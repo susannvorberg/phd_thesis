@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #build html book
-/usr/bin/Rscript -e "bookdown::render_book('/home/vorberg/Documents/phd_thesis/index.Rmd', 'bookdown::gitbook(lib_dir = "libs")')"
+/usr/bin/Rscript -e "bookdown::render_book('/home/vorberg/Documents/phd_thesis/index.Rmd', 'bookdown::gitbook')"
 
 #commit and push to github
 git add --all *
