@@ -1,12 +1,13 @@
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
-    after_body: disqus.html
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
 bookdown::epub_book: default
 bookdown::gitbook:
+  includes:
+    after_body: disqus.html
   css: style.css
   config:
     toc:
