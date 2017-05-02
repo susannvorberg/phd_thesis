@@ -9,6 +9,7 @@ bookdown::gitbook:
   includes:
       after_body: disqus.html
   css: style.css
+  lib_dir: "libs"
   config:
     toc:
       collapse: subsection
