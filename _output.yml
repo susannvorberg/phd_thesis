@@ -1,6 +1,7 @@
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
+    after_body: disqus.html
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
