@@ -9,8 +9,16 @@ bookdown::gitbook:
   css: style.css
   config:
     toc:
+      collapse: subsection
+      scroll_highlight: yes
       before: |
         <li><a href="./">A Minimal Book Example</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+        <li><a href="https://github.com/rstudio/bookdown">Proudly published with bookdown</a></li>
+    edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
+    download: ["pdf", "epub", "mobi"]
+    search: yes
+    github-repo: "susannvorberg/phd_thesis"
+    url: "https://susannvorberg.github.io/phd_thesis/index.html"
+
