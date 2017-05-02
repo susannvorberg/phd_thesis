@@ -14,7 +14,7 @@ bookdown::gitbook:
       collapse: subsection
       scroll_highlight: yes
       before: |
-        <li><a href="./">Bayesian Model for Residue-Residue Contact Prediction</a></li>
+        <li><a href="./">PhD Thesis Susann Vorberg</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
