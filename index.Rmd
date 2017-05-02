@@ -4,11 +4,12 @@ author: "Susann Vorberg"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-#####output: bookdown::gitbook
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "This is my PhD thesis on residue-residue contact prediction."
+github-repo: "susannvorberg/phd_thesis"
+url: "https://susannvorberg.github.io/phd_thesis/index.html"
 ---
 
 # Title page

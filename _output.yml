@@ -20,6 +20,4 @@ bookdown::gitbook:
     edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
     download: ["pdf", "epub", "mobi"]
     search: yes
-    github-repo: "susannvorberg/phd_thesis"
-    url: "https://susannvorberg.github.io/phd_thesis/index.html"
 
