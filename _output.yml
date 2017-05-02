@@ -6,8 +6,6 @@ bookdown::pdf_book:
   keep_tex: yes
 bookdown::epub_book: default
 bookdown::gitbook:
-  includes:
-    after_body: disqus.html
   css: style.css
   config:
     toc:
