@@ -11,19 +11,9 @@ link-citations: yes
 description: "This is my PhD thesis on residue-residue contact prediction."
 ---
 
-# Prerequisites
+# Title page
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
-
-For now, you have to install the development versions of **bookdown** from Github:
-
-```{r eval=FALSE}
-devtools::install_github("rstudio/bookdown")
-```
-
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
-
-To compile this example to PDF, you need to install XeLaTeX.
+Maybe here latex code to generate the LMU title page
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
