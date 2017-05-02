@@ -9,7 +9,6 @@ biblio-style: apalike
 link-citations: yes
 description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
-url: "https://susannvorberg.github.io/phd_thesis"
 ---
 
 # Title page
