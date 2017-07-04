@@ -10,6 +10,22 @@ biblio-style: apalike
 link-citations: yes
 description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
+linkcolor: blue
+citecolor: blue
+urlcolor: blue
+toccolor: black
+fontenc: T1
+papersize: A4
+fontsize: 12pt
+documentclass: book
+classoption: twoside
+margin-left: 2.5cm
+margin-right: 2.5cm
+margin-top: 2.5cm
+margin-bottom: 2.5cm
+toc_appendix: yes
+lof: yes
+lot: yes
 ---
 
 # Acknowledgements
