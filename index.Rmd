@@ -17,7 +17,6 @@ toccolor: black
 fontenc: T1
 papersize: A4
 fontsize: 12pt
-documentclass: book
 classoption: twoside
 margin-left: 2.5cm
 margin-right: 2.5cm
