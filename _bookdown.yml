@@ -1,14 +1,4 @@
-title: "PhD thesis: residue-residue contact prediction"
-book_filename: "PhD-thesis"
-author: "Susann Vorberg"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
-link-citations: yes
-description: "This is my PhD thesis on residue-residue contact prediction."
-github-repo: "susannvorberg/phd_thesis"
+
 language:
   ui:
     edit: "Edit"
