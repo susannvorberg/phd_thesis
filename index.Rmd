@@ -11,9 +11,13 @@ description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
 ---
 
-# Title page
+# Acknowledgements
 
-Maybe here latex code to generate the LMU title page
+I thank the world
+
+# Summary
+
+Abstract in engl and in german???
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

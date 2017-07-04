@@ -1,10 +1,7 @@
-\documentclass[12pt,a4paper,twoside]{book}
 \usepackage{acronym}
 \usepackage[utf8]{inputenc}
 \usepackage{booktabs}
 \usepackage{amsthm}
-\usepackage[colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black]{hyperref}
-\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
 
 \makeatletter
 \def\thm@space@setup{%
@@ -18,7 +15,7 @@
 %------------------- LMU specific formatting
 
 
-\newcommand{\LMUTitlePage}[8]{
+\newcommand{\LMUCover}[3]{
     \thispagestyle{empty}
     \vspace*{\stretch{1}}
     {\parindent0cm \rule{\linewidth}{.7ex}}
@@ -37,15 +34,13 @@
     \vspace*{\stretch{5}}
     \vspace*{\stretch{1}}
     
-    \begin{center}\sffamily\LARGE{#4}\end{center}
-    
-    \newpage
-    \thispagestyle{empty}
+    \begin{center}\sffamily\LARGE{#3}\end{center}
+}
 
-    \cleardoublepage
-    
-    \thispagestyle{empty}
 
+
+\newcommand{\LMUTitlePage}[4]{
+    \thispagestyle{empty}
     \vspace*{\stretch{1}}
     
     \begin{center}
@@ -70,40 +65,38 @@
       \Large #2\\
       \Large aus #3\\
       \vspace*{\stretch{2}}
-      \Large Muenchen, den #5
+      \Large Muenchen, den #4
     \end{center}
+}
 
-    \cleardoublepage
-  
-  
+
+\newcommand{\LMUErklaerung}[5]{
     \thispagestyle{empty}
     \begin{flushleft}
       \large \textbf{Erklärung} \\[1mm]
-      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #6 betreut.
+      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
       \bigskip
   
       \large \textbf{Eidesstattliche Versicherung}\\[1mm]
       \large Diese Dissertation wurde eigenständig und ohne unerlaubte Hilfe erarbeitet.
       \vspace{5em}
   
-      \dots\dots\dots\dots \hfill \dots\dots\dots\dots\dots\\
-      \large Ort, Datum \hfill #2
+      \dots\dots\dots   \dots\dots\dots \hfill \dots\dots\dots\dots\dots\dots\dots\dots\\
+      \large Ort, Datum \hfill #1
       \vfill
   
   
-      \large Dissertation eingereicht am: \hfill #5
+      \large Dissertation eingereicht am: \hfill #4
       \bigskip
     
-      \large Erstgutachter:  #6 \hfill \dots\dots\dots\dots
+      \large Erstgutachter:  #2 \hfill \dots\dots\dots\dots\dots\dots\dots
       \bigskip
     
-      \large Zweitgutachter: #7 \hfill \dots\dots\dots\dots
+      \large Zweitgutachter: #3 \hfill \dots\dots\dots\dots\dots\dots\dots
       \bigskip
     
-      \large Tag der muendlichen Pruefung: \hfill #8
+      \large Tag der muendlichen Pruefung: \hfill #5
     \end{flushleft}
-
-    \cleardoublepage
 }
 
 

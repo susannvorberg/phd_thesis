@@ -1,4 +1,5 @@
 book_filename: "PhD-thesis"
+output_dir: "docs"
 language:
   label:
     fig: "FIGURE "

@@ -1,5 +1,4 @@
 bookdown::pdf_book:
-  output_dir: "pdf"
   includes:
     in_header: latex/preamble.tex
     before_body: latex/before_body.tex
@@ -10,7 +9,6 @@ bookdown::pdf_book:
   pandoc_args: --chapters
 bookdown::epub_book: default
 bookdown::gitbook:
-  output_dir: "docs"
   includes:
       after_body: disqus.html
   css: [css/style.css, css/toc.css]
