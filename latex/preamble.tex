@@ -1,0 +1,112 @@
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage{acronym}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black]{hyperref}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+
+
+%------------------- LMU specific formatting
+
+
+\newcommand{\LMUTitlePage}[8]{
+    \thispagestyle{empty}
+    \vspace*{\stretch{1}}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\large
+      #2
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+    \vspace*{\stretch{5}}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}\sffamily\LARGE{#4}\end{center}
+    
+    \newpage
+    \thispagestyle{empty}
+
+    \cleardoublepage
+    
+    \thispagestyle{empty}
+
+    \vspace*{\stretch{1}}
+    
+    \begin{center}
+      \Large Dissertation zur Erlangung des Doktorgrades der Fakultät für Chemie und Pharmazie der Ludwig-Maximilians-Universität München
+    \end{center}
+    
+    \vspace*{\stretch{1}}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+
+    \vspace*{\stretch{3}}
+    \begin{center}
+      \Large vorgelegt von\\
+      \Large #2\\
+      \Large aus #3\\
+      \vspace*{\stretch{2}}
+      \Large Muenchen, den #5
+    \end{center}
+
+    \cleardoublepage
+  
+  
+    \thispagestyle{empty}
+    \begin{flushleft}
+      \large \textbf{Erklärung} \\[1mm]
+      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #6 betreut.
+      \bigskip
+  
+      \large \textbf{Eidesstattliche Versicherung}\\[1mm]
+      \large Diese Dissertation wurde eigenständig und ohne unerlaubte Hilfe erarbeitet.
+      \vspace{5em}
+  
+      \dots\dots\dots\dots \hfill \dots\dots\dots\dots\dots\\
+      \large Ort, Datum \hfill #2
+      \vfill
+  
+  
+      \large Dissertation eingereicht am: \hfill #5
+      \bigskip
+    
+      \large Erstgutachter:  #6 \hfill \dots\dots\dots\dots
+      \bigskip
+    
+      \large Zweitgutachter: #7 \hfill \dots\dots\dots\dots
+      \bigskip
+    
+      \large Tag der muendlichen Pruefung: \hfill #8
+    \end{flushleft}
+
+    \cleardoublepage
+}
+
+
+
+
+
