@@ -1,13 +1,13 @@
 [
-["preface.html", "PhD thesis: residue-residue contact prediction Preface", " PhD thesis: residue-residue contact prediction Susann Vorberg 2017-07-04 Preface In this book, we will introduce an interesting method "],
-["summary.html", "1 Summary", " 1 Summary Awesome contact prediction project abstract "],
-["acknowledgements.html", "2 Acknowledgements", " 2 Acknowledgements I thank the world. "],
-["introduction.html", "3 Introduction", " 3 Introduction Intro to structires "],
+["index.html", "PhD thesis: residue-residue contact prediction Preface", " PhD thesis: residue-residue contact prediction Susann Vorberg 2017-07-04 Preface In this book, we will introduce an interesting method "],
+["summary.html", " 1 Summary", " 1 Summary Awesome contact prediction project abstract "],
+["acknowledgements.html", " 2 Acknowledgements", " 2 Acknowledgements I thank the world. "],
+["introduction.html", " 3 Introduction", " 3 Introduction Intro to structires "],
 ["structure-determination.html", "3.1 Structure Determination", " 3.1 Structure Determination nmr xray "],
 ["structure-prediction.html", "3.2 Structure Prediction", " 3.2 Structure Prediction homology modelling template free contact assisted "],
 ["contact-prediction.html", "3.3 Contact Prediction", " 3.3 Contact Prediction "],
 ["state-of-the-art-cp.html", "3.4 State of the Art CP", " 3.4 State of the Art CP "],
 ["downsides-and-pitfalls.html", "3.5 Downsides and Pitfalls", " 3.5 Downsides and Pitfalls -->"],
-["methods.html", "4 Methods", " 4 Methods all you need to know "],
+["methods.html", " 4 Methods", " 4 Methods all you need to know "],
 ["dataset.html", "4.1 Dataset", " 4.1 Dataset -->"]
 ]
