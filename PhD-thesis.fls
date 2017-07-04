@@ -183,4 +183,8 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 INPUT /usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+INPUT PhD-thesis.out
+INPUT PhD-thesis.out
+INPUT PhD-thesis.out
+INPUT PhD-thesis.out
 OUTPUT PhD-thesis.out

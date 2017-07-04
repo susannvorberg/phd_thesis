@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.10.27)  4 JUL 2017 11:12
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2016.10.27)  4 JUL 2017 11:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -964,6 +964,7 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 248.
 LaTeX Info: Redefining \pageref on input line 248.
 LaTeX Info: Redefining \nameref on input line 248.
+(./PhD-thesis.out) (./PhD-thesis.out)
 \@outlinefile=\write5
 \openout5 = `PhD-thesis.out'.
 
@@ -974,9 +975,9 @@ Package hyperref Warning: Rerun to get /PageLabels entry.
 l.256 \frontmatter
                    
 Here is how much of TeX's memory you used:
- 25511 strings out of 493638
- 445581 string characters out of 6146795
- 503359 words of memory out of 5000000
+ 25515 strings out of 493638
+ 445641 string characters out of 6146795
+ 503463 words of memory out of 5000000
  28704 multiletter control sequences out of 15000+600000
  4040 words of font info for 20 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
