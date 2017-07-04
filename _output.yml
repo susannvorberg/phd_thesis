@@ -5,24 +5,7 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
-  toc_appendix: yes
-  lof: yes
-  lot: yes
-  pandoc_args: --chapters
-  linkcolor: blue
-  citecolor: blue
-  urlcolor: blue
-  toccolor: black
-  fontenc: T1
-  papersize: A4
-  fontsize: 12pt
-  documentclass: book
-  classoption: twoside
-  margin-left: 2.5cm
-  margin-right: 2.5cm
-  margin-top: 2.5cm
-  margin-bottom: 2.5cm
-  inputenc: utf8
+
 bookdown::epub_book: default
 bookdown::gitbook:
   includes:
