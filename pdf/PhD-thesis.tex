@@ -1,4 +1,4 @@
-\documentclass[]{book}
+\documentclass[12pt,A4,twoside]{book}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -33,16 +33,16 @@
 \fi
 \hypersetup{breaklinks=true,
             bookmarks=true,
-            pdfauthor={},
-            pdftitle={},
+            pdfauthor={Susann Vorberg},
+            pdftitle={PhD thesis: residue-residue contact prediction},
             colorlinks=true,
             citecolor=blue,
             urlcolor=blue,
-            linkcolor=magenta,
+            linkcolor=blue,
             pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{natbib}
-\bibliographystyle{plainnat}
+\bibliographystyle{apalike}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -115,13 +115,15 @@
 }
 
 \setlength{\droptitle}{-2em}
-  \title{}
-  \pretitle{\vspace{\droptitle}}
-  \posttitle{}
-  \author{}
-  \preauthor{}\postauthor{}
-  \date{}
-  \predate{}\postdate{}
+  \title{PhD thesis: residue-residue contact prediction}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Susann Vorberg}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{2017-07-04}
 
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
@@ -296,6 +298,8 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\listoftables
+\listoffigures
 \chapter{Acknowledgements}\label{acknowledgements}
 
 I thank the world
@@ -406,5 +410,7 @@ Some \emph{significant} applications are demonstrated in this chapter.
 \chapter{Final Words}\label{final-words}
 
 We have finished a nice book.
+
+\bibliography{packages.bib,book.bib}
 
 \end{document}
