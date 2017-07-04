@@ -1,5 +1,9 @@
-book_filename: "PhD-thesis"
+title: Bayesian Model for Prediction of Protein Residue-Residue Contacts
+book_filename: "PhD thesis Susann Vorberg"
 language:
   ui:
-    edit: "Edit"
-    chapter_name: "Chapter "
+    chapter_name: "dfg "
+rmd_files:
+  html: ["index.md", "md_files/01-summary.md", "md_files/02-acknowledgements.md", "md_files/03-intro.md", "md_files/04-methods.md"]
+  latex: ["01-summary.md", "02-acknowledgements.md", "toc.md", "03-intro.md", "04-methods.md"]
+

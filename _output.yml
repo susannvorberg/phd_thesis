@@ -1,11 +1,9 @@
 bookdown::pdf_book:
-  includes:
-    in_header: latex/preamble.tex
-    before_body: latex/before_body.tex
   latex_engine: xelatex
-  citation_package: natbib
   keep_tex: yes
-  template: default.latex
+  template: latex/phd_thesis_template.tex
+  toc: False
+  pandoc_args:  [--top-level-division=chapter, --number-sections, --listings ]
 bookdown::epub_book: default
 bookdown::gitbook:
   includes:
@@ -24,4 +22,6 @@ bookdown::gitbook:
     edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
     download: ["pdf", "epub"]
     search: yes
+
+
 

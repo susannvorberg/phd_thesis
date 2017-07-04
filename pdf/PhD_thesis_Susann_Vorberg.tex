@@ -1,0 +1,277 @@
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{acronym}
+\usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black,unicode=true]{hyperref}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\urlstyle{same}  % don't use monospace font for urls
+
+
+
+
+
+\usepackage{listings}
+
+
+
+
+
+
+\usepackage{longtable,booktabs}
+
+
+
+
+
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\setcounter{secnumdepth}{5}
+
+
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+
+
+%------------------- Definition of LMU title pages
+\newcommand{\LMUCover}[3]{
+    \thispagestyle{empty}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\large
+      #2
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+    \vspace*{\stretch{5}}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}\sffamily\LARGE{#3}\end{center}
+}
+
+
+
+\newcommand{\LMUTitlePage}[4]{
+    \thispagestyle{empty}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}
+      \Large Dissertation zur Erlangung des Doktorgrades der Fakultät für Chemie und Pharmazie der Ludwig-Maximilians-Universität München
+    \end{center}
+    
+    \vspace*{\stretch{1}}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+
+    \vspace*{\stretch{3}}
+    \begin{center}
+      \Large vorgelegt von\\
+      \Large #2\\
+      \Large geboren in #3\\
+      \vspace*{\stretch{2}}
+      \Large München, den #4
+    \end{center}
+}
+
+
+\newcommand{\LMUErklaerung}[5]{
+    \thispagestyle{empty}
+    \begin{flushleft}
+      \large \textbf{Erklärung} \\[1mm]
+      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
+      \bigskip
+  
+      \large \textbf{Eidesstattliche Versicherung}\\[1mm]
+      \large Diese Dissertation wurde eigenständig und ohne unerlaubte Hilfe erarbeitet.
+      \vspace{5em}
+  
+      \dots\dots\dots   \dots\dots\dots \hfill \dots\dots\dots\dots\dots\dots\dots\dots\\
+      \large Ort, Datum \hfill #1
+      \vfill
+  
+  
+      \large Dissertation eingereicht am: \hfill #4
+      \bigskip
+    
+      \large Erstgutachter:  #2 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Zweitgutachter: #3 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Tag der mündlichen Prüfung: \hfill #5
+    \end{flushleft}
+}
+
+
+\begin{document}
+
+\frontmatter
+
+%%% LMU cover page
+\LMUCover
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU title page
+\LMUTitlePage
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{Leipzig, Germany}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU statement page
+\frontmatter\setcounter{page}{1}
+\LMUErklaerung
+	{Susann Vorberg}
+	{Dr. Johannes Soeding}
+	{Prof. Dr. Julien Gagneur}
+	{15.10.2017}
+	{15.12.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+
+\chapter{Summary}\label{summary}
+
+Awesome contact prediction project abstract
+
+\chapter{Acknowledgements}\label{acknowledgements}
+
+I thank the world.
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\mainmatter \setcounter{page}{1}
+
+\chapter{Introduction}\label{introduction}
+
+Intro to structires
+
+\section{Structure Determination}\label{structure-determination}
+
+\begin{itemize}
+\tightlist
+\item
+  nmr
+\item
+  xray
+\end{itemize}
+
+\section{Structure Prediction}\label{structure-prediction}
+
+\begin{itemize}
+\tightlist
+\item
+  homology modelling
+\item
+  template free
+\item
+  contact assisted
+\end{itemize}
+
+\section{Contact Prediction}\label{contact-prediction}
+
+\section{State of the Art CP}\label{state-of-the-art-cp}
+
+\section{Downsides and Pitfalls}\label{downsides-and-pitfalls}
+
+\chapter{Methods}\label{methods}
+
+all you need to know
+
+\section{Dataset}\label{dataset}
+
+\bibliography{}
+
+\end{document}
