@@ -9,12 +9,15 @@ biblio-style: apalike
 link-citations: yes
 description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
-url: "https\://susannvorberg.github.io/phd_thesis"
 ---
 
-# Title page
+# Acknowledgements
 
-Maybe here latex code to generate the LMU title page
+I thank the world
+
+# Summary
+
+Abstract in engl and in german???
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
@@ -37,6 +40,7 @@ Figures and tables with captions will be placed in `figure` and `table` environm
 par(mar = c(4, 4, .1, .1))
 plot(pressure, type = 'b', pch = 19)
 ```
+-> here I would change something
 
 Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
 
