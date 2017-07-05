@@ -3,6 +3,7 @@ book_filename: "PhD thesis Susann Vorberg"
 language:
   ui:
     chapter_name: " "
+rmd_subdir: "src/"
 rmd_files:
   html: ["index.md", "01-summary.md", "02-acknowledgements.md", "03-intro.md", "04-methods.md"]
   latex: ["01-summary.md", "02-acknowledgements.md", "toc.md", "03-intro.md", "04-methods.md"]

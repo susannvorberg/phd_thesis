@@ -1,0 +1,229 @@
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{acronym}
+\usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black,unicode=true]{hyperref}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+
+
+
+
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+% Numbering of sections unto depth=5
+\setcounter{secnumdepth}{5}
+
+% Table of contents formatting
+\renewcommand{\contentsname}{Table of Contents}
+\setcounter{tocdepth}{1}
+
+% Headers and page numbering 
+\usepackage{fancyhdr}
+\pagestyle{plain}
+
+% Chapter styling
+\usepackage[grey]{quotchap}
+\makeatletter 
+\renewcommand*{\chapnumfont}{%
+  \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{80}{100}\selectfont% Default: 100/130
+  \color{chaptergrey}%
+}
+\makeatother
+
+
+%------------------- Definition of LMU title pages
+\newcommand{\LMUCover}[3]{
+    \thispagestyle{empty}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\large
+      #2
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+    \vspace*{\stretch{5}}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}\sffamily\LARGE{#3}\end{center}
+}
+
+
+
+\newcommand{\LMUTitlePage}[4]{
+    \thispagestyle{empty}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}
+      \Large Dissertation zur Erlangung des Doktorgrades der Fakultät für Chemie und Pharmazie der Ludwig-Maximilians-Universität München
+    \end{center}
+    
+    \vspace*{\stretch{1}}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+
+    \vspace*{\stretch{3}}
+    \begin{center}
+      \Large vorgelegt von\\
+      \Large #2\\
+      \Large geboren in #3\\
+      \vspace*{\stretch{2}}
+      \Large München, den #4
+    \end{center}
+}
+
+
+\newcommand{\LMUErklaerung}[5]{
+    \thispagestyle{empty}
+    \begin{flushleft}
+      \large \textbf{Erklärung} \\[1mm]
+      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
+      \bigskip
+  
+      \large \textbf{Eidesstattliche Versicherung}\\[1mm]
+      \large Diese Dissertation wurde eigenständig und ohne unerlaubte Hilfe erarbeitet.
+      \vspace{5em}
+  
+      \dots\dots\dots   \dots\dots\dots \hfill \dots\dots\dots\dots\dots\dots\dots\dots\\
+      \large Ort, Datum \hfill #1
+      \vfill
+  
+  
+      \large Dissertation eingereicht am: \hfill #4
+      \bigskip
+    
+      \large Erstgutachter:  #2 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Zweitgutachter: #3 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Tag der mündlichen Prüfung: \hfill #5
+    \end{flushleft}
+}
+
+
+\begin{document}
+
+\frontmatter
+
+%%% LMU cover page
+\LMUCover
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU title page
+\LMUTitlePage
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{Leipzig, Germany}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU statement page
+\frontmatter\setcounter{page}{1}
+\LMUErklaerung
+	{Susann Vorberg}
+	{Dr. Johannes Soeding}
+	{Prof. Dr. Julien Gagneur}
+	{15.10.2017}
+	{15.12.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+
+\chapter{Summary}\label{summary}
+
+Awesome contact prediction project abstract
+
+\chapter{Acknowledgements}\label{acknowledgements}
+
+I thank the world.
+
+\tableofcontents
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\mainmatter \setcounter{page}{1}
+
+\chapter{Introduction}\label{introduction}
+
+Intro to structires
+
+\section{Structure Determination}\label{structure-determination}
+
+\begin{itemize}
+\tightlist
+\item
+  nmr
+\item
+  xray
+\end{itemize}
+
+\section{Structure Prediction}\label{structure-prediction}
+
+\begin{itemize}
+\tightlist
+\item
+  homology modelling
+\item
+  template free
+\item
+  contact assisted
+\end{itemize}
+
+\section{Contact Prediction}\label{contact-prediction}
+
+\section{State of the Art CP}\label{state-of-the-art-cp}
+
+\section{Downsides and Pitfalls}\label{downsides-and-pitfalls}
+
+\chapter{Methods}\label{methods}
+
+all you need to know
+
+\section{Dataset}\label{dataset}
+
+\bibliography{book.bib}
+
+\end{document}
