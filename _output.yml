@@ -6,6 +6,7 @@ bookdown::pdf_book:
   pandoc_args:  [--top-level-division=chapter, --number-sections, --listings ]
 bookdown::epub_book: default
 bookdown::gitbook:
+  bibliography: [bib/structure_prediction.bib]
   includes:
       after_body: disqus.html
   css: [css/style.css, css/toc.css]

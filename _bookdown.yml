@@ -1,5 +1,6 @@
 title: Bayesian Model for Prediction of Protein Residue-Residue Contacts
 book_filename: "PhD thesis Susann Vorberg"
+bib: [bib/structure_prediction.bib]
 language:
   ui:
     chapter_name: " "
