@@ -1,11 +1,5 @@
 
 \tableofcontents
-  
-\listoffigures
-\addcontentsline{toc}{chapter}{List of Figures}
-
-
-\listoftables
-\addcontentsline{toc}{chapter}{List of Tables}
+\addcontentsline{toc}{chapter}{Table of Contents}
 
 \mainmatter \setcounter{page}{1}

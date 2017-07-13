@@ -5,10 +5,21 @@ date: "`r Sys.Date()`"
 institute: LMU
 description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
-toc-depth: 1
+bibliography: [bib/structure_prediction.bib]
+link-citations: true
+csl: csl/cell-numeric.csl
 ---
 
-# Preface {-}
+# Summary {-}
+Awesome contact prediction project abstract
+ 
+# Acknowledgements {-}
 
-In this book, we will introduce an interesting
-method
+I thank the world.
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+
+
+
+\mainmatter \setcounter{page}{1}

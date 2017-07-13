@@ -2,16 +2,14 @@ bookdown::pdf_book:
   latex_engine: xelatex
   keep_tex: yes
   template: latex/phd_thesis_template.tex
-  toc: False
-  pandoc_args:  [--top-level-division=chapter, --number-sections, --listings ]
+  pandoc_args:  [--top-level-division=chapter, --number-sections]
 bookdown::epub_book: default
 bookdown::gitbook:
-  bibliography: [bib/structure_prediction.bib]
   includes:
       after_body: disqus.html
   css: [css/style.css, css/toc.css]
   split_by: section
-  lib_dir: "libs"
+  split_bib: True
   config:
     toc:
       collapse: subsection
@@ -23,6 +21,10 @@ bookdown::gitbook:
     edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
     download: ["pdf", "epub"]
     search: yes
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
 
 
 

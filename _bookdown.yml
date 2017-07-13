@@ -1,11 +1,13 @@
 title: Bayesian Model for Prediction of Protein Residue-Residue Contacts
 book_filename: "PhD thesis Susann Vorberg"
-bib: [bib/structure_prediction.bib]
 language:
+  label:
+    fig: 'Figure '
+    tab: 'Table '
+    eq: 'Equation '
   ui:
-    chapter_name: " "
-rmd_subdir: "src/"
+    chapter_name: ""
 rmd_files:
-  html: ["index.md", "01-summary.md", "02-acknowledgements.md", "03-intro.md", "04-methods.md"]
-  latex: ["01-summary.md", "02-acknowledgements.md", "toc.md", "03-intro.md", "04-methods.md"]
+  html: ["index.md", "03-intro.md", "04-methods.md", "07-appendix.md", "06-references.md"]
+  latex: ["index.md", "03-intro.md", "04-methods.md", "07-appendix.md", "06-references.md"]
 

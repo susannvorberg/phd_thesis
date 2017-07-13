@@ -6,15 +6,8 @@
 \usepackage{graphicx}
 \usepackage{siunitx}
 \usepackage{acronym}
-\usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=black,linkcolor=black,unicode=true]{hyperref}
+\usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
 \usepackage[top=2.5cm, bottom=2.5cm]{geometry}
-
-
-
-
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -155,7 +148,6 @@
 \cleardoublepage
 
 %%% LMU statement page
-\frontmatter\setcounter{page}{1}
 \LMUErklaerung
 	{Susann Vorberg}
 	{Dr. Johannes Soeding}
@@ -166,10 +158,9 @@
 \newpage
 \thispagestyle{empty}
 \cleardoublepage
-
+\frontmatter\setcounter{page}{1}
 
 $body$
 
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 
 \end{document}
