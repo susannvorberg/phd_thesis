@@ -1,0 +1,598 @@
+\documentclass[12pt,a4paper,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{acronym}
+\usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+% Numbering of sections unto depth=5
+\setcounter{secnumdepth}{5}
+
+% Table of contents formatting
+\renewcommand{\contentsname}{Table of Contents}
+\setcounter{tocdepth}{1}
+
+% Headers and page numbering 
+\usepackage{fancyhdr}
+\pagestyle{plain}
+
+% Chapter styling
+\usepackage[grey]{quotchap}
+\makeatletter 
+\renewcommand*{\chapnumfont}{%
+  \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{80}{100}\selectfont% Default: 100/130
+  \color{chaptergrey}%
+}
+\makeatother
+
+
+%------------------- Definition of LMU title pages
+\newcommand{\LMUCover}[3]{
+    \thispagestyle{empty}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\large
+      #2
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+    \vspace*{\stretch{5}}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}\sffamily\LARGE{#3}\end{center}
+}
+
+
+
+\newcommand{\LMUTitlePage}[4]{
+    \thispagestyle{empty}
+    \vspace*{\stretch{1}}
+    
+    \begin{center}
+      \Large Dissertation zur Erlangung des Doktorgrades der Fakultät für Chemie und Pharmazie der Ludwig-Maximilians-Universität München
+    \end{center}
+    
+    \vspace*{\stretch{1}}
+    {\parindent0cm \rule{\linewidth}{.7ex}}
+    
+    \begin{flushright}
+      \vspace*{\stretch{1}}
+      \sffamily\bfseries\Huge
+      #1\\
+      \vspace*{\stretch{1}}
+    \end{flushright}
+  
+    \rule{\linewidth}{.7ex}
+
+    \vspace*{\stretch{3}}
+    \begin{center}
+      \Large vorgelegt von\\
+      \Large #2\\
+      \Large geboren in #3\\
+      \vspace*{\stretch{2}}
+      \Large München, den #4
+    \end{center}
+}
+
+
+\newcommand{\LMUErklaerung}[5]{
+    \thispagestyle{empty}
+    \begin{flushleft}
+      \large \textbf{Erklärung} \\[1mm]
+      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
+      \bigskip
+  
+      \large \textbf{Eidesstattliche Versicherung}\\[1mm]
+      \large Diese Dissertation wurde eigenständig und ohne unerlaubte Hilfe erarbeitet.
+      \vspace{5em}
+  
+      \dots\dots\dots   \dots\dots\dots \hfill \dots\dots\dots\dots\dots\dots\dots\dots\\
+      \large Ort, Datum \hfill #1
+      \vfill
+  
+  
+      \large Dissertation eingereicht am: \hfill #4
+      \bigskip
+    
+      \large Erstgutachter:  #2 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Zweitgutachter: #3 \hfill \dots\dots\dots\dots\dots\dots\dots
+      \bigskip
+    
+      \large Tag der mündlichen Prüfung: \hfill #5
+    \end{flushleft}
+}
+
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\begin{document}
+
+\frontmatter
+
+%%% LMU cover page
+\LMUCover
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU title page
+\LMUTitlePage
+	{Bayesian Model for Prediction of Protein Residue-Residue Contacts}
+	{Susann Vorberg}
+	{Leipzig, Germany}
+	{15.10.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%% LMU statement page
+\LMUErklaerung
+	{Susann Vorberg}
+	{Dr. Johannes Soeding}
+	{Prof. Dr. Julien Gagneur}
+	{15.10.2017}
+	{15.12.2017}
+
+\newpage
+\thispagestyle{empty}
+\cleardoublepage
+\frontmatter\setcounter{page}{1}
+
+\chapter*{Summary}\label{summary}
+\addcontentsline{toc}{chapter}{Summary}
+
+Awesome contact prediction project abstract
+
+\chapter*{Acknowledgements}\label{acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I thank the world.
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+
+\mainmatter \setcounter{page}{1}
+
+\chapter{Introduction}\label{introduction}
+
+In his Nobel Prize speech in 1973
+{[}\protect\hyperlink{ref-Anfinsen1973}{1}{]} Anfinsen postulated one of
+the basic principles in molecular biology, which is known as
+\emph{Anfinsen's dogma}: a protein's native structure is uniquely
+determined by its amino acid sequence. With certain exceptions (e.g.
+\(\ac{IDP}\) {[}\protect\hyperlink{ref-Wright1999}{2}{]}), this dogma
+has proven to hold true for the majority of proteins.
+
+Ever since, it is regarded as the biggest challenge in structural
+bioinformatics {[}\protect\hyperlink{ref-Samish2015}{3}{]}, to realiably
+predict a protein's structure given only its amino acid sequence.
+\emph{De-novo} protein structure prediction methods use physical or
+knowledge based energy potentials to find a protein conformation that
+minimizes the protein's energy landscape. However, these methods are
+limited by the complexity of the conformational space and the accuracy
+of the energy potentials. Considering a protein with 150 amino acids,
+that has approximately 450 degrees of freedom, Regarding the rotational
+and translational degrees of freedom of the protein chain, the
+complexity scales with XXX
+{[}\protect\hyperlink{ref-Anfinsen1973}{1}{]}.
+
+Far more successfull are methods that make use of existing structural
+information. Since protein structure is conserved stronger than sequence
+{[}\protect\hyperlink{ref-Anfinsen1973}{1}{]}, the structure of a
+homologue protein can be used as template to model the target protein.
+These template-based methods are crucially dependent on sensitive
+sequence search tools that are able to detect even distantly related
+proteins. Modern tools, like
+HHblits{[}\protect\hyperlink{ref-Anfinsen1973}{1}{]}, are able to
+identify remote homologs sharing as little as 10\% sequence identity
+{[}\protect\hyperlink{ref-Anfinsen1973}{1}{]}. Of course, the
+availability of a structural templates poses the main limitation for
+this methodology.
+
+Unfortunately, the number of solved protein structures increases only
+slowly, as experimental methods are both time consuming and expensive
+{[}\protect\hyperlink{ref-Dorn2014}{4}{]}. The
+\(\ac{PDB}\){[}{\textbf{???}}{]} is the main repository for
+marcomolecular structures and currently (Jul 2017) holds about 120 000
+atomic models of proteins.
+
+The primary technique for determining protein structures is X-ray
+crystallography, accounting for roughly 90\% of entries in the
+\(\ac{PDB}\). About 9\% of protein structures have been solved using
+\(\ac{NMR}\) and less than 1\% using \(\ac{EM}\) (see FIG 1). All three
+experimental techniques have advantages and limiations with respect to
+certain modelling aspects. X-ray crystallography requires the protein to
+form crystals, which is an arduous and time consuming process.
+Furthermore, crystal packing forces the protein into a unnatural and
+rigid environment preventing the observation of conformational
+flexibility. \(\ac{NMR}\) studies the protein in an physiological
+environment in solution and enables the study of protein dynamics as
+ensembles of protein structures can be observed. However, \(\ac{NMR}\)
+is limited to look at small proteins. Recently, \(\ac{EM}\) has
+undergone a ``resolution revolution''
+{[}\protect\hyperlink{ref-Egelman2016}{5}{]} and macromolecular
+structures have been solved with resolutions up to 2A{[}citation{]}. The
+limit of \(\ac{cryo-EM}\) lies in the size of proteins.
+
+Compared to the tedious task of revealing atomic resolution of a protein
+tertiary structure, it has become very easy to decipher the primary
+sequence of proteins. With the latest sequencing technologies
+{[}examples{]}, it takes only hours to sequence millions of basepaires
+at low costs {[}example numbers{]} and the number of sequenced genomes
+has risen tremendously. The UniProtKB {[}{\textbf{???}}{]}, the leading
+resource for protein sequence information, contains more than 80 million
+sequence entries (24 July 2017).
+
+Consequently, the gap between the number of protein structures and
+sequences is still growing and even new developments as single protein
+structure determination {[}{\textbf{???}}{]} are not expected to close
+this gap near in time. {[}Figure sequence structure gap{]}
+
+Protein structure determines protein function. Therefore, structural
+insights are of uttermost importance. They are essential for a detailed
+understanding of chemical reactions, regulatory processes and transport
+mechanisms. They are fundamental for the design of drugs and
+antibiotics. Moreover structural abnormalities can lead to misfolding
+and aggregation potentially causing diseases so studying them is
+pathologically relevant.
+
+The aformentioned trends illustrate the need of computational methods
+and motivate research to solve \emph{Ansinsens Dogma} to reliably
+predict protein structures from sequence alone.
+
+\section{Structure Prediction}\label{structure-prediction}
+
+Despite the knowledge of Anfinsen's postulate, we are not able to
+reliably predict the structure of a protein from its sequence alone.
+Generally it is assumed that a protein folds into a unique, well-defined
+native structure that is near the global free energy minimum
+(\autoref{fig:folding_funnel}). Levinthal's paradox
+{[}\protect\hyperlink{ref-Levinthal1969}{6}{]} describes the complexity
+of the folding process towards this minimum. It stresses the problem
+that it is not possible for a protein to exhaustively search the
+conformational space to get to its native fold. Due to the
+``combinatorial explosion'' of possible conformations, an exhaustive
+search would take unreasonably long. Hence, it is not a feasible
+approach for structure prediction to scan all possible conformations.
+Different approaches have been developed over time to overcome or elude
+this problem.
+
+\subsection{Template based methods}\label{template-based-methods}
+
+Homology Modelling is applied in the case where homologous proteins with
+solved structures are available and can be identified via sequence
+alignments. The underlying assumption for this strategy relates to the
+fact that structure is more conserved than sequence. That is, if we find
+a related protein that shows sufficient similarity on the sequence
+level, we can safely infer that both proteins share a similar structure.
+Homology Modelling is assumed to yield reliable results when query and
+target protein share more than 30\% sequence similarity, depending on
+the sequence length (\textit{safe homology zone})
+{[}{[}\protect\hyperlink{ref-Sander1991}{7}{]}\}. For proteins sharing
+less than 30\% sequence similarity, the structure will not necessarily
+be conserved. Within this \textit{twilight zone} of homology modelling
+the number of false positives regarding structural similarity explodes
+{[}{[}\protect\hyperlink{ref-Rost1999}{8}{]}\} and other structure
+prediction methods have to be applied (see
+\autoref{fig:schneider_sander_HM_threshold}). When a suitable target
+structure has been identified, the backbone of the model is generated by
+simply copying the coordinates of the target backbone atoms onto the
+model. Non-aligned residues due to gaps in the alignment have to be
+modelled \textit{de-novo}, meaning from scratch. This can be done by a
+knowledge-based search for suitable fragments in the PDB or by true
+energy-based \textit{de-novo} modelling. When the backbone is generated,
+the side chains are modelled, usually by searching rotamer libraries for
+energetically favoured residue conformations. Finally, the model is
+energetically optimized in an iterative procedure. Force fields are
+applied to correct the backbone and side chain conformations
+{[}{[}\protect\hyperlink{ref-Gu2009}{9}{]}\}. By now, many automated
+homology modelling servers are well-established (Modeller
+{[}\textbf{???}\}, 3D-Jigsaw
+{[}{[}\protect\hyperlink{ref-Bates2001}{10}{]}\}, SwissModel
+{[}{[}\protect\hyperlink{ref-Arnold2006}{11}{]}\}) which allow more or
+less manual intervention in the modelling process.
+
+Homology modeling is by far the most successful approach to structure
+prediction. It is applied in the case where homologous proteins with
+solved structures are available and can be identified via sequence
+alignments. The underlying assumption for this strategy relates to the
+fact that structure is more conserved than sequence. That is, if we find
+a related protein that shows sufficient similarity on the sequence
+level, we can safely infer that both proteins share a similar structure.
+Several automated homology modelling servers are well-established ,
+e.g.~Modeller \citep{Eswar2007}, 3D-Jigsaw \citep{Bates2001} or
+SwissModel \citep{Arnold2006}.
+
+The limits of homology modeling lie in the identification of suitable
+templates. As can be seen in \autoref{fig:pfam}, most protein families
+have no known structure that can be used for homology modeling. In these
+cases, other techniques, like fold recognition or ab initio predictions
+might succeed.
+
+Fold Recognition describes the inverse folding problem
+\citep{Bowie1993}: instead of finding the compatible structure for a
+given sequence, one tries to find sequences that fit onto a given
+structure. Whether the query sequence fits a structure from the database
+is not determined by sequence similarities but rather energetic or
+environment specific measures. Thus, fold recognition methods are able
+to recognize structural similarity even in the absence of sequence
+similarity. The rationale basis for this strategy is the assumption that
+the fold space is limited. It has been found that seemingly unrelated
+proteins often adopt similar folds. This might be due to divergent
+evolution (proteins are related, but homology cannot be detected at the
+corresponding sequence level) or convergent evolution (functional
+requirements lead to similar folds for unrelated proteins)
+\citep{Gu2009}. Early approaches include profile based methods. Here,
+the structural information of the protein is encoded into profiles,
+which subsequently are aligned to the sequences
+\citep{Bowie1991,Fischer1996,Ouzounis1993}. Advanced techniques are
+known as ``threading'' techniques, describing the process of threading a
+sequence through a structure and determining the optimal fit via energy
+functions. \citep{Jones1992,Jones1998,Lemer1995}
+
+Use a homologue protein structure as template. Only possible if a
+homologue protein structure can be detected (usually via sequence
+profile searches).
+
+Threading techniques try to identify structural elements that fit to the
+sequence.
+
+\subsection{Template-free structure
+prediction}\label{template-free-structure-prediction}
+
+Ab initio or de-novo modeling techniques implement Anfinsen's Dogma most
+closely in mimicking the folding process based only on physico-chemical
+principles. Energy functions (physical or knowledge-based) are used to
+describe the folding landscape and are minimized to arrive at the global
+energy minimum corresponding to the native conformation. Since the
+native conformation can be found near the global energy minimum of the
+folding landscape, energy functions (physical or knowledge-based) have
+been developed to describe this landscape. With respect to the idea of a
+folding funnel, the energy function is minimized to mimic the folding
+process that automatically leads to the global minimum. Again, there
+exist numerous webservers that combine energy minimization, threading
+techniques and fragment-based approaches, e.g.~Rosetta
+\citep{Simons1999}, Tasser \citep{Zhang2004}, Touchstone II
+\citep{Zhang2003}.
+
+Drawbacks of these methods are the time requirements due to the
+computational complexity of energy functions as well as their
+inaccuracy.
+
+Minimize a physical or knowledge-based energy function for the protein.
+This has huge complexity due to large conformational space that needs to
+be sampled.
+
+\subsection{contact assisted denovo
+predictions}\label{contact-assisted-denovo-predictions}
+
+Structure Reconstruction from true contacts maps works well. Even a
+small number of contacts is sufficient to reconstruct the fold of the
+protein. Distance maps work even better.
+
+What is the optimal distance cutoff to define a contact? Duarte et al
+2010: between 8 and 12A Dyrka et al 2016 Konopka et al 2014 Sathyapriya
+et al 2009
+
+Many studies that successfuly predict structures denovo with the help of
+predicted contact.
+
+\section{Contact Prediction}\label{contact-prediction}
+
+\subsection{Correlated mutations}\label{correlated-mutations}
+
+contact prediction methods aim to identify correlated mutations from an
+alignment of homologue protein sequences. main assumption is that two
+interacting amino acid residues are coevolving: mutation of one of the
+two residues can be compensated by mutation of the other residue
+
+\subsection{Benchamrking methods}\label{benchamrking-methods}
+
+\begin{itemize}
+\item
+  threshold for defining a contact: usually distance between \(C_\beta\)
+  atoms (\(C_\alpha\) for Glycin) \textless{} 8 angstrom.
+\item
+  PPV: TP/(FP+TP) fraction of correct predictions among all predictions
+\end{itemize}
+
+\subsection{Pitfalls}\label{pitfalls}
+
+Coevolution of residues can be mediated by molecules (e.g zinc ions) and
+will not always imply spatial proximity in structure. Transitivity can
+lead to correlation signals. Phylogenetic bias can also lead to
+correlations. Sampling bias needs to be taken into account.
+
+\section{State of the Art CP}\label{state-of-the-art-cp}
+
+\subsection{Local methods}\label{local-methods}
+
+MI and correlation measures suffer from transitivity of correlations
+
+\subsection{Direct coupling analysis}\label{direct-coupling-analysis}
+
+Can disentangle direct and indirect correlations.
+
+Infer parameters of a maximum entropy model, more specifically a Potts
+model (statistical physics) aka markov random fiels (computer science).
+Likelihood function is convex, but Maximum Likelihood inference of model
+is infeasible: Likelihood function needs to be reevaluated at each
+iteration during optimization but partition function term sums over
+20\^{}L sequences.
+
+Many approximations: - mean field (Marks), Psicov - pseudo-likelihood -
+belief-propagation (accurate but slow)
+
+\subsection{Computing contact map from coupling
+matrix}\label{computing-contact-map-from-coupling-matrix}
+
+\begin{itemize}
+\tightlist
+\item
+  direct information
+\item
+  frobenius norm
+\end{itemize}
+
+average product correction (also for MI)
+
+(benchmark plot for localmethods + ccmpred)
+
+\subsection{Meta-predictors}\label{meta-predictors}
+
+\begin{itemize}
+\tightlist
+\item
+  combining different approaches
+\item
+  jones et al: overlap between methods but also many unique predictions
+\item
+  machine learning methods incorporate sequence-derived features:
+\item
+  secondary structure predictions
+\item
+  solvent accessibilty
+\item
+  contact potentials
+\item
+  msa properties
+\item
+  pssms
+\item
+  physico-chemcial properties of amino acids
+\end{itemize}
+
+However, Meta-predictors will improve if basic methods improve.
+Ultra-deep learning paper identifies coevolution features as crucial
+feature.
+
+\chapter{Methods}\label{methods}
+
+all you need to know
+
+\section{Dataset}\label{dataset}
+
+\appendix
+
+
+\chapter{Abbreviations}\label{abbreviations}
+
+\begin{acronym}
+    \acro{IDP}{intrinsically disordered proteins}
+    \acro{APC}{Average Product Correction}
+    \acro{CASP}{Critical Assessment of protein Structure Prediction}
+    \acro{DCA}{Direct Coupling Analysis}
+    \acro{DI}{Direct Information}
+    \acro{EM}{electron microscopy}
+    \acro{PDB}{protein data bank}
+\end{acronym}
+
+\backmatter
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\chapter*{References}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\hypertarget{refs}{}
+\hypertarget{ref-Anfinsen1973}{}
+1. Anfinsen, C.B. (1973). Principles that Govern the Folding of Protein
+Chains. Science (80-. ). \emph{181}, 223--230. Available at:
+\url{http://www.sciencemag.org/content/181/4096/223}.
+
+\hypertarget{ref-Wright1999}{}
+2. Wright, P.E., and Dyson, H. (1999). Intrinsically unstructured
+proteins: re-assessing the protein structure-function paradigm. J. Mol.
+Biol. \emph{293}, 321--331. Available at:
+\href{http://www.ncbi.nlm.nih.gov/pubmed/10550212\%20http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108}{http://www.ncbi.nlm.nih.gov/pubmed/10550212 http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108}.
+
+\hypertarget{ref-Samish2015}{}
+3. Samish, I., Bourne, P.E., and Najmanovich, R.J. (2015). Achievements
+and challenges in structural bioinformatics and computational
+biophysics. Bioinformatics \emph{31}, 146--150. Available at:
+\href{https://oup.silverchair-cdn.com/oup/backfile/Content\%7B/_\%7Dpublic/Journal/bioinformatics/31/1/10.1093\%7B/_\%7Dbioinformatics\%7B/_\%7Dbtu769/2/btu769.pdf?Expires=1500051331\%7B/\&\%7DSignature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b\%7B~\%7D5ZU\%7B~\%7D\%7B~\%7DD6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-}{https://oup.silverchair-cdn.com/oup/backfile/Content\{\textbackslash{}\_\}public/Journal/bioinformatics/31/1/10.1093\{\textbackslash{}\_\}bioinformatics\{\textbackslash{}\_\}btu769/2/btu769.pdf?Expires=1500051331\{\textbackslash{}\&\}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b\{\textasciitilde{}\}5ZU\{\textasciitilde{}\}\{\textasciitilde{}\}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-}.
+
+\hypertarget{ref-Dorn2014}{}
+4. Dorn, M., Silva, M.B. e, Buriol, L.S., and Lamb, L.C. (2014).
+Three-dimensional protein structure prediction: Methods and
+computational strategies. Comput. Biol. Chem. \emph{53}, 251--276.
+Available at:
+\url{http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248}.
+
+\hypertarget{ref-Egelman2016}{}
+5. Egelman, E.H. (2016). The Current Revolution in Cryo-EM. Biophysj
+\emph{110}, 1008--1012. Available at:
+\url{http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf}.
+
+\hypertarget{ref-Levinthal1969}{}
+6. Levinthal, C. (1969). How to Fold Graciously. 22--24. Available at:
+\url{http://www.citeulike.org/user/FBerkemeier/article/380320}.
+
+\hypertarget{ref-Sander1991}{}
+7. Sander, C., and Schneider, R. (1991). Database of homology-derived
+protein structures and the structural meaning of sequence alignment.
+Proteins \emph{9}, 56--68. Available at:
+\url{http://www.ncbi.nlm.nih.gov/pubmed/2017436}.
+
+\hypertarget{ref-Rost1999}{}
+8. Rost, B. (1999). Twilight zone of protein sequence alignments.
+Protein Eng. Des. Sel. \emph{12}, 85--94. Available at:
+\url{http://peds.oxfordjournals.org/content/12/2/85.full}.
+
+\hypertarget{ref-Gu2009}{}
+9. Gu, J., and Bourne, P.E. (2009). Structural Bioinformatics
+(Wiley-Blackwell) Available at:
+\url{http://www.amazon.com/Structural-Bioinformatics-Jenny-Gu/dp/0470181052}.
+
+\hypertarget{ref-Bates2001}{}
+10. Bates, P.A., Kelley, L.A., MacCallum, R.M., and Sternberg, M.J.
+(2001). Enhancement of protein modeling by human intervention in
+applying the automatic programs 3D-JIGSAW and 3D-PSSM. Proteins
+\emph{Suppl 5}, 39--46. Available at:
+\url{http://www.ncbi.nlm.nih.gov/pubmed/11835480}.
+
+\hypertarget{ref-Arnold2006}{}
+11. Arnold, K., Bordoli, L., Kopp, J., and Schwede, T. (2006). The
+SWISS-MODEL workspace: a web-based environment for protein structure
+homology modelling. Bioinformatics \emph{22}, 195--201. Available at:
+\url{http://bioinformatics.oxfordjournals.org/content/22/2/195.short}.
+
+
+\end{document}

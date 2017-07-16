@@ -1,6 +1,6 @@
 #!/bin/sh
 
-bash _deploy.sh
+bash _build.sh
  
 #commit and push to github
 git add --all *

@@ -1,3 +1,31 @@
+---
+title: "PhD thesis: residue-residue contact prediction"
+author: "Susann Vorberg"
+date: "`r Sys.Date()`"
+institute: LMU
+description: "This is my PhD thesis on residue-residue contact prediction."
+github-repo: "susannvorberg/phd_thesis"
+bibliography: [~/Documents/work_docs/bibtex_files/structure_prediction.bib]
+link-citations: true
+csl: csl/cell-numeric.csl
+---
+
+# Summary {-}
+Awesome contact prediction project abstract
+ 
+# Acknowledgements {-}
+
+I thank the world.
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+
+
+
+\mainmatter \setcounter{page}{1}
+
+<!--chapter:end:index.md-->
+
 # Introduction
 
 In his Nobel Prize speech in 1973 [@Anfinsen1973] Anfinsen postulated one of the basic principles in molecular biology, which is known as *Anfinsen's dogma*: a protein's native structure is uniquely determined by its amino acid sequence. 
@@ -157,4 +185,47 @@ average product correction (also for MI)
 
 However, Meta-predictors will improve if basic methods improve. Ultra-deep learning paper identifies coevolution features as crucial feature. 
 
+
+
+<!--chapter:end:03-intro.md-->
+
+# Methods
+
+all you need to know
+
+## Dataset
+
+
+
+<!--chapter:end:04-methods.md-->
+
+# (APPENDIX) Appendix {-} 
+
+# Abbreviations
+
+\begin{acronym}
+    \acro{IDP}{intrinsically disordered proteins}
+    \acro{APC}{Average Product Correction}
+    \acro{CASP}{Critical Assessment of protein Structure Prediction}
+    \acro{DCA}{Direct Coupling Analysis}
+    \acro{DI}{Direct Information}
+    \acro{EM}{electron microscopy}
+    \acro{PDB}{protein data bank}
+\end{acronym}
+
+<!--chapter:end:07-appendix.md-->
+
+
+\backmatter
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+#References {-}
+
+
+<!--chapter:end:06-references.md-->
 

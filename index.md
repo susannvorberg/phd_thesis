@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 institute: LMU
 description: "This is my PhD thesis on residue-residue contact prediction."
 github-repo: "susannvorberg/phd_thesis"
-bibliography: [bib/structure_prediction.bib]
+bibliography: [~/Documents/work_docs/bibtex_files/structure_prediction.bib]
 link-citations: true
 csl: csl/cell-numeric.csl
 ---
