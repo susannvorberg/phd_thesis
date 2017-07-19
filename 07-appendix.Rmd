@@ -3,8 +3,6 @@
 # Abbreviations {#abbrev}
 
 
-**IDP** intrinsically disordered proteins
-
 **APC** Avarage Product Correction
 
 **CASP** Critical Assessment of protein Structure Prediction
@@ -15,7 +13,13 @@
 
 **EM** electron microscopy
 
+**IDP** intrinsically disordered proteins
+
+**MRF** Markov-Random Field
+
 **PDB** protein data bank
+
+
 
 
 

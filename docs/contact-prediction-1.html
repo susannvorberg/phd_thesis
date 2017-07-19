@@ -25,15 +25,15 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-11">
+<meta name="date" content="2017-07-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="appendix-a.html">
-
+<link rel="prev" href="dataset.html">
+<link rel="next" href="abbrev.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -71,7 +71,7 @@
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.1</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template based methods</a></li>
+<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template-based methods</a></li>
 <li class="chapter" data-level="1.1.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.1.2</b> Template-free structure prediction</a></li>
 <li class="chapter" data-level="1.1.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.1.3</b> contact assisted denovo predictions</a></li>
 </ul></li>
@@ -89,11 +89,17 @@
 </ul></li>
 <li class="chapter" data-level="2" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2</b> Methods</a><ul>
 <li class="chapter" data-level="2.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>2.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html"><i class="fa fa-check"></i><b>2.2</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#sequence-reweighting"><i class="fa fa-check"></i><b>2.2.1</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudo-counts"><i class="fa fa-check"></i><b>2.2.2</b> Pseudo-Counts</a></li>
+<li class="chapter" data-level="2.2.3" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudolikelihood"><i class="fa fa-check"></i><b>2.2.3</b> Pseudolikelihood</a></li>
+<li class="chapter" data-level="2.2.4" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#full-likelihood"><i class="fa fa-check"></i><b>2.2.4</b> Full-likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="appendix-a.html"><a href="appendix-a.html"><i class="fa fa-check"></i><b>A</b> Appendix A</a></li>
-<li class="chapter" data-level="B" data-path="appendix-b.html"><a href="appendix-b.html"><i class="fa fa-check"></i><b>B</b> Appendix B</a></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -114,14 +120,43 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="appendix-b" class="section level1">
-<h1><span class="header-section-number">B</span> Appendix B</h1>
-<p>dfghdfgh</p>
-
-<div id="refs" class="references">
-<div>
-<p>Anfinsen, C. B. 1973. “Principles that Govern the Folding of Protein Chains.” <em>Science (80-. ).</em> 181 (4096): 223–30. doi:<a href="https://doi.org/10.1126/science.181.4096.223">10.1126/science.181.4096.223</a>.</p>
+<div id="contact-prediction-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> Contact Prediction</h2>
+<p>Dr Stefan Seemayer wrote a new implementation of the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">21</a>]</span> in Python. His code forms the basis of all extensions that have been developed in this thesis.</p>
+<div id="sequence-reweighting" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Sequence Reweighting</h3>
+<p>Every sequence <span class="math inline">\(x_n\)</span> of length <span class="math inline">\(L\)</span> in an alignment with <span class="math inline">\(N\)</span> sequences has an associated weight <span class="math inline">\(w_n\)</span>:</p>
+<span class="math display" id="eq:seqweight">\[\begin{equation} 
+  w_n = \frac{1}{\sum_{m=1}^N I \left( ID(x_n, x_m) \geq 0.8 \right)} \\
+  ID(x_n, x_m)=\frac{1}{L} \sum_{i=1}^L I(x_n^i = x_m^i)
+  \tag{2.1}
+\end{equation}\]</span>
+<p>The number of effective sequences <strong>Neff</strong> of an alignment is then computed as:</p>
+<span class="math display" id="eq:neff">\[\begin{equation} 
+  \text{Neff} = \sum_{n=1}^N w_n
+  \tag{2.2}
+\end{equation}\]</span>
 </div>
+<div id="pseudo-counts" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Pseudo-Counts</h3>
+</div>
+<div id="pseudolikelihood" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Pseudolikelihood</h3>
+</div>
+<div id="full-likelihood" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Full-likelihood</h3>
+<p>Dr Stefan Seemayer provided a Python implementation of CCMpred that was extended to optimize the full-likelihood of the <a href="abbrev.html#abbrev">MRF</a>.</p>
+
+</div>
+</div>
+</div>
+
+
+<!--  -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Seemayer2014">
+<p>21. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -148,8 +183,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="appendix-a.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="abbrev.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -178,7 +213,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/06-references.md",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-methods.Rmd",
 "text": "Edit"
 },
 "download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
