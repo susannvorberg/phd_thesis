@@ -1,0 +1,39 @@
+# Methods
+
+all you need to know
+
+## Dataset
+
+A protein dataset has been constructed from the CATH (v4.1) [@Sillitoe2015] database for classification of protein domains.
+All CATH domains from classes 1(mainly $\alpha$), 2(mainly $\beta$), 3($\alpha+\beta$) have been selected and filtered for internal redundancy at the sequence level using the `pdbfilter` script from the HH-suite[@Remmert2012] with an E-value cutoff=0.1. 
+The dataset has been split into ten subsets aiming at the best possible balance between CATH classes 1,2,3 in the subsets. 
+All domains from a given CATH topology (=fold) go into the same subsets, so that any two subsets are non-redundant at the fold level. 
+Some overrepresented folds (e.g. Rossman Fold) have been subsampled to ensure that every subset contains at max 30% domains of the same fold. 
+In total there are 6741 domains in the dataset.
+
+
+Multiple sequence alignments were built from the CATH domain sequences ([COMBS](http://www.cathdb.info/version/current/domain/3cdjA03/sequence)) using HHblits [@Remmert2012] with parameters to maximize the detection of homologous sequences:
+
+`hhblits -maxfilt 100000 -realign_max 100000 -B 100000 -Z 100000 -n 5 -e 0.1 -all`
+`hhfilter -id 90 -neff 15 -qsc -30` 
+
+The COMBS sequences are derived from the SEQRES records of the PDB file sometimes contain extra residues that are not resolved in the structure. 
+Therefore, residues in PDB files have been renumbered to match the COMBS sequences. The process of renumbering residues in PDB files yielded ambigious solutions for 293 proteins, that were removed from the dataset. 
+Another filtering step was applied to remove 80 proteins that do not hold the following properties:
+
+*  more than 10 sequences in the multiple sequence alignment ($N>10$)
+*  protein length between 30 and 600 residues ($30 \leq L \leq 600$)
+*  less than 80% gaps in the multiple sequence alignment (percent gaps < 0.8)
+*  at least one residue-pair in contact at $C_\beta < 8Å$ and minimum sequence separation of 6 positions (#contact>0)
+
+The final dataset is comprised of **6368** proteins with almost evenly distributed CATH classes over the ten subsets  (Figure \@ref(fig:dataset-cath-topologies)).
+
+
+```{r dataset-cath-topologies, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Distribution of CATH topologies in the ten datasets.'}
+knitr::include_url("img/cath_topologies_stacked_absolute.html")
+```
+
+
+
+
+
