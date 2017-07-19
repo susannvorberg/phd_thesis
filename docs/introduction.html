@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-16">
+<meta name="date" content="2017-07-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -92,6 +92,7 @@
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="abbreviations.html"><a href="abbreviations.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -118,9 +119,16 @@
 <p>In his Nobel Prize speech in 1973 <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span> Anfinsen postulated one of the basic principles in molecular biology, which is known as <em>Anfinsen’s dogma</em>: a protein’s native structure is uniquely determined by its amino acid sequence. With certain exceptions (e.g. <span class="math inline">\(\ac{IDP}\)</span> <span class="citation">[<a href="#ref-Wright1999">2</a>]</span>), this dogma has proven to hold true for the majority of proteins.</p>
 <p>Ever since, it is regarded as the biggest challenge in structural bioinformatics <span class="citation">[<a href="#ref-Samish2015">3</a>]</span>, to realiably predict a protein’s structure given only its amino acid sequence. <em>De-novo</em> protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein’s energy landscape. However, these methods are limited by the complexity of the conformational space and the accuracy of the energy potentials. Considering a protein with 150 amino acids, that has approximately 450 degrees of freedom, Regarding the rotational and translational degrees of freedom of the protein chain, the complexity scales with XXX <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>.</p>
 <p>Far more successfull are methods that make use of existing structural information. Since protein structure is conserved stronger than sequence <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>, the structure of a homologue protein can be used as template to model the target protein. These template-based methods are crucially dependent on sensitive sequence search tools that are able to detect even distantly related proteins. Modern tools, like HHblits<span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>, are able to identify remote homologs sharing as little as 10% sequence identity <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>. Of course, the availability of a structural templates poses the main limitation for this methodology.</p>
-<p>Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive <span class="citation">[<a href="#ref-Dorn2014">4</a>]</span>. The <span class="math inline">\(\ac{PDB}\)</span><span class="citation">[<span class="citeproc-not-found" data-reference-id="Berman2000"><strong>???</strong></span>]</span> is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins.</p>
-<p>The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the <span class="math inline">\(\ac{PDB}\)</span>. About 9% of protein structures have been solved using <span class="math inline">\(\ac{NMR}\)</span> and less than 1% using <span class="math inline">\(\ac{EM}\)</span> (see FIG 1). All three experimental techniques have advantages and limiations with respect to certain modelling aspects. X-ray crystallography requires the protein to form crystals, which is an arduous and time consuming process. Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. <span class="math inline">\(\ac{NMR}\)</span> studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, <span class="math inline">\(\ac{NMR}\)</span> is limited to look at small proteins. Recently, <span class="math inline">\(\ac{EM}\)</span> has undergone a “resolution revolution” <span class="citation">[<a href="#ref-Egelman2016">5</a>]</span> and macromolecular structures have been solved with resolutions up to 2A[citation]. The limit of <span class="math inline">\(\ac{cryo-EM}\)</span> lies in the size of proteins.</p>
-<p>Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously. The UniProtKB <span class="citation">[<span class="citeproc-not-found" data-reference-id="TheUniProtConsortium2013"><strong>???</strong></span>]</span>, the leading resource for protein sequence information, contains more than 80 million sequence entries (24 July 2017).</p>
+<div class="figure"><span id="fig:seq-str-gap"></span>
+<iframe src="img/pdb_growth.html" width="100%" height="400px">
+</iframe>
+<p class="caption">
+Figure 1.1: Yearly growth of number of solved structures in the PDB<span class="citation">[<a href="#ref-Berman2000">4</a>]</span> and protein sequences in the Uniprot<span class="citation">[<a href="#ref-TheUniProtConsortium2013">5</a>]</span>.
+</p>
+</div>
+<p>Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive <span class="citation">[<a href="#ref-Dorn2014">6</a>]</span>. The <span class="math inline">\(\ac{PDB}\)</span><span class="citation">[<a href="#ref-Berman2000">4</a>]</span> is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins.</p>
+<p>The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the <span class="math inline">\(\ac{PDB}\)</span>. About 9% of protein structures have been solved using <span class="math inline">\(\ac{NMR}\)</span> and less than 1% using <span class="math inline">\(\ac{EM}\)</span> (see Figure <a href="introduction.html#fig:seq-str-gap">1.1</a>). All three experimental techniques have advantages and limiations with respect to certain modelling aspects. X-ray crystallography requires the protein to form crystals, which is an arduous and time consuming process. Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. <span class="math inline">\(\ac{NMR}\)</span> studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, <span class="math inline">\(\ac{NMR}\)</span> is limited to look at small proteins. Recently, <span class="math inline">\(\ac{EM}\)</span> has undergone a “resolution revolution” <span class="citation">[<a href="#ref-Egelman2016">7</a>]</span> and macromolecular structures have been solved with resolutions up to 2A[citation]. The limit of <span class="math inline">\(\ac{cryo-EM}\)</span> lies in the size of proteins.</p>
+<p>Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously. The UniProtKB <span class="citation">[<a href="#ref-TheUniProtConsortium2013">5</a>]</span>, the leading resource for protein sequence information, contains more than 80 million sequence entries (24 July 2017).</p>
 <p>Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span> are not expected to close this gap near in time. [Figure sequence structure gap]</p>
 <p>Protein structure determines protein function. Therefore, structural insights are of uttermost importance. They are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms. They are fundamental for the design of drugs and antibiotics. Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.</p>
 <p>The aformentioned trends illustrate the need of computational methods and motivate research to solve <em>Ansinsens Dogma</em> to reliably predict protein structures from sequence alone.</p> 
@@ -136,11 +144,17 @@
 <div id="ref-Samish2015">
 <p>3. Samish, I., Bourne, P.E., and Najmanovich, R.J. (2015). Achievements and challenges in structural bioinformatics and computational biophysics. Bioinformatics <em>31</em>, 146–150. Available at: <a href="https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-" class="uri">https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-</a>.</p>
 </div>
+<div id="ref-Berman2000">
+<p>4. Berman, H.M. (2000). The Protein Data Bank. Nucleic Acids Res. <em>28</em>, 235–242. Available at: <a href="http://nar.oxfordjournals.org/content/28/1/235.abstract" class="uri">http://nar.oxfordjournals.org/content/28/1/235.abstract</a>.</p>
+</div>
+<div id="ref-TheUniProtConsortium2013">
+<p>5. The UniProt Consortium (2013). Update on activities at the Universal Protein Resource (UniProt) in 2013. Nucleic Acids Res. <em>41</em>, D43–7. Available at: <a href="http://nar.oxfordjournals.org/content/41/D1/D43" class="uri">http://nar.oxfordjournals.org/content/41/D1/D43</a>.</p>
+</div>
 <div id="ref-Dorn2014">
-<p>4. Dorn, M., Silva, M.B. e, Buriol, L.S., and Lamb, L.C. (2014). Three-dimensional protein structure prediction: Methods and computational strategies. Comput. Biol. Chem. <em>53</em>, 251–276. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248</a>.</p>
+<p>6. Dorn, M., Silva, M.B. e, Buriol, L.S., and Lamb, L.C. (2014). Three-dimensional protein structure prediction: Methods and computational strategies. Comput. Biol. Chem. <em>53</em>, 251–276. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248</a>.</p>
 </div>
 <div id="ref-Egelman2016">
-<p>5. Egelman, E.H. (2016). The Current Revolution in Cryo-EM. Biophysj <em>110</em>, 1008–1012. Available at: <a href="http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf" class="uri">http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf</a>.</p>
+<p>7. Egelman, E.H. (2016). The Current Revolution in Cryo-EM. Biophysj <em>110</em>, 1008–1012. Available at: <a href="http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf" class="uri">http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -197,7 +211,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.md",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
 "text": "Edit"
 },
 "download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
