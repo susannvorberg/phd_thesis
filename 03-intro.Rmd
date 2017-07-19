@@ -15,11 +15,15 @@ These template-based methods are crucially dependent on sensitive sequence searc
 Modern tools, like HHblits[@Anfinsen1973], are able to identify remote homologs sharing as little as 10% sequence identity [@Anfinsen1973]. 
 Of course, the availability of a structural templates poses the main limitation for this methodology. 
 
+```{r seq-str-gap, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
+knitr::include_url("img/pdb_growth.html")
+```
+
 Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive [@Dorn2014].
 The $\ac{PDB}$[@Berman2000] is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins. 
 
 The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the $\ac{PDB}$. 
-About 9% of protein structures have been solved using $\ac{NMR}$ and less than 1% using $\ac{EM}$ (see FIG 1).
+About 9% of protein structures have been solved using $\ac{NMR}$ and less than 1% using $\ac{EM}$ (see Figure \@ref(fig:seq-str-gap)).
 All three experimental techniques have advantages and limiations with respect to certain modelling aspects.
 X-ray crystallography requires the protein to form crystals, which is an arduous and time consuming process. 
 Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. 

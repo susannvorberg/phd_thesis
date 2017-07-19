@@ -1,0 +1,31 @@
+# (APPENDIX) Appendix {-} 
+
+# Abbreviations
+
+\begin{acronym}
+    \acro{IDP}{intrinsically disordered proteins}
+    \acro{APC}{Average Product Correction}
+    \acro{CASP}{Critical Assessment of protein Structure Prediction}
+    \acro{DCA}{Direct Coupling Analysis}
+    \acro{DI}{Direct Information}
+    \acro{EM}{electron microscopy}
+    \acro{PDB}{protein data bank}
+\end{acronym}
+
+# Dataset Properties
+
+```{r dataset-diversity, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Diversity of alignments in the ten datasets.'}
+knitr::include_url("img/diversity_dataset_boxplot.html")
+```
+
+```{r dataset-gaps, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Percentage of gaps in alignments in the ten datasets.'}
+knitr::include_url("img/gap_percentage_boxplot.html")
+```
+
+```{r dataset-alignment-size, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Distribution of alignment size in the ten datasets.'}
+knitr::include_url("img/msa_size_dataset_boxplot.html")
+```
+
+```{r dataset-protein-length, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Distribution of protein length in the ten datasets.'}
+knitr::include_url("img/protein_length_dataset_boxplot.html")
+```
