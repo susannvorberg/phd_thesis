@@ -24,7 +24,6 @@ The [PDB](#abbrev)[@Berman2000] is the main repository for marcomolecular struct
 The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the [PDB](#abbrev). 
 About 9% of protein structures have been solved using [NMR](#abbrev) and less than 1% using [EM](#abbrev) (see FIG 1).
 
-<<<<<<< HEAD:03-intro.md
 All three experimental techniques have advantages and limitations with respect to certain modelling aspects.
 X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. 
 Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. 
@@ -34,7 +33,7 @@ The limit of $\ac{cryo-EM}$ lies in the size of proteins.
 
 Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. 
 With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously.
-The UniProtKB [@TheUniProtConsortium2013], the leading resource for protein sequence information, contains more than 80 million sequence entries (24 July 2017). 
+The UniProtKB [@TheUniProtConsortium2013], the leading resource for protein sequences, contains more than 80 million sequence entries (24 July 2017). 
  
 Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination [@CITE] are not expected to close this gap near in time.
 [Figure sequence structure gap]
@@ -109,7 +108,7 @@ Many studies that successfuly predict structures denovo with the help of predict
 contact prediction methods aim to identify correlated mutations from an  alignment of homologue protein sequences. 
 main assumption is that two interacting amino acid residues are coevolving: mutation of one of the two residues can be compensated by mutation of the other residue
 
-### Benchamrking methods
+### Benchmarking methods
 
 - threshold for defining a contact: 
 usually distance between $C_\beta$ atoms ($C_\alpha$ for Glycin) < 8 angstrom. 
@@ -127,10 +126,14 @@ Coevolution of residues can be mediated by molecules (e.g zinc ions) and will no
 
 ## State of the Art CP
 
+###Correlation vs Causation
+
+A recurring difficulty when dealing with interacting systems is distinguishing the direct interactions, resulting from adjacent interplay between two units, from interactions mediated via multi-step paths across other elements [Ekeberg master thesis]
+
 ### Local methods
 MI and correlation measures suffer from transitivity of correlations
 
-### Direct coupling analysis
+### Direct coupling analysis {#dca}
 Can disentangle direct and indirect correlations.
 
 Infer parameters of a maximum entropy model, more specifically a Potts model (statistical physics) aka markov random fiels (computer science).
@@ -142,6 +145,22 @@ Many approximations:
 - mean field (Marks), Psicov
 - pseudo-likelihood 
 - belief-propagation (accurate but slow)
+
+#### Pseudo-Likelihood
+
+the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities[@Stein2015a]
+
+Recall from above that our pseudo-likelihood uses the full representation and fixes the gauge by the regularization terms Rl2. Our procedure is therefore first to infer the
+interaction parameters using using the pseudo-likelihood and the regularization, and then change to the zero-sum gauge [@Ekeberg2013]
+
+
+On one hand, this improvement might not be surpris-ing: it is known that, for very large data sets, pseudo- likelihood maximization becomes asymptotically equiva- lent to full maximum-likelihood inference, whereas mean- field inference remains intrinsically approximate, and this may result in an improved PLM performance. On the other hand, the above advantage holds if and only if the following two conditions are fulfilled: data a drawn independently from a probability distribution, and this probability distribution is the the Boltzmann distribution of a Potts model. None of these two con- ditions actually hold for real protein sequences [@Ekeberg2013]
+
+
+Disregarding the improvements, we find that overall
+the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation[@Ekeberg2013]
+
+The pseudo-likelihood inherits the concavity[@Stein2015a]
 
 ### Computing contact map from coupling matrix
 

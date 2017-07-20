@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="acknowledgements.html">
-<link rel="next" href="structure-prediction.html">
+<link rel="prev" href="results.html">
+<link rel="next" href="methods.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -155,61 +155,18 @@ MathJax.Hub.Config({
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
-<p>In his Nobel Prize speech in 1973 <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span> Anfinsen postulated one of the basic principles in molecular biology, which is known as <em>Anfinsen’s dogma</em>: a protein’s native structure is uniquely determined by its amino acid sequence. With certain exceptions (e.g. <a href="abbrev.html#abbrev">IDP</a> <span class="citation">[<a href="#ref-Wright1999">2</a>]</span>), this dogma has proven to hold true for the majority of proteins.</p>
-<p>Ever since, it is regarded as the biggest challenge in structural bioinformatics <span class="citation">[<a href="#ref-Samish2015">3</a>]</span>, to realiably predict a protein’s structure given only its amino acid sequence. <em>De-novo</em> protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein’s energy landscape. However, these methods are limited by the complexity of the conformational space and the accuracy of the energy potentials. Considering a protein with 150 amino acids, that has approximately 450 degrees of freedom, Regarding the rotational and translational degrees of freedom of the protein chain, the complexity scales with XXX <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>.</p>
-<p>Far more successfull are template-based modelling approaches. Given the observation that structure is more conserved than sequence in a protein family <span class="citation">[<a href="#ref-Lesk1980">4</a>]</span>, the structure of a target protein can be inferred from a homologue protein <span class="citation">[<a href="#ref-Sander1991">5</a>]</span>. The degree of structural conservation is linked to the level of pairwise sequence identity <span class="citation">[<a href="#ref-Chothia1986">6</a>]</span>. Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model <span class="citation">[<a href="#ref-Marti-Renom2000">7</a>]</span>. By definition, homology derived models are unable to capture new folds <span class="citation">[<a href="#ref-Dorn2014">8</a>]</span> and their main limitation lies in the availability of suitable templates.</p>
-<div class="figure"><span id="fig:seq-str-gap"></span>
-<iframe src="img/pdb_growth.html" width="100%" height="400px">
-</iframe>
-<p class="caption">
-Figure 1.1: Yearly growth of number of solved structures in the PDB<span class="citation">[<a href="#ref-Berman2000">9</a>]</span> and protein sequences in the Uniprot<span class="citation">[<a href="#ref-TheUniProtConsortium2013">10</a>]</span>.
-</p>
+<div id="optimizing-full-likelihood" class="section level2">
+<h2><span class="header-section-number">2.1</span> Optimizing Full-Likelihood</h2>
+<p>The full likelihood of the maximum entropy model cannot be optimized with <a href="abbrev.html#abbrev">ML</a> methods due to the exponential complexity of the partition function (see section <a href="state-of-the-art-cp.html#dca">1.3.3</a>). As elaborated in the introduction, many approximations have been developed to optimize the likelihood function. Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or sparse inverse covariance. Even though pseudo-likelihood estimates have been shown to be consistent with full-likelihood methods in the limit of large datasets, it is not clear how well pseudo-likelihood approximation is for small data <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span>.</p>
+<div id="likelihood-gradient" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Likelihood Gradient</h3>
 </div>
-<p>Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive <span class="citation">[<a href="#ref-Dorn2014">8</a>]</span>. The <a href="abbrev.html#abbrev">PDB</a><span class="citation">[<a href="#ref-Berman2000">9</a>]</span> is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins. The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the <a href="abbrev.html#abbrev">PDB</a>. About 9% of protein structures have been solved using <a href="abbrev.html#abbrev">NMR</a> and less than 1% using <a href="abbrev.html#abbrev">EM</a> (see FIG 1).</p>
-<p>All three experimental techniques have advantages and limitations with respect to certain modelling aspects. X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. <span class="math inline">\(\ac{NMR}\)</span> studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, <span class="math inline">\(\ac{NMR}\)</span> is limited to look at small proteins. Recently, <span class="math inline">\(\ac{EM}\)</span> has undergone a “resolution revolution” <span class="citation">[<a href="#ref-Egelman2016">11</a>]</span> and macromolecular structures have been solved with resolutions up to 2A[citation]. The limit of <span class="math inline">\(\ac{cryo-EM}\)</span> lies in the size of proteins.</p>
-<p>Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously. The UniProtKB <span class="citation">[<a href="#ref-TheUniProtConsortium2013">10</a>]</span>, the leading resource for protein sequences, contains more than 80 million sequence entries (24 July 2017).</p>
-<p>Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span> are not expected to close this gap near in time. [Figure sequence structure gap]</p>
-<p>Protein structure determines protein function. Therefore, structural insights are of uttermost importance. They are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms. They are fundamental for the design of drugs and antibiotics. Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.</p>
-<p>The aformentioned trends illustrate the need of computational methods and motivate research to solve <em>Ansinsens Dogma</em> to reliably predict protein structures from sequence alone.</p> 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Anfinsen1973">
-<p>1. Anfinsen, C.B. (1973). Principles that Govern the Folding of Protein Chains. Science (80-. ). <em>181</em>, 223–230. Available at: <a href="http://www.sciencemag.org/content/181/4096/223" class="uri">http://www.sciencemag.org/content/181/4096/223</a>.</p>
-</div>
-<div id="ref-Wright1999">
-<p>2. Wright, P.E., and Dyson, H. (1999). Intrinsically unstructured proteins: re-assessing the protein structure-function paradigm. J. Mol. Biol. <em>293</em>, 321–331. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10550212 http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10550212 http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108</a>.</p>
-</div>
-<div id="ref-Samish2015">
-<p>3. Samish, I., Bourne, P.E., and Najmanovich, R.J. (2015). Achievements and challenges in structural bioinformatics and computational biophysics. Bioinformatics <em>31</em>, 146–150. Available at: <a href="https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-" class="uri">https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-</a>.</p>
-</div>
-<div id="ref-Lesk1980">
-<p>4. Lesk, A.M., and Chothia, C. (1980). How different amino acid sequences determine similar protein structures: The structure and evolutionary dynamics of the globins. J. Mol. Biol. <em>136</em>, 225–270. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283680903733" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283680903733</a>.</p>
-</div>
-<div id="ref-Sander1991">
-<p>5. Sander, C., and Schneider, R. (1991). Database of homology-derived protein structures and the structural meaning of sequence alignment. Proteins <em>9</em>, 56–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/2017436" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/2017436</a>.</p>
-</div>
-<div id="ref-Chothia1986">
-<p>6. Chothia, C., and Lesk, A.M. (1986). The relation between the divergence of sequence and structure in proteins. EMBO J. <em>5</em>, 823–6. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/3709526 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1166865" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/3709526 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1166865</a>.</p>
-</div>
-<div id="ref-Marti-Renom2000">
-<p>7. Martí-Renom, M.A., Stuart, A.C., Fiser, A., Sánchez, R., Melo, F., and Šali, A. (2000). Comparative Protein Structure Modeling of Genes and Genomes. Annu. Rev. Biophys. Biomol. Struct. <em>29</em>, 291–325. Available at: <a href="http://www.annualreviews.org/doi/10.1146/annurev.biophys.29.1.291" class="uri">http://www.annualreviews.org/doi/10.1146/annurev.biophys.29.1.291</a>.</p>
-</div>
-<div id="ref-Dorn2014">
-<p>8. Dorn, M., Silva, M.B. e, Buriol, L.S., and Lamb, L.C. (2014). Three-dimensional protein structure prediction: Methods and computational strategies. Comput. Biol. Chem. <em>53</em>, 251–276. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248</a>.</p>
-</div>
-<div id="ref-Berman2000">
-<p>9. Berman, H.M. (2000). The Protein Data Bank. Nucleic Acids Res. <em>28</em>, 235–242. Available at: <a href="http://nar.oxfordjournals.org/content/28/1/235.short" class="uri">http://nar.oxfordjournals.org/content/28/1/235.short</a>.</p>
-</div>
-<div id="ref-TheUniProtConsortium2013">
-<p>10. The UniProt Consortium (2013). Update on activities at the Universal Protein Resource (UniProt) in 2013. Nucleic Acids Res. <em>41</em>, D43–7. Available at: <a href="http://nar.oxfordjournals.org/content/41/D1/D43" class="uri">http://nar.oxfordjournals.org/content/41/D1/D43</a>.</p>
-</div>
-<div id="ref-Egelman2016">
-<p>11. Egelman, E.H. (2016). The Current Revolution in Cryo-EM. Biophysj <em>110</em>, 1008–1012. Available at: <a href="http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf" class="uri">http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf</a>.</p>
+<div id="contrastive-divergence" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Contrastive Divergence</h3>
+
 </div>
 </div>
+<!-- </div> -->
 <div id="disqus_thread"></div>
 <script>
 /**
@@ -234,8 +191,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="acknowledgements.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="structure-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -264,7 +221,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/05-results.Rmd",
 "text": "Edit"
 },
 "download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],

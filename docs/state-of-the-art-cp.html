@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-19">
+<meta name="date" content="2017-07-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="contact-prediction.html">
-<link rel="next" href="methods.html">
+<link rel="next" href="results.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -47,6 +47,34 @@
 
 
 
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  TeX: { 
+    extensions: ["mediawiki-texvc.js"],
+    Macros: {
+      eq: "{\\;\\!=\\!\\;}",
+      neff: "N_\\mathrm{eff}"
+    }
+  }
+});
+</script>
+
+<!--
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+   extensions: ["[siunitx]/siunitx.js"]
+ });
+ MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { TagSide: "left" }
+});
+</script>
+//-->
 
 
 
@@ -77,23 +105,30 @@
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Contact Prediction</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.2.1</b> Correlated mutations</a></li>
-<li class="chapter" data-level="1.2.2" data-path="contact-prediction.html"><a href="contact-prediction.html#benchamrking-methods"><i class="fa fa-check"></i><b>1.2.2</b> Benchamrking methods</a></li>
+<li class="chapter" data-level="1.2.2" data-path="contact-prediction.html"><a href="contact-prediction.html#benchmarking-methods"><i class="fa fa-check"></i><b>1.2.2</b> Benchmarking methods</a></li>
 <li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
-<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#direct-coupling-analysis"><i class="fa fa-check"></i><b>1.3.2</b> Direct coupling analysis</a></li>
-<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.3</b> Computing contact map from coupling matrix</a></li>
-<li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.4</b> Meta-predictors</a></li>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#correlation-vs-causation"><i class="fa fa-check"></i><b>1.3.1</b> Correlation vs Causation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#dca"><i class="fa fa-check"></i><b>1.3.3</b> Direct coupling analysis</a></li>
+<li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
+<li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2</b> Methods</a><ul>
-<li class="chapter" data-level="2.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>2.1</b> Dataset</a></li>
-<li class="chapter" data-level="2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html"><i class="fa fa-check"></i><b>2.2</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#sequence-reweighting"><i class="fa fa-check"></i><b>2.2.1</b> Sequence Reweighting</a></li>
-<li class="chapter" data-level="2.2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudo-counts"><i class="fa fa-check"></i><b>2.2.2</b> Pseudo-Counts</a></li>
-<li class="chapter" data-level="2.2.3" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudolikelihood"><i class="fa fa-check"></i><b>2.2.3</b> Pseudolikelihood</a></li>
-<li class="chapter" data-level="2.2.4" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#full-likelihood"><i class="fa fa-check"></i><b>2.2.4</b> Full-likelihood</a></li>
+<li class="chapter" data-level="2" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>2</b> Results</a><ul>
+<li class="chapter" data-level="2.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>2.1</b> Optimizing Full-Likelihood</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>2.1.1</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="2.1.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>2.1.2</b> Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
+<li class="chapter" data-level="3.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html"><i class="fa fa-check"></i><b>3.2</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#seq-reweighting"><i class="fa fa-check"></i><b>3.2.1</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="3.2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#computing-amino-acid-frequencies"><i class="fa fa-check"></i><b>3.2.2</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="3.2.3" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudolikelihood"><i class="fa fa-check"></i><b>3.2.3</b> Pseudolikelihood</a></li>
+<li class="chapter" data-level="3.2.4" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#full-likelihood"><i class="fa fa-check"></i><b>3.2.4</b> Full-likelihood</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -122,18 +157,30 @@
             <section class="normal" id="section-">
 <div id="state-of-the-art-cp" class="section level2">
 <h2><span class="header-section-number">1.3</span> State of the Art CP</h2>
+<div id="correlation-vs-causation" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Correlation vs Causation</h3>
+<p>A recurring difficulty when dealing with interacting systems is distinguishing the direct interactions, resulting from adjacent interplay between two units, from interactions mediated via multi-step paths across other elements [Ekeberg master thesis]</p>
+</div>
 <div id="local-methods" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Local methods</h3>
+<h3><span class="header-section-number">1.3.2</span> Local methods</h3>
 <p>MI and correlation measures suffer from transitivity of correlations</p>
 </div>
-<div id="direct-coupling-analysis" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Direct coupling analysis</h3>
+<div id="dca" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Direct coupling analysis</h3>
 <p>Can disentangle direct and indirect correlations.</p>
 <p>Infer parameters of a maximum entropy model, more specifically a Potts model (statistical physics) aka markov random fiels (computer science). Likelihood function is convex, but Maximum Likelihood inference of model is infeasible: Likelihood function needs to be reevaluated at each iteration during optimization but partition function term sums over 20^L sequences.</p>
 <p>Many approximations: - mean field (Marks), Psicov - pseudo-likelihood - belief-propagation (accurate but slow)</p>
+<div id="pseudo-likelihood" class="section level4">
+<h4><span class="header-section-number">1.3.3.1</span> Pseudo-Likelihood</h4>
+<p>the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities<span class="citation">[<a href="#ref-Stein2015a">20</a>]</span></p>
+<p>Recall from above that our pseudo-likelihood uses the full representation and fixes the gauge by the regularization terms Rl2. Our procedure is therefore first to infer the interaction parameters using using the pseudo-likelihood and the regularization, and then change to the zero-sum gauge <span class="citation">[<a href="#ref-Ekeberg2013">21</a>]</span></p>
+<p>On one hand, this improvement might not be surpris-ing: it is known that, for very large data sets, pseudo- likelihood maximization becomes asymptotically equiva- lent to full maximum-likelihood inference, whereas mean- field inference remains intrinsically approximate, and this may result in an improved PLM performance. On the other hand, the above advantage holds if and only if the following two conditions are fulfilled: data a drawn independently from a probability distribution, and this probability distribution is the the Boltzmann distribution of a Potts model. None of these two con- ditions actually hold for real protein sequences <span class="citation">[<a href="#ref-Ekeberg2013">21</a>]</span></p>
+<p>Disregarding the improvements, we find that overall the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation<span class="citation">[<a href="#ref-Ekeberg2013">21</a>]</span></p>
+<p>The pseudo-likelihood inherits the concavity<span class="citation">[<a href="#ref-Stein2015a">20</a>]</span></p>
+</div>
 </div>
 <div id="computing-contact-map-from-coupling-matrix" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> Computing contact map from coupling matrix</h3>
+<h3><span class="header-section-number">1.3.4</span> Computing contact map from coupling matrix</h3>
 <ul>
 <li>direct information</li>
 <li>frobenius norm</li>
@@ -142,7 +189,7 @@
 <p>(benchmark plot for localmethods + ccmpred)</p>
 </div>
 <div id="meta-predictors" class="section level3">
-<h3><span class="header-section-number">1.3.4</span> Meta-predictors</h3>
+<h3><span class="header-section-number">1.3.5</span> Meta-predictors</h3>
 <ul>
 <li>combining different approaches</li>
 <li>jones et al: overlap between methods but also many unique predictions</li>
@@ -159,6 +206,15 @@
 </div>
 </div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Stein2015a">
+<p>20. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Ekeberg2013">
+<p>21. Ekeberg, M., Lövkvist, C., Lan, Y., Weigt, M., and Aurell, E. (2013). Improved contact prediction in proteins: Using pseudolikelihoods to infer Potts models. Phys. Rev. E <em>87</em>, 012707. Available at: <a href="http://link.aps.org/doi/10.1103/PhysRevE.87.012707" class="uri">http://link.aps.org/doi/10.1103/PhysRevE.87.012707</a>.</p>
+</div>
+</div>
 <div id="disqus_thread"></div>
 <script>
 /**
@@ -184,7 +240,7 @@ s.setAttribute('data-timestamp', +new Date());
         </div>
       </div>
 <a href="contact-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -231,7 +287,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

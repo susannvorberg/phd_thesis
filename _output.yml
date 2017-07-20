@@ -6,6 +6,7 @@ bookdown::pdf_book:
 bookdown::epub_book: default
 bookdown::gitbook:
   includes:
+      in_header: latex/preamble.html
       after_body: disqus.html
   css: [css/style.css, css/toc.css]
   split_by: section

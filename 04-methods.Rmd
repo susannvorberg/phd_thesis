@@ -24,7 +24,7 @@ Another filtering step was applied to remove 80 proteins that do not hold the fo
 *  more than 10 sequences in the multiple sequence alignment ($N>10$)
 *  protein length between 30 and 600 residues ($30 \leq L \leq 600$)
 *  less than 80% gaps in the multiple sequence alignment (percent gaps < 0.8)
-*  at least one residue-pair in contact at $C_\beta < 8Å$ and minimum sequence separation of 6 positions
+*  at least one residue-pair in contact at $C_\beta < 8\AA$ and minimum sequence separation of 6 positions
 
 The final dataset is comprised of **6368** proteins with almost evenly distributed CATH classes over the ten subsets  (Figure \@ref(fig:dataset-cath-topologies)).
 
@@ -38,25 +38,54 @@ knitr::include_url("img/cath_topologies_stacked_absolute.html")
 
 Dr Stefan Seemayer wrote a new implementation of the open-source software CCMpred [@Seemayer2014] in Python. His code forms the basis of all extensions that have been developed in this thesis.
 
-### Sequence Reweighting
+### Sequence Reweighting {#seq-reweighting}
 
-Every sequence $x_n$ of length $L$ in an alignment with $N$ sequences has an associated weight $w_n$:
+Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. This uneven sampling of sequence space thus leaves certain regions unexplored whereas others are statistically overrepresented. To reduce the effects of overrepresented sequences, typically a simple weighting strategy [@Stein2015a] is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold. It has been found that reweighting improves contact prediction performance but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 [@Morcos2011]. We chose an identity threshold of 0.8.   
+
+Every sequence $x_n$ of length $L$ in an alignment with $N$ sequences has an associated weight $w_n = 1/m_n$, where $m_n$ represents the number of similar sequences:
 
 \begin{equation} 
-  w_n = \frac{1}{\sum_{m=1}^N I \left( ID(x_n, x_m) \geq 0.8 \right)} \\
+  w_n = \frac{1}{m_n}, m_n = \sum_{m=1}^N I \left( ID(x_n, x_m) \geq 0.8 \right) \\
   ID(x_n, x_m)=\frac{1}{L} \sum_{i=1}^L I(x_n^i = x_m^i)
   (\#eq:seqweight)
 \end{equation} 
 
-The number of effective sequences **Neff** of an alignment is then computed as:
+The number of effective sequences $\mathbf{\neff}$ of an alignment is then the number of sequence clusters computed as:
 
 \begin{equation} 
-  \text{Neff} = \sum_{n=1}^N w_n
+  \neff = \sum_{n=1}^N w_n
   (\#eq:neff)
 \end{equation}
 
 
-### Pseudo-Counts
+\todo{Plot Performance for Seq weighting}
+
+### Computing Amino Acid Frequencies
+
+Single and pairwise amino acid frequencies are computed from the alignment by taking into account the weights of sequences (section \@ref(seq-reweighting)) and adding pseudocounts for numerical stability. 
+
+Let $a,b \in \{1,\ldots,20\}$ be amino acids, $q(x_i=a), q(x_i=a, x_j=b)$ and $q_0(x_i=a), q_0(x_i=a,x_j=b)$ be the empirical single and pair frequencies with and without pseudocounts, respectively. 
+We define
+
+
+
+\begin{align}
+  q(x_i \eq a) :=& (1-\tau) \;  q_0(x_i \eq a) + \tau \tilde{q}(x_i\eq a) \\
+  q(x_i \eq a, x_j \eq b) :=& (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \\
+                            & q(x_i \eq a) \; q(x_j \eq b) (\#eq:pseudocounts)
+\end{align}
+
+with $\tilde{q}(x_i \eq a) := f(a)$ being background amino acid frequencies and $\tau \in [0,1]$ is a pseudocount admixture coefficient, which is a function of the diversity of the multiple sequence alignment:
+
+\begin{equation}
+  \tau = \frac{N_\mathrm{pc}}{(N_\mathrm{eff} + N_\mathrm{pc})}
+  (\#eq:tau)
+\end{equation} 
+
+where $N_{pc} > 0$.
+
+The formula for $q(x_i \eq a, x_j \eq b)$ in the second line in eq \@ref(eq:pseudocounts) was chosen such that for $\tau \eq0$ we obtain $q(x_i \eq a, x_j \eq b) = q_0(x_i \eq a, x_j  \eq b)$, and furthermore
+ $q(x_i \eq a, x_j  \eq b) = q(x_i \eq a)  q(x_j \eq b)$ exactly if $q_0(x_i \eq a, x_j  \eq b) = q_0(x_i \eq a)  q_0(x_j \eq b)$.
 
 ### Pseudolikelihood
 

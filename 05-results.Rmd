@@ -1,0 +1,15 @@
+# Results
+
+## Optimizing Full-Likelihood 
+
+The full likelihood of the maximum entropy model cannot be optimized with [ML](#abbrev) methods due to the exponential complexity of the partition function (see section \@ref(dca)).
+As elaborated in the introduction, many approximations have been developed to optimize the likelihood function. 
+Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or sparse inverse covariance. 
+Even though pseudo-likelihood estimates have been shown to be consistent with full-likelihood methods in the limit of large datasets, it is not clear how well pseudo-likelihood approximation is for small data [@CITE].
+
+
+
+### Likelihood Gradient
+
+### Contrastive Divergence
+
