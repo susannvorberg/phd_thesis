@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -71,7 +71,7 @@
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.1</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template based methods</a></li>
+<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template-based methods</a></li>
 <li class="chapter" data-level="1.1.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.1.2</b> Template-free structure prediction</a></li>
 <li class="chapter" data-level="1.1.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.1.3</b> contact assisted denovo predictions</a></li>
 </ul></li>
@@ -89,9 +89,15 @@
 </ul></li>
 <li class="chapter" data-level="2" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2</b> Methods</a><ul>
 <li class="chapter" data-level="2.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>2.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html"><i class="fa fa-check"></i><b>2.2</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#sequence-reweighting"><i class="fa fa-check"></i><b>2.2.1</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudo-counts"><i class="fa fa-check"></i><b>2.2.2</b> Pseudo-Counts</a></li>
+<li class="chapter" data-level="2.2.3" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudolikelihood"><i class="fa fa-check"></i><b>2.2.3</b> Pseudolikelihood</a></li>
+<li class="chapter" data-level="2.2.4" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#full-likelihood"><i class="fa fa-check"></i><b>2.2.4</b> Full-likelihood</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="abbreviations.html"><a href="abbreviations.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
 <li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -225,7 +231,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
