@@ -3,9 +3,9 @@
 ## Optimizing Full-Likelihood 
 
 The full likelihood of the maximum entropy model cannot be optimized with [ML](#abbrev) methods due to the exponential complexity of the partition function (see section \@ref(dca)).
-As elaborated in the introduction, many approximations have been developed to optimize the likelihood function. 
-Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or sparse inverse covariance. 
-Even though pseudo-likelihood estimates have been shown to be consistent with full-likelihood methods in the limit of large datasets, it is not clear how well pseudo-likelihood approximation is for small data [@CITE].
+As elaborated in the introduction, many approximations to maximum likelihood inference have been developed that resolve the computational intractability of the partition function. 
+Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or methods based on the Bethe-approximation or sparse inverse covariance. 
+Even though pseudo-likelihood has been shown to be a consistent estimator of the true likelihood estimates in the limit of large datasets [@Besag1975 @Aurell2012], it is not clear how well pseudo-likelihood approximation is for small data.
 
 
 
@@ -13,3 +13,7 @@ Even though pseudo-likelihood estimates have been shown to be consistent with fu
 
 ### Contrastive Divergence
 
+CD is about the difference between the original data set and a perturbed data set 
+perturbed data set : The contrasting data set needs to represent A data sample characteristic of the current PARAMETERS --> Gibbs Sampling starting from data
+Note: as contrasting dataset towards true_parameters, the elements of the gradient converge to the gradient of the max log likelihood
+– At the limit of the Markov chain, the CD converges to the actual MLE

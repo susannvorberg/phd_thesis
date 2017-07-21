@@ -121,7 +121,10 @@ fraction of correct predictions among all predictions
 <iframe src="img/pfam_pdb.html" frameborder="0" allowtransparency="true" width=100% height=600px></iframe>
 
 
-Coevolution of residues can be mediated by molecules (e.g zinc ions) and will not always imply spatial proximity in structure. Transitivity can lead to correlation signals. Phylogenetic bias can also lead to correlations. Sampling bias needs to be taken into account. 
+Coevolution of residues can be mediated by molecules (e.g zinc ions) and will not always imply spatial proximity in structure. Transitivity can lead to correlation signals. Phylogenetic bias can also lead to correlations. 
+
+Sampling bias needs to be taken into account. See sequence reweighting strategies in methods section
+
 
 
 ## State of the Art CP
@@ -133,7 +136,51 @@ A recurring difficulty when dealing with interacting systems is distinguishing t
 ### Local methods
 MI and correlation measures suffer from transitivity of correlations
 
-### Direct coupling analysis {#dca}
+### Maximum entropy models for modelling protein families {#maxent}
+
+The principle of maximum entropy was postulated by Jaynes in 1957 [@Jaynes1957a] [@Jaynes1957b], stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and is the least biased estimate of a distribution given the measured constraints.
+
+Applied to the problem of modelling protein families, one would seek a probability distribution over protein sequences $\seq = (x_i, ..., x_L)$ of length $L$ reproducing the empirical single $\mathcal{f}(x_i \eq a)$ and pairwise $\mathcal{f}(x_i \eq a, x_j \eq b)$ amino acid frequencies of an alignment $\mathbf{X}$ with $N$ sequences:
+
+\begin{equation}
+ p(x_i\eq a) = \mathcal{f}(x_i\eq a) = \frac{1}{N}\sum_{n=1}^N I(x_i^{(n)} \eq a) \\
+ p(x_i\eq a, x_j \eq b) = \mathcal{f}(x_i\eq a, x_j\eq b) = \frac{1}{N} \sum_{n=1}^N I(x_i^{(n)} \eq a, x_j^{(n)} \eq b)
+ (\#eq:emp-freq)
+\end{equation}
+
+Maximizing the entropy $S= -\sum_{\seq} p(\seq) \log p(\seq)$ of the distribution under the given constraints \@ref(eq:emp-freq) using Lagrange multipliers results in the formulation of an exponential model known as *Potts model* or its generalized form a *Markov Random Field*:
+
+\begin{equation}
+p(\seq) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i, x_j) \right)
+(\#eq:max-ent-model)
+\end{equation}
+
+$Z$ is a normalization constant also known as *partition function* ensuring the total probabilty adds up to one by summing over all possible assignments to $\seq$. 
+
+\begin{equation}
+  Z = \sum_{\seq' \in [1,...,20]^L} p(\seq' | \v, \w)
+  (\#eq:partition-fct-likelihood)
+\end{equation}
+
+
+#### Interpretation of model parameters
+
+Markov Random Field belongs to class of undirected graphical models. 
+Therefore they can be represented as a graph with nodes corresponding to positions in the alignment and edges describing the dependency structure between nodes. 
+
+A protein sequence can be encoded in multiple ways, altering the resultign model. 
+
+Using a binary encoding for amino acids $x_i \in [0, 1]^{21}$, a sequence $x$ can be interpreted as continous random variable.
+For continous, real-valued variables x, the maximum entropy model can be represented as a graphical Gaussian model. 
+This interpretation of the model is used as the basis for PSICOV. 
+
+Otherwise sequences are represented as multinomial variables with 21 states (20 amino acids and one gap).
+
+
+The single-emission potentials $v_i(a)$ correspond to the single amino acid frequencies whereas the pairwise-emission potentials $w_{ij}(a,b)$ also called couplings reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment. 
+
+
+
 Can disentangle direct and indirect correlations.
 
 Infer parameters of a maximum entropy model, more specifically a Potts model (statistical physics) aka markov random fiels (computer science).
@@ -146,7 +193,34 @@ Many approximations:
 - pseudo-likelihood 
 - belief-propagation (accurate but slow)
 
+
+#### Infering model parameters
+
+Typically, one would obtain parameter estimates by maximizing the log-likelihood of observed data. 
+
+However, given the 20 amino acids and typical proteins of length $L=100$, the partition function $Z$ has to sum over $20^100$ sequences.
+Because of this exponential complexityit is computationally intractable to evaluate the likelihood-function at every iteration of an optimization procedure. 
+
+Several approaches have been developed to evade the infeasible computation of the partition function and obtain approximate solutions for the model parameters.
+Some of these approaches have successfully been adapted to the problem of modelling protein families.
+
 #### Pseudo-Likelihood
+
+Instead of optimizing the likelihood, Besag suggested in 1975 to rather optimize a function that he termed *pseudo-likelihood* that replaces the joint probability with the product over conditionals [@Besag1975]:
+
+\begin{equation}
+  p(\seq | \v,\w) = \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w)  = \prod_{i=1}^L \left( \frac{1}{Z_i} \exp[v_i(x_i)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(x_i, x_j)]   \right)
+\end{equation}
+
+Here, the normalization term $Z_i$ sums only over all assignments to one position $i$ in sequence:
+
+\begin{equation}
+  Z_i = \sum_{a=1}^{20} \exp[v_i(a)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(a, x_j)] 
+\end{equation}
+
+
+Besag showed that *pseudo-likelihood* is an consistent estimator for the likelihood in the limit of large data. 
+
 
 the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities[@Stein2015a]
 

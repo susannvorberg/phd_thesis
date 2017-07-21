@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-20">
+<meta name="date" content="2017-07-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -53,9 +53,12 @@
   TeX: { 
     extensions: ["mediawiki-texvc.js"],
     Macros: {
-      eq: "{\\;\\!=\\!\\;}",
-      neff: "N_\\mathrm{eff}"
-    }
+      eq: "\\!=\\!",
+      neff: "N_\\mathrm{eff}",
+      seq: "\\mathbf{x}",
+      v: "\\mathbf{v}",
+      w: "\\mathbf{w}"
+      }
   }
 });
 </script>
@@ -111,7 +114,7 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#correlation-vs-causation"><i class="fa fa-check"></i><b>1.3.1</b> Correlation vs Causation</a></li>
 <li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
-<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#dca"><i class="fa fa-check"></i><b>1.3.3</b> Direct coupling analysis</a></li>
+<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
 <li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
 <li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
 </ul></li>
@@ -157,10 +160,10 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="contact-prediction-1" class="section level2">
 <h2><span class="header-section-number">3.2</span> Contact Prediction</h2>
-<p>Dr Stefan Seemayer wrote a new implementation of the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">24</a>]</span> in Python. His code forms the basis of all extensions that have been developed in this thesis.</p>
+<p>Dr Stefan Seemayer wrote a new implementation of the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">28</a>]</span> in Python. His code forms the basis of all extensions that have been developed in this thesis.</p>
 <div id="seq-reweighting" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Sequence Reweighting</h3>
-<p>Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. This uneven sampling of sequence space thus leaves certain regions unexplored whereas others are statistically overrepresented. To reduce the effects of overrepresented sequences, typically a simple weighting strategy <span class="citation">[<a href="#ref-Stein2015a">20</a>]</span> is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold. It has been found that reweighting improves contact prediction performance but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 <span class="citation">[<a href="#ref-Morcos2011">25</a>]</span>. We chose an identity threshold of 0.8.</p>
+<p>Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. This uneven sampling of sequence space thus leaves certain regions unexplored whereas others are statistically overrepresented. To reduce the effects of overrepresented sequences, typically a simple weighting strategy <span class="citation">[<a href="#ref-Stein2015a">23</a>]</span> is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold. It has been found that reweighting improves contact prediction performance but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 <span class="citation">[<a href="#ref-Morcos2011">29</a>]</span>. We chose an identity threshold of 0.8.</p>
 <p>Every sequence <span class="math inline">\(x_n\)</span> of length <span class="math inline">\(L\)</span> in an alignment with <span class="math inline">\(N\)</span> sequences has an associated weight <span class="math inline">\(w_n = 1/m_n\)</span>, where <span class="math inline">\(m_n\)</span> represents the number of similar sequences:</p>
 <span class="math display" id="eq:seqweight">\[\begin{equation} 
   w_n = \frac{1}{m_n}, m_n = \sum_{m=1}^N I \left( ID(x_n, x_m) \geq 0.8 \right) \\
@@ -207,13 +210,13 @@ MathJax.Hub.Config({
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Seemayer2014">
-<p>24. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
+<p>28. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
 </div>
 <div id="ref-Stein2015a">
-<p>20. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>23. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Morcos2011">
-<p>25. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S., Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011). Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proc. Natl. Acad. Sci. U. S. A. <em>108</em>, E1293–301. Available at: <a href="http://www.pnas.org/content/108/49/E1293.full" class="uri">http://www.pnas.org/content/108/49/E1293.full</a>.</p>
+<p>29. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S., Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011). Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proc. Natl. Acad. Sci. U. S. A. <em>108</em>, E1293–301. Available at: <a href="http://www.pnas.org/content/108/49/E1293.full" class="uri">http://www.pnas.org/content/108/49/E1293.full</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
