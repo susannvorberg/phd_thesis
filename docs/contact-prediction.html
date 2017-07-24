@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-21">
+<meta name="date" content="2017-07-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,8 +112,8 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#correlation-vs-causation"><i class="fa fa-check"></i><b>1.3.1</b> Correlation vs Causation</a></li>
-<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
 <li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
 <li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
 <li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
@@ -175,8 +175,34 @@ MathJax.Hub.Config({
 <h3><span class="header-section-number">1.2.3</span> Pitfalls</h3>
 <iframe src="img/pfam_pdb.html" frameborder="0" allowtransparency="true" width="100%" height="600px">
 </iframe>
-<p>Coevolution of residues can be mediated by molecules (e.g zinc ions) and will not always imply spatial proximity in structure. Transitivity can lead to correlation signals. Phylogenetic bias can also lead to correlations.</p>
+<p>Coevolution of residues can be mediated by intermediate molecules (e.g metal ions) and will not always imply spatial proximity in structure <span class="citation">[<a href="#ref-Morcos2011">20</a>]</span>.</p>
+<p>Transitivity can lead to correlation signals.</p>
+<p>Phylogenetic bias can also lead to correlations.</p>
+<p>Some of these distant dependencies have been suggested to be caused by homooligomeric interactions [14,22]<span class="citation">[<a href="#ref-Burger2010">21</a>]</span><span class="citation">[<a href="#ref-Morcos2011">20</a>]</span>.</p>
+<p>Alternative conformations may lead to false positive predictions <span class="citation">[<a href="#ref-Morcos2011">20</a>]</span>.</p>
 <p>Sampling bias needs to be taken into account. See sequence reweighting strategies in methods section</p>
+<p>That is, very low entropy columns have on average almost twice as many contacts as high entropy columns<span class="citation">[<a href="#ref-Burger2010">21</a>]</span>….reiterates the well-known dependence between surface accessibility and conservation…Obviously, since this position shows no variation whatsoever it cannot display any signs of statistical dependency with any other column, even though it may contact many other residues. This is a basic limitation of using statistical dependency for contact prediction that cannot be avoided</p>
+<ul>
+<li>theoretical upper boundary on precision: simply not all contacts within 8A interact with each other and therefore will never be detected using covariance methods –&gt; influences sensitivity.</li>
+<li>strongly conserved residues can also not show covariance signals –&gt; influences sensitivity</li>
+</ul>
+<div id="correlation-vs-causation" class="section level4">
+<h4><span class="header-section-number">1.2.3.1</span> Correlation vs Causation</h4>
+<p>One important shortcoming of covariance approaches arises from the fact that chains of amino acid interactions are very common in protein structures and lead to direct as well as indirect correlation signals <span class="citation">[<a href="#ref-Lapedes1999">22</a>]</span> <span class="citation">[<a href="#ref-Burger2010">21</a>]</span>.<br />
+Many erronous couplings occur due to the correlation versus causation phenomenon. Considering three protein residues. Residue A interacts with residue B and B interacts with residue C. Residue A and C do not physically interact, but there will still be a correlation between A and C. These transitive effects of covariation need to be disentangled to obtain the true coupling signal. Traditional covariance methods are unable to distinguish direct and indirect correlations.</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Morcos2011">
+<p>20. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S., Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011). Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proc. Natl. Acad. Sci. U. S. A. <em>108</em>, E1293–301. Available at: <a href="http://www.pnas.org/content/108/49/E1293.full" class="uri">http://www.pnas.org/content/108/49/E1293.full</a>.</p>
+</div>
+<div id="ref-Burger2010">
+<p>21. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
+</div>
+<div id="ref-Lapedes1999">
+<p>22. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -251,7 +277,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

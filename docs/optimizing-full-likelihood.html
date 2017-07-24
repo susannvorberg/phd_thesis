@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-21">
+<meta name="date" content="2017-07-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,8 +112,8 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#correlation-vs-causation"><i class="fa fa-check"></i><b>1.3.1</b> Correlation vs Causation</a></li>
-<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
 <li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
 <li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
 <li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
@@ -160,7 +160,7 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="optimizing-full-likelihood" class="section level2">
 <h2><span class="header-section-number">2.1</span> Optimizing Full-Likelihood</h2>
-<p>The full likelihood of the maximum entropy model cannot be optimized with <a href="abbrev.html#abbrev">ML</a> methods due to the exponential complexity of the partition function (see section <a href="#dca"><strong>??</strong></a>). As elaborated in the introduction, many approximations to maximum likelihood inference have been developed that resolve the computational intractability of the partition function. Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or methods based on the Bethe-approximation or sparse inverse covariance. Even though pseudo-likelihood has been shown to be a consistent estimator of the true likelihood estimates in the limit of large datasets <span class="citation">[<a href="#ref-Besag1975">22</a>]</span>, it is not clear how well pseudo-likelihood approximation is for small data.</p>
+<p>The full likelihood of the maximum entropy model cannot be optimized with <a href="abbrev.html#abbrev">ML</a> methods due to the exponential complexity of the partition function (see section <a href="state-of-the-art-cp.html#maxent">1.3.3</a>). As elaborated in the introduction, many approximations to maximum likelihood inference have been developed that resolve the computational intractability of the partition function. Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or methods based on the Bethe-approximation or sparse inverse covariance. Even though pseudo-likelihood maximation has been shown to be a consistent estimator in the limit of infinite data <span class="citation">[<a href="#ref-Besag1975">30</a>]</span>, it is not clear how well pseudo-likelihood approximation is for real-world datasets.</p>
 <div id="likelihood-gradient" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Likelihood Gradient</h3>
 </div>
@@ -174,7 +174,7 @@ MathJax.Hub.Config({
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Besag1975">
-<p>22. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source Stat. <em>24</em>, 179–195. Available at: <a href="http://www.jstor.org http://www.jstor.org/stable/2987782" class="uri">http://www.jstor.org http://www.jstor.org/stable/2987782</a>.</p>
+<p>30. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source Stat. <em>24</em>, 179–195. Available at: <a href="http://www.jstor.org http://www.jstor.org/stable/2987782" class="uri">http://www.jstor.org http://www.jstor.org/stable/2987782</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -249,7 +249,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

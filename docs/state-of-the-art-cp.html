@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-21">
+<meta name="date" content="2017-07-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,8 +112,8 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#correlation-vs-causation"><i class="fa fa-check"></i><b>1.3.1</b> Correlation vs Causation</a></li>
-<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
 <li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
 <li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
 <li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
@@ -160,66 +160,75 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="state-of-the-art-cp" class="section level2">
 <h2><span class="header-section-number">1.3</span> State of the Art CP</h2>
-<div id="correlation-vs-causation" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Correlation vs Causation</h3>
-<p>A recurring difficulty when dealing with interacting systems is distinguishing the direct interactions, resulting from adjacent interplay between two units, from interactions mediated via multi-step paths across other elements [Ekeberg master thesis]</p>
-</div>
 <div id="local-methods" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Local methods</h3>
+<h3><span class="header-section-number">1.3.1</span> Local methods</h3>
 <p>MI and correlation measures suffer from transitivity of correlations</p>
+</div>
+<div id="global-methods" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Global methods</h3>
+<p>In 2010, Burger and Nijmwegen developed a Bayesian network model <span class="citation">[<a href="#ref-Burger2010">21</a>]</span> that is able to disentangle direct from indirect correlations and introducing informative priors to improve precision. independently of weight in 2009</p>
 </div>
 <div id="maxent" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> Maximum entropy models for modelling protein families</h3>
-<p>The principle of maximum entropy was postulated by Jaynes in 1957 <span class="citation">[<a href="#ref-Jaynes1957a">20</a>]</span> <span class="citation">[<a href="#ref-Jaynes1957b">21</a>]</span>, stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and is the least biased estimate of a distribution given the measured constraints.</p>
-<p>Applied to the problem of modelling protein families, one would seek a probability distribution over protein sequences <span class="math inline">\(\seq = (x_i, ..., x_L)\)</span> of length <span class="math inline">\(L\)</span> reproducing the empirical single <span class="math inline">\(\mathcal{f}(x_i \eq a)\)</span> and pairwise <span class="math inline">\(\mathcal{f}(x_i \eq a, x_j \eq b)\)</span> amino acid frequencies of an alignment <span class="math inline">\(\mathbf{X}\)</span> with <span class="math inline">\(N\)</span> sequences:</p>
+<p>The principle of maximum entropy was postulated by Jaynes in 1957 <span class="citation">[<span class="citeproc-not-found" data-reference-id="Jaynes1957a"><strong>???</strong></span>]</span> <span class="citation">[<span class="citeproc-not-found" data-reference-id="Jaynes1957b"><strong>???</strong></span>]</span>, stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and therefore is the least biased estimate of a distribution given the measured constraints.</p>
+<p>Applied to the problem of modelling protein families, one would seek a probability distribution over an alignment <span class="math inline">\(\mathbf{X}\)</span> comprising <span class="math inline">\(N\)</span> protein sequences <span class="math inline">\(\seq^{(n)} = (x_i^{(n)},..., x_L^{(n)})\)</span> of length <span class="math inline">\(L\)</span>. Every position <span class="math inline">\(x_i^{(n)}\)</span> in the <a href="abbrev.html#abbrev">MSA</a> can take one of 21 states representing the 20 naturally occuring amino acids and a gap (‘-’) state. The distribution should reproduce the empirical single <span class="math inline">\(\mathcal{f}(x_i \eq a)\)</span> and pairwise <span class="math inline">\(\mathcal{f}(x_i \eq a, x_j \eq b)\)</span> amino acid frequencies of the alignment:</p>
 <span class="math display" id="eq:emp-freq">\[\begin{equation}
  p(x_i\eq a) = \mathcal{f}(x_i\eq a) = \frac{1}{N}\sum_{n=1}^N I(x_i^{(n)} \eq a) \\
  p(x_i\eq a, x_j \eq b) = \mathcal{f}(x_i\eq a, x_j\eq b) = \frac{1}{N} \sum_{n=1}^N I(x_i^{(n)} \eq a, x_j^{(n)} \eq b)
  \tag{1.1}
 \end{equation}\]</span>
-<p>Maximizing the entropy <span class="math inline">\(S= -\sum_{\seq} p(\seq) \log p(\seq)\)</span> of the distribution under the given constraints <a href="state-of-the-art-cp.html#eq:emp-freq">(1.1)</a> using Lagrange multipliers results in the formulation of an exponential model known as <em>Potts model</em> or its generalized form a <em>Markov Random Field</em>:</p>
+<p>Maximizing the entropy <span class="math inline">\(S= -\sum_{\seq} p(\seq) \log p(\seq)\)</span> of the distribution subject to the constraints given in eq. <a href="state-of-the-art-cp.html#eq:emp-freq">(1.1)</a> via Lagrange multipliers results in the formulation of an exponential model known as <em>Potts model</em> or its generalized form a <em>Markov Random Field</em>:</p>
 <span class="math display" id="eq:max-ent-model">\[\begin{equation}
-p(\seq) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i, x_j) \right)
+p(\seq | \v,\w) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i &lt; j \leq L}^L w_{ij}(x_i, x_j) \right)
 \tag{1.2}
 \end{equation}\]</span>
-<p><span class="math inline">\(Z\)</span> is a normalization constant also known as <em>partition function</em> ensuring the total probabilty adds up to one by summing over all possible assignments to <span class="math inline">\(\seq\)</span>.</p>
+<p><span class="math inline">\(Z\)</span> is a normalization constant also known as <em>partition function</em> that ensures the total probabilty adds up to one by summing over all possible assignments to <span class="math inline">\(\seq\)</span>.</p>
 <span class="math display" id="eq:partition-fct-likelihood">\[\begin{equation}
   Z = \sum_{\seq&#39; \in [1,...,20]^L} p(\seq&#39; | \v, \w)
   \tag{1.3}
 \end{equation}\]</span>
-<div id="interpretation-of-model-parameters" class="section level4">
-<h4><span class="header-section-number">1.3.3.1</span> Interpretation of model parameters</h4>
-<p>Markov Random Field belongs to class of undirected graphical models. Therefore they can be represented as a graph with nodes corresponding to positions in the alignment and edges describing the dependency structure between nodes.</p>
-<p>A protein sequence can be encoded in multiple ways, altering the resultign model.</p>
-<p>Using a binary encoding for amino acids <span class="math inline">\(x_i \in [0, 1]^{21}\)</span>, a sequence <span class="math inline">\(x\)</span> can be interpreted as continous random variable. For continous, real-valued variables x, the maximum entropy model can be represented as a graphical Gaussian model. This interpretation of the model is used as the basis for PSICOV.</p>
-<p>Otherwise sequences are represented as multinomial variables with 21 states (20 amino acids and one gap).</p>
-<p>The single-emission potentials <span class="math inline">\(v_i(a)\)</span> correspond to the single amino acid frequencies whereas the pairwise-emission potentials <span class="math inline">\(w_{ij}(a,b)\)</span> also called couplings reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment.</p>
+<div id="properties-of-model-parameters" class="section level4">
+<h4><span class="header-section-number">1.3.3.1</span> Properties of model parameters</h4>
+<p>The Langrange multipliers <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span>, introduced to satisfy the constraints in eq. <a href="state-of-the-art-cp.html#eq:emp-freq">(1.1)</a>, specify the maximum entropy model and need to be tuned. The single potentials <span class="math inline">\(v_i(a)\)</span> correspond to the single amino acid frequencies whereas the pairwise potentials <span class="math inline">\(w_{ij}(a,b)\)</span>, also called couplings, reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment.</p>
+<p>Maximum entropy models belong to the family of exponential models and thus have a unique global minimum.</p>
+<p>Markov Random Field belongs to the class of undirected graphical models. Therefore they can be represented as a graph with nodes corresponding to positions in the alignment and edges describing the dependency structure between nodes.</p>
 <p>Can disentangle direct and indirect correlations.</p>
 <p>Infer parameters of a maximum entropy model, more specifically a Potts model (statistical physics) aka markov random fiels (computer science). Likelihood function is convex, but Maximum Likelihood inference of model is infeasible: Likelihood function needs to be reevaluated at each iteration during optimization but partition function term sums over 20^L sequences.</p>
-<p>Many approximations: - mean field (Marks), Psicov - pseudo-likelihood - belief-propagation (accurate but slow)</p>
 </div>
 <div id="infering-model-parameters" class="section level4">
 <h4><span class="header-section-number">1.3.3.2</span> Infering model parameters</h4>
-<p>Typically, one would obtain parameter estimates by maximizing the log-likelihood of observed data.</p>
-<p>However, given the 20 amino acids and typical proteins of length <span class="math inline">\(L=100\)</span>, the partition function <span class="math inline">\(Z\)</span> has to sum over <span class="math inline">\(20^100\)</span> sequences. Because of this exponential complexityit is computationally intractable to evaluate the likelihood-function at every iteration of an optimization procedure.</p>
-<p>Several approaches have been developed to evade the infeasible computation of the partition function and obtain approximate solutions for the model parameters. Some of these approaches have successfully been adapted to the problem of modelling protein families.</p>
+<p>Typically, one would obtain parameter estimates by maximizing the log-likelihood function of the parameters over observed sequences in the alignment <span class="math inline">\(\mathbf{X}\)</span>:</p>
+<span class="math display">\[\begin{equation}
+    \mathcal{L}(\v, \w | \mathbf{X}) = \sum_{n=1}^N \log p(\seq^{(n)}) = \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_i^{(n)}) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i^{(n)}, x_j^{(n)}) - \log Z \right]
+\end{equation}\]</span>
+<p>However, optimizing the log-likelihood requires computing the partition function that sums <span class="math inline">\(20^L\)</span> terms. Naturally occurig protein domains comprise hundreds of residues. Because of this exponential complexity in protein length L it is computationally intractable to evaluate the log-likelihood function at every iteration of an optimization procedure.</p>
+<p>Several approximate solutions have been developed to evade the infeasible computation of the partition function. In 1999 Lapedes et al. <span class="citation">[<a href="#ref-Lapedes1999">22</a>]</span> were the first to apply maximum entropy models to the problem of predicting residue pairs in spatial proximity and thus entangling transitive effects. They used an iterative Monte Carlo procedure to obtain estimates of the partition function.</p>
+<p>In 2009 Weight et al proposed a message-passing algorithm to approximate the partition function <span class="citation">[<a href="#ref-Weigt2009">23</a>]</span>. Eventhough their approach is computationally very expensive and only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.</p>
+<p>Balakrishnan and collegues <span class="citation">[<a href="#ref-Balakrishnan2011">24</a>]</span> were the first to apply L1-regularized pseudo-likelihood optimization in 2011. Pseudo-likelihood optimizes a different objective and does not aim at approximating the partition function Z. This approach is described in more detail in <a href="#Pseudo-Likelihood"><strong>??</strong></a> as it represents the most successfull approach, eventhough it was not taken notice of at that time.</p>
+<p>Also in 2011, another approximate solution to the partition fucntion was proposed that uses mean-field expansion <span class="citation">[<a href="#ref-Morcos2011">20</a>]</span>. This method is termed mfDCA. This study resulted in the first 3D models of yet unsolved protein structures being computed with the help of predicted contacts <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span> This method allowed high-throughput predictions as the mean-field approach boils down to inverting the covariance matrix which allows for shorter running times.</p>
+<p>A related approach is sparse inverse covariance estimation (PSICOV) method by Jones and colleggues.<span class="citation">[<a href="#ref-Jones2012">25</a>]</span> They use L1-regularization to invert the correlation matrix and enforce sparsity which is known as grapgical Lasso <span class="citation">[<a href="#ref-Friedman2008">26</a>]</span>. Both procedures, mfDCA and PSICOV, assume that model distribution is a multivariate Gaussian. it has been shown by Banerjee et al. (2008) that this dual optimization solution also applies to binary data (as is the case in this application). In order to represent the <a href="abbrev.html#abbrev">MSA</a> as continuous distributed, each position is encoded as a 20-dimensional binary vector.</p>
+<p>So far using pseudo-likelihood maximization to infer the model directly from the input alignment has proven to be the most accurate approach. There exist several implementations of pseudo-likelihood maximization that vary only in implemenation details, perform similarly and thus are equally popular in the community: CCmpred <span class="citation">[<a href="#ref-Seemayer2014">27</a>]</span>, plmDCA<span class="citation">[<a href="#ref-Ekeberg2014">28</a>]</span>, GREMLIN <span class="citation">[<a href="#ref-Kamisetty2013">29</a>]</span>.</p>
 </div>
 <div id="pseudo-likelihood" class="section level4">
 <h4><span class="header-section-number">1.3.3.3</span> Pseudo-Likelihood</h4>
-<p>Instead of optimizing the likelihood, Besag suggested in 1975 to rather optimize a function that he termed <em>pseudo-likelihood</em> that replaces the joint probability with the product over conditionals <span class="citation">[<a href="#ref-Besag1975">22</a>]</span>:</p>
+<p>Instead of optimizing the likelihood, Besag suggested in 1975 to rather optimize a function that he termed <em>pseudo-likelihood</em> that replaces the joint probability with the product over conditionals <span class="citation">[<a href="#ref-Besag1975">30</a>]</span>:</p>
 <span class="math display">\[\begin{equation}
-  p(\seq | \v,\w) = \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w)  = \prod_{i=1}^L \left( \frac{1}{Z_i} \exp[v_i(x_i)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(x_i, x_j)]   \right)
+  p(\seq | \v,\w) =   \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w) =  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(x_i, x_j) \right)
 \end{equation}\]</span>
 <p>Here, the normalization term <span class="math inline">\(Z_i\)</span> sums only over all assignments to one position <span class="math inline">\(i\)</span> in sequence:</p>
 <span class="math display">\[\begin{equation}
-  Z_i = \sum_{a=1}^{20} \exp[v_i(a)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(a, x_j)] 
+  Z_i = \sum_{a=1}^{20} \exp \left( v_i(a) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(a, x_j) \right)
 \end{equation}\]</span>
-<p>Besag showed that <em>pseudo-likelihood</em> is an consistent estimator for the likelihood in the limit of large data.</p>
-<p>the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities<span class="citation">[<a href="#ref-Stein2015a">23</a>]</span></p>
-<p>Recall from above that our pseudo-likelihood uses the full representation and fixes the gauge by the regularization terms Rl2. Our procedure is therefore first to infer the interaction parameters using using the pseudo-likelihood and the regularization, and then change to the zero-sum gauge <span class="citation">[<a href="#ref-Ekeberg2013">24</a>]</span></p>
-<p>On one hand, this improvement might not be surpris-ing: it is known that, for very large data sets, pseudo- likelihood maximization becomes asymptotically equiva- lent to full maximum-likelihood inference, whereas mean- field inference remains intrinsically approximate, and this may result in an improved PLM performance. On the other hand, the above advantage holds if and only if the following two conditions are fulfilled: data a drawn independently from a probability distribution, and this probability distribution is the the Boltzmann distribution of a Potts model. None of these two con- ditions actually hold for real protein sequences <span class="citation">[<a href="#ref-Ekeberg2013">24</a>]</span></p>
-<p>Disregarding the improvements, we find that overall the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation<span class="citation">[<a href="#ref-Ekeberg2013">24</a>]</span></p>
-<p>The pseudo-likelihood inherits the concavity<span class="citation">[<a href="#ref-Stein2015a">23</a>]</span></p>
+<p>The learning objective must include a regularization, as it is overparametrized. The indeterminacy can be fixed by including a regularization prior that also prevents overfitting. Commonly <span class="citation">[<a href="#ref-Seemayer2014">27</a>]</span> <span class="citation">[<a href="#ref-Ekeberg2014">28</a>]</span>, an L2-regularization is used which corresponds to a zero centered Gaussian prior.</p>
+<span class="math display">\[\begin{align}
+  R(\v, \w)  &amp;= \mathcal{N}(\v | \vec{0}, \lambda_v I^{-1})  + \mathcal{N}(\w | \vec{0}, \lambda_w I^{-1}) \\
+             &amp;= \lambda_v ||\v||_2^2 + \lambda_w ||\w||_2^2 
+\end{align}\]</span>
+<p>The pseudo-likelihood function retains the concavity of the likelihood.<span class="citation">[<a href="#ref-Stein2015a">31</a>]</span> Moreover, it has been shown that <em>pseudo-likelihood</em> is a consistent estimator in the limit of infinite data for pairwise <a href="abbrev.html#abbrev">MRF</a> <span class="citation">[<a href="#ref-Besag1975">30</a>]</span> <span class="citation">[<a href="#ref-Gidas1988">32</a>]</span>. That is, as the number of sequences in the alignment increases, pseudo-likelihood estimates converge towards the true full likelihood parameters.</p>
+<p>the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities<span class="citation">[<a href="#ref-Stein2015a">31</a>]</span></p>
+<p>Recall from above that our pseudo-likelihood uses the full representation and fixes the gauge by the regularization terms Rl2. Our procedure is therefore first to infer the interaction parameters using using the pseudo-likelihood and the regularization, and then change to the zero-sum gauge <span class="citation">[<a href="#ref-Ekeberg2013">33</a>]</span></p>
+<p>On one hand, this improvement might not be surpris-ing: it is known that, for very large data sets, pseudo- likelihood maximization becomes asymptotically equiva- lent to full maximum-likelihood inference, whereas mean- field inference remains intrinsically approximate, and this may result in an improved PLM performance. On the other hand, the above advantage holds if and only if the following two conditions are fulfilled: data a drawn independently from a probability distribution, and this probability distribution is the the Boltzmann distribution of a Potts model. None of these two con- ditions actually hold for real protein sequences <span class="citation">[<a href="#ref-Ekeberg2013">33</a>]</span></p>
+<p>Disregarding the improvements, we find that overall the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation<span class="citation">[<a href="#ref-Ekeberg2013">33</a>]</span></p>
 </div>
 </div>
 <div id="computing-contact-map-from-coupling-matrix" class="section level3">
@@ -251,20 +260,47 @@ p(\seq) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{\substack{i,j=1 \\
 <!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-Jaynes1957a">
-<p>20. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics I. Phys. Rev. <em>106</em>, 620–630. Available at: <a href="https://link.aps.org/doi/10.1103/PhysRev.106.620" class="uri">https://link.aps.org/doi/10.1103/PhysRev.106.620</a>.</p>
+<div id="ref-Burger2010">
+<p>21. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
 </div>
-<div id="ref-Jaynes1957b">
-<p>21. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics. II. Phys. Rev. <em>108</em>, 171–190. Available at: <a href="https://link.aps.org/doi/10.1103/PhysRev.108.171" class="uri">https://link.aps.org/doi/10.1103/PhysRev.108.171</a>.</p>
+<div id="ref-Lapedes1999">
+<p>22. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
+</div>
+<div id="ref-Weigt2009">
+<p>23. Weigt, M., White, R.A., Szurmant, H., Hoch, J.A., and Hwa, T. (2009). Identification of direct residue contacts in protein-protein interaction by message passing. Proc. Natl. Acad. Sci. U. S. A. <em>106</em>, 67–72. Available at: <a href="http://www.pnas.org/content/106/1/67.abstract" class="uri">http://www.pnas.org/content/106/1/67.abstract</a>.</p>
+</div>
+<div id="ref-Balakrishnan2011">
+<p>24. Balakrishnan, S., Kamisetty, H., Carbonell, J.G., Lee, S.-I., and Langmead, C.J. (2011). Learning generative models for protein fold families. Proteins <em>79</em>, 1061–78. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21268112" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21268112</a>.</p>
+</div>
+<div id="ref-Morcos2011">
+<p>20. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S., Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011). Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proc. Natl. Acad. Sci. U. S. A. <em>108</em>, E1293–301. Available at: <a href="http://www.pnas.org/content/108/49/E1293.full" class="uri">http://www.pnas.org/content/108/49/E1293.full</a>.</p>
+</div>
+<div id="ref-Jones2012">
+<p>25. Jones, D.T., Buchan, D.W.A., Cozzetto, D., and Pontil, M. (2012). PSICOV: precise structural contact prediction using sparse inverse covariance estimation on large multiple sequence alignments. Bioinformatics <em>28</em>, 184–90. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/2/184.full" class="uri">http://bioinformatics.oxfordjournals.org/content/28/2/184.full</a>.</p>
+</div>
+<div id="ref-Friedman2008">
+<p>26. Friedman, J., Hastie, T., and Tibshirani, R. (2008). Sparse inverse covariance estimation with the graphical lasso. Biostatistics <em>9</em>, 432–41. Available at: <a href="http://biostatistics.oxfordjournals.org/content/9/3/432.abstract" class="uri">http://biostatistics.oxfordjournals.org/content/9/3/432.abstract</a>.</p>
+</div>
+<div id="ref-Seemayer2014">
+<p>27. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
+</div>
+<div id="ref-Ekeberg2014">
+<p>28. Ekeberg, M., Hartonen, T., and Aurell, E. (2014). Fast pseudolikelihood maximization for direct-coupling analysis of protein structure from many homologous amino-acid sequences. J. Comput. Phys. <em>276</em>, 341–356. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S0021999114005178" class="uri">http://www.sciencedirect.com/science/article/pii/S0021999114005178</a>.</p>
+</div>
+<div id="ref-Kamisetty2013">
+<p>29. Kamisetty, H., Ovchinnikov, S., and Baker, D. (2013). Assessing the utility of coevolution-based residue-residue contact predictions in a sequence- and structure-rich era. Proc. Natl. Acad. Sci. U. S. A. <em>110</em>, 15674–9. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Besag1975">
-<p>22. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source Stat. <em>24</em>, 179–195. Available at: <a href="http://www.jstor.org http://www.jstor.org/stable/2987782" class="uri">http://www.jstor.org http://www.jstor.org/stable/2987782</a>.</p>
+<p>30. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source Stat. <em>24</em>, 179–195. Available at: <a href="http://www.jstor.org http://www.jstor.org/stable/2987782" class="uri">http://www.jstor.org http://www.jstor.org/stable/2987782</a>.</p>
 </div>
 <div id="ref-Stein2015a">
-<p>23. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>31. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Gidas1988">
+<p>32. Gidas, B. (1988). Consistency of maximum likelihood and pseudo-likelihood estimators for Gibbs Distributions. Stoch. Differ. Syst. Stoch. Control Theory Appl. Available at: <a href="http://www.researchgate.net/publication/244456377{\_}Consistency{\_}of{\_}maximum{\_}likelihood{\_}and{\_}pseudo-likelihood{\_}estimators{\_}for{\_}Gibbs{\_}Distributions" class="uri">http://www.researchgate.net/publication/244456377{\_}Consistency{\_}of{\_}maximum{\_}likelihood{\_}and{\_}pseudo-likelihood{\_}estimators{\_}for{\_}Gibbs{\_}Distributions</a>.</p>
 </div>
 <div id="ref-Ekeberg2013">
-<p>24. Ekeberg, M., Lövkvist, C., Lan, Y., Weigt, M., and Aurell, E. (2013). Improved contact prediction in proteins: Using pseudolikelihoods to infer Potts models. Phys. Rev. E <em>87</em>, 012707. Available at: <a href="http://link.aps.org/doi/10.1103/PhysRevE.87.012707" class="uri">http://link.aps.org/doi/10.1103/PhysRevE.87.012707</a>.</p>
+<p>33. Ekeberg, M., Lövkvist, C., Lan, Y., Weigt, M., and Aurell, E. (2013). Improved contact prediction in proteins: Using pseudolikelihoods to infer Potts models. Phys. Rev. E <em>87</em>, 012707. Available at: <a href="http://link.aps.org/doi/10.1103/PhysRevE.87.012707" class="uri">http://link.aps.org/doi/10.1103/PhysRevE.87.012707</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -339,7 +375,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

@@ -19,9 +19,11 @@
 
 **MRF** Markov-Random Field
 
+**MSA** Multiple Sequence Alignment
+
 **PDB** protein data bank
 
-
+%%%% used as: [MRF](#abbrev)
 
 
 

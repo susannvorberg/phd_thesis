@@ -101,6 +101,8 @@ Sathyapriya et al 2009
 
 Many studies that successfuly predict structures denovo with the help of predicted contact.
 
+Vice versa, because contacts at large primary distances are rare, they are most informative for protein structure prediction: Izarzugaza J, Gran ˜a O, Tress M, Valencia A, Clarke N (2007) Assessment of intramolecular contact predictions for CASP7
+
 ## Contact Prediction
 
 ### Correlated mutations
@@ -121,26 +123,54 @@ fraction of correct predictions among all predictions
 <iframe src="img/pfam_pdb.html" frameborder="0" allowtransparency="true" width=100% height=600px></iframe>
 
 
-Coevolution of residues can be mediated by molecules (e.g zinc ions) and will not always imply spatial proximity in structure. Transitivity can lead to correlation signals. Phylogenetic bias can also lead to correlations. 
+Coevolution of residues can be mediated by intermediate molecules (e.g metal ions) and will not always imply spatial proximity in structure [@Morcos2011]. 
+
+Transitivity can lead to correlation signals. 
+
+Phylogenetic bias can also lead to correlations. 
+
+Some of these distant dependencies have been suggested to be caused by homooligomeric interactions [14,22][@Burger2010][@Morcos2011].
+
+Alternative conformations may lead to false positive predictions [@Morcos2011].
+
 
 Sampling bias needs to be taken into account. See sequence reweighting strategies in methods section
 
+That is, very low entropy columns have on average almost twice as many contacts as high entropy columns[@Burger2010]....reiterates the well-known dependence between surface accessibility and conservation...Obviously, since this position shows no variation whatsoever it cannot display any signs of statistical dependency with any other column, even though it may contact many other residues. This is a basic limitation of using statistical dependency for contact prediction that cannot be avoided
+
+- theoretical upper boundary on precision: simply not all contacts within 8A interact with each other and therefore will never be detected using covariance methods --> influences sensitivity.
+- strongly conserved residues can also not show covariance signals --> influences sensitivity
+
+#### Correlation vs Causation 
+
+One important shortcoming of covariance approaches arises from the fact that chains of amino acid interactions are very common in protein structures and lead to direct as well as indirect correlation signals [@Lapedes1999] [@Burger2010].  
+Many erronous couplings occur due to the correlation versus causation phenomenon. 
+Considering three protein residues. 
+Residue A interacts with residue B and B interacts with residue C. 
+Residue A and C do not physically interact, but there will still be a correlation between A and C.
+These transitive effects of covariation need to be disentangled to obtain the true coupling signal.
+Traditional covariance methods are unable to distinguish direct and indirect correlations.
 
 
 ## State of the Art CP
 
-###Correlation vs Causation
-
-A recurring difficulty when dealing with interacting systems is distinguishing the direct interactions, resulting from adjacent interplay between two units, from interactions mediated via multi-step paths across other elements [Ekeberg master thesis]
 
 ### Local methods
 MI and correlation measures suffer from transitivity of correlations
 
+
+### Global methods
+
+In 2010, Burger and Nijmwegen  developed a Bayesian network model [@Burger2010] that is able to disentangle direct from indirect correlations and introducing informative priors to improve precision. independently of weight in 2009
+
+
 ### Maximum entropy models for modelling protein families {#maxent}
 
-The principle of maximum entropy was postulated by Jaynes in 1957 [@Jaynes1957a] [@Jaynes1957b], stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and is the least biased estimate of a distribution given the measured constraints.
+The principle of maximum entropy was postulated by Jaynes in 1957 [@Jaynes1957a] [@Jaynes1957b], stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and therefore is the least biased estimate of a distribution given the measured constraints.
 
-Applied to the problem of modelling protein families, one would seek a probability distribution over protein sequences $\seq = (x_i, ..., x_L)$ of length $L$ reproducing the empirical single $\mathcal{f}(x_i \eq a)$ and pairwise $\mathcal{f}(x_i \eq a, x_j \eq b)$ amino acid frequencies of an alignment $\mathbf{X}$ with $N$ sequences:
+Applied to the problem of modelling protein families, one would seek a probability distribution over an alignment $\mathbf{X}$ comprising $N$ protein sequences $\seq^{(n)} = (x_i^{(n)},..., x_L^{(n)})$ of length $L$. 
+Every position $x_i^{(n)}$ in the [MSA](#abbrev) can take one of 21 states representing the 20 naturally occuring amino acids and a gap ('-') state.
+The distribution should reproduce the empirical single $\mathcal{f}(x_i \eq a)$ and pairwise $\mathcal{f}(x_i \eq a, x_j \eq b)$ amino acid frequencies of the alignment:
 
 \begin{equation}
  p(x_i\eq a) = \mathcal{f}(x_i\eq a) = \frac{1}{N}\sum_{n=1}^N I(x_i^{(n)} \eq a) \\
@@ -148,14 +178,15 @@ Applied to the problem of modelling protein families, one would seek a probabili
  (\#eq:emp-freq)
 \end{equation}
 
-Maximizing the entropy $S= -\sum_{\seq} p(\seq) \log p(\seq)$ of the distribution under the given constraints \@ref(eq:emp-freq) using Lagrange multipliers results in the formulation of an exponential model known as *Potts model* or its generalized form a *Markov Random Field*:
+Maximizing the entropy $S= -\sum_{\seq} p(\seq) \log p(\seq)$ of the distribution subject to the constraints given in eq. \@ref(eq:emp-freq) via Lagrange multipliers results in the formulation of an exponential model known as *Potts model* or its generalized form a *Markov Random Field*:
 
 \begin{equation}
-p(\seq) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i, x_j) \right)
+p(\seq | \v,\w) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right)
 (\#eq:max-ent-model)
 \end{equation}
 
-$Z$ is a normalization constant also known as *partition function* ensuring the total probabilty adds up to one by summing over all possible assignments to $\seq$. 
+
+$Z$ is a normalization constant also known as *partition function* that ensures the total probabilty adds up to one by summing over all possible assignments to $\seq$. 
 
 \begin{equation}
   Z = \sum_{\seq' \in [1,...,20]^L} p(\seq' | \v, \w)
@@ -163,22 +194,20 @@ $Z$ is a normalization constant also known as *partition function* ensuring the 
 \end{equation}
 
 
-#### Interpretation of model parameters
 
-Markov Random Field belongs to class of undirected graphical models. 
+
+
+#### Properties of model parameters
+
+The Langrange multipliers $\v$ and $\w$, introduced to satisfy the constraints in eq. \@ref(eq:emp-freq), specify the maximum entropy model and need to be tuned.
+The single potentials $v_i(a)$ correspond to the single amino acid frequencies whereas the pairwise potentials $w_{ij}(a,b)$, also called couplings, reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment.
+
+
+Maximum entropy models belong to the family of exponential models and thus have a unique global minimum. 
+
+
+Markov Random Field belongs to the class of undirected graphical models. 
 Therefore they can be represented as a graph with nodes corresponding to positions in the alignment and edges describing the dependency structure between nodes. 
-
-A protein sequence can be encoded in multiple ways, altering the resultign model. 
-
-Using a binary encoding for amino acids $x_i \in [0, 1]^{21}$, a sequence $x$ can be interpreted as continous random variable.
-For continous, real-valued variables x, the maximum entropy model can be represented as a graphical Gaussian model. 
-This interpretation of the model is used as the basis for PSICOV. 
-
-Otherwise sequences are represented as multinomial variables with 21 states (20 amino acids and one gap).
-
-
-The single-emission potentials $v_i(a)$ correspond to the single amino acid frequencies whereas the pairwise-emission potentials $w_{ij}(a,b)$ also called couplings reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment. 
-
 
 
 Can disentangle direct and indirect correlations.
@@ -188,38 +217,73 @@ Likelihood function is convex, but Maximum Likelihood inference of model is infe
 Likelihood function needs to be reevaluated at each iteration during optimization but partition function term sums over 20^L sequences.
 
 
-Many approximations:
-- mean field (Marks), Psicov
-- pseudo-likelihood 
-- belief-propagation (accurate but slow)
-
 
 #### Infering model parameters
 
-Typically, one would obtain parameter estimates by maximizing the log-likelihood of observed data. 
+Typically, one would obtain parameter estimates by maximizing the log-likelihood function of the parameters over observed sequences in the alignment $\mathbf{X}$: 
 
-However, given the 20 amino acids and typical proteins of length $L=100$, the partition function $Z$ has to sum over $20^100$ sequences.
-Because of this exponential complexityit is computationally intractable to evaluate the likelihood-function at every iteration of an optimization procedure. 
+\begin{equation}
+    \mathcal{L}(\v, \w | \mathbf{X}) = \sum_{n=1}^N \log p(\seq^{(n)}) = \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_i^{(n)}) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i^{(n)}, x_j^{(n)}) - \log Z \right]
+\end{equation}
 
-Several approaches have been developed to evade the infeasible computation of the partition function and obtain approximate solutions for the model parameters.
-Some of these approaches have successfully been adapted to the problem of modelling protein families.
+However, optimizing the log-likelihood requires computing the partition function that sums $20^L$ terms. 
+Naturally occurig protein domains comprise hundreds of residues. 
+Because of this exponential complexity in protein length L it is computationally intractable to evaluate the log-likelihood function at every iteration of an optimization procedure. 
+
+Several approximate solutions have been developed to evade the infeasible computation of the partition function.
+In 1999 Lapedes et al. [@Lapedes1999] were the first to apply maximum entropy models to the problem of predicting residue pairs in spatial proximity and thus entangling transitive effects.
+They used an iterative Monte Carlo procedure to obtain estimates of the partition function. 
+
+In 2009 Weight et al proposed a message-passing algorithm to approximate the partition function [@Weigt2009].
+Eventhough their approach is computationally very expensive and only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.
+
+Balakrishnan and collegues [@Balakrishnan2011] were the first to apply L1-regularized pseudo-likelihood optimization in 2011. 
+Pseudo-likelihood optimizes a different objective and does not aim at approximating the partition function Z.
+This approach is described in more detail in \@ref(Pseudo-Likelihood) as it represents the most successfull approach, eventhough it was not taken notice of at that time.
+
+Also in 2011, another approximate solution to the partition fucntion was proposed that uses mean-field expansion [@Morcos2011].
+This method is termed mfDCA.
+This study resulted in the first 3D models of yet unsolved protein structures being computed with the help of predicted contacts [@CITE]
+This method allowed high-throughput predictions as the mean-field approach boils down to inverting the covariance matrix which allows for shorter running times.
+
+A related approach is sparse inverse covariance estimation (PSICOV) method by Jones and colleggues.[@Jones2012] 
+They use L1-regularization to invert the correlation matrix and enforce sparsity which is known as grapgical Lasso [@Friedman2008].
+Both procedures, mfDCA and PSICOV, assume that model distribution is a multivariate Gaussian. 
+it has been shown by Banerjee et al. (2008) that this dual optimization solution also applies to binary data (as is the case in this application). 
+In order to represent the [MSA](#abbrev) as continuous distributed, each position is encoded as a 20-dimensional binary vector. 
+
+So far using pseudo-likelihood maximization to infer the model directly from the input alignment has proven to be the most accurate approach. 
+There exist several implementations of pseudo-likelihood maximization that vary only in implemenation details, perform similarly and thus are equally popular in the community: CCmpred [@Seemayer2014, ], plmDCA[@Ekeberg2014], GREMLIN [@Kamisetty2013].
 
 #### Pseudo-Likelihood
 
 Instead of optimizing the likelihood, Besag suggested in 1975 to rather optimize a function that he termed *pseudo-likelihood* that replaces the joint probability with the product over conditionals [@Besag1975]:
 
 \begin{equation}
-  p(\seq | \v,\w) = \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w)  = \prod_{i=1}^L \left( \frac{1}{Z_i} \exp[v_i(x_i)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(x_i, x_j)]   \right)
+  p(\seq | \v,\w) =   \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w) =  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(x_i, x_j) \right)
 \end{equation}
 
 Here, the normalization term $Z_i$ sums only over all assignments to one position $i$ in sequence:
 
 \begin{equation}
-  Z_i = \sum_{a=1}^{20} \exp[v_i(a)] \prod_{\substack{j=1 \\ j \neq i}}^L \exp[w_{ij}(a, x_j)] 
+  Z_i = \sum_{a=1}^{20} \exp \left( v_i(a) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(a, x_j) \right)
 \end{equation}
 
 
-Besag showed that *pseudo-likelihood* is an consistent estimator for the likelihood in the limit of large data. 
+The learning objective must include a regularization, as it is overparametrized. 
+The indeterminacy can be fixed by including a regularization prior that also prevents overfitting.
+Commonly [@Seemayer2014] [@Ekeberg2014], an L2-regularization is used which corresponds to a zero centered Gaussian prior.
+
+
+\begin{align}
+  R(\v, \w)  &= \mathcal{N}(\v | \vec{0}, \lambda_v I^{-1})  + \mathcal{N}(\w | \vec{0}, \lambda_w I^{-1}) \\
+             &= \lambda_v ||\v||_2^2 + \lambda_w ||\w||_2^2 
+\end{align}
+
+
+The pseudo-likelihood function retains the concavity of the likelihood.[@Stein2015a]
+Moreover, it has been shown that *pseudo-likelihood* is a consistent estimator in the limit of infinite data for pairwise [MRF](#abbrev) [@Besag1975] [@Gidas1988]. 
+That is, as the number of sequences in the alignment increases, pseudo-likelihood estimates converge towards the true full likelihood parameters.
 
 
 the proba- bility of them-th observation, xm, is approximated by the product of the conditional probabilities[@Stein2015a]
@@ -234,7 +298,6 @@ On one hand, this improvement might not be surpris-ing: it is known that, for ve
 Disregarding the improvements, we find that overall
 the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation[@Ekeberg2013]
 
-The pseudo-likelihood inherits the concavity[@Stein2015a]
 
 ### Computing contact map from coupling matrix
 
