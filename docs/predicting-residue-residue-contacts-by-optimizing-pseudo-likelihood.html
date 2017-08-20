@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-08-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="dataset.html">
+<link rel="next" href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  TeX: { 
+    extensions: ["mediawiki-texvc.js"],
+    Macros: {
+      eq: "\\!=\\!",
+      neff: "N_\\mathrm{eff}",
+      seq: "\\mathbf{x}",
+      v: "\\mathbf{v}",
+      via: "\\mathcal{v}_{ia}",
+      w: "\\mathbf{w}",
+      wijab: "\\mathcal{w}_{ijab}",
+      I: "\\mathbf{I}"
+      }
+  }
+});
+</script>
+
+<!--
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+   extensions: ["[siunitx]/siunitx.js"]
+ });
+ MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { TagSide: "left" }
+});
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.1</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.1.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.1.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.1.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.1.3</b> contact assisted denovo predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.2.1</b> Correlated mutations</a></li>
+<li class="chapter" data-level="1.2.2" data-path="contact-prediction.html"><a href="contact-prediction.html#benchmarking-methods"><i class="fa fa-check"></i><b>1.2.2</b> Benchmarking methods</a></li>
+<li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
+<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
+<li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
+<li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>2</b> Results</a><ul>
+<li class="chapter" data-level="2.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>2.1</b> Optimizing Full-Likelihood</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>2.1.1</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="2.1.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>2.1.2</b> Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
+<li class="chapter" data-level="3.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>3.2</b> Predicting Residue-Residue Contacts by Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>3.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="3.2.2" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>3.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="3.2.3" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>3.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>3.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="3.2.5" data-path="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html"><a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#regularization"><i class="fa fa-check"></i><b>3.2.5</b> Regularization</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><a href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><i class="fa fa-check"></i><b>3.3</b> Predicting Residue-Residue Contacts by Optimizing Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><a href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html#full-likelihood"><i class="fa fa-check"></i><b>3.3.1</b> Full-likelihood</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood" class="section level2">
+<h2><span class="header-section-number">3.2</span> Predicting Residue-Residue Contacts by Optimizing Pseudo-Likelihood</h2>
+<p>Dr Stefan Seemayer has reimplementated the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">29</a>]</span> in Python. Based on a fork of his private github repository I continued development and extended the software, which is now called CCMpredPy. It will soon be available at <a href="https://github.com/soedinglab/CCMpredPy" class="uri">https://github.com/soedinglab/CCMpredPy</a>. All computations in this thesis are performed with CCMpredPy unless stated otherwise.</p>
+<div id="pseudo-likelihood-objective-function-and-its-gradients" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Pseudo-Likelihood Objective Function and its Gradients</h3>
+<p>CCMpred optimizes the regularized negative pseudo-log-likelihood using conjugate gradients optimizer.</p>
+<p>The negative pseudo-log-likelihood, abbreviated <span class="math inline">\(\mathcal{npll}\)</span>, is defined as:</p>
+<span class="math display">\[\begin{equation}
+  \mathcal{npll}(\v,\w) =   - \sum_{i=1}^L  \left(  v_i(x_i) + \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(x_i, x_j)  - \log Z_i \right)
+\end{equation}\]</span>
+<p>The normalization term <span class="math inline">\(Z_i\)</span> sums over all assignments to one position <span class="math inline">\(i\)</span> in sequence:</p>
+<span class="math display">\[\begin{equation}
+  Z_i = \sum_{a=1}^{20} \exp \left( v_i(a) + \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(a, x_j) \right)
+\end{equation}\]</span>
+</div>
+<div id="diff-ccmpred-ccmpredpy" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Differences between CCMpred and CCMpredpy</h3>
+<p>CCMpredPy differs from CCMpred <span class="citation">[<a href="#ref-Seemayer2014">29</a>]</span> which is available at <a href="https://github.com/soedinglab/CCMpred" class="uri">https://github.com/soedinglab/CCMpred</a> in several details:</p>
+<ul>
+<li>Initialization of potentials <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span>
+<ul>
+<li>CCMpred initializes single potentials <span class="math inline">\(\v_i(a) = \log f_i(a) - \log f_i(a= &quot;-&quot;)\)</span> with <span class="math inline">\(f_i(a)\)</span> being the frequency of amino acid a at position i and <span class="math inline">\(a=&quot;-&quot;\)</span> representing a gap. A single pseudo-count has been added before computing the frequencies. Pair potentials <span class="math inline">\(\w\)</span> are intialized at 0.</li>
+<li>CCMpredPy initializes single potentials <span class="math inline">\(\v\)</span> with the <a href="abbrev.html#abbrev">ML</a> estimate of single potentials (see section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#regularization">3.2.5</a>) using amino acid frequencies computed as described in section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#amino-acid-frequencies">3.2.4</a>. Pair potentials <span class="math inline">\(\w\)</span> are initialized at 0.</li>
+</ul></li>
+<li>Regularization
+<ul>
+<li>CCMpred uses a Gaussian regularization prior centered at zero for both single and pair potentials. The regularization coefficient for single potentials <span class="math inline">\(\lambda_v = 0.01\)</span> and for pair potentials <span class="math inline">\(\lambda_w = 0.2 * (L-1)\)</span> with <span class="math inline">\(L\)</span> being protein length.</li>
+<li>CCMpredPy uses a Gaussian regularization prior centered at zero for the pair potentials. For the single potentials the Gaussian regularization prior is centered at the <a href="abbrev.html#abbrev">ML</a> estimate of single potentials (see section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#regularization">3.2.5</a>) using amino acid frequencies computed as described in section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#amino-acid-frequencies">3.2.4</a>. The regularization coefficient for single potentials <span class="math inline">\(\lambda_v = 10\)</span> and for pair potentials <span class="math inline">\(\lambda_w = 0.2 * (L-1)\)</span> with <span class="math inline">\(L\)</span> being protein length.</li>
+</ul></li>
+</ul>
+<p>Default settings for CCMpredPy have been chosen to best reproduce CCMpred results. A benchmark over a subset of approximately 3000 proteins confirms that performance measured as <a href="abbrev.html#abbrev">PPV</a> for both methods is almost identical (see Figure <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#fig:cmmpredvanilla-vs-ccmpredpy">3.2</a>).</p>
+
+<div class="figure"><span id="fig:cmmpredvanilla-vs-ccmpredpy"></span>
+<iframe src="img/ccmpredvanilla_vs_ccmpredpy_precision_vs_rank.html" width="100%" height="400px">
+</iframe>
+<p class="caption">
+Figure 3.2: Benchmark for CCMpred and CCMpredPy on a dataset of 3124 proteins. ccmpred-vanilla+apc: CCMpred <span class="citation">[<a href="#ref-Seemayer2014">29</a>]</span> with <a href="abbrev.html#abbrev">APC</a>. ccmpred-pll-centerv+apc: CCMpredPy with <a href="abbrev.html#abbrev">APC</a>. Specific flags that have been used to run both methods are described in detail in the text (see section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy">3.2.2</a>).
+</p>
+</div>
+<p>The benchmark in Figure <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#fig:cmmpredvanilla-vs-ccmpredpy">3.2</a> as well as all contacts predicted with CCMpred and CCMPredPy (using pseudo-likelihood) in my thesis have been computed using the following flags:</p>
+<p>Flags used with CCMpredPy (using pseudo-likelihood objective function):</p>
+<pre><code>--maxit 250                       # Compute a maximum of MAXIT operations
+--center-v                        # Use a Gaussian prior for single potentials centered at ML estimate v*
+--reg-l2-lambda-single 10         # regularization coefficient for single potentials
+--reg-l2-lambda-pair-factor 0.2   # regularization coefficient for pairwise potentials computed as reg-l2-lambda-pair-factor * (L-1)
+--pc-uniform                      # use uniform pseudocounts (1/21 for 20 amino acids + 1 gap state) 
+--pc-count 1                      # defining pseudo count admixture coefficient rho = pc-count/( pc-count+ Neff)
+--epsilon 1e-5                    # convergence criterion for minimum decrease in the last K iterations
+--ofn-pll                         # using pseudo-likelihood as objective function
+--alg-cg                          # using conjugate gradient to optimize objective function</code></pre>
+<p>Flags used with CCMpred:</p>
+<pre><code>-n 250    # NUMITER:  Compute a maximum of NUMITER operations
+-l 0.2    # LFACTOR:  Set pairwise regularization coefficients to LFACTOR * (L-1) 
+-w 0.8    # IDTHRES:  Set sequence reweighting identity threshold to IDTHRES
+-e 1e-5   # EPSILON:  Set convergence criterion for minimum decrease in the last K iterations to EPSILON</code></pre>
+</div>
+<div id="seq-reweighting" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Sequence Reweighting</h3>
+<p>Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. This uneven sampling of sequence space thus leaves certain regions unexplored whereas others are statistically overrepresented. To reduce the effects of overrepresented sequences, typically a simple weighting strategy <span class="citation">[<a href="#ref-Stein2015a">33</a>]</span> is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold. It has been found that reweighting improves contact prediction performance <span class="citation">[<a href="#ref-Jones2012">27</a>]</span> significantly but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 <span class="citation">[<a href="#ref-Morcos2011">20</a>]</span>. We chose an identity threshold of 0.8.</p>
+<p>Every sequence <span class="math inline">\(x_n\)</span> of length <span class="math inline">\(L\)</span> in an alignment with <span class="math inline">\(N\)</span> sequences has an associated weight <span class="math inline">\(w_n = 1/m_n\)</span>, where <span class="math inline">\(m_n\)</span> represents the number of similar sequences:</p>
+<span class="math display" id="eq:seqweight">\[\begin{equation} 
+  w_n = \frac{1}{m_n}, m_n = \sum_{m=1}^N I \left( ID(x_n, x_m) \geq 0.8 \right) \\
+  ID(x_n, x_m)=\frac{1}{L} \sum_{i=1}^L I(x_n^i = x_m^i)
+  \tag{3.1}
+\end{equation}\]</span>
+<p>The number of effective sequences <span class="math inline">\(\mathbf{\neff}\)</span> of an alignment is then the number of sequence clusters computed as:</p>
+<span class="math display" id="eq:neff">\[\begin{equation} 
+  \neff = \sum_{n=1}^N w_n
+  \tag{3.2}
+\end{equation}\]</span>
+
+</div>
+<div id="amino-acid-frequencies" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Computing Amino Acid Frequencies</h3>
+<p>Single and pairwise amino acid frequencies are computed from the alignment by weighting amino acid counts (see section <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#seq-reweighting">3.2.3</a>) and adding pseudocounts for numerical stability.</p>
+<p>Let <span class="math inline">\(a,b \in \{1,\ldots,20\}\)</span> be amino acids, <span class="math inline">\(q(x_i=a), q(x_i=a, x_j=b)\)</span> and <span class="math inline">\(q_0(x_i=a), q_0(x_i=a,x_j=b)\)</span> be the empirical single and pair frequencies with and without pseudocounts, respectively. We define</p>
+<span class="math display" id="eq:pseudocounts">\[\begin{align}
+  q(x_i \eq a) :=&amp; (1-\tau) \;  q_0(x_i \eq a) + \tau \tilde{q}(x_i\eq a) \\
+  q(x_i \eq a, x_j \eq b) :=&amp; (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \\
+                            &amp; q(x_i \eq a) \; q(x_j \eq b) \tag{3.3}
+\end{align}\]</span>
+<p>with <span class="math inline">\(\tilde{q}(x_i \eq a) := f(a)\)</span> being background amino acid frequencies and <span class="math inline">\(\tau \in [0,1]\)</span> is a pseudocount admixture coefficient, which is a function of the diversity of the multiple sequence alignment:</p>
+<span class="math display" id="eq:tau">\[\begin{equation}
+  \tau = \frac{N_\mathrm{pc}}{(N_\mathrm{eff} + N_\mathrm{pc})}
+  \tag{3.4}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(N_{pc} &gt; 0\)</span>.</p>
+<p>The formula for <span class="math inline">\(q(x_i \eq a, x_j \eq b)\)</span> in the second line in eq <a href="predicting-residue-residue-contacts-by-optimizing-pseudo-likelihood.html#eq:pseudocounts">(3.3)</a> was chosen such that for <span class="math inline">\(\tau \eq0\)</span> we obtain <span class="math inline">\(q(x_i \eq a, x_j \eq b) = q_0(x_i \eq a, x_j \eq b)\)</span>, and furthermore <span class="math inline">\(q(x_i \eq a, x_j \eq b) = q(x_i \eq a) q(x_j \eq b)\)</span> exactly if <span class="math inline">\(q_0(x_i \eq a, x_j \eq b) = q_0(x_i \eq a) q_0(x_j \eq b)\)</span>.</p>
+</div>
+<div id="regularization" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Regularization</h3>
+<p>As the model is overparameterized, regularization is an alternative solution compared to choosing a gauge. Furthermore it helps preventing overfitting.</p>
+<p>L2-regularization which corresponds to using a Gaussian prior, has proven to work better than L1 regularization <span class="citation">[<span class="citeproc-not-found" data-reference-id="cite"><strong>???</strong></span>]</span>.</p>
+<span class="math display">\[\begin{equation}
+  R(\v, \w) = \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})  + \mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) 
+\end{equation}\]</span>
+<span class="math display">\[\begin{align}
+ \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})   &amp;= \lambda_v ||\v||_2^2 \\
+                                                &amp;= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  \via^2
+\end{align}\]</span>
+<span class="math display">\[\begin{align}
+\mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) &amp;= \lambda_w ||\w||_2^2 \\
+                                            &amp;= \frac{\lambda_w}{2} \sum_{i=1}^L \sum_{\substack{j=1 \\ i \neq j}}^L  \sum_{a,b=1}^{20} \wijab^2
+\end{align}\]</span>
+<p>However, it makes sense to use a Gaussian prior for single emission potentials that is centered at the <a href="abbrev.html#abbrev">ML</a> estimate of the single potentials. Consider, …..</p>
+<span class="math display">\[\begin{align}
+ \mathcal{N}(\v |  \v^{*}, \lambda_v \I^{-1}) &amp;= \lambda_v ||\v - \v^{*}||_2^2 \\
+                                            &amp;= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  (\via - \via^{*})^2   
+\end{align}\]</span>
+<span class="math display">\[\begin{equation}
+  \via^* = \log q(x_i=a) - \frac{1}{20} \sum_{a&#39;=1}^{20} \log q(x_i=a&#39;)
+\end{equation}\]</span>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Seemayer2014">
+<p>29. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
+</div>
+<div id="ref-Stein2015a">
+<p>33. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise Interactions from Biological Data Using Maximum-Entropy Probability Models. PLOS Comput. Biol. <em>11</em>, e1004182. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Jones2012">
+<p>27. Jones, D.T., Buchan, D.W.A., Cozzetto, D., and Pontil, M. (2012). PSICOV: precise structural contact prediction using sparse inverse covariance estimation on large multiple sequence alignments. Bioinformatics <em>28</em>, 184–90. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/2/184.full" class="uri">http://bioinformatics.oxfordjournals.org/content/28/2/184.full</a>.</p>
+</div>
+<div id="ref-Morcos2011">
+<p>20. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S., Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011). Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proc. Natl. Acad. Sci. U. S. A. <em>108</em>, E1293–301. Available at: <a href="http://www.pnas.org/content/108/49/E1293.full" class="uri">http://www.pnas.org/content/108/49/E1293.full</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-methods.Rmd",
+"text": "Edit"
+},
+"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -2,13 +2,14 @@
 
 all you need to know
 
-## Dataset
+## Dataset {#dataset}
 
 A protein dataset has been constructed from the CATH (v4.1) [@Sillitoe2015] database for classification of protein domains.
 All CATH domains from classes 1(mainly $\alpha$), 2(mainly $\beta$), 3($\alpha+\beta$) have been selected and filtered for internal redundancy at the sequence level using the `pdbfilter` script from the HH-suite[@Remmert2012] with an E-value cutoff=0.1. 
 The dataset has been split into ten subsets aiming at the best possible balance between CATH classes 1,2,3 in the subsets. 
 All domains from a given CATH topology (=fold) go into the same subsets, so that any two subsets are non-redundant at the fold level. 
-Some overrepresented folds (e.g. Rossman Fold) have been subsampled to ensure that every subset contains at max 30% domains of the same fold. 
+Some overrepresented folds (e.g. Rossman Fold) have been subsampled ensuring that in every subset each class contains at max 50% domains of the same fold. 
+Consequently, a fold is not allowed to dominate a subset or even a class in a subset.
 In total there are 6741 domains in the dataset.
 
 
@@ -29,16 +30,86 @@ Another filtering step was applied to remove 80 proteins that do not hold the fo
 The final dataset is comprised of **6368** proteins with almost evenly distributed CATH classes over the ten subsets  (Figure \@ref(fig:dataset-cath-topologies)).
 
 
-```{r dataset-cath-topologies, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Distribution of CATH topologies in the ten datasets.'}
-knitr::include_url("img/cath_topologies_stacked_absolute.html")
+
+(ref:caption-dataset-cath-topologies) Distribution of CATH classes (1=mainly $\alpha$, 2=mainly $\beta$, 3=$\alpha-\beta$) in the dataset and the ten subsets.
+
+```{r dataset-cath-topologies, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-dataset-cath-topologies) '}
+knitr::include_url("img/dataset_statistics/cath_topologies_stacked_reative_notitle.html")
 ```
 
 
-## Contact Prediction
+## Optimizing Pseudo-Likelihood
 
-Dr Stefan Seemayer wrote a new implementation of the open-source software CCMpred [@Seemayer2014] in Python. His code forms the basis of all extensions that have been developed in this thesis.
+Dr Stefan Seemayer has reimplementated the open-source software CCMpred [@Seemayer2014] in Python. 
+Based on a fork of his private github repository I continued development and extended the software, which is now called CCMpredPy. 
+It will soon be available at https://github.com/soedinglab/CCMpredPy.
+All computations in this thesis are performed with CCMpredPy unless stated otherwise.
+
+### Pseudo-Likelihood Objective Function and its Gradients
+
+CCMpred optimizes the regularized negative pseudo-log-likelihood using conjugate gradients optimizer. 
+
+The negative pseudo-log-likelihood, abbreviated $\mathcal{npll}$, is defined as:
+
+\begin{equation}
+  \mathcal{npll}(\mathbf{X} | \v,\w) =   - \sum_{n=1}^N \sum_{i=1}^L  \left(  v_i(x_i^{(n)}) + \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(x_i^{(n)}, x_j^{(n)})  - \log Z_i^{(n)} \right)
+\end{equation}
+
+The normalization term $Z_i$ sums over all assignments to one position $i$ in sequence:
+
+\begin{equation}
+  Z_i^{(n)} = \sum_{a=1}^{20} \exp \left( v_i(a) + \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(a, x_j^{(n)}) \right)
+\end{equation}
+
+
+### Differences between CCMpred and CCMpredpy {#diff-ccmpred-ccmpredpy}
+
+CCMpredPy differs from CCMpred [@Seemayer2014] which is available at https://github.com/soedinglab/CCMpred in several details:
+
+- Initialization of potentials $\v$ and $\w$
+    - CCMpred initializes single potentials $\v_i(a) = \log f_i(a) - \log f_i(a= "-")$ with $f_i(a)$ being the frequency of amino acid a at position i and $a="-"$ representing a gap. A single pseudo-count has been added before computing the frequencies. Pair potentials $\w$ are intialized at 0.
+    - CCMpredPy initializes single potentials $\v$ with the [ML](#abbrev) estimate of single potentials (see section \@ref(regularization)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). Pair potentials $\w$ are initialized at 0.
+- Regularization
+    - CCMpred uses a Gaussian regularization prior centered at zero for both single and pair potentials. The regularization coefficient for single potentials $\lambda_v = 0.01$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
+    - CCMpredPy uses a Gaussian regularization prior centered at zero for the pair potentials. For the single potentials the Gaussian regularization prior is centered at the [ML](#abbrev) estimate of single potentials (see section \@ref(regularization)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). The regularization coefficient for single potentials $\lambda_v = 10$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
+
+Default settings for CCMpredPy have been chosen to best reproduce CCMpred results.
+A benchmark over a subset of approximately 3000 proteins confirms that performance measured as [PPV](#abbrev) for both methods is almost identical (see Figure \@ref(fig:cmmpredvanilla-vs-ccmpredpy)). 
+
+
+(ref:caption-cmmpredvanilla-vs-ccmpredpy) Benchmark for CCMpred and CCMpredPy on a dataset of 3124 proteins. ccmpred-vanilla+apc: CCMpred [@Seemayer2014] with [APC](#abbrev). ccmpred-pll-centerv+apc: CCMpredPy with [APC](#abbrev). Specific flags that have been used to run both methods are described in detail in the text (see section \@ref(diff-ccmpred-ccmpredpy)).
+
+```{r cmmpredvanilla-vs-ccmpredpy, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-cmmpredvanilla-vs-ccmpredpy)'}
+knitr::include_url("img/ccmpredvanilla_vs_ccmpredpy_precision_vs_rank.html")
+```
+
+The benchmark in Figure \@ref(fig:cmmpredvanilla-vs-ccmpredpy) as well as all contacts predicted with CCMpred and CCMPredPy (using pseudo-likelihood) in my thesis have been computed using the following flags:
+
+Flags used with CCMpredPy (using pseudo-likelihood objective function):
+```
+--maxit 250                       # Compute a maximum of MAXIT operations
+--center-v                        # Use a Gaussian prior for single potentials centered at ML estimate v*
+--reg-l2-lambda-single 10         # regularization coefficient for single potentials
+--reg-l2-lambda-pair-factor 0.2   # regularization coefficient for pairwise potentials computed as reg-l2-lambda-pair-factor * (L-1)
+--pc-uniform                      # use uniform pseudocounts (1/21 for 20 amino acids + 1 gap state) 
+--pc-count 1                      # defining pseudo count admixture coefficient rho = pc-count/( pc-count+ Neff)
+--epsilon 1e-5                    # convergence criterion for minimum decrease in the last K iterations
+--ofn-pll                         # using pseudo-likelihood as objective function
+--alg-cg                          # using conjugate gradient to optimize objective function
+```
+
+Flags used with CCMpred:
+```
+-n 250    # NUMITER:  Compute a maximum of NUMITER operations
+-l 0.2    # LFACTOR:  Set pairwise regularization coefficients to LFACTOR * (L-1) 
+-w 0.8    # IDTHRES:  Set sequence reweighting identity threshold to IDTHRES
+-e 1e-5   # EPSILON:  Set convergence criterion for minimum decrease in the last K iterations to EPSILON
+```
 
 ### Sequence Reweighting {#seq-reweighting}
+
+Sequences in a [MSA](#abbrev) do not represent independent draws from a probabilistic model. 
+Due to their evolutionary relationships they in fact have a complicated dependence structure.
 
 Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. 
 In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. 
@@ -65,9 +136,10 @@ The number of effective sequences $\mathbf{\neff}$ of an alignment is then the n
 
 \todo{Plot Performance for Seq weighting}
 
-### Computing Amino Acid Frequencies
 
-Single and pairwise amino acid frequencies are computed from the alignment by taking into account the weights of sequences (section \@ref(seq-reweighting)) and adding pseudocounts for numerical stability. 
+### Computing Amino Acid Frequencies {#amino-acid-frequencies}
+
+Single and pairwise amino acid frequencies are computed from the alignment by weighting amino acid counts (see section \@ref(seq-reweighting)) and adding pseudocounts for numerical stability. 
 
 Let $a,b \in \{1,\ldots,20\}$ be amino acids, $q(x_i=a), q(x_i=a, x_j=b)$ and $q_0(x_i=a), q_0(x_i=a,x_j=b)$ be the empirical single and pair frequencies with and without pseudocounts, respectively. 
 We define
@@ -75,16 +147,17 @@ We define
 
 
 \begin{align}
-  q(x_i \eq a) :=& (1-\tau) \;  q_0(x_i \eq a) + \tau \tilde{q}(x_i\eq a) \\
-  q(x_i \eq a, x_j \eq b) :=& (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \\
-                            & q(x_i \eq a) \; q(x_j \eq b) (\#eq:pseudocounts)
+    q(x_i \eq a) :=& (1-\tau) \;  q_0(x_i \eq a) + \tau \tilde{q}(x_i\eq a) \\
+    q(x_i \eq a, x_j \eq b) :=& (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \\
+                            & q(x_i \eq a) \; q(x_j \eq b) 
+(\#eq:pseudocounts)
 \end{align}
 
 with $\tilde{q}(x_i \eq a) := f(a)$ being background amino acid frequencies and $\tau \in [0,1]$ is a pseudocount admixture coefficient, which is a function of the diversity of the multiple sequence alignment:
 
 \begin{equation}
-  \tau = \frac{N_\mathrm{pc}}{(N_\mathrm{eff} + N_\mathrm{pc})}
-  (\#eq:tau)
+    \tau = \frac{N_\mathrm{pc}}{(N_\mathrm{eff} + N_\mathrm{pc})}
+(\#eq:tau)
 \end{equation} 
 
 where $N_{pc} > 0$.
@@ -92,11 +165,373 @@ where $N_{pc} > 0$.
 The formula for $q(x_i \eq a, x_j \eq b)$ in the second line in eq \@ref(eq:pseudocounts) was chosen such that for $\tau \eq0$ we obtain $q(x_i \eq a, x_j \eq b) = q_0(x_i \eq a, x_j  \eq b)$, and furthermore
  $q(x_i \eq a, x_j  \eq b) = q(x_i \eq a)  q(x_j \eq b)$ exactly if $q_0(x_i \eq a, x_j  \eq b) = q_0(x_i \eq a)  q_0(x_j \eq b)$.
 
-### Pseudolikelihood
+### Regularization {#regularization}
 
-### Full-likelihood
+As the model is overparameterized, regularization is an alternative solution compared to choosing a gauge.
+Furthermore it helps preventing overfitting. 
 
-Dr Stefan Seemayer provided a Python implementation of CCMpred that was extended to optimize the full-likelihood of the [MRF](#abbrev).
+L2-regularization which corresponds to using a Gaussian prior, has proven to work better than L1 regularization [@cite].
+
+\begin{equation}
+  R(\v, \w) = \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})  + \mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) 
+\end{equation}
+
+
+\begin{align}
+ \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})   &= \lambda_v ||\v||_2^2 \\
+                                                &= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  \via^2
+\end{align}
+
+
+\begin{align}
+\mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) &= \lambda_w ||\w||_2^2 \\
+                                            &= \frac{\lambda_w}{2} \sum_{i=1}^L \sum_{\substack{j=1 \\ i \neq j}}^L  \sum_{a,b=1}^{20} \wijab^2
+\end{align}
+
+
+However, it makes sense to use a Gaussian prior for single emission potentials that is centered at the [ML](#abbrev) estimate of the single potentials. 
+Consider, .....
+
+
+\begin{align}
+ \mathcal{N}(\v |  \v^{*}, \lambda_v \I^{-1}) &= \lambda_v ||\v - \v^{*}||_2^2 \\
+                                               &= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  (\via - \via^{*})^2   
+\end{align}
+
+\begin{equation}
+  \via^* = \log q(x_i=a) - \frac{1}{20} \sum_{a'=1}^{20} \log q(x_i=a')
+\end{equation}
+
+
+## Analysis of Coupling Matrices
+
+### Correlation of Couplings with Contact Class {#method-coupling-correlation}
+
+Approximately 100000 residue pairs have been filtered for contacts and non-contacts respectively according to the following criteria:
+
+- consider only residue pairs separated by at least 10 positions in sequence
+- minimal diversity ($=\frac{\sqrt{N}}{L}$) of alignment = 0.3
+- minimal number of non-gapped sequences = 1000
+- $\Cb$ distance threshold for contact: $<8\AA$
+- $\Cb$ distance threshold for noncontact: $>25\AA$
+
+### Coupling Distribution Plots {#method-coupling-profile}
+
+For one-dimensional coupling distribution plots the residue pairs and respective pseudo-log-likelihood coupling values $\wijab$ have been selected as follows:
+
+- consider only residue pairs separated by at least 10 positions in sequence
+- discard residues that have more than 30% gaps in the alignment
+- discard residue pairs that have insufficient evidence in the alignment: $N_{ij} \cdot q_i(a)  \cdot q_j(b) < 100$ with:
+    - $N_{ij}$ is the number of sequences with neither a gap at position i nor at position j
+    - $q_i(a)$ and $q_j(b)$ are the frequencies of amino acids a and b at positions i and j (computed as described in section \@ref(amino-acid-frequencies)) 
+    
+The same criteria have been applied for selecting couplings for the two-dimensional distribution plots with the difference that evidence for a single coupling term has to be $N_{ij} \cdot q_i(a) \cdot q_j(b) < 80.$
+
+### Bayesian Model for Residue-Resdiue Contact Prediction
+
+## Off-diagonal elements in $\H$ {#Hessian-offdiagonal}
+
+
+## Efficiently Computing the negative Hessian of the regularized log-likelihood {#neg-Hessian-computation}
+
+Surprisingly, the elements of the Hessian at the mode $\w^*$ are easy to compute. 
+Let $i,j,k,l \in \{1,\ldots,L\}$ be columns in the [MSA](#abbrev) and let $a, b, c, d \in \{1,\ldots,20\}$ represent amino acids. 
+
+The partial derivative $\partial / \partial \w_{klcd}$ of the second term in the gradient of the couplings in eq. \@ref(eq:gradient-LLreg-pair) is
+
+\begin{eqnarray}
+    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab } 
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\partial \left( \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} \right)}{\partial \wklcd}   I(y_i \eq a, y_j \eq b) \\
+    &&- \lambda_w \delta_{ijab,klcd} \,,
+\end{eqnarray}
+
+
+where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the product rule, we find
+
+\begin{eqnarray}
+    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
+    & \times & \left[ \frac{\partial}{\partial \wklcd} \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}  w_{ij}(y_i,y_j)  \right) 
+                  - \frac{1}{Z_n(\v,\w)} \frac{\partial  Z_n(\v,\w) }{\partial\wklcd} \right] \\
+    &-& \lambda_w \delta_{ijab,klcd} \\
+
+    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
+    & \times & \left[ I(y_k \eq c, y_l \eq d) - \frac{\partial}{\partial \wklcd} \log Z_n(\v,\w) \right] \\
+    &-& \lambda_w \delta_{ijab,klcd} \,.
+\end{eqnarray}
+
+
+We simplify this expression using
+
+\begin{equation}
+    p(\mathbf{y} | \v,\w) = \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z_n(\v,\w)}  ,
+\end{equation} 
+
+yielding
+
+\begin{eqnarray}
+    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab} 
+    &=&  -  \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b, y_k \eq c, y_l \eq d)  \\
+    &+& \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \mathcal{S}_n} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b ) \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w)  I(y_k \eq c, y_l \eq d ) \\
+    &-& \lambda_w \delta_{ijab,klcd} \,.
+\end{eqnarray}
+
+If $\X$ does not contain too many gaps, this expression can be approximated by 
+
+\begin{eqnarray}
+    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
+    &=& - N_{ijkl} \: p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d | \v,\w)  \nonumber \\
+    && +  N_{ijkl} \: p(x_i \eq a, x_j \eq b | \v,\w) \, p(x_k \eq c, x_l \eq d | \v,\w) - \lambda_w \delta_{ijab,klcd} \,,
+\end{eqnarray}
+
+where $N_{ijkl}$ is the number of sequences that have a residue in $i$, $j$, $k$ and $l$.
+
+Looking at three cases separately: 
+  
+  - case 1: $(k,l) = (i,j)$ and $(c,d) = (a,b)$
+  - case 2: $(k,l) = (i,j)$ and $(c,d) \ne (a,b)$
+  - case 3: $(k,l) \ne (i,j)$ and $(c,d) \ne (a,b)$,
+  
+the elements of $\H$, which are the negative second partial derivatives of $\LLreg(\v^*,\w)$ with respect to the components of $\w$, are
+
+\begin{eqnarray}
+    \mathrm{case~1:} (\H)_{ijab, ijab}  
+    &=&  N_{ij} \, p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*) \,) \\
+    &&   + \lambda_w \\
+    \mathrm{case~2:} (\H)_{ijcd, ijab}  
+    &=&  - N_{ij} \, p(x_i \eq a, x_j \eq b |\v^*,\w^*) \, p(x_i \eq c, x_j \eq d |\v^*,\w^*) \\
+    \mathrm{case~3:} (\H)_{klcd, ijab}  
+    &=&   N_{ijkl} \, p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d  | \v^*,\w^*) \nonumber \\
+    &&    - N_{ijkl} \, p(x_i \eq a, x_j \eq b | \v^*,\w^*)\, p(x_k \eq c, x_l \eq d | \v^*,\w^*) \,.
+(\#eq:Hw-offdiag)
+\end{eqnarray}
+
+We know from eq. \@ref(eq:gradient-LLreg-approx) that at the mode $\w^*$ the model probabilities match the empirical frequencies up to a small regularization term,
+
+\begin{equation}
+    p(x_i \eq a, x_j \eq b | \v^*,\w^*) = q(x_i \eq a, x_j \eq b) - \frac{\lambda_w}{N_{ij}}  \wijab^* \,,
+\end{equation}
+
+and therefore the negative Hessian elements in cases 1 and 2 can be expressed as
+
+
+<!-- The first term ($N_{ij} \left(\,q(x_i\!=\!a, x_j\!=\!b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right)$) actually is accurate and only the second $(\dots)$ iss approximated according to the gap approximation in eq. \@ref(eq:gradient-LLreg-approx) -->
+
+\begin{align}
+   (\H)_{ijab, ijab} =& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
+   & + \lambda_w \\
+   (\H)_{ijcd, ijab} =& -N_{ij} \left(\,q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( q(x_i \eq c, x_j \eq d) -\frac{\lambda_w}{N_{ij}} \wijcd^* \right) .
+(\#eq:Hw-diag)
+\end{align}
+
+
+In order to write the previous eq. \@ref(eq:Hw-diag) in matrix form, the *regularised* empirical frequencies $\qij$ will be defined as
+
+\begin{equation}
+    (\qij)_{ab} = q'_{ijab} := q(x_i \eq a, x_j \eq b) - \lambda_w  \wijab^* / N_{ij} \,,
+\end{equation}
+
+and the $400 \times 400$ diagonal matrix $\Qij$ will be defined as
+
+\begin{equation}
+    \Qij := \text{diag}(\qij) \; .
+\end{equation}
+
+Now eq. \@ref(eq:Hw-diag) can be written in matrix form
+
+\begin{equation}
+	 \H_{ij} = N_{ij} \left( \Qij -  \qij \qij^{\mathrm{T}} \right)  + \lambda_w \I \; .
+(\#eq:mat-Hij)
+\end{equation}
+
+
+## Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
+
+It is possible to efficiently invert the matrix $\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k$, that is introduced in \@ref(coupling-prior) where $\H_{ij}$ is the $400 \times 400$ diagonal block submatrix $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$ and $\Lambda_k$ is an invertible diagonal precision matrix that is introduced in section \@ref(modeling-dep-of-wij). 
+
+Equation \@ref(eq:mat-Hij) can be used to write $\Lijk$ in matrix form as
+
+\begin{equation}
+	 \Lijk = \H_{ij} - \lambda_w \I + \Lk = N_{ij} \Qij- N_{ij} \qij \qij^{\mathrm{T}} + \Lk \,.
+(\#eq:mat-Lijk)
+\end{equation}
+
+Owing to eqs. \@ref(eq:normalized-emp-freq) and \@ref(eq:zero-sum-wij), $\sum_{a,b=1}^{20} q'_{ijab} = 1$.
+The previous equation \@ref(eq:mat-Lijk) facilitates the calculation of the inverse of this matrix using the *Woodbury identity* for matrices
+
+\begin{equation}
+    (\mathbf{A} + \mathbf{B} \mathbf{D}^{-1} \mathbf{C})^{-1} = \mathbf{A}^{-1} - \mathbf{A}^{-1} \mathbf{B} (\mathbf{D} + \mathbf{C} \mathbf{A}^{-1} \mathbf{B}) ^{-1} \mathbf{C} \mathbf{A}^{-1} \;. 
+\end{equation}
+
+by setting 
+
+\begin{align}
+  \mathbf{A} &= N_{ij} \Qij + \Lk \\
+  \mathbf{B} &= \qij \\
+  \mathbf{C} &= \qij^\mathrm{T} \\
+  \mathbf{D} &=- N_{ij}^{-1} \\
+\end{align}
+
+\begin{align}
+	  \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} & = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \\
+     & = \mathbf{A}^{-1} + \frac{ (\mathbf{A}^{-1} \qij) (\mathbf{A}^{-1} \qij)^{\mathrm{T}} }{ N_{ij}^{-1} - \qij^\mathrm{T} \mathbf{A}^{-1} \qij} \,.
+(\#eq:fast-inverse-mat-Lijk)
+\end{align}
+
+Note that $\mathbf{A}$ is diagonal as $\Qij$ and $\Lk$ are diagonal matrices: $\mathbf{A} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab})$.
+Moreover, $\mathbf{A}$ has only positive diagonal elements, because $\Lk$ is invertible and has only positive diagonal elements and because $q'_{ijab} = p(x_i \eq a, x_j \eq b | \v^*,\w^*) \ge 0$. 
+
+Therefore $\mathbf{A}$ is invertible: $\mathbf{A}^{-1} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab} )^{-1}$.
+
+Because $\sum_{a,b=1}^{20} q'_{ijab} = 1$, the denominator of the second term is 
+
+\begin{equation}
+    N_{ij}^{-1} - \sum_{a,b=1}^{20}  \frac{{q'}_{ijab}^2}{N_{ij} q'_{ijab} + {(\Lk)}_{ab,ab} } > N_{ij}^{-1} - \sum_{a,b=1}^{20} \frac{{q'}^2_{ijab}}{N_{ij} q'_{ijab}} = 0
+\end{equation}
+
+
+and therefore the inverse of $\Lijk$ in eq. \@ref(eq:fast-inverse-mat-Lijk) is well defined.
+
+The log determinant of $\Lijk$ is necessary to compute the ratio of Gaussians (see equation \@ref(eq:p-X-r-final)) and can be computed using the matrix determinant lemma:
+
+\begin{equation}
+  \det(\mathbf{A} + \mathbf{uv}^\mathrm{T}) = (1+\mathbf{v}^\mathrm{T} \mathbf{A}^{-1} \mathbf{u}) \det(\mathbf{A})
+\end{equation}
+
+Setting $\mathbf{A} = N_{ij} \Qij + \Lk$ and $\v = \qij$ and $\mathbf{u} = - N_{ij} \qij$ yields
+
+\begin{equation}
+  \det(\Lijk ) = \det(\H_{ij} - \lambda_w \I + \Lk) = (1 - N_{ij}\qij^\mathrm{T} \mathbf{A}^{-1}\qij) \det(\mathbf{A}) \,.
+\end{equation}
+
+$\mathbf{A}$ is diagonal and has only positive diagonal elements so that $\log(\det(\mathbf{A})) = \sum \log \left( \text{diag}(\mathbf{A}) \right)$.
+
+
+
+## Modelling the dependence of $\wij$ on distance
+
+It is straightforward to extend the model presented in \@ref(coupling-prior) for distances. 
+
+The mixture weights $g_k(\rij)$ in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax over linear functions $\gamma_k(\rij)$ (Figure \ref{fig:g_k(r)}):
+
+\begin{align}
+	  g_k(\rij)        &= \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} \, , \nonumber \\
+	  \gamma_k(\rij)   &= - \sum_{k'=0}^{k} \alpha_{k'} ( \rij - \rho_{k'}) .
+(\#eq:definition-mixture-weights}
+\end{align}
+
+(ref:caption-softmax_linear_fct) The Gaussian mixture coefficients $g_k(\rij)$ of $p(\wij|\rij)$ are modelled as softmax over linear functions $\gamma_k(\rij)$. $\rho_k$ sets the transition point between neighbouring components $g_{k-1}(\rij)$ and $g_k(\rij)$, while $\alpha_k$ quantifies the abruptness of the transition between $g_{k-1}(\rij)$ and $g_k(\rij)$.
+
+```{r softmax_linear_fct, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-softmax_linear_fct)'}
+knitr::include_graphics("img/theory/softmax_linear_fct.png")
+```
+
+
+The functions $g_k(\rij)$ remain invariant when adding an offset to all $\gamma_k(\rij)$. 
+This degeneracy can be removed by setting $\gamma_0(\rij) = 0$ (i.e., $\alpha_0 = 0$ and $\rho_0=0$). 
+Further, the components are ordered, $\rho_1> \ldots > \rho_K$ and it is demanded that $\alpha_k > 0$ for all $k$. 
+This ensures that for $\rij \rightarrow \infty$ we will obtain $g_0(\rij) \rightarrow 1$ and hence $p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )$.
+
+The parameters $\rho_k$ mark the transition points between the two Gaussian mixture components $k-1$ and $k$, i.e., the points at which the two components obtain equal weights. 
+This follows from $\gamma_k(\rij) - \gamma_{k-1}(r) = \alpha_{t} ( \rij - \rho_{t})$ and hence $\gamma_{k-1}(\rho_k) = \gamma_k(\rho_k)$. 
+A change in $\rho_k$ or $\alpha_k$ only changes the behaviour of $g_{k-1}(\rij)$ and $g_k(\rij)$ in the transition region around $\rho_k$. 
+Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $\alpha_k$ and $\rho_k$ as independent of each other as possible, rendering the optimisation of these parameters more efficient.
+
+
+## Training the Hyperparameters $\muk$ and $\Lk$
+
+The model parameters $\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)$,  $\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)$ will be trained by maximizing the logarithm of the full likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^N$ and associated structures with distance vectors $\r^1,\ldots,\r^N$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$:
+
+\begin{equation}
+	L\!L(\mathbf{\mu}, \mathbf{\Lambda}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^N  \log p(\X^n | \r^n, \mathbf{\mu}, \mathbf{\Lambda} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
+\end{equation}
+
+The regulariser penalizes values that deviate too far from zero and values for: 
+
+\begin{align}
+ 	R(\mathbf{\mu}, \mathbf{\Lambda}) = -\frac{1}{2 \sigma_{\mu}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \mu_{k,ab}^2 
+					    -\frac{1}{2 \sigma_\text{diag}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \Lambda_{k,ab,ab}^2
+(\#eq:reg)
+\end{align}
+
+Reasonable values are $\sigma_{\mu}=0.1$, $\sigma_\text{diag} = 100$.  
+
+The log likelihood can be optimized using LBFG-S-B[@CITE], which requires the computation of the gradient of the log likelihood. 
+For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index $n$ in $\rij^n$, $(\wij^n)^*$ and $\Hij^n$.
+
+From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
+
+\begin{equation}
+ 	L\!L(\mathbf{\mu}, \mathbf{\Lambda}) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
+\end{equation}
+
+
+### The gradient of the log likelihood with respect to $\mathbf{\mu}$
+ 
+ 
+By applying the formula $d f(x) / dx = f(x) \, d \log f(x) / dx$ to the previous equation one obtains
+
+\begin{equation}
+ \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+	= \sum_{1\le i<j\le L}  
+	\frac{ 
+		g_{k}(\rij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
+			 \frac{\partial}{\partial \mu_{k,ab}}  \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)  
+	 } { \sum_{k'=0}^K g_{k'}(\rij) \, \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
+(\#eq:gradient-mukab)
+\end{equation}
+
+To simplify this expression, we define the responsibility of component $k$ for the posterior distribution of $\wij$, the probability that $\wij$ has been generated by component $k$:
+
+\begin{align}
+      p(k|ij)  = 
+      \frac{ g_{k}(\rij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
+    {\sum_{k'=0}^K g_{k'}(\rij) \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk', \Lijk'^{-1})} }  \,.
+(\#eq:responsibilities)
+\end{align}
+
+
+By substituting the definition for responsibility, \@ref(eq:gradient-mukab) simplifies
+
+\begin{equation}
+  \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+	= \sum_{1\le i<j\le L}  p(k | ij)  \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right) ,
+\end{equation}
+and analogously for partial derivatives with respect to $\Lambda_{k,ab,cd}$.
+
+The partial derivative inside the sum can be written
+\begin{equation}
+	 \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
+	= \frac{1}{2}  \frac{\partial}{\partial \mu_{k,ab}}   \left( \log | \Lk | - \muk^\mathrm{T} \Lk \muk - \log | \Lijk | + \muijk^\mathrm{T} \Lijk \muijk \right)\,.
+\end{equation}
+
+Using the following formula for a matrix $\mathbf{A}$, a real variable $x$ and a vector $\mathbf{y}$ that depends on $x$,
+\begin{equation}
+	\frac{\partial}{\partial x} \left( \mathbf{y}^\mathrm{T} \mathbf{A} \mathbf{y} \right) = \frac{\partial \mathbf{y}^\mathrm{T}}{\partial x}  \mathbf{A} \mathbf{y} + \mathbf{y}^\mathrm{T} \mathbf{A} \frac{\partial \mathbf{y}}{\partial x}  =  \mathbf{y}^\mathrm{T} (\mathbf{A} + \mathbf{A}^\mathrm{T}) \frac{\partial \mathbf{y}}{\partial x} 
+\end{equation}
+
+the partial derivative therefore becomes
+
+\begin{align}
+	 \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
+	=& \left( -\muk^\mathrm{T} \Lk \mathbf{e}_{ab} \, +  \muijk^\mathrm{T} \Lijk \Lijk^{-1} \Lk \mathbf{e}_{ab} \right) \\
+	=& \mathbf{e}^\mathrm{T}_{ab} \Lk ( \muijk - \muk ) \; . 
+\end{align}
+
+Finally, the gradient of the log likelihood with respect to $\mathbf{\mu}$ becomes
+
+\begin{align}
+    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+	=  \sum_{1\le i<j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
+(\#eq:gradient-mukab-final)
+\end{align}
+
+
+
+## Training the Hyperparameters $\rho_k$ and $\alpha_k$ for distance-dependent prior
+
+
 
 
 

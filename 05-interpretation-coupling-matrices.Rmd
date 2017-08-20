@@ -1,0 +1,180 @@
+# Interpretation of Coupling Matrices
+
+State-of-the-art contact prediction methods map the 20 x 20 coupling matrices $w_{ij}$ onto scalar values to obtain contact scores for each residue pair (see section \@ref(post-processing-heuristics)). 
+By doing so, the full information contained in coupling matrices is lost:
+
+  - the contribution of individual couplings $\wijab$
+  - the direction of couplings (positive or negative)
+  - the correlation between couplings $\wijab$ and $\wijcd$
+  - intrinsic biological meaning
+  
+The following analyses give some intuition for the information contained in coupling matrices.
+
+## Single Coupling Values Carry Evidence of Contacts
+
+Given the success of [DCA](#abbrev) methods, it is clear that contact scores are good indicators of spatial proximity for residue pairs. 
+As described in section \@ref(post-processing-heuristics), a contact score for a residue pair is commonly computed as the square root over the sum of squared coupling values. 
+
+
+Figure \@ref(fig:sq-coupling-correlation) shows the correlation between squared coupling values and contact class.
+All couplings have a positive class correlation, meaning the stronger their squared value, the more likely a contact can be inferred. 
+Generally, couplings that involve any aliphatic amino acid (I, L, V) or alanine express the strongest class correlation. 
+In contrast, C-C or aromatic pairings (involving Y, F, W) correlate only weakly with contact class.
+Therefore, these couplings often might contribute to false positive predictions. 
+
+(ref:caption-sq-coupling) Correlation of squared coupling values $(\wijab)^2$ with contact class (contact=1, non-contact=0) for approximately 100 000 residue pairs per class (details see section \@ref(method-coupling-correlation)). Contacts defined as residue pairs with $\Cb < 8 \AA$ and non-contacts as residue pairs with $\Cb > 25 \AA$. 
+
+
+```{r sq-coupling-correlation, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-sq-coupling)'}
+knitr::include_url("img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html", height = "750px")
+```
+
+Apparantly, distinct couplings are of varying importance for contact inference. 
+Without squaring the coupling values, these charateristics become even more pronounced. 
+
+Figure \@ref(fig:coupling-correlation) shows the correlation of raw coupling values with contact class.
+Interestingly, in contrast to the finding with squared coupling values, only couplings for charged pairs have strong correlation (positive and negative) with class value, whereas couplings for hydrophobic pairs correlate to a much lesser extent (mostly negative).
+This implies that absolute (squared) coupling strength is much more indicative of a contact for hydrophobic pairings than the direction of coupling.
+On the contrary, for charged residue pairs the direction of a coupling value is a stronger indicator than the strength of the squared coupling value.
+
+As with squared couplings, raw couplings for aromatic pairs or C-C pairs correlate only weakly with contact class. 
+For these pairings, neither coupling strength, nor direction of coupling seems to be a good indicator for a contact.
+```{r coupling-correlation, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-correlation)'}
+knitr::include_url("img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html", height = "750px")
+```
+
+Of course, looking only at correlations can be misleading if there are non-linear patterns in the data, for example higher order dependencies between couplings. 
+For this reason it is advisable to take a more detailed view at coupling matrices and the distributions of their values.
+
+## Physico-Chemical Fingerprints in Coupling Matrices
+
+
+The correlation analysis of raw coupling matrices in the last section revealed that certain coupling values tend to indicate a contact more strongly than others. 
+Single coupling matrices of residue contacts often display striking patterns that agree with the previuos findings. 
+Most often, these patterns suggest biological relevant details of the interdependency between both residues.
+
+Figure \@ref(fig:coupling-matrix-ionic-interaction) visualizes the inferred coupling matrix for a residue pair (residues 6 and 82) in protein 1awq, chain A.
+Clearly visible is a cluster of strong coupling values for charged and polar residues (E,D,K,R,Q). 
+Positive coupling values can be observed between positively charged residues (R,K) and negatively charged residues (E,D), whereas coupling values between equally charged residues are negative. 
+The coupling matrix perfectly reflects the interaction preference for residues forming salt bridges. 
+Indeed, in the protein structure residue 6 (glutamic acid) forms a salt bridge with residue 82 (lysine) as can be seen in figure \@ref(fig:coupling-matrix-pymol).
+
+(ref:caption-coupling-matrix-ionic-interaction) Coupling matrix for residues 6 and 82 in protein 1awq chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+
+```{r coupling-matrix-ionic-interaction, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
+knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html", height = "750px")
+```
+
+Figure \@ref(fig:coupling-matrix-hydrophobic-interaction) visualizes the coupling matrix for a pair of hydrophobic residues (residues 29 and 39) in protein 1ae9 chain A.
+Hydrophobic pairings have strong coupling values but the couplings also reflect a sterical constraint:
+alanine as a small hydrophobic residue is favoured at either position 29 or position 39, but disfavoured to appear at both positions.
+Figure \@ref(fig:coupling-matrix-pymol) illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.
+
+(ref:caption-coupling-matrix-hydrophobic-interaction) Coupling matrix for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+
+```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
+knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html", height = "750px")
+```
+
+<!---
+<iframe width="750" height="750" frameborder="0" scrolling="no" src="img/coupling_matrix_analysis/coupling_matrix_1awqA00_92_129_notitle.html">
+-->
+
+(ref:caption-coupling-matrix-pymol) Interactions between protein side chains. Left: residue 6 (glutamic acid) forming a salt bridge with residue 82 (lysine) in protein 1awq, chain A. Right: residue 29 (alanine) and residue 39 (leucine) within the hydrophobic core of protein 1ae9 chain A.   
+
+```{r coupling-matrix-pymol, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-coupling-matrix-pymol)'}
+knitr::include_graphics(c("img/coupling_matrix_analysis/1a9xA05_6_82.png", "img/coupling_matrix_analysis/1ae9A00_29_39.png"))
+```
+
+
+Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Appendix \@ref(pi-cation)), aromatic-proline interactions (see Appendix \@ref(aromatic-proline)), sulfur-aromatic interactions or disulphide bonds (see Appendix \@ref(disulfide)). 
+
+Coucke and collegues [@Coucke2016] performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs.
+They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. 
+By looking at specific populations of residue pairs, like buried and exposed residues or residues pairs from specific protein classes (small, mainly $\alpha$, etc), the eigenmodes capture very characteristic interactions for each class, e.g. rare disulfide contacts withins small proteins and hydrophilic contacts between exposed residues. 
+Their study confirms our qualitative observation that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices. 
+
+
+## Coupling Profiles Vary with Distance
+
+Analyses in the previous sections showed that certain coupling values correlate more or less strong with contact class and that coupling matrices for contacts express biological meaningpull patterns. 
+
+More insights can be obtained by looking at the distribution of distinct coupling values for contacts, non-contacts and arbitrary populations of residue pairs. 
+To avoid uninformative couplings, we consider only residue pairs with a sequence separation > 10 and with enough evidence for a certain amino acid pairing (see Methods section \@ref(method-coupling-profile) for details).
+
+Figure \@ref(fig:1d-coupling-profile-0-5) shows the distribution of selected couplings for residue pairs within a $\Cb$ distance $< 5\AA$. 
+The distribution of R-E and E-E coupling values is shifted and skewed towards positive and negative values respectively. 
+This is in accordance with attracting electrostatic interactions between the positively charged side chain of arginine and the negatively charged side chain of gluatamic acid and also with repulsive interactions between the two negatively charged gluatamic acid side chains.
+Couling values for C-C pairs have a broad distribution that is skewed towards positive values, reflecting the strong signals obtained from covalent disulphide bonds. 
+Hydrophobic pairs like V-I have an almost symmetric coupling distribution, confirming the finding that the direction of coupling is not indicative of a true contact whereas the strength of the coupling is.
+Hydrophobic interactions arising from the hydrophobic effect are not specific or directed and can easily be substituted by other hydrophobic residues, which explains the not very pronounced positive coupling signal compared to more specific interactions, e.g ionic interactions. 
+The distribution of aromatic coupling values like F-W is slightly skewed towards negative values, accounting for steric hindrance of their large side chains at small distances. 
+
+(ref:caption-1d-coupling-profile-0-5) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $< 5\AA$ (see Methods section \@ref(method-coupling-profile) for details).
+
+```{r 1d-coupling-profile-0-5, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)'}
+knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_0_5.html")
+```
+
+In an intermediate $\Cb$ distance range between $8\AA$ and $12\AA$ the distributions for all coupling values are centered close to zero and are less broad. 
+The distributions are still shifted and skewed as for $\Cb$ distance $< 5\AA$ but much less pronounced. 
+For aromatic pairs like F-W, the distribution of coupling values has very long tails, suggesting strong couplings for aroamtic side chains at this distance.
+
+(ref:caption-1d-coupling-profile-8-12) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $< 5\AA$ (see Methods section \@ref(method-coupling-profile) for details).
+
+```{r 1d-coupling-profile-8-12, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-8-12)'}
+knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_8_12.html")
+```
+
+
+Figure \@ref(fig:1d-coupling-profile-20-50) shows the distribution of selected couplings for residue pairs far apart in the protein structure ($\Cb$ distance $> 20\AA$).  
+The distribution for all couplings is centered at zero and has small variance. 
+For C-C coupling values, the distribution has a long tail for positve values, presumably arising from the fact that the maximum entropy model cannot distuinguish highly conserved signals of multiple disulphide bonds within a protein. 
+This observation also agrees with the previous finding that C-C couplings correlate only weakly with contact class.
+The same arguments apply to couplings of aromatic pairs that have a comparably broad distribution and do not correlate strongly with contact class.
+The strong coevolution signals for aromatic pairs even at high distance ranges might be to insufficient disentanglig of transitive effects, as aromatic residues are known to form network-like structures in the protein core that stabilize protein structure (see Figure \@ref(fig:aromatic-network) in Appendix)[@Burley1985]. 
+
+
+
+(ref:caption-1d-coupling-profile-20-50) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $> 25\AA$ (see Methods section \@ref(method-coupling-profile) for details).
+
+```{r 1d-coupling-profile-20-50, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-20-50)'}
+knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_20_50.html")
+```
+
+
+## Higher Order Dependencies Between Couplings 
+
+The analyses in the previous sections focused on single coupling values of the $20 \times 20$-dimensional coupling matrices.
+As mentioned before, looking at single variables might be misleading if they are dependent on another.
+Unfortunately, it is not possible to reasonably visualize the high dimensional coupling matrices. 
+But there are several ways to identify interesting dimensions. 
+
+First of all, 2-dimensional scatter plots of couplings for biological relevant pairings confirm the previous trend that couplings reflect amino acid interactions.
+
+Figure \@ref(fig:2d-coupling-profile-re-er-0-8) and \@ref(fig:2d-coupling-profile-re-ee-0-8) illustrate the distribution of attractive and repulsive ionic interactions at $\Cb$ distances less than $8\AA$.
+Whereas coupling values for R-E and E-R are positively correlated, coupling values for R-E and E-E are negatively correlated. 
+Hydrophobic coupling values for residue pairs at $\Cb$ distances less than $8\AA$ are symmetrically distributed around zero, in agreement with all previous analyses (Figure \@ref(fig:2d-coupling-profile-vi-il-0-8)).
+
+(ref:caption-2d-coupling-profile-re-er-0-8) Two-dimensional distribution of coupling values R-E and E-R for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The distribution is almost symmetrical and the coupling values are positively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
+
+```{r 2d-coupling-profile-re-er-0-8, echo = FALSE, out.width='75%', fig.show = 'hold', fig.cap = '(ref:caption-2d-coupling-profile-re-er-0-8)'}
+knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.html")
+```
+
+(ref:caption-2d-coupling-profile-re-ee-0-8) Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The coupling values are negatively correlated. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
+
+```{r 2d-coupling-profile-re-ee-0-8, echo = FALSE, out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-re-ee-0-8)'}
+knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.html")
+```
+
+(ref:caption-2d-coupling-profile-vi-il-0-8) Two-dimensional distribution of coupling values V-I and I-L for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The coupling values are symmetrically distributed around zero. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
+
+```{r 2d-coupling-profile-vi-il-0-8, echo = FALSE, out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-vi-il-0-8)'}
+knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.html")
+```
+
+
+
+
+

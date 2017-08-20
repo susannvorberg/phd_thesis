@@ -1,0 +1,36 @@
+# Optimizing the Full-Likelihood {#optimizing-full-likelihood}
+
+Computing the gradient of the likelihood analytically according to the previous equations is infeasible, because computing $p(x_i \eq a, x_j \eq b | \v, \w) = \sum_{y_1, \dots, y_L =1}^{20} p(y_1,  \dots, y_L | \v, \w) I(y_i \eq a, y_j \eq b)$ would require summing over $20^L$ sequences $(y_1,\ldots,y_L)$. 
+Several approaches have been used to get around this problem as described in section \@ref(infering-max-ent-models). 
+The most popular one for protein contact prediction is to optimize the pseudo likelihood instead (see section \@ref(pseudo-likelihood)). 
+Its gradient involves a sum over just the 20 amino acids instead of over all possible sequences of length $L$. 
+
+It is possible though to optimize the true likelihood by employing an approach called "persistent contrastive divergence" [PCD](#abbrev) that extends the "contrastive divergence" [CD](#abbrev) approach by G.E.~Hinton introduced in "Training products of experts by minimizing contrastive divergence", \emph{Neural computation} (2002).
+
+In CD, we initialise $N$ Markov chains, one with each of the $N$ sequences from our MSA, and we generate $N$ new samples by a single step of Gibbs sampling from each of the $N$ sequences. From the $N$ new sequences we can estimate the frequencies of pairs $(x_{i}\!=\! a, x_{j}=b)$ to approximate the second term in \eqref{eq:dLLdw_gaps}, just as the first term is computed from the original $N$ sequences. Even though the approximation for the second term is very bad, it can be seen that this approximate gradient will become zero approximately where the true gradient of the likelihood also becomes zero. To see this, imagine $(\v^*, \w^*)$ is the maximum of the likelihood. Then, starting from the sequences in the MSA, the Gibbs sampling step should not lead away from the empirical distribution, because the parameters $(\v^*, \w^*)$  already describe the empirical distribution correctly. This equality of the two maxima is accurate to the extent that the empirical distribution with its finite number of sequences $N$ can represent the true distribution given by parameters $(\v^*, \w^*)$. Therefore, the larger $N$, the better CD will optimise into the maximum of the true likelihood. It can be shown that CD using a single-step Gibbs sampling is exactly equivalent to optimising the pseudo likelihood.
+
+For [PCD](#abbrev), the Markov chains are not restarted from the $N$ sequences in the MSA every time a new gradient is computed. Instead the Markov chains are evolved between successive gradient computations without resetting them. This ensures that, as we approach the maximum $(\v^*, \w^*)$, we acquire more and more samples from the distribution corresponding to parameters $(\v,\w)$ near the optimum. Hence our approximation to the gradient of the likelihood gets better the longer we sample, independent of the number of sequences $N$ in the MSA. 
+
+The optimization of the true likelihood with [CD](#abbrev) and [PCD](#abbrev) is discussed in section \@ref{optimizing-full-likelihood}.
+
+### Full-likelihood
+
+Dr Stefan Seemayer provided a Python implementation of CCMpred that was extended to optimize the full-likelihood of the [MRF](#abbrev).
+
+
+
+The full likelihood of the maximum entropy model cannot be optimized with [ML](#abbrev) methods due to the exponential complexity of the partition function (see section \@ref(maxent)).
+As elaborated in the introduction, many approximations to maximum likelihood inference have been developed that resolve the computational intractability of the partition function. 
+Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or methods based on the Bethe-approximation or sparse inverse covariance. 
+Even though pseudo-likelihood maximation has been shown to be a consistent estimator in the limit of infinite data [@Besag1975 @Aurell2012], it is not clear how well pseudo-likelihood approximation is for real-world datasets. 
+
+
+
+### Likelihood Gradient
+
+### Contrastive Divergence
+
+CD is about the difference between the original data set and a perturbed data set 
+perturbed data set : The contrasting data set needs to represent A data sample characteristic of the current PARAMETERS --> Gibbs Sampling starting from data
+Note: as contrasting dataset towards true_parameters, the elements of the gradient converge to the gradient of the max log likelihood
+– At the limit of the Markov chain, the CD converges to the actual MLE

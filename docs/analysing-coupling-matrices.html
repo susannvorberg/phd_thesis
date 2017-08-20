@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-08-02">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="results.html">
+<link rel="next" href="optimizing-full-likelihood.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  TeX: { 
+    extensions: ["mediawiki-texvc.js"],
+    Macros: {
+      eq: "\\!=\\!",
+      neff: "N_\\mathrm{eff}",
+      seq: "\\mathbf{x}",
+      v: "\\mathbf{v}",
+      via: "\\mathcal{v}_{ia}",
+      w: "\\mathbf{w}",
+      wijab: "\\mathcal{w}_{ijab}",
+      I: "\\mathbf{I}"
+      }
+  }
+});
+</script>
+
+<!--
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+   extensions: ["[siunitx]/siunitx.js"]
+ });
+ MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { TagSide: "left" }
+});
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.1</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.1.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.1.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.1.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.1.3</b> contact assisted denovo predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.2.1</b> Correlated mutations</a></li>
+<li class="chapter" data-level="1.2.2" data-path="contact-prediction.html"><a href="contact-prediction.html#benchmarking-methods"><i class="fa fa-check"></i><b>1.2.2</b> Benchmarking methods</a></li>
+<li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
+<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
+<li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
+<li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>2</b> Results</a><ul>
+<li class="chapter" data-level="2.1" data-path="analysing-coupling-matrices.html"><a href="analysing-coupling-matrices.html"><i class="fa fa-check"></i><b>2.1</b> Analysing Coupling Matrices</a></li>
+<li class="chapter" data-level="2.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>2.2</b> Optimizing Full-Likelihood</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>2.2.1</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="2.2.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>2.2.2</b> Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
+<li class="chapter" data-level="3.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>3.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="3.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>3.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="3.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>3.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>3.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="3.2.5" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#regularization"><i class="fa fa-check"></i><b>3.2.5</b> Regularization</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><a href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><i class="fa fa-check"></i><b>3.3</b> Predicting Residue-Residue Contacts by Optimizing Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html"><a href="predicting-residue-residue-contacts-by-optimizing-contrastive-divergence.html#full-likelihood"><i class="fa fa-check"></i><b>3.3.1</b> Full-likelihood</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analysing-coupling-matrices" class="section level2">
+<h2><span class="header-section-number">2.1</span> Analysing Coupling Matrices</h2>
+<p>State-of-the-art contact prediction methods compute a contact score for each residue pair by computing the Frobenius norm of the corresponding coupling matrix <span class="math inline">\(w_{ij}\)</span>. By doing so, valuable information contained in the 20x20 coupling matrix is lost: the qualitative information about which couplings <span class="math inline">\(\wijab\)</span> contribute most and in whether it is a positive or negative signal.</p>
+<p>Detailed analysis of coupling matrices reveals that they are indicative of the underlying evolutionary constraint for a given residue pair.</p>
+
+<div class="figure"><span id="fig:coupling-matrix-pymol"></span>
+<img src="img/coupling_matrix_analysis/1aluA00_71_154.png" alt="Residue pairs involved in structural constraints." width="50%" /><img src="img/coupling_matrix_analysis/1azoA00_110_160.png" alt="Residue pairs involved in structural constraints." width="50%" />
+<p class="caption">
+Figure 2.1: Residue pairs involved in structural constraints.
+</p>
+</div>
+<p>Considering an ionic interaction between two residues which is evolutionary conserved, will result in pairings of positively charged arginine(R) and lysine(K) residues with either glutamic acid(E) or aspartic acid(D). Pairings of two positively charged residues (e.g. arginine and arginine) or two negative charged residues (e.g glutamic acid with aspartic acid) are very unlikely, as identical charges are repulsive. Given enough evidence in the alignment (sufficient number of sequences and enough variabilty at both positions), coupling matrices reflect these physico-chemical constraints. Figure <a href="analysing-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">2.2</a> shows the coupling matrix for residue pair i=92 ande j=129 of PDB 1awq chain A. There is a cluster of strong couplings for charged residues arginine(R), glutamic acid(E) and lysine(K). Lysine and glutamic acid are positively coupled wheras lysine and lysine are negatively coupled.</p>
+
+<div class="figure"><span id="fig:coupling-matrix-ionic-interaction"></span>
+<iframe src="img/coupling_matrix_analysis/coupling_matrix_1awqA00_92_129_notitle.html" width="750px" height="750px">
+</iframe>
+<p class="caption">
+Figure 2.2: Coupling Matrix for residue pair i=92 and j=129 of PDB 1awq chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=92 and bars at the y-axis represent single potentials for residue j=129. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+</p>
+</div>
+<!---
+<iframe width="750" height="750" frameborder="0" scrolling="no" src="img/coupling_matrix_analysis/coupling_matrix_1awqA00_92_129_notitle.html">
+-->
+<p>Figure <a href="analysing-coupling-matrices.html#fig:coupling-matrix-volume">2.3</a> shows the coupling matrix for a residue pair that is constrained by space. As can be seen in <a href="analysing-coupling-matrices.html#fig:coupling-matrix-pymol">2.1</a>, phenylalanine takes a lot of space so that only a non bulky amino acid can fit at the other position. This constraint is reflected in the coupling matrix in that there are strong couplings between Alanine(A) and Tryptophane(W) and Glycine(G) and Phenylalanine(F). As there is a negative coupling between Alanine(A) and Phenylalanine(F) it can be assumed that Alanine is already too big to fit in with Phenylalanine(F), whereas it is fine to co-exist with Tryptophane(W).</p>
+
+<div class="figure"><span id="fig:coupling-matrix-volume"></span>
+<iframe src="img/coupling_matrix_analysis/coupling_matrix_1aluA00_71_154_notitle.html" width="750px" height="750px">
+</iframe>
+<p class="caption">
+Figure 2.3: Coupling Matrix for residue pair i=27 and j=77 of PDB 1atg chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=27 and bars at the y-axis represent single potentials for residue j=77. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+</p>
+</div>
+<p>Another example is shown in Figure <a href="analysing-coupling-matrices.html#fig:coupling-matrix-aromatic-interaction">2.4</a>. Here the coupling matrix reflects aromatic interactions between two residues. Tryptophan(W) is strongly positively coupled with Tryptophan(W), as well as Phenylalanine(F) with Tyrosin(Y).</p>
+
+<div class="figure"><span id="fig:coupling-matrix-aromatic-interaction"></span>
+<iframe src="img/coupling_matrix_analysis/coupling_matrix_1azoA00_110_160_notitle.html" width="750px" height="750px">
+</iframe>
+<p class="caption">
+Figure 2.4: Coupling Matrix for residue pair i=110 and j=160 of PDB 1azo chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=110 and bars at the y-axis represent single potentials for residue j=160. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+</p>
+</div>
+<p>There are many more interaction constraints (e.g. pi-cation, aroamtic-proline interactions) as well as volume constraints (e.g large vs small residues) that can be inferred from the patterns revealed by coupling matrices.</p>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="optimizing-full-likelihood.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/05-results.Rmd",
+"text": "Edit"
+},
+"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

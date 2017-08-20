@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-08-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="maxent.html">
+<link rel="next" href="single-coupling-values-carry-evidence-of-contacts.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  TeX: { 
+    extensions: ["mediawiki-texvc.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      via: "\\mathcal{v}_{ia}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}"
+      }
+  }
+});
+</script>
+
+<!--
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+   extensions: ["[siunitx]/siunitx.js"]
+ });
+ MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { TagSide: "left" }
+});
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted denovo predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.3.1</b> Correlated mutations</a></li>
+<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.3</b> Global methods</a></li>
+<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.4</b> Meta-predictors</a></li>
+<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.5</b> Benchmarking methods</a></li>
+<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.3.6</b> Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Maximum entropy models for modelling protein families</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="maxent.html"><a href="maxent.html#properties-of-model-parameters"><i class="fa fa-check"></i><b>1.4.1</b> Properties of model parameters</a></li>
+<li class="chapter" data-level="1.4.2" data-path="maxent.html"><a href="maxent.html#infering-max-ent-models"><i class="fa fa-check"></i><b>1.4.2</b> Infering model parameters</a></li>
+<li class="chapter" data-level="1.4.3" data-path="maxent.html"><a href="maxent.html#pseudo-likelihood"><i class="fa fa-check"></i><b>1.4.3</b> Pseudo-Likelihood</a></li>
+<li class="chapter" data-level="1.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>1.4.4</b> Computing contact map from coupling matrix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>2.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-model-for-contact-prediction.html"><a href="bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>3</b> Bayesian Model for Contact Prediction</a><ul>
+<li class="chapter" data-level="3.1" data-path="likelihood-of-the-sequences-as-a-potts-model.html"><a href="likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> Likelihood of the sequences as a Potts model</a></li>
+<li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.3" data-path="gauge-transformation.html"><a href="gauge-transformation.html"><i class="fa fa-check"></i><b>3.3</b> Gauge transformation</a></li>
+<li class="chapter" data-level="3.4" data-path="the-regularized-log-likelihood-function-llregvw.html"><a href="the-regularized-log-likelihood-function-llregvw.html"><i class="fa fa-check"></i><b>3.4</b> The regularized log likelihood function LLreg(v,w)</a></li>
+<li class="chapter" data-level="3.5" data-path="the-gradient-of-the-regularized-log-likelihood.html"><a href="the-gradient-of-the-regularized-log-likelihood.html"><i class="fa fa-check"></i><b>3.5</b> The gradient of the regularized log likelihood</a></li>
+<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="3.7" data-path="the-regularized-likelihood-as-multivariate-gaussian.html"><a href="the-regularized-likelihood-as-multivariate-gaussian.html"><i class="fa fa-check"></i><b>3.7</b> The regularized likelihood as multivariate Gaussian</a></li>
+<li class="chapter" data-level="3.8" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html"><i class="fa fa-check"></i><b>3.8</b> Posterior Probabilty of distances</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html#coupling-prior"><i class="fa fa-check"></i><b>3.8.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html#integrating-out-v-and-w"><i class="fa fa-check"></i><b>3.8.2</b> Integrating out <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#full-likelihood"><i class="fa fa-check"></i><b>4.0.1</b> Full-likelihood</a></li>
+<li class="chapter" data-level="4.0.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>4.0.2</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="4.0.3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>4.0.3</b> Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Methods</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>5.1</b> Dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>5.2</b> Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>5.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="5.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>5.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="5.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>5.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="5.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>5.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="5.2.5" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#regularization"><i class="fa fa-check"></i><b>5.2.5</b> Regularization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>5.3</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>5.3.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="5.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>5.3.2</b> Coupling Distribution Plots</a></li>
+<li class="chapter" data-level="5.3.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#bayesian-model-for-residue-resdiue-contact-prediction"><i class="fa fa-check"></i><b>5.3.3</b> Bayesian Model for Residue-Resdiue Contact Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>5.4</b> Off-diagonal elements in <span class="math inline">\(\H\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>5.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.6" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>5.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.7" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>5.7</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="5.8" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html"><i class="fa fa-check"></i><b>5.8</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a><ul>
+<li class="chapter" data-level="5.8.1" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>5.8.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><a href="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><i class="fa fa-check"></i><b>5.9</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a><ul>
+<li class="chapter" data-level="B.1" data-path="alignment-diversity.html"><a href="alignment-diversity.html"><i class="fa fa-check"></i><b>B.1</b> Alignment Diversity</a></li>
+<li class="chapter" data-level="B.2" data-path="proportion-of-gaps-in-alignment.html"><a href="proportion-of-gaps-in-alignment.html"><i class="fa fa-check"></i><b>B.2</b> Proportion of Gaps in Alignment</a></li>
+<li class="chapter" data-level="B.3" data-path="alignment-size-number-of-sequences.html"><a href="alignment-size-number-of-sequences.html"><i class="fa fa-check"></i><b>B.3</b> Alignment Size (number of sequences)</a></li>
+<li class="chapter" data-level="B.4" data-path="protein-length.html"><a href="protein-length.html"><i class="fa fa-check"></i><b>B.4</b> Protein Length</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><a href="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><i class="fa fa-check"></i><b>C</b> Amino Acid Interaction Preferences Reflected in Coupling Matrices</a><ul>
+<li class="chapter" data-level="C.1" data-path="pi-cation.html"><a href="pi-cation.html"><i class="fa fa-check"></i><b>C.1</b> Pi-Cation interactions</a></li>
+<li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
+<li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
+<li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpretation-of-coupling-matrices" class="section level1">
+<h1><span class="header-section-number">2</span> Interpretation of Coupling Matrices</h1>
+<p>State-of-the-art contact prediction methods map the 20 x 20 coupling matrices <span class="math inline">\(w_{ij}\)</span> onto scalar values to obtain contact scores for each residue pair (see section <a href="maxent.html#post-processing-heuristics">1.4.4</a>). By doing so, the full information contained in coupling matrices is lost:</p>
+<ul>
+<li>the contribution of individual couplings <span class="math inline">\(\wijab\)</span></li>
+<li>the direction of couplings (positive or negative)</li>
+<li>the correlation between couplings <span class="math inline">\(\wijab\)</span> and <span class="math inline">\(\wijcd\)</span></li>
+<li>intrinsic biological meaning</li>
+</ul>
+<p>The following analyses give some intuition for the information contained in coupling matrices.</p> 
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="maxent.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="single-coupling-values-carry-evidence-of-contacts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/05-interpretation-coupling-matrices.Rmd",
+"text": "Edit"
+},
+"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

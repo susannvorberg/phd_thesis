@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-07-24">
+<meta name="date" content="2017-08-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="introduction.html">
+<link rel="prev" href="protein-structure.html">
 <link rel="next" href="contact-prediction.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -53,11 +53,33 @@
   TeX: { 
     extensions: ["mediawiki-texvc.js"],
     Macros: {
+      Cb: "C_\\beta",
       eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
       neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
       seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
-      w: "\\mathbf{w}"
+      via: "\\mathcal{v}_{ia}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}"
       }
   }
 });
@@ -101,42 +123,90 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.1</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.1.1</b> Template-based methods</a></li>
-<li class="chapter" data-level="1.1.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.1.2</b> Template-free structure prediction</a></li>
-<li class="chapter" data-level="1.1.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.1.3</b> contact assisted denovo predictions</a></li>
+<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.2.1</b> Correlated mutations</a></li>
-<li class="chapter" data-level="1.2.2" data-path="contact-prediction.html"><a href="contact-prediction.html#benchmarking-methods"><i class="fa fa-check"></i><b>1.2.2</b> Benchmarking methods</a></li>
-<li class="chapter" data-level="1.2.3" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.2.3</b> Pitfalls</a></li>
+<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-denovo-predictions"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted denovo predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html"><i class="fa fa-check"></i><b>1.3</b> State of the Art CP</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local methods</a></li>
-<li class="chapter" data-level="1.3.2" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global methods</a></li>
-<li class="chapter" data-level="1.3.3" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#maxent"><i class="fa fa-check"></i><b>1.3.3</b> Maximum entropy models for modelling protein families</a></li>
-<li class="chapter" data-level="1.3.4" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#computing-contact-map-from-coupling-matrix"><i class="fa fa-check"></i><b>1.3.4</b> Computing contact map from coupling matrix</a></li>
-<li class="chapter" data-level="1.3.5" data-path="state-of-the-art-cp.html"><a href="state-of-the-art-cp.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.5</b> Meta-predictors</a></li>
+<li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#correlated-mutations"><i class="fa fa-check"></i><b>1.3.1</b> Correlated mutations</a></li>
+<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.2</b> Local methods</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.3</b> Global methods</a></li>
+<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.4</b> Meta-predictors</a></li>
+<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.5</b> Benchmarking methods</a></li>
+<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#pitfalls"><i class="fa fa-check"></i><b>1.3.6</b> Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Maximum entropy models for modelling protein families</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="maxent.html"><a href="maxent.html#properties-of-model-parameters"><i class="fa fa-check"></i><b>1.4.1</b> Properties of model parameters</a></li>
+<li class="chapter" data-level="1.4.2" data-path="maxent.html"><a href="maxent.html#infering-max-ent-models"><i class="fa fa-check"></i><b>1.4.2</b> Infering model parameters</a></li>
+<li class="chapter" data-level="1.4.3" data-path="maxent.html"><a href="maxent.html#pseudo-likelihood"><i class="fa fa-check"></i><b>1.4.3</b> Pseudo-Likelihood</a></li>
+<li class="chapter" data-level="1.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>1.4.4</b> Computing contact map from coupling matrix</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>2</b> Results</a><ul>
-<li class="chapter" data-level="2.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>2.1</b> Optimizing Full-Likelihood</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>2.1.1</b> Likelihood Gradient</a></li>
-<li class="chapter" data-level="2.1.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>2.1.2</b> Contrastive Divergence</a></li>
+<li class="chapter" data-level="2" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>2.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayesian-model-for-contact-prediction.html"><a href="bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>3</b> Bayesian Model for Contact Prediction</a><ul>
+<li class="chapter" data-level="3.1" data-path="likelihood-of-the-sequences-as-a-potts-model.html"><a href="likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> Likelihood of the sequences as a Potts model</a></li>
+<li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.3" data-path="gauge-transformation.html"><a href="gauge-transformation.html"><i class="fa fa-check"></i><b>3.3</b> Gauge transformation</a></li>
+<li class="chapter" data-level="3.4" data-path="the-regularized-log-likelihood-function-llregvw.html"><a href="the-regularized-log-likelihood-function-llregvw.html"><i class="fa fa-check"></i><b>3.4</b> The regularized log likelihood function LLreg(v,w)</a></li>
+<li class="chapter" data-level="3.5" data-path="the-gradient-of-the-regularized-log-likelihood.html"><a href="the-gradient-of-the-regularized-log-likelihood.html"><i class="fa fa-check"></i><b>3.5</b> The gradient of the regularized log likelihood</a></li>
+<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="3.7" data-path="the-regularized-likelihood-as-multivariate-gaussian.html"><a href="the-regularized-likelihood-as-multivariate-gaussian.html"><i class="fa fa-check"></i><b>3.7</b> The regularized likelihood as multivariate Gaussian</a></li>
+<li class="chapter" data-level="3.8" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html"><i class="fa fa-check"></i><b>3.8</b> Posterior Probabilty of distances</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html#coupling-prior"><i class="fa fa-check"></i><b>3.8.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="posterior-probabilty-of-distances.html"><a href="posterior-probabilty-of-distances.html#integrating-out-v-and-w"><i class="fa fa-check"></i><b>3.8.2</b> Integrating out <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
-<li class="chapter" data-level="3.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
-<li class="chapter" data-level="3.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html"><i class="fa fa-check"></i><b>3.2</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#seq-reweighting"><i class="fa fa-check"></i><b>3.2.1</b> Sequence Reweighting</a></li>
-<li class="chapter" data-level="3.2.2" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#computing-amino-acid-frequencies"><i class="fa fa-check"></i><b>3.2.2</b> Computing Amino Acid Frequencies</a></li>
-<li class="chapter" data-level="3.2.3" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#pseudolikelihood"><i class="fa fa-check"></i><b>3.2.3</b> Pseudolikelihood</a></li>
-<li class="chapter" data-level="3.2.4" data-path="contact-prediction-1.html"><a href="contact-prediction-1.html#full-likelihood"><i class="fa fa-check"></i><b>3.2.4</b> Full-likelihood</a></li>
+<li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#full-likelihood"><i class="fa fa-check"></i><b>4.0.1</b> Full-likelihood</a></li>
+<li class="chapter" data-level="4.0.2" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#likelihood-gradient"><i class="fa fa-check"></i><b>4.0.2</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="4.0.3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html#contrastive-divergence"><i class="fa fa-check"></i><b>4.0.3</b> Contrastive Divergence</a></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Methods</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>5.1</b> Dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>5.2</b> Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>5.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="5.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>5.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="5.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>5.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="5.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>5.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="5.2.5" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#regularization"><i class="fa fa-check"></i><b>5.2.5</b> Regularization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>5.3</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>5.3.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="5.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>5.3.2</b> Coupling Distribution Plots</a></li>
+<li class="chapter" data-level="5.3.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#bayesian-model-for-residue-resdiue-contact-prediction"><i class="fa fa-check"></i><b>5.3.3</b> Bayesian Model for Residue-Resdiue Contact Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>5.4</b> Off-diagonal elements in <span class="math inline">\(\H\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>5.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.6" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>5.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.7" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>5.7</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="5.8" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html"><i class="fa fa-check"></i><b>5.8</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a><ul>
+<li class="chapter" data-level="5.8.1" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>5.8.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><a href="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><i class="fa fa-check"></i><b>5.9</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
-<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a><ul>
+<li class="chapter" data-level="B.1" data-path="alignment-diversity.html"><a href="alignment-diversity.html"><i class="fa fa-check"></i><b>B.1</b> Alignment Diversity</a></li>
+<li class="chapter" data-level="B.2" data-path="proportion-of-gaps-in-alignment.html"><a href="proportion-of-gaps-in-alignment.html"><i class="fa fa-check"></i><b>B.2</b> Proportion of Gaps in Alignment</a></li>
+<li class="chapter" data-level="B.3" data-path="alignment-size-number-of-sequences.html"><a href="alignment-size-number-of-sequences.html"><i class="fa fa-check"></i><b>B.3</b> Alignment Size (number of sequences)</a></li>
+<li class="chapter" data-level="B.4" data-path="protein-length.html"><a href="protein-length.html"><i class="fa fa-check"></i><b>B.4</b> Protein Length</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><a href="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><i class="fa fa-check"></i><b>C</b> Amino Acid Interaction Preferences Reflected in Coupling Matrices</a><ul>
+<li class="chapter" data-level="C.1" data-path="pi-cation.html"><a href="pi-cation.html"><i class="fa fa-check"></i><b>C.1</b> Pi-Cation interactions</a></li>
+<li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
+<li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
+<li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -159,23 +229,23 @@ MathJax.Hub.Config({
 
             <section class="normal" id="section-">
 <div id="structure-prediction" class="section level2">
-<h2><span class="header-section-number">1.1</span> Structure Prediction</h2>
-<p>Despite the knowledge of Anfinsen’s postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (). Levinthal’s paradox <span class="citation">[<a href="#ref-Levinthal1969">12</a>]</span> describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the “combinatorial explosion” of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.</p>
+<h2><span class="header-section-number">1.2</span> Structure Prediction</h2>
+<p>Despite the knowledge of Anfinsen’s postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (). Levinthal’s paradox <span class="citation">[<a href="#ref-Levinthal1969">21</a>]</span> describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the “combinatorial explosion” of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.</p>
 <div id="template-based-methods" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Template-based methods</h3>
+<h3><span class="header-section-number">1.2.1</span> Template-based methods</h3>
 <p>Homology modeling is by far the most successful approach to structure prediction. The basic concept of this strategy relates to the fact that structure is more conserved than sequence <span class="citation">[<a href="#ref-Lesk1980">4</a>]</span>. After detecting a homologous protein of known structure, that has sufficient sequence similarity, it can be used as a template to model the structure of the target protein.</p>
-<p>The degree of structural conservation is linked to the level of pariwise sequence identity <span class="citation">[<a href="#ref-Chothia1986">6</a>]</span>. Homology Modelling is assumed to yield reliably accurate models when query and target protein share more than 30% sequence similarity, depending on the sequence length (<em>safe homology zone</em>) <span class="citation">[<a href="#ref-Sander1991">5</a>]</span>. Below a threshold of ~20-35% pairwise sequence identity (<em>twighlight-zone</em>) the number of false positives regarding structural similarity explodes and structural inference becomes less reliable and more than 95% of structures are dissmilar <span class="citation">[<a href="#ref-Rost1999">13</a>]</span>. Advances in remote homology detection and alignment generation have improved the quality of models, even beyond the once postulated limit of the <em>twighlight-zone</em> <span class="citation">[<a href="#ref-Yan2013">14</a>]</span>. Integration of multiple templates has also proved to increase model quality <span class="citation">[<a href="#ref-Meier2015">15</a>]</span></p>
-<p>After the identification of a suitable template, there are different strategies that can be followed to obtain a model for the target protein. The the backbone of the model is generated by simply copying the coordinates of the target backbone atoms onto the model. Non-aligned residues due to gaps in the alignment have to be modelled , meaning from scratch. This can be done by a knowledge-based search for suitable fragments in the PDB or by true energy-based  modelling. When the backbone is generated, the side chains are modelled, usually by searching rotamer libraries for energetically favoured residue conformations. Finally, the model is energetically optimized in an iterative procedure. Force fields are applied to correct the backbone and side chain conformations [<span class="citation">[<a href="#ref-Gu2009">16</a>]</span>}. Several automated pipelines for homology modelling are well-established (Modeller [<span class="citation">[<a href="#ref-Eswar2007">17</a>]</span>}, 3D-Jigsaw [<span class="citation">[<a href="#ref-Bates2001">18</a>]</span>}, SwissModel [<span class="citation">[<a href="#ref-Arnold2006">19</a>]</span>}) which allow more or less manual intervention in the modelling process.</p>
+<p>The degree of structural conservation is linked to the level of pariwise sequence identity <span class="citation">[<a href="#ref-Chothia1986">6</a>]</span>. Homology Modelling is assumed to yield reliably accurate models when query and target protein share more than 30% sequence similarity, depending on the sequence length (<em>safe homology zone</em>) <span class="citation">[<a href="#ref-Sander1991">5</a>]</span>. Below a threshold of ~20-35% pairwise sequence identity (<em>twighlight-zone</em>) the number of false positives regarding structural similarity explodes and structural inference becomes less reliable and more than 95% of structures are dissmilar <span class="citation">[<a href="#ref-Rost1999">22</a>]</span>. Advances in remote homology detection and alignment generation have improved the quality of models, even beyond the once postulated limit of the <em>twighlight-zone</em> <span class="citation">[<a href="#ref-Yan2013">23</a>]</span>. Integration of multiple templates has also proved to increase model quality <span class="citation">[<a href="#ref-Meier2015">24</a>]</span></p>
+<p>After the identification of a suitable template, there are different strategies that can be followed to obtain a model for the target protein. The the backbone of the model is generated by simply copying the coordinates of the target backbone atoms onto the model. Non-aligned residues due to gaps in the alignment have to be modelled , meaning from scratch. This can be done by a knowledge-based search for suitable fragments in the PDB or by true energy-based  modelling. When the backbone is generated, the side chains are modelled, usually by searching rotamer libraries for energetically favoured residue conformations. Finally, the model is energetically optimized in an iterative procedure. Force fields are applied to correct the backbone and side chain conformations [<span class="citation">[<a href="#ref-Gu2009">25</a>]</span>}. Several automated pipelines for homology modelling are well-established (Modeller [<span class="citation">[<a href="#ref-Eswar2007">26</a>]</span>}, 3D-Jigsaw [<span class="citation">[<a href="#ref-Bates2001">27</a>]</span>}, SwissModel [<span class="citation">[<a href="#ref-Arnold2006">28</a>]</span>}) which allow more or less manual intervention in the modelling process.</p>
 <p>Fold Recognition describes the inverse folding problem : instead of finding the compatible structure for a given sequence, one tries to find sequences that fit onto a given structure. Whether the query sequence fits a structure from the database is not determined by sequence similarities but rather energetic or environment specific measures. Thus, fold recognition methods are able to recognize structural similarity even in the absence of sequence similarity. The rationale basis for this strategy is the assumption that the fold space is limited. It has been found that seemingly unrelated proteins often adopt similar folds. This might be due to divergent evolution (proteins are related, but homology cannot be detected at the corresponding sequence level) or convergent evolution (functional requirements lead to similar folds for unrelated proteins) . Early approaches include profile based methods. Here, the structural information of the protein is encoded into profiles, which subsequently are aligned to the sequences . Advanced techniques are known as “threading” techniques, describing the process of threading a sequence through a structure and determining the optimal fit via energy functions. </p>
 </div>
 <div id="template-free-structure-prediction" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> Template-free structure prediction</h3>
+<h3><span class="header-section-number">1.2.2</span> Template-free structure prediction</h3>
 <p>Ab initio or de-novo modeling techniques implement Anfinsen’s Dogma most closely in mimicking the folding process based only on physico-chemical principles. Energy functions (physical or knowledge-based) are used to describe the folding landscape and are minimized to arrive at the global energy minimum corresponding to the native conformation. Since the native conformation can be found near the global energy minimum of the folding landscape, energy functions (physical or knowledge-based) have been developed to describe this landscape. With respect to the idea of a folding funnel, the energy function is minimized to mimic the folding process that automatically leads to the global minimum. Again, there exist numerous webservers that combine energy minimization, threading techniques and fragment-based approaches, e.g. Rosetta , Tasser , Touchstone II .</p>
 <p>Drawbacks of these methods are the time requirements due to the computational complexity of energy functions as well as their inaccuracy.</p>
 <p>Minimize a physical or knowledge-based energy function for the protein. This has huge complexity due to large conformational space that needs to be sampled.</p>
 </div>
 <div id="contact-assisted-denovo-predictions" class="section level3">
-<h3><span class="header-section-number">1.1.3</span> contact assisted denovo predictions</h3>
+<h3><span class="header-section-number">1.2.3</span> contact assisted denovo predictions</h3>
 <p>Structure Reconstruction from true contacts maps works well. Even a small number of contacts is sufficient to reconstruct the fold of the protein. Distance maps work even better.</p>
 <p>What is the optimal distance cutoff to define a contact? Duarte et al 2010: between 8 and 12A Dyrka et al 2016 Konopka et al 2014 Sathyapriya et al 2009</p>
 <p>Many studies that successfuly predict structures denovo with the help of predicted contact.</p>
@@ -185,7 +255,7 @@ MathJax.Hub.Config({
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Levinthal1969">
-<p>12. Levinthal, C. (1969). How to Fold Graciously. 22–24. Available at: <a href="http://www.citeulike.org/user/FBerkemeier/article/380320" class="uri">http://www.citeulike.org/user/FBerkemeier/article/380320</a>.</p>
+<p>21. Levinthal, C. (1969). How to Fold Graciously. 22–24. Available at: <a href="http://www.citeulike.org/user/FBerkemeier/article/380320" class="uri">http://www.citeulike.org/user/FBerkemeier/article/380320</a>.</p>
 </div>
 <div id="ref-Lesk1980">
 <p>4. Lesk, A.M., and Chothia, C. (1980). How different amino acid sequences determine similar protein structures: The structure and evolutionary dynamics of the globins. J. Mol. Biol. <em>136</em>, 225–270. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283680903733" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283680903733</a>.</p>
@@ -197,25 +267,25 @@ MathJax.Hub.Config({
 <p>5. Sander, C., and Schneider, R. (1991). Database of homology-derived protein structures and the structural meaning of sequence alignment. Proteins <em>9</em>, 56–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/2017436" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/2017436</a>.</p>
 </div>
 <div id="ref-Rost1999">
-<p>13. Rost, B. (1999). Twilight zone of protein sequence alignments. Protein Eng. Des. Sel. <em>12</em>, 85–94. Available at: <a href="http://peds.oxfordjournals.org/content/12/2/85.full" class="uri">http://peds.oxfordjournals.org/content/12/2/85.full</a>.</p>
+<p>22. Rost, B. (1999). Twilight zone of protein sequence alignments. Protein Eng. Des. Sel. <em>12</em>, 85–94. Available at: <a href="http://peds.oxfordjournals.org/content/12/2/85.full" class="uri">http://peds.oxfordjournals.org/content/12/2/85.full</a>.</p>
 </div>
 <div id="ref-Yan2013">
-<p>14. Yan, R., Xu, D., Yang, J., Walker, S., and Zhang, Y. (2013). A comparative assessment and analysis of 20 representative sequence alignment methods for protein structure prediction. Sci. Rep. <em>3</em>, 2619. Available at: <a href="http://www.nature.com/srep/2013/130910/srep02619/full/srep02619.html" class="uri">http://www.nature.com/srep/2013/130910/srep02619/full/srep02619.html</a>.</p>
+<p>23. Yan, R., Xu, D., Yang, J., Walker, S., and Zhang, Y. (2013). A comparative assessment and analysis of 20 representative sequence alignment methods for protein structure prediction. Sci. Rep. <em>3</em>, 2619. Available at: <a href="http://www.nature.com/srep/2013/130910/srep02619/full/srep02619.html" class="uri">http://www.nature.com/srep/2013/130910/srep02619/full/srep02619.html</a>.</p>
 </div>
 <div id="ref-Meier2015">
-<p>15. Meier, A. (2015). Automatic Prediction of Protein 3D Structures by Probabilistic Multi-template Homology Modeling. PLoS Comput Biol <em>11</em>, 1–20.</p>
+<p>24. Meier, A. (2015). Automatic Prediction of Protein 3D Structures by Probabilistic Multi-template Homology Modeling. PLoS Comput Biol <em>11</em>, 1–20.</p>
 </div>
 <div id="ref-Gu2009">
-<p>16. Gu, J., and Bourne, P.E. (2009). Structural Bioinformatics (Wiley-Blackwell) Available at: <a href="http://www.amazon.com/Structural-Bioinformatics-Jenny-Gu/dp/0470181052" class="uri">http://www.amazon.com/Structural-Bioinformatics-Jenny-Gu/dp/0470181052</a>.</p>
+<p>25. Gu, J., and Bourne, P.E. (2009). Structural Bioinformatics (Wiley-Blackwell) Available at: <a href="http://www.amazon.com/Structural-Bioinformatics-Jenny-Gu/dp/0470181052" class="uri">http://www.amazon.com/Structural-Bioinformatics-Jenny-Gu/dp/0470181052</a>.</p>
 </div>
 <div id="ref-Eswar2007">
-<p>17. Eswar, N., Webb, B., Marti-Renom, M.A., Madhusudhan, M.S., Eramian, D., Shen, M.-Y., Pieper, U., and Sali, A. (2007). Comparative protein structure modeling using MODELLER. Curr. Protoc. Protein Sci. <em>Chapter 2</em>, Unit 2.9. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18429317" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18429317</a>.</p>
+<p>26. Eswar, N., Webb, B., Marti-Renom, M.A., Madhusudhan, M.S., Eramian, D., Shen, M.-Y., Pieper, U., and Sali, A. (2007). Comparative protein structure modeling using MODELLER. Curr. Protoc. Protein Sci. <em>Chapter 2</em>, Unit 2.9. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18429317" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18429317</a>.</p>
 </div>
 <div id="ref-Bates2001">
-<p>18. Bates, P.A., Kelley, L.A., MacCallum, R.M., and Sternberg, M.J. (2001). Enhancement of protein modeling by human intervention in applying the automatic programs 3D-JIGSAW and 3D-PSSM. Proteins <em>Suppl 5</em>, 39–46. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/11835480" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/11835480</a>.</p>
+<p>27. Bates, P.A., Kelley, L.A., MacCallum, R.M., and Sternberg, M.J. (2001). Enhancement of protein modeling by human intervention in applying the automatic programs 3D-JIGSAW and 3D-PSSM. Proteins <em>Suppl 5</em>, 39–46. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/11835480" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/11835480</a>.</p>
 </div>
 <div id="ref-Arnold2006">
-<p>19. Arnold, K., Bordoli, L., Kopp, J., and Schwede, T. (2006). The SWISS-MODEL workspace: a web-based environment for protein structure homology modelling. Bioinformatics <em>22</em>, 195–201. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/22/2/195.short" class="uri">http://bioinformatics.oxfordjournals.org/content/22/2/195.short</a>.</p>
+<p>28. Arnold, K., Bordoli, L., Kopp, J., and Schwede, T. (2006). The SWISS-MODEL workspace: a web-based environment for protein structure homology modelling. Bioinformatics <em>22</em>, 195–201. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/22/2/195.short" class="uri">http://bioinformatics.oxfordjournals.org/content/22/2/195.short</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -242,7 +312,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="protein-structure.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="contact-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -290,7 +360,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

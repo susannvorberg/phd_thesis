@@ -1,0 +1,430 @@
+# Bayesian Model for Contact Prediction
+
+The most popular and successfull methods for contact prediction so far optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
+
+The next sections introduce a principled Bayesian statistical approach that eradicates these heuristics.
+Instead of transforming the model parameters $\w$ into heuristic contact scores, one can compute the posterior probability distributions of the distances $r_{ij}$ between $\Cb$ atoms of all residues pairs $i$ and $j$, given the [MSA](#abbrev) $\X$. 
+The coupling parameters $\w$ are treated as hidden variables that will be integrated out analytically. 
+This approach also allows for extraction of information contained in the particular types of amino acids, since each pair of amino acids will have a different preference to be coupled at certain distances.
+
+
+## Likelihood of the sequences as a Potts model
+
+We denote the $N$ sequences in the [MSA](#abbrev) $\X$ with ${\seq_1, ..., \seq_N}$. 
+Each sequence $\seq_n = (\seq_{n1}, ..., \seq_{nL})$ is a string of $L$ letters from an alphabet indexed by $\{0, ..., 20\}$, where 0 stands for a gap and $\{1, ... , 20\}$ stand for the 20 types of amino acids. 
+The goal is to predict from $\X$ the distances $r_{ij}$ between the $\Cb$ atoms of all pairs of residues $(i, j) \in \{1, ..., L\}$.
+The link between the [MSA](#abbrev) $\X$ and the vector $\mathbf{r}$ of all inter-$\Cb$ distances is described via the evolutionary couplings of residue pairs that are the $20^2$-dimensional vectors $w_{ij}$.
+
+As already described in detail in section \@ref(maxent), we model the likelihood of the sequences in an [MSA](#abbrev) with a Potts Model, also known as [MRF](#abbrev): 
+
+\begin{equation}
+    p(\X | \v, \w) = \prod_{n=1}^N p(\seq_n | \v, \w) = \prod_{n=1}^N \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i < j \leq L} w_{ij}(x_{ni}, x_{nj}) \right)
+\end{equation}
+
+The coefficients $\via$ are the single potentials and $\wijab$ denote the coupling strengths for pairs of residues. 
+$Z(\v, \w)$ is the so-called partition sum that normalizes the probability distribution $p(\seq_n |\v, \w)$:
+
+\begin{equation}
+  Z(\v, \w) = \sum_{y_1, ..., y_L = 1}^{20} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i < j \leq L} w_{ij}(y_i, y_j)  \right)
+\end{equation}
+
+TODO: this is irrelevant for CD, isn't it?
+For an efficient computational implementation, we might sum over all $1 \le i, j \le L$ without demanding $i < j$ and enforce trivial constraints $\wijab = w_{jiba}$ during the optimization.
+
+## Treating Gaps as Missing Information {#gap-treatment}
+
+Treating gaps explicitly as 0’th letter of the alphabet would lead to couplings between columns that are not in physical contact. 
+To see why, imagine a hypothetical alignment consisting of two sets of sequences as it is illustrated in Figure \@ref(fig:gap-treatment). 
+The first set has sequences covering only the left half of columns in the MSA, while the second set has sequences covering only the right half of columns. 
+The two blocks could correspond to protein domains that were aligned to a single query sequence. 
+
+Now consider couplings between a pair of columns $i, j$ with $i$ from the left half and $j$ from the right half. 
+Since no sequence (except the single query sequence) overlaps both domains, the empirical amino acid pair frequencies $q(x_i = a, x_j = b)$ will vanish for all $a, b \in \{1,... , L\}$. 
+
+(ref:caption-gap-treatment) Hypothetical [MSA](#abbrev) consisting of two sets of sequences: the first set has sequences covering only the left half of columns, while the second set has sequences covering only the right half of columns. The two blocks could correspond to protein domains that were aligned to a single query sequence. Empirical amino acid pair frequencies $q(x_i \eq a, x_j \eq b)$ will vanish for positions $i$ from the left half and $j$ from the right half of the alignment.
+
+```{r gap-treatment, echo = FALSE, fig.cap = '(ref:caption-gap-treatment)'}
+knitr::include_graphics("img/gap_treatment.png")
+```
+
+
+The gradient of the log likelihood for couplings is 
+
+\begin{align}
+\frac{\partial LL}{\partial \wijab} &= \sum_{n=1}^N I(x_{ni}=a, x_{nj}=b)  - N \frac{\partial}{\partial \wijab} \log Z(\v,\w) \\
+                                        &= \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \\
+                                        & - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
+                                        &=  N q(x_{i} \eq a, x_{j} \eq b) - N \sum_{y_1,\ldots,y_L=1}^{20} p(y_1, \ldots, y_L | \v,\w) \, I(y_i \eq a, y_j \eq b) \\
+                                        &=  N q(x_{i} \eq a, x_{j} \eq b) - N p(x_i \eq a, x_j \eq b | \v,\w) 
+(\#eq:gradient-LLreg-gaps-single)
+\end{align}
+
+Note that the empirical frequencies are equal to the model probabilities at the maximum of the likelihood when the gradient vanishes.
+Therefore, $p(x_i \eq a, x_j \eq b | \v, \w)$ would have to be zero in the optimum when the empirical amino acid frequencies $q(x_i \eq a, x_j \eq b)$ vanish for pairs of columns as described above.
+However, $p(x_i \eq a, x_j \eq b | \v, \w)$ can only become zero, when the exponential term in $p(x_i \eq a, x_j \eq b | \v, \w)$ ammounts to zero, which would only be possible if $\wijab$ goes to $−\infty$. 
+This is clearly undesirable, as we want to deduce physical contacts from the size of the couplings.
+
+The solution is to treat gaps as missing information. 
+This means that the normalisation of $p(\seq_n | \v, \w)$ should not run over all positions $i \in \{1,... , L\}$ but only over those $i$ that are not gaps in $\seq_n$.
+Therefore we define the set of sequences $\Sn$ used for normalization of $p(\seq_n | \v, \w)$ as:
+
+\begin{equation}
+\Sn := \{(y_1,... , y_L): 0 \leq y_i \leq 20 \land (y_i \eq 0 \textrm{ iff } x_{ni} \eq 0) \}
+\end{equation}
+
+and the partition function becomes:
+
+\begin{equation}
+  Z_n(\v, \w) = \sum_{\mathbf{y} \in \Sn} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i < j \leq L} w_{ij}(y_i, y_j)  \right)
+\end{equation}
+
+To ensure that the gaps in $x_n$ do not contribute anything to the sums, we fix all parameters associated with a gap to 0:
+
+$v_i(0) = 0$ and $w_{ij}(0, b) = w_{ij}(a, 0) = 0$ for all $i, j \in \{1, ..., L\}$ and $a, b \in \{0, ..., 20\}$.
+
+Furthermore, we redefine the empirical amino acid frequencies $q_{ia}$ and $q_{ijab}$ such that they are normalised over $\{1, ..., 20\}$:
+
+\begin{align}
+   N_i :=& \sum_{n=1}^N  I(x_{ni} \!\ne\! 0) &  q_{ia} = q(x_i \eq a) :=& \frac{1}{N_i} \sum_{n=1}^N I(x_{ni} \eq a)   \\
+   N_{ij} :=& \sum_{n=1}^N  I(x_{ni} \!\ne\! 0, x_{nj} \!\ne\! 0)  &  q_{ijab} = q(x_i \eq a, x_j \eq b) :=& \frac{1}{N_{ij}} \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b)
+\end{align}
+
+With this definition, empirical amino acid frequencies are normalized without gaps, so that
+
+\begin{equation}
+    \sum_{a=1}^{20} q_{ia} = 1      \; , \;     \sum_{a,b=1}^{20} q_{ijab} = 1.
+(\#eq:normalized-emp-freq)
+\end{equation}
+
+
+
+## Gauge transformation 
+
+The model  contains $L \times  20 + \frac{L(L − 1)}{2} \times 20^2$ parameters, but the parameters are not uniquely determined. 
+For example, for any fixed position $i$ and amino acid a we can add a constant to $\via$ and subtract the same constant from the $20L$ coefficients $\wijab$ with $b \in \{1, ..., 20\}$ and $j  \in \{1, ..., L\}$. This overparametrization, the so-called gauge transformation, would leave the probabilities for all sequences under the model unchanged.
+
+We could eliminate parameters by enforcing the restraints 
+$\sum_{a=1}^{20} v_{ia} = 0$ and $\sum_{a=1}^{20} \wijab = 0 = \sum_{a=1}^{20} w_{ijba}$. 
+However, it is easier to rather formulate carefully the link between the distribution of $\w_{ij}$ vectors and the distance $r_ij$ while taking the non-uniqueness of parameters into acount, as we will see below.
+
+
+
+
+## The regularized log likelihood function LLreg(v,w)
+
+In pseudo-likelihood based methods, a regularisation is commonly used that can be interpreted to arise from a prior probability. 
+We will do the same here, constraining $\v$ and $\w$ by Gaussian priors $\mathcal{N}( \v | \v^*, \lambda_v^{-1} \I)$ and $\mathcal{N}( \w |\boldsymbol 0, \lambda_w^{-1} \I)$. 
+The choice of $v^*$ will be discussed in the section \@ref(prior-v). 
+By including the logarithm of this prior into the log likelihood using the gap treatment described in section \@ref{gap-treatment}, we obtain the regularised likelihood,
+
+\begin{equation}
+    \LLreg(\v,\w)  = \log \left[ p(\X | \v,\w) \;  \Gauss (\v | \v^*, \lambda_v^{-1} \I)  \; \Gauss( \w | \boldsymbol 0, \lambda_w^{-1} \I) \right] 
+\end{equation}
+
+or explicitely,
+
+\begin{align}
+    \LLreg(\v,\w) =& \sum_{n=1}^N  \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1\le i<j\le L} w_{ij}(x_{ni},x_{nj}) - \log Z_n(\v,\w) \right] \\
+                    & - \frac{\lambda_v}{2} \!\! \sum_{i=1}^L \sum_{a=1}^{20} (\via - \via^*)^2  - \frac{\lambda_w}{2}  \sum_{1 \le i < j \le L} \sum_{a,b=1}^{20} \wijab^2 .
+\end{align}
+
+
+
+
+
+## The gradient of the regularized log likelihood
+
+The gradient of the regularized log likelihood has single components
+
+\begin{align}
+    \frac{\partial \LLreg}{\partial \via} =& \sum_{n=1}^N I(x_{ni}=a) - \sum_{n=1}^N \frac{\partial}{\partial \via} \, \log Z_n(\v,\w) - \lambda_v (\via - \via^*)\\
+                                          =& \; N_i q(x_i \eq a) \\
+                                          & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{  \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)}  I(y_i=a) \\
+                                          & - \lambda_v (\via - \via^*) 
+(\#eq:gradient-LLreg-single)
+\end{align}
+
+and pair components
+
+\begin{align}
+    \frac{\partial \LLreg}{\partial \wijab} =& \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) - \sum_{n=1}^N \frac{\partial}{\partial \wijab} \log Z_n(\v,\w)  - \lambda_w \wijab \\
+                                            =& \; N_{ij} q(x_i \eq a, x_j=b) \\
+                                            & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} I(y_i \eq a, y_j \eq b) \\
+                                            & - \lambda_w \wijab  
+(\#eq:gradient-LLreg-pair)
+\end{align}
+
+
+Note that (without regulariation $\lambda_v = \lambda_w = 0$) the empirical frequencies $q(x_i \eq a)$ and $q(x_i \eq a, x_j=b)$ are equal to the model probabilities at the maximum of the likelihood.
+
+If the proportion of gap positions in $\X$ is small (e.g. $<5\%$, also compare percentage of gaps in dataset in Appendix Figure \@ref(fig:dataset-gaps)), we can approximate the sums over $\mathbf{y} \in \Sn$ in eqs. \@ref(eq:gradient-LLreg-single) and \@ref(eq:gradient-LLreg-pair) by $p(x_i=a | \v,\w) I(x_{ni} \ne 0)$ and $p(x_i=a, x_j=b | \v,\w) I(x_{ni} \ne 0, x_{nj} \ne 0)$, respectively, and the partial derivatives become
+
+\begin{align}
+  \frac{\partial \LLreg}{\partial \via}   =& \; N_i q(x_i \eq a) -  N_i \; p(x_i \eq a  | \v,\w)  - \lambda_v (\via - \via^*)  \\
+  \frac{\partial \LLreg}{\partial \wijab} =& \; N_{ij} q(x_i \eq a, x_j=b) - N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w) - \lambda_w \wijab
+  (\#eq:gradient-LLreg-approx)
+\end{align}
+
+Note that the couplings between columns $i$ and $j$ in our hypothetical MSA (see section \@ref(gap-treatment)) will now vanish since $N_{ij} \eq 0$ and the gradient with respect to $\wijab$ is equal to $-\lambda_w \wijab$.
+
+
+
+## The prior on $\v$ {#prior-v}
+
+Most previous approaches chose a prior around the origin, $p(\v) = \Gauss ( \v| \mathbf{0}, \lambda_v \I)$. 
+This choice has an obvious draw-back. 
+To see why, we take the sum over $b=1,\ldots, 20$ of the gradient of couplings in eq. \@ref(eq:gradient-LLreg-approx) at the optimum, where the gradient vanishes. 
+
+This yields
+\begin{equation}
+    0 =   N_{ij}\, q(x_i \eq a, x_j \ne 0)   - N_{ij}\, p(x_i \eq a | \v, \w)  - \lambda_w \sum_{b=1}^{20} \wijab.
+\end{equation}
+
+
+Incidentally, we note that by taking the sum over $a$ we find 
+\begin{equation}
+    \sum_{a,b=1}^{20} \wijab  = 0.
+(\#eq:zero-sum-wij)
+\end{equation}
+
+At the optimum the gradient with respect to $v_{ia}$ vanishes and we can substitute $p(x_i=a|\v,\w) = q(x_i=a) - \lambda_v (\via - \via^*) / N_i$, yielding   
+
+\begin{equation}
+    0 =  N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a) + \frac{N_{ij}}{N_i}\lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab .
+(\#eq:gauge-opt-1)
+\end{equation}
+
+for all $i,j \in \{1,\ldots,L\}$ and all $a \in \{1,\ldots,20\}$. 
+To show that the choice $\v^*= \mathbf{0}$ leads to undesirable results, we take an [MSA](#abbrev) without gaps.
+The first two terms $N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a)$ vanish as they add up to zero, which leaves
+
+\begin{equation}
+    0 =  \lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab .
+(\#eq:gauge-opt-2)
+\end{equation}
+
+Consider a column $i$ that is not coupled to any other and assume that amino acid $a$ was frequent in column $i$ and therefore $\via$ would be large and positive. 
+Then according to eq. \@ref(eq:gauge-opt-2),  for any other column $j$ the 20 coefficients $\wijab$ for $b \in \{1,\ldots,20\}$ would have to take up the bill and deviate from zero! 
+
+To correct this unwanted behaviour, we instead chose a Gaussian prior centered around $\v^*$ obeying 
+\begin{equation}
+  \frac{\exp(\via^*)}{\sum_{a'=1}^{20} \exp(v_{ia'}^*)} = q(x_i=a) .
+\end{equation}
+
+This choice ensures that if no columns are coupled, i.e. $p(\seq | \v,\w) = \prod_{i=1}^L p(x_i)$, $\v=\v^*$ and $\w= \mathbf{0}$ gives the correct probability model for the sequences in the MSA. 
+If we impose the restraint $\sum_{a=1}^{20} \via = 0$ to fix the gauge of the $\via$ (i.e. to remove the indeterminacy), we get
+
+\begin{align}
+\via^* = \log q(x_i=a) - \frac{1}{20} \sum_{a'=1}^{20} \log q(x_i=a') .
+(\#eq:prior-v)
+\end{align}
+
+For this choice, $\via - \via^*$ will be approximately zero and will certainly be much smaller than $\via$, hence the sum over coupling coefficients in eq. \@ref(eq:gauge-opt-2) will be close to zero, as it should be. 
+
+Another way to understand the choice of $\v^*$ in eq. \@ref(eq:prior-v) as opposed to $\v^*=\mathbf{0}$ is by noting that in that case $q(x_i \eq a) \approx p(x_i \eq a|\v^*,\w^*)$. 
+Therefore, if $q(x_i \eq a,x_j \eq b) = q(x_i \eq a) \, q(x_j \eq b)$ it follows that $p(x_i \eq a, x_j \eq b | \v,\w) \approx  q(x_i \eq a, x_j \eq b)  = p(x_i \eq a | \v^*,\w^*)\,  p(x_j \eq b | \v^*,\w^*)$, i.e. we would correctly conclude that $\wijab=0$ and $(i,a)$ and $(j,b)$ are not coupled.
+
+
+
+
+## The regularized likelihood as multivariate Gaussian
+
+
+From sampling experiments done by Markus Gruber we know that the regularized pseudo-log-likelihood for realistic examples of protein MSAs obeys the equipartition theorem. 
+The equipartition theorem states that in a harmonic potential (where third and higher order derivatives around the energy minimum vanish) the mean potential energy per degree of freedom (i.e. per eigendirection of the Hessian of the potential) is equal to $k_B T/2$, which is of course equal to the mean kinetic energy per degree of freedom. 
+Hence we have a strong indication that in realistic examples the pseudo log likelihood is well approximated by a harmonic potential. 
+We assume here that this will also be true for the regularized log likelihood. 
+We will come back to justify this assumption of normality in the subsection following the next. 
+
+
+The single potentials $\v$ will be set to the target vector $\v^*$ given in eq. \@ref(eq:prior-v) and the mode $\w^*$ of the regularized log-likelihood $\LLreg(\v^*,\w)$ will be determined with the [CD](#abbrev) approach introduced in the previous section and described in detail in section \@ref{optimizing-full-likelihood}. 
+
+By carrying out a second order Taylor expansion around the mode $\w^*$ , the regularized log-likelihood 
+
+\begin{equation}
+    \LLreg(\v^{*},\w) = \log \; \left[ p(\X | \v^{*},\w) \, \Gauss(\w | \mathbf{0}, \lambda_w^{-1} \I) \right]
+\end{equation}
+
+can be approximated as 
+
+\begin{align}
+    \LLreg(\v^{*},\w) &\overset{!}{\approx} \LLreg(\v^*, \w^*) \\
+                  & + \nabla_\w \LLreg(\v^*,\w^*)(\w-\w^*) \\ 
+  					      & + \frac{1}{2}\nabla^2_\w \LLreg(\v^*,\w^*)(\w-\w^*)^2 \\
+\end{align}
+
+Since the gradient for the couplings vanishes at the maximum of the regularized log-likelihood, $\nabla_\w \LLreg(\v^*,\w^*) = \mathbf{0}$, the second order approximation can be written as
+
+\begin{equation}
+    \LLreg(\v^{*},\w) \overset{!}{\approx} \LLreg(\v^*, \w^*)  - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \, \H \, (\w-\w^*)  \;,
+\end{equation}
+
+where $\H$ signifies the *negative* Hessian matrix with respect to the components of $\w$,
+
+\begin{equation}
+    (\H)_{klcd, ijab} = - \left. \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \w_{klcd} \, \partial \wijab  } \right|_{(\w^*)} .
+\end{equation}
+
+By applying $\exp(\cdot)$ to the second order approximation, it turns out that the regularized likelihood can be approximated by a multivariate Gaussian, 
+
+\begin{align}
+    p(\X | \v^*,\w) \, \Gauss(\w| \mathbf{0}, \lambda_w^{-1} \I) &= p(\X | \v^*, \w^*) \, \exp \left( -\frac{1}{2} (\w-\w^*)^{\mathrm{T}} \H  (\w -\w^*) \right) \nonumber \\
+              &= p(\X | \v^*,\w^*) \frac{(2 \pi)^\frac{D}{2}} { |\H|^\frac{D}{2}} \times \Gauss (\w | \w^*, \H^{-1} )  \\
+              &\propto  \Gauss (\w | \w^*, \H^{-1}) \,,
+(\#eq:reg-lik-gauss-approx)
+\end{align}
+
+with proportionality constant that depends only on the data and with a precision matrix equal to the negative Hessian matrix.
+The surprisingly easy computation of the Hessian can be found in Methods section \@ref(neg-Hessian-computation). 
+
+
+
+
+
+## Posterior Probabilty of distances
+
+Our ultimate goal is to compute the posterior probability of the distances, $p(\r | \X) \propto p(\X | \r) \, p(\r )$ and the marginals $p(\rij | \X) = \int  p(\r | \X) d \r_{\backslash ij}$, where $\r_{\backslash ij}$ is the vector containing all coordinates of $\r$ except $\rij$. 
+
+In Bayesian statistics the posterior can be computed by analytically integrating out the hidden variables $\v$ and $\w$ in the dependence of $\r$ on $\X$:
+
+\begin{equation}
+p(\X | \r) = \int \int p(\X | \v,\w) \, p(\v, \w | \r) \,d\v\,d\w .
+(\#eq:integrate-out-vw)
+\end{equation}
+
+This can be achieved with the following strategy: factorize the integrand into factors over $(i,j)$ and perform each integration over the coupling coefficients $\wij$ for $(i,j)$ separately. 
+As discussed earlier (see section \@ref(prior-v)), the single potentials $\v$ are fixed to its best estimate $\v^*$. 
+Theoretically, this can be done by using a very tight prior $p(\v) = \Gauss(\v|\v^*,\lambda_v^{-1} \I) \rightarrow \delta(\v-\v*)$ for $\lambda_v \rightarrow \infty$. 
+In practice, $\v$ will not be optimized but simply be set to the value of $\v^*$. 
+This allows the replacement of the intergral over $\v$ with the value of the integrand at its mode $\v^*$. 
+
+Furthermore, the prior over $\w$ will be defined as a product over independent contributions over $\wij$ with $\wij$ depending only on the distance $\rij$:
+\begin{equation}
+  p(\v,\w|\r) = \Gauss(\v|\v^*,\lambda_v^{-1} \I) \, \prod_{1\le i<j\le L} p(\wij|\rij) .
+(\#eq:definition-coupling-prior)
+\end{equation}
+
+
+### Modelling the dependence of $\wij$ on $\rij$ {#coupling-prior}
+
+
+The prior over couplings $p(\wij|\rij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \R^{400}$, precision matrices $\Lk \in \R^{400\times 400}$, and distance-dependent, normalised weights $g_k(\rij)$, 
+
+\begin{align}	
+	  p(\wij | \rij) = \sum_{k=0}^K g_k(\rij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.
+(\#eq:definition-mixture-coupling-prior)
+\end{align}
+
+The mixture weights $g_k(\rij)$  in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax: 
+
+\begin{equation}
+	g_k(\rij) = \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} 
+	\label{eq:def-g_k_binary}
+\end{equation}
+
+The functions $g_k(\rij)$ remain invariant when adding an offset to all $\gamma_k(\rij)$. 
+This degeneracy can be removed by setting $\gamma_0(\rij)=1$.
+
+
+### Integrating out $\v$ and $\w$
+
+Substituting eq. \@ref(eq:definition-coupling-prior) into eq. \@ref(eq:integrate-out-vw) and performing the integral over $\v$ (where the tight Gaussian acts as a delta function) yields
+
+\begin{eqnarray}
+    p(\X | \r) &=& \int \left( \int  p(\X | \v,\w) \, \Gauss(\v|\v^*,\lambda_v^{-1} \I) \,d\v \right) \, \prod_{1\le i<j\le L} p(\wij|\rij) \, d\w  \\
+    p(\X | \r) &=& \int  p(\X | \v^*,\w) \, \prod_{1\le i<j\le L} p(\wij|\rij) \, d\w  
+\label{eq:in_over_w_1}
+\end{eqnarray}
+
+Next, the likelihood will be multiplied with the regularisation prior and the distance-dependent prior will be divided by the regularisation prior again:
+
+\begin{eqnarray}
+	  p(\X | \r) &=& \int p(\X | \v^*,\w) \, \Gauss(\w|\mathbf{0}, \lambda_w^{-1} \I) \, \prod_{1\le i<j\le L} \frac{p(\wij|\rij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} \,d\w \, .
+\end{eqnarray}
+
+Now the crucial advantage of our likelihood regularisation is borne out: We can chose the strength of the regularisation prior, $\lambda_w$, such that the mode $\w^*$ of the regularised likelihood is near to the mode of the integrand in the last integral. 
+The regularisation prior $\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)$ is then a simpler, approximate version of the real, distance-dependent prior $\prod_{1\le i<j\le L} p(\wij|\rij)$. 
+This allows us to approximate the regularised likelihood with a Gaussian distribution (eq. \@ref(eq:reg-lik-gauss-approx)), because this approximation will be fairly accurate in the region around its mode, which is near the region around the mode of the integrand and this again is in the region that contributes most to the integral:
+
+\begin{eqnarray}
+	  p(\X | \r) &\propto& \int \Gauss (\w | \w^*, \H^{-1} ) \, \prod_{1 \le i<j \le L} \frac{p(\wij | \rij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w \,.
+(\#eq:int-over-w)
+\end{eqnarray}
+
+The matrix $\H$ has dimensions $(L^2 \times 20^2) \times (L^2 \times 20^2)$. 
+Computing it is obviously infeasible, even if there was a way to compute $p(x_i \eq a, x_j \eq b| \v^*,\w^*)$ efficiently. 
+In Methods section \@ref(Hessian-offdiagonal) is shown that in practice, the off-diagonal block matrices with $(i,j) \ne (k,l)$ are negligible in comparison to the diagonal block matrices.
+For the purpose of computing the integral in eq. \@ref(eq:int-over-w), it is therefore a good approximation to simply set the off-diagonal block matrices (case 3 in \@ref(eq:Hw-offdiag)) to zero! 
+
+The first term in the integrand of eq. \@ref(eq:int-over-w) now factorizes over $(i,j)$, 
+
+\begin{equation}
+  \Gauss (\w | \w^{*}, \H^{-1}) \approx \prod_{1 \le i < j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) ,
+\end{equation}
+
+with the diagonal block matrices are $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. 
+
+Now the product over all residue indices can be moved in front of the integral and each integral can be performed over $\wij$ separately, 
+
+\begin{eqnarray}
+  p(\X | \r) &\propto& \int \prod_{1 \le i < j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) \prod_{1 \le i<j \le L} \frac{p(\wij | \rij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w  \\
+  p(\X | \r) &\propto& \int \prod_{1\le i<j\le L} \left(  \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \, \frac{p(\wij | \rij)}{\Gauss(\wij | \mathbf{0}, \lambda_w^{-1} \I)} \right) d\w \\
+  p(\X | \r) &\propto& \prod_{1\le i<j\le L}  \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{p(\wij | \rij)}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij 
+(\#eq:int-over-w-2)
+\end{eqnarray}
+
+Inserting eq. \@ref(eq:definition-mixture-coupling-prior) yields
+
+\begin{eqnarray}
+   p(\X | \r) &\propto& \prod_{1\le i<j\le L} \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{\sum_{k=0}^K g_{k}(\rij) \Gauss(\wij | \muk, \Lk^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij \\
+   p(\X | \r) &\propto& \prod_{1\le i<j\le L} \sum_{k=0}^K g_{k}(\rij) \int \frac{\Gauss (\wij | \wij^*, \H_{ij}^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} \Gauss(\wij | \muk, \Lk^{-1}) d\wij \; .
+(\#eq:int-over-w-3)
+\end{eqnarray}
+
+
+The integral can be carried out using the following formula:
+\begin{equation}
+    \int d\seq \, \frac{ \Gauss( \seq | \mathbf{\mu}_1, \mathbf{\Lambda}_1^{-1}) }{\Gauss(\seq|\mathbf{0},\mathbf{\Lambda}3^{-1})} \, \Gauss(\seq|\mathbf{\mu}_2,\mathbf{\Lambda}_2^{-1}) = \\
+    \frac{\Gauss(\mathbf{0}| \mathbf{\mu}_1, \mathbf{\Lambda}_{1}^{-1}) \Gauss(\mathbf{0}| \mathbf{\mu}_2, \mathbf{\Lambda}_{2}^{-1})}{\Gauss(\mathbf{0}|\mathbf{0}, \mathbf{\Lambda}_{3}^{-1}) \Gauss(\mathbf{0}| \mathbf{\mu}_{12}, \mathbf{\Lambda}_{123}^{-1})} 
+\end{equation}
+
+with 
+\begin{eqnarray}
+  	\mathbf{\Lambda}_{123} &:=& \mathbf{\Lambda}_1 - \mathbf{\Lambda}_3 + \mathbf{\Lambda}_2 \\
+  	\mathbf{\mu}_{12}  &:=& \mathbf{\Lambda}_{123}^{-1}(\mathbf{\Lambda}_1 \mathbf{\mu}_1 + \mathbf{\Lambda}_2 \mathbf{\mu}_2).
+\end{eqnarray}
+
+We define 
+\begin{align}
+  	\Lijk   &:= \H_{ij} - \lambda_w \I + \Lk \\ 
+  	\muijk  &:= \Lijk^{-1}(\H_{ij} \wij^* + \Lk \muk) \,.
+(\#eq:def-Jkij)
+\end{align}
+
+and obtain
+
+\begin{align}
+p(\X | \r) \propto \prod_{1 \le i < j \le L}  \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \,.
+(\#eq:pXr-final)
+\end{align}
+
+$\Gauss( \mathbf{0} | \mathbf{0}, \lambda_w^{-1} \I)$ and $\N( \mathbf{0} | \wij^*, \H_{ij}^{-1})$ are constants that depend only on $\X$ and $\lambda_w$ and can be omitted. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,8 +15,8 @@ The degree of structural conservation is linked to the level of pairwise sequenc
 Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model [@Marti-Renom2000]. 
 By definition, homology derived models are unable to capture new folds [@Dorn2014] and their main limitation lies in the availability of suitable templates.  
 
-```{r seq-str-gap, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
-knitr::include_url("img/pdb_growth.html")
+```{r seq-str-gap, echo = FALSE, out.width = '100%', fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
+knitr::include_url("img/pdb_growth.html", height = "750px")
 ```
 
 Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive [@Dorn2014].
@@ -43,6 +43,63 @@ They are fundamental for the design of drugs and antibiotics. Moreover structura
 
 The aformentioned trends illustrate the need of computational methods and motivate research to solve *Ansinsens Dogma* to reliably predict protein structures from sequence alone. 
 
+## Protein Structure
+
+- Primary: Amino Acid Sewuence
+- Secondary: Helices, sheets, coils, repeats,..
+- tertiary: interaction of secondary structure elementws
+- quartary: interaction of domains
+
+
+### Amino Acid Interactions {#amino-acid-interactions}
+
+The Venn diagram in figure \@ref(fig:amino-acid-physico-chemical-properties) displays a typical classification of amino acids with respect to their physico-chemical properties. 
+
+
+The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. 
+Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure.
+Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. 
+The $\pi$-electron systems favour T-shaped or offset stacked conformations [@Waters2002].
+Preferred distances between aromatic residues have been observed between 4.5\AA and 7\AA of their ring centroids [@Burley1985].
+
+Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains.
+They comprise the strongest side chain interactions in protein structures and their length varies between 3.5\AA to 4\AA.
+Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. 
+Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees [@Thornton1981].
+They play a very important role in stabilizing protein structures. 
+The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core.
+It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability [@Bastolla2005].
+
+Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). 
+The strength of electrostatic interactions, as described by Coulomb's law, decreases with distance between the point charges at the functional groups. 
+It has been found to be maximal at 4\AA with respect to the functional groups of the both residues [@Donald2011].
+
+Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. 
+They are electrostatic interactions as well and thus their strength depends on distance as well. 
+Hydrogen bonds are formed at distances of 2.4\AA to 3.5\AA between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
+
+Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). 
+The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).
+
+Cation–$\pi$ interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). 
+The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4\AA and 6\AA [@Burley1986] [@Crowley2005]
+Their role in stabilizing protein structures is still under debate [@Slutsky2004].
+
+Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. 
+The sterical rigidity of the proline side chain restricts the backbone angle and thus affects secondary structure formation.
+Proline is known as a helix-breaker. 
+Whereas other aromatic side chains are defined by their negatively charged $\pi$ faces, the face of proline side chains is partially positively charged.
+Thus, aromatic and proline residues can interact favorably with each other.
+Once due to the hydrophobic nature of the residues and also due to the interaction between the negatively charged aroamtic $\pi$ face and the polarized C-H bonds in proline, called a CH/$\pi$  interaction.
+
+Petersen et al. (2012) found clear secondary structure elements preferences for each amino acid pair. 
+For example, residue pairs containing Alanine and Leucine are predominantly found in buried $\alpha$-helices, whereas pairs containing Isoleucine and Valine preferentially are located in $\beta$-sheet environments. 
+Of course, solvent accessibility represents an important criterion for residue interactions. 
+Hydrophobic residues are rather buried in the structure, whereas polar and charged residues are found more frequently on the protein surface and interact with water molecules.
+
+```{r amino-acid-physico-chemical-properties, echo = FALSE, out.width = '50%',  fig.cap = 'Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in [@Livingstone1993].'}
+knitr::include_graphics("img/amino_acid_physico_chemical_properties_venn_diagramm.png")
+```
 
 
 ## Structure Prediction
@@ -103,6 +160,12 @@ Many studies that successfuly predict structures denovo with the help of predict
 
 Vice versa, because contacts at large primary distances are rare, they are most informative for protein structure prediction: Izarzugaza J, Gran ˜a O, Tress M, Valencia A, Clarke N (2007) Assessment of intramolecular contact predictions for CASP7
 
+
+
+
+
+
+
 ## Contact Prediction
 
 ### Correlated mutations
@@ -110,7 +173,29 @@ Vice versa, because contacts at large primary distances are rare, they are most 
 contact prediction methods aim to identify correlated mutations from an  alignment of homologue protein sequences. 
 main assumption is that two interacting amino acid residues are coevolving: mutation of one of the two residues can be compensated by mutation of the other residue
 
-### Benchmarking methods
+### Local methods
+MI and correlation measures suffer from transitivity of correlations
+
+
+### Global methods
+
+In 2010, Burger and Nijmwegen  developed a Bayesian network model [@Burger2010] that is able to disentangle direct from indirect correlations and introducing informative priors to improve precision. independently of weight in 2009
+
+### Meta-predictors
+
+- combining different approaches
+ - jones et al: overlap between methods but also many unique predictions
+- machine learning methods incorporate sequence-derived features:
+  - secondary structure predictions
+  - solvent accessibilty
+  - contact potentials
+  - msa properties
+  - pssms 
+  - physico-chemcial properties of amino acids
+
+However, Meta-predictors will improve if basic methods improve. Ultra-deep learning paper identifies coevolution features as crucial feature. 
+
+### Benchmarking methods {#intro-cp-evaluation}
 
 - threshold for defining a contact: 
 usually distance between $C_\beta$ atoms ($C_\alpha$ for Glycin) < 8 angstrom. 
@@ -118,9 +203,58 @@ usually distance between $C_\beta$ atoms ($C_\alpha$ for Glycin) < 8 angstrom.
 - PPV: TP/(FP+TP)
 fraction of correct predictions among all predictions
 
+#### Sequence Separation
+
+Residue pairs too close in sequence (e.g $|i-j| < 6$) are filtered out for benchmarking contact prediction methods.
+Commonly, sequence separation bins are applied to distuinguish short ($6 \le |i-j| < 12$), medium ($12 \le |i-j| < 24$) and long range ($|i-j| \ge 24$) contacts.
+Especially long range contacts are of importance for structure prediction as they are informative and able to constrain the overal fold of a protein [@CITE].
+
+In contrast, residue pairs close in sequence ($|i-j| < 6$) are trivial to predict and often reflect local geometrical constraints from secondary structure elements.
+Figure \@ref(fig:Cb-distribution) shows the distribution of $\Cb$ distances for various minimal sequence separation thresholds. 
+Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around $5.5\AA$, $7.4\AA$ and $10.6\AA$ that can be attributed to local interactions in e.g. helices (see Figure \@ref(fig:peaks-Cb-distribution)).
+ 
+ 
+(ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over all proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds: blue = $|i-j| > 1$ (all residue pairs), orange = $|i-j| > 6$, green = $|i-j| > 12$, red = $|i-j| > 24$.
+
+```{r Cb-distribution, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
+knitr::include_url("img/dataset_statistics/Cb_distribution_all_data43579541_log.html", height="500px")
+```
+
+(ref:caption-peaks-Cb-distribution) $\Cb$ distances between neighboring residues in $\alpha$-helices. Left: Direct neighbors in $\alpha$-helices have $\Cb$ distances around $5.4\AA$ due to the geometrical constraints from $\alpha$-helical architecture. Right: Residues separated by two positions ($|i-j| = 2$) are less geometrically restricted to $\Cb$ distances between $7\AA$ and $7.5\AA$.
+
+```{r peaks-Cb-distribution, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-peaks-Cb-distribution)'}
+knitr::include_graphics(c("img/dataset_statistics/cb_distribution_peak_5-6.png","img/dataset_statistics/cb_distribution_peak_7.png"))
+```
+
+#### Contact Definition
+
+Methods are validated with respect to precision of predictions (see section \@ref(intro-cp-evaluation)), where a correctly predicted contact is commonly defined as a residue pair whose $\Cb$ atoms are within 8 $\AA$ [@CASP].
+However, whether two residues truly interact in a protein structure depends only marginally on the distance between their atoms.
+More importantly, interactions between side-chains depend on their physico-chemical properties, on their orientation and on their environment [@Bettsa] (see section \@ref(amino-acid-interactions).
+
+Other distance thresholds or definitions for contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well.
+In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\AA$ and 11$\AA$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
+
+Anishchenko and colleagues [@Anishchenko2017] analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \AA$, as they found that this cutoff optimally defines direct physical interactions of residue pairs.
+
+However, keeping in mind that predicted contacts shall be used for structure prediction protocols, it is more convenient to apply a simple $\CB$ cutoff as this threshold can be easily implemented into protocols (e.g Modeller).
+
+Amino acid interactions strongly depend physico-chemical properties, distance, geometry and environmental preferences.
+Therefore, one has to keep in mind that a contact definition based merely on the distance between the atoms of two residues is a poor gold standard. 
+It cannot capture the true interaction preferences of amino acids which are based on their physico-chemical properties and which vary within the vast number of alternative environments within proteins.
+  
+  
+
+
+  
+
 ### Pitfalls
 
-<iframe src="img/pfam_pdb.html" frameborder="0" allowtransparency="true" width=100% height=600px></iframe>
+(ref:caption-pfam) Distribution of PFAM family sizes. Less than half of the families in PFAM (7990 compared to 8489 families) do not have an annotated structure. The median family size in number of sequences for families with and without annotated structures is 185 and 827 respectively. Data taken from PFAM 31.0 (March 2017, 16712 entries).
+
+```{r pfam, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-pfam)'}
+knitr::include_url("img/pfam_pdb_notitle.html", height = "650px")
+```
 
 
 Coevolution of residues can be mediated by intermediate molecules (e.g metal ions) and will not always imply spatial proximity in structure [@Morcos2011]. 
@@ -138,8 +272,10 @@ Sampling bias needs to be taken into account. See sequence reweighting strategie
 
 That is, very low entropy columns have on average almost twice as many contacts as high entropy columns[@Burger2010]....reiterates the well-known dependence between surface accessibility and conservation...Obviously, since this position shows no variation whatsoever it cannot display any signs of statistical dependency with any other column, even though it may contact many other residues. This is a basic limitation of using statistical dependency for contact prediction that cannot be avoided
 
-- theoretical upper boundary on precision: simply not all contacts within 8A interact with each other and therefore will never be detected using covariance methods --> influences sensitivity.
-- strongly conserved residues can also not show covariance signals --> influences sensitivity
+- theoretical upper boundary on precision: simply not all contacts within 8A interact with each other and therefore will never be detected using co-variance methods --> influences sensitivity.
+- strongly conserved residues can also not show co-variance signals --> influences sensitivity
+
+
 
 #### Correlation vs Causation 
 
@@ -152,19 +288,11 @@ These transitive effects of covariation need to be disentangled to obtain the tr
 Traditional covariance methods are unable to distinguish direct and indirect correlations.
 
 
-## State of the Art CP
 
 
-### Local methods
-MI and correlation measures suffer from transitivity of correlations
 
 
-### Global methods
-
-In 2010, Burger and Nijmwegen  developed a Bayesian network model [@Burger2010] that is able to disentangle direct from indirect correlations and introducing informative priors to improve precision. independently of weight in 2009
-
-
-### Maximum entropy models for modelling protein families {#maxent}
+## Maximum entropy models for modelling protein families {#maxent}
 
 The principle of maximum entropy was postulated by Jaynes in 1957 [@Jaynes1957a] [@Jaynes1957b], stating that the probability distribution which best represents observed data is the one that is in agreement with measured constraints and has the largest entropy. It is a distribution that makes minimal assumptions and therefore is the least biased estimate of a distribution given the measured constraints.
 
@@ -178,7 +306,7 @@ The distribution should reproduce the empirical single $\mathcal{f}(x_i \eq a)$ 
  (\#eq:emp-freq)
 \end{equation}
 
-Maximizing the entropy $S= -\sum_{\seq} p(\seq) \log p(\seq)$ of the distribution subject to the constraints given in eq. \@ref(eq:emp-freq) via Lagrange multipliers results in the formulation of an exponential model known as *Potts model* or its generalized form a *Markov Random Field*:
+Introducing Lagrange multipliers to maximize the entropy $S= -\sum_{\seq} p(\seq) \log p(\seq)$ of the distribution subject to the constraints given in eq. \@ref(eq:emp-freq) results in the formulation of an exponential model known as *Potts model* or its generalized form a *Markov Random Field*:
 
 \begin{equation}
 p(\seq | \v,\w) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right)
@@ -194,10 +322,7 @@ $Z$ is a normalization constant also known as *partition function* that ensures 
 \end{equation}
 
 
-
-
-
-#### Properties of model parameters
+### Properties of model parameters
 
 The Langrange multipliers $\v$ and $\w$, introduced to satisfy the constraints in eq. \@ref(eq:emp-freq), specify the maximum entropy model and need to be tuned.
 The single potentials $v_i(a)$ correspond to the single amino acid frequencies whereas the pairwise potentials $w_{ij}(a,b)$, also called couplings, reflect the tendency of an amino acid a at position i to co-occur with an amino acid b at position j in the alignment.
@@ -218,12 +343,12 @@ Likelihood function needs to be reevaluated at each iteration during optimizatio
 
 
 
-#### Infering model parameters
+### Infering model parameters {#infering-max-ent-models}
 
 Typically, one would obtain parameter estimates by maximizing the log-likelihood function of the parameters over observed sequences in the alignment $\mathbf{X}$: 
 
 \begin{equation}
-    \mathcal{L}(\v, \w | \mathbf{X}) = \sum_{n=1}^N \log p(\seq^{(n)}) = \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_i^{(n)}) \sum_{\substack{i,j=1 \\ i \neq j}}^L w_{ij}(x_i^{(n)}, x_j^{(n)}) - \log Z \right]
+    \mathcal{L}(\v, \w | \mathbf{X}) = \sum_{n=1}^N \log p(\seq^{(n)}) = \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_i^{(n)}) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i^{(n)}, x_j^{(n)}) - \log Z \right]
 \end{equation}
 
 However, optimizing the log-likelihood requires computing the partition function that sums $20^L$ terms. 
@@ -255,18 +380,18 @@ In order to represent the [MSA](#abbrev) as continuous distributed, each positio
 So far using pseudo-likelihood maximization to infer the model directly from the input alignment has proven to be the most accurate approach. 
 There exist several implementations of pseudo-likelihood maximization that vary only in implemenation details, perform similarly and thus are equally popular in the community: CCmpred [@Seemayer2014, ], plmDCA[@Ekeberg2014], GREMLIN [@Kamisetty2013].
 
-#### Pseudo-Likelihood
+### Pseudo-Likelihood {#pseudo-likelihood}
 
 Instead of optimizing the likelihood, Besag suggested in 1975 to rather optimize a function that he termed *pseudo-likelihood* that replaces the joint probability with the product over conditionals [@Besag1975]:
 
 \begin{equation}
-  p(\seq | \v,\w) =   \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w) =  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(x_i, x_j) \right)
+  p(\seq | \v,\w) =   \prod_{i=1}^L p(x_i | \seq_{/xi}\v,\w) =  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right)
 \end{equation}
 
 Here, the normalization term $Z_i$ sums only over all assignments to one position $i$ in sequence:
 
 \begin{equation}
-  Z_i = \sum_{a=1}^{20} \exp \left( v_i(a) \sum_{\substack{j=1 \\ j \neq i}}^L w_{ij}(a, x_j) \right)
+  Z_i = \sum_{a=1}^{20} \exp \left( v_i(a) \sum_{1 \leq i < j \leq L}^L w_{ij}(a, x_j) \right)
 \end{equation}
 
 
@@ -299,7 +424,7 @@ Disregarding the improvements, we find that overall
 the predicted contact pairs for plmDCA and mfDCA are highly overlapping, illustrating the robustness of DCA results with respect to the algorithmic implementation[@Ekeberg2013]
 
 
-### Computing contact map from coupling matrix
+### Computing contact map from coupling matrix {#post-processing-heuristics}
 
 - direct information
 - frobenius norm
@@ -308,18 +433,5 @@ average product correction (also for MI)
 
 (benchmark plot for localmethods + ccmpred)
 
-### Meta-predictors
-
-- combining different approaches
- - jones et al: overlap between methods but also many unique predictions
-- machine learning methods incorporate sequence-derived features:
-  - secondary structure predictions
-  - solvent accessibilty
-  - contact potentials
-  - msa properties
-  - pssms 
-  - physico-chemcial properties of amino acids
-
-However, Meta-predictors will improve if basic methods improve. Ultra-deep learning paper identifies coevolution features as crucial feature. 
 
 
