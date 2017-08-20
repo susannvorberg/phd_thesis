@@ -463,7 +463,7 @@ For simplicity of notation, the following calculations consider the contribution
 From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
 
 \begin{equation}
- 	L\!L(\mathbf{\mu}, \mathbf{\Lambda}) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
+ 	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
 \end{equation}
 
 
@@ -473,7 +473,7 @@ From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
 By applying the formula $d f(x) / dx = f(x) \, d \log f(x) / dx$ to the previous equation one obtains
 
 \begin{equation}
- \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+ \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
 	= \sum_{1\le i<j\le L}  
 	\frac{ 
 		g_{k}(\rij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
@@ -495,7 +495,7 @@ To simplify this expression, we define the responsibility of component $k$ for t
 By substituting the definition for responsibility, \@ref(eq:gradient-mukab) simplifies
 
 \begin{equation}
-  \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+  \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
 	= \sum_{1\le i<j\le L}  p(k | ij)  \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right) ,
 \end{equation}
 and analogously for partial derivatives with respect to $\Lambda_{k,ab,cd}$.
@@ -522,10 +522,49 @@ the partial derivative therefore becomes
 Finally, the gradient of the log likelihood with respect to $\mathbf{\mu}$ becomes
 
 \begin{align}
-    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda})
+    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
 	=  \sum_{1\le i<j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
 (\#eq:gradient-mukab-final)
 \end{align}
+
+
+### The gradient of the log likelihood with respect to $\gamma_k$
+
+With $\rij \in \{0,1\}$ defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. \@ref(eq:def-g-k-binary). 
+The derivative of the mixing weights $g_k(\rij)$ is: 
+
+\begin{eqnarray}
+\frac{\partial g_{k'}(\rij)} {\partial \gamma_k} = \left\{
+  \begin{array}{lr}
+    g_k(\rij) (1 - g_k(\rij)) & : k' = k\\
+    g_{k'}(\rij) - g_k(\rij)  & : k' \neq k
+  \end{array}
+  \right.
+\end{eqnarray}
+
+The partial derivative of the likelihood function with respect to $\gamma_k$ is:
+
+\begin{align}
+\frac{\partial} {\partial \gamma_k}  	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) 
+  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  \frac{\partial}{\partial \gamma_k} g_{k'}(\rij)  
+  \frac{\Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\N( 0 | \muijk, \Lijk^{-1})}}
+  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
+  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  g_{k'}(\rij)  
+  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \cdot 
+  \begin{cases} 
+   1-g_k(\rij) & \text{if } k' = k \\
+   -g_k(\rij)  & \text{if } k' \neq k
+  \end{cases}}
+  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
+  =& \sum_{1\le i<j\le L} \sum_{k'=0}^K p(k'|ij) 
+  \begin{cases} 
+  	1-g_k(\rij) & \text{if } k' = k \\
+   	-g_k(\rij)  & \text{if } k' \neq k 
+  \end{cases} \\
+  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij) \sum_{k'=0}^K p(k'|ij) \nonumber\\
+  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij)
+\end{align}
+
 
 
 

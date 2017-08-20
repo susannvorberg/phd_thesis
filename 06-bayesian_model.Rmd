@@ -319,7 +319,7 @@ The mixture weights $g_k(\rij)$  in eq. \@ref(eq:definition-mixture-coupling-pri
 
 \begin{equation}
 	g_k(\rij) = \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} 
-	\label{eq:def-g_k_binary}
+(\#eq:def-g-k-binary)
 \end{equation}
 
 The functions $g_k(\rij)$ remain invariant when adding an offset to all $\gamma_k(\rij)$. 

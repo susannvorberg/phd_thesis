@@ -190,6 +190,7 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="5.7" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>5.7</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
 <li class="chapter" data-level="5.8" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html"><i class="fa fa-check"></i><b>5.8</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a><ul>
 <li class="chapter" data-level="5.8.1" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>5.8.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="5.8.2" data-path="training-the-hyperparameters-muk-and-lk.html"><a href="training-the-hyperparameters-muk-and-lk.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.8.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><a href="training-the-hyperparameters-rho-k-and-alpha-k-for-distance-dependent-prior.html"><i class="fa fa-check"></i><b>5.9</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
@@ -250,9 +251,9 @@ Furthermore, the prior over <span class="math inline">\(\w\)</span> will be defi
 \tag{3.13}
 \end{align}\]</span>
 <p>The mixture weights <span class="math inline">\(g_k(\rij)\)</span> in eq. <a href="posterior-probabilty-of-distances.html#eq:definition-mixture-coupling-prior">(3.13)</a> are modelled as softmax:</p>
-<span class="math display">\[\begin{equation}
+<span class="math display" id="eq:def-g-k-binary">\[\begin{equation}
     g_k(\rij) = \frac{\exp \gamma_k(\rij)}{\sum_{k&#39;=0}^K \exp \gamma_{k&#39;}(\rij)} 
-    \label{eq:def-g_k_binary}
+\tag{3.14}
 \end{equation}\]</span>
 <p>The functions <span class="math inline">\(g_k(\rij)\)</span> remain invariant when adding an offset to all <span class="math inline">\(\gamma_k(\rij)\)</span>. This degeneracy can be removed by setting <span class="math inline">\(\gamma_0(\rij)=1\)</span>.</p>
 </div>
@@ -271,10 +272,10 @@ Furthermore, the prior over <span class="math inline">\(\w\)</span> will be defi
 <p>Now the crucial advantage of our likelihood regularisation is borne out: We can chose the strength of the regularisation prior, <span class="math inline">\(\lambda_w\)</span>, such that the mode <span class="math inline">\(\w^*\)</span> of the regularised likelihood is near to the mode of the integrand in the last integral. The regularisation prior <span class="math inline">\(\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)\)</span> is then a simpler, approximate version of the real, distance-dependent prior <span class="math inline">\(\prod_{1\le i&lt;j\le L} p(\wij|\rij)\)</span>. This allows us to approximate the regularised likelihood with a Gaussian distribution (eq. <a href="the-regularized-likelihood-as-multivariate-gaussian.html#eq:reg-lik-gauss-approx">(3.10)</a>), because this approximation will be fairly accurate in the region around its mode, which is near the region around the mode of the integrand and this again is in the region that contributes most to the integral:</p>
 <span class="math display" id="eq:int-over-w">\[\begin{eqnarray}
       p(\X | \r) &amp;\propto&amp; \int \Gauss (\w | \w^*, \H^{-1} ) \, \prod_{1 \le i&lt;j \le L} \frac{p(\wij | \rij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w \,.
-\tag{3.14}
+\tag{3.15}
 \end{eqnarray}\]</span>
-<p>The matrix <span class="math inline">\(\H\)</span> has dimensions <span class="math inline">\((L^2 \times 20^2) \times (L^2 \times 20^2)\)</span>. Computing it is obviously infeasible, even if there was a way to compute <span class="math inline">\(p(x_i \eq a, x_j \eq b| \v^*,\w^*)\)</span> efficiently. In Methods section <a href="Hessian-offdiagonal.html#Hessian-offdiagonal">5.4</a> is shown that in practice, the off-diagonal block matrices with <span class="math inline">\((i,j) \ne (k,l)\)</span> are negligible in comparison to the diagonal block matrices. For the purpose of computing the integral in eq. <a href="posterior-probabilty-of-distances.html#eq:int-over-w">(3.14)</a>, it is therefore a good approximation to simply set the off-diagonal block matrices (case 3 in <a href="neg-Hessian-computation.html#eq:Hw-offdiag">(5.5)</a>) to zero!</p>
-<p>The first term in the integrand of eq. <a href="posterior-probabilty-of-distances.html#eq:int-over-w">(3.14)</a> now factorizes over <span class="math inline">\((i,j)\)</span>,</p>
+<p>The matrix <span class="math inline">\(\H\)</span> has dimensions <span class="math inline">\((L^2 \times 20^2) \times (L^2 \times 20^2)\)</span>. Computing it is obviously infeasible, even if there was a way to compute <span class="math inline">\(p(x_i \eq a, x_j \eq b| \v^*,\w^*)\)</span> efficiently. In Methods section <a href="Hessian-offdiagonal.html#Hessian-offdiagonal">5.4</a> is shown that in practice, the off-diagonal block matrices with <span class="math inline">\((i,j) \ne (k,l)\)</span> are negligible in comparison to the diagonal block matrices. For the purpose of computing the integral in eq. <a href="posterior-probabilty-of-distances.html#eq:int-over-w">(3.15)</a>, it is therefore a good approximation to simply set the off-diagonal block matrices (case 3 in <a href="neg-Hessian-computation.html#eq:Hw-offdiag">(5.5)</a>) to zero!</p>
+<p>The first term in the integrand of eq. <a href="posterior-probabilty-of-distances.html#eq:int-over-w">(3.15)</a> now factorizes over <span class="math inline">\((i,j)\)</span>,</p>
 <span class="math display">\[\begin{equation}
   \Gauss (\w | \w^{*}, \H^{-1}) \approx \prod_{1 \le i &lt; j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) ,
 \end{equation}\]</span>
@@ -284,13 +285,13 @@ Furthermore, the prior over <span class="math inline">\(\w\)</span> will be defi
   p(\X | \r) &amp;\propto&amp; \int \prod_{1 \le i &lt; j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) \prod_{1 \le i&lt;j \le L} \frac{p(\wij | \rij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w  \\
   p(\X | \r) &amp;\propto&amp; \int \prod_{1\le i&lt;j\le L} \left(  \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \, \frac{p(\wij | \rij)}{\Gauss(\wij | \mathbf{0}, \lambda_w^{-1} \I)} \right) d\w \\
   p(\X | \r) &amp;\propto&amp; \prod_{1\le i&lt;j\le L}  \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{p(\wij | \rij)}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij 
-\tag{3.15}
+\tag{3.16}
 \end{eqnarray}\]</span>
 <p>Inserting eq. <a href="posterior-probabilty-of-distances.html#eq:definition-mixture-coupling-prior">(3.13)</a> yields</p>
 <span class="math display" id="eq:int-over-w-3">\[\begin{eqnarray}
    p(\X | \r) &amp;\propto&amp; \prod_{1\le i&lt;j\le L} \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{\sum_{k=0}^K g_{k}(\rij) \Gauss(\wij | \muk, \Lk^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij \\
    p(\X | \r) &amp;\propto&amp; \prod_{1\le i&lt;j\le L} \sum_{k=0}^K g_{k}(\rij) \int \frac{\Gauss (\wij | \wij^*, \H_{ij}^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} \Gauss(\wij | \muk, \Lk^{-1}) d\wij \; .
-\tag{3.16}
+\tag{3.17}
 \end{eqnarray}\]</span>
 The integral can be carried out using the following formula:
 <span class="math display">\[\begin{equation}
@@ -306,12 +307,12 @@ We define
 <span class="math display" id="eq:def-Jkij">\[\begin{align}
     \Lijk   &amp;:= \H_{ij} - \lambda_w \I + \Lk \\ 
     \muijk  &amp;:= \Lijk^{-1}(\H_{ij} \wij^* + \Lk \muk) \,.
-\tag{3.17}
+\tag{3.18}
 \end{align}\]</span>
 <p>and obtain</p>
 <span class="math display" id="eq:pXr-final">\[\begin{align}
 p(\X | \r) \propto \prod_{1 \le i &lt; j \le L}  \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \,.
-\tag{3.18}
+\tag{3.19}
 \end{align}\]</span>
 <p><span class="math inline">\(\Gauss( \mathbf{0} | \mathbf{0}, \lambda_w^{-1} \I)\)</span> and <span class="math inline">\(\N( \mathbf{0} | \wij^*, \H_{ij}^{-1})\)</span> are constants that depend only on <span class="math inline">\(\X\)</span> and <span class="math inline">\(\lambda_w\)</span> and can be omitted.</p>
 
