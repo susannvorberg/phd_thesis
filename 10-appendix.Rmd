@@ -17,7 +17,11 @@
 
 **IDP** intrinsically disordered proteins
 
+**MAP** Maximum a posteriori
+
 **ML** Maximum-Likelihood
+
+**MLE** Maximum-Likelihood Estimate
 
 **MRF** Markov-Random Field
 

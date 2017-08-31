@@ -1,4 +1,4 @@
-# Interpretation of Coupling Matrices
+# Interpretation of Coupling Matrices {#interpreting-coupling-matrices}
 
 State-of-the-art contact prediction methods map the 20 x 20 coupling matrices $w_{ij}$ onto scalar values to obtain contact scores for each residue pair (see section \@ref(post-processing-heuristics)). 
 By doing so, the full information contained in coupling matrices is lost:

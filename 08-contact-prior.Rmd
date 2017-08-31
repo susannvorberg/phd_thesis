@@ -1,0 +1,7 @@
+# Contact Prior {#contact-prior}
+
+Up to now the only source of information to predict contacts was the [MSA](#abbrev) $\X$. 
+There are other sources of information that can be exploited. 
+As shown in subsection \ref{sec:1Dprops}, much information about the distance $\rij$ is typically contained in features of 1D properties at positions $i$ and $j$ predicted from local sequence profiles, such as  secondary structure, solvent accessibility, contact number or context states, and in features of predicted 2D properties such as the contact prediction scores for $(i,j)$ from a profile-based method. 
+
+This information can be introduced directly as prior $p(\r |\phi)$ for the correlated mutations analysis to improve the overall prediction accuracy in terms of posterior probabilities.
