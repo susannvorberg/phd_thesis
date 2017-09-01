@@ -19,6 +19,8 @@
 
 **MAP** Maximum a posteriori
 
+**MI** mutual information
+
 **ML** Maximum-Likelihood
 
 **MLE** Maximum-Likelihood Estimate

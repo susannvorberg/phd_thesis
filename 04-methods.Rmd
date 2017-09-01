@@ -108,14 +108,9 @@ Flags used with CCMpred:
 
 ### Sequence Reweighting {#seq-reweighting}
 
-Sequences in a [MSA](#abbrev) do not represent independent draws from a probabilistic model. 
-Due to their evolutionary relationships they in fact have a complicated dependence structure.
-
-Multiple sequence alignments do not represent iid samples of the sequence space of a protein family. 
-In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. 
-This uneven sampling of sequence space thus leaves certain regions unexplored whereas others are statistically overrepresented. 
-To reduce the effects of overrepresented sequences, typically a simple weighting strategy [@Stein2015a] is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold. 
-It has been found that reweighting improves contact prediction performance [@Jones2012] significantly but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 [@Morcos2011]. 
+As discussed in section \@ref(challenges), sequences in a [MSA](#abbrev) do not represent independent draws from a probabilistic model. 
+To reduce the effects of overrepresented sequences, typically a simple weighting strategy is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold [@Stein2015a]. 
+It has been found that reweighting improves contact prediction performance [@Buslje2009; @Morcos2011; @Jones2012] significantly but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 [@Morcos2011]. 
 We chose an identity threshold of 0.8.   
 
 Every sequence $x_n$ of length $L$ in an alignment with $N$ sequences has an associated weight $w_n = 1/m_n$, where $m_n$ represents the number of similar sequences:
