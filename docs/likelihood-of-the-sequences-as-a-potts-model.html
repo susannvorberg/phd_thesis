@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-01">
+<meta name="date" content="2017-09-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -133,11 +133,12 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted de-novo predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#coevolution-methods"><i class="fa fa-check"></i><b>1.3.1</b> Coevolution methods</a></li>
-<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.2</b> Machine Learnign Methods and Meta-Predictors</a></li>
-<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.3</b> Evaluating Contact Prediction Methods</a></li>
-<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.4</b> Maximum Entropy Modelling of Protein Families</a></li>
-<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.5</b> Challenges in Coevolutionary Inference</a></li>
+<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learnign Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
+<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.4</b> Developing a Bayesian Model for Contact Prediction</a></li>
 </ul></li>
@@ -234,7 +235,7 @@ MathJax.Hub.Config({
 <div id="likelihood-of-the-sequences-as-a-potts-model" class="section level2">
 <h2><span class="header-section-number">3.1</span> Likelihood of the sequences as a Potts model</h2>
 <p>We denote the <span class="math inline">\(N\)</span> sequences in the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span> with <span class="math inline">\({\seq_1, ..., \seq_N}\)</span>. Each sequence <span class="math inline">\(\seq_n = (\seq_{n1}, ..., \seq_{nL})\)</span> is a string of <span class="math inline">\(L\)</span> letters from an alphabet indexed by <span class="math inline">\(\{0, ..., 20\}\)</span>, where 0 stands for a gap and <span class="math inline">\(\{1, ... , 20\}\)</span> stand for the 20 types of amino acids. The goal is to predict from <span class="math inline">\(\X\)</span> the distances <span class="math inline">\(r_{ij}\)</span> between the <span class="math inline">\(\Cb\)</span> atoms of all pairs of residues <span class="math inline">\((i, j) \in \{1, ..., L\}\)</span>. The link between the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span> and the vector <span class="math inline">\(\mathbf{r}\)</span> of all inter-<span class="math inline">\(\Cb\)</span> distances is described via the evolutionary couplings of residue pairs that are the <span class="math inline">\(20^2\)</span>-dimensional vectors <span class="math inline">\(w_{ij}\)</span>.</p>
-<p>As already described in detail in section <a href="contact-prediction.html#maxent">1.3.4</a>, we model the likelihood of the sequences in an <a href="abbrev.html#abbrev">MSA</a> with a Potts Model, also known as <a href="abbrev.html#abbrev">MRF</a>:</p>
+<p>As already described in detail in section <a href="contact-prediction.html#maxent">1.3.5</a>, we model the likelihood of the sequences in an <a href="abbrev.html#abbrev">MSA</a> with a Potts Model, also known as <a href="abbrev.html#abbrev">MRF</a>:</p>
 <span class="math display">\[\begin{equation}
     p(\X | \v, \w) = \prod_{n=1}^N p(\seq_n | \v, \w) = \prod_{n=1}^N \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i &lt; j \leq L} w_{ij}(x_{ni}, x_{nj}) \right)
 \end{equation}\]</span>

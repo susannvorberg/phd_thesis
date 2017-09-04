@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-01">
+<meta name="date" content="2017-09-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -133,11 +133,12 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted de-novo predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#coevolution-methods"><i class="fa fa-check"></i><b>1.3.1</b> Coevolution methods</a></li>
-<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.2</b> Machine Learnign Methods and Meta-Predictors</a></li>
-<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.3</b> Evaluating Contact Prediction Methods</a></li>
-<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.4</b> Maximum Entropy Modelling of Protein Families</a></li>
-<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.5</b> Challenges in Coevolutionary Inference</a></li>
+<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learnign Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
+<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.4</b> Developing a Bayesian Model for Contact Prediction</a></li>
 </ul></li>
@@ -233,7 +234,7 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="single-coupling-values-carry-evidence-of-contacts" class="section level2">
 <h2><span class="header-section-number">2.1</span> Single Coupling Values Carry Evidence of Contacts</h2>
-<p>Given the success of <a href="abbrev.html#abbrev">DCA</a> methods, it is clear that contact scores are good indicators of spatial proximity for residue pairs. As described in section <a href="contact-prediction.html#post-processing-heuristics">1.3.4.4</a>, a contact score for a residue pair is commonly computed as the square root over the sum of squared coupling values.</p>
+<p>Given the success of <a href="abbrev.html#abbrev">DCA</a> methods, it is clear that contact scores are good indicators of spatial proximity for residue pairs. As described in section <a href="contact-prediction.html#post-processing-heuristics">1.3.5.5</a>, a contact score for a residue pair is commonly computed as the square root over the sum of squared coupling values.</p>
 <p>Figure <a href="single-coupling-values-carry-evidence-of-contacts.html#fig:sq-coupling-correlation">2.1</a> shows the correlation between squared coupling values and contact class. All couplings have a positive class correlation, meaning the stronger their squared value, the more likely a contact can be inferred. Generally, couplings that involve any aliphatic amino acid (I, L, V) or alanine express the strongest class correlation. In contrast, C-C or aromatic pairings (involving Y, F, W) correlate only weakly with contact class. Therefore, these couplings often might contribute to false positive predictions.</p>
 
 <div class="figure"><span id="fig:sq-coupling-correlation"></span>

@@ -186,82 +186,43 @@ According to the hypothesis, compensatory mutations show up as correlations betw
 knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 ```
 
-
 Early methods from the 1990's were very inaccurate as the number of available protein sequences was only small and weak statistical models were prone to noise.
-It took until the end of the last decade that major sources of noise could be eliminated [@Dunn2008; @Weigt2009].
+It took until the end of the last decade that major sources of noise could be eliminated and sophisticated statistical models allowed for the distinction between transitively mediated and causal interactions [@Dunn2008; @Weigt2009].
 With the steady increase in protein sequence data, purely machine learning based methods emerged that are trained on features extracted from [MSAs](#abbrev).
 Currently, the most accurate methods to predict residue-residue contacts are meta-predictors, combining one or several coevolution methods with sequence derived features and other sources of information. 
     
 This chapter will give an overview over important previous methods, will introduce the state-of-the-art statistical model for inferring coevolutionary couplings and present well-known challenges for contact prediction methods.
 
 
-### Coevolution methods
-
-#### Local statistical models {#local-methods}
+### Local Statistical Models {#local-methods}
 
 Early contact prediction methods used local pairwise statistics to infer contacts that regard pairs of amino acids in a sequence as statistically independent from another.
 The drawback of these approaches is that they do not account for transitive effects arising from chains of correlations between multiple residue pairs as described in the section on [Transitive Effects].
 
-Several methods use correlation coefficient based measures, like Pearson correlation of amino acid counts or properties associated with amino acids at the sites of a [MSA](#abbrev) such as mutational propensities [@Neher1994; @Taylor1994; @Gobel1994; @Oliveira2002]. 
+Several of these methods use correlation coefficient based measures, such as Pearson correlation between amino acid counts, properties associated with amino acids or mutational propensities at the sites of a [MSA](#abbrev) [@Neher1994; @Taylor1994; @Gobel1994; @Oliveira2002]. 
 
-Many methods have been developed that are rooted in information theory and use [MI](#abbrev) measures to describe the dependence between sites in the alignment [@Clarke1995; @Korber1993; @Martin2005].
-Phylogenetic and entropy biases have been identified as the major sources of noise that confound the true coevolution signal [@Atchley2000; @Fodor2004; @Martin2005].
+Many methods have been developed that are rooted in information theory and use [MI](#abbrev) measures to describe the dependencies between sites in the alignment [@Clarke1995; @Korber1993; @Martin2005].
+Phylogenetic and entropic biases have been identified as the major sources of noise that confound the true coevolution signal [@Atchley2000; @Fodor2004; @Martin2005].
 Different variants of [MI](#abbrev) based approaches try to address these effects and improve on the signal-to-noise ratio [@Atchley2000; @Tillier2003; @Gouveia_Oliveira2007].
-The most prominent correction for background noises is [APC](#apc), developed by Dunn et al. [@Dunn2008] that drastically removes background noise from entropic effects and is discussed in section  \@ref(post-processing-heuristics).
+The most prominent correction for background noises is [APC](#apc), developed by Dunn et al. that drastically removes background noise from entropic effects and is discussed in section  \@ref(post-processing-heuristics) [@Dunn2008].
 
 Another popular method is *OMES* that essentially computes a chi-squared statistic to detect the differences between observed and expected pairwise amino acid frequencies for a pair of columns [@Kass2002; @Noivirt2005].
 
+Eventhough these methods cannot compete with modern predictors, *OMES* and [MI](#abbrev) based scores often serve as a baseline to benchmark the performance of new methods [@DeJuan2013; @Jones2012].
 
 
+### Global Statistical Models {#global-methods}
 
-#### Global methods {#global-methods}
+Global statistical models make predictions for a single residue pair while considering all other pairs in the protein.
+By doing so they solve the correlation versus causation phenomenon and distinguish direct from indirect couplings which has been referred to in the literature as [DCA](#abbrev) [@Lapedes1999; @Weigt2009].
 
-The problem of distinguishing
-direct from indirect couplings has been referred to in the literature as DCA.
-
-Disadvantage of local models: they cannot distuinguish between causation and correlation: transitivity effects
-Global methods can do that by making predictions for a single residue pair while considering all other pairs in the protein.
-
-Most prominent model that is able to do that is the Pott's Model which is a maximum entropy model which is explained in detail in section 
-
-covariation versus causation phenomenon. Consider the following situation: Site A physically interacts and covaries with site B; site B physically interacts and covaries with site C; but site A and site C do not physically interact. Site A can covary with site C in spite of no physical interaction between A and C. [lapedes]
-
-
-general sentence to maxent models tht are described in section \@ref(maxent).
-
-In 1999 Lapedes et al. were the first to apply maximum entropy models to the problem of predicting residue pairs in spatial proximity and thus entangling transitive effects [@Lapedes1999].
-They used an iterative Monte Carlo procedure to obtain estimates of the partition function. 
-As the calculations involved were very time-consuming and at that time required supercomputing resources, the wider implications were not noted.
-
-In 2009 Weight et al proposed an iterative message-passing algorithm, here referred to as *mpDCA*, to approximate the partition function [@Weigt2009].
-Eventhough their approach is computationally very expensive and in practive only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.
-
-Balakrishnan et al [@Balakrishnan2011] were the first to apply pseudo-likelihood approximations to the full likelihood in 2011. 
-The pseudo-likelihood optimizes a different objective and replaces the global partition function $Z$ with local estimates.
-Balakrishnan and colleagues applied their method *GREMLIN* to learn sparse graphical models for 71 protein families.
-In a follow-up study in 2013 [@Kamisetty2013], an improved version of *GREMLIN* incorporating prior information was evaluated in a comprehensive benchmark tailored towards the contact prediction problem.
-
-Also in 2011, Morcos et al. introduced a naive mean-field inversion approximation to the partition function, named *mfDCA* [@Morcos2011].
-This method allows for drastically shorter running times as the mean-field approach boils down to inverting the empirical covariance matrix calculated from observed amino acid frequencies for each residue pair $i$ and $j$ of the alignment.
-This study performed the first high-throughput analysis of intradomain contacts for 131 protein families and facilitated the prediction of protein structures from accurately predicted contacts in [@Marks2011].
-
-A related approach to mean-field approximation is sparse inverse covariance estimation, named *PSICOV*, by Jones et al [@Jones2012]. 
-They use L1-regularization, known as graphical Lasso, to invert the correlation matrix and learn a sparse graphical model [@Friedman2008].
-Both procedures, *mfDCA* and *PSICOV*, assume the model distribution to be a multivariate Gaussian. 
-It has been shown by Banerjee et al. (2008) that this dual optimization solution also applies to binary data (as is the case in this application). 
-In order to represent the [MSA](#abbrev) as continuous distributed, each position is encoded as a 20-dimensional binary vector. 
-
-Another related approach to *mfDCA* and *PSICOV* is *gaussianDCA*, proposed in 2014 by Baldassi et al. [@Baldassi2014].
-Similar to the other both approaches, they model the data as multivariate Gaussian but within a simple Bayesian formalism by using a suitable prior and estimating parameters over the posterior distribution.
-
-
-So far, pseudo-likelihood maximization has proven to be the most accurate approach with respect to the standard evaluation procedures for contact prediction presented in section \@ref(intro-cp-evaluation). 
-Currently, there exist several implementations of pseudo-likelihood maximization that vary in slight details, perform similarly and thus are equally popular in the community, such as CCMpred [@Seemayer2014], plmDCA[@Ekeberg2014] and GREMLIN [@Kamisetty2013].
-The general approach for pseudo-likelihood optimization is described in detail in section \@ref(pseudo-likelihood).
-
-A method not using the maxent model:
-In 2010, Burger and Nijmwegen  developed a Bayesian network model [@Burger2010] that is able to disentangle direct from indirect correlations and introducing informative priors to improve precision. independently of weight in 2009
-
+In 1999 Lapedes et al. were the first to propose a global statistical approach for the prediction of residue-residue contacts in order to disentangle  transitive effects [@Lapedes1999].
+They consider a Pott's model that can be derived under a maximum entropy assumption and use the model specific coupling parameters to infer interactions.
+At that time the wider implications of this great advancement went unnoted but meanwhile the Pott's Model has become the most prominent statistical model for contact prediction.
+Section \@ref(maxent) deals extensively with the derivation and properties of the Pott's model, its application to contact prediction and its numerous realizations.
+In fact, most global statistical approaches can be reformulated in the light of maximum entropy models.  
+Only Burger and Nijmwegen developed a global statistical model very different from the maximum entropy approach. 
+Their Bayesian network model uses informative priors to improve precision [@Burger2010]. 
 
 
 ### Machine Learnign Methods and Meta-Predictors
@@ -483,11 +444,40 @@ For the Potts model, the log-likelihood function is computed over sequences in t
 However, optimizing the log-likelihood requires computing the partition function $Z$ given in eq. \@ref(eq:partition-fct-likelihood) that sums $q^L$ terms, with $L$ being in the hundreds for naturally occurig protein domains.
 Because of this exponential complexity in protein length $L$, it is computationally intractable to evaluate the log-likelihood function at every iteration of an optimization procedure. 
 
-Several approximate solutions have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts between residues. 
-An overview of these methods is given in section \@ref(global-methods).
-Pseudo-likelihood approximation has proven to be the most successfull approach with respect to predicting residue-residue contacts and is explained in the following section. 
+Several approximate solutions have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts between residues that are briefly explained in the next section. 
 
+#### Solving the Inverse Potts Problem
 
+In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle  transitive effects [@Lapedes1999].
+They used an iterative Monte Carlo procedure to obtain estimates of the partition function. 
+As the calculations involved were very time-consuming and at that time required supercomputing resources, the wider implications were not noted yet.
+
+In 2009 Weight et al proposed an iterative message-passing algorithm, here referred to as *mpDCA*, to approximate the partition function [@Weigt2009].
+Eventhough their approach is computationally very expensive and in practive only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.
+
+Balakrishnan et al [@Balakrishnan2011] were the first to apply pseudo-likelihood approximations to the full likelihood in 2011. 
+The pseudo-likelihood optimizes a different objective and replaces the global partition function $Z$ with local estimates.
+Balakrishnan and colleagues applied their method *GREMLIN* to learn sparse graphical models for 71 protein families.
+In a follow-up study in 2013 [@Kamisetty2013], an improved version of *GREMLIN* incorporating prior information was evaluated in a comprehensive benchmark tailored towards the contact prediction problem.
+
+Also in 2011, Morcos et al. introduced a naive mean-field inversion approximation to the partition function, named *mfDCA* [@Morcos2011].
+This method allows for drastically shorter running times as the mean-field approach boils down to inverting the empirical covariance matrix calculated from observed amino acid frequencies for each residue pair $i$ and $j$ of the alignment.
+This study performed the first high-throughput analysis of intradomain contacts for 131 protein families and facilitated the prediction of protein structures from accurately predicted contacts in [@Marks2011].
+
+The initial work by Balakrishnan and collegueas went almost unnoted as it was not primarily targeted to the problem of contact prediction.
+Ekeberg and collegueas independently developed the pseudo-likelihood method *plmDCA*  and showed its superior precision towards *mfDCA* [@Ekeberg2013].
+
+A related approach to mean-field approximation is sparse inverse covariance estimation, named *PSICOV*, by Jones et al [@Jones2012]. 
+They use L1-regularization, known as graphical Lasso, to invert the correlation matrix and learn a sparse graphical model [@Friedman2008].
+Both procedures, *mfDCA* and *PSICOV*, assume the model distribution to be a multivariate Gaussian. 
+It has been shown by Banerjee et al. (2008) that this dual optimization solution also applies to binary data (as is the case in this application). 
+In order to represent the [MSA](#abbrev) as continuous distributed, each position is encoded as a 20-dimensional binary vector. 
+
+Another related approach to *mfDCA* and *PSICOV* is *gaussianDCA*, proposed in 2014 by Baldassi et al. [@Baldassi2014].
+Similar to the other both approaches, they model the data as multivariate Gaussian but within a simple Bayesian formalism by using a suitable prior and estimating parameters over the posterior distribution.
+
+So far, pseudo-likelihood maximization has proven to be the most accurate approach with respect to the standard evaluation procedures for contact prediction presented in the following section. 
+Currently, there exist several implementations of pseudo-likelihood maximization that vary in slight details, perform similarly and thus are equally popular in the community, such as CCMpred [@Seemayer2014], plmDCA[@Ekeberg2014] and GREMLIN [@Kamisetty2013].
 
 #### Pseudo-Likelihood {#pseudo-likelihood}
 
@@ -532,7 +522,8 @@ That is, as the number of sequences in the alignment increases, pseudo-likelihoo
 Model inference as described in the last section yields [MAP](#abbrev) estimates of the couplings $\hat{\w}_{ij}$. 
 In order to obtain a scalar measure for the coupling strength between two residues $i$ and $j$, current methods heuristically map the $q \! \times \! q$ dimensional coupling matrix $\wij$ to a single scalar quantity.
 
-*mpDCA* [@Weigt2009] and *mfDCA* [@Morcos2011; @Marks2011] employ a score called [DI](#abbrev), which has quickly been replaced by the Frobenius norm as it was found to improve prediction performance over [DI](#abbrev) [@Ekeberg2013; @Baldassi2014].
+*mpDCA* [@Weigt2009] and *mfDCA* [@Morcos2011; @Marks2011] employ a score called [DI](#abbrev), that essentially computes the [MI](#abbrev) for two positions $i$ and $j$ using the couplings $\wij$ instead of pairwise amino acid frequencies.
+However, [DI](#abbrev) scores have quickly been replaced by the Frobenius norm as it was found to improve prediction performance over [DI](#abbrev) [@Ekeberg2013; @Baldassi2014].
 
 Currently, all pseudo-likelihood methods (*plmDCA* [@Ekeberg2013; @Ekeberg2014], *CCMpred* [@Seemayer2014], *GREMLIN* [@Kamisetty2013]) compute the *Frobenius norm* of the coupling matrix $\wij$ to obtain a scalar contact score $C_{ij}$,
 
