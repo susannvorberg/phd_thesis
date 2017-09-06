@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -234,7 +234,7 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="coupling-prior" class="section level2">
 <h2><span class="header-section-number">4.2</span> Modelling the prior over couplings with dependence on <span class="math inline">\(\rij\)</span></h2>
-<p>The prior over couplings <span class="math inline">\(p(\wij|\rij)\)</span> will be modelled as a mixture of <span class="math inline">\(K\!+\!1\)</span> 400-dimensional Gaussians, with means <span class="math inline">\(\muk \in \R^{400}\)</span>, precision matrices <span class="math inline">\(\Lk \in \R^{400\times 400}\)</span>, and distance-dependent, normalised weights <span class="math inline">\(g_k(\rij)\)</span>,</p>
+<p>The prior over couplings <span class="math inline">\(p(\wij|\rij)\)</span> will be modelled as a mixture of <span class="math inline">\(K\!+\!1\)</span> 400-dimensional Gaussians, with means <span class="math inline">\(\muk \in \mathbb{R}^{400}\)</span>, precision matrices <span class="math inline">\(\Lk \in \mathbb{R}^{400\times 400}\)</span>, and distance-dependent, normalised weights <span class="math inline">\(g_k(\rij)\)</span>,</p>
 <span class="math display" id="eq:definition-mixture-coupling-prior">\[\begin{align}   
       p(\wij | \rij) = \sum_{k=0}^K g_k(\rij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.
 \tag{4.4}
@@ -303,10 +303,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/07-posterior-distribution.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -318,7 +321,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

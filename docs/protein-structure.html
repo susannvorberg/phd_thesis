@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -243,12 +243,12 @@ MathJax.Hub.Config({
 <div id="amino-acid-interactions" class="section level3">
 <h3><span class="header-section-number">1.1.1</span> Amino Acid Interactions</h3>
 <p>The Venn diagram in figure <a href="protein-structure.html#fig:amino-acid-physico-chemical-properties">1.2</a> displays a typical classification of amino acids with respect to their physico-chemical properties.</p>
-<p>The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure. Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. The <span class="math inline">\(\pi\)</span>-electron systems favour T-shaped or offset stacked conformations <span class="citation">[<a href="#ref-Waters2002">12</a>]</span>. Preferred distances between aromatic residues have been observed between 4.5and 7of their ring centroids <span class="citation">[<a href="#ref-Burley1985">13</a>]</span>.</p>
-<p>Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains. They comprise the strongest side chain interactions in protein structures and their length varies between 3.5to 4. Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees <span class="citation">[<a href="#ref-Thornton1981">14</a>]</span>. They play a very important role in stabilizing protein structures. The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core. It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability <span class="citation">[<a href="#ref-Bastolla2005">15</a>]</span>.</p>
-<p>Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). The strength of electrostatic interactions, as described by Coulomb’s law, decreases with distance between the point charges at the functional groups. It has been found to be maximal at 4with respect to the functional groups of the both residues <span class="citation">[<a href="#ref-Donald2011">16</a>]</span>.</p>
-<p>Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. They are electrostatic interactions as well and thus their strength depends on distance as well. Hydrogen bonds are formed at distances of 2.4to 3.5between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).</p>
+<p>The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure. Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. The <span class="math inline">\(\pi\)</span>-electron systems favour T-shaped or offset stacked conformations <span class="citation">[<a href="#ref-Waters2002">12</a>]</span>. Preferred distances between aromatic residues have been observed between 4.5<span class="math inline">\(\AA \; \;\)</span> and 7<span class="math inline">\(\AA \; \;\)</span> of their ring centroids <span class="citation">[<a href="#ref-Burley1985">13</a>]</span>.</p>
+<p>Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains. They comprise the strongest side chain interactions in protein structures and their length varies between 3.5<span class="math inline">\(\AA \; \;\)</span> to 4<span class="math inline">\(\AA \; \;\)</span>. Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees <span class="citation">[<a href="#ref-Thornton1981">14</a>]</span>. They play a very important role in stabilizing protein structures. The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core. It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability <span class="citation">[<a href="#ref-Bastolla2005">15</a>]</span>.</p>
+<p>Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). The strength of electrostatic interactions, as described by Coulomb’s law, decreases with distance between the point charges at the functional groups. It has been found to be maximal at 4<span class="math inline">\(\AA \; \;\)</span> with respect to the functional groups of the both residues <span class="citation">[<a href="#ref-Donald2011">16</a>]</span>.</p>
+<p>Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. They are electrostatic interactions as well and thus their strength depends on distance as well. Hydrogen bonds are formed at distances of 2.4<span class="math inline">\(\AA \; \;\)</span> to 3.5<span class="math inline">\(\AA \; \;\)</span> between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).</p>
 <p>Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).</p>
-<p>Cation–<span class="math inline">\(\pi\)</span> interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). The preferential distance of the amino group to the <span class="math inline">\(\pi\)</span>-electron system has been determined between 3.4and 6<span class="citation">[<a href="#ref-Burley1986">17</a>]</span> <span class="citation">[<a href="#ref-Crowley2005">18</a>]</span> Their role in stabilizing protein structures is still under debate <span class="citation">[<a href="#ref-Slutsky2004">19</a>]</span>.</p>
+<p>Cation–<span class="math inline">\(\pi\)</span> interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). The preferential distance of the amino group to the <span class="math inline">\(\pi\)</span>-electron system has been determined between 3.4<span class="math inline">\(\AA \; \;\)</span> and 6<span class="math inline">\(\AA \; \;\)</span> <span class="citation">[<a href="#ref-Burley1986">17</a>]</span> <span class="citation">[<a href="#ref-Crowley2005">18</a>]</span> Their role in stabilizing protein structures is still under debate <span class="citation">[<a href="#ref-Slutsky2004">19</a>]</span>.</p>
 <p>Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. The sterical rigidity of the proline side chain restricts the backbone angle and thus affects secondary structure formation. Proline is known as a helix-breaker. Whereas other aromatic side chains are defined by their negatively charged <span class="math inline">\(\pi\)</span> faces, the face of proline side chains is partially positively charged. Thus, aromatic and proline residues can interact favorably with each other. Once due to the hydrophobic nature of the residues and also due to the interaction between the negatively charged aroamtic <span class="math inline">\(\pi\)</span> face and the polarized C-H bonds in proline, called a CH/<span class="math inline">\(\pi\)</span> interaction.</p>
 <p>Petersen et al. (2012) found clear secondary structure elements preferences for each amino acid pair. For example, residue pairs containing Alanine and Leucine are predominantly found in buried <span class="math inline">\(\alpha\)</span>-helices, whereas pairs containing Isoleucine and Valine preferentially are located in <span class="math inline">\(\beta\)</span>-sheet environments. Of course, solvent accessibility represents an important criterion for residue interactions. Hydrophobic residues are rather buried in the structure, whereas polar and charged residues are found more frequently on the protein surface and interact with water molecules.</p>
 <div class="figure"><span id="fig:amino-acid-physico-chemical-properties"></span>
@@ -346,10 +346,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -361,7 +364,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

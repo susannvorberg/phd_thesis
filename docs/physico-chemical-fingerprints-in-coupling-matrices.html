@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -238,7 +238,7 @@ MathJax.Hub.Config({
 <p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">2.3</a> visualizes the inferred coupling matrix for a residue pair (residues 6 and 82) in protein 1awq, chain A. Clearly visible is a cluster of strong coupling values for charged and polar residues (E,D,K,R,Q). Positive coupling values can be observed between positively charged residues (R,K) and negatively charged residues (E,D), whereas coupling values between equally charged residues are negative. The coupling matrix perfectly reflects the interaction preference for residues forming salt bridges. Indeed, in the protein structure residue 6 (glutamic acid) forms a salt bridge with residue 82 (lysine) as can be seen in figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">2.5</a>.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-ionic-interaction"></span>
-<iframe src="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html" width="750px" height="750px">
+<iframe src="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html" width="100%" height="750px">
 </iframe>
 <p class="caption">
 Figure 2.3: Coupling matrix for residues 6 and 82 in protein 1awq chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
@@ -247,7 +247,7 @@ Figure 2.3: Coupling matrix for residues 6 and 82 in protein 1awq chain A. Size 
 <p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-hydrophobic-interaction">2.4</a> visualizes the coupling matrix for a pair of hydrophobic residues (residues 29 and 39) in protein 1ae9 chain A. Hydrophobic pairings have strong coupling values but the couplings also reflect a sterical constraint: alanine as a small hydrophobic residue is favoured at either position 29 or position 39, but disfavoured to appear at both positions. Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">2.5</a> illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-hydrophobic-interaction"></span>
-<iframe src="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html" width="750px" height="750px">
+<iframe src="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html" width="100%" height="750px">
 </iframe>
 <p class="caption">
 Figure 2.4: Coupling matrix for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
@@ -264,12 +264,12 @@ Figure 2.5: Interactions between protein side chains. Left: residue 6 (glutamic 
 </p>
 </div>
 <p>Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Appendix <a href="pi-cation.html#pi-cation">C.1</a>), aromatic-proline interactions (see Appendix <a href="aromatic-proline.html#aromatic-proline">C.3</a>), sulfur-aromatic interactions or disulphide bonds (see Appendix <a href="disulfide.html#disulfide">C.2</a>).</p>
-<p>Coucke and collegues <span class="citation">[<a href="#ref-Coucke2016">85</a>]</span> performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs. They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. By looking at specific populations of residue pairs, like buried and exposed residues or residues pairs from specific protein classes (small, mainly <span class="math inline">\(\alpha\)</span>, etc), the eigenmodes capture very characteristic interactions for each class, e.g. rare disulfide contacts withins small proteins and hydrophilic contacts between exposed residues. Their study confirms our qualitative observation that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices.</p>
+<p>Coucke and collegues <span class="citation">[<a href="#ref-Coucke2016">88</a>]</span> performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs. They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. By looking at specific populations of residue pairs, like buried and exposed residues or residues pairs from specific protein classes (small, mainly <span class="math inline">\(\alpha\)</span>, etc), the eigenmodes capture very characteristic interactions for each class, e.g. rare disulfide contacts withins small proteins and hydrophilic contacts between exposed residues. Their study confirms our qualitative observation that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Coucke2016">
-<p>85. Coucke, A., Uguzzoni, G., Oteri, F., Cocco, S., Monasson, R., and Weigt, M. (2016). Direct coevolutionary couplings reflect biophysical residue interactions in proteins. J. Chem. Phys. <em>145</em>, 174102. Available at: <a href="http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156" class="uri">http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156</a>.</p>
+<p>88. Coucke, A., Uguzzoni, G., Oteri, F., Cocco, S., Monasson, R., and Weigt, M. (2016). Direct coevolutionary couplings reflect biophysical residue interactions in proteins. J. Chem. Phys. <em>145</em>, 174102. Available at: <a href="http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156" class="uri">http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -329,10 +329,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/05-interpretation-coupling-matrices.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -344,7 +347,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

@@ -15,7 +15,8 @@ The degree of structural conservation is linked to the level of pairwise sequenc
 Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model [@Marti-Renom2000]. 
 By definition, homology derived models are unable to capture new folds [@Dorn2014] and their main limitation lies in the availability of suitable templates.  
 
-```{r seq-str-gap, echo = FALSE, out.width = '100%', fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
+
+```{r seq-str-gap, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
 knitr::include_url("img/pdb_growth.html", height = "750px")
 ```
 
@@ -27,9 +28,9 @@ About 9% of protein structures have been solved using [NMR](#abbrev) and less th
 All three experimental techniques have advantages and limitations with respect to certain modelling aspects.
 X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. 
 Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. 
-$\ac{NMR}$ studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, $\ac{NMR}$ is limited to look at small proteins. 
-Recently, $\ac{EM}$ has undergone a "resolution revolution" [@Egelman2016] and macromolecular structures have been solved with resolutions up to 2A[citation]. 
-The limit of $\ac{cryo-EM}$ lies in the size of proteins.
+NMR studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, NMR is limited to look at small proteins. 
+Recently, EM has undergone a "resolution revolution" [@Egelman2016] and macromolecular structures have been solved with resolutions up to 2A[citation]. 
+The limit of cryo-EM lies in the size of proteins.
 
 Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. 
 With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously.
@@ -60,10 +61,10 @@ The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and hi
 Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure.
 Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. 
 The $\pi$-electron systems favour T-shaped or offset stacked conformations [@Waters2002].
-Preferred distances between aromatic residues have been observed between 4.5\AA and 7\AA of their ring centroids [@Burley1985].
+Preferred distances between aromatic residues have been observed between 4.5$\AA \; \;$ and 7$\AA \; \;$ of their ring centroids [@Burley1985].
 
 Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains.
-They comprise the strongest side chain interactions in protein structures and their length varies between 3.5\AA to 4\AA.
+They comprise the strongest side chain interactions in protein structures and their length varies between 3.5$\AA \; \;$ to 4$\AA \; \;$.
 Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. 
 Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees [@Thornton1981].
 They play a very important role in stabilizing protein structures. 
@@ -72,17 +73,17 @@ It has also been found that disulfide bonds are more frequently observed in prot
 
 Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). 
 The strength of electrostatic interactions, as described by Coulomb's law, decreases with distance between the point charges at the functional groups. 
-It has been found to be maximal at 4\AA with respect to the functional groups of the both residues [@Donald2011].
+It has been found to be maximal at 4$\AA \; \;$ with respect to the functional groups of the both residues [@Donald2011].
 
 Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. 
 They are electrostatic interactions as well and thus their strength depends on distance as well. 
-Hydrogen bonds are formed at distances of 2.4\AA to 3.5\AA between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
+Hydrogen bonds are formed at distances of 2.4$\AA \; \;$ to 3.5$\AA \; \;$ between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
 
 Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). 
 The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).
 
 Cation–$\pi$ interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). 
-The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4\AA and 6\AA [@Burley1986] [@Crowley2005]
+The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4$\AA \; \;$ and 6$\AA \; \;$ [@Burley1986] [@Crowley2005]
 Their role in stabilizing protein structures is still under debate [@Slutsky2004].
 
 Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. 
@@ -104,7 +105,7 @@ knitr::include_graphics("img/amino_acid_physico_chemical_properties_venn_diagram
 
 ## Structure Prediction
 
-Despite the knowledge of Anfinsen's postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (\autoref{fig:folding_funnel}). Levinthal's paradox [@Levinthal1969] describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the "combinatorial explosion" of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.
+Despite the knowledge of Anfinsen's postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (fig:folding_funnel). Levinthal's paradox [@Levinthal1969] describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the "combinatorial explosion" of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.
 
 
 ### Template-based methods
@@ -114,22 +115,22 @@ The basic concept of this strategy relates to the fact that structure is more co
 After detecting a homologous protein of known structure, that has sufficient sequence similarity, it can be used as a template to model the structure of the target protein.
 
 The degree of structural conservation is linked to the level of pariwise sequence identity [@Chothia1986]. 
-Homology Modelling is assumed to yield reliably accurate models when query and target protein share more than 30\% sequence similarity, depending on the sequence length (*safe homology zone*) [@Sander1991]. 
+Homology Modelling is assumed to yield reliably accurate models when query and target protein share more than 30$\%$ sequence similarity, depending on the sequence length (*safe homology zone*) [@Sander1991]. 
 Below a threshold of ~20-35% pairwise sequence identity (*twighlight-zone*) the number of false positives regarding structural similarity explodes and structural inference becomes less reliable and more than 95% of structures are dissmilar [@Rost1999]. 
 Advances in remote homology detection and alignment generation have improved the quality of models, even beyond the once postulated limit of the *twighlight-zone* [@Yan2013].
 Integration of multiple templates has also proved to increase model quality [@Meier2015]
 
 After the identification of a suitable template, there are different strategies that can be followed to obtain a model for the target protein. 
 The the backbone of the model is generated by simply copying the coordinates of the target backbone atoms onto the model. 
-Non-aligned residues due to gaps in the alignment have to be modelled \textit{de-novo}, meaning from scratch.
-This can be done by a knowledge-based search for suitable fragments in the PDB or by true energy-based \textit{de-novo} modelling. 
+Non-aligned residues due to gaps in the alignment have to be modelled $\textit{de-novo}$, meaning from scratch.
+This can be done by a knowledge-based search for suitable fragments in the PDB or by true energy-based $\textit{de-novo}$ modelling. 
 When the backbone is generated, the side chains are modelled, usually by searching rotamer libraries for energetically favoured residue conformations. 
 Finally, the model is energetically optimized in an iterative procedure. 
-Force fields are applied to correct the backbone and side chain conformations [@Gu2009}. 
-Several automated pipelines for homology modelling are well-established (Modeller [@Eswar2007}, 3D-Jigsaw [@Bates2001}, SwissModel [@Arnold2006}) which allow more or less manual intervention in the modelling process. 
+Force fields are applied to correct the backbone and side chain conformations [@Gu2009]. 
+Several automated pipelines for homology modelling are well-established (Modeller [@Eswar2007], 3D-Jigsaw [@Bates2001], SwissModel [@Arnold2006]) which allow more or less manual intervention in the modelling process. 
 
         
-Fold Recognition describes the inverse folding problem \citep{Bowie1993}: instead of finding the compatible structure for a given sequence, one tries to find sequences that fit onto a given structure. Whether the query sequence fits a structure from the database is not determined by sequence similarities but rather energetic or environment specific measures. Thus, fold recognition methods are able to recognize structural similarity even in the absence of sequence similarity. The rationale basis for this strategy is the assumption that the fold space is limited. It has been found that seemingly unrelated proteins often adopt similar folds. This might be due to divergent evolution (proteins are related, but homology cannot be detected at the corresponding sequence level) or convergent evolution (functional requirements lead to similar folds for unrelated proteins) \citep{Gu2009}. Early approaches include profile based methods. Here, the structural information of the protein is encoded into profiles, which subsequently are aligned to the sequences \citep{Bowie1991,Fischer1996,Ouzounis1993}. Advanced techniques are known as  "threading" techniques, describing the process of threading a sequence through a structure and determining the optimal fit via energy functions. \citep{Jones1992,Jones1998,Lemer1995}
+Fold Recognition describes the inverse folding problem [Bowie1993]: instead of finding the compatible structure for a given sequence, one tries to find sequences that fit onto a given structure. Whether the query sequence fits a structure from the database is not determined by sequence similarities but rather energetic or environment specific measures. Thus, fold recognition methods are able to recognize structural similarity even in the absence of sequence similarity. The rationale basis for this strategy is the assumption that the fold space is limited. It has been found that seemingly unrelated proteins often adopt similar folds. This might be due to divergent evolution (proteins are related, but homology cannot be detected at the corresponding sequence level) or convergent evolution (functional requirements lead to similar folds for unrelated proteins) [Gu2009]. Early approaches include profile based methods. Here, the structural information of the protein is encoded into profiles, which subsequently are aligned to the sequences [Bowie1991,Fischer1996,Ouzounis1993]. Advanced techniques are known as  "threading" techniques, describing the process of threading a sequence through a structure and determining the optimal fit via energy functions. [Jones1992,Jones1998,Lemer1995]
 
 
 ### Template-free structure prediction
@@ -138,7 +139,7 @@ Ab initio or de-novo modeling techniques implement Anfinsen’s Dogma most close
 Energy functions (physical or knowledge-based) are used to describe the folding landscape and are minimized to arrive at the global energy minimum corresponding to the native conformation. 
 Since the native conformation can be found near the global energy minimum of the folding landscape, energy functions (physical or knowledge-based) have been developed to describe this landscape.
 With respect to the idea of a folding funnel, the energy function is minimized to mimic the folding process that automatically leads to the global minimum.
- Again, there exist numerous webservers that combine energy minimization,  threading techniques and fragment-based approaches, e.g. Rosetta \citep{Simons1999}, Tasser \citep{Zhang2004}, Touchstone II \citep{Zhang2003}.
+ Again, there exist numerous webservers that combine energy minimization,  threading techniques and fragment-based approaches, e.g. Rosetta [\citep{]Simons1999], Tasser [Zhang2004, Touchstone II Zhang2003].
 
 Drawbacks of these methods are the time requirements due to the computational complexity of energy functions as well as their inaccuracy. 
     
@@ -230,12 +231,12 @@ Their fast Bayesian network model incorporates additional prior information and 
 
 These methods combine abundant information on sequence and
 amino acid properties in order to learn associations between input features and residue-residue
-contacts. Methods dier mainly in the type of the applied Machine Learning (ML) algorithm,
+contacts. Methods differ mainly in the type of the applied Machine Learning (ML) algorithm,
 e.g Neural Networks (NNs), Support Vector Machines (SVMs) or Random Forests (RFs) and the
 chosen input features, e.g. contact predictions, solvent accessibility, physico-chemical properties
 of amino acids, secondary structure predictions or evolutionary information. (Kukic et al.,
 2014; Alfonso Marquez-Chamorro, 2013; Li et al., 2011) The problem with these methods is
-interpretability, as it is dicult to elucidate which feature patterns contribute in which amount
+interpretability, as it is diffcult to elucidate which feature patterns contribute in which amount
 to the model.
 
 
@@ -287,15 +288,14 @@ Figure \@ref(fig:Cb-distribution) shows the distribution of $\Cb$ distances for 
 
 (ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over all proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds: blue = $|i-j| > 1$ (all residue pairs), orange = $|i-j| > 6$, green = $|i-j| > 12$, red = $|i-j| > 24$.
 
-```{r Cb-distribution, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
+```{r Cb-distribution, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
 knitr::include_url("img/dataset_statistics/Cb_distribution_all_data43579541_log.html", height="500px")
 ```
 
-
-Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around $5.5\AA \; \;$, $7.4\AA \; \;$ and $10.6\AA \; \;$ that can be attributed to local interactions in e.g. helices (see Figure \@ref(fig:peaks-Cb-distribution)).
+Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around $5.5\AA  \; \;$, $7.4\AA \; \;$ and $10.6\AA \; \;$ that can be attributed to local interactions in e.g. helices (see Figure \@ref(fig:peaks-Cb-distribution)).
  
  
-(ref:caption-peaks-Cb-distribution) $\Cb$ distances between neighboring residues in $\alpha$-helices. Left: Direct neighbors in $\alpha$-helices have $\Cb$ distances around $5.4\AA\; \;$ due to the geometrical constraints from $\alpha$-helical architecture. Right: Residues separated by two positions ($|i-j| = 2$) are less geometrically restricted to $\Cb$ distances between $7\AA\; \;$ and $7.5\AA\; \;$.
+(ref:caption-peaks-Cb-distribution) $\Cb$ distances between neighboring residues in $\alpha$-helices. Left: Direct neighbors in $\alpha$-helices have $\Cb$ distances around $5.4\AA \; \;$ due to the geometrical constraints from $\alpha$-helical architecture. Right: Residues separated by two positions ($|i-j| = 2$) are less geometrically restricted to $\Cb$ distances between $7\AA \; \;$ and $7.5\AA \; \;$.
 
 ```{r peaks-Cb-distribution, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-peaks-Cb-distribution)'}
 knitr::include_graphics(c("img/dataset_statistics/cb_distribution_peak_5-6.png","img/dataset_statistics/cb_distribution_peak_7.png"))
@@ -341,20 +341,20 @@ According to the maximum entropy principle, the distribution $p(\seq)$ should ha
 
 \begin{align}
    \mathcal{f}(x_i\eq a)            &\equiv p(x_i\eq a)  \\
-                                    &= \sum_{\seq'_1, \ldots, \seq'_L = 1}^{q} p(x') I(x'_i \eq a) \\
+                                    &= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} p(x\prime) I(x\prime_i \eq a) \\
   \mathcal{f}(x_i\eq a, x_j\eq b)   &\equiv p(x_i\eq a, x_j \eq b) \\
-                                    &= \sum_{\seq'_1, \ldots, \seq'_L = 1}^{q}  p(x') I(x'_i\eq a, x'_j \eq b)  \; .
+                                    &= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q}  p(x\prime) I(x\prime_i\eq a, x\prime_j \eq b)  \; .
  (\#eq:maxent-reproducing-emp-freq)
 \end{align}
 
 
-Solving for the distribution $p(\seq)$ that maximizes the Shannon entropy $S= -\sum_{\seq'} p(\seq') \log p(\seq')$ while satisfying the constraints given in eq. \@ref(eq:maxent-reproducing-emp-freq) by introducing the Lagrange multipliers $\wij$ and $\vi$, 
+Solving for the distribution $p(\seq)$ that maximizes the Shannon entropy $S= -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime)$ while satisfying the constraints given in eq. \@ref(eq:maxent-reproducing-emp-freq) by introducing the Lagrange multipliers $\wij$ and $\vi$, 
 
 \begin{align}
-F \left[ p(\seq) \right] =& -\sum_{\seq'} p(\seq') \log p(\seq') \\
+F \left[ p(\seq) \right] =& -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime) \\
         & + \sum_{i=1}^L \sum_{a=1}^{q} \vi(a) \left( p(x_i\eq a) - \mathcal{f}(x_i\eq a) \right) \\
         & + \sum_{1 \leq i < j \leq L}^L \; \sum_{a,b=1}^{q} \wij(a,b) \left( p(x_i\eq a, x_j \eq b) - \mathcal{f}(x_i\eq a, x_j\eq b) \right) \\
-        & + \Omega \left( 1-\sum_{\seq'} p(\seq')  \right)
+        & + \Omega \left( 1-\sum_{\seq\prime} p(\seq\prime)  \right)
 (\#eq:derivation-max-ent-model)
 \end{align}
 
@@ -369,7 +369,7 @@ The Lagrange multipliers $\wij$ and $\vi$ remain as model parameters to be fitte
 $Z$ is a normalization constant also known as *partition function* that ensures the total probabilty adds up to one by summing over all possible assignments to $\seq$, 
 
 \begin{equation}
-  Z = \sum_{\seq'_1, \ldots, \seq'_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
+  Z = \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
   (\#eq:partition-fct-likelihood)
 \end{equation}
 
@@ -540,7 +540,7 @@ The Frobenius norm is gauge dependent and is minimized by the *zero-sum gauge* [
 Therefore, in [@Ekeberg2013; @Ekeberg2014; @Seemayer2014; @Baldassi2014] the coupling matrices are transformed to *zero-sum gauge* before computing the Frobenius norm:
 
 \begin{equation}
-    \w'_{ij}  = \wij - \wij(\cdot, b) - \wij(a, \cdot) + \wij(\cdot, \cdot) \; ,
+    \w\prime_{ij}  = \wij - \wij(\cdot, b) - \wij(a, \cdot) + \wij(\cdot, \cdot) \; ,
 (\#eq:zero-sum-gauge-transform)
 \end{equation}
 
@@ -629,7 +629,7 @@ Nevertheless, because of the already mentioned sequencing biases, better and mor
 
   (ref:caption-pfam) Distribution of PFAM family sizes. Less than half of the families in PFAM (7990 compared to 8489 families) do not have an annotated structure. The median family size in number of sequences for families with and without annotated structures is 185 and 827 respectively. Data taken from PFAM 31.0 (March 2017, 16712 entries) [@Finn2016].
 
-```{r pfam, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-pfam)'}
+```{r pfam, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-pfam)'}
 knitr::include_url("img/pfam_pdb_notitle.html", height = "650px")
 ```
 

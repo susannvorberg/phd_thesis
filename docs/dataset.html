@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -234,7 +234,7 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="dataset" class="section level2">
 <h2><span class="header-section-number">6.1</span> Dataset</h2>
-<p>A protein dataset has been constructed from the CATH (v4.1) <span class="citation">[<a href="#ref-Sillitoe2015">87</a>]</span> database for classification of protein domains. All CATH domains from classes 1(mainly <span class="math inline">\(\alpha\)</span>), 2(mainly <span class="math inline">\(\beta\)</span>), 3(<span class="math inline">\(\alpha+\beta\)</span>) have been selected and filtered for internal redundancy at the sequence level using the <code>pdbfilter</code> script from the HH-suite<span class="citation">[<a href="#ref-Remmert2012">76</a>]</span> with an E-value cutoff=0.1. The dataset has been split into ten subsets aiming at the best possible balance between CATH classes 1,2,3 in the subsets. All domains from a given CATH topology (=fold) go into the same subsets, so that any two subsets are non-redundant at the fold level. Some overrepresented folds (e.g. Rossman Fold) have been subsampled ensuring that in every subset each class contains at max 50% domains of the same fold. Consequently, a fold is not allowed to dominate a subset or even a class in a subset. In total there are 6741 domains in the dataset.</p>
+<p>A protein dataset has been constructed from the CATH (v4.1) <span class="citation">[<a href="#ref-Sillitoe2015">90</a>]</span> database for classification of protein domains. All CATH domains from classes 1(mainly <span class="math inline">\(\alpha\)</span>), 2(mainly <span class="math inline">\(\beta\)</span>), 3(<span class="math inline">\(\alpha+\beta\)</span>) have been selected and filtered for internal redundancy at the sequence level using the <code>pdbfilter</code> script from the HH-suite<span class="citation">[<a href="#ref-Remmert2012">76</a>]</span> with an E-value cutoff=0.1. The dataset has been split into ten subsets aiming at the best possible balance between CATH classes 1,2,3 in the subsets. All domains from a given CATH topology (=fold) go into the same subsets, so that any two subsets are non-redundant at the fold level. Some overrepresented folds (e.g. Rossman Fold) have been subsampled ensuring that in every subset each class contains at max 50% domains of the same fold. Consequently, a fold is not allowed to dominate a subset or even a class in a subset. In total there are 6741 domains in the dataset.</p>
 <p>Multiple sequence alignments were built from the CATH domain sequences (<a href="http://www.cathdb.info/version/current/domain/3cdjA03/sequence">COMBS</a>) using HHblits <span class="citation">[<a href="#ref-Remmert2012">76</a>]</span> with parameters to maximize the detection of homologous sequences:</p>
 <p><code>hhblits -maxfilt 100000 -realign_max 100000 -B 100000 -Z 100000 -n 5 -e 0.1 -all</code> <code>hhfilter -id 90 -neff 15 -qsc -30</code></p>
 <p>The COMBS sequences are derived from the SEQRES records of the PDB file and sometimes contain extra residues that are not resolved in the structure. Therefore, residues in PDB files have been renumbered to match the COMBS sequences. The process of renumbering residues in PDB files yielded ambigious solutions for 293 proteins, that were removed from the dataset. Another filtering step was applied to remove 80 proteins that do not hold the following properties:</p>
@@ -257,7 +257,7 @@ Figure 6.1: Distribution of CATH classes (1=mainly <span class="math inline">\(\
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Sillitoe2015">
-<p>87. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
+<p>90. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
 </div>
 <div id="ref-Remmert2012">
 <p>76. Remmert, M., Biegert, A., Hauser, A., and Söding, J. (2012). HHblits: lightning-fast iterative protein sequence searching by HMM-HMM alignment. Nat. Methods <em>9</em>, 173–5. Available at: <a href="http://dx.doi.org/10.1038/nmeth.1818" class="uri">http://dx.doi.org/10.1038/nmeth.1818</a>.</p>
@@ -320,10 +320,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-methods.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -335,7 +338,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

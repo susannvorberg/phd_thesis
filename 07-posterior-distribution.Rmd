@@ -48,7 +48,7 @@ Finally, the marginals $p(\rij | \X, \phi) = \int  p(\r | \X, \phi) d \r_{\backs
 
 ## Modelling the prior over couplings with dependence on $\rij$ {#coupling-prior}
 
-The prior over couplings $p(\wij|\rij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \R^{400}$, precision matrices $\Lk \in \R^{400\times 400}$, and distance-dependent, normalised weights $g_k(\rij)$, 
+The prior over couplings $p(\wij|\rij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \mathbb{R}^{400}$, precision matrices $\Lk \in \mathbb{R}^{400\times 400}$, and distance-dependent, normalised weights $g_k(\rij)$, 
 
 \begin{align}	
 	  p(\wij | \rij) = \sum_{k=0}^K g_k(\rij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.

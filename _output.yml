@@ -1,4 +1,6 @@
 bookdown::pdf_book:
+  includes:
+      in_header: latex/preamble.html
   latex_engine: xelatex
   keep_tex: yes
   template: latex/phd_thesis_template.tex
@@ -19,8 +21,10 @@ bookdown::gitbook:
         <li><a href="./">PhD Thesis Susann Vorberg</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    toolbar:
+      position: fixed
     edit: https://github.com/susannvorberg/phd_thesis/edit/master/%s
-    download: ["pdf", "epub"]
+    download: ["pdf"]
     search: yes
     fontsettings:
       theme: white

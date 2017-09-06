@@ -33,7 +33,7 @@ The final dataset is comprised of **6368** proteins with almost evenly distribut
 
 (ref:caption-dataset-cath-topologies) Distribution of CATH classes (1=mainly $\alpha$, 2=mainly $\beta$, 3=$\alpha-\beta$) in the dataset and the ten subsets.
 
-```{r dataset-cath-topologies, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-dataset-cath-topologies) '}
+```{r dataset-cath-topologies, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",  out.width = '100%', fig.cap = '(ref:caption-dataset-cath-topologies) '}
 knitr::include_url("img/dataset_statistics/cath_topologies_stacked_reative_notitle.html")
 ```
 
@@ -79,7 +79,7 @@ A benchmark over a subset of approximately 3000 proteins confirms that performan
 
 (ref:caption-cmmpredvanilla-vs-ccmpredpy) Benchmark for CCMpred and CCMpredPy on a dataset of 3124 proteins. ccmpred-vanilla+apc: CCMpred [@Seemayer2014] with [APC](#abbrev). ccmpred-pll-centerv+apc: CCMpredPy with [APC](#abbrev). Specific flags that have been used to run both methods are described in detail in the text (see section \@ref(diff-ccmpred-ccmpredpy)).
 
-```{r cmmpredvanilla-vs-ccmpredpy, echo = FALSE, out.width = '100%', out.height = '100%', fig.cap = '(ref:caption-cmmpredvanilla-vs-ccmpredpy)'}
+```{r cmmpredvanilla-vs-ccmpredpy, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",  out.width = '100%', fig.cap = '(ref:caption-cmmpredvanilla-vs-ccmpredpy)'}
 knitr::include_url("img/ccmpredvanilla_vs_ccmpredpy_precision_vs_rank.html")
 ```
 
@@ -129,7 +129,7 @@ The number of effective sequences $\mathbf{\neff}$ of an alignment is then the n
 \end{equation}
 
 
-\todo{Plot Performance for Seq weighting}
+TODO: Plot Performance for Seq weighting
 
 
 ### Computing Amino Acid Frequencies {#amino-acid-frequencies}
@@ -249,7 +249,6 @@ where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the p
     & \times & \left[ \frac{\partial}{\partial \wklcd} \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}  w_{ij}(y_i,y_j)  \right) 
                   - \frac{1}{Z_n(\v,\w)} \frac{\partial  Z_n(\v,\w) }{\partial\wklcd} \right] \\
     &-& \lambda_w \delta_{ijab,klcd} \\
-
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
     &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
     & \times & \left[ I(y_k \eq c, y_l \eq d) - \frac{\partial}{\partial \wklcd} \log Z_n(\v,\w) \right] \\

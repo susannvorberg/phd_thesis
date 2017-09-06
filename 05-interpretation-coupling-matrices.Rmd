@@ -25,7 +25,7 @@ Therefore, these couplings often might contribute to false positive predictions.
 (ref:caption-sq-coupling) Correlation of squared coupling values $(\wijab)^2$ with contact class (contact=1, non-contact=0) for approximately 100 000 residue pairs per class (details see section \@ref(method-coupling-correlation)). Contacts defined as residue pairs with $\Cb < 8 \AA$ and non-contacts as residue pairs with $\Cb > 25 \AA$. 
 
 
-```{r sq-coupling-correlation, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-sq-coupling)'}
+```{r sq-coupling-correlation, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-sq-coupling)'}
 knitr::include_url("img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html", height = "750px")
 ```
 
@@ -39,7 +39,10 @@ On the contrary, for charged residue pairs the direction of a coupling value is 
 
 As with squared couplings, raw couplings for aromatic pairs or C-C pairs correlate only weakly with contact class. 
 For these pairings, neither coupling strength, nor direction of coupling seems to be a good indicator for a contact.
-```{r coupling-correlation, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-correlation)'}
+
+(ref:caption-coupling-correlation) TODOOOOOOO.
+
+```{r coupling-correlation, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-correlation)'}
 knitr::include_url("img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html", height = "750px")
 ```
 
@@ -61,7 +64,7 @@ Indeed, in the protein structure residue 6 (glutamic acid) forms a salt bridge w
 
 (ref:caption-coupling-matrix-ionic-interaction) Coupling matrix for residues 6 and 82 in protein 1awq chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
-```{r coupling-matrix-ionic-interaction, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
+```{r coupling-matrix-ionic-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html", height = "750px")
 ```
 
@@ -72,7 +75,7 @@ Figure \@ref(fig:coupling-matrix-pymol) illustrates the location of the two resi
 
 (ref:caption-coupling-matrix-hydrophobic-interaction) Coupling matrix for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
-```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, out.width='750px', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
+```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html", height = "750px")
 ```
 
@@ -112,7 +115,7 @@ The distribution of aromatic coupling values like F-W is slightly skewed towards
 
 (ref:caption-1d-coupling-profile-0-5) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $< 5\AA$ (see Methods section \@ref(method-coupling-profile) for details).
 
-```{r 1d-coupling-profile-0-5, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)'}
+```{r 1d-coupling-profile-0-5, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)'}
 knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_0_5.html")
 ```
 
@@ -122,7 +125,7 @@ For aromatic pairs like F-W, the distribution of coupling values has very long t
 
 (ref:caption-1d-coupling-profile-8-12) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $< 5\AA$ (see Methods section \@ref(method-coupling-profile) for details).
 
-```{r 1d-coupling-profile-8-12, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-8-12)'}
+```{r 1d-coupling-profile-8-12, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-8-12)'}
 knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_8_12.html")
 ```
 
@@ -138,7 +141,7 @@ The strong coevolution signals for aromatic pairs even at high distance ranges m
 
 (ref:caption-1d-coupling-profile-20-50) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $> 25\AA$ (see Methods section \@ref(method-coupling-profile) for details).
 
-```{r 1d-coupling-profile-20-50, echo = FALSE, out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-20-50)'}
+```{r 1d-coupling-profile-20-50, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-20-50)'}
 knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_20_50.html")
 ```
 
@@ -158,19 +161,19 @@ Hydrophobic coupling values for residue pairs at $\Cb$ distances less than $8\AA
 
 (ref:caption-2d-coupling-profile-re-er-0-8) Two-dimensional distribution of coupling values R-E and E-R for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The distribution is almost symmetrical and the coupling values are positively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
 
-```{r 2d-coupling-profile-re-er-0-8, echo = FALSE, out.width='75%', fig.show = 'hold', fig.cap = '(ref:caption-2d-coupling-profile-re-er-0-8)'}
+```{r 2d-coupling-profile-re-er-0-8, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='75%', fig.show = 'hold', fig.cap = '(ref:caption-2d-coupling-profile-re-er-0-8)'}
 knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.html")
 ```
 
 (ref:caption-2d-coupling-profile-re-ee-0-8) Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The coupling values are negatively correlated. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
 
-```{r 2d-coupling-profile-re-ee-0-8, echo = FALSE, out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-re-ee-0-8)'}
+```{r 2d-coupling-profile-re-ee-0-8, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-re-ee-0-8)'}
 knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.html")
 ```
 
 (ref:caption-2d-coupling-profile-vi-il-0-8) Two-dimensional distribution of coupling values V-I and I-L for approximately 10000 residue pairs with $\Delta\Cb < 8\AA$. The coupling values are symmetrically distributed around zero. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods \@ref(method-coupling-profile)). 
 
-```{r 2d-coupling-profile-vi-il-0-8, echo = FALSE, out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-vi-il-0-8)'}
+```{r 2d-coupling-profile-vi-il-0-8, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='75%', fig.cap = '(ref:caption-2d-coupling-profile-vi-il-0-8)'}
 knitr::include_url("img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.html")
 ```
 

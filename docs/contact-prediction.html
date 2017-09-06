@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -261,7 +261,7 @@ Figure 1.3: Compensatory mutations between spatially neighboring residues subjec
 </div>
 <div id="machine-learnign-methods-and-meta-predictors" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> Machine Learnign Methods and Meta-Predictors</h3>
-<p>These methods combine abundant information on sequence and amino acid properties in order to learn associations between input features and residue-residue contacts. Methods dier mainly in the type of the applied Machine Learning (ML) algorithm, e.g Neural Networks (NNs), Support Vector Machines (SVMs) or Random Forests (RFs) and the chosen input features, e.g. contact predictions, solvent accessibility, physico-chemical properties of amino acids, secondary structure predictions or evolutionary information. (Kukic et al., 2014; Alfonso Marquez-Chamorro, 2013; Li et al., 2011) The problem with these methods is interpretability, as it is dicult to elucidate which feature patterns contribute in which amount to the model.</p>
+<p>These methods combine abundant information on sequence and amino acid properties in order to learn associations between input features and residue-residue contacts. Methods differ mainly in the type of the applied Machine Learning (ML) algorithm, e.g Neural Networks (NNs), Support Vector Machines (SVMs) or Random Forests (RFs) and the chosen input features, e.g. contact predictions, solvent accessibility, physico-chemical properties of amino acids, secondary structure predictions or evolutionary information. (Kukic et al., 2014; Alfonso Marquez-Chamorro, 2013; Li et al., 2011) The problem with these methods is interpretability, as it is diffcult to elucidate which feature patterns contribute in which amount to the model.</p>
 <ul>
 <li>combining different approaches</li>
 <li>jones et al: overlap between methods but also many unique predictions</li>
@@ -297,9 +297,9 @@ Figure 1.4: Distribution of residue pair <span class="math inline">\(\Cb\)</span
 <p>Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around <span class="math inline">\(5.5\AA \; \;\)</span>, <span class="math inline">\(7.4\AA \; \;\)</span> and <span class="math inline">\(10.6\AA \; \;\)</span> that can be attributed to local interactions in e.g. helices (see Figure <a href="contact-prediction.html#fig:peaks-Cb-distribution">1.5</a>).</p>
 
 <div class="figure"><span id="fig:peaks-Cb-distribution"></span>
-<img src="img/dataset_statistics/cb_distribution_peak_5-6.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\AA\; \;\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\AA\; \;\) and \(7.5\AA\; \;\)." width="50%" /><img src="img/dataset_statistics/cb_distribution_peak_7.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\AA\; \;\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\AA\; \;\) and \(7.5\AA\; \;\)." width="50%" />
+<img src="img/dataset_statistics/cb_distribution_peak_5-6.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\AA \; \;\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\AA \; \;\) and \(7.5\AA \; \;\)." width="50%" /><img src="img/dataset_statistics/cb_distribution_peak_7.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\AA \; \;\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\AA \; \;\) and \(7.5\AA \; \;\)." width="50%" />
 <p class="caption">
-Figure 1.5: <span class="math inline">\(\Cb\)</span> distances between neighboring residues in <span class="math inline">\(\alpha\)</span>-helices. Left: Direct neighbors in <span class="math inline">\(\alpha\)</span>-helices have <span class="math inline">\(\Cb\)</span> distances around <span class="math inline">\(5.4\AA\; \;\)</span> due to the geometrical constraints from <span class="math inline">\(\alpha\)</span>-helical architecture. Right: Residues separated by two positions (<span class="math inline">\(|i-j| = 2\)</span>) are less geometrically restricted to <span class="math inline">\(\Cb\)</span> distances between <span class="math inline">\(7\AA\; \;\)</span> and <span class="math inline">\(7.5\AA\; \;\)</span>.
+Figure 1.5: <span class="math inline">\(\Cb\)</span> distances between neighboring residues in <span class="math inline">\(\alpha\)</span>-helices. Left: Direct neighbors in <span class="math inline">\(\alpha\)</span>-helices have <span class="math inline">\(\Cb\)</span> distances around <span class="math inline">\(5.4\AA \; \;\)</span> due to the geometrical constraints from <span class="math inline">\(\alpha\)</span>-helical architecture. Right: Residues separated by two positions (<span class="math inline">\(|i-j| = 2\)</span>) are less geometrically restricted to <span class="math inline">\(\Cb\)</span> distances between <span class="math inline">\(7\AA \; \;\)</span> and <span class="math inline">\(7.5\AA \; \;\)</span>.
 </p>
 </div>
 <p>Commonly, sequence separation bins are applied to distuinguish short (<span class="math inline">\(6 &lt; |i-j| \le 12\)</span>), medium (<span class="math inline">\(12 &lt; |i-j| \le 24\)</span>) and long range (<span class="math inline">\(|i-j| &gt; 24\)</span>) contacts <span class="citation">[<a href="#ref-Monastyrskyy2015">49</a>]</span>. Especially long range contacts are of importance for structure prediction as they are informative and able to constrain the overal fold of a protein <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span>.</p>
@@ -319,17 +319,17 @@ Figure 1.5: <span class="math inline">\(\Cb\)</span> distances between neighbori
 <p>According to the maximum entropy principle, the distribution <span class="math inline">\(p(\seq)\)</span> should have maximal entropy and reproduce the empirically observed amino acid frequencies, so that</p>
 <span class="math display" id="eq:maxent-reproducing-emp-freq">\[\begin{align}
    \mathcal{f}(x_i\eq a)            &amp;\equiv p(x_i\eq a)  \\
-                                    &amp;= \sum_{\seq&#39;_1, \ldots, \seq&#39;_L = 1}^{q} p(x&#39;) I(x&#39;_i \eq a) \\
+                                    &amp;= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} p(x\prime) I(x\prime_i \eq a) \\
   \mathcal{f}(x_i\eq a, x_j\eq b)   &amp;\equiv p(x_i\eq a, x_j \eq b) \\
-                                    &amp;= \sum_{\seq&#39;_1, \ldots, \seq&#39;_L = 1}^{q}  p(x&#39;) I(x&#39;_i\eq a, x&#39;_j \eq b)  \; .
+                                    &amp;= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q}  p(x\prime) I(x\prime_i\eq a, x\prime_j \eq b)  \; .
  \tag{1.2}
 \end{align}\]</span>
-<p>Solving for the distribution <span class="math inline">\(p(\seq)\)</span> that maximizes the Shannon entropy <span class="math inline">\(S= -\sum_{\seq&#39;} p(\seq&#39;) \log p(\seq&#39;)\)</span> while satisfying the constraints given in eq. <a href="contact-prediction.html#eq:maxent-reproducing-emp-freq">(1.2)</a> by introducing the Lagrange multipliers <span class="math inline">\(\wij\)</span> and <span class="math inline">\(\vi\)</span>,</p>
+<p>Solving for the distribution <span class="math inline">\(p(\seq)\)</span> that maximizes the Shannon entropy <span class="math inline">\(S= -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime)\)</span> while satisfying the constraints given in eq. <a href="contact-prediction.html#eq:maxent-reproducing-emp-freq">(1.2)</a> by introducing the Lagrange multipliers <span class="math inline">\(\wij\)</span> and <span class="math inline">\(\vi\)</span>,</p>
 <span class="math display" id="eq:derivation-max-ent-model">\[\begin{align}
-F \left[ p(\seq) \right] =&amp; -\sum_{\seq&#39;} p(\seq&#39;) \log p(\seq&#39;) \\
+F \left[ p(\seq) \right] =&amp; -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime) \\
         &amp; + \sum_{i=1}^L \sum_{a=1}^{q} \vi(a) \left( p(x_i\eq a) - \mathcal{f}(x_i\eq a) \right) \\
         &amp; + \sum_{1 \leq i &lt; j \leq L}^L \; \sum_{a,b=1}^{q} \wij(a,b) \left( p(x_i\eq a, x_j \eq b) - \mathcal{f}(x_i\eq a, x_j\eq b) \right) \\
-        &amp; + \Omega \left( 1-\sum_{\seq&#39;} p(\seq&#39;)  \right)
+        &amp; + \Omega \left( 1-\sum_{\seq\prime} p(\seq\prime)  \right)
 \tag{1.3}
 \end{align}\]</span>
 <p>results in the formulation of an exponential model known as <em>Potts model</em> in statistical physics or <a href="abbrev.html#abbrev">MRF</a> in statistics,</p>
@@ -339,7 +339,7 @@ F \left[ p(\seq) \right] =&amp; -\sum_{\seq&#39;} p(\seq&#39;) \log p(\seq&#39;)
 \end{equation}\]</span>
 <p>The Lagrange multipliers <span class="math inline">\(\wij\)</span> and <span class="math inline">\(\vi\)</span> remain as model parameters to be fitted to data. <span class="math inline">\(Z\)</span> is a normalization constant also known as <em>partition function</em> that ensures the total probabilty adds up to one by summing over all possible assignments to <span class="math inline">\(\seq\)</span>,</p>
 <span class="math display" id="eq:partition-fct-likelihood">\[\begin{equation}
-  Z = \sum_{\seq&#39;_1, \ldots, \seq&#39;_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i &lt; j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
+  Z = \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i &lt; j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
   \tag{1.5}
 \end{equation}\]</span>
 <div id="model-properties" class="section level4">
@@ -432,7 +432,7 @@ F \left[ p(\seq) \right] =&amp; -\sum_{\seq&#39;} p(\seq&#39;) \log p(\seq&#39;)
 <p>It was found that prediction precision improves further when the Frobenius norm is computed only on the <span class="math inline">\(20 \times 20\)</span> submatrix, thus ignoring contributions from gaps <span class="citation">[<a href="#ref-Feinauer2014">71</a>]</span>. <em>PSICOV</em> <span class="citation">[<a href="#ref-Jones2012">45</a>]</span> uses an L1-norm on the <span class="math inline">\(20 \times 20\)</span> submatrix instead of the Frobenius norm.</p>
 <p>The Frobenius norm is gauge dependent and is minimized by the <em>zero-sum gauge</em> <span class="citation">[<a href="#ref-Weigt2009">31</a>]</span>. Therefore, in <span class="citation">[<a href="#ref-Ekeberg2013">61</a>,<a href="#ref-Seemayer2014">63</a>,<a href="#ref-Ekeberg2014">64</a>,<a href="#ref-Baldassi2014">68</a>]</span> the coupling matrices are transformed to <em>zero-sum gauge</em> before computing the Frobenius norm:</p>
 <span class="math display" id="eq:zero-sum-gauge-transform">\[\begin{equation}
-    \w&#39;_{ij}  = \wij - \wij(\cdot, b) - \wij(a, \cdot) + \wij(\cdot, \cdot) \; ,
+    \w\prime_{ij}  = \wij - \wij(\cdot, b) - \wij(a, \cdot) + \wij(\cdot, \cdot) \; ,
 \tag{1.12}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\cdot\)</span> denotes average over the respective indices.</p>
@@ -517,9 +517,9 @@ Figure 1.8: Distribution of PFAM family sizes. Less than half of the families in
 Figure 1.9: Possible causes of coevolution. <strong>a)</strong> Physical interactions between intra-domain residues. <strong>b)</strong> Interactions across the interface of predominantly homo-oligomeric complexes. <strong>c)</strong> Interactions mediated by ligands or metal atoms. <strong>d)</strong> Transient interactions due to conformational flexibility.
 </p>
 </div>
-<p>Many proteins form homo-oligomers with evolutionary conserved interaction surfaces. Currently it is hard to reliably distinguish intra- and inter-molecular contacts. Anishchenko et al. found that approximately one third of strong co-evolutionary signals between residue pairs at long distances (minimal heavy atom distance <span class="math inline">\(&gt;15 \AA \;\;\)</span>) can be attributed to interactions across homo-oligomeric interfaces <span class="citation">[<a href="#ref-Anishchenko2017">52</a>]</span>. Several studies specifically analysed co-evolution across homo-oligomeric interfaces for proteins of known structure by filtering for residue pairs with strong couplings at long distances <span class="citation">[<span class="citeproc-not-found" data-reference-id="Lee2009"><strong>???</strong></span>,<span class="citeproc-not-found" data-reference-id="Jana2014"><strong>??</strong></span>,<a href="#ref-Hopf2012">79</a>–<a href="#ref-Sutto2015">81</a>]</span> or used co-evolutionary signals to predict homo-dimeric complexes <span class="citation">[<a href="#ref-DosSantos2015a">82</a>]</span>.</p>
-<p>It has been proposed that co-evolutionary signals can also arise from ligand or atom mediated interactions between residues or from critical interactions in intermediate folding states <span class="citation">[<a href="#ref-Buslje2009">74</a>,<a href="#ref-Ovchinnikov2015b">83</a>]</span>. Confirming this hypothesis, a study showed that the cumulative strength of couplings for a particular residue can be used to predict functional sites <span class="citation">[<a href="#ref-Marks2012">73</a>,<a href="#ref-Hopf2012">79</a>]</span>.</p>
-<p>Another important aspect is conformational flexibility. PDB structures used to evaluate co-evolution analysis represent only rigid snapshots taken in an unnatural crystalline environment. Yet proteins possess huge conformational plasticity and can adopt distinct alternative conformations or adapt shape when interacting with other proteins in an induced fit manner <span class="citation">[<a href="#ref-Noel2016">84</a>]</span>. Several studies demonstrated successfully that co-evolutionary signals can capture interactions specific to different distinct conformations <span class="citation">[<span class="citeproc-not-found" data-reference-id="Jana2014"><strong>???</strong></span>,<span class="citeproc-not-found" data-reference-id="Sfriso2016"><strong>??</strong></span>,<a href="#ref-Morcos2011">57</a>,<a href="#ref-Hopf2012">79</a>]</span>.</p>
+<p>Many proteins form homo-oligomers with evolutionary conserved interaction surfaces. Currently it is hard to reliably distinguish intra- and inter-molecular contacts. Anishchenko et al. found that approximately one third of strong co-evolutionary signals between residue pairs at long distances (minimal heavy atom distance <span class="math inline">\(&gt;15 \AA \;\;\)</span>) can be attributed to interactions across homo-oligomeric interfaces <span class="citation">[<a href="#ref-Anishchenko2017">52</a>]</span>. Several studies specifically analysed co-evolution across homo-oligomeric interfaces for proteins of known structure by filtering for residue pairs with strong couplings at long distances <span class="citation">[<a href="#ref-Hopf2012">79</a>–<a href="#ref-Jana2014">83</a>]</span> or used co-evolutionary signals to predict homo-dimeric complexes <span class="citation">[<a href="#ref-DosSantos2015a">84</a>]</span>.</p>
+<p>It has been proposed that co-evolutionary signals can also arise from ligand or atom mediated interactions between residues or from critical interactions in intermediate folding states <span class="citation">[<a href="#ref-Buslje2009">74</a>,<a href="#ref-Ovchinnikov2015b">85</a>]</span>. Confirming this hypothesis, a study showed that the cumulative strength of couplings for a particular residue can be used to predict functional sites <span class="citation">[<a href="#ref-Marks2012">73</a>,<a href="#ref-Hopf2012">79</a>]</span>.</p>
+<p>Another important aspect is conformational flexibility. PDB structures used to evaluate co-evolution analysis represent only rigid snapshots taken in an unnatural crystalline environment. Yet proteins possess huge conformational plasticity and can adopt distinct alternative conformations or adapt shape when interacting with other proteins in an induced fit manner <span class="citation">[<a href="#ref-Noel2016">86</a>]</span>. Several studies demonstrated successfully that co-evolutionary signals can capture interactions specific to different distinct conformations <span class="citation">[<a href="#ref-Morcos2011">57</a>,<a href="#ref-Hopf2012">79</a>,<a href="#ref-Jana2014">83</a>,<a href="#ref-Sfriso2016">87</a>]</span>.</p>
 </div>
 </div>
 </div>
@@ -675,17 +675,20 @@ Figure 1.9: Possible causes of coevolution. <strong>a)</strong> Physical interac
 <div id="ref-Hopf2012">
 <p>79. Hopf, T.A., Colwell, L.J., Sheridan, R., Rost, B., Sander, C., and Marks, D.S. (2012). Three-dimensional structures of membrane proteins from genomic sequencing. Cell <em>149</em>, 1607–21. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
-<div id="ref-Sutto2015">
-<p>81. Sutto, L., Marsili, S., Valencia, A., and Gervasio, F.L. (2015). From residue coevolution to protein conformational ensembles and functional dynamics. Proc. Natl. Acad. Sci. U. S. A., 1508584112. Available at: <a href="http://www.pnas.org/content/early/2015/10/20/1508584112.abstract" class="uri">http://www.pnas.org/content/early/2015/10/20/1508584112.abstract</a>.</p>
+<div id="ref-Jana2014">
+<p>83. Jana, B., Morcos, F., and Onuchic, J.N. (2014). From structure to function: the convergence of structure based models and co-evolutionary information. Phys. Chem. Chem. Phys. <em>16</em>, 6496. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/24603809 http://xlink.rsc.org/?DOI=c3cp55275f" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/24603809 http://xlink.rsc.org/?DOI=c3cp55275f</a>.</p>
 </div>
 <div id="ref-DosSantos2015a">
-<p>82. Dos Santos, R.N., Morcos, F., Jana, B., Andricopulo, A.D., and Onuchic, J.N. (2015). Dimeric interactions and complex formation using direct coevolutionary couplings. Sci. Rep. <em>5</em>, 13652. Available at: <a href="http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html" class="uri">http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html</a>.</p>
+<p>84. Dos Santos, R.N., Morcos, F., Jana, B., Andricopulo, A.D., and Onuchic, J.N. (2015). Dimeric interactions and complex formation using direct coevolutionary couplings. Sci. Rep. <em>5</em>, 13652. Available at: <a href="http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html" class="uri">http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html</a>.</p>
 </div>
 <div id="ref-Ovchinnikov2015b">
-<p>83. Ovchinnikov, S., Kim, D.E., Wang, R.Y.-R., Liu, Y., DiMaio, F., and Baker, D. (2015). Improved de novo structure prediction in CASP11 by incorporating Co-evolution information into rosetta. Proteins. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26677056" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26677056</a>.</p>
+<p>85. Ovchinnikov, S., Kim, D.E., Wang, R.Y.-R., Liu, Y., DiMaio, F., and Baker, D. (2015). Improved de novo structure prediction in CASP11 by incorporating Co-evolution information into rosetta. Proteins. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26677056" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26677056</a>.</p>
 </div>
 <div id="ref-Noel2016">
-<p>84. Noel, J.K., Morcos, F., and Onuchic, J.N. (2016). Sequence co-evolutionary information is a natural partner to minimally-frustrated models of biomolecular dynamics. F1000Research <em>5</em>. Available at: <a href="http://f1000research.com/articles/5-106/v1" class="uri">http://f1000research.com/articles/5-106/v1</a>.</p>
+<p>86. Noel, J.K., Morcos, F., and Onuchic, J.N. (2016). Sequence co-evolutionary information is a natural partner to minimally-frustrated models of biomolecular dynamics. F1000Research <em>5</em>. Available at: <a href="http://f1000research.com/articles/5-106/v1" class="uri">http://f1000research.com/articles/5-106/v1</a>.</p>
+</div>
+<div id="ref-Sfriso2016">
+<p>87. Sfriso, P., Duran-Frigola, M., Mosca, R., Emperador, A., Aloy, P., and Orozco, M. (2016). Residues Coevolution Guides the Systematic Identification of Alternative Functional Conformations in Proteins. Structure <em>24</em>, 116–126. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S0969212615004657" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S0969212615004657</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -745,10 +748,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -760,7 +766,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

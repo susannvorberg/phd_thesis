@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -245,7 +245,7 @@ Figure 1.1: Yearly growth of number of solved structures in the PDB<span class="
 </p>
 </div>
 <p>Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive <span class="citation">[<a href="#ref-Dorn2014">8</a>]</span>. The <a href="abbrev.html#abbrev">PDB</a><span class="citation">[<a href="#ref-Berman2000">9</a>]</span> is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins. The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the <a href="abbrev.html#abbrev">PDB</a>. About 9% of protein structures have been solved using <a href="abbrev.html#abbrev">NMR</a> and less than 1% using <a href="abbrev.html#abbrev">EM</a> (see FIG 1).</p>
-<p>All three experimental techniques have advantages and limitations with respect to certain modelling aspects. X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. <span class="math inline">\(\ac{NMR}\)</span> studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, <span class="math inline">\(\ac{NMR}\)</span> is limited to look at small proteins. Recently, <span class="math inline">\(\ac{EM}\)</span> has undergone a “resolution revolution” <span class="citation">[<a href="#ref-Egelman2016">11</a>]</span> and macromolecular structures have been solved with resolutions up to 2A[citation]. The limit of <span class="math inline">\(\ac{cryo-EM}\)</span> lies in the size of proteins.</p>
+<p>All three experimental techniques have advantages and limitations with respect to certain modelling aspects. X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. NMR studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, NMR is limited to look at small proteins. Recently, EM has undergone a “resolution revolution” <span class="citation">[<a href="#ref-Egelman2016">11</a>]</span> and macromolecular structures have been solved with resolutions up to 2A[citation]. The limit of cryo-EM lies in the size of proteins.</p>
 <p>Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously. The UniProtKB <span class="citation">[<a href="#ref-TheUniProtConsortium2013">10</a>]</span>, the leading resource for protein sequences, contains more than 80 million sequence entries (24 July 2017).</p>
 <p>Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination <span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span> are not expected to close this gap near in time. [Figure sequence structure gap]</p>
 <p>Protein structure determines protein function. Therefore, structural insights are of uttermost importance. They are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms. They are fundamental for the design of drugs and antibiotics. Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.</p>
@@ -344,10 +344,13 @@ gitbook.start({
 "link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
 "text": "Edit"
 },
-"download": ["PhD thesis Susann Vorberg.pdf", "PhD thesis Susann Vorberg.epub"],
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
 },
 "search": true
 });
@@ -359,7 +362,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
