@@ -204,7 +204,7 @@ Several of these methods use correlation coefficient based measures, such as Pea
 Many methods have been developed that are rooted in information theory and use [MI](#abbrev) measures to describe the dependencies between sites in the alignment [@Clarke1995; @Korber1993; @Martin2005].
 Phylogenetic and entropic biases have been identified as the major sources of noise that confound the true coevolution signal [@Atchley2000; @Fodor2004; @Martin2005].
 Different variants of [MI](#abbrev) based approaches try to address these effects and improve on the signal-to-noise ratio [@Atchley2000; @Tillier2003; @Gouveia_Oliveira2007].
-The most prominent correction for background noises is [APC](#apc), developed by Dunn et al. that drastically removes background noise from entropic effects and is discussed in section  \@ref(post-processing-heuristics) [@Dunn2008].
+The most prominent correction for background noises is [APC](#abbrev), developed by Dunn et al. that drastically removes background noise from entropic effects and is discussed in section  \@ref(post-processing-heuristics) [@Dunn2008].
 
 Another popular method is *OMES* that essentially computes a chi-squared statistic to detect the differences between observed and expected pairwise amino acid frequencies for a pair of columns [@Kass2002; @Noivirt2005].
 
@@ -220,9 +220,10 @@ In 1999 Lapedes et al. were the first to propose a global statistical approach f
 They consider a Pott's model that can be derived under a maximum entropy assumption and use the model specific coupling parameters to infer interactions.
 At that time the wider implications of this great advancement went unnoted but meanwhile the Pott's Model has become the most prominent statistical model for contact prediction.
 Section \@ref(maxent) deals extensively with the derivation and properties of the Pott's model, its application to contact prediction and its numerous realizations.
-In fact, most global statistical approaches can be reformulated in the light of maximum entropy models.  
-Only Burger and Nijmwegen developed a global statistical model very different from the maximum entropy approach. 
-Their Bayesian network model uses informative priors to improve precision [@Burger2010]. 
+
+
+A global statistical model not motivated by the maximum entropy approach was proposed by Burger and Nijmwegen in 2010 [@Burger2008; @Burger2010]. 
+Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via [APC](#abbrev) but cannot compete with the currently most successfull pseudo-likelihood approaches presented in section \@ref(pseudo-likelihood). 
 
 
 ### Machine Learnign Methods and Meta-Predictors
