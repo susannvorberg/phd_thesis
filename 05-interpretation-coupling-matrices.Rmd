@@ -25,8 +25,8 @@ Therefore, these couplings often might contribute to false positive predictions.
 (ref:caption-sq-coupling) Correlation of squared coupling values $(\wijab)^2$ with contact class (contact=1, non-contact=0) for approximately 100 000 residue pairs per class (details see section \@ref(method-coupling-correlation)). Contacts defined as residue pairs with $\Cb < 8 \AA$ and non-contacts as residue pairs with $\Cb > 25 \AA$. 
 
 
-```{r sq-coupling-correlation, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-sq-coupling)'}
-knitr::include_url("img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html", height = "750px")
+```{r sq-coupling-correlation, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.png", out.width='90%', fig.cap = '(ref:caption-sq-coupling)', fig.align='center'}
+knitr::include_url("img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html", height = "600px")
 ```
 
 Apparantly, distinct couplings are of varying importance for contact inference. 
@@ -42,8 +42,8 @@ For these pairings, neither coupling strength, nor direction of coupling seems t
 
 (ref:caption-coupling-correlation) TODOOOOOOO.
 
-```{r coupling-correlation, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-correlation)'}
-knitr::include_url("img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html", height = "750px")
+```{r coupling-correlation, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.png", out.width='90%', fig.cap = '(ref:caption-coupling-correlation)'}
+knitr::include_url("img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html", height = "600px")
 ```
 
 Of course, looking only at correlations can be misleading if there are non-linear patterns in the data, for example higher order dependencies between couplings. 
@@ -64,8 +64,8 @@ Indeed, in the protein structure residue 6 (glutamic acid) forms a salt bridge w
 
 (ref:caption-coupling-matrix-ionic-interaction) Coupling matrix for residues 6 and 82 in protein 1awq chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
-```{r coupling-matrix-ionic-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
-knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html", height = "750px")
+```{r coupling-matrix-ionic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.png", out.width='90%', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
+knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html", height = "600px")
 ```
 
 Figure \@ref(fig:coupling-matrix-hydrophobic-interaction) visualizes the coupling matrix for a pair of hydrophobic residues (residues 29 and 39) in protein 1ae9 chain A.
@@ -75,8 +75,8 @@ Figure \@ref(fig:coupling-matrix-pymol) illustrates the location of the two resi
 
 (ref:caption-coupling-matrix-hydrophobic-interaction) Coupling matrix for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
-```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
-knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html", height = "750px")
+```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.png", out.width='90%', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
+knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html", height = "600px")
 ```
 
 <!---
@@ -113,9 +113,9 @@ Hydrophobic pairs like V-I have an almost symmetric coupling distribution, confi
 Hydrophobic interactions arising from the hydrophobic effect are not specific or directed and can easily be substituted by other hydrophobic residues, which explains the not very pronounced positive coupling signal compared to more specific interactions, e.g ionic interactions. 
 The distribution of aromatic coupling values like F-W is slightly skewed towards negative values, accounting for steric hindrance of their large side chains at small distances. 
 
-(ref:caption-1d-coupling-profile-0-5) Distribution of selected couplings for approximately 10000 filtered residue pairs with $\Cb$ distance $< 5\AA$ (see Methods section \@ref(method-coupling-profile) for details).
+(ref:caption-1d-coupling-profile-0-5) Distribution of selected couplings for approximately 10000 filtered residue pairs (value in brackets) with $\Cb$ distance $< 5\AA \; \;$ (see Methods section \@ref(method-coupling-profile) for details).
 
-```{r 1d-coupling-profile-0-5, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)'}
+```{r 1d-coupling-profile-0-5, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/1d_coupling_profile_0_5.png", out.width='90%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)', fig.align='center'}
 knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_0_5.html")
 ```
 

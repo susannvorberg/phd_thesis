@@ -286,9 +286,9 @@ Local residue pairs separated by only some positions in sequence (e.g $|i-j| < 6
 They are trivial to predict as they typically correspond to contacts within secondary structure elements and reflect the local geometrical constraints.
 Figure \@ref(fig:Cb-distribution) shows the distribution of $\Cb$ distances for various minimal sequence separation thresholds. 
 
-(ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over all proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds: blue = $|i-j| > 1$ (all residue pairs), orange = $|i-j| > 6$, green = $|i-j| > 12$, red = $|i-j| > 24$.
+(ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over ~6000 proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds.
 
-```{r Cb-distribution, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
+```{r Cb-distribution, echo = FALSE, screenshot.alt="img/dataset_statistics/Cb_distribution_all_data43579541_log.png", out.width = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
 knitr::include_url("img/dataset_statistics/Cb_distribution_all_data43579541_log.html", height="500px")
 ```
 
@@ -629,8 +629,8 @@ Nevertheless, because of the already mentioned sequencing biases, better and mor
 
   (ref:caption-pfam) Distribution of PFAM family sizes. Less than half of the families in PFAM (7990 compared to 8489 families) do not have an annotated structure. The median family size in number of sequences for families with and without annotated structures is 185 and 827 respectively. Data taken from PFAM 31.0 (March 2017, 16712 entries) [@Finn2016].
 
-```{r pfam, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-pfam)'}
-knitr::include_url("img/pfam_pdb_notitle.html", height = "650px")
+```{r pfam, echo = FALSE, screenshot.alt="img/pfam_pdb_notitle.png", out.width='90%', fig.cap = '(ref:caption-pfam)', fig.align='center'}
+knitr::include_url("img/pfam_pdb_notitle.html", height = "500px")
 ```
 
 

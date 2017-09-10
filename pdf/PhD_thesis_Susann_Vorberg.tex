@@ -793,13 +793,11 @@ separation thresholds.
 
 
 
-
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of residue pair \(\Cb\)
-distances over all proteins in the dataset (see Methods \ref{dataset})
-at different minimal sequence separation thresholds: blue =
-\(|i-j| > 1\) (all residue pairs), orange = \(|i-j| > 6\), green =
-\(|i-j| > 12\), red = \(|i-j| > 24\).}\label{fig:Cb-distribution}
+\includegraphics[width=1\linewidth]{img/dataset_statistics/Cb_distribution_all_data43579541_log} \caption{Distribution of residue pair \(\Cb\)
+distances over \textasciitilde{}6000 proteins in the dataset (see
+Methods \ref{dataset}) at different minimal sequence separation
+thresholds.}\label{fig:Cb-distribution}
 \end{figure}
 
 Without filtering local residue pairs (sequence separation 1), there are
@@ -1407,7 +1405,12 @@ applicability domain of coevolutionary methods.
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of PFAM family sizes. Less than half of
+
+{\centering \includegraphics[width=0.9\linewidth]{img/pfam_pdb_notitle} 
+
+}
+
+\caption{Distribution of PFAM family sizes. Less than half of
 the families in PFAM (7990 compared to 8489 families) do not have an
 annotated structure. The median family size in number of sequences for
 families with and without annotated structures is 185 and 827
@@ -1656,7 +1659,12 @@ often might contribute to false positive predictions.
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Correlation of squared coupling values
+
+{\centering \includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle} 
+
+}
+
+\caption{Correlation of squared coupling values
 \((\wijab)^2\) with contact class (contact=1, non-contact=0) for
 approximately 100 000 residue pairs per class (details see section
 \ref{method-coupling-correlation}). Contacts defined as residue pairs
@@ -1687,7 +1695,7 @@ indicator for a contact.
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{TODOOOOOOO.}\label{fig:coupling-correlation}
+\includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle} \caption{TODOOOOOOO.}\label{fig:coupling-correlation}
 \end{figure}
 
 Of course, looking only at correlations can be misleading if there are
@@ -1727,7 +1735,7 @@ bridge with residue 82 (lysine) as can be seen in figure
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Coupling matrix for
+\includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle} \caption{Coupling matrix for
 residues 6 and 82 in protein 1awq chain A. Size of the bubbles
 represents coupling strength and color represents the direction of
 coupling: red = positive coupling, blue = negative coupling. Bars at the
@@ -1755,7 +1763,7 @@ packed and the limited space allows for only small hydrophobic residues.
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Coupling matrix
+\includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle} \caption{Coupling matrix
 for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles
 represents coupling strength and color represents the direction of
 coupling: red = positive coupling, blue = negative coupling. Bars at the
@@ -1840,10 +1848,15 @@ hindrance of their large side chains at small distances.
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of selected couplings
-for approximately 10000 filtered residue pairs with \(\Cb\) distance
-\(< 5\AA\) (see Methods section \ref{method-coupling-profile} for
-details).}\label{fig:1d-coupling-profile-0-5}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/1d_coupling_profile_0_5} 
+
+}
+
+\caption{Distribution of selected couplings
+for approximately 10000 filtered residue pairs (value in brackets) with
+\(\Cb\) distance \(< 5\AA \; \;\) (see Methods section
+\ref{method-coupling-profile} for details).}\label{fig:1d-coupling-profile-0-5}
 \end{figure}
 
 In an intermediate \(\Cb\) distance range between \(8\AA\) and \(12\AA\)

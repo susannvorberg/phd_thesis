@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-06">
+<meta name="date" content="2017-09-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -237,8 +237,8 @@ MathJax.Hub.Config({
 <p>Given the success of <a href="abbrev.html#abbrev">DCA</a> methods, it is clear that contact scores are good indicators of spatial proximity for residue pairs. As described in section <a href="contact-prediction.html#post-processing-heuristics">1.3.5.5</a>, a contact score for a residue pair is commonly computed as the square root over the sum of squared coupling values.</p>
 <p>Figure <a href="single-coupling-values-carry-evidence-of-contacts.html#fig:sq-coupling-correlation">2.1</a> shows the correlation between squared coupling values and contact class. All couplings have a positive class correlation, meaning the stronger their squared value, the more likely a contact can be inferred. Generally, couplings that involve any aliphatic amino acid (I, L, V) or alanine express the strongest class correlation. In contrast, C-C or aromatic pairings (involving Y, F, W) correlate only weakly with contact class. Therefore, these couplings often might contribute to false positive predictions.</p>
 
-<div class="figure"><span id="fig:sq-coupling-correlation"></span>
-<iframe src="img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html" width="100%" height="750px">
+<div class="figure" style="text-align: center"><span id="fig:sq-coupling-correlation"></span>
+<iframe src="img/coupling_matrix_analysis/correlation_squared_couplings_with_contact_class_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
 Figure 2.1: Correlation of squared coupling values <span class="math inline">\((\wijab)^2\)</span> with contact class (contact=1, non-contact=0) for approximately 100 000 residue pairs per class (details see section <a href="analysis-of-coupling-matrices.html#method-coupling-correlation">6.3.1</a>). Contacts defined as residue pairs with <span class="math inline">\(\Cb &lt; 8 \AA\)</span> and non-contacts as residue pairs with <span class="math inline">\(\Cb &gt; 25 \AA\)</span>.
@@ -249,7 +249,7 @@ Figure 2.1: Correlation of squared coupling values <span class="math inline">\((
 <p>As with squared couplings, raw couplings for aromatic pairs or C-C pairs correlate only weakly with contact class. For these pairings, neither coupling strength, nor direction of coupling seems to be a good indicator for a contact.</p>
 
 <div class="figure"><span id="fig:coupling-correlation"></span>
-<iframe src="img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html" width="100%" height="750px">
+<iframe src="img/coupling_matrix_analysis/correlation_couplings_with_contact_class_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
 Figure 2.2: TODOOOOOOO.

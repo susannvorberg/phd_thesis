@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-06">
+<meta name="date" content="2017-09-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -291,7 +291,7 @@ Figure 1.3: Compensatory mutations between spatially neighboring residues subjec
 <iframe src="img/dataset_statistics/Cb_distribution_all_data43579541_log.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 1.4: Distribution of residue pair <span class="math inline">\(\Cb\)</span> distances over all proteins in the dataset (see Methods <a href="dataset.html#dataset">6.1</a>) at different minimal sequence separation thresholds: blue = <span class="math inline">\(|i-j| &gt; 1\)</span> (all residue pairs), orange = <span class="math inline">\(|i-j| &gt; 6\)</span>, green = <span class="math inline">\(|i-j| &gt; 12\)</span>, red = <span class="math inline">\(|i-j| &gt; 24\)</span>.
+Figure 1.4: Distribution of residue pair <span class="math inline">\(\Cb\)</span> distances over ~6000 proteins in the dataset (see Methods <a href="dataset.html#dataset">6.1</a>) at different minimal sequence separation thresholds.
 </p>
 </div>
 <p>Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around <span class="math inline">\(5.5\AA \; \;\)</span>, <span class="math inline">\(7.4\AA \; \;\)</span> and <span class="math inline">\(10.6\AA \; \;\)</span> that can be attributed to local interactions in e.g. helices (see Figure <a href="contact-prediction.html#fig:peaks-Cb-distribution">1.5</a>).</p>
@@ -481,8 +481,8 @@ Figure 1.7: The phylogenetic dependence of closely related sequences can produce
 <p>Interesting targets for contact prediction are protein families without any associated structural information. As can be seen in Figure <a href="contact-prediction.html#fig:pfam">1.8</a>, those protein families generally comprise low numbers of homologous sequences with a median of 185 sequences per family and are thus susceptible to finite sampling effects.</p>
 <p>With the rapidly increasing size of protein sequence databases (see section <a href="general-intro.html#general-intro">1</a>) the number of protein families with enough sequences for accuarate contact predictions will also increase steadily <span class="citation">[<a href="#ref-TheUniProtConsortium2013">10</a>,<a href="#ref-Kamisetty2013">65</a>]</span>. Nevertheless, because of the already mentioned sequencing biases, better and more sensitive statistical models are indespensible to extend the applicability domain of coevolutionary methods.</p>
 
-<div class="figure"><span id="fig:pfam"></span>
-<iframe src="img/pfam_pdb_notitle.html" width="100%" height="650px">
+<div class="figure" style="text-align: center"><span id="fig:pfam"></span>
+<iframe src="img/pfam_pdb_notitle.html" width="90%" height="500px">
 </iframe>
 <p class="caption">
 Figure 1.8: Distribution of PFAM family sizes. Less than half of the families in PFAM (7990 compared to 8489 families) do not have an annotated structure. The median family size in number of sequences for families with and without annotated structures is 185 and 827 respectively. Data taken from PFAM 31.0 (March 2017, 16712 entries) <span class="citation">[<a href="#ref-Finn2016">75</a>]</span>.
