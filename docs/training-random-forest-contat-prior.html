@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-09-12">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modelling-the-dependence-of-wij-on-distance.html">
+<link rel="next" href="abbrev.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  TeX: { 
+    extensions: ["mediawiki-texvc.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      via: "\\mathcal{v}_{ia}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}"
+      }
+  }
+});
+</script>
+
+<!--
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+   extensions: ["[siunitx]/siunitx.js"]
+ });
+ MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { TagSide: "left" }
+});
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted de-novo predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learnign Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
+<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.4</b> Developing a Bayesian Model for Contact Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>2.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="likelihood-of-the-sequences-as-a-potts-model.html"><a href="likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> Likelihood of the sequences as a Potts model</a></li>
+<li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.3" data-path="gauge-transformation.html"><a href="gauge-transformation.html"><i class="fa fa-check"></i><b>3.3</b> Gauge transformation</a></li>
+<li class="chapter" data-level="3.4" data-path="the-regularized-log-likelihood-function-llregvw.html"><a href="the-regularized-log-likelihood-function-llregvw.html"><i class="fa fa-check"></i><b>3.4</b> The regularized log likelihood function LLreg(v,w)</a></li>
+<li class="chapter" data-level="3.5" data-path="the-gradient-of-the-regularized-log-likelihood.html"><a href="the-gradient-of-the-regularized-log-likelihood.html"><i class="fa fa-check"></i><b>3.5</b> The gradient of the regularized log likelihood</a></li>
+<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a><ul>
+<li class="chapter" data-level="3.6.1" data-path="prior-v.html"><a href="prior-v.html#full-likelihood"><i class="fa fa-check"></i><b>3.6.1</b> Full-likelihood</a></li>
+<li class="chapter" data-level="3.6.2" data-path="prior-v.html"><a href="prior-v.html#likelihood-gradient"><i class="fa fa-check"></i><b>3.6.2</b> Likelihood Gradient</a></li>
+<li class="chapter" data-level="3.6.3" data-path="prior-v.html"><a href="prior-v.html#contrastive-divergence"><i class="fa fa-check"></i><b>3.6.3</b> Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>4</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="4.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>4.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
+<li class="chapter" data-level="4.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>4.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="4.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>4.3</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>4.3.1</b> Iterative improvement of Laplace approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>4.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
+<li class="chapter" data-level="4.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>4.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-predictor.html"><a href="evaluating-random-forest-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
+<li class="chapter" data-level="6.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>6.1</b> Dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>6.2</b> Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>6.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="6.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>6.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="6.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>6.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="6.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>6.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="6.2.5" data-path="contact-prediction.html"><a href="contact-prediction.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="6.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>6.3.2</b> Coupling Distribution Plots</a></li>
+<li class="chapter" data-level="6.3.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#bayesian-model-for-residue-resdiue-contact-prediction"><i class="fa fa-check"></i><b>6.3.3</b> Bayesian Model for Residue-Resdiue Contact Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>6.4</b> Off-diagonal elements in <span class="math inline">\(\H\)</span></a></li>
+<li class="chapter" data-level="6.5" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>6.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="6.6" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>6.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="6.7" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>6.7</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a><ul>
+<li class="chapter" data-level="6.7.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>6.7.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="6.7.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>6.7.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="6.7.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>6.7.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.8</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a></li>
+<li class="chapter" data-level="6.9" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>6.9</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.9.1</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.10</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.10.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="6.10.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#hyperparameter-optimization-for-random-forest-prior"><i class="fa fa-check"></i><b>6.10.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="6.10.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#feature-selection"><i class="fa fa-check"></i><b>6.10.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="6.10.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.10.4</b> Using additional coevolution score</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a><ul>
+<li class="chapter" data-level="B.1" data-path="alignment-diversity.html"><a href="alignment-diversity.html"><i class="fa fa-check"></i><b>B.1</b> Alignment Diversity</a></li>
+<li class="chapter" data-level="B.2" data-path="proportion-of-gaps-in-alignment.html"><a href="proportion-of-gaps-in-alignment.html"><i class="fa fa-check"></i><b>B.2</b> Proportion of Gaps in Alignment</a></li>
+<li class="chapter" data-level="B.3" data-path="alignment-size-number-of-sequences.html"><a href="alignment-size-number-of-sequences.html"><i class="fa fa-check"></i><b>B.3</b> Alignment Size (number of sequences)</a></li>
+<li class="chapter" data-level="B.4" data-path="protein-length.html"><a href="protein-length.html"><i class="fa fa-check"></i><b>B.4</b> Protein Length</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><a href="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><i class="fa fa-check"></i><b>C</b> Amino Acid Interaction Preferences Reflected in Coupling Matrices</a><ul>
+<li class="chapter" data-level="C.1" data-path="pi-cation.html"><a href="pi-cation.html"><i class="fa fa-check"></i><b>C.1</b> Pi-Cation interactions</a></li>
+<li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
+<li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
+<li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="training-random-forest-contat-prior" class="section level2">
+<h2><span class="header-section-number">6.10</span> Training Random Forest Contat Prior</h2>
+<div id="seq-features" class="section level3">
+<h3><span class="header-section-number">6.10.1</span> Sequence Derived Features</h3>
+<p>Given a multiple sequence alignment of a protein family, various sequence features can be derived that have been found to be informative of a residue-residue contact. For example, predictions of secondary structure elements and solvent accessibility are used by most modern machine learning predictors, such as MetaPsicov <span class="citation">[<a href="#ref-Jones2015a">96</a>]</span>, NeBCon <span class="citation">[<a href="#ref-He2017">97</a>]</span>, EPSILON-CP <span class="citation">[<a href="#ref-Stahl2017">93</a>]</span>, PconsC3 <span class="citation">[<a href="#ref-Skwark2016">94</a>]</span>. Other features that have been used are pairwise contact potentials, sequence separation or conservation measures such as column entropy <span class="citation">[<a href="#ref-Jones2015a">96</a>–<a href="#ref-Ma2015a">98</a>]</span>.</p>
+<p>These features and several more are included in the feature set that will be used to train the Random Forest contact prior. In total there are <strong>250</strong> features that can be divided into global, single position and pairwise features and are described in the following sections. If not stated otherwise, <em>weighted</em> features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section <a href="optimizing-pseudo-likelihood.html#seq-reweighting">6.2.3</a>.</p>
+<div id="seq-features-global" class="section level4">
+<h4><span class="header-section-number">6.10.1.1</span> Global Features</h4>
+<p>These features describe alignment characteristics. Every pair of residues <span class="math inline">\((i,j)\)</span> from the same protein will be attributed the same feature.</p>
+<table>
+<caption>Features characterizing the total alignment</caption>
+<colgroup>
+<col width="25%" />
+<col width="55%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Feature</th>
+<th align="left">Description</th>
+<th align="center">No. Features per residue pair <span class="math inline">\((i, j)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">L</td>
+<td align="left">log of protein length L</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">N</td>
+<td align="left">number of sequences N</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">Neff</td>
+<td align="left">number of effective sequences Neff computed as the sum over sequence weights (see section <a href="optimizing-pseudo-likelihood.html#seq-reweighting">6.2.3</a>)</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">gaps</td>
+<td align="left">average percentage of gaps over all positions</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">diversity</td>
+<td align="left"><span class="math inline">\(\frac{\sqrt{N}}{L}\)</span>, N=number of sequences, L=protein length</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">amino acid composition</td>
+<td align="left">weighted amino acid frequencies in alignment</td>
+<td align="center">20</td>
+</tr>
+<tr class="odd">
+<td align="right">secondary structure prediction</td>
+<td align="left">average three state propensities PSIPRED (v4.0)<span class="citation">[<a href="#ref-Jones1999">99</a>]</span></td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="right">secondary structure prediction</td>
+<td align="left">average three state propensities Netsurfp (v1.0)<span class="citation">[<a href="#ref-Petersen2009a">100</a>]</span></td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="right">prior protein length</td>
+<td align="left">expected number of contacts (<a href="#fig:contact-priorL"><strong>??</strong></a>)</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+<p>There are in total <strong>32</strong> global alignment features.</p>
+</div>
+<div id="seq-features-single" class="section level4">
+<h4><span class="header-section-number">6.10.1.2</span> Single Position Features</h4>
+<p>These features describe characteristics of a single alignment column. Every residue pair <span class="math inline">\((i,j)\)</span> will be described by two features, once for each position.</p>
+<table>
+<caption>Single Position Sequence Features</caption>
+<colgroup>
+<col width="25%" />
+<col width="55%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Feature</th>
+<th align="left">Description</th>
+<th align="center">No. Features per residue pair <span class="math inline">\((i, j)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">shannon entropy (20 states)</td>
+<td align="left"><span class="math inline">\(- \sum_{a=1}^{20} p_a \log p_a\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">shannon entropy (21 states)</td>
+<td align="left"><span class="math inline">\(- \sum_{a=1}^{21} p_a \log p_a\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">kullback leibler divergence</td>
+<td align="left">between weighted observed and background amino acid frequencies <span class="citation">[<a href="#ref-Robinson1991">101</a>]</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">jennson shannon divergence</td>
+<td align="left">between weighted observed and background amino acid frequencies <span class="citation">[<a href="#ref-Robinson1991">101</a>]</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">PSSM</td>
+<td align="left">log odds ratio of weighted observed and background amino acid frequencies <span class="citation">[<a href="#ref-Robinson1991">101</a>]</span></td>
+<td align="center">40</td>
+</tr>
+<tr class="even">
+<td align="right">secondary structure prediction</td>
+<td align="left">three state propensities PSIPRED (v4.0) <span class="citation">[<a href="#ref-Jones1999">99</a>]</span></td>
+<td align="center">6</td>
+</tr>
+<tr class="odd">
+<td align="right">secondary structure prediction</td>
+<td align="left">three state propensities Netsurfp (v1.0) <span class="citation">[<a href="#ref-Petersen2009a">100</a>]</span></td>
+<td align="center">6</td>
+</tr>
+<tr class="even">
+<td align="right">solvent accessibility prediction</td>
+<td align="left">RSA and RSA Z-score Netsurfp (v1.0) <span class="citation">[<a href="#ref-Petersen2009a">100</a>]</span></td>
+<td align="center">4</td>
+</tr>
+<tr class="odd">
+<td align="right">relative position in sequence</td>
+<td align="left"><span class="math inline">\(\frac{i}{L}\)</span> for a protien of length <span class="math inline">\(L\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">number of ungapped sequences</td>
+<td align="left"><span class="math inline">\(\sum_n w_n I(x_{ni} \neq 20)\)</span> for sequences <span class="math inline">\(x_n\)</span> and sequence weights <span class="math inline">\(w_n\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">percentage of gaps</td>
+<td align="left"><span class="math inline">\(\frac{\sum_n w_n I(x_{ni} = 20)}{N_{\text{eff}}}\)</span> for sequences <span class="math inline">\(x_n\)</span> and sequence weights <span class="math inline">\(w_n\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Atchley Factors 1-5 <span class="citation">[<a href="#ref-Atchley2005">102</a>]</span></td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Polarity accordign to Grantham, 1974. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Polarity according to Zimmermann et al., 1986. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Isoelectric point according to Zimmermann et al., 1968. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Hydrophobicity scale according to Wimley &amp; White, 1996. Data taken from <a href="https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt">UCSF Chimera</a> <span class="citation">[<a href="#ref-Wimley1996">104</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Hydrophobicity index according to Kyte &amp; Doolittle, 1982. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Hydrophobicity according to Cornette <span class="citation">[<a href="#ref-Cornette1987">105</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Bulkiness according to Zimmerman et al., 1968. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="right">Average physico-chemical properties</td>
+<td align="left">Average volumes of residues according to Pontius et al., 1996. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>There are in total <strong>96</strong> single sequence features.</p>
+<p>Additionally, all single features will be computed within a window of size 5. The window feature for center residue <span class="math inline">\(i\)</span> will be computed as the mean feature over residues <span class="math inline">\([i-2, \ldots, i, \ldots, i+2]\)</span>. Whenever the window extends the range of the sequence (for <span class="math inline">\(i\!&lt;\!2\)</span> and <span class="math inline">\(i\!&gt;\!(L-2)\)</span>), the window feature will be computed only for valid sequence positions. This results in additional <strong>96</strong> window features.</p>
+</div>
+<div id="seq-features-pairwise" class="section level4">
+<h4><span class="header-section-number">6.10.1.3</span> Pairwise Features</h4>
+<p>These features are computed for every pair of columns <span class="math inline">\((i, j)\)</span> in the alignment with <span class="math inline">\(i&lt;j\)</span>.</p>
+<table>
+<caption>Pairwise Sequence Features</caption>
+<colgroup>
+<col width="25%" />
+<col width="55%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Feature</th>
+<th align="left">Description</th>
+<th align="center">No. Features per residue pair <span class="math inline">\((i, j)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">sequence separation</td>
+<td align="left"><span class="math inline">\(j-i\)</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">gaps</td>
+<td align="left">pairwise percentage of gaps using weighted sequences</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">number of ungapped sequences</td>
+<td align="left"><span class="math inline">\(\sum_n w_n I(x_{ni} \! \neq \! 20, x_{nj} \! \neq \! 20)\)</span> for sequences <span class="math inline">\(x_n\)</span> and sequence weights <span class="math inline">\(w_n\)</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">correlation physico-chemical features</td>
+<td align="left">pairwise correlation of all physico-chemical properties listed in <a href="#single-seq-features"><strong>??</strong></a></td>
+<td align="center">13</td>
+</tr>
+<tr class="odd">
+<td align="right">pairwise potential</td>
+<td align="left">Average quasi-chemical energy of interactions in an average buried environment. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">pairwise potential</td>
+<td align="left">Average quasi-chemical energy of transfer of amino acids from water to the protein environment. Data taken from <a href="http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106">AAindex Database</a> <span class="citation">[<a href="#ref-Kawashima2008">103</a>]</span>.</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">pairwise potential</td>
+<td align="left">Average general contact potential by Li&amp;Fang <span class="citation">[<a href="#ref-Li2011">106</a>]</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">pairwise potential</td>
+<td align="left">Average statistical potential from residue pairs in beta-sheets by Zhu&amp;Braun <span class="citation">[<a href="#ref-Zhu1999">107</a>]</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">joint_shannon_entropy (20 state)</td>
+<td align="left"><span class="math inline">\(- \sum_{a=1}^{20}\sum_{b=1}^{20} p(a,b) \log p(a,b)\)</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="right">joint_shannon_entropy (21 state)</td>
+<td align="left"><span class="math inline">\(- \sum_{a=1}^{21}\sum_{b=1}^{21} p(a,b) \log p(a,b)\)</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="right">mutual information (MI)</td>
+<td align="left">several variants: MI with pseudo-counts, MI with pseudo-counts + APC, normalized MI</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="right">OMES</td>
+<td align="left">according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">108</a>]</span> with and without APC</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+<p>There are in total <strong>26</strong> pairwise sequence features.</p>
+</div>
+</div>
+<div id="hyperparameter-optimization-for-random-forest-prior" class="section level3">
+<h3><span class="header-section-number">6.10.2</span> Hyperparameter Optimization for Random Forest Prior</h3>
+<p>There are several parameters that need to be tuned in such a way as to obtain a trade-off between model performance and size of the model. Apart from requiring a lot of disk space, the larger the model becomes, the longer it will take to train and to make predictions:</p>
+<p>The module <code>ensemble.RandomForestClassifier</code> in the Python package <code>sklearn (v. 0.19)</code> was used to learn random forest classifiers over sequence features described in section <a href="training-random-forest-contat-prior.html#seq-features">6.10.1</a>. The following parameters were optimized in a grid search with 5-fold cross-validation on a dataset with 50.000 residue pairs <span class="math inline">\(&lt; 8 \AA\)</span> (“contacts”“) and 250.000 residue pairs <span class="math inline">\(&gt; 8 \AA\)</span> (”non-contacts“) using a window size of 5 for certain features as described in section <a href="#random-forest-features"><strong>??</strong></a>:</p>
+<ul>
+<li>‘n_estimators’: the number of trees in the forest [100,500,1000]</li>
+<li>‘min_samples_leaf’: [1, 10, 100],</li>
+<li>‘max_depth’: the depth of each tree [10, 100, 1000, None],</li>
+<li>‘max_features’: the number of features to consider for each split [‘sqrt’, ‘log2’, None]</li>
+</ul>
+<p>Evluated using precision for out-of-bag samples???? PLOT GRID SEARCH RESULTS</p>
+<p>Using the optimal setting of hyperparameters (<code>n_estimators=1000, min_samples_leaf=100, max_depth=100, max_features=sqrt</code>) obtained from the grid search, cross-validation was used to optimize the window-size of features (see section<a href="#random-forest-features"><strong>??</strong></a>):</p>
+<ul>
+<li>window size: [5, 7, 9, 11]</li>
+</ul>
+<p>PLOT PRECISISON FOR WINDOW SIZES</p>
+<p>The problem of predicting contacting residues is a highly imbalanced problem with approximately 5% contacts. Therefore, the ratio of contacts to non-contacts was optimized with 5-fold crossvalidation while performing a grid seardch over the <code>class-weight</code> parameter which assigns a weight to each datasample according to the class label.</p>
+<ul>
+<li>varying class ratios using equal amount of total data:</li>
+<li>1:1 = 250 000 : 250 000</li>
+<li>1:3 = 125 000 : 375 000</li>
+<li>1:5 = 85 000 : 415 000</li>
+<li>1:10 = 45 000 : 455 000</li>
+<li>‘class_weight’: [ None, # equal class weights “balanced”, # n_samples / (n_classes * np.bincount(y)) {0: 0.6, 1: 3}, # ==&gt; “balanced” for ratio 1:5 {0: 0.55, 1: 5.5}, # ==&gt; “balanced” for ratio 1:10 {0: 0.525, 1: 10.5}, # ==&gt; “balanced” for ratio 1:20 {0: 10.5, 1: 0.525} # ==&gt; “balanced” for ratio 20:1 (sanity check) ]</li>
+</ul>
+<p>PLOT GRID SEARCH RESULTS FOR EVERY DATASET (=4 plots)</p>
+</div>
+<div id="feature-selection" class="section level3">
+<h3><span class="header-section-number">6.10.3</span> Feature Selection</h3>
+<p>Training a random forest model on large trainingset and evaluate precision of predictor on validation set for subset of features selected according to feature importance.</p>
+<p><span class="citation">[<a href="#ref-Stahl2017">93</a>]</span> performed feature selection and found that amino acid composition (PSSM) is non-informative and removing PSSM reduces complexity.</p>
+<p>Correlation can inflate or deflate the importance of a feature <span class="citation">[<a href="#ref-Stahl2017">93</a>]</span>.</p>
+</div>
+<div id="rf-with-pll-score" class="section level3">
+<h3><span class="header-section-number">6.10.4</span> Using additional coevolution score</h3>
+<p>Next to the 250 sequence derived features, the pseudo-likelihood contact score (L2norm + APC) is used as an additional feature. Using 100 000 residue pairs in contact (<span class="math inline">\(\Delta \Cb &lt; 8 \AA \; \;\)</span>) and 500 000 residue pairs not in contact (<span class="math inline">\(\Delta \Cb &gt; 8 \AA \; \;\)</span>) the random forest was trained with the hyperparameters described in the last section.</p>
+<p>The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the following figure <a href="training-random-forest-contat-prior.html#fig:feature-importance-rf-with-pll-score">6.4</a>.</p>
+
+<div class="figure"><span id="fig:feature-importance-rf-with-pll-score"></span>
+<iframe src="img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 6.4: Most important features in the random forest model. Features are ranked according to mean importance of feature over all trees in the forest. Feature importance is measured as Gini impurity.
+</p>
+</div>
+<p>Training the model only on the 26 most important features improves the model further as can be seen in the following figure <a href="training-random-forest-contat-prior.html#fig:feature-importance-rf-with-pll-score">6.4</a>.</p>
+
+<div class="figure"><span id="fig:feature-selection-rf-with-pll-score"></span>
+<iframe src="img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 6.5: Mean precision over proteins in testset for the top ranked contacts for variaous random forest models trained on subsets of features. Subsets of features have been selected according to five equally sized bins on the ranked features according to mean feature importance (Gini impurity). Learning a random forest model on the 26 most important features yields the best model.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!--  -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Jones2015a">
+<p>96. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
+</div>
+<div id="ref-He2017">
+<p>97. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017). NeBcon: Protein contact map prediction using neural network training coupled with naïve Bayes classifiers. Bioinformatics. Available at: <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164" class="uri">https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164</a>.</p>
+</div>
+<div id="ref-Stahl2017">
+<p>93. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
+</div>
+<div id="ref-Skwark2016">
+<p>94. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and Elofsson, A. (2016). Accurate contact predictions for thousands of protein families using PconsC3. bioRxiv.</p>
+</div>
+<div id="ref-Ma2015a">
+<p>98. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
+</div>
+<div id="ref-Jones1999">
+<p>99. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
+</div>
+<div id="ref-Petersen2009a">
+<p>100. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+</div>
+<div id="ref-Robinson1991">
+<p>101. Robinson, A.B., and Robinson, L.R. (1991). Distribution of glutamine and asparagine residues and their near neighbors in peptides and proteins. Proc. Natl. Acad. Sci. U. S. A. <em>88</em>, 8880–4. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614</a>.</p>
+</div>
+<div id="ref-Atchley2005">
+<p>102. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005). Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U. S. A. <em>102</em>, 6395–400. Available at: <a href="http://www.pnas.org/content/102/18/6395.abstract" class="uri">http://www.pnas.org/content/102/18/6395.abstract</a>.</p>
+</div>
+<div id="ref-Kawashima2008">
+<p>103. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A., Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index database, progress report 2008. Nucleic Acids Res. <em>36</em>, D202–5. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890</a>.</p>
+</div>
+<div id="ref-Wimley1996">
+<p>104. Wimley, W.C., and White, S.H. (1996). Experimentally determined hydrophobicity scale for proteins at membrane interfaces. Nat. Struct. Biol. <em>3</em>, 842–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8836100" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8836100</a>.</p>
+</div>
+<div id="ref-Cornette1987">
+<p>105. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky, J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational techniques for detecting amphipathic structures in proteins. J. Mol. Biol. <em>195</em>, 659–685. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283687901896" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283687901896</a>.</p>
+</div>
+<div id="ref-Li2011">
+<p>106. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+</div>
+<div id="ref-Zhu1999">
+<p>107. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical potentials, and three-dimensional structure prediction with self-correcting distance geometry calculations of beta-sheet formation in proteins. Protein Sci. <em>8</em>, 326–42. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Fodor2004a">
+<p>108. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelling-the-dependence-of-wij-on-distance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="abbrev.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-methods.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

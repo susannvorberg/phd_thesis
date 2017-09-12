@@ -636,6 +636,180 @@ Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $
 ### Training the Hyperparameters $\rho_k$ and $\alpha_k$ for distance-dependent prior
 
 
+## Training Random Forest Contat Prior
+
+
+### Sequence Derived Features {#seq-features}
+
+Given a multiple sequence alignment of a protein family, various sequence features can be derived that have been found to be informative of a residue-residue contact.
+For example, predictions of secondary structure elements and solvent accessibility are used by most modern machine learning predictors, such as MetaPsicov [@Jones2015a], NeBCon [@He2017], EPSILON-CP [@Stahl2017], PconsC3 [@Skwark2016].
+Other features that have been used are pairwise contact potentials, sequence separation or conservation measures such as column entropy [@Jones2015a; @He2017; @Ma2015a].
+
+These features and several more are included in the feature set that will be used to train the Random Forest contact prior.
+In total there are **250** features that can be divided into global, single position and pairwise features and are described in the following sections. 
+If not stated otherwise, *weighted* features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section \@ref(seq-reweighting).
+
+#### Global Features {#seq-features-global}
+
+These features describe alignment characteristics.
+Every pair of residues $(i,j)$ from the same protein will be attributed the same feature.
+
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+| L                                 | log of protein length L | 1 |
+| N                                 | number of sequences N | 1 |
+| Neff                              | number of effective sequences Neff computed as the sum over sequence weights (see section \@ref(seq-reweighting)) | 1 |
+| gaps                              | average percentage of gaps over all positions | 1 |
+| diversity                         | $\frac{\sqrt{N}}{L}$, N=number of sequences, L=protein length| 1 |
+| amino acid composition            | weighted amino acid frequencies in alignment | 20 |
+| secondary structure prediction    | average three state propensities PSIPRED (v4.0)[@Jones1999] | 3 |
+| secondary structure prediction    | average three state propensities Netsurfp (v1.0)[@Petersen2009a] | 3 |
+| prior protein length              | expected number of contacts (\@ref(fig:contact-priorL)) | 1 |
+:Features characterizing the total alignment
+
+There are in total **32** global alignment features. 
+
+#### Single Position Features {#seq-features-single}
+
+These features describe characteristics of a single alignment column.
+Every residue pair $(i,j)$ will be described by two features, once for each position.
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+|shannon entropy (20 states)        | $- \sum_{a=1}^{20} p_a \log p_a$ | 2 |
+|shannon entropy (21 states)        | $- \sum_{a=1}^{21} p_a \log p_a$ | 2 |
+|kullback leibler divergence        | between weighted observed and background amino acid frequencies [@Robinson1991] | 2 |
+|jennson shannon divergence         | between weighted observed and background amino acid frequencies [@Robinson1991] | 2 |
+|PSSM                               | log odds ratio of weighted observed and background amino acid frequencies [@Robinson1991] | 40 | 
+|secondary structure prediction     | three state propensities PSIPRED (v4.0) [@Jones1999] | 6 |
+|secondary structure prediction     | three state propensities Netsurfp (v1.0) [@Petersen2009a] | 6 |
+|solvent accessibility prediction   | RSA and RSA Z-score Netsurfp (v1.0) [@Petersen2009a] | 4 |
+|relative position in sequence      | $\frac{i}{L}$ for a protien of length $L$ | 2 |
+|number of ungapped sequences       | $\sum_n w_n I(x_{ni} \neq 20)$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
+|percentage of gaps                 | $\frac{\sum_n w_n I(x_{ni} = 20)}{N_{\text{eff}}}$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
+|Average physico-chemical properties| Atchley Factors 1-5 [@Atchley2005] | 10 |
+|Average physico-chemical properties| Polarity accordign to Grantham, 1974. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Polarity according to Zimmermann et al., 1986. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Isoelectric point according to Zimmermann et al., 1968. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Hydrophobicity scale according to Wimley & White, 1996. Data taken from [UCSF Chimera](https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt) [@Wimley1996]. | 2 |
+|Average physico-chemical properties| Hydrophobicity index according to Kyte & Doolittle, 1982. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Hydrophobicity according to Cornette [@Cornette1987]. | 2 |
+|Average physico-chemical properties| Bulkiness according to Zimmerman et al., 1968. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Average volumes of residues according to Pontius et al., 1996. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101) [@Kawashima2008]. | 2 |
+: Single Position Sequence Features
+
+There are in total **96** single sequence features. 
+
+Additionally, all single features will be computed within a window of size 5.
+The window feature for center residue $i$ will be computed as the mean feature over residues $[i-2, \ldots, i, \ldots, i+2]$.
+Whenever the window extends the range of the sequence (for $i\!<\!2$ and $i\!>\!(L-2)$), the window feature will be computed only for valid sequence positions. 
+This results in additional **96**  window features.
+
+
+#### Pairwise Features {#seq-features-pairwise}
+
+These features are computed for every pair of columns $(i, j)$ in the alignment with $i<j$.
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+| sequence separation                   | $j-i$ | 1 |
+| gaps                                  | pairwise percentage of gaps using weighted sequences  | 1 |
+| number of ungapped sequences          | $\sum_n w_n I(x_{ni} \! \neq \!  20, x_{nj} \! \neq \! 20)$ for sequences $x_n$ and sequence weights $w_n$ | 1 |
+| correlation physico-chemical features | pairwise correlation of all physico-chemical properties listed in \@ref(single-seq-features) | 13 |
+| pairwise potential                    | Average quasi-chemical energy of interactions in an average buried environment. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107) [@Kawashima2008]. | 1 |
+| pairwise potential                    | Average quasi-chemical energy of transfer of amino acids from water to the protein environment. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106) [@Kawashima2008]. | 1 |
+| pairwise potential                    | Average general contact potential by Li&Fang [@Li2011]| 1 |
+| pairwise potential                    | Average statistical potential from residue pairs in beta-sheets by Zhu&Braun [@Zhu1999] | 1 |
+| joint_shannon_entropy (20 state)      | $- \sum_{a=1}^{20}\sum_{b=1}^{20} p(a,b) \log p(a,b)$ | 1 |
+| joint_shannon_entropy (21 state)      | $- \sum_{a=1}^{21}\sum_{b=1}^{21} p(a,b) \log p(a,b)$ | 1 |
+| mutual information (MI)               | several variants: MI with pseudo-counts, MI with pseudo-counts + APC, normalized MI| 3 |
+| OMES                                  | according to Fodor&Aldrich [@Fodor2004a] with and without APC | 2 |
+: Pairwise Sequence Features
+
+There are in total **26** pairwise sequence features. 
+
+
+
+### Hyperparameter Optimization for Random Forest Prior
+
+There are several parameters that need to be tuned in such a way as to obtain a trade-off between model performance and size of the model.
+Apart from requiring a lot of disk space, the larger the model becomes, the longer it will take to train and to make predictions:
+
+The module `ensemble.RandomForestClassifier` in the Python package `sklearn (v. 0.19)` was used to learn random forest classifiers over sequence features described in section \@ref(seq-features).
+The following parameters were optimized in a grid search with 5-fold cross-validation on a dataset with 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") using a window size of 5 for certain features as described in section \@ref(random-forest-features):
+
+- 'n_estimators': the number of trees in the forest
+  [100,500,1000]
+- 'min_samples_leaf': 
+  [1, 10, 100],
+- 'max_depth': the depth of each tree
+  [10, 100, 1000, None],
+- 'max_features': the number of features to consider for each split
+  ['sqrt', 'log2', None]
+
+
+Evluated using precision for out-of-bag samples????
+PLOT GRID SEARCH RESULTS
+
+Using the optimal setting of hyperparameters (`n_estimators=1000, min_samples_leaf=100, max_depth=100, max_features=sqrt`) obtained from the grid search, cross-validation was used to optimize the window-size of features (see section\@ref(random-forest-features)):
+
+- window size:
+  [5, 7, 9, 11]
+  
+  
+PLOT PRECISISON FOR WINDOW SIZES
+  
+  
+The problem of predicting contacting residues is a highly imbalanced problem with approximately 5% contacts.
+Therefore, the ratio of contacts to non-contacts was optimized with 5-fold crossvalidation while performing a grid seardch over the `class-weight` parameter which assigns a weight to each datasample according to the class label.
+
+- varying class ratios using equal amount of total data:
+  - 1:1   = 250 000 : 250 000
+  - 1:3   = 125 000 : 375 000
+  - 1:5   = 85 000 : 415 000
+  - 1:10  = 45 000 : 455 000
+- 'class_weight': [ None,                     # equal class weights
+                    "balanced",               # n_samples / (n_classes * np.bincount(y))
+                    {0: 0.6,   1: 3},         # ==> "balanced" for ratio 1:5
+                    {0: 0.55,  1: 5.5},       # ==> "balanced" for ratio 1:10
+                    {0: 0.525, 1: 10.5},      # ==> "balanced" for ratio 1:20
+                    {0: 10.5, 1: 0.525}       # ==> "balanced" for ratio 20:1 (sanity check)
+                  ]
+
+
+
+PLOT GRID SEARCH RESULTS FOR EVERY DATASET (=4 plots)
+
+### Feature Selection
+
+Training a random forest model on large trainingset and evaluate precision of predictor on validation set for subset of features selected according to feature importance.
+
+@Stahl2017 performed feature selection and found that amino acid composition (PSSM) is non-informative and removing PSSM reduces complexity. 
+
+Correlation can inflate or deflate the importance of a feature [@Stahl2017].
+
+
+### Using additional coevolution score {#rf-with-pll-score}
+
+Next to the 250 sequence derived features, the pseudo-likelihood contact score (L2norm + APC) is used as an additional feature. 
+Using 100 000 residue pairs in contact ($\Delta \Cb < 8 \AA \; \;$) and 500 000 residue pairs not in contact ($\Delta \Cb > 8 \AA \; \;$) the random forest was trained with the hyperparameters described in the last section.
+
+The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
+
+(ref:caption-feature-importance-rf-with-pll-score) Most important features in the random forest model. Features are ranked according to mean importance of feature over all trees in the forest. Feature importance is measured as Gini impurity.
+
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts.png",out.width = '90%', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts.html", height = "500px")
+```
+
+Training the model only on the 26 most important features improves the model further as can be seen in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
+
+(ref:caption-feature-selection-rf-with-pll-score) Mean precision over proteins in testset for the top ranked contacts for variaous random forest models trained on subsets of features. Subsets of features have been selected according to five equally sized bins on the ranked features according to mean feature importance (Gini impurity). Learning a random forest model on the 26 most important features yields the best model.
+
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features.png",out.width = '90%', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features.html", height = "500px")
+```
 
 
 

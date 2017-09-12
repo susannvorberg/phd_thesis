@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-10">
+<meta name="date" content="2017-09-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -169,7 +169,10 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="4.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>4.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
 <li class="chapter" data-level="4.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>4.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a></li>
+<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-predictor.html"><a href="evaluating-random-forest-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Predictor</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
 <li class="chapter" data-level="6.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>6.1</b> Dataset</a></li>
 <li class="chapter" data-level="6.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>6.2</b> Optimizing Pseudo-Likelihood</a><ul>
@@ -195,6 +198,12 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="6.8" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.8</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a></li>
 <li class="chapter" data-level="6.9" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>6.9</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a><ul>
 <li class="chapter" data-level="6.9.1" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.9.1</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.10</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.10.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="6.10.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#hyperparameter-optimization-for-random-forest-prior"><i class="fa fa-check"></i><b>6.10.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="6.10.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#feature-selection"><i class="fa fa-check"></i><b>6.10.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="6.10.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.10.4</b> Using additional coevolution score</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -504,7 +513,61 @@ MathJax.Hub.Config({
 <p>89. Aurell, E., and Ekeberg, M. (2012). Inverse Ising Inference Using All the Data. Phys. Rev. Lett. <em>108</em>, 090201. Available at: <a href="https://link.aps.org/doi/10.1103/PhysRevLett.108.090201" class="uri">https://link.aps.org/doi/10.1103/PhysRevLett.108.090201</a>.</p>
 </div>
 <div>
-<p>90. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
+<p>90. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+</div>
+<div>
+<p>91. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf. doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278–282. Available at: <a href="http://ieeexplore.ieee.org/document/598994/" class="uri">http://ieeexplore.ieee.org/document/598994/</a>.</p>
+</div>
+<div>
+<p>92. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+</div>
+<div>
+<p>93. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
+</div>
+<div>
+<p>94. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and Elofsson, A. (2016). Accurate contact predictions for thousands of protein families using PconsC3. bioRxiv.</p>
+</div>
+<div>
+<p>95. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
+</div>
+<div>
+<p>96. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
+</div>
+<div>
+<p>97. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017). NeBcon: Protein contact map prediction using neural network training coupled with naïve Bayes classifiers. Bioinformatics. Available at: <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164" class="uri">https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164</a>.</p>
+</div>
+<div>
+<p>98. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
+</div>
+<div>
+<p>99. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
+</div>
+<div>
+<p>100. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+</div>
+<div>
+<p>101. Robinson, A.B., and Robinson, L.R. (1991). Distribution of glutamine and asparagine residues and their near neighbors in peptides and proteins. Proc. Natl. Acad. Sci. U. S. A. <em>88</em>, 8880–4. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614</a>.</p>
+</div>
+<div>
+<p>102. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005). Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U. S. A. <em>102</em>, 6395–400. Available at: <a href="http://www.pnas.org/content/102/18/6395.abstract" class="uri">http://www.pnas.org/content/102/18/6395.abstract</a>.</p>
+</div>
+<div>
+<p>103. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A., Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index database, progress report 2008. Nucleic Acids Res. <em>36</em>, D202–5. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890</a>.</p>
+</div>
+<div>
+<p>104. Wimley, W.C., and White, S.H. (1996). Experimentally determined hydrophobicity scale for proteins at membrane interfaces. Nat. Struct. Biol. <em>3</em>, 842–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8836100" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8836100</a>.</p>
+</div>
+<div>
+<p>105. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky, J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational techniques for detecting amphipathic structures in proteins. J. Mol. Biol. <em>195</em>, 659–685. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283687901896" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283687901896</a>.</p>
+</div>
+<div>
+<p>106. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+</div>
+<div>
+<p>107. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical potentials, and three-dimensional structure prediction with self-correcting distance geometry calculations of beta-sheet formation in proteins. Protein Sci. <em>8</em>, 326–42. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div>
+<p>108. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
 </div>
 </div>
@@ -583,7 +646,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

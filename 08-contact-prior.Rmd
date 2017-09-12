@@ -2,6 +2,89 @@
 
 Up to now the only source of information to predict contacts was the [MSA](#abbrev) $\X$. 
 There are other sources of information that can be exploited. 
-As shown in subsection \ref{sec:1Dprops}, much information about the distance $\rij$ is typically contained in features of 1D properties at positions $i$ and $j$ predicted from local sequence profiles, such as  secondary structure, solvent accessibility, contact number or context states, and in features of predicted 2D properties such as the contact prediction scores for $(i,j)$ from a profile-based method. 
-
+Much information about the distance $\rij$ is typically contained in features of 1D properties at positions $i$ and $j$ predicted from local sequence profiles, such as  secondary structure, solvent accessibility or contact number, and in features of predicted 2D properties such as the contact prediction scores for $(i,j)$ from a profile-based method. 
 This information can be introduced directly as prior $p(\r |\phi)$ for the correlated mutations analysis to improve the overall prediction accuracy in terms of posterior probabilities.
+
+
+## Random Forest Classifiers
+
+
+Random Forests are supervised machine learning methods that belong to the class of ensemble methods [@Ho1998;@TinKamHo;@Breiman2001].
+
+Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator.
+Random Forests are ensembles of decision trees where randomness is introduced in two ways:
+1) every tree is build on a random sample that is of the same size but drawn with replacement from the trainingset (i.e., a bootstrap sample) 
+2) every split of a node is performed on a random subset of features
+
+A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. 
+As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases at therefore the risk of overfitting.
+
+Random forests are capable of regression and classification tasks.
+For classification, predictions for new data are obtained by running a new data sample down every tree in the forest and then either apply majority voting over single class votes or average the probabilistic class predictions.
+A probabilistic class prediction is the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. 
+
+Typically the Gini impurity is used as a split criterion to estimate the quality of a split.
+It measures the degree of purity in a dataset regarding class labels as 
+
+\begin{equation}
+  \textrm{Gini} = 1 - \sum_{k=1}^K p_k^2 \; ,
+\end{equation}
+
+
+where $p_k$ is the proportion of class $k$ in the dataset.
+The feature with lowest Gini impurity over the two resulting childnode subsets will be used to split the dataset at the given node. 
+
+Random Forests can handle a large number of features due to their intrinsic feature selection property.
+The importance of a feature can be computed by adding up the gini importance of the feature over all trees whenever it was used for a split.
+
+
+## Evaluating Random Forest Predictor
+
+After hyperparameter optimization of Random Forest parameters as well as grid search over window size and class ratios (see methods), we can look at features that are most important
+
+- which features are most important
+
+now we can do feature selection as desribed in methods and its sufficient to use only a small set of features (75)
+
+- which subset of features is enough
+
+Now we can look at performance and compare it to pll l2norm + apc
+
+Furthermore we can include the pll l2norm + apc to see how much we can improve using the additional sequence features
+How much does Prior Information Improve Contact Prediction?
+
+In order to evaluate how much the sequence derived features can improve contact prediction over the coevolutionary contact scores, the coevolutionary contact score can simply be included as an additional feature into the Random Forest model. 
+
+The model was trained as described in methods section \@ref(rf-with-pll-score) using the additional pseudo-likelihood score feature. 
+As expected, the pseudo-likelihood score comprises the most important feature in the model as can be seen in Figure \@ref(fig:feature-importance-rf-with-pll-score).
+Furthermore, feature selection analysis shows that by using only the 26 most important features improves the model further (see Figure \@ref(fig:feature-selection-rf-with-pll-score)).
+
+Using the default pseudo-likelihood contact score (L2norm + APC) as an additional coevolutionary feature indeed improves performance (see Figure \@ref(fig:performance-rf-with-pll-score)) over the score wihtout prior information.
+
+(ref:caption-performance-rf-with-pll-score) Mean Precision for top ranked contacts on a testset of ~500 proteins. **omes_fodoraldrich+apc** = OMES score with APC as described in section \@ref(seq-features-pairwise). **mi_pc + APC** = mutual information with APC as described in section \@ref(seq-features-pairwise). **rf_contact_prior** = random forest model using only sequence derived features.  **pLL-L2normapc-RF** = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). **ccmpred-pll-centerv+apc** = conventional pseudo-likelihood contact score (L2norm + APC)
+
+```{r performance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_notitle.html", height = "500px")
+```
+
+Especially for small alignments, the random forest model makes better predictions than the coevolutionary method. 
+This finding is expected, as it is well known that models trained on simpple sequence features perform almost independent of alignment size. [@Stahl2017, @Skwark2016].
+In contrast, the improvement on large alignments is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable. 
+
+(ref:caption-performance-neff-rf-with-pll-score) blabla neff
+
+```{r performance-neff-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
+```
+
+
+
+
+
+
+
+
+
+
+
+

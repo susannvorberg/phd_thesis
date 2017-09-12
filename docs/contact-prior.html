@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-10">
+<meta name="date" content="2017-09-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="posterior-of-rij.html">
-<link rel="next" href="methods.html">
+<link rel="next" href="random-forest-classifiers.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -169,7 +169,10 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="4.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>4.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
 <li class="chapter" data-level="4.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>4.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a></li>
+<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-predictor.html"><a href="evaluating-random-forest-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Predictor</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
 <li class="chapter" data-level="6.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>6.1</b> Dataset</a></li>
 <li class="chapter" data-level="6.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>6.2</b> Optimizing Pseudo-Likelihood</a><ul>
@@ -195,6 +198,12 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="6.8" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.8</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a></li>
 <li class="chapter" data-level="6.9" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>6.9</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a><ul>
 <li class="chapter" data-level="6.9.1" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.9.1</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.10</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.10.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="6.10.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#hyperparameter-optimization-for-random-forest-prior"><i class="fa fa-check"></i><b>6.10.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="6.10.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#feature-selection"><i class="fa fa-check"></i><b>6.10.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="6.10.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.10.4</b> Using additional coevolution score</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -234,9 +243,7 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="contact-prior" class="section level1">
 <h1><span class="header-section-number">5</span> Contact Prior</h1>
-<p>Up to now the only source of information to predict contacts was the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span>. There are other sources of information that can be exploited. As shown in subsection , much information about the distance <span class="math inline">\(\rij\)</span> is typically contained in features of 1D properties at positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> predicted from local sequence profiles, such as secondary structure, solvent accessibility, contact number or context states, and in features of predicted 2D properties such as the contact prediction scores for <span class="math inline">\((i,j)\)</span> from a profile-based method.</p>
-<p>This information can be introduced directly as prior <span class="math inline">\(p(\r |\phi)\)</span> for the correlated mutations analysis to improve the overall prediction accuracy in terms of posterior probabilities.</p>
-
+<p>Up to now the only source of information to predict contacts was the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span>. There are other sources of information that can be exploited. Much information about the distance <span class="math inline">\(\rij\)</span> is typically contained in features of 1D properties at positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> predicted from local sequence profiles, such as secondary structure, solvent accessibility or contact number, and in features of predicted 2D properties such as the contact prediction scores for <span class="math inline">\((i,j)\)</span> from a profile-based method. This information can be introduced directly as prior <span class="math inline">\(p(\r |\phi)\)</span> for the correlated mutations analysis to improve the overall prediction accuracy in terms of posterior probabilities.</p> 
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -263,7 +270,7 @@ s.setAttribute('data-timestamp', +new Date());
         </div>
       </div>
 <a href="posterior-of-rij.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="random-forest-classifiers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -313,7 +320,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

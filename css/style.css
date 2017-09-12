@@ -12,3 +12,8 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+
+.book .book-body.fixed .body-inner .page-wrapper .page-inner{
+  max-width: 80%;
+}
