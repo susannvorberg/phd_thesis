@@ -227,7 +227,7 @@ A global statistical model not motivated by the maximum entropy approach was pro
 Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via [APC](#abbrev) but cannot compete with the currently most successfull pseudo-likelihood approaches presented in section \@ref(pseudo-likelihood). 
 
 
-### Machine Learnign Methods and Meta-Predictors
+### Machine Learning Methods and Meta-Predictors {#meta-predictors}
 
 These methods combine abundant information on sequence and
 amino acid properties in order to learn associations between input features and residue-residue
@@ -266,18 +266,7 @@ From these considerations emerged a standard benchmark that evaluates the mean p
 The number of top scoring predictions per protein is typically normalized with respect to protein length $L$ and precision is defined as the number of true contacts among the top scoring predicted contacts.
 Usually, a pair of residues is defined to be in contact when the distance between their $\Cb$ atoms ($C\alpha$ in case of glycine) is less than $8 \AA \; \;$ in the reference protein structure [@Monastyrskyy2015].
 
-**Contact Definition**
 
-However, whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.
-More importantly, interactions between side-chains depend on their physico-chemical properties, on their orientation and vary within the vast number of alternative environments within proteins [@Bettsa] (see section \@ref(amino-acid-interactions)). 
-Therefore, a simple $\Cb$ distance threshold cannot capture the true interaction preferences of amino acids and yields an imperfect gold-standard for benchmarking.
-
-Other distance thresholds or definitions for contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well.
-In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\AA \; \;$ and 11$\AA \; \;$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
-
-Anishchenko and colleagues [@Anishchenko2017] analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \AA \; \;$, as they found that this cutoff optimally defines direct physical interactions of residue pairs.
-
-With regard to the utilization of contacts for structure prediction, a simple $\Cb$ cutoff is nonetheless a convenient choice, as this threshold can be easily implemented as a restraint in common structure predictions protocols (e.g Modeller).
 
 
 **Sequence Separation**
@@ -666,15 +655,28 @@ Most statistical models treat gaps as the 21st amino acid, thus introducing an i
 
 #### Evaluation Strategy {-}
 
-Contact prediction methods are typically evaluated based on a rigid definition of a residue contact that does not reflect true biological interactions between amino acids as discussed in section \@ref(intro-cp-evaluation).
-Choosing different distance cutoffs or different reference atoms for defining a true contact changes the evaluation outcome.
+Contact prediction methods are typically evaluated based on a rigid definition of a residue contact as discussed in section \@ref(intro-cp-evaluation).
+
+However, whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.
+More importantly, interactions between side-chains depend on their physico-chemical properties, on their orientation and vary within the vast number of alternative environments within proteins [@Bettsa] (see section \@ref(amino-acid-interactions)). 
+Therefore, a simple $\Cb$ distance threshold cannot capture the true biological interaction preferences of amino acids and yields an imperfect gold-standard for benchmarking.
+
+Other distance thresholds or definitions for contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well.
+In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\AA \; \;$ and 11$\AA \; \;$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
+
+Anishchenko and colleagues [@Anishchenko2017] analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \AA \; \;$, as they found that this cutoff optimally defines direct physical interactions of residue pairs.
+
+Therefore, choosing different distance cutoffs or different reference atoms for defining a true contact changes the evaluation outcome.
+With regard to the utilization of contacts for structure prediction, a simple $\Cb$ cutoff is nonetheless a convenient choice, as this threshold can be easily implemented as a restraint in common structure predictions protocols (e.g Modeller).
+Furthermore, [CASP](#abbrev) introduced the $8\AA \; \; \Cb$ definition for a contact which has become well established in the mean time.
+
 
 Related to the problem of choosing the right trade-off between sensitivity and specificity when generating alignemnts is the issue of structural variation within a protein family.
 Evolutionary couplings are inferred from all family memebers in the [MSA](#abbrev) and thus might be physical contacts in one family member but not in another. 
 Anishchenko et al. could show that more than $80\%$ of false positives at intermediate distances (minimal heavy atom distance $5-15 \AA \;\;$) are true contacts in at least one homolog structure [@Anishchenko2017].
 
 
-#### Alternative Sources of Co-evolution{-}
+#### Alternative Sources of Co-evolution {-}
 
 Co-evolutionary signals can not only arise from intra-domain contacts, but also from other sources, like homo-oligomeric contacts, alternative conformations, ligand-mediated interactions or even contacts over hetero-oligomeric interfaces (see Figure \@ref(fig:sources-coevolution))  [@Marks2012].
 With the objective to predict physical contacts it is therefore necessary to identify and filter these alternative sources for co-evolutionary couplings.

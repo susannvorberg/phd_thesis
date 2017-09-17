@@ -222,12 +222,85 @@ For one-dimensional coupling distribution plots the residue pairs and respective
     
 The same criteria have been applied for selecting couplings for the two-dimensional distribution plots with the difference that evidence for a single coupling term has to be $N_{ij} \cdot q_i(a) \cdot q_j(b) < 80.$
 
-### Bayesian Model for Residue-Resdiue Contact Prediction
-
-## Off-diagonal elements in $\H$ {#Hessian-offdiagonal}
 
 
-## Efficiently Computing the negative Hessian of the regularized log-likelihood {#neg-Hessian-computation}
+
+
+
+
+
+
+## Optimizing the Full-Likelihood {#methods-optimizing-full-likelihood}
+
+Given the likelihood gradient estimate utilizing contrastive divergence, the full likelihood can now be minimized using a gradient descent optimization algorithm.
+Second order optimization algorithms that make use of the (approximate) partial second derivates cannot be applied here, as the computation of the Hessian is too complex.
+
+Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters.
+Stochastic gradient descent is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. 
+Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function.
+These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
+By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
+
+However, choosing an optimal learning rate for parameter updates as well as an appropriate learning rate decay offers a challenge and needs manual tuning. 
+The following sections describe the hyperparameter optimization of two stochastic gradient descent optimization algorithms: simple stochastic gradient descent and ADAM [@Kingma2014].
+The performance for tested parameter settings is evaluated on a benchmark set of ~ 500 proteins, that is a subset of the data set described in methods section \@ref(dataset).
+The reference method for all new developed scores is the pseudo-likelihood method that uses the corrected L2norm as a final contact score as explained in section \@ref(post-processing-heuristics).
+Pseudo-likelihood couplings are computed with the tool CCMpredPy that is introduced in methods section \@ref(diff-ccmpred-ccmpredpy).
+Contact scores for the methods under developments are computed using the corrected L2norm of the couplings, just as for the pseudo-likelihood method.
+
+### Hyperparameter Optimization for Stochastic Gradient Descent
+
+Stochastic gradient descent updates the coupling parameters $\w$ using the approximate gradient to the log likelihood $\nabla_w \LLreg(\v,\w)$ obtained with contrastive divergence and a learning rate $\alpha$ according to  
+
+\begin{equation}
+  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
+\end{equation}
+
+In order to get a first intuition of the optimization problem, I used $\alpha \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ and a standard learning rate schedule,
+
+\begin{equation}
+  \alpha  = \frac{\alpha_0}{1 + \gamma \cdot t} \; ,
+\end{equation}
+
+with $\gamma=0.1$ being the decay rate and $t$ the current iteration [@Bottou2012].
+It is not feasible to compute the function value at each iteration in order to decide when the optimization has converged.
+Therefore the optimization will stop whenever the gradient norm changes less than a small $\epsilon=1\mathrm{e}{-8}$ or when 5000 iterations are reached.
+
+
+Figure \@ref(fig:performance-cd-alphaopt) shows the benchmark for the optimizations with the four different learning rates. 
+In general, the top ranked contacts are predicted with equal accuracy as the reference method (<span style="color:green">"ccmpred-pll-centerv+apc"</span>) when using small learning rates $\alpha \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3} \}$.
+Predictions for lower ranked contacts (top $0.6-L$ predictions) are less accurate. 
+Using a high learning rate $5\mathrm{e}{-3}$ yields much less accurate predictions. 
+When evaluating the methods with respect to alignment size (see Figure \@ref(fig:performance-cd-alphaopt-neff)) it becomes clear that a high learning rate of $5\mathrm{e}{-3}$ does only not work well for proteins with large alignments. 
+The magnitude of the gradient depends on the size of the alignment because the gradient is computed as a difference of amino acid counts. 
+Therefore proteins with large alignments will generally have larger gradients than proteins with small alignments.
+When analysing individual proteins with large alignments it becomes clear that choosing a learning rate that is too large causes the optimization to diverge. 
+Furthermore, when using a small learning rate, most of the optimizations did not converge but reached the maximum number of 5000 iterations.
+
+(ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over ~500 proteins. <span style="color:green; font-weight: bold">ccmpred-pll-centerv+apc</span>:  L2norm + APC score for pseudo-likelihood couplings. The other methods derive contact scores as the L2norm + APC for couplings computed with contrastive divergence using stochastic gradient descent and different learning rates: <span style="color:red; font-weight: bold">cd_alpha_1e-4+apc</span>: learning rate $1\mathrm{e}{-4}$. <span style="color:blue; font-weight: bold">cd_alpha_5e-4+apc</span>: learning rate $5\mathrm{e}{-4}$. <span style="color:purple; font-weight: bold">cd_alpha_1e-3+apc</span>: learning rate $1\mathrm{e}{-3}$. <span style="color:dark; font-weight: bold">cd_alpha_5e-3+apc</span>: learning rate $5\mathrm{e}{-3}$.
+
+```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
+knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html", height = "500px")
+```
+
+
+(ref:caption-performance-cd-alphaopt-neff) Mean precision for top ranked contact predictions over ~500 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
+
+```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
+knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.html", height = "500px")
+```
+
+
+
+
+
+
+
+
+
+## Bayesian Model for Residue-Resdiue Contact Prediction
+
+### Efficiently Computing the negative Hessian of the regularized log-likelihood {#neg-Hessian-computation}
 
 Surprisingly, the elements of the Hessian at the mode $\w^*$ are easy to compute. 
 Let $i,j,k,l \in \{1,\ldots,L\}$ be columns in the [MSA](#abbrev) and let $a, b, c, d \in \{1,\ldots,20\}$ represent amino acids. 
@@ -340,7 +413,7 @@ Now eq. \@ref(eq:Hw-diag) can be written in matrix form
 \end{equation}
 
 
-## Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
+### Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
 
 It is possible to efficiently invert the matrix $\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k$, that is introduced in \@ref(coupling-prior) where $\H_{ij}$ is the $400 \times 400$ diagonal block submatrix $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$ and $\Lambda_k$ is an invertible diagonal precision matrix that is introduced in section \@ref(modeling-dep-of-wij). 
 
@@ -405,7 +478,7 @@ $\mathbf{A}$ is diagonal and has only positive diagonal elements so that $\log(\
 
 
 
-## Training the Hyperparameters $\muk$, $\Lk$ and $\gamma_k$ {#training-hyperparameters}
+### Training the Hyperparameters $\muk$, $\Lk$ and $\gamma_k$ {#training-hyperparameters}
 
 The model parameters $\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)$,  $\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)$ and $\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)$ will be trained by maximizing the logarithm of the full likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^N$ and associated structures with distance vectors $\r^1,\ldots,\r^N$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$:
 
@@ -601,9 +674,18 @@ The partial derivative of the likelihood function with respect to $\gamma_k$ is:
   =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij)
 \end{align}
 
+
+
+
+
+
+
+
+
+
 ## Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances
 
-## Modelling the dependence of $\wij$ on distance
+### Modelling the dependence of $\wij$ on distance
 
 It is straightforward to extend the model presented in \@ref(coupling-prior) for distances. 
 
@@ -636,16 +718,15 @@ Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $
 ### Training the Hyperparameters $\rho_k$ and $\alpha_k$ for distance-dependent prior
 
 
+
+
 ## Training Random Forest Contat Prior
 
 
 ### Sequence Derived Features {#seq-features}
 
 Given a multiple sequence alignment of a protein family, various sequence features can be derived that have been found to be informative of a residue-residue contact.
-For example, predictions of secondary structure elements and solvent accessibility are used by most modern machine learning predictors, such as MetaPsicov [@Jones2015a], NeBCon [@He2017], EPSILON-CP [@Stahl2017], PconsC3 [@Skwark2016].
-Other features that have been used are pairwise contact potentials, sequence separation or conservation measures such as column entropy [@Jones2015a; @He2017; @Ma2015a].
 
-These features and several more are included in the feature set that will be used to train the Random Forest contact prior.
 In total there are **250** features that can be divided into global, single position and pairwise features and are described in the following sections. 
 If not stated otherwise, *weighted* features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section \@ref(seq-reweighting).
 
@@ -665,7 +746,7 @@ Every pair of residues $(i,j)$ from the same protein will be attributed the same
 | amino acid composition            | weighted amino acid frequencies in alignment | 20 |
 | secondary structure prediction    | average three state propensities PSIPRED (v4.0)[@Jones1999] | 3 |
 | secondary structure prediction    | average three state propensities Netsurfp (v1.0)[@Petersen2009a] | 3 |
-| prior protein length              | expected number of contacts (\@ref(fig:contact-priorL)) | 1 |
+| contact prior protein length      | simple contact predictor based on expected number of contacts per protein with respect to protein length (see next subsection \@ref(contact-prior-protein-length)) | 1 |
 :Features characterizing the total alignment
 
 There are in total **32** global alignment features. 
@@ -716,7 +797,7 @@ These features are computed for every pair of columns $(i, j)$ in the alignment 
 | sequence separation                   | $j-i$ | 1 |
 | gaps                                  | pairwise percentage of gaps using weighted sequences  | 1 |
 | number of ungapped sequences          | $\sum_n w_n I(x_{ni} \! \neq \!  20, x_{nj} \! \neq \! 20)$ for sequences $x_n$ and sequence weights $w_n$ | 1 |
-| correlation physico-chemical features | pairwise correlation of all physico-chemical properties listed in \@ref(single-seq-features) | 13 |
+| correlation physico-chemical features | pairwise correlation of all physico-chemical properties listed in \@ref(seq-features-single) | 13 |
 | pairwise potential                    | Average quasi-chemical energy of interactions in an average buried environment. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107) [@Kawashima2008]. | 1 |
 | pairwise potential                    | Average quasi-chemical energy of transfer of amino acids from water to the protein environment. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106) [@Kawashima2008]. | 1 |
 | pairwise potential                    | Average general contact potential by Li&Fang [@Li2011]| 1 |
@@ -729,30 +810,75 @@ These features are computed for every pair of columns $(i, j)$ in the alignment 
 
 There are in total **26** pairwise sequence features. 
 
+#### Protein length dependent Contact Prior {#contact-prior-protein-length}
+
+The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length L as can be seen in Figure \@ref(fig:avg-nr-contacts-per-residue-vs-protein-length).
+
+(ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation.
+
+```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_priornumber_contacts_per_residue_vs_protein_length.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
+knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
+```
 
 
-### Hyperparameter Optimization for Random Forest Prior
+In log space, the average number of contats per residue can be fitted with a linear regression (see Figure \@ref(fig:avg-nr-contacts-per-residue-vs-log-protein-length-linfit)) and yields the following functions:
+
+- $f(L) = 1.556 + 0.596 \log (L)$ for sequence separation of 0 positions
+- $f(L) = -1.273 + 0.59 \log (L)$ for sequence separation of 8 positions
+- $f(L) = -1.567 + 0.615 \log (L)$ for sequence separation of 12 positions
+- $f(L) = -2.0 + 0.624 \log (L)$ for sequence separation of 24 positions
+
+A simple contact predictor can be formulated as the ratio of the expected number of contacts per residue, given by $f(L)$, and the possible number of contacts per residue which is $L-1$,
+
+$$
+p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
+$$
+
+with $r_{ij}=1$ representing a contact between residue $i$ and $j$. 
+
+(ref:caption-avg-nr-contacts-per-residue-vs-log-protein-length-linfit) Linear regression fits for average number of contats per residue on logarithm of protein length. Distribution and linear regression fits are shown for different sequence separation thresholds. 
+
+```{r avg-nr-contacts-per-residue-vs-log-protein-length-linfit, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-log-protein-length-linfit)'}
+knitr::include_url("img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.html", height = "650px")
+```
+
+
+
+
+
+### Hyperparameter Optimization for Random Forest Prior {#rf-hyperparameter-optimization}
 
 There are several parameters that need to be tuned in such a way as to obtain a trade-off between model performance and size of the model.
 Apart from requiring a lot of disk space, the larger the model becomes, the longer it will take to train and to make predictions:
 
-The module `ensemble.RandomForestClassifier` in the Python package `sklearn (v. 0.19)` was used to learn random forest classifiers over sequence features described in section \@ref(seq-features).
-The following parameters were optimized in a grid search with 5-fold cross-validation on a dataset with 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") using a window size of 5 for certain features as described in section \@ref(random-forest-features):
+The module `ensemble.RandomForestClassifier` in the Python package `sklearn (v. 0.19)` was used to learn random forest classifiers over sequence features described in section \@ref(seq-features)  [@Pedregosa2011].
+Hyperparamters of the random forest were optimized with a grid search over parameter space using 5-fold cross-validation on a dataset with 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") using a window size of 5 for single position features as described in section \@ref(seq-features-single).
 
-- 'n_estimators': the number of trees in the forest
-  [100,500,1000]
-- 'min_samples_leaf': 
-  [1, 10, 100],
-- 'max_depth': the depth of each tree
-  [10, 100, 1000, None],
-- 'max_features': the number of features to consider for each split
-  ['sqrt', 'log2', None]
+First of all, I performed grid search over the parameters *n_estimators*, defining the number of trees in the forest and *max_features*, defining the number of randomly selected features considerd for each split using the following settings:
+
+- *n_estimators*: [100,500,1000]
+- *max_features*: ['sqrt', 'log2', None]
+
+Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) visualizes the results of the grid search. Considering only $\log_2 \approx 8$ features for every split yields highest precision averaged over the five cross-validation runs regardless of how many trees are learned. I chose *n_estimators* = 1000 and *max_features* = log2 for further analysis.
+
+(ref:caption-rf-gridsearch-nestimators-maxfeatures) Distribution of precision for 5-fold cross-validation of a grid search over parameters *n_estiamtors* and *max_features*. Using 1000 trees and randomly selecting $\log_2$ feautures at every split yields highest mean precision over the five runs.
+
+```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/gridsearch/grid_search_cv_results_precision_random_forest_notitle_nrestimators_maxfeatures.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
+knitr::include_url("img/random_forest_contact_prior/gridsearch/grid_search_cv_results_precision_random_forest_notitle_nrestimators_maxfeatures.html", height = "600px")
+```
+
+Next, I optimized the parameters *min_samples_leaf* defining the minimum number of samples required to be at a leaf node and *max_depth* defining the maximum depth of the trees using the following settings:
+
+- *min_samples_leaf*: [1, 10, 100]
+- *max_depth*: [10, 100, 1000, None]
+
+
 
 
 Evluated using precision for out-of-bag samples????
 PLOT GRID SEARCH RESULTS
 
-Using the optimal setting of hyperparameters (`n_estimators=1000, min_samples_leaf=100, max_depth=100, max_features=sqrt`) obtained from the grid search, cross-validation was used to optimize the window-size of features (see section\@ref(random-forest-features)):
+Using the optimal setting of hyperparameters (`n_estimators=1000, min_samples_leaf=100, max_depth=100, max_features=sqrt`) obtained from the grid search, cross-validation was used to optimize the window-size of features (see section\@ref(seq-features-single)):
 
 - window size:
   [5, 7, 9, 11]
@@ -762,6 +888,15 @@ PLOT PRECISISON FOR WINDOW SIZES
   
   
 The problem of predicting contacting residues is a highly imbalanced problem with approximately 5% contacts.
+
+(ref:caption-fraction-contacts-vs-protein-length) Fraction of contacts among all possible contacts ($\frac{L(L-1)}{2}$) in a protein against protein length L. The distribution has a non-linear relationship. At a sequence separation threshold >8 positions the fraction of contacts for intermediate size proteins with length >100 is approximately 2%. 
+
+```{r fraction-contacts-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-fraction-contacts-vs-protein-length)'}
+knitr::include_url("img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.html", height = "500px")
+```
+
+
+
 Therefore, the ratio of contacts to non-contacts was optimized with 5-fold crossvalidation while performing a grid seardch over the `class-weight` parameter which assigns a weight to each datasample according to the class label.
 
 - varying class ratios using equal amount of total data:
@@ -781,34 +916,37 @@ Therefore, the ratio of contacts to non-contacts was optimized with 5-fold cross
 
 PLOT GRID SEARCH RESULTS FOR EVERY DATASET (=4 plots)
 
-### Feature Selection
+### Feature Selection {#rf-feature-selection}
 
-Training a random forest model on large trainingset and evaluate precision of predictor on validation set for subset of features selected according to feature importance.
+Many features obtain low *Gini importance* scores and can most likely be removed from the data set, thus also reducig model complexity. 
+It has been found, that prediction performance might even increase after removing the most irrelevant feaures [@Menze2009].
+For example, during the development of *EPSILON-CP*, a deep neural network method for contact prediction, the authors performed feature selection using boosted trees.
+By removing 75% of the most non-informative features (mostly attributed to amino acid composition), the performance of their predictor increased slightly [@Stahl2017]. 
 
-@Stahl2017 performed feature selection and found that amino acid composition (PSSM) is non-informative and removing PSSM reduces complexity. 
+I therefore developed a feature selection pipeline with which to retrain the random forest on subsets of features.
+As subsets I chose those feautures with *Gini importance* larger than the $\{10, 30, 50, 70, 90\}$-percentile of *Gini importance* values.
+Performance is then evaluated for the models trained on these subsets of features. 
 
-Correlation can inflate or deflate the importance of a feature [@Stahl2017].
 
+### Using Pseudo-likelihood Coevolution Score as Additional Feature {#rf-with-pll-score}
 
-### Using additional coevolution score {#rf-with-pll-score}
+In addition to the 250 sequence derived features, the pseudo-likelihood contact score (L2norm + APC) is used as a feature. 
+The random forest was trained on 100.000 residue pairs in contact ($\Delta \Cb < 8 \AA \; \;$) and 500.000 residue pairs not in contact ($\Delta \Cb > 8 \AA \; \;$) using the cross-validated hyperparameters as described in the last section.
 
-Next to the 250 sequence derived features, the pseudo-likelihood contact score (L2norm + APC) is used as an additional feature. 
-Using 100 000 residue pairs in contact ($\Delta \Cb < 8 \AA \; \;$) and 500 000 residue pairs not in contact ($\Delta \Cb > 8 \AA \; \;$) the random forest was trained with the hyperparameters described in the last section.
+The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the following Figure \@ref(fig:feature-importance-rf-with-pll-score).
 
-The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
+(ref:caption-feature-importance-rf-with-pll-score) Most important features in the random forest model. Features are ranked according to Gini importance which is the mean decrease in Gini impurity over all splits and all trees in the forest.
 
-(ref:caption-feature-importance-rf-with-pll-score) Most important features in the random forest model. Features are ranked according to mean importance of feature over all trees in the forest. Feature importance is measured as Gini impurity.
-
-```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts.png",out.width = '90%', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts.html", height = "500px")
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/ffeature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.png",out.width = '90%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.html", height = "500px")
 ```
 
-Training the model only on the 26 most important features improves the model further as can be seen in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
+Training the model only on the 26 most important features improves precision of the model compared to using the full feature set as is illustrated in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
 
-(ref:caption-feature-selection-rf-with-pll-score) Mean precision over proteins in testset for the top ranked contacts for variaous random forest models trained on subsets of features. Subsets of features have been selected according to five equally sized bins on the ranked features according to mean feature importance (Gini impurity). Learning a random forest model on the 26 most important features yields the best model.
+(ref:caption-feature-selection-rf-with-pll-score) Mean precision over proteins in testset for the top ranked contacts for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). Learning a random forest model on the 26 most important features yields the best model with respect to precision.
 
-```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features.png",out.width = '90%', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features.html", height = "500px")
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_featureselection_plll2norm_random_forest_nestimators1000_maxfeaturesauto_26features_notitle.png",out.width = '90%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_featureselection_plll2norm_random_forest_nestimators1000_maxfeaturesauto_26features_notitle.html", height = "500px")
 ```
 
 

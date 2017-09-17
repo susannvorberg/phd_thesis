@@ -29,6 +29,8 @@
 
 **MSA** Multiple Sequence Alignment
 
+**Neff** Number of effective sequences
+
 **PCD** Persistent Contrastive Divergence
 
 **PDB** protein data bank

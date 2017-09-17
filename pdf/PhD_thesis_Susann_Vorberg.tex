@@ -685,7 +685,7 @@ most successfull pseudo-likelihood approaches presented in section
 \ref{pseudo-likelihood}.
 
 \subsection{Machine Learnign Methods and
-Meta-Predictors}\label{machine-learnign-methods-and-meta-predictors}
+Meta-Predictors}\label{meta-predictors}
 
 These methods combine abundant information on sequence and amino acid
 properties in order to learn associations between input features and
@@ -2772,63 +2772,115 @@ constant with respect to \(\rij\), we find
 
 \chapter{Contact Prior}\label{contact-prior}
 
-Up to now the only source of information to predict contacts was the
-\protect\hyperlink{abbrev}{MSA} \(\X\). There are other sources of
-information that can be exploited. Much information about the distance
-\(\rij\) is typically contained in features of 1D properties at
-positions \(i\) and \(j\) predicted from local sequence profiles, such
-as secondary structure, solvent accessibility or contact number, and in
-features of predicted 2D properties such as the contact prediction
-scores for \((i,j)\) from a profile-based method. This information can
-be introduced directly as prior \(p(\r |\phi)\) for the correlated
-mutations analysis to improve the overall prediction accuracy in terms
-of posterior probabilities.
+The wealth of successful meta-predictors presented in section
+\ref{meta-predictors} highlights the importance to exploit other sources
+of information apart from coevolution statistics. Much information about
+residue interactions is typically contained in features of 1D properties
+at positions \(i\) and \(j\) predicted from local sequence profiles,
+such as secondary structure, solvent accessibility or contact number,
+and in features of predicted 2D properties such as the contact
+prediction scores for \((i,j)\) from a profile-based method.
+
+For example, predictions of secondary structure elements and solvent
+accessibility are used by almost all modern machine learning predictors,
+such as MetaPsicov {[}\protect\hyperlink{ref-Jones2015a}{89}{]}, NeBCon
+{[}\protect\hyperlink{ref-He2017}{90}{]}, EPSILON-CP
+{[}\protect\hyperlink{ref-Stahl2017}{91}{]}, PconsC3
+{[}\protect\hyperlink{ref-Skwark2016}{92}{]}. Other frequently used
+sequence derived features include pairwise contact potentials, sequence
+separation and conservation measures such as column entropy
+{[}\protect\hyperlink{ref-Jones2015a}{89},\protect\hyperlink{ref-He2017}{90},\protect\hyperlink{ref-Ma2015a}{93}{]}.
+
+In the following sections I will present a random forest classifier that
+uses sequence derived features to distinguish contacts from
+non-contacts. Methods section \ref{seq-features} lists all features used
+to train the classifier including the aforementioned standard features
+as well as some novel features.
+
+The probabilistic predictions of the random forest model can be
+introduced directly as prior information \(p(\r |\phi)\) into the
+Bayesian statistical model presented in the last section
+\ref{bayesian-approach} to improve the overall prediction accuracy in
+terms of posterior probabilities. Furthermore, contact scores from
+coevolution methods can be added as an additional feature to the random
+forest model in order to elucidate how much the combined information
+improves prediction accuracy over the single coevolution method.
 
 \section{Random Forest Classifiers}\label{random-forest-classifiers}
 
 Random Forests are supervised machine learning methods that belong to
 the class of ensemble methods
-{[}\protect\hyperlink{ref-Ho1998}{89}--\protect\hyperlink{ref-Breiman2001}{91}{]}.
+{[}\protect\hyperlink{ref-Ho1998}{94}--\protect\hyperlink{ref-Breiman2001}{96}{]}.
+They are easy to implement, fast to train and can handle large numbers
+of features due to implicit feature selection
+{[}\protect\hyperlink{ref-Menze2009}{97}{]}.
 
 Ensemble methods combine the predictions of several independent base
 estimators with the goal to improve generalizability over a single
-estimator. Random Forests are ensembles of decision trees where
-randomness is introduced in two ways: 1) every tree is build on a random
-sample that is of the same size but drawn with replacement from the
-trainingset (i.e., a bootstrap sample) 2) every split of a node is
-performed on a random subset of features
+estimator. Random forests are ensembles of decision trees where
+randomness is introduced in two ways:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  every tree is build on a random sample that is of the same size but
+  drawn with replacement from the training set (i.e., a bootstrap
+  sample)
+\item
+  every split of a node is performed on a random subset of features
+\end{enumerate}
+
+Predictions from all trees are averaged to obtain the final prediction.
 
 A single decision tree, especially when it is grown very deep is highly
 susceptible to noise in the training set and therefore prone to
 overfitting which results in poor generalization ability. As a
 consequence of randomness and averaging over many decision trees, the
-variance of a random forest predictor decreases at therefore the risk of
-overfitting.
+variance of a random forest predictor decreases and therefore the risk
+of overfitting.
 
 Random forests are capable of regression and classification tasks. For
 classification, predictions for new data are obtained by running a new
 data sample down every tree in the forest and then either apply majority
-voting over single class votes or average the probabilistic class
-predictions. A probabilistic class prediction is the fraction of
-training set samples of the same class in a leaf whereas the single
-class vote refers to the majority class in a leaf.
+voting over single class votes or averaging the probabilistic class
+predictions. Probabilistic class predictions of single trees are
+computed as the fraction of training set samples of the same class in a
+leaf whereas the single class vote refers to the majority class in a
+leaf.
 
-Typically the Gini impurity is used as a split criterion to estimate the
-quality of a split. It measures the degree of purity in a dataset
-regarding class labels as
+Typically, \emph{Gini impurity}, which is a computationally efficient
+approximation to the entropy, is used as a split criterion to estimate
+the quality of a split of a node. It measures the degree of purity in a
+data set regarding class labels as \(GI = (1 - \sum_{k=1}^K p_k^2)\),
+where \(p_k\) is the proportion of class \(k\) in the data set. The
+feature \(f\) with the highest \emph{decrease in Gini impurity}
+\(\Delta GI_f\) over the two resulting child node subsets will be used
+to split the data set at the given node \(N\),
 
-\begin{equation}
-  \textrm{Gini} = 1 - \sum_{k=1}^K p_k^2 \; ,
-\end{equation}
+\[
+\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI(N_{\textrm{left}}) - p_{\textrm{right}} GI(N_{\textrm{left}})
+\]
 
-where \(p_k\) is the proportion of class \(k\) in the dataset. The
-feature with lowest Gini impurity over the two resulting childnode
-subsets will be used to split the dataset at the given node.
+where \(p_{\textrm{left}}\) and \(p_{\textrm{right}}\) refers to the
+fraction of samples ending up in the left and right child node
+respectively {[}\protect\hyperlink{ref-Menze2009}{97}{]}.
 
-Random Forests can handle a large number of features due to their
-intrinsic feature selection property. The importance of a feature can be
-computed by adding up the gini importance of the feature over all trees
-whenever it was used for a split.
+Summing the \emph{decrease in Gini impurity} for a feature \(f\) over
+all trees whenever \(f\) was used for a split yields the \emph{Gini
+importance} measure, which can be used as an estimate of general feature
+relevance. Random forests therefore are popular methods for feature
+selection and it is common practice to remove the least important
+features from a data set to reduce the complexity of the model. However,
+feature importance measured with respect to \emph{Gini importance} needs
+to be interpreted with care. The random forest model cannot distinguish
+between correlated features and it will choose any of the correlated
+features for a split, thereby reducing the importance of the other
+features and introducing bias. Furthermore, it has been found that
+feature selection based on \emph{Gini importance} is biased towards
+selecting features with more categories as they will be chosen more
+often for splits and therefore tend to obtain higher scores
+{[}\protect\hyperlink{ref-Strobl2007}{98}{]}.
 
 \section{Evaluating Random Forest
 Predictor}\label{evaluating-random-forest-predictor}
@@ -2843,7 +2895,7 @@ at features that are most important
   which features are most important
 \end{itemize}
 
-now we can do feature selection as desribed in methods and its
+now we can do feature selection as described in methods and its
 sufficient to use only a small set of features (75)
 
 \begin{itemize}
@@ -2874,7 +2926,7 @@ features improves the model further (see Figure
 
 Using the default pseudo-likelihood contact score (L2norm + APC) as an
 additional coevolutionary feature indeed improves performance (see
-Figure \ref{fig:performance-rf-with-pll-score}) over the score wihtout
+Figure \ref{fig:performance-rf-with-pll-score}) over the score without
 prior information.
 
 
@@ -2891,7 +2943,7 @@ prior information.
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_notitle} \caption{Mean Precision for top
-ranked contacts on a testset of \textasciitilde{}500 proteins.
+ranked contacts on a test set of \textasciitilde{}500 proteins.
 \textbf{omes\_fodoraldrich+apc} = OMES score with APC as described in
 section \ref{seq-features-pairwise}. \textbf{mi\_pc + APC} = mutual
 information with APC as described in section
@@ -2905,9 +2957,9 @@ contact score (L2norm + APC)}\label{fig:performance-rf-with-pll-score}
 
 Especially for small alignments, the random forest model makes better
 predictions than the coevolutionary method. This finding is expected, as
-it is well known that models trained on simpple sequence features
-perform almost independent of alignment size.
-{[}\protect\hyperlink{ref-Stahl2017}{92}{]}. In contrast, the
+it is well known that models trained on simple sequence features perform
+almost independent of alignment size.
+{[}\protect\hyperlink{ref-Stahl2017}{91}{]}. In contrast, the
 improvement on large alignments is small, as the gain from simple
 sequence features compared to the much more powerful coevolution signals
 is neglectable.
@@ -2925,7 +2977,7 @@ all you need to know
 \section{Dataset}\label{dataset}
 
 A protein dataset has been constructed from the CATH (v4.1)
-{[}\protect\hyperlink{ref-Sillitoe2015}{94}{]} database for
+{[}\protect\hyperlink{ref-Sillitoe2015}{99}{]} database for
 classification of protein domains. All CATH domains from classes
 1(mainly \(\alpha\)), 2(mainly \(\beta\)), 3(\(\alpha+\beta\)) have been
 selected and filtered for internal redundancy at the sequence level
@@ -3787,24 +3839,14 @@ Prior}\label{training-random-forest-contat-prior}
 
 Given a multiple sequence alignment of a protein family, various
 sequence features can be derived that have been found to be informative
-of a residue-residue contact. For example, predictions of secondary
-structure elements and solvent accessibility are used by most modern
-machine learning predictors, such as MetaPsicov
-{[}\protect\hyperlink{ref-Jones2015a}{95}{]}, NeBCon
-{[}\protect\hyperlink{ref-He2017}{96}{]}, EPSILON-CP
-{[}\protect\hyperlink{ref-Stahl2017}{92}{]}, PconsC3
-{[}\protect\hyperlink{ref-Skwark2016}{93}{]}. Other features that have
-been used are pairwise contact potentials, sequence separation or
-conservation measures such as column entropy
-{[}\protect\hyperlink{ref-Jones2015a}{95}--\protect\hyperlink{ref-Ma2015a}{97}{]}.
+of a residue-residue contact.
 
-These features and several more are included in the feature set that
-will be used to train the Random Forest contact prior. In total there
-are \textbf{250} features that can be divided into global, single
-position and pairwise features and are described in the following
-sections. If not stated otherwise, \emph{weighted} features have been
-computed using amino acid counts or amino acid frequencies based on
-weighted sequences as described in section \ref{seq-reweighting}.
+In total there are \textbf{250} features that can be divided into
+global, single position and pairwise features and are described in the
+following sections. If not stated otherwise, \emph{weighted} features
+have been computed using amino acid counts or amino acid frequencies
+based on weighted sequences as described in section
+\ref{seq-reweighting}.
 
 \subsubsection{Global Features}\label{seq-features-global}
 
@@ -3881,7 +3923,7 @@ weighted amino acid frequencies in alignment\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 average three state propensities PSIPRED
-(v4.0){[}\protect\hyperlink{ref-Jones1999}{98}{]}\strut
+(v4.0){[}\protect\hyperlink{ref-Jones1999}{100}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
 \end{minipage}\tabularnewline
@@ -3889,7 +3931,7 @@ average three state propensities PSIPRED
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 average three state propensities Netsurfp
-(v1.0){[}\protect\hyperlink{ref-Petersen2009a}{99}{]}\strut
+(v1.0){[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
 \end{minipage}\tabularnewline
@@ -3951,7 +3993,7 @@ shannon entropy (21 states)\strut
 kullback leibler divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{100}{]}\strut
+{[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -3959,7 +4001,7 @@ between weighted observed and background amino acid frequencies
 jennson shannon divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{100}{]}\strut
+{[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -3967,7 +4009,7 @@ between weighted observed and background amino acid frequencies
 PSSM\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 log odds ratio of weighted observed and background amino acid
-frequencies {[}\protect\hyperlink{ref-Robinson1991}{100}{]}\strut
+frequencies {[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 40\strut
 \end{minipage}\tabularnewline
@@ -3975,7 +4017,7 @@ frequencies {[}\protect\hyperlink{ref-Robinson1991}{100}{]}\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 three state propensities PSIPRED (v4.0)
-{[}\protect\hyperlink{ref-Jones1999}{98}{]}\strut
+{[}\protect\hyperlink{ref-Jones1999}{100}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
@@ -3983,7 +4025,7 @@ three state propensities PSIPRED (v4.0)
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 three state propensities Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{99}{]}\strut
+{[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
@@ -3991,7 +4033,7 @@ three state propensities Netsurfp (v1.0)
 solvent accessibility prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 RSA and RSA Z-score Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{99}{]}\strut
+{[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 4\strut
 \end{minipage}\tabularnewline
@@ -4021,7 +4063,7 @@ percentage of gaps\strut
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{101}{]}\strut
+Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{103}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 10\strut
 \end{minipage}\tabularnewline
@@ -4030,7 +4072,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity accordign to Grantham, 1974. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4039,7 +4081,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity according to Zimmermann et al., 1986. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4048,7 +4090,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Isoelectric point according to Zimmermann et al., 1968. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4057,7 +4099,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity scale according to Wimley \& White, 1996. Data taken from
 \href{https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt}{UCSF
-Chimera} {[}\protect\hyperlink{ref-Wimley1996}{103}{]}.\strut
+Chimera} {[}\protect\hyperlink{ref-Wimley1996}{105}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4067,7 +4109,7 @@ Average physico-chemical properties\strut
 Hydrophobicity index according to Kyte \& Doolittle, 1982. Data taken
 from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4075,7 +4117,7 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
 Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity according to Cornette
-{[}\protect\hyperlink{ref-Cornette1987}{104}{]}.\strut
+{[}\protect\hyperlink{ref-Cornette1987}{106}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4084,7 +4126,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Bulkiness according to Zimmerman et al., 1968. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4094,7 +4136,7 @@ Average physico-chemical properties\strut
 Average volumes of residues according to Pontius et al., 1996. Data
 taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4174,7 +4216,7 @@ pairwise potential\strut
 Average quasi-chemical energy of interactions in an average buried
 environment. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4184,7 +4226,7 @@ pairwise potential\strut
 Average quasi-chemical energy of transfer of amino acids from water to
 the protein environment. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4192,7 +4234,7 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{102}{]}.\strut
 pairwise potential\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average general contact potential by Li\&Fang
-{[}\protect\hyperlink{ref-Li2011}{105}{]}\strut
+{[}\protect\hyperlink{ref-Li2011}{107}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4200,7 +4242,7 @@ Average general contact potential by Li\&Fang
 pairwise potential\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average statistical potential from residue pairs in beta-sheets by
-Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{106}{]}\strut
+Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{108}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4230,7 +4272,7 @@ normalized MI\strut
 OMES\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{107}{]} with and without APC\strut
+{[}\protect\hyperlink{ref-Fodor2004a}{109}{]} with and without APC\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4320,12 +4362,12 @@ Training a random forest model on large trainingset and evaluate
 precision of predictor on validation set for subset of features selected
 according to feature importance.
 
-{[}\protect\hyperlink{ref-Stahl2017}{92}{]} performed feature selection
+{[}\protect\hyperlink{ref-Stahl2017}{91}{]} performed feature selection
 and found that amino acid composition (PSSM) is non-informative and
 removing PSSM reduces complexity.
 
 Correlation can inflate or deflate the importance of a feature
-{[}\protect\hyperlink{ref-Stahl2017}{92}{]}.
+{[}\protect\hyperlink{ref-Stahl2017}{91}{]}.
 
 \subsection{Using additional coevolution score}\label{rf-with-pll-score}
 
@@ -5129,120 +5171,134 @@ Available at:
 All the Data. Phys. Rev. Lett. \emph{108}, 090201. Available at:
 \url{https://link.aps.org/doi/10.1103/PhysRevLett.108.090201}.
 
-\hypertarget{ref-Ho1998}{}
-89. Ho, T.K. (1998). The random subspace method for constructing
-decision forests. IEEE Trans. Pattern Anal. Mach. Intell. \emph{20},
-832--844. Available at:
-\url{http://ieeexplore.ieee.org/document/709601/}.
-
-\hypertarget{ref-TinKamHo}{}
-90. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf.
-doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278--282. Available
-at: \url{http://ieeexplore.ieee.org/document/598994/}.
-
-\hypertarget{ref-Breiman2001}{}
-91. Breiman, L. (2001). Random Forests. Mach. Learn. \emph{45}, 5--32.
-Available at: \url{http://link.springer.com/10.1023/A:1010933404324}.
-
-\hypertarget{ref-Stahl2017}{}
-92. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using
-deep learning to combine information from multiple sources for protein
-contact prediction. BMC Bioinformatics \emph{18}, 303. Available at:
-\url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x}.
-
-\hypertarget{ref-Skwark2016}{}
-93. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and
-Elofsson, A. (2016). Accurate contact predictions for thousands of
-protein families using PconsC3. bioRxiv.
-
-\hypertarget{ref-Sillitoe2015}{}
-94. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
-N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. \emph{et
-al.} (2015). CATH: comprehensive structural and functional annotations
-for genome sequences. Nucleic Acids Res. \emph{43}, D376--D381.
-Available at:
-\url{https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947}.
-
 \hypertarget{ref-Jones2015a}{}
-95. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015).
+89. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015).
 MetaPSICOV: combining coevolution methods for accurate prediction of
 contacts and long range hydrogen bonding in proteins. Bioinformatics
 \emph{31}, 999--1006. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/31/7/999.short}.
 
 \hypertarget{ref-He2017}{}
-96. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017).
+90. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017).
 NeBcon: Protein contact map prediction using neural network training
 coupled with naïve Bayes classifiers. Bioinformatics. Available at:
 \url{https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164}.
 
+\hypertarget{ref-Stahl2017}{}
+91. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using
+deep learning to combine information from multiple sources for protein
+contact prediction. BMC Bioinformatics \emph{18}, 303. Available at:
+\url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x}.
+
+\hypertarget{ref-Skwark2016}{}
+92. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and
+Elofsson, A. (2016). Accurate contact predictions for thousands of
+protein families using PconsC3. bioRxiv.
+
 \hypertarget{ref-Ma2015a}{}
-97. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
+93. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
 prediction by integrating joint evolutionary coupling analysis and
 supervised learning. Bioinformatics, btv472. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472}.
 
+\hypertarget{ref-Ho1998}{}
+94. Ho, T.K. (1998). The random subspace method for constructing
+decision forests. IEEE Trans. Pattern Anal. Mach. Intell. \emph{20},
+832--844. Available at:
+\url{http://ieeexplore.ieee.org/document/709601/}.
+
+\hypertarget{ref-TinKamHo}{}
+95. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf.
+doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278--282. Available
+at: \url{http://ieeexplore.ieee.org/document/598994/}.
+
+\hypertarget{ref-Breiman2001}{}
+96. Breiman, L. (2001). Random Forests. Mach. Learn. \emph{45}, 5--32.
+Available at: \url{http://link.springer.com/10.1023/A:1010933404324}.
+
+\hypertarget{ref-Menze2009}{}
+97. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P.,
+Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest
+and its Gini importance with standard chemometric methods for the
+feature selection and classification of spectral data. BMC
+Bioinformatics \emph{10}, 213. Available at:
+\href{http://www.ncbi.nlm.nih.gov/pubmed/19591666\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}{http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}.
+
+\hypertarget{ref-Strobl2007}{}
+98. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007).
+Bias in random forest variable importance measures: Illustrations,
+sources and a solution. BMC Bioinformatics \emph{8}, 25. Available at:
+\url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25}.
+
+\hypertarget{ref-Sillitoe2015}{}
+99. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
+N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. \emph{et
+al.} (2015). CATH: comprehensive structural and functional annotations
+for genome sequences. Nucleic Acids Res. \emph{43}, D376--D381.
+Available at:
+\url{https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947}.
+
 \hypertarget{ref-Jones1999}{}
-98. Jones, D.T. (1999). Protein secondary structure prediction based on
+100. Jones, D.T. (1999). Protein secondary structure prediction based on
 position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol.
 Biol. \emph{292}, 195--202. Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/10493868\%20http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}{http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}.
 
 \hypertarget{ref-Petersen2009a}{}
-99. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and
+101. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and
 Lundegaard, C. (2009). BMC Structural Biology A generic method for
 assignment of reliability scores applied to solvent accessibility
 predictions. BMC Struct. Biol. \emph{9}. Available at:
 \url{http://www.biomedcentral.com/1472-6807/9/51}.
 
 \hypertarget{ref-Robinson1991}{}
-100. Robinson, A.B., and Robinson, L.R. (1991). Distribution of
+102. Robinson, A.B., and Robinson, L.R. (1991). Distribution of
 glutamine and asparagine residues and their near neighbors in peptides
 and proteins. Proc. Natl. Acad. Sci. U. S. A. \emph{88}, 8880--4.
 Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/1924347\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}{http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}.
 
 \hypertarget{ref-Atchley2005}{}
-101. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
+103. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
 Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U.
 S. A. \emph{102}, 6395--400. Available at:
 \url{http://www.pnas.org/content/102/18/6395.abstract}.
 
 \hypertarget{ref-Kawashima2008}{}
-102. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A.,
+104. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A.,
 Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index
 database, progress report 2008. Nucleic Acids Res. \emph{36}, D202--5.
 Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/17998252\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}{http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}.
 
 \hypertarget{ref-Wimley1996}{}
-103. Wimley, W.C., and White, S.H. (1996). Experimentally determined
+105. Wimley, W.C., and White, S.H. (1996). Experimentally determined
 hydrophobicity scale for proteins at membrane interfaces. Nat. Struct.
 Biol. \emph{3}, 842--8. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/8836100}.
 
 \hypertarget{ref-Cornette1987}{}
-104. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky,
+106. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky,
 J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational
 techniques for detecting amphipathic structures in proteins. J. Mol.
 Biol. \emph{195}, 659--685. Available at:
 \url{http://linkinghub.elsevier.com/retrieve/pii/0022283687901896}.
 
 \hypertarget{ref-Li2011}{}
-105. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue
+107. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue
 contacts using random forest models. Bioinformatics \emph{27}, 3379--84.
 Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/27/24/3379.long}.
 
 \hypertarget{ref-Zhu1999}{}
-106. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
+108. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
 potentials, and three-dimensional structure prediction with
 self-correcting distance geometry calculations of beta-sheet formation
 in proteins. Protein Sci. \emph{8}, 326--42. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
 
 \hypertarget{ref-Fodor2004a}{}
-107. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
+109. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
 calculations of amino acid covariance in multiple sequence alignments.
 Proteins \emph{56}, 211--21. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/15211506}.

@@ -1,4 +1,4 @@
-# Bayesian Model for Contact Prediction
+# Bayesian Model for Contact Prediction {#bayesian-approach}
 
 The most popular and successfull methods for contact prediction so far optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
 

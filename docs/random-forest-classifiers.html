@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-12">
+<meta name="date" content="2017-09-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="contact-prior.html">
-<link rel="next" href="evaluating-random-forest-predictor.html">
+<link rel="next" href="evaluating-random-forest-model-as-contact-predictor.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -135,7 +135,7 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
-<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#machine-learnign-methods-and-meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learnign Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learning Methods and Meta-Predictors</a></li>
 <li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
 <li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
 <li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
@@ -154,11 +154,9 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="3.3" data-path="gauge-transformation.html"><a href="gauge-transformation.html"><i class="fa fa-check"></i><b>3.3</b> Gauge transformation</a></li>
 <li class="chapter" data-level="3.4" data-path="the-regularized-log-likelihood-function-llregvw.html"><a href="the-regularized-log-likelihood-function-llregvw.html"><i class="fa fa-check"></i><b>3.4</b> The regularized log likelihood function LLreg(v,w)</a></li>
 <li class="chapter" data-level="3.5" data-path="the-gradient-of-the-regularized-log-likelihood.html"><a href="the-gradient-of-the-regularized-log-likelihood.html"><i class="fa fa-check"></i><b>3.5</b> The gradient of the regularized log likelihood</a></li>
-<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a><ul>
-<li class="chapter" data-level="3.6.1" data-path="prior-v.html"><a href="prior-v.html#full-likelihood"><i class="fa fa-check"></i><b>3.6.1</b> Full-likelihood</a></li>
-<li class="chapter" data-level="3.6.2" data-path="prior-v.html"><a href="prior-v.html#likelihood-gradient"><i class="fa fa-check"></i><b>3.6.2</b> Likelihood Gradient</a></li>
-<li class="chapter" data-level="3.6.3" data-path="prior-v.html"><a href="prior-v.html#contrastive-divergence"><i class="fa fa-check"></i><b>3.6.3</b> Contrastive Divergence</a></li>
-</ul></li>
+<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="3.7" data-path="full-likelihood.html"><a href="full-likelihood.html"><i class="fa fa-check"></i><b>3.7</b> Full-likelihood</a></li>
+<li class="chapter" data-level="3.8" data-path="contrastive-divergence.html"><a href="contrastive-divergence.html"><i class="fa fa-check"></i><b>3.8</b> Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>4</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="4.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>4.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
@@ -171,7 +169,7 @@ MathJax.Hub.Config({
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-predictor.html"><a href="evaluating-random-forest-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Predictor</a></li>
+<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
 <li class="chapter" data-level="6.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>6.1</b> Dataset</a></li>
@@ -185,25 +183,27 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
 <li class="chapter" data-level="6.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>6.3.2</b> Coupling Distribution Plots</a></li>
-<li class="chapter" data-level="6.3.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#bayesian-model-for-residue-resdiue-contact-prediction"><i class="fa fa-check"></i><b>6.3.3</b> Bayesian Model for Residue-Resdiue Contact Prediction</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>6.4</b> Off-diagonal elements in <span class="math inline">\(\H\)</span></a></li>
-<li class="chapter" data-level="6.5" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>6.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="6.6" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>6.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="6.7" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>6.7</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a><ul>
-<li class="chapter" data-level="6.7.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>6.7.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
-<li class="chapter" data-level="6.7.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>6.7.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="6.7.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>6.7.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="6.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>6.4</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#hyperparameter-optimization-for-stochastic-gradient-descent"><i class="fa fa-check"></i><b>6.4.1</b> Hyperparameter Optimization for Stochastic Gradient Descent</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.8</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a></li>
-<li class="chapter" data-level="6.9" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html"><i class="fa fa-check"></i><b>6.9</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a><ul>
-<li class="chapter" data-level="6.9.1" data-path="modelling-the-dependence-of-wij-on-distance.html"><a href="modelling-the-dependence-of-wij-on-distance.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.9.1</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+<li class="chapter" data-level="6.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>6.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>6.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="6.5.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>6.5.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="6.5.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>6.5.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="6.5.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>6.5.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="6.5.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>6.5.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="6.5.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>6.5.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.10</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="6.10.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.10.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="6.10.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#hyperparameter-optimization-for-random-forest-prior"><i class="fa fa-check"></i><b>6.10.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="6.10.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#feature-selection"><i class="fa fa-check"></i><b>6.10.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="6.10.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.10.4</b> Using additional coevolution score</a></li>
+<li class="chapter" data-level="6.6" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.6</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>6.6.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.6.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.7</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.7.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="6.7.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>6.7.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="6.7.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>6.7.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="6.7.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.7.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -243,24 +243,35 @@ MathJax.Hub.Config({
             <section class="normal" id="section-">
 <div id="random-forest-classifiers" class="section level2">
 <h2><span class="header-section-number">5.1</span> Random Forest Classifiers</h2>
-<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">90</a>–<a href="#ref-Breiman2001">92</a>]</span>.</p>
-<p>Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator. Random Forests are ensembles of decision trees where randomness is introduced in two ways: 1) every tree is build on a random sample that is of the same size but drawn with replacement from the trainingset (i.e., a bootstrap sample) 2) every split of a node is performed on a random subset of features</p>
-<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases at therefore the risk of overfitting.</p>
-<p>Random forests are capable of regression and classification tasks. For classification, predictions for new data are obtained by running a new data sample down every tree in the forest and then either apply majority voting over single class votes or average the probabilistic class predictions. A probabilistic class prediction is the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf.</p>
-<p>Typically the Gini impurity is used as a split criterion to estimate the quality of a split. It measures the degree of purity in a dataset regarding class labels as</p>
-<span class="math display">\[\begin{equation}
-  \textrm{Gini} = 1 - \sum_{k=1}^K p_k^2 \; ,
-\end{equation}\]</span>
-<p>where <span class="math inline">\(p_k\)</span> is the proportion of class <span class="math inline">\(k\)</span> in the dataset. The feature with lowest Gini impurity over the two resulting childnode subsets will be used to split the dataset at the given node.</p>
-<p>Random Forests can handle a large number of features due to their intrinsic feature selection property. The importance of a feature can be computed by adding up the gini importance of the feature over all trees whenever it was used for a split.</p>
+<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">95</a>–<a href="#ref-Breiman2001">97</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">98</a>]</span>.</p>
+<p>Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator. Random forests are ensembles of decision trees where randomness is introduced in two ways:</p>
+<ol style="list-style-type: decimal">
+<li>every tree is build on a random sample that is of the same size but drawn with replacement from the training set (i.e., a bootstrap sample)</li>
+<li>every split of a node is performed on a random subset of features</li>
+</ol>
+<p>Predictions from all trees are averaged to obtain the final prediction.</p>
+<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting.</p>
+<p>Random forests are capable of regression and classification tasks. For classification, predictions for new data are obtained by running a new data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf.</p>
+<p>Typically, <em>Gini impurity</em>, which is a computationally efficient approximation to the entropy, is used as a split criterion to estimate the quality of a split of a node. It measures the degree of purity in a data set regarding class labels as <span class="math inline">\(GI = (1 - \sum_{k=1}^K p_k^2)\)</span>, where <span class="math inline">\(p_k\)</span> is the proportion of class <span class="math inline">\(k\)</span> in the data set. The feature <span class="math inline">\(f\)</span> with the highest <em>decrease in Gini impurity</em> <span class="math inline">\(\Delta GI_f\)</span> over the two resulting child node subsets will be used to split the data set at the given node <span class="math inline">\(N\)</span>,</p>
+<p><span class="math display">\[
+\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI(N_{\textrm{left}}) - p_{\textrm{right}} GI(N_{\textrm{left}})
+\]</span></p>
+<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">98</a>]</span>.</p>
+<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">99</a>]</span>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ho1998">
-<p>90. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+<p>95. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
 </div>
 <div id="ref-Breiman2001">
-<p>92. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+<p>97. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+</div>
+<div id="ref-Menze2009">
+<p>98. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+</div>
+<div id="ref-Strobl2007">
+<p>99. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -288,7 +299,7 @@ s.setAttribute('data-timestamp', +new Date());
         </div>
       </div>
 <a href="contact-prior.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="evaluating-random-forest-predictor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="evaluating-random-forest-model-as-contact-predictor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

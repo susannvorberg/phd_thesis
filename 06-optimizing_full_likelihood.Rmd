@@ -229,7 +229,7 @@ Therefore, if $q(x_i \eq a,x_j \eq b) = q(x_i \eq a) \, q(x_j \eq b)$ it follows
 
 
 
-### Full-likelihood
+## Full-likelihood
 
 
 
@@ -259,11 +259,16 @@ Even though pseudo-likelihood maximation has been shown to be a consistent estim
 
 
 
-### Likelihood Gradient
-
-### Contrastive Divergence
+## Contrastive Divergence
 
 CD is about the difference between the original data set and a perturbed data set 
 perturbed data set : The contrasting data set needs to represent A data sample characteristic of the current PARAMETERS --> Gibbs Sampling starting from data
 Note: as contrasting dataset towards true_parameters, the elements of the gradient converge to the gradient of the max log likelihood
 – At the limit of the Markov chain, the CD converges to the actual MLE
+
+
+
+
+
+
+
