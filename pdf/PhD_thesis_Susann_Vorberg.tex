@@ -1,14 +1,15 @@
 \documentclass[12pt,a4paper,twoside]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{amstext}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{longtable}
-\usepackage{siunitx}
 \usepackage{booktabs}
 \usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
 \usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{siunitx}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -45,6 +46,8 @@
 \newcommand{\wijcd}{\mathcal{w}_{ijcd}}
 \newcommand{\wklcd}{\mathcal{w}_{klcd}}
 \newcommand{\X}{\mathbf{X}}
+\newcommand{\angstrom}{\si{\angstrom}}
+
 
 % Numbering of sections unto depth=5
 \setcounter{secnumdepth}{5}
@@ -217,6 +220,8 @@ I thank the world.
 \mainmatter \setcounter{page}{1}
 
 \chapter{Introduction}\label{general-intro}
+
+dsfgdsfg \(\AA\) ds dfg
 
 In his Nobel Prize speech in 1973
 {[}\protect\hyperlink{ref-Anfinsen1973}{1}{]} Anfinsen postulated one of
@@ -684,7 +689,7 @@ information and phylogenetic correction via
 most successfull pseudo-likelihood approaches presented in section
 \ref{pseudo-likelihood}.
 
-\subsection{Machine Learnign Methods and
+\subsection{Machine Learning Methods and
 Meta-Predictors}\label{meta-predictors}
 
 These methods combine abundant information on sequence and amino acid
@@ -748,38 +753,8 @@ normalized with respect to protein length \(L\) and precision is defined
 as the number of true contacts among the top scoring predicted contacts.
 Usually, a pair of residues is defined to be in contact when the
 distance between their \(\Cb\) atoms (\(C\alpha\) in case of glycine) is
-less than \(8 \AA \; \;\) in the reference protein structure
+less than 8\(\AA\) in the reference protein structure
 {[}\protect\hyperlink{ref-Monastyrskyy2015}{48}{]}.
-
-\textbf{Contact Definition}
-
-However, whether two residues truly interact in a protein structure
-depends only marginally on the distance between their \(\Cb\) atoms.
-More importantly, interactions between side-chains depend on their
-physico-chemical properties, on their orientation and vary within the
-vast number of alternative environments within proteins
-{[}\protect\hyperlink{ref-Bettsa}{49}{]} (see section
-\ref{amino-acid-interactions}). Therefore, a simple \(\Cb\) distance
-threshold cannot capture the true interaction preferences of amino acids
-and yields an imperfect gold-standard for benchmarking.
-
-Other distance thresholds or definitions for contacts (e.g minimal
-atomic distances or distance between functional groups) have been
-studied as well. In fact, Duarte and colleagues found that using a
-\(\Cb\) distance threshold between 9\(\AA \; \;\) and 11\(\AA \; \;\)
-yields optimal results when predicting the 3D structure from the
-respective contacts {[}\protect\hyperlink{ref-Duarte2010}{50}{]}.
-
-Anishchenko and colleagues
-{[}\protect\hyperlink{ref-Anishchenko2017}{51}{]} analysed false
-positive predictions with respect to a minimal atom distance threshold
-\(< 5 \AA \; \;\), as they found that this cutoff optimally defines
-direct physical interactions of residue pairs.
-
-With regard to the utilization of contacts for structure prediction, a
-simple \(\Cb\) cutoff is nonetheless a convenient choice, as this
-threshold can be easily implemented as a restraint in common structure
-predictions protocols (e.g Modeller).
 
 \textbf{Sequence Separation}
 
@@ -852,7 +827,7 @@ Currently best methods perform in the range XXX
 \subsection{Maximum Entropy Modelling of Protein Families}\label{maxent}
 
 The principle of maximum entropy, proposed by Jaynes in 1957
-{[}\protect\hyperlink{ref-Jaynes1957a}{52},\protect\hyperlink{ref-Jaynes1957b}{53}{]},
+{[}\protect\hyperlink{ref-Jaynes1957a}{49},\protect\hyperlink{ref-Jaynes1957b}{50}{]},
 states that the probability distribution which makes minimal assumptions
 and best represents observed data is the one that is in agreement with
 measured constraints (prior information) and has the largest entropy. In
@@ -935,7 +910,7 @@ Maximum entropy models naturally give rise to exponential family
 distributions that express useful properties for statistical modelling,
 such as the convexity of the likelihood function which consequently has
 a unique, global minimum
-{[}\protect\hyperlink{ref-Wainwright2007}{54},\protect\hyperlink{ref-Murphy2012}{55}{]}.
+{[}\protect\hyperlink{ref-Wainwright2007}{51},\protect\hyperlink{ref-Murphy2012}{52}{]}.
 
 The Potts model is a discrete instance of what is referred to as a
 pairwise \protect\hyperlink{abbrev}{Markov random field} in the
@@ -976,7 +951,7 @@ choices are the \emph{zero-sum gauge} or \emph{Ising-gauge} used by
 \end{equation}
 
 for all \(i,j,b\) or the \emph{lattice-gas gauge} used by
-{[}\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Marks2011}{57}{]}
+{[}\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Marks2011}{54}{]}
 imposed by restraints
 
 \begin{equation}
@@ -984,13 +959,13 @@ imposed by restraints
 \label{eq:ising-gauge}
 \end{equation}
 
-for all \(i,j,a\) {[}\protect\hyperlink{ref-Cocco2017}{58}{]}.
+for all \(i,j,a\) {[}\protect\hyperlink{ref-Cocco2017}{55}{]}.
 
 Alternatively, the indeterminacy can be fixed by including a
 regularization prior (see next section). The regularizer selects for a
 unique solution among all parametrizations of the optimal distribution
 and therefore eliminates the need to choose a gauge
-{[}\protect\hyperlink{ref-Koller2009}{59}--\protect\hyperlink{ref-Stein2015a}{61}{]}.
+{[}\protect\hyperlink{ref-Koller2009}{56}--\protect\hyperlink{ref-Stein2015a}{58}{]}.
 
 \paragraph{Regularization}\label{regularization}
 \addcontentsline{toc}{paragraph}{Regularization}
@@ -1016,7 +991,7 @@ of a zero-centered Gaussian prior,
 
 where the strength of regularization is tuned via the regularization
 coefficients \(\lambda_v\) and \(\lambda_w\)
-{[}\protect\hyperlink{ref-Seemayer2014}{62}--\protect\hyperlink{ref-Kamisetty2013}{64}{]}.
+{[}\protect\hyperlink{ref-Seemayer2014}{59}--\protect\hyperlink{ref-Kamisetty2013}{61}{]}.
 
 \subsubsection{Intractability of the Partition
 Function}\label{partition-function}
@@ -1062,39 +1037,39 @@ is computationally very expensive and in practive only applicable to
 small proteins, they obtained remarkable results for the two-component
 signaling system in bacteria.
 
-Balakrishnan et al {[}\protect\hyperlink{ref-Balakrishnan2011}{65}{]}
+Balakrishnan et al {[}\protect\hyperlink{ref-Balakrishnan2011}{62}{]}
 were the first to apply pseudo-likelihood approximations to the full
 likelihood in 2011. The pseudo-likelihood optimizes a different
 objective and replaces the global partition function \(Z\) with local
 estimates. Balakrishnan and colleagues applied their method
 \emph{GREMLIN} to learn sparse graphical models for 71 protein families.
 In a follow-up study in 2013
-{[}\protect\hyperlink{ref-Kamisetty2013}{64}{]}, an improved version of
+{[}\protect\hyperlink{ref-Kamisetty2013}{61}{]}, an improved version of
 \emph{GREMLIN} incorporating prior information was evaluated in a
 comprehensive benchmark tailored towards the contact prediction problem.
 
 Also in 2011, Morcos et al. introduced a naive mean-field inversion
 approximation to the partition function, named \emph{mfDCA}
-{[}\protect\hyperlink{ref-Morcos2011}{56}{]}. This method allows for
+{[}\protect\hyperlink{ref-Morcos2011}{53}{]}. This method allows for
 drastically shorter running times as the mean-field approach boils down
 to inverting the empirical covariance matrix calculated from observed
 amino acid frequencies for each residue pair \(i\) and \(j\) of the
 alignment. This study performed the first high-throughput analysis of
 intradomain contacts for 131 protein families and facilitated the
 prediction of protein structures from accurately predicted contacts in
-{[}\protect\hyperlink{ref-Marks2011}{57}{]}.
+{[}\protect\hyperlink{ref-Marks2011}{54}{]}.
 
 The initial work by Balakrishnan and collegueas went almost unnoted as
 it was not primarily targeted to the problem of contact prediction.
 Ekeberg and collegueas independently developed the pseudo-likelihood
 method \emph{plmDCA} and showed its superior precision towards
-\emph{mfDCA} {[}\protect\hyperlink{ref-Ekeberg2013}{60}{]}.
+\emph{mfDCA} {[}\protect\hyperlink{ref-Ekeberg2013}{57}{]}.
 
 A related approach to mean-field approximation is sparse inverse
 covariance estimation, named \emph{PSICOV}, by Jones et al
 {[}\protect\hyperlink{ref-Jones2012}{44}{]}. They use L1-regularization,
 known as graphical Lasso, to invert the correlation matrix and learn a
-sparse graphical model {[}\protect\hyperlink{ref-Friedman2008}{66}{]}.
+sparse graphical model {[}\protect\hyperlink{ref-Friedman2008}{63}{]}.
 Both procedures, \emph{mfDCA} and \emph{PSICOV}, assume the model
 distribution to be a multivariate Gaussian. It has been shown by
 Banerjee et al. (2008) that this dual optimization solution also applies
@@ -1104,7 +1079,7 @@ each position is encoded as a 20-dimensional binary vector.
 
 Another related approach to \emph{mfDCA} and \emph{PSICOV} is
 \emph{gaussianDCA}, proposed in 2014 by Baldassi et al.
-{[}\protect\hyperlink{ref-Baldassi2014}{67}{]}. Similar to the other
+{[}\protect\hyperlink{ref-Baldassi2014}{64}{]}. Similar to the other
 both approaches, they model the data as multivariate Gaussian but within
 a simple Bayesian formalism by using a suitable prior and estimating
 parameters over the posterior distribution.
@@ -1115,15 +1090,15 @@ contact prediction presented in the following section. Currently, there
 exist several implementations of pseudo-likelihood maximization that
 vary in slight details, perform similarly and thus are equally popular
 in the community, such as CCMpred
-{[}\protect\hyperlink{ref-Seemayer2014}{62}{]},
-plmDCA{[}\protect\hyperlink{ref-Ekeberg2014}{63}{]} and GREMLIN
-{[}\protect\hyperlink{ref-Kamisetty2013}{64}{]}.
+{[}\protect\hyperlink{ref-Seemayer2014}{59}{]},
+plmDCA{[}\protect\hyperlink{ref-Ekeberg2014}{60}{]} and GREMLIN
+{[}\protect\hyperlink{ref-Kamisetty2013}{61}{]}.
 
 \subsubsection{Pseudo-Likelihood}\label{pseudo-likelihood}
 
 Instead of the full likelihood, Besag suggested to optimize a different
 objective function that he called \emph{pseudo-likelihood}
-{[}\protect\hyperlink{ref-Besag1975}{68}{]}. The pseudo-likelihood
+{[}\protect\hyperlink{ref-Besag1975}{65}{]}. The pseudo-likelihood
 approximates the joint probability with the product over conditionals
 for each variable, i.e.~the conditional probability of observing one
 variable given all the others:
@@ -1164,11 +1139,11 @@ of the parameters,
 Eventhough the pseudo-likelihood optimizes a different objective than
 the full-likelihood, it has been found to work well in practice for many
 problems, including contact prediction
-{[}\protect\hyperlink{ref-Murphy2012}{55},\protect\hyperlink{ref-Koller2009}{59}--\protect\hyperlink{ref-Stein2015a}{61}{]}.
+{[}\protect\hyperlink{ref-Murphy2012}{52},\protect\hyperlink{ref-Koller2009}{56}--\protect\hyperlink{ref-Stein2015a}{58}{]}.
 The pseudo-likelihood function retains the concavity of the likelihood
 and it has been shown to be a consistent estimator in the limit of
 infinite data for models of the exponential family
-{[}\protect\hyperlink{ref-Koller2009}{59},\protect\hyperlink{ref-Besag1975}{68},\protect\hyperlink{ref-Gidas1988}{69}{]}.
+{[}\protect\hyperlink{ref-Koller2009}{56},\protect\hyperlink{ref-Besag1975}{65},\protect\hyperlink{ref-Gidas1988}{66}{]}.
 That is, as the number of sequences in the alignment increases,
 pseudo-likelihood estimates converge towards the true full likelihood
 parameters.
@@ -1184,19 +1159,19 @@ heuristically map the \(q \! \times \! q\) dimensional coupling matrix
 
 \emph{mpDCA} {[}\protect\hyperlink{ref-Weigt2009}{30}{]} and
 \emph{mfDCA}
-{[}\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Marks2011}{57}{]}
+{[}\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Marks2011}{54}{]}
 employ a score called \protect\hyperlink{abbrev}{DI}, that essentially
 computes the \protect\hyperlink{abbrev}{MI} for two positions \(i\) and
 \(j\) using the couplings \(\wij\) instead of pairwise amino acid
 frequencies. However, \protect\hyperlink{abbrev}{DI} scores have quickly
 been replaced by the Frobenius norm as it was found to improve
 prediction performance over \protect\hyperlink{abbrev}{DI}
-{[}\protect\hyperlink{ref-Ekeberg2013}{60},\protect\hyperlink{ref-Baldassi2014}{67}{]}.
+{[}\protect\hyperlink{ref-Ekeberg2013}{57},\protect\hyperlink{ref-Baldassi2014}{64}{]}.
 
 Currently, all pseudo-likelihood methods (\emph{plmDCA}
-{[}\protect\hyperlink{ref-Ekeberg2013}{60},\protect\hyperlink{ref-Ekeberg2014}{63}{]},
-\emph{CCMpred} {[}\protect\hyperlink{ref-Seemayer2014}{62}{]},
-\emph{GREMLIN} {[}\protect\hyperlink{ref-Kamisetty2013}{64}{]}) compute
+{[}\protect\hyperlink{ref-Ekeberg2013}{57},\protect\hyperlink{ref-Ekeberg2014}{60}{]},
+\emph{CCMpred} {[}\protect\hyperlink{ref-Seemayer2014}{59}{]},
+\emph{GREMLIN} {[}\protect\hyperlink{ref-Kamisetty2013}{61}{]}) compute
 the \emph{Frobenius norm} of the coupling matrix \(\wij\) to obtain a
 scalar contact score \(C_{ij}\),
 
@@ -1208,14 +1183,14 @@ scalar contact score \(C_{ij}\),
 It was found that prediction precision improves further when the
 Frobenius norm is computed only on the \(20 \times 20\) submatrix, thus
 ignoring contributions from gaps
-{[}\protect\hyperlink{ref-Feinauer2014}{70}{]}. \emph{PSICOV}
+{[}\protect\hyperlink{ref-Feinauer2014}{67}{]}. \emph{PSICOV}
 {[}\protect\hyperlink{ref-Jones2012}{44}{]} uses an L1-norm on the
 \(20 \times 20\) submatrix instead of the Frobenius norm.
 
 The Frobenius norm is gauge dependent and is minimized by the
 \emph{zero-sum gauge} {[}\protect\hyperlink{ref-Weigt2009}{30}{]}.
 Therefore, in
-{[}\protect\hyperlink{ref-Ekeberg2013}{60},\protect\hyperlink{ref-Seemayer2014}{62},\protect\hyperlink{ref-Ekeberg2014}{63},\protect\hyperlink{ref-Baldassi2014}{67}{]}
+{[}\protect\hyperlink{ref-Ekeberg2013}{57},\protect\hyperlink{ref-Seemayer2014}{59},\protect\hyperlink{ref-Ekeberg2014}{60},\protect\hyperlink{ref-Baldassi2014}{64}{]}
 the coupling matrices are transformed to \emph{zero-sum gauge} before
 computing the Frobenius norm:
 
@@ -1229,7 +1204,7 @@ where \(\cdot\) denotes average over the respective indices.
 Another commonly applied heuristic known as
 \protect\hyperlink{abbrev}{APC} has been found to substantially boost
 contact prediction performance
-{[}\protect\hyperlink{ref-Dunn2008}{29},\protect\hyperlink{ref-Kamisetty2013}{64}{]}.
+{[}\protect\hyperlink{ref-Dunn2008}{29},\protect\hyperlink{ref-Kamisetty2013}{61}{]}.
 Dunn et al. introduced \protect\hyperlink{abbrev}{APC} in order to
 remove the influence of background noise arising from correlations
 between positions with high entropy or phylogenetic couplings
@@ -1251,7 +1226,7 @@ well and how it can be interpreted. Zhang et al. showed that
 \protect\hyperlink{abbrev}{APC} essentially approximates the removal of
 the first principal component of the contact matrix and therefore
 removes the highest variability in the matrix that is assumed to arise
-from background biases {[}\protect\hyperlink{ref-Zhang2016}{71}{]}.
+from background biases {[}\protect\hyperlink{ref-Zhang2016}{68}{]}.
 Furthermore, they studied an advanced decomposition technique, called
 low-rank and sparse matrix decomposition (LRS), that decomposes the
 contact matrix into a low-rank and a sparse component, representing
@@ -1271,7 +1246,7 @@ entropy correction has the advantage that it is computed from input
 statistics and therefore is independent of the statistical model used to
 infer the couplings. In contrast, \protect\hyperlink{abbrev}{APC} and
 other denoising techniques such as LRS
-{[}\protect\hyperlink{ref-Zhang2016}{71}{]} discussed above, estimate a
+{[}\protect\hyperlink{ref-Zhang2016}{68}{]} discussed above, estimate a
 background model from the final contact matrix, thus depending on the
 statistical model used to infer the contact matrix.
 
@@ -1315,7 +1290,7 @@ bias from sequencing species of special interest (e.g human pathogens)
 or sequencing closely related species, e.g multiple strains. This uneven
 sampling of a protein family's sequence space thus leaves certain
 regions unexplored whereas others are statistically overrepresented
-{[}\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Marks2012}{72}{]}.
+{[}\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Marks2012}{69}{]}.
 
 Furthermore, due to their evolutionary relationships, sequences have a
 complicated dependence structure. Closely related sequences can cause
@@ -1348,7 +1323,7 @@ reweighting strategy has been found to improve contact prediction
 performance, where every sequence receives a weight that is the inverse
 of the number of similar sequences according to an identity threshold
 (see section \ref{seq-reweighting})
-{[}\protect\hyperlink{ref-Jones2012}{44},\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Buslje2009}{73}{]}.
+{[}\protect\hyperlink{ref-Jones2012}{44},\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Buslje2009}{70}{]}.
 
 \subsubsection*{Entropic bias}\label{entropic-bias}
 \addcontentsline{toc}{subsubsection}{Entropic bias}
@@ -1380,11 +1355,11 @@ sequences. This relationship was confirmed in many studies and as a rule
 of thumb it has been argued that proteins with \(L\) residues need at
 least \emph{5L} sequences in order to obtain confident predictions
 useful for protein structure prediction
-{[}\protect\hyperlink{ref-Kamisetty2013}{64},\protect\hyperlink{ref-Marks2012}{72}{]}.
+{[}\protect\hyperlink{ref-Kamisetty2013}{61},\protect\hyperlink{ref-Marks2012}{69}{]}.
 Recently it was shown that precision of predicted contacts saturates for
 protein families with more than \(10^3\) diverse sequences and that
 precision is only dependent on protein length for families with small
-number of sequences {[}\protect\hyperlink{ref-Anishchenko2017}{51}{]}.
+number of sequences {[}\protect\hyperlink{ref-Anishchenko2017}{71}{]}.
 
 Interesting targets for contact prediction are protein families without
 any associated structural information. As can be seen in Figure
@@ -1395,7 +1370,7 @@ thus susceptible to finite sampling effects.
 With the rapidly increasing size of protein sequence databases (see
 section \ref{general-intro}) the number of protein families with enough
 sequences for accuarate contact predictions will also increase steadily
-{[}\protect\hyperlink{ref-TheUniProtConsortium2013}{11},\protect\hyperlink{ref-Kamisetty2013}{64}{]}.
+{[}\protect\hyperlink{ref-TheUniProtConsortium2013}{11},\protect\hyperlink{ref-Kamisetty2013}{61}{]}.
 Nevertheless, because of the already mentioned sequencing biases, better
 and more sensitive statistical models are indespensible to extend the
 applicability domain of coevolutionary methods.
@@ -1418,7 +1393,7 @@ the families in PFAM (7990 compared to 8489 families) do not have an
 annotated structure. The median family size in number of sequences for
 families with and without annotated structures is 185 and 827
 respectively. Data taken from PFAM 31.0 (March 2017, 16712 entries)
-{[}\protect\hyperlink{ref-Finn2016}{74}{]}.}\label{fig:pfam}
+{[}\protect\hyperlink{ref-Finn2016}{72}{]}.}\label{fig:pfam}
 \end{figure}
 
 \hypertarget{transitive-effects}{\subsubsection*{Transitive
@@ -1456,7 +1431,7 @@ Obviously, a correct \protect\hyperlink{abbrev}{MSA} is the essential
 starting point for correlated mutation analysis as incorrectly aligned
 residues will confound the true covariation signal. Highly sensitive and
 accurate tools such as HHblits generate high quality alignments suitable
-for contact prediction {[}\protect\hyperlink{ref-Remmert2012}{75}{]}.
+for contact prediction {[}\protect\hyperlink{ref-Remmert2012}{73}{]}.
 However, there are certain subtleties to be kept in mind when generating
 alignments.
 
@@ -1464,10 +1439,10 @@ For example, proteins with repeated stretches of amino acids or with
 regions of low complexity are notoriously hard to align. Especially,
 repeat proteins have been found to account for a considerable fraction
 of false positive predictions
-{[}\protect\hyperlink{ref-Anishchenko2017}{51}{]}. Therefore,
+{[}\protect\hyperlink{ref-Anishchenko2017}{71}{]}. Therefore,
 \protect\hyperlink{abbrev}{MSAs} need to be generated with great care
 and covariation methods need to be tailored to these specific problems
-{[}\protect\hyperlink{ref-Espada2014}{76},\protect\hyperlink{ref-Toth-Petroczy2016}{77}{]}.
+{[}\protect\hyperlink{ref-Espada2014}{74},\protect\hyperlink{ref-Toth-Petroczy2016}{75}{]}.
 
 Sensitivity of sequence search is critically dependent on the research
 question and the protein family of interest. While many diverse
@@ -1475,7 +1450,7 @@ sequences generally increase precision of predictions, co-evolutionary
 signals specific to a subfamily might be averaged out when alignments
 become too deep. Therefore a trade-off between specificity and diversity
 of the alignment is required to reach optimal results
-{[}\protect\hyperlink{ref-Hopf2012}{78}{]}.
+{[}\protect\hyperlink{ref-Hopf2012}{76}{]}.
 
 Another intrinsic characteristic of \protect\hyperlink{abbrev}{MSAs} are
 repeated stretches of gaps that result from commonly utilized
@@ -1483,17 +1458,46 @@ gap-penalty schemes assigning large penalties to insert a gap and lower
 penalties to gap extensions. Most statistical models treat gaps as the
 21st amino acid, thus introducing an imbalance as gaps and amino acid
 express different behaviours which often results in gap-induced
-artefacts {[}\protect\hyperlink{ref-Feinauer2014}{70}{]}.
+artefacts {[}\protect\hyperlink{ref-Feinauer2014}{67}{]}.
 
 \subsubsection*{Evaluation Strategy}\label{evaluation-strategy}
 \addcontentsline{toc}{subsubsection}{Evaluation Strategy}
 
 Contact prediction methods are typically evaluated based on a rigid
-definition of a residue contact that does not reflect true biological
-interactions between amino acids as discussed in section
-\ref{intro-cp-evaluation}. Choosing different distance cutoffs or
-different reference atoms for defining a true contact changes the
-evaluation outcome.
+definition of a residue contact as discussed in section
+\ref{intro-cp-evaluation}.
+
+However, whether two residues truly interact in a protein structure
+depends only marginally on the distance between their \(\Cb\) atoms.
+More importantly, interactions between side-chains depend on their
+physico-chemical properties, on their orientation and vary within the
+vast number of alternative environments within proteins
+{[}\protect\hyperlink{ref-Bettsa}{77}{]} (see section
+\ref{amino-acid-interactions}). Therefore, a simple \(\Cb\) distance
+threshold cannot capture the true biological interaction preferences of
+amino acids and yields an imperfect gold-standard for benchmarking.
+
+Other distance thresholds or definitions for contacts (e.g minimal
+atomic distances or distance between functional groups) have been
+studied as well. In fact, Duarte and colleagues found that using a
+\(\Cb\) distance threshold between 9\(\AA \; \;\) and 11\(\AA \; \;\)
+yields optimal results when predicting the 3D structure from the
+respective contacts {[}\protect\hyperlink{ref-Duarte2010}{78}{]}.
+
+Anishchenko and colleagues
+{[}\protect\hyperlink{ref-Anishchenko2017}{71}{]} analysed false
+positive predictions with respect to a minimal atom distance threshold
+\(< 5 \AA \; \;\), as they found that this cutoff optimally defines
+direct physical interactions of residue pairs.
+
+Therefore, choosing different distance cutoffs or different reference
+atoms for defining a true contact changes the evaluation outcome. With
+regard to the utilization of contacts for structure prediction, a simple
+\(\Cb\) cutoff is nonetheless a convenient choice, as this threshold can
+be easily implemented as a restraint in common structure predictions
+protocols (e.g Modeller). Furthermore, \protect\hyperlink{abbrev}{CASP}
+introduced the \(8\AA \; \; \Cb\) definition for a contact which has
+become well established in the mean time.
 
 Related to the problem of choosing the right trade-off between
 sensitivity and specificity when generating alignemnts is the issue of
@@ -1503,7 +1507,7 @@ and thus might be physical contacts in one family member but not in
 another. Anishchenko et al. could show that more than \(80\%\) of false
 positives at intermediate distances (minimal heavy atom distance
 \(5-15 \AA \;\;\)) are true contacts in at least one homolog structure
-{[}\protect\hyperlink{ref-Anishchenko2017}{51}{]}.
+{[}\protect\hyperlink{ref-Anishchenko2017}{71}{]}.
 
 \subsubsection*{Alternative Sources of
 Co-evolution}\label{alternative-sources-of-co-evolution}
@@ -1514,7 +1518,7 @@ Co-evolutionary signals can not only arise from intra-domain contacts,
 but also from other sources, like homo-oligomeric contacts, alternative
 conformations, ligand-mediated interactions or even contacts over
 hetero-oligomeric interfaces (see Figure \ref{fig:sources-coevolution})
-{[}\protect\hyperlink{ref-Marks2012}{72}{]}. With the objective to
+{[}\protect\hyperlink{ref-Marks2012}{69}{]}. With the objective to
 predict physical contacts it is therefore necessary to identify and
 filter these alternative sources for co-evolutionary couplings.
 
@@ -1546,22 +1550,22 @@ approximately one third of strong co-evolutionary signals between
 residue pairs at long distances (minimal heavy atom distance
 \(>15 \AA \;\;\)) can be attributed to interactions across
 homo-oligomeric interfaces
-{[}\protect\hyperlink{ref-Anishchenko2017}{51}{]}. Several studies
+{[}\protect\hyperlink{ref-Anishchenko2017}{71}{]}. Several studies
 specifically analysed co-evolution across homo-oligomeric interfaces for
 proteins of known structure by filtering for residue pairs with strong
 couplings at long distances
-{[}\protect\hyperlink{ref-Hopf2012}{78}--\protect\hyperlink{ref-Jana2014}{82}{]}
+{[}\protect\hyperlink{ref-Hopf2012}{76},\protect\hyperlink{ref-Lee2009}{79}--\protect\hyperlink{ref-Jana2014}{82}{]}
 or used co-evolutionary signals to predict homo-dimeric complexes
 {[}\protect\hyperlink{ref-DosSantos2015a}{83}{]}.
 
 It has been proposed that co-evolutionary signals can also arise from
 ligand or atom mediated interactions between residues or from critical
 interactions in intermediate folding states
-{[}\protect\hyperlink{ref-Buslje2009}{73},\protect\hyperlink{ref-Ovchinnikov2015b}{84}{]}.
+{[}\protect\hyperlink{ref-Buslje2009}{70},\protect\hyperlink{ref-Ovchinnikov2015b}{84}{]}.
 Confirming this hypothesis, a study showed that the cumulative strength
 of couplings for a particular residue can be used to predict functional
 sites
-{[}\protect\hyperlink{ref-Marks2012}{72},\protect\hyperlink{ref-Hopf2012}{78}{]}.
+{[}\protect\hyperlink{ref-Marks2012}{69},\protect\hyperlink{ref-Hopf2012}{76}{]}.
 
 Another important aspect is conformational flexibility. PDB structures
 used to evaluate co-evolution analysis represent only rigid snapshots
@@ -1571,7 +1575,7 @@ conformations or adapt shape when interacting with other proteins in an
 induced fit manner {[}\protect\hyperlink{ref-Noel2016}{85}{]}. Several
 studies demonstrated successfully that co-evolutionary signals can
 capture interactions specific to different distinct conformations
-{[}\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Hopf2012}{78},\protect\hyperlink{ref-Jana2014}{82},\protect\hyperlink{ref-Sfriso2016}{86}{]}.
+{[}\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Hopf2012}{76},\protect\hyperlink{ref-Jana2014}{82},\protect\hyperlink{ref-Sfriso2016}{86}{]}.
 
 \section{Developing a Bayesian Model for Contact
 Prediction}\label{developing-a-bayesian-model-for-contact-prediction}
@@ -2044,16 +2048,14 @@ amino acid pair frequencies \(q(x_i = a, x_j = b)\) will vanish for all
 
 
 \begin{figure}
-\centering
-\includegraphics{img/gap_treatment.png}
-\caption{\label{fig:gap-treatment}Hypothetical \protect\hyperlink{abbrev}{MSA}
+\includegraphics[width=11.11in]{img/gap_treatment} \caption{Hypothetical \protect\hyperlink{abbrev}{MSA}
 consisting of two sets of sequences: the first set has sequences
 covering only the left half of columns, while the second set has
 sequences covering only the right half of columns. The two blocks could
 correspond to protein domains that were aligned to a single query
 sequence. Empirical amino acid pair frequencies
 \(q(x_i \eq a, x_j \eq b)\) will vanish for positions \(i\) from the
-left half and \(j\) from the right half of the alignment.}
+left half and \(j\) from the right half of the alignment.}\label{fig:gap-treatment}
 \end{figure}
 
 The gradient of the log likelihood for couplings is
@@ -2286,7 +2288,7 @@ that
 i.e.~we would correctly conclude that \(\wijab=0\) and \((i,a)\) and
 \((j,b)\) are not coupled.
 
-\subsection{Full-likelihood}\label{full-likelihood}
+\section{Full-likelihood}\label{full-likelihood}
 
 Computing the gradient of the likelihood analytically according to the
 previous equations is infeasible, because computing
@@ -2357,12 +2359,10 @@ other approximations like mean-field methods or methods based on the
 Bethe-approximation or sparse inverse covariance. Even though
 pseudo-likelihood maximation has been shown to be a consistent estimator
 in the limit of infinite data
-{[}\protect\hyperlink{ref-Besag1975}{68}{]}, it is not clear how well
+{[}\protect\hyperlink{ref-Besag1975}{65}{]}, it is not clear how well
 pseudo-likelihood approximation is for real-world datasets.
 
-\subsection{Likelihood Gradient}\label{likelihood-gradient}
-
-\subsection{Contrastive Divergence}\label{contrastive-divergence}
+\section{Contrastive Divergence}\label{contrastive-divergence}
 
 CD is about the difference between the original data set and a perturbed
 data set perturbed data set : The contrasting data set needs to
@@ -2514,7 +2514,7 @@ where the single potentials \(\v\) are set to the target vector \(\v^*\)
 as discussed in section \ref{overview-posterior-distances}.
 
 The posterior distribution can be approximated with a so called
-``Laplace Approximation''{[}\protect\hyperlink{ref-Murphy2012}{55}{]} as
+``Laplace Approximation''{[}\protect\hyperlink{ref-Murphy2012}{52}{]} as
 follows. By performing a second order Taylor expansion around the mode
 \(\w^*\) of the log posterior it can be written as
 
@@ -2784,12 +2784,11 @@ prediction scores for \((i,j)\) from a profile-based method.
 For example, predictions of secondary structure elements and solvent
 accessibility are used by almost all modern machine learning predictors,
 such as MetaPsicov {[}\protect\hyperlink{ref-Jones2015a}{89}{]}, NeBCon
-{[}\protect\hyperlink{ref-He2017}{90}{]}, EPSILON-CP
-{[}\protect\hyperlink{ref-Stahl2017}{91}{]}, PconsC3
-{[}\protect\hyperlink{ref-Skwark2016}{92}{]}. Other frequently used
-sequence derived features include pairwise contact potentials, sequence
-separation and conservation measures such as column entropy
-{[}\protect\hyperlink{ref-Jones2015a}{89},\protect\hyperlink{ref-He2017}{90},\protect\hyperlink{ref-Ma2015a}{93}{]}.
+{[}{\textbf{???}}{]}, EPSILON-CP {[}{\textbf{???}}{]}, PconsC3
+{[}{\textbf{???}}{]}. Other frequently used sequence derived features
+include pairwise contact potentials, sequence separation and
+conservation measures such as column entropy
+{[}{\textbf{???}},\protect\hyperlink{ref-Jones2015a}{89},\protect\hyperlink{ref-Ma2015a}{90}{]}.
 
 In the following sections I will present a random forest classifier that
 uses sequence derived features to distinguish contacts from
@@ -2810,10 +2809,9 @@ improves prediction accuracy over the single coevolution method.
 
 Random Forests are supervised machine learning methods that belong to
 the class of ensemble methods
-{[}\protect\hyperlink{ref-Ho1998}{94}--\protect\hyperlink{ref-Breiman2001}{96}{]}.
-They are easy to implement, fast to train and can handle large numbers
-of features due to implicit feature selection
-{[}\protect\hyperlink{ref-Menze2009}{97}{]}.
+{[}{\textbf{???}},{\textbf{??}},{\textbf{??}}{]}. They are easy to
+implement, fast to train and can handle large numbers of features due to
+implicit feature selection {[}{\textbf{???}}{]}.
 
 Ensemble methods combine the predictions of several independent base
 estimators with the goal to improve generalizability over a single
@@ -2864,7 +2862,7 @@ to split the data set at the given node \(N\),
 
 where \(p_{\textrm{left}}\) and \(p_{\textrm{right}}\) refers to the
 fraction of samples ending up in the left and right child node
-respectively {[}\protect\hyperlink{ref-Menze2009}{97}{]}.
+respectively {[}{\textbf{???}}{]}.
 
 Summing the \emph{decrease in Gini impurity} for a feature \(f\) over
 all trees whenever \(f\) was used for a split yields the \emph{Gini
@@ -2880,35 +2878,90 @@ features and introducing bias. Furthermore, it has been found that
 feature selection based on \emph{Gini importance} is biased towards
 selecting features with more categories as they will be chosen more
 often for splits and therefore tend to obtain higher scores
-{[}\protect\hyperlink{ref-Strobl2007}{98}{]}.
+{[}{\textbf{???}}{]}.
 
-\section{Evaluating Random Forest
-Predictor}\label{evaluating-random-forest-predictor}
+\section{Evaluating Random Forest Model as Contact
+Predictor}\label{evaluating-random-forest-model-as-contact-predictor}
 
-After hyperparameter optimization of Random Forest parameters as well as
-grid search over window size and class ratios (see methods), we can look
-at features that are most important
+I trained a random forest classifier on the feature set described in
+methods section \ref{seq-features} and optimized model hyperparameters
+as well as some data set specific settings (e.g window size and class
+ratios) with 5-fold cross-validation as described in methods section
+\ref{rf-hyperparameter-optimization}.
 
-\begin{itemize}
-\tightlist
-\item
-  which features are most important
-\end{itemize}
+Ranking features by \emph{Gini importance} reveals that both local
+statistical contact scores, OMES and mutual information (see
+\ref(local-methods)), constitute the most important features (see Figure
+\ref{fig:rf-feature-importance}). Further important features include the
+log protein length and the contact prior based on protein length.
+Solvent accessibility predictions also rank highly as well as some of
+the mean potential scores.
 
-now we can do feature selection as described in methods and its
-sufficient to use only a small set of features (75)
 
-\begin{itemize}
-\tightlist
-\item
-  which subset of features is enough
-\end{itemize}
 
-Now we can look at performance and compare it to pll l2norm + apc
 
-Furthermore we can include the pll l2norm + apc to see how much we can
-improve using the additional sequence features How much does Prior
-Information Improve Contact Prediction?
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/aa_venn_diagram} \caption{Top ten features ranked according to
+\emph{Gini importance}. omes\_apc = OMES contact score with
+\protect\hyperlink{abbrev}{APC}, MI\_apc = mutual information score with
+\protect\hyperlink{abbrev}{APC}, prior\_L = contact prior based on
+protein length as described in methods section
+\ref{seq-features-global}, log\_L = logarithm of protein length,
+miyasawajernigan1999water = mean pairwise contact potential based on
+quasi-chemical potential by Miyazawa \& Jernigan (1999)
+{[}\protect\hyperlink{ref-Miyazawa1999a}{91}{]}, rsa\_i amd rsa\_j =
+solvent accessibility prediction for residues i and j with NetsurfP
+{[}{\textbf{???}}{]}.}\label{fig:rf-feature-importance}
+\end{figure}
+
+Many features receive only very low \emph{Gini importance} scores. In
+order to reduce the complexity of the model that comprises 225 features,
+it is convenient to evaluate model performance on subsets of highly
+important features only (see methods section
+\ref{rf-feature-selection}). As can be seen in Figure
+\ref{rf-performance-feature-selection}, most models trained on subsets
+of the feature space perform nearly identical to the model trained on
+the complete feature set.
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/aa_venn_diagram} \caption{Average precision of
+random forest models trained on subsets of sequence derived features.
+Subsets of features have been selected as described in methods section
+\ref{rf-feature-selection}.}\label{fig:rf-performance-feature-selection}
+\end{figure}
+
+The model using the 75 most important features according to \emph{Gini
+importance} has been selected for further analysis. Figure
+\ref{rf-with-pll-score} compares performance of various models. The
+random forest model trained on the 75 most important features (green
+line) has a mean precision of 0.33 for the top 5L contacts compared to a
+precision of 0.47 for the conventional L2norm + APC contact score based
+on pseudo-likelihood optimization (red line). The performance of the two
+local statistical contact scores, OMES+APC and MI+APC, which also
+constitute the two most important features of the random forest model,
+are shown as blue and yellow lines in Figure \ref{rf-with-pll-score}.
+The random forest model improves approximately ten percentage points in
+precision over both methods.
+
+When analysing performance with respect to alignment size it is clear
+that the random forest model outperforms the pseudo-likelihood score for
+small alignments. Both, OMES and MI also perform weak on small
+alignments, leading to the conclusion that the remaining sequence
+derived features are highly relevant in the regimes low data.
 
 In order to evaluate how much the sequence derived features can improve
 contact prediction over the coevolutionary contact scores, the
@@ -2958,11 +3011,10 @@ contact score (L2norm + APC)}\label{fig:performance-rf-with-pll-score}
 Especially for small alignments, the random forest model makes better
 predictions than the coevolutionary method. This finding is expected, as
 it is well known that models trained on simple sequence features perform
-almost independent of alignment size.
-{[}\protect\hyperlink{ref-Stahl2017}{91}{]}. In contrast, the
-improvement on large alignments is small, as the gain from simple
-sequence features compared to the much more powerful coevolution signals
-is neglectable.
+almost independent of alignment size. {[}{\textbf{???}},
+\textbf{???}{]}. In contrast, the improvement on large alignments is
+small, as the gain from simple sequence features compared to the much
+more powerful coevolution signals is neglectable.
 
 
 
@@ -2977,12 +3029,12 @@ all you need to know
 \section{Dataset}\label{dataset}
 
 A protein dataset has been constructed from the CATH (v4.1)
-{[}\protect\hyperlink{ref-Sillitoe2015}{99}{]} database for
+{[}\protect\hyperlink{ref-Sillitoe2015}{92}{]} database for
 classification of protein domains. All CATH domains from classes
 1(mainly \(\alpha\)), 2(mainly \(\beta\)), 3(\(\alpha+\beta\)) have been
 selected and filtered for internal redundancy at the sequence level
 using the \texttt{pdbfilter} script from the
-HH-suite{[}\protect\hyperlink{ref-Remmert2012}{75}{]} with an E-value
+HH-suite{[}\protect\hyperlink{ref-Remmert2012}{73}{]} with an E-value
 cutoff=0.1. The dataset has been split into ten subsets aiming at the
 best possible balance between CATH classes 1,2,3 in the subsets. All
 domains from a given CATH topology (=fold) go into the same subsets, so
@@ -2994,7 +3046,7 @@ class in a subset. In total there are 6741 domains in the dataset.
 
 Multiple sequence alignments were built from the CATH domain sequences
 (\href{http://www.cathdb.info/version/current/domain/3cdjA03/sequence}{COMBS})
-using HHblits {[}\protect\hyperlink{ref-Remmert2012}{75}{]} with
+using HHblits {[}\protect\hyperlink{ref-Remmert2012}{73}{]} with
 parameters to maximize the detection of homologous sequences:
 
 \texttt{hhblits\ -maxfilt\ 100000\ -realign\_max\ 100000\ -B\ 100000\ -Z\ 100000\ -n\ 5\ -e\ 0.1\ -all}
@@ -3040,7 +3092,7 @@ dataset and the ten subsets. }\label{fig:dataset-cath-topologies}
 Pseudo-Likelihood}\label{optimizing-pseudo-likelihood}
 
 Dr Stefan Seemayer has reimplementated the open-source software CCMpred
-{[}\protect\hyperlink{ref-Seemayer2014}{62}{]} in Python. Based on a
+{[}\protect\hyperlink{ref-Seemayer2014}{59}{]} in Python. Based on a
 fork of his private github repository I continued development and
 extended the software, which is now called CCMpredPy. It will soon be
 available at \url{https://github.com/soedinglab/CCMpredPy}. All
@@ -3071,7 +3123,7 @@ The normalization term \(Z_i\) sums over all assignments to one position
 CCMpredpy}\label{diff-ccmpred-ccmpredpy}
 
 CCMpredPy differs from CCMpred
-{[}\protect\hyperlink{ref-Seemayer2014}{62}{]} which is available at
+{[}\protect\hyperlink{ref-Seemayer2014}{59}{]} which is available at
 \url{https://github.com/soedinglab/CCMpred} in several details:
 
 \begin{itemize}
@@ -3135,7 +3187,7 @@ proteins confirms that performance measured as
 \begin{figure}
 \includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Benchmark for CCMpred and
 CCMpredPy on a dataset of 3124 proteins. ccmpred-vanilla+apc: CCMpred
-{[}\protect\hyperlink{ref-Seemayer2014}{62}{]} with
+{[}\protect\hyperlink{ref-Seemayer2014}{59}{]} with
 \protect\hyperlink{abbrev}{APC}. ccmpred-pll-centerv+apc: CCMpredPy with
 \protect\hyperlink{abbrev}{APC}. Specific flags that have been used to
 run both methods are described in detail in the text (see section
@@ -3178,12 +3230,12 @@ a probabilistic model. To reduce the effects of overrepresented
 sequences, typically a simple weighting strategy is applied that assigns
 a weight to each sequence that is the inverse of the number of similar
 sequences according to an identity threshold
-{[}\protect\hyperlink{ref-Stein2015a}{61}{]}. It has been found that
+{[}\protect\hyperlink{ref-Stein2015a}{58}{]}. It has been found that
 reweighting improves contact prediction performance
-{[}\protect\hyperlink{ref-Jones2012}{44},\protect\hyperlink{ref-Morcos2011}{56},\protect\hyperlink{ref-Buslje2009}{73}{]}
+{[}\protect\hyperlink{ref-Jones2012}{44},\protect\hyperlink{ref-Morcos2011}{53},\protect\hyperlink{ref-Buslje2009}{70}{]}
 significantly but results are robust against the choice of the identity
 threshold in a range between 0.7 and 0.9
-{[}\protect\hyperlink{ref-Morcos2011}{56}{]}. We chose an identity
+{[}\protect\hyperlink{ref-Morcos2011}{53}{]}. We chose an identity
 threshold of 0.8.
 
 Every sequence \(x_n\) of length \(L\) in an alignment with \(N\)
@@ -3337,14 +3389,161 @@ two-dimensional distribution plots with the difference that evidence for
 a single coupling term has to be
 \(N_{ij} \cdot q_i(a) \cdot q_j(b) < 80.\)
 
-\subsection{Bayesian Model for Residue-Resdiue Contact
+\section{Optimizing the
+Full-Likelihood}\label{methods-optimizing-full-likelihood}
+
+Given the likelihood gradient estimate utilizing contrastive divergence,
+the full likelihood can now be minimized using a gradient descent
+optimization algorithm. Second order optimization algorithms that make
+use of the (approximate) partial second derivates cannot be applied
+here, as the computation of the Hessian is too complex.
+
+Gradient descent algorithms in general minimize an objective function by
+iteratively updating the function parameters in the opposite direction
+of the gradient of the objective function with respect to the
+parameters. Stochastic gradient descent is a variant thereof that uses
+only a subsample of the data at each step of the optimization procedure
+to estimate the gradient. Consequently, the gradient estimates are noisy
+resulting in parameter updates with high variance and strong
+fluctuations of the objective function. These fluctuation enable
+stochastic gradient descent to escape local minima but also complicate
+finding the exact minimum of the objective function. By slowly
+decreasing the step size of the parameter updates at every iteration,
+stochastic gradient descent most likely will converge to the global
+minimum for convex objective functions
+{[}{\textbf{???}},{\textbf{??}}{]}.
+
+However, choosing an optimal learning rate for parameter updates as well
+as an appropriate learning rate decay offers a challenge and needs
+manual tuning. The following sections describe the hyperparameter
+optimization of two stochastic gradient descent optimization algorithms:
+simple stochastic gradient descent and ADAM
+{[}\protect\hyperlink{ref-Kingma2014}{93}{]}. The performance for tested
+parameter settings is evaluated on a benchmark set of \textasciitilde{}
+500 proteins, that is a subset of the data set described in methods
+section \ref{dataset}. The reference method for all new developed scores
+is the pseudo-likelihood method that uses the corrected L2norm as a
+final contact score as explained in section
+\ref{post-processing-heuristics}. Pseudo-likelihood couplings are
+computed with the tool CCMpredPy that is introduced in methods section
+\ref{diff-ccmpred-ccmpredpy}. Contact scores for the methods under
+developments are computed using the corrected L2norm of the couplings,
+just as for the pseudo-likelihood method.
+
+\subsection{Hyperparameter Optimization for Stochastic Gradient
+Descent}\label{hyperparameter-optimization-for-stochastic-gradient-descent}
+
+Stochastic gradient descent updates the coupling parameters \(\w\) using
+the approximate gradient to the log likelihood
+\(\nabla_w \LLreg(\v,\w)\) obtained with contrastive divergence and a
+learning rate \(\alpha\) according to
+
+\begin{equation}
+  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
+\end{equation}
+
+In order to get a first intuition of the optimization problem, I used
+\(\alpha \in \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}\)
+and a standard learning rate schedule,
+
+\begin{equation}
+  \alpha  = \frac{\alpha_0}{1 + \gamma \cdot t} \; ,
+\end{equation}
+
+with \(\gamma=0.1\) being the decay rate and \(t\) the current iteration
+{[}{\textbf{???}}{]}. It is not feasible to compute the function value
+at each iteration in order to decide when the optimization has
+converged. Therefore the optimization will stop whenever the gradient
+norm changes less than a small \(\epsilon=1\mathrm{e}{-8}\) or when 5000
+iterations are reached.
+
+Figure \ref{fig:performance-cd-alphaopt} shows the benchmark for the
+optimizations with the four different learning rates. In general, the
+top ranked contacts are predicted with equal accuracy as the reference
+method ({``ccmpred-pll-centerv+apc''}) when using small learning rates
+\(\alpha \in \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3} \}\).
+Predictions for lower ranked contacts (top \(0.6-L\) predictions) are
+less accurate. Using a high learning rate \(5\mathrm{e}{-3}\) yields
+much less accurate predictions. When evaluating the methods with respect
+to alignment size (see Figure \ref{fig:performance-cd-alphaopt-neff}) it
+becomes clear that a high learning rate of \(5\mathrm{e}{-3}\) does only
+not work well for proteins with large alignments. The magnitude of the
+gradient depends on the size of the alignment because the gradient is
+computed as a difference of amino acid counts. Therefore proteins with
+large alignments will generally have larger gradients than proteins with
+small alignments. When analysing individual proteins with large
+alignments it becomes clear that choosing a learning rate that is too
+large causes the optimization to diverge. Furthermore, when using a
+small learning rate, most of the optimizations did not converge but
+reached the maximum number of 5000 iterations.
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/aa_venn_diagram} 
+
+}
+
+\caption{Mean precision for top ranked
+contact predictions over \textasciitilde{}500 proteins.
+{ccmpred-pll-centerv+apc}: L2norm + APC score for pseudo-likelihood
+couplings. The other methods derive contact scores as the L2norm + APC
+for couplings computed with contrastive divergence using stochastic
+gradient descent and different learning rates: {cd\_alpha\_1e-4+apc}:
+learning rate \(1\mathrm{e}{-4}\). {cd\_alpha\_5e-4+apc}: learning rate
+\(5\mathrm{e}{-4}\). {cd\_alpha\_1e-3+apc}: learning rate
+\(1\mathrm{e}{-3}\). {cd\_alpha\_5e-3+apc}: learning rate
+\(5\mathrm{e}{-3}\).}\label{fig:performance-cd-alphaopt}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/aa_venn_diagram} 
+
+}
+
+\caption{Mean precision for top ranked
+contact predictions over \textasciitilde{}500 proteins splitted into
+four equally sized subsets according to
+\protect\hyperlink{abbrev}{Neff}. Subsets are defined according to
+quantiles of \protect\hyperlink{abbrev}{Neff} values. Upper left: Subset
+of proteins with \protect\hyperlink{abbrev}{Neff} \textless{} Q1. Upper
+right: Subset of proteins with Q1 \textless{}=
+\protect\hyperlink{abbrev}{Neff} \textless{} Q2. Lower left: Subset of
+proteins with Q2 \textless{}= \protect\hyperlink{abbrev}{Neff}
+\textless{} Q3. Lower right: Subset of proteins with Q3 \textless{}=
+\protect\hyperlink{abbrev}{Neff} \textless{} Q4. Methods are the same as
+in Figure \ref{fig:performance-cd-alphaopt}.}\label{fig:performance-cd-alphaopt-neff}
+\end{figure}
+
+\section{Bayesian Model for Residue-Resdiue Contact
 Prediction}\label{bayesian-model-for-residue-resdiue-contact-prediction}
 
-\section{\texorpdfstring{Off-diagonal elements in
-\(\H\)}{Off-diagonal elements in \textbackslash{}H}}\label{Hessian-offdiagonal}
-
-\section{Efficiently Computing the negative Hessian of the regularized
-log-likelihood}\label{neg-Hessian-computation}
+\subsection{Efficiently Computing the negative Hessian of the
+regularized log-likelihood}\label{neg-Hessian-computation}
 
 Surprisingly, the elements of the Hessian at the mode \(\w^*\) are easy
 to compute. Let \(i,j,k,l \in \{1,\ldots,L\}\) be columns in the
@@ -3469,7 +3668,7 @@ Now eq. \eqref{eq:Hw-diag} can be written in matrix form
 \label{eq:mat-Hij}
 \end{equation}
 
-\section{\texorpdfstring{Efficiently Computing the Inverse of Matrix
+\subsection{\texorpdfstring{Efficiently Computing the Inverse of Matrix
 \(\Lijk\)}{Efficiently Computing the Inverse of Matrix \textbackslash{}Lijk}}\label{inv-lambda-ij-k}
 
 It is possible to efficiently invert the matrix
@@ -3550,8 +3749,8 @@ Setting \(\mathbf{A} = N_{ij} \Qij + \Lk\) and \(\v = \qij\) and
 that
 \(\log(\det(\mathbf{A})) = \sum \log \left( \text{diag}(\mathbf{A}) \right)\).
 
-\section{\texorpdfstring{Training the Hyperparameters \(\muk\), \(\Lk\)
-and
+\subsection{\texorpdfstring{Training the Hyperparameters \(\muk\),
+\(\Lk\) and
 \(\gamma_k\)}{Training the Hyperparameters \textbackslash{}muk, \textbackslash{}Lk and \textbackslash{}gamma\_k}}\label{training-hyperparameters}
 
 The model parameters
@@ -3775,7 +3974,7 @@ The partial derivative of the likelihood function with respect to
 Residue-Residue
 Distances}\label{bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances}
 
-\section{\texorpdfstring{Modelling the dependence of \(\wij\) on
+\subsection{\texorpdfstring{Modelling the dependence of \(\wij\) on
 distance}{Modelling the dependence of \textbackslash{}wij on distance}}\label{modelling-the-dependence-of-wij-on-distance}
 
 It is straightforward to extend the model presented in
@@ -3923,7 +4122,7 @@ weighted amino acid frequencies in alignment\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 average three state propensities PSIPRED
-(v4.0){[}\protect\hyperlink{ref-Jones1999}{100}{]}\strut
+(v4.0){[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
 \end{minipage}\tabularnewline
@@ -3931,14 +4130,16 @@ average three state propensities PSIPRED
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 average three state propensities Netsurfp
-(v1.0){[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
+(v1.0){[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
-prior protein length\strut
+contact prior protein length\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-expected number of contacts (\ref{fig:contact-priorL})\strut
+simple contact predictor based on expected number of contacts per
+protein with respect to protein length (see next subsection
+\ref{contact-prior-protein-length})\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -3993,7 +4194,7 @@ shannon entropy (21 states)\strut
 kullback leibler divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
+{[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4001,7 +4202,7 @@ between weighted observed and background amino acid frequencies
 jennson shannon divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
+{[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4009,31 +4210,28 @@ between weighted observed and background amino acid frequencies
 PSSM\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 log odds ratio of weighted observed and background amino acid
-frequencies {[}\protect\hyperlink{ref-Robinson1991}{102}{]}\strut
+frequencies {[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 40\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-three state propensities PSIPRED (v4.0)
-{[}\protect\hyperlink{ref-Jones1999}{100}{]}\strut
+three state propensities PSIPRED (v4.0) {[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-three state propensities Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
+three state propensities Netsurfp (v1.0) {[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 solvent accessibility prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-RSA and RSA Z-score Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{101}{]}\strut
+RSA and RSA Z-score Netsurfp (v1.0) {[}{\textbf{???}}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 4\strut
 \end{minipage}\tabularnewline
@@ -4063,7 +4261,7 @@ percentage of gaps\strut
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{103}{]}\strut
+Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{94}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 10\strut
 \end{minipage}\tabularnewline
@@ -4072,7 +4270,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity accordign to Grantham, 1974. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4081,7 +4279,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity according to Zimmermann et al., 1986. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4090,7 +4288,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Isoelectric point according to Zimmermann et al., 1968. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4099,7 +4297,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity scale according to Wimley \& White, 1996. Data taken from
 \href{https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt}{UCSF
-Chimera} {[}\protect\hyperlink{ref-Wimley1996}{105}{]}.\strut
+Chimera} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4109,15 +4307,14 @@ Average physico-chemical properties\strut
 Hydrophobicity index according to Kyte \& Doolittle, 1982. Data taken
 from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-Hydrophobicity according to Cornette
-{[}\protect\hyperlink{ref-Cornette1987}{106}{]}.\strut
+Hydrophobicity according to Cornette {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4126,7 +4323,7 @@ Average physico-chemical properties\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Bulkiness according to Zimmerman et al., 1968. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4136,7 +4333,7 @@ Average physico-chemical properties\strut
 Average volumes of residues according to Pontius et al., 1996. Data
 taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4206,7 +4403,7 @@ sequences \(x_n\) and sequence weights \(w_n\)\strut
 correlation physico-chemical features\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 pairwise correlation of all physico-chemical properties listed in
-\ref{single-seq-features}\strut
+\ref{seq-features-single}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 13\strut
 \end{minipage}\tabularnewline
@@ -4216,7 +4413,7 @@ pairwise potential\strut
 Average quasi-chemical energy of interactions in an average buried
 environment. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4226,7 +4423,7 @@ pairwise potential\strut
 Average quasi-chemical energy of transfer of amino acids from water to
 the protein environment. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
+Database} {[}{\textbf{???}}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4234,7 +4431,7 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{104}{]}.\strut
 pairwise potential\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average general contact potential by Li\&Fang
-{[}\protect\hyperlink{ref-Li2011}{107}{]}\strut
+{[}\protect\hyperlink{ref-Li2011}{95}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4242,7 +4439,7 @@ Average general contact potential by Li\&Fang
 pairwise potential\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average statistical potential from residue pairs in beta-sheets by
-Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{108}{]}\strut
+Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{96}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -4271,8 +4468,8 @@ normalized MI\strut
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 OMES\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{109}{]} with and without APC\strut
+according to Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{97}{]}
+with and without APC\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -4281,8 +4478,79 @@ according to Fodor\&Aldrich
 
 There are in total \textbf{26} pairwise sequence features.
 
+\subsubsection{Protein length dependent Contact
+Prior}\label{contact-prior-protein-length}
+
+The average number of contats per residue, computed as the observed
+number of contacts divided by protein length L, has a non-linear
+relationship with protein length L as can be seen in Figure
+\ref{fig:avg-nr-contacts-per-residue-vs-protein-length}.
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8} 
+
+}
+
+\caption{Observed
+number of contacts per residue has a non-linear relationship with
+protein length. Distribution is shown for several thresholds of sequence
+separation.}\label{fig:avg-nr-contacts-per-residue-vs-protein-length}
+\end{figure}
+
+In log space, the average number of contats per residue can be fitted
+with a linear regression (see Figure
+\ref{fig:avg-nr-contacts-per-residue-vs-log-protein-length-linfit}) and
+yields the following functions:
+
+\begin{itemize}
+\tightlist
+\item
+  \(f(L) = 1.556 + 0.596 \log (L)\) for sequence separation of 0
+  positions
+\item
+  \(f(L) = -1.273 + 0.59 \log (L)\) for sequence separation of 8
+  positions
+\item
+  \(f(L) = -1.567 + 0.615 \log (L)\) for sequence separation of 12
+  positions
+\item
+  \(f(L) = -2.0 + 0.624 \log (L)\) for sequence separation of 24
+  positions
+\end{itemize}
+
+A simple contact predictor can be formulated as the ratio of the
+expected number of contacts per residue, given by \(f(L)\), and the
+possible number of contacts per residue which is \(L-1\),
+
+\[
+p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
+\]
+
+with \(r_{ij}=1\) representing a contact between residue \(i\) and
+\(j\).
+
+(ref:caption-avg-nr-contacts-per-residue-vs-log-protein-length-linfit)
+Linear regression fits for average number of contats per residue on
+logarithm of protein length. Distribution and linear regression fits are
+shown for different sequence separation thresholds.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8} 
+
+}
+
+\caption{(ref:caption-avg-nr-contacts-per-residue-vs-log-protein-length-linfit)}\label{fig:avg-nr-contacts-per-residue-vs-log-protein-length-linfit}
+\end{figure}
+
 \subsection{Hyperparameter Optimization for Random Forest
-Prior}\label{hyperparameter-optimization-for-random-forest-prior}
+Prior}\label{rf-hyperparameter-optimization}
 
 There are several parameters that need to be tuned in such a way as to
 obtain a trade-off between model performance and size of the model.
@@ -4292,23 +4560,63 @@ the longer it will take to train and to make predictions:
 The module \texttt{ensemble.RandomForestClassifier} in the Python
 package \texttt{sklearn\ (v.\ 0.19)} was used to learn random forest
 classifiers over sequence features described in section
-\ref{seq-features}. The following parameters were optimized in a grid
-search with 5-fold cross-validation on a dataset with 50.000 residue
-pairs \(< 8 \AA\) (``contacts''``) and 250.000 residue pairs \(> 8 \AA\)
-(''non-contacts``) using a window size of 5 for certain features as
-described in section \ref{random-forest-features}:
+\ref{seq-features} {[}{\textbf{???}}{]}. Hyperparamters of the random
+forest were optimized with a grid search over parameter space using
+5-fold cross-validation on a dataset with 50.000 residue pairs
+\(< 8 \AA\) (``contacts''``) and 250.000 residue pairs \(> 8 \AA\)
+(''non-contacts``) using a window size of 5 for single position features
+as described in section \ref{seq-features-single}.
+
+First of all, I performed grid search over the parameters
+\emph{n\_estimators}, defining the number of trees in the forest and
+\emph{max\_features}, defining the number of randomly selected features
+considerd for each split using the following settings:
 
 \begin{itemize}
 \tightlist
 \item
-  `n\_estimators': the number of trees in the forest {[}100,500,1000{]}
+  \emph{n\_estimators}: {[}100,500,1000{]}
 \item
-  `min\_samples\_leaf': {[}1, 10, 100{]},
+  \emph{max\_features}: {[}`sqrt', `log2', None{]}
+\end{itemize}
+
+Figure \ref{fig:rf-gridsearch-nestimators-maxfeatures} visualizes the
+results of the grid search. Considering only \(\log_2 \approx 8\)
+features for every split yields highest precision averaged over the five
+cross-validation runs regardless of how many trees are learned. I chose
+\emph{n\_estimators} = 1000 and \emph{max\_features} = log2 for further
+analysis.
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/gridsearch/grid_search_cv_results_precision_random_forest_notitle_nrestimators_maxfeatures} 
+
+}
+
+\caption{Distribution of
+precision for 5-fold cross-validation of a grid search over parameters
+\emph{n\_estiamtors} and \emph{max\_features}. Using 1000 trees and
+randomly selecting \(\log_2\) feautures at every split yields highest
+mean precision over the five runs.}\label{fig:rf-gridsearch-nestimators-maxfeatures}
+\end{figure}
+
+Next, I optimized the parameters \emph{min\_samples\_leaf} defining the
+minimum number of samples required to be at a leaf node and
+\emph{max\_depth} defining the maximum depth of the trees using the
+following settings:
+
+\begin{itemize}
+\tightlist
 \item
-  `max\_depth': the depth of each tree {[}10, 100, 1000, None{]},
+  \emph{min\_samples\_leaf}: {[}1, 10, 100{]}
 \item
-  `max\_features': the number of features to consider for each split
-  {[}`sqrt', `log2', None{]}
+  \emph{max\_depth}: {[}10, 100, 1000, None{]}
 \end{itemize}
 
 Evluated using precision for out-of-bag samples???? PLOT GRID SEARCH
@@ -4317,7 +4625,7 @@ RESULTS
 Using the optimal setting of hyperparameters
 (\texttt{n\_estimators=1000,\ min\_samples\_leaf=100,\ max\_depth=100,\ max\_features=sqrt})
 obtained from the grid search, cross-validation was used to optimize the
-window-size of features (see section\ref{random-forest-features}):
+window-size of features (see section\ref{seq-features-single}):
 
 \begin{itemize}
 \tightlist
@@ -4328,10 +4636,33 @@ window-size of features (see section\ref{random-forest-features}):
 PLOT PRECISISON FOR WINDOW SIZES
 
 The problem of predicting contacting residues is a highly imbalanced
-problem with approximately 5\% contacts. Therefore, the ratio of
-contacts to non-contacts was optimized with 5-fold crossvalidation while
-performing a grid seardch over the \texttt{class-weight} parameter which
-assigns a weight to each datasample according to the class label.
+problem with approximately 5\% contacts.
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8} 
+
+}
+
+\caption{Fraction of contacts
+among all possible contacts (\(\frac{L(L-1)}{2}\)) in a protein against
+protein length L. The distribution has a non-linear relationship. At a
+sequence separation threshold \textgreater{}8 positions the fraction of
+contacts for intermediate size proteins with length \textgreater{}100 is
+approximately 2\%.}\label{fig:fraction-contacts-vs-protein-length}
+\end{figure}
+
+Therefore, the ratio of contacts to non-contacts was optimized with
+5-fold crossvalidation while performing a grid seardch over the
+\texttt{class-weight} parameter which assigns a weight to each
+datasample according to the class label.
 
 \begin{itemize}
 \tightlist
@@ -4356,30 +4687,37 @@ assigns a weight to each datasample according to the class label.
 
 PLOT GRID SEARCH RESULTS FOR EVERY DATASET (=4 plots)
 
-\subsection{Feature Selection}\label{feature-selection}
+\subsection{Feature Selection}\label{rf-feature-selection}
 
-Training a random forest model on large trainingset and evaluate
-precision of predictor on validation set for subset of features selected
-according to feature importance.
+Many features obtain low \emph{Gini importance} scores and can most
+likely be removed from the data set, thus also reducig model complexity.
+It has been found, that prediction performance might even increase after
+removing the most irrelevant feaures {[}{\textbf{???}}{]}. For example,
+during the development of \emph{EPSILON-CP}, a deep neural network
+method for contact prediction, the authors performed feature selection
+using boosted trees. By removing 75\% of the most non-informative
+features (mostly attributed to amino acid composition), the performance
+of their predictor increased slightly {[}{\textbf{???}}{]}.
 
-{[}\protect\hyperlink{ref-Stahl2017}{91}{]} performed feature selection
-and found that amino acid composition (PSSM) is non-informative and
-removing PSSM reduces complexity.
+I therefore developed a feature selection pipeline with which to retrain
+the random forest on subsets of features. As subsets I chose those
+feautures with \emph{Gini importance} larger than the
+\(\{10, 30, 50, 70, 90\}\)-percentile of \emph{Gini importance} values.
+Performance is then evaluated for the models trained on these subsets of
+features.
 
-Correlation can inflate or deflate the importance of a feature
-{[}\protect\hyperlink{ref-Stahl2017}{91}{]}.
+\subsection{Using Pseudo-likelihood Coevolution Score as Additional
+Feature}\label{rf-with-pll-score}
 
-\subsection{Using additional coevolution score}\label{rf-with-pll-score}
-
-Next to the 250 sequence derived features, the pseudo-likelihood contact
-score (L2norm + APC) is used as an additional feature. Using 100 000
-residue pairs in contact (\(\Delta \Cb < 8 \AA \; \;\)) and 500 000
-residue pairs not in contact (\(\Delta \Cb > 8 \AA \; \;\)) the random
-forest was trained with the hyperparameters described in the last
-section.
+In addition to the 250 sequence derived features, the pseudo-likelihood
+contact score (L2norm + APC) is used as a feature. The random forest was
+trained on 100.000 residue pairs in contact
+(\(\Delta \Cb < 8 \AA \; \;\)) and 500.000 residue pairs not in contact
+(\(\Delta \Cb > 8 \AA \; \;\)) using the cross-validated hyperparameters
+as described in the last section.
 
 The pseudo-likelihood contact score comprises by far the most important
-feature as can be seen in the following figure
+feature as can be seen in the following Figure
 \ref{fig:feature-importance-rf-with-pll-score}.
 
 
@@ -4388,14 +4726,20 @@ feature as can be seen in the following figure
 
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/feature_random_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_251features_100kcontacts_500knoncontacts} \caption{Most important
+
+{\centering \includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top} 
+
+}
+
+\caption{Most important
 features in the random forest model. Features are ranked according to
-mean importance of feature over all trees in the forest. Feature
-importance is measured as Gini impurity.}\label{fig:feature-importance-rf-with-pll-score}
+Gini importance which is the mean decrease in Gini impurity over all
+splits and all trees in the forest.}\label{fig:feature-importance-rf-with-pll-score}
 \end{figure}
 
-Training the model only on the 26 most important features improves the
-model further as can be seen in the following figure
+Training the model only on the 26 most important features improves
+precision of the model compared to using the full feature set as is
+illustrated in the following figure
 \ref{fig:feature-importance-rf-with-pll-score}.
 
 
@@ -4405,15 +4749,18 @@ model further as can be seen in the following figure
 
 
 
-
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_nestimators1000_classweightNone_criterionentropy_maxdepth100_minsamplesleaf100_26features} \caption{Mean precision over
+
+{\centering \includegraphics[width=0.9\linewidth]{img/random_forest_contact_prior/precision_vs_rank_featureselection_plll2norm_random_forest_nestimators1000_maxfeaturesauto_26features_notitle} 
+
+}
+
+\caption{Mean precision over
 proteins in testset for the top ranked contacts for variaous random
 forest models trained on subsets of features. Subsets of features have
-been selected according to five equally sized bins on the ranked
-features according to mean feature importance (Gini impurity). Learning
-a random forest model on the 26 most important features yields the best
-model.}\label{fig:feature-selection-rf-with-pll-score}
+been selected as described in section \ref{rf-feature-selection}.
+Learning a random forest model on the 26 most important features yields
+the best model with respect to precision.}\label{fig:feature-selection-rf-with-pll-score}
 \end{figure}
 
 \appendix
@@ -4446,6 +4793,8 @@ model.}\label{fig:feature-selection-rf-with-pll-score}
 \textbf{MRF} Markov-Random Field
 
 \textbf{MSA} Multiple Sequence Alignment
+
+\textbf{Neff} Number of effective sequences
 
 \textbf{PCD} Persistent Contrastive Divergence
 
@@ -4926,46 +5275,28 @@ Kryshtafovych, A. (2015). New encouraging developments in contact
 prediction: Assessment of the CASP11 results. Proteins. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/26474083}.
 
-\hypertarget{ref-Bettsa}{}
-49. Betts, M.J., and Russell, R.B. Amino Acid Properties and
-Consequences of Substitutions. In Bioinforma. genet. (Chichester, UK:
-John Wiley \& Sons, Ltd), pp. 289--316. Available at:
-\url{http://doi.wiley.com/10.1002/0470867302.ch14}.
-
-\hypertarget{ref-Duarte2010}{}
-50. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe,
-M. (2010). Optimal contact definition for reconstruction of contact
-maps. BMC Bioinformatics \emph{11}, 283. Available at:
-\url{http://www.biomedcentral.com/1471-2105/11/283}.
-
-\hypertarget{ref-Anishchenko2017}{}
-51. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D.
-(2017). Origins of coevolution between residues distant in protein 3D
-structures. Proc. Natl. Acad. Sci., 201702664. Available at:
-\href{http://www.ncbi.nlm.nih.gov/pubmed/28784799\%20http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114}{http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114}.
-
 \hypertarget{ref-Jaynes1957a}{}
-52. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics I.
+49. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics I.
 Phys. Rev. \emph{106}, 620--630. Available at:
 \url{https://link.aps.org/doi/10.1103/PhysRev.106.620}.
 
 \hypertarget{ref-Jaynes1957b}{}
-53. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics.
+50. Jaynes, E.T. (1957). Information Theory and Statistical Mechanics.
 II. Phys. Rev. \emph{108}, 171--190. Available at:
 \url{https://link.aps.org/doi/10.1103/PhysRev.108.171}.
 
 \hypertarget{ref-Wainwright2007}{}
-54. Wainwright, M.J., and Jordan, M.I. (2007). Graphical Models,
+51. Wainwright, M.J., and Jordan, M.I. (2007). Graphical Models,
 Exponential Families, and Variational Inference. Found. Trends Mach.
 Learn. \emph{1}, 1--305. Available at:
 \url{http://www.nowpublishers.com/article/Details/MAL-001}.
 
 \hypertarget{ref-Murphy2012}{}
-55. Murphy, K.P. (2012). Machine Learning: A Probabilistic Perspective
+52. Murphy, K.P. (2012). Machine Learning: A Probabilistic Perspective
 (MIT Press).
 
 \hypertarget{ref-Morcos2011}{}
-56. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S.,
+53. Morcos, F., Pagnani, A., Lunt, B., Bertolino, A., Marks, D.S.,
 Sander, C., Zecchina, R., Onuchic, J.N., Hwa, T., and Weigt, M. (2011).
 Direct-coupling analysis of residue coevolution captures native contacts
 across many protein families. Proc. Natl. Acad. Sci. U. S. A.
@@ -4973,110 +5304,116 @@ across many protein families. Proc. Natl. Acad. Sci. U. S. A.
 \url{http://www.pnas.org/content/108/49/E1293.full}.
 
 \hypertarget{ref-Marks2011}{}
-57. Marks, D.S., Colwell, L.J., Sheridan, R., Hopf, T.A., Pagnani, A.,
+54. Marks, D.S., Colwell, L.J., Sheridan, R., Hopf, T.A., Pagnani, A.,
 Zecchina, R., and Sander, C. (2011). Protein 3D structure computed from
 evolutionary sequence variation. PLoS One \emph{6}, e28766. Available
 at: \url{http://dx.plos.org/10.1371/journal.pone.0028766}.
 
 \hypertarget{ref-Cocco2017}{}
-58. Cocco, S., Feinauer, C., Figliuzzi, M., Monasson, R., and Weigt, M.
+55. Cocco, S., Feinauer, C., Figliuzzi, M., Monasson, R., and Weigt, M.
 (2017). Inverse Statistical Physics of Protein Sequences: A Key Issues
 Review. arXiv. Available at: \url{https://arxiv.org/pdf/1703.01222.pdf}.
 
 \hypertarget{ref-Koller2009}{}
-59. Koller, D., and Friedman, N.I.R. (2009). Probabilistic graphical
+56. Koller, D., and Friedman, N.I.R. (2009). Probabilistic graphical
 models: Principles and Techniques (MIT Press).
 
 \hypertarget{ref-Ekeberg2013}{}
-60. Ekeberg, M., Lövkvist, C., Lan, Y., Weigt, M., and Aurell, E.
+57. Ekeberg, M., Lövkvist, C., Lan, Y., Weigt, M., and Aurell, E.
 (2013). Improved contact prediction in proteins: Using pseudolikelihoods
 to infer Potts models. Phys. Rev. E \emph{87}, 012707. Available at:
 \url{http://link.aps.org/doi/10.1103/PhysRevE.87.012707}.
 
 \hypertarget{ref-Stein2015a}{}
-61. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise
+58. Stein, R.R., Marks, D.S., and Sander, C. (2015). Inferring Pairwise
 Interactions from Biological Data Using Maximum-Entropy Probability
 Models. PLOS Comput. Biol. \emph{11}, e1004182. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=4520494\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
 
 \hypertarget{ref-Seemayer2014}{}
-62. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and
+59. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and
 precise prediction of protein residue-residue contacts from correlated
 mutations. Bioinformatics, btu500. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500}.
 
 \hypertarget{ref-Ekeberg2014}{}
-63. Ekeberg, M., Hartonen, T., and Aurell, E. (2014). Fast
+60. Ekeberg, M., Hartonen, T., and Aurell, E. (2014). Fast
 pseudolikelihood maximization for direct-coupling analysis of protein
 structure from many homologous amino-acid sequences. J. Comput. Phys.
 \emph{276}, 341--356. Available at:
 \url{http://www.sciencedirect.com/science/article/pii/S0021999114005178}.
 
 \hypertarget{ref-Kamisetty2013}{}
-64. Kamisetty, H., Ovchinnikov, S., and Baker, D. (2013). Assessing the
+61. Kamisetty, H., Ovchinnikov, S., and Baker, D. (2013). Assessing the
 utility of coevolution-based residue-residue contact predictions in a
 sequence- and structure-rich era. Proc. Natl. Acad. Sci. U. S. A.
 \emph{110}, 15674--9. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
 
 \hypertarget{ref-Balakrishnan2011}{}
-65. Balakrishnan, S., Kamisetty, H., Carbonell, J.G., Lee, S.-I., and
+62. Balakrishnan, S., Kamisetty, H., Carbonell, J.G., Lee, S.-I., and
 Langmead, C.J. (2011). Learning generative models for protein fold
 families. Proteins \emph{79}, 1061--78. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/21268112}.
 
 \hypertarget{ref-Friedman2008}{}
-66. Friedman, J., Hastie, T., and Tibshirani, R. (2008). Sparse inverse
+63. Friedman, J., Hastie, T., and Tibshirani, R. (2008). Sparse inverse
 covariance estimation with the graphical lasso. Biostatistics \emph{9},
 432--41. Available at:
 \url{http://biostatistics.oxfordjournals.org/content/9/3/432.abstract}.
 
 \hypertarget{ref-Baldassi2014}{}
-67. Baldassi, C., Zamparo, M., Feinauer, C., Procaccini, A., Zecchina,
+64. Baldassi, C., Zamparo, M., Feinauer, C., Procaccini, A., Zecchina,
 R., Weigt, M., and Pagnani, A. (2014). Fast and accurate multivariate
 gaussian modeling of protein families: predicting residue contacts and
 protein-interaction partners. PLoS One \emph{9}, e92721. Available at:
 \url{http://dx.plos.org/10.1371/journal.pone.0092721}.
 
 \hypertarget{ref-Besag1975}{}
-68. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source
+65. Besag, J. (1975). Statistical Analysis of Non-Lattice Data. Source
 Stat. \emph{24}, 179--195. Available at:
 \href{http://www.jstor.org\%20http://www.jstor.org/stable/2987782}{http://www.jstor.org http://www.jstor.org/stable/2987782}.
 
 \hypertarget{ref-Gidas1988}{}
-69. Gidas, B. (1988). Consistency of maximum likelihood and
+66. Gidas, B. (1988). Consistency of maximum likelihood and
 pseudo-likelihood estimators for Gibbs Distributions. Stoch. Differ.
 Syst. Stoch. Control Theory Appl. Available at:
 \href{http://www.researchgate.net/publication/244456377\%7B/_\%7DConsistency\%7B/_\%7Dof\%7B/_\%7Dmaximum\%7B/_\%7Dlikelihood\%7B/_\%7Dand\%7B/_\%7Dpseudo-likelihood\%7B/_\%7Destimators\%7B/_\%7Dfor\%7B/_\%7DGibbs\%7B/_\%7DDistributions}{http://www.researchgate.net/publication/244456377\{\textbackslash{}\_\}Consistency\{\textbackslash{}\_\}of\{\textbackslash{}\_\}maximum\{\textbackslash{}\_\}likelihood\{\textbackslash{}\_\}and\{\textbackslash{}\_\}pseudo-likelihood\{\textbackslash{}\_\}estimators\{\textbackslash{}\_\}for\{\textbackslash{}\_\}Gibbs\{\textbackslash{}\_\}Distributions}.
 
 \hypertarget{ref-Feinauer2014}{}
-70. Feinauer, C., Skwark, M.J., Pagnani, A., and Aurell, E. (2014).
+67. Feinauer, C., Skwark, M.J., Pagnani, A., and Aurell, E. (2014).
 Improving contact prediction along three dimensions. 19. Available at:
 \url{http://arxiv.org/abs/1403.0379}.
 
 \hypertarget{ref-Zhang2016}{}
-71. Zhang, H., Gao, Y., Deng, M., Wang, C., Zhu, J., Li, S.C., Zheng,
+68. Zhang, H., Gao, Y., Deng, M., Wang, C., Zhu, J., Li, S.C., Zheng,
 W.-M., and Bu, D. (2016). Improving residue-residue contact prediction
 via low-rank and sparse decomposition of residue correlation matrix.
 Biochem. Biophys. Res. Commun. Available at:
 \url{http://www.sciencedirect.com/science/article/pii/S0006291X16301838}.
 
 \hypertarget{ref-Marks2012}{}
-72. Marks, D.S., Hopf, T.A., and Sander, C. (2012). Protein structure
+69. Marks, D.S., Hopf, T.A., and Sander, C. (2012). Protein structure
 prediction from sequence variation. Nat. Biotechnol. \emph{30},
 1072--1080. Available at:
 \url{http://www.nature.com/nbt/journal/v30/n11/full/nbt.2419.html}.
 
 \hypertarget{ref-Buslje2009}{}
-73. Buslje, C.M., Santos, J., Delfino, J.M., and Nielsen, M. (2009).
+70. Buslje, C.M., Santos, J., Delfino, J.M., and Nielsen, M. (2009).
 Correction for phylogeny, small number of observations and data
 redundancy improves the identification of coevolving amino acid pairs
 using mutual information. Bioinformatics \emph{25}, 1125--31. Available
 at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/19276150\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2672635}{http://www.ncbi.nlm.nih.gov/pubmed/19276150 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2672635}.
 
+\hypertarget{ref-Anishchenko2017}{}
+71. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D.
+(2017). Origins of coevolution between residues distant in protein 3D
+structures. Proc. Natl. Acad. Sci., 201702664. Available at:
+\href{http://www.ncbi.nlm.nih.gov/pubmed/28784799\%20http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114}{http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114}.
+
 \hypertarget{ref-Finn2016}{}
-74. Finn, R.D., Coggill, P., Eberhardt, R.Y., Eddy, S.R., Mistry, J.,
+72. Finn, R.D., Coggill, P., Eberhardt, R.Y., Eddy, S.R., Mistry, J.,
 Mitchell, A.L., Potter, S.C., Punta, M., Qureshi, M., and
 Sangrador-Vegas, A. \emph{et al.} (2016). The Pfam protein families
 database: towards a more sustainable future. Nucleic Acids Res.
@@ -5084,29 +5421,41 @@ database: towards a more sustainable future. Nucleic Acids Res.
 \url{https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkv1344}.
 
 \hypertarget{ref-Remmert2012}{}
-75. Remmert, M., Biegert, A., Hauser, A., and Söding, J. (2012).
+73. Remmert, M., Biegert, A., Hauser, A., and Söding, J. (2012).
 HHblits: lightning-fast iterative protein sequence searching by HMM-HMM
 alignment. Nat. Methods \emph{9}, 173--5. Available at:
 \url{http://dx.doi.org/10.1038/nmeth.1818}.
 
 \hypertarget{ref-Espada2014}{}
-76. Espada, R., Parra, R.G., Mora, T., Walczak, A.M., and Ferreiro, D.
+74. Espada, R., Parra, R.G., Mora, T., Walczak, A.M., and Ferreiro, D.
 (2015). Capturing coevolutionary signals in repeat proteins. BMC
 Bioinformatics \emph{16}, 207. Available at:
 \url{http://arxiv.org/abs/1407.6903}.
 
 \hypertarget{ref-Toth-Petroczy2016}{}
-77. Toth-Petroczy, A., Palmedo, P., Ingraham, J., Hopf, T.A., Berger,
+75. Toth-Petroczy, A., Palmedo, P., Ingraham, J., Hopf, T.A., Berger,
 B., Sander, C., Marks, D.S., Alexander, P., He, Y., and Chen, Y.
 \emph{et al.} (2016). Structured States of Disordered Proteins from
 Genomic Sequences. Cell \emph{167}, 158--170.e12. Available at:
 \url{http://linkinghub.elsevier.com/retrieve/pii/S0092867416312430}.
 
 \hypertarget{ref-Hopf2012}{}
-78. Hopf, T.A., Colwell, L.J., Sheridan, R., Rost, B., Sander, C., and
+76. Hopf, T.A., Colwell, L.J., Sheridan, R., Rost, B., Sander, C., and
 Marks, D.S. (2012). Three-dimensional structures of membrane proteins
 from genomic sequencing. Cell \emph{149}, 1607--21. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
+
+\hypertarget{ref-Bettsa}{}
+77. Betts, M.J., and Russell, R.B. Amino Acid Properties and
+Consequences of Substitutions. In Bioinforma. genet. (Chichester, UK:
+John Wiley \& Sons, Ltd), pp. 289--316. Available at:
+\url{http://doi.wiley.com/10.1002/0470867302.ch14}.
+
+\hypertarget{ref-Duarte2010}{}
+78. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe,
+M. (2010). Optimal contact definition for reconstruction of contact
+maps. BMC Bioinformatics \emph{11}, 283. Available at:
+\url{http://www.biomedcentral.com/1471-2105/11/283}.
 
 \hypertarget{ref-Lee2009}{}
 79. Lee, B.-C., and Kim, D. (2009). A new method for revealing
@@ -5178,127 +5527,51 @@ contacts and long range hydrogen bonding in proteins. Bioinformatics
 \emph{31}, 999--1006. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/31/7/999.short}.
 
-\hypertarget{ref-He2017}{}
-90. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017).
-NeBcon: Protein contact map prediction using neural network training
-coupled with naïve Bayes classifiers. Bioinformatics. Available at:
-\url{https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164}.
-
-\hypertarget{ref-Stahl2017}{}
-91. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using
-deep learning to combine information from multiple sources for protein
-contact prediction. BMC Bioinformatics \emph{18}, 303. Available at:
-\url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x}.
-
-\hypertarget{ref-Skwark2016}{}
-92. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and
-Elofsson, A. (2016). Accurate contact predictions for thousands of
-protein families using PconsC3. bioRxiv.
-
 \hypertarget{ref-Ma2015a}{}
-93. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
+90. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
 prediction by integrating joint evolutionary coupling analysis and
 supervised learning. Bioinformatics, btv472. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472}.
 
-\hypertarget{ref-Ho1998}{}
-94. Ho, T.K. (1998). The random subspace method for constructing
-decision forests. IEEE Trans. Pattern Anal. Mach. Intell. \emph{20},
-832--844. Available at:
-\url{http://ieeexplore.ieee.org/document/709601/}.
-
-\hypertarget{ref-TinKamHo}{}
-95. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf.
-doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278--282. Available
-at: \url{http://ieeexplore.ieee.org/document/598994/}.
-
-\hypertarget{ref-Breiman2001}{}
-96. Breiman, L. (2001). Random Forests. Mach. Learn. \emph{45}, 5--32.
-Available at: \url{http://link.springer.com/10.1023/A:1010933404324}.
-
-\hypertarget{ref-Menze2009}{}
-97. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P.,
-Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest
-and its Gini importance with standard chemometric methods for the
-feature selection and classification of spectral data. BMC
-Bioinformatics \emph{10}, 213. Available at:
-\href{http://www.ncbi.nlm.nih.gov/pubmed/19591666\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}{http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}.
-
-\hypertarget{ref-Strobl2007}{}
-98. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007).
-Bias in random forest variable importance measures: Illustrations,
-sources and a solution. BMC Bioinformatics \emph{8}, 25. Available at:
-\url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25}.
+\hypertarget{ref-Miyazawa1999a}{}
+91. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation
+of inter-residue protein contact energies based on an equilibrium
+mixture approximation of residues. Proteins \emph{34}, 49--68. Available
+at: \url{http://www.ncbi.nlm.nih.gov/pubmed/10336383}.
 
 \hypertarget{ref-Sillitoe2015}{}
-99. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
+92. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
 N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. \emph{et
 al.} (2015). CATH: comprehensive structural and functional annotations
 for genome sequences. Nucleic Acids Res. \emph{43}, D376--D381.
 Available at:
 \url{https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947}.
 
-\hypertarget{ref-Jones1999}{}
-100. Jones, D.T. (1999). Protein secondary structure prediction based on
-position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol.
-Biol. \emph{292}, 195--202. Available at:
-\href{http://www.ncbi.nlm.nih.gov/pubmed/10493868\%20http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}{http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}.
-
-\hypertarget{ref-Petersen2009a}{}
-101. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and
-Lundegaard, C. (2009). BMC Structural Biology A generic method for
-assignment of reliability scores applied to solvent accessibility
-predictions. BMC Struct. Biol. \emph{9}. Available at:
-\url{http://www.biomedcentral.com/1472-6807/9/51}.
-
-\hypertarget{ref-Robinson1991}{}
-102. Robinson, A.B., and Robinson, L.R. (1991). Distribution of
-glutamine and asparagine residues and their near neighbors in peptides
-and proteins. Proc. Natl. Acad. Sci. U. S. A. \emph{88}, 8880--4.
-Available at:
-\href{http://www.ncbi.nlm.nih.gov/pubmed/1924347\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}{http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}.
+\hypertarget{ref-Kingma2014}{}
+93. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic
+Optimization. Available at: \url{http://arxiv.org/abs/1412.6980}.
 
 \hypertarget{ref-Atchley2005}{}
-103. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
+94. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
 Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U.
 S. A. \emph{102}, 6395--400. Available at:
 \url{http://www.pnas.org/content/102/18/6395.abstract}.
 
-\hypertarget{ref-Kawashima2008}{}
-104. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A.,
-Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index
-database, progress report 2008. Nucleic Acids Res. \emph{36}, D202--5.
-Available at:
-\href{http://www.ncbi.nlm.nih.gov/pubmed/17998252\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}{http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}.
-
-\hypertarget{ref-Wimley1996}{}
-105. Wimley, W.C., and White, S.H. (1996). Experimentally determined
-hydrophobicity scale for proteins at membrane interfaces. Nat. Struct.
-Biol. \emph{3}, 842--8. Available at:
-\url{http://www.ncbi.nlm.nih.gov/pubmed/8836100}.
-
-\hypertarget{ref-Cornette1987}{}
-106. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky,
-J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational
-techniques for detecting amphipathic structures in proteins. J. Mol.
-Biol. \emph{195}, 659--685. Available at:
-\url{http://linkinghub.elsevier.com/retrieve/pii/0022283687901896}.
-
 \hypertarget{ref-Li2011}{}
-107. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue
+95. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue
 contacts using random forest models. Bioinformatics \emph{27}, 3379--84.
 Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/27/24/3379.long}.
 
 \hypertarget{ref-Zhu1999}{}
-108. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
+96. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
 potentials, and three-dimensional structure prediction with
 self-correcting distance geometry calculations of beta-sheet formation
 in proteins. Protein Sci. \emph{8}, 326--42. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
 
 \hypertarget{ref-Fodor2004a}{}
-109. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
+97. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
 calculations of amino acid covariance in multiple sequence alignments.
 Proteins \emph{56}, 211--21. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/15211506}.

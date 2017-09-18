@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-15">
+<meta name="date" content="2017-09-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="contact-prediction.html">
+<link rel="prev" href="challenges.html">
 <link rel="next" href="interpreting-coupling-matrices.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +50,9 @@
 
 <script type="text/x-mathjax-config">
  MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
   TeX: { 
-    extensions: ["mediawiki-texvc.js"],
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
     Macros: {
       Cb: "C_\\beta",
       eq: "\\!=\\!",
@@ -86,19 +87,15 @@
 });
 </script>
 
+
+ 
 <!--
 <script type="text/x-mathjax-config">
- MathJax.Hub.Config({
-   extensions: ["[siunitx]/siunitx.js"]
- });
- MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
- </script>
-
-
-<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
   TeX: { TagSide: "left" }
 });
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </script>
 //-->
 
@@ -136,11 +133,20 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
 <li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learning Methods and Meta-Predictors</a></li>
-<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
-<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
-<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.4</b> Developing a Bayesian Model for Contact Prediction</a></li>
+<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.5" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.5</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.5.1</b> Sequence Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.6</b> Challenges in Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#phylogenetic-bias"><i class="fa fa-check"></i>Phylogenetic Bias</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i>Finite Sampling Effects</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#transitive-effects"><i class="fa fa-check"></i>Transitive Effects</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i>Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#evaluation-strategy"><i class="fa fa-check"></i>Evaluation Strategy</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i>Alternative Sources of Coevolution</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.7</b> Developing a Bayesian Model for Contact Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
 <li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
@@ -178,7 +184,7 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="6.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>6.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
 <li class="chapter" data-level="6.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>6.2.3</b> Sequence Reweighting</a></li>
 <li class="chapter" data-level="6.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>6.2.4</b> Computing Amino Acid Frequencies</a></li>
-<li class="chapter" data-level="6.2.5" data-path="contact-prediction.html"><a href="contact-prediction.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
+<li class="chapter" data-level="6.2.5" data-path="maxent.html"><a href="maxent.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
@@ -242,8 +248,8 @@ MathJax.Hub.Config({
 
             <section class="normal" id="section-">
 <div id="developing-a-bayesian-model-for-contact-prediction" class="section level2">
-<h2><span class="header-section-number">1.4</span> Developing a Bayesian Model for Contact Prediction</h2>
-<p>The most popular and successfull methods for contact prediction optimize the pseudo-log-likelihood of the <a href="abbrev.html#abbrev">MSA</a> and use several heuristics to calculate a contact score (see section <a href="contact-prediction.html#post-processing-heuristics">1.3.5.5</a>).</p>
+<h2><span class="header-section-number">1.7</span> Developing a Bayesian Model for Contact Prediction</h2>
+<p>The most popular and successfull methods for contact prediction optimize the pseudo-log-likelihood of the <a href="abbrev.html#abbrev">MSA</a> and use several heuristics to calculate a contact score (see section <a href="maxent.html#post-processing-heuristics">1.4.0.5</a>).</p>
 <p>By doing so valuable information in contact matrices is lost. Analyses in section 1 shows what information is contained in coupling matrices and that the signal in coupling matrices varies with <span class="math inline">\(\Cb\)</span> distance.</p>
 <p>This thesis introcudes a principled Bayesian statistical approach that eradicates these heuristics to fully exploit the information in coupling matrices. Instead of transforming the model parameters <span class="math inline">\(\w\)</span> into heuristic contact scores, one can compute the posterior probability distributions of the distances <span class="math inline">\(r_{ij}\)</span> between <span class="math inline">\(\Cb\)</span> atoms of all residues pairs <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, given the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span>. The coupling parameters <span class="math inline">\(\w\)</span> are treated as hidden variables that will be integrated out analytically. This approach also allows for extraction of information contained in the particular types of amino acids, since each pair of amino acids will have a different preference to be coupled at certain distances.</p>
 <p>TODO Figure ! !</p>
@@ -279,7 +285,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="contact-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="challenges.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="interpreting-coupling-matrices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -330,7 +336,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

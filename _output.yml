@@ -1,9 +1,7 @@
 bookdown::pdf_book:
-  includes:
-      in_header: latex/preamble.html
-  latex_engine: xelatex
   keep_tex: yes
   template: latex/phd_thesis_template.tex
+  latex_engine: xelatex
   pandoc_args:  [--top-level-division=chapter, --number-sections]
 bookdown::epub_book: default
 bookdown::gitbook:

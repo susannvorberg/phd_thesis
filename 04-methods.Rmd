@@ -279,14 +279,14 @@ Furthermore, when using a small learning rate, most of the optimizations did not
 
 (ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over ~500 proteins. <span style="color:green; font-weight: bold">ccmpred-pll-centerv+apc</span>:  L2norm + APC score for pseudo-likelihood couplings. The other methods derive contact scores as the L2norm + APC for couplings computed with contrastive divergence using stochastic gradient descent and different learning rates: <span style="color:red; font-weight: bold">cd_alpha_1e-4+apc</span>: learning rate $1\mathrm{e}{-4}$. <span style="color:blue; font-weight: bold">cd_alpha_5e-4+apc</span>: learning rate $5\mathrm{e}{-4}$. <span style="color:purple; font-weight: bold">cd_alpha_1e-3+apc</span>: learning rate $1\mathrm{e}{-3}$. <span style="color:dark; font-weight: bold">cd_alpha_5e-3+apc</span>: learning rate $5\mathrm{e}{-3}$.
 
-```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
+```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
 knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html", height = "500px")
 ```
 
 
 (ref:caption-performance-cd-alphaopt-neff) Mean precision for top ranked contact predictions over ~500 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
 
-```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
+```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
 knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.html", height = "500px")
 ```
 
@@ -816,7 +816,7 @@ The average number of contats per residue, computed as the observed number of co
 
 (ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation.
 
-```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_priornumber_contacts_per_residue_vs_protein_length.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
+```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
 knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
 ```
 
@@ -937,7 +937,7 @@ The pseudo-likelihood contact score comprises by far the most important feature 
 
 (ref:caption-feature-importance-rf-with-pll-score) Most important features in the random forest model. Features are ranked according to Gini importance which is the mean decrease in Gini impurity over all splits and all trees in the forest.
 
-```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/ffeature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.png",out.width = '90%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.png",out.width = '90%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
 knitr::include_url("img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.html", height = "500px")
 ```
 

@@ -59,7 +59,7 @@ Further important features include the log protein length and the contact prior 
 
 (ref:caption-rf-feature-importance) Top ten features ranked according to *Gini importance*. omes_apc = OMES contact score with [APC](#abbrev), MI_apc = mutual information score with [APC](#abbrev), prior_L = contact prior based on protein length as described in methods section \@ref(seq-features-global), log_L = logarithm of protein length, miyasawajernigan1999water = mean pairwise contact potential based on quasi-chemical potential by Miyazawa & Jernigan (1999) [@Miyazawa1999a], rsa_i amd rsa_j = solvent accessibility prediction for residues i and j with NetsurfP [@Petersen2009a].
 
-```{r rf-feature-importance, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature-importance-rf.png", out.width = '100%', fig.cap = '(ref:caption-rf-feature-importance)'}
+```{r rf-feature-importance, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '100%', fig.cap = '(ref:caption-rf-feature-importance)'}
 knitr::include_url("img/random_forest_contact_prior/feature-importance-rf.html", height = "500px")
 ```
 
@@ -69,7 +69,7 @@ As can be seen in Figure \@ref(rf-performance-feature-selection), most models tr
 
 (ref:caption-rf-performance-feature-selection) Average precision of random forest models trained on subsets of sequence derived features. Subsets of features have been selected as described in methods section \@ref(rf-feature-selection).  
 
-```{r rf-performance-feature-selection, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature-selection-rf.png", out.width = '100%', fig.cap = '(ref:caption-rf-performance-feature-selection)'}
+```{r rf-performance-feature-selection, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '100%', fig.cap = '(ref:caption-rf-performance-feature-selection)'}
 knitr::include_url("img/random_forest_contact_prior/feature-selection-rf.html", height = "500px")
 ```
 

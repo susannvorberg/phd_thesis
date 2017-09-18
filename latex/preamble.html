@@ -1,8 +1,9 @@
 
 <script type="text/x-mathjax-config">
  MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
   TeX: { 
-    extensions: ["mediawiki-texvc.js"],
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
     Macros: {
       Cb: "C_\\beta",
       eq: "\\!=\\!",
@@ -37,18 +38,18 @@
 });
 </script>
 
+
+ 
 <!--
 <script type="text/x-mathjax-config">
- MathJax.Hub.Config({
-   extensions: ["[siunitx]/siunitx.js"]
- });
- MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
- </script>
-
-
-<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
   TeX: { TagSide: "left" }
 });
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </script>
 //-->
+
+
+
+

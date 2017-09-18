@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-15">
+<meta name="date" content="2017-09-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,8 +50,9 @@
 
 <script type="text/x-mathjax-config">
  MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
   TeX: { 
-    extensions: ["mediawiki-texvc.js"],
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
     Macros: {
       Cb: "C_\\beta",
       eq: "\\!=\\!",
@@ -86,19 +87,15 @@
 });
 </script>
 
+
+ 
 <!--
 <script type="text/x-mathjax-config">
- MathJax.Hub.Config({
-   extensions: ["[siunitx]/siunitx.js"]
- });
- MathJax.Ajax.config.path['siunitx']  = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
- </script>
-
-
-<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
   TeX: { TagSide: "left" }
 });
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </script>
 //-->
 
@@ -136,11 +133,20 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
 <li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learning Methods and Meta-Predictors</a></li>
-<li class="chapter" data-level="1.3.4" data-path="contact-prediction.html"><a href="contact-prediction.html#intro-cp-evaluation"><i class="fa fa-check"></i><b>1.3.4</b> Evaluating Contact Prediction Methods</a></li>
-<li class="chapter" data-level="1.3.5" data-path="contact-prediction.html"><a href="contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.3.5</b> Maximum Entropy Modelling of Protein Families</a></li>
-<li class="chapter" data-level="1.3.6" data-path="contact-prediction.html"><a href="contact-prediction.html#challenges"><i class="fa fa-check"></i><b>1.3.6</b> Challenges in Coevolutionary Inference</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.4</b> Developing a Bayesian Model for Contact Prediction</a></li>
+<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.5" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.5</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.5.1</b> Sequence Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.6</b> Challenges in Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#phylogenetic-bias"><i class="fa fa-check"></i>Phylogenetic Bias</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i>Finite Sampling Effects</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#transitive-effects"><i class="fa fa-check"></i>Transitive Effects</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i>Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#evaluation-strategy"><i class="fa fa-check"></i>Evaluation Strategy</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i>Alternative Sources of Coevolution</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.7</b> Developing a Bayesian Model for Contact Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
 <li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
@@ -178,7 +184,7 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="6.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>6.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
 <li class="chapter" data-level="6.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>6.2.3</b> Sequence Reweighting</a></li>
 <li class="chapter" data-level="6.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>6.2.4</b> Computing Amino Acid Frequencies</a></li>
-<li class="chapter" data-level="6.2.5" data-path="contact-prediction.html"><a href="contact-prediction.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
+<li class="chapter" data-level="6.2.5" data-path="maxent.html"><a href="maxent.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
@@ -244,8 +250,8 @@ MathJax.Hub.Config({
 <div id="methods-optimizing-full-likelihood" class="section level2">
 <h2><span class="header-section-number">6.4</span> Optimizing the Full-Likelihood</h2>
 <p>Given the likelihood gradient estimate utilizing contrastive divergence, the full likelihood can now be minimized using a gradient descent optimization algorithm. Second order optimization algorithms that make use of the (approximate) partial second derivates cannot be applied here, as the computation of the Hessian is too complex.</p>
-<p>Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters. Stochastic gradient descent is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function. These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions <span class="citation">[<a href="#ref-Ruder2017">103</a>,<a href="#ref-Bottou2012">104</a>]</span>.</p>
-<p>However, choosing an optimal learning rate for parameter updates as well as an appropriate learning rate decay offers a challenge and needs manual tuning. The following sections describe the hyperparameter optimization of two stochastic gradient descent optimization algorithms: simple stochastic gradient descent and ADAM <span class="citation">[<a href="#ref-Kingma2014">105</a>]</span>. The performance for tested parameter settings is evaluated on a benchmark set of ~ 500 proteins, that is a subset of the data set described in methods section <a href="dataset.html#dataset">6.1</a>. The reference method for all new developed scores is the pseudo-likelihood method that uses the corrected L2norm as a final contact score as explained in section <a href="contact-prediction.html#post-processing-heuristics">1.3.5.5</a>. Pseudo-likelihood couplings are computed with the tool CCMpredPy that is introduced in methods section <a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy">6.2.2</a>. Contact scores for the methods under developments are computed using the corrected L2norm of the couplings, just as for the pseudo-likelihood method.</p>
+<p>Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters. Stochastic gradient descent is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function. These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions <span class="citation">[<a href="#ref-Ruder2017">107</a>,<a href="#ref-Bottou2012">108</a>]</span>.</p>
+<p>However, choosing an optimal learning rate for parameter updates as well as an appropriate learning rate decay offers a challenge and needs manual tuning. The following sections describe the hyperparameter optimization of two stochastic gradient descent optimization algorithms: simple stochastic gradient descent and ADAM <span class="citation">[<a href="#ref-Kingma2014">109</a>]</span>. The performance for tested parameter settings is evaluated on a benchmark set of ~ 500 proteins, that is a subset of the data set described in methods section <a href="dataset.html#dataset">6.1</a>. The reference method for all new developed scores is the pseudo-likelihood method that uses the corrected L2norm as a final contact score as explained in section <a href="maxent.html#post-processing-heuristics">1.4.0.5</a>. Pseudo-likelihood couplings are computed with the tool CCMpredPy that is introduced in methods section <a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy">6.2.2</a>. Contact scores for the methods under developments are computed using the corrected L2norm of the couplings, just as for the pseudo-likelihood method.</p>
 <div id="hyperparameter-optimization-for-stochastic-gradient-descent" class="section level3">
 <h3><span class="header-section-number">6.4.1</span> Hyperparameter Optimization for Stochastic Gradient Descent</h3>
 <p>Stochastic gradient descent updates the coupling parameters <span class="math inline">\(\w\)</span> using the approximate gradient to the log likelihood <span class="math inline">\(\nabla_w \LLreg(\v,\w)\)</span> obtained with contrastive divergence and a learning rate <span class="math inline">\(\alpha\)</span> according to</p>
@@ -256,8 +262,8 @@ MathJax.Hub.Config({
 <span class="math display">\[\begin{equation}
   \alpha  = \frac{\alpha_0}{1 + \gamma \cdot t} \; ,
 \end{equation}\]</span>
-<p>with <span class="math inline">\(\gamma=0.1\)</span> being the decay rate and <span class="math inline">\(t\)</span> the current iteration <span class="citation">[<a href="#ref-Bottou2012">104</a>]</span>. It is not feasible to compute the function value at each iteration in order to decide when the optimization has converged. Therefore the optimization will stop whenever the gradient norm changes less than a small <span class="math inline">\(\epsilon=1\mathrm{e}{-8}\)</span>.</p>
-<p>Figure <a href="methods-optimizing-full-likelihood.html#fig:performance-cd-alphaopt">6.3</a> shows the benchmark for the optimizations with the four different learning rates. In general, the top ranked contacts are predicted with equal accuracy as the reference method (<span style="color:green">“ccmpred-pll-centerv+apc”</span>) when using small learning rates <span class="math inline">\(\alpha \in \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3} \}\)</span>. Predictions for lower ranked contacts (top <span class="math inline">\(0.6-L\)</span> predictions) are less accurate. Using a high learning rate <span class="math inline">\(5\mathrm{e}{-3}\)</span> yields much less accurate predictions. When evaluating the methods with respect to alignment size (see Figure <a href="methods-optimizing-full-likelihood.html#fig:performance-cd-alphaopt-neff">6.4</a>) it becomes clear that a high learning rate of <span class="math inline">\(5\mathrm{e}{-3}\)</span> does only not work well for proteins with large alignments.</p>
+<p>with <span class="math inline">\(\gamma=0.1\)</span> being the decay rate and <span class="math inline">\(t\)</span> the current iteration <span class="citation">[<a href="#ref-Bottou2012">108</a>]</span>. It is not feasible to compute the function value at each iteration in order to decide when the optimization has converged. Therefore the optimization will stop whenever the gradient norm changes less than a small <span class="math inline">\(\epsilon=1\mathrm{e}{-8}\)</span> or when 5000 iterations are reached.</p>
+<p>Figure <a href="methods-optimizing-full-likelihood.html#fig:performance-cd-alphaopt">6.3</a> shows the benchmark for the optimizations with the four different learning rates. In general, the top ranked contacts are predicted with equal accuracy as the reference method (<span style="color:green">“ccmpred-pll-centerv+apc”</span>) when using small learning rates <span class="math inline">\(\alpha \in \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3} \}\)</span>. Predictions for lower ranked contacts (top <span class="math inline">\(0.6-L\)</span> predictions) are less accurate. Using a high learning rate <span class="math inline">\(5\mathrm{e}{-3}\)</span> yields much less accurate predictions. When evaluating the methods with respect to alignment size (see Figure <a href="methods-optimizing-full-likelihood.html#fig:performance-cd-alphaopt-neff">6.4</a>) it becomes clear that a high learning rate of <span class="math inline">\(5\mathrm{e}{-3}\)</span> does only not work well for proteins with large alignments. The magnitude of the gradient depends on the size of the alignment because the gradient is computed as a difference of amino acid counts. Therefore proteins with large alignments will generally have larger gradients than proteins with small alignments. When analysing individual proteins with large alignments it becomes clear that choosing a learning rate that is too large causes the optimization to diverge. Furthermore, when using a small learning rate, most of the optimizations did not converge but reached the maximum number of 5000 iterations.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:performance-cd-alphaopt"></span>
 <iframe src="img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html" width="90%" height="500px">
@@ -279,13 +285,13 @@ Figure 6.4: Mean precision for top ranked contact predictions over ~500 proteins
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ruder2017">
-<p>103. Ruder, S. (2017). An overview of gradient descent optimization algorithms. arXiv. Available at: <a href="http://arxiv.org/abs/1609.04747" class="uri">http://arxiv.org/abs/1609.04747</a>.</p>
+<p>107. Ruder, S. (2017). An overview of gradient descent optimization algorithms. arXiv. Available at: <a href="http://arxiv.org/abs/1609.04747" class="uri">http://arxiv.org/abs/1609.04747</a>.</p>
 </div>
 <div id="ref-Bottou2012">
-<p>104. Bottou, L. (2012). Stochastic Gradient Descent Tricks. In Neural networks: Tricks of the trade (Springer, Berlin, Heidelberg), pp. 421–436. Available at: <a href="http://link.springer.com/10.1007/978-3-642-35289-8{\_}25" class="uri">http://link.springer.com/10.1007/978-3-642-35289-8{\_}25</a>.</p>
+<p>108. Bottou, L. (2012). Stochastic Gradient Descent Tricks. In Neural networks: Tricks of the trade (Springer, Berlin, Heidelberg), pp. 421–436. Available at: <a href="http://link.springer.com/10.1007/978-3-642-35289-8{\_}25" class="uri">http://link.springer.com/10.1007/978-3-642-35289-8{\_}25</a>.</p>
 </div>
 <div id="ref-Kingma2014">
-<p>105. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+<p>109. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -363,7 +369,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
