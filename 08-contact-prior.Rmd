@@ -6,11 +6,11 @@ Much information about residue interactions is typically contained in features o
 For example, predictions of secondary structure elements and solvent accessibility are used by almost all modern machine learning predictors, such as MetaPsicov [@Jones2015a], NeBCon [@He2017], EPSILON-CP [@Stahl2017], PconsC3 [@Skwark2016].
 Other frequently used sequence derived features include pairwise contact potentials, sequence separation and conservation measures such as column entropy [@Jones2015a; @He2017; @Ma2015a].
 
-In the following sections I will present a random forest classifier that uses sequence derived features to distinguish contacts from non-contacts.
+In the following sections I present a random forest classifier that uses sequence derived features to distinguish contacts from non-contacts.
 Methods section \@ref(seq-features) lists all features used to train the classifier including the aforementioned standard features as well as some novel features. 
 
-The probabilistic predictions of the random forest model can be introduced directly as prior information $p(\r |\phi)$ into the Bayesian statistical model presented in the last section \@ref(bayesian-approach) to improve the overall prediction accuracy in terms of posterior probabilities.
-Furthermore, contact scores from coevolution methods can be added as an additional feature to the random forest model in order to elucidate how much the combined information improves prediction accuracy over the single coevolution method. 
+The probabilistic predictions of the random forest model can be introduced directly as prior information into the Bayesian statistical model presented in the last section \@ref(bayesian-approach) to improve the overall prediction accuracy in terms of posterior probabilities.
+Furthermore, contact scores from coevolution methods can be added as an additional feature to the random forest model in order to elucidate how much the combined information improves prediction accuracy over the single methods. 
 
 
 ## Random Forest Classifiers
@@ -30,7 +30,7 @@ A single decision tree, especially when it is grown very deep is highly suscepti
 As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting.
 
 Random forests are capable of regression and classification tasks.
-For classification, predictions for new data are obtained by running a new data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. 
+For classification, predictions for new data are obtained by running a data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. 
 
 Typically, *Gini impurity*, which is a computationally efficient approximation to the entropy, is used as a split criterion to estimate the quality of a split of a node.
 It measures the degree of purity in a data set regarding class labels as $GI = (1 - \sum_{k=1}^K p_k^2)$, where $p_k$ is the proportion of class $k$ in the data set.
@@ -57,20 +57,21 @@ I trained a random forest classifier on the feature set described in methods sec
 Ranking features by *Gini importance* reveals that both local statistical contact scores, OMES and mutual information (see \ref(local-methods)), constitute the most important features (see Figure \@ref(fig:rf-feature-importance)). 
 Further important features include the log protein length and the contact prior based on protein length. Solvent accessibility predictions also rank highly as well as some of the mean potential scores. 
 
-(ref:caption-rf-feature-importance) Top ten features ranked according to *Gini importance*. omes_apc = OMES contact score with [APC](#abbrev), MI_apc = mutual information score with [APC](#abbrev), prior_L = contact prior based on protein length as described in methods section \@ref(seq-features-global), log_L = logarithm of protein length, miyasawajernigan1999water = mean pairwise contact potential based on quasi-chemical potential by Miyazawa & Jernigan (1999) [@Miyazawa1999a], rsa_i amd rsa_j = solvent accessibility prediction for residues i and j with NetsurfP [@Petersen2009a].
+(ref:caption-rf-feature-importance) Top ten features ranked according to *Gini importance*. omes_apc = OMES contact score with [APC](#abbrev), MI_apc = mutual information score with [APC](#abbrev), prior_L = contact prior based on protein length as described in methods section \@ref(seq-features-global), log_L = logarithm of protein length, miyasawajernigan1999water = mean pairwise contact potential based on quasi-chemical potential by Miyazawa & Jernigan (1999) [@Miyazawa1999a], rsa_i amd rsa_j = solvent accessibility prediction for residues i and j with NetsurfP [@Petersen2009a], LiFang = mean pairwise contact potential as used by Li & Fang [@Li2011].
 
-```{r rf-feature-importance, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '100%', fig.cap = '(ref:caption-rf-feature-importance)'}
-knitr::include_url("img/random_forest_contact_prior/feature-importance-rf.html", height = "500px")
+```{r rf-feature-importance, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.png", out.width = '100%', fig.cap = '(ref:caption-rf-feature-importance)'}
+knitr::include_url("img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.html", height = "500px")
 ```
 
 Many features receive only very low *Gini importance* scores. 
 In order to reduce the complexity of the model that comprises 225 features, it is convenient to evaluate model performance on subsets of highly important features only (see methods section \@ref(rf-feature-selection)).
-As can be seen in Figure \@ref(rf-performance-feature-selection), most models trained on subsets of the feature space perform nearly identical to the model trained on the complete feature set. 
+As can be seen in Figure \@ref(fig:rf-performance-feature-selection), most models trained on subsets of the feature space perform nearly identical to the model trained on the complete feature set. 
+When using only the 26 most relevant features, performance of the model drops compared to using at least 75 features.
 
 (ref:caption-rf-performance-feature-selection) Average precision of random forest models trained on subsets of sequence derived features. Subsets of features have been selected as described in methods section \@ref(rf-feature-selection).  
 
-```{r rf-performance-feature-selection, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '100%', fig.cap = '(ref:caption-rf-performance-feature-selection)'}
-knitr::include_url("img/random_forest_contact_prior/feature-selection-rf.html", height = "500px")
+```{r rf-performance-feature-selection, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_optimized_hyperparameters_25features.png", out.width = '100%', fig.cap = '(ref:caption-rf-performance-feature-selection)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_optimized_hyperparameters_25features.html", height = "500px")
 ```
 
 The model using the 75 most important features according to *Gini importance* has been selected for further analysis. 
@@ -79,33 +80,43 @@ The random forest model trained on the 75 most important features (green line) h
 The performance of the two local statistical contact scores, OMES+APC and MI+APC, which also constitute the two most important features of the random forest model, are shown as blue and yellow lines in Figure \@ref(rf-with-pll-score).
 The random forest model improves approximately ten percentage points in precision over both methods. 
 
+(ref:caption-performance-rf-with-pll-score) Mean precision for top ranked contacts on a test set of 761 proteins. **omes_fodoraldrich+apc** = OMES score with APC as described in section \@ref(seq-features-pairwise). **mi_pc + APC** = mutual information with APC as described in section \@ref(seq-features-pairwise). **rf_contact_prior** = random forest model using only sequence derived features.  **pLL-L2normapc-RF** = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). **ccmpred-pll-centerv+apc** = conventional pseudo-likelihood contact score (L2norm + APC)
+
+```{r performance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_notitle.html", height = "500px")
+```
+
+
 When analysing performance with respect to alignment size it is clear that the random forest model outperforms the pseudo-likelihood score for small alignments. 
-Both, OMES and MI also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant in the regimes low data.
+Both, OMES and MI also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences.
+This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size [@Stahl2017, @Skwark2016].
+
+
+Mean precision for top ranked contact predictions over 286 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
+
+
+
+(ref:caption-performance-neff-rf-with-pll-score) Mean precision for top ranked contacts on a test set of 761 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **omes_fodoraldrich+apc** = OMES score with [APC](#abbrev) as described in section \@ref(seq-features-pairwise). **mi_pc + APC** = mutual information with [APC](#abbrev) as described in section \@ref(seq-features-pairwise). **rf_contact_prior** = random forest model using only sequence derived features.  **pLL-L2normapc-RF** = random forest model using sequence derived features and pseudo-likelihood contact score ([APC](#abbrev) corrected Frobenius norm of the couplings $\wij$). **ccmpred-pll-centerv+apc** = [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$ computed with pseudo-likelihood.
+
+
+```{r performance-neff-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
+```
+
+
+
 
 
 In order to evaluate how much the sequence derived features can improve contact prediction over the coevolutionary contact scores, the coevolutionary contact score can simply be included as an additional feature into the Random Forest model. 
 
 The model was trained as described in methods section \@ref(rf-with-pll-score) using the additional pseudo-likelihood score feature. 
 As expected, the pseudo-likelihood score comprises the most important feature in the model as can be seen in Figure \@ref(fig:feature-importance-rf-with-pll-score).
-Furthermore, feature selection analysis shows that by using only the 26 most important features improves the model further (see Figure \@ref(fig:feature-selection-rf-with-pll-score)).
+As can be seen in Figure \@ref(fig:feature-selection-rf-with-pll-score), using only the 26 most important features improves the predictive power of the model even further.
 
-Using the default pseudo-likelihood contact score (L2norm + APC) as an additional coevolutionary feature indeed improves performance (see Figure \@ref(fig:performance-rf-with-pll-score)) over the score without prior information.
-
-(ref:caption-performance-rf-with-pll-score) Mean Precision for top ranked contacts on a test set of ~500 proteins. **omes_fodoraldrich+apc** = OMES score with APC as described in section \@ref(seq-features-pairwise). **mi_pc + APC** = mutual information with APC as described in section \@ref(seq-features-pairwise). **rf_contact_prior** = random forest model using only sequence derived features.  **pLL-L2normapc-RF** = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). **ccmpred-pll-centerv+apc** = conventional pseudo-likelihood contact score (L2norm + APC)
-
-```{r performance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_notitle.html", height = "500px")
-```
-
-Especially for small alignments, the random forest model makes better predictions than the coevolutionary method. 
-This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size. [@Stahl2017, @Skwark2016].
+Finally, the comparison of the extended random forest model ("pLL-L2normapc-RF") to the pseudo-likelihood score in Figure \@ref(fig:performance-rf-with-pll-score) reveals that the additional coevolutionary feature indeed improves performance over the score without prior information.
+Especially for small alignments, the improvment is substantial as can be seen in Figure \@ref(fig:performance-neff-rf-with-pll-score).
 In contrast, the improvement on large alignments is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable. 
 
-(ref:caption-performance-neff-rf-with-pll-score) blabla neff
-
-```{r performance-neff-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
-```
 
 
 

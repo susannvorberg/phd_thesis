@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-17">
+<meta name="date" content="2017-09-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -81,7 +81,8 @@
       wijab: "\\mathcal{w}_{ijab}",
       wijcd: "\\mathcal{w}_{ijcd}",
       wklcd: "\\mathcal{w}_{klcd}",
-      X: "\\mathbf{X}"
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\;"
       }
   }
 });
@@ -134,12 +135,18 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
 <li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learning Methods and Meta-Predictors</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Maximum Entropy Modelling of Protein Families</a></li>
+<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Modelling Protein Families with Potts Model</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="maxent.html"><a href="maxent.html#potts-model-properties"><i class="fa fa-check"></i><b>1.4.1</b> Model Properties</a></li>
+<li class="chapter" data-level="1.4.2" data-path="maxent.html"><a href="maxent.html#potts-mle"><i class="fa fa-check"></i><b>1.4.2</b> Inferring Parameters for the Potts Model</a></li>
+<li class="chapter" data-level="1.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>1.4.3</b> Solving the Inverse Potts Problem</a></li>
+<li class="chapter" data-level="1.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>1.4.4</b> Computing Contact Maps</a></li>
+</ul></li>
 <li class="chapter" data-level="1.5" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.5</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.5.1</b> Sequence Separation</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.6</b> Challenges in Coevolutionary Inference</a><ul>
 <li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#phylogenetic-bias"><i class="fa fa-check"></i>Phylogenetic Bias</a></li>
+<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#entropic-bias"><i class="fa fa-check"></i>Entropic bias</a></li>
 <li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i>Finite Sampling Effects</a></li>
 <li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#transitive-effects"><i class="fa fa-check"></i>Transitive Effects</a></li>
 <li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i>Multiple Sequence Alignments</a></li>
@@ -149,20 +156,17 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="1.7" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.7</b> Developing a Bayesian Model for Contact Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
-<li class="chapter" data-level="2.1" data-path="single-coupling-values-carry-evidence-of-contacts.html"><a href="single-coupling-values-carry-evidence-of-contacts.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
 <li class="chapter" data-level="2.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
 <li class="chapter" data-level="2.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>2.3</b> Coupling Profiles Vary with Distance</a></li>
 <li class="chapter" data-level="2.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="3.1" data-path="likelihood-of-the-sequences-as-a-potts-model.html"><a href="likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> Likelihood of the sequences as a Potts model</a></li>
+<li class="chapter" data-level="3.1" data-path="the-likelihood-of-the-sequences-as-a-potts-model.html"><a href="the-likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> The Likelihood of the Sequences as a Potts Model</a></li>
 <li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
-<li class="chapter" data-level="3.3" data-path="gauge-transformation.html"><a href="gauge-transformation.html"><i class="fa fa-check"></i><b>3.3</b> Gauge transformation</a></li>
-<li class="chapter" data-level="3.4" data-path="the-regularized-log-likelihood-function-llregvw.html"><a href="the-regularized-log-likelihood-function-llregvw.html"><i class="fa fa-check"></i><b>3.4</b> The regularized log likelihood function LLreg(v,w)</a></li>
-<li class="chapter" data-level="3.5" data-path="the-gradient-of-the-regularized-log-likelihood.html"><a href="the-gradient-of-the-regularized-log-likelihood.html"><i class="fa fa-check"></i><b>3.5</b> The gradient of the regularized log likelihood</a></li>
-<li class="chapter" data-level="3.6" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.6</b> The prior on <span class="math inline">\(\v\)</span></a></li>
-<li class="chapter" data-level="3.7" data-path="full-likelihood.html"><a href="full-likelihood.html"><i class="fa fa-check"></i><b>3.7</b> Full-likelihood</a></li>
-<li class="chapter" data-level="3.8" data-path="contrastive-divergence.html"><a href="contrastive-divergence.html"><i class="fa fa-check"></i><b>3.8</b> Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3" data-path="the-regularized-log-likelihood-and-its-gradient.html"><a href="the-regularized-log-likelihood-and-its-gradient.html"><i class="fa fa-check"></i><b>3.3</b> The Regularized Log Likelihood and its Gradient</a></li>
+<li class="chapter" data-level="3.4" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="3.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.5</b> Optimizing the Full Likelihood with Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>4</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="4.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>4.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
@@ -184,7 +188,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="6.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>6.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
 <li class="chapter" data-level="6.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>6.2.3</b> Sequence Reweighting</a></li>
 <li class="chapter" data-level="6.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>6.2.4</b> Computing Amino Acid Frequencies</a></li>
-<li class="chapter" data-level="6.2.5" data-path="maxent.html"><a href="maxent.html#regularization"><i class="fa fa-check"></i><b>6.2.5</b> Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
@@ -192,6 +195,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>6.4</b> Optimizing the Full-Likelihood</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#hyperparameter-optimization-for-stochastic-gradient-descent"><i class="fa fa-check"></i><b>6.4.1</b> Hyperparameter Optimization for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="6.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.2</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="6.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.3</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>6.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>6.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
@@ -213,7 +218,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a><ul>
+<li class="chapter" data-level="A.1" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>A.1</b> Amino Acid Alphabet</a></li>
+</ul></li>
 <li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a><ul>
 <li class="chapter" data-level="B.1" data-path="alignment-diversity.html"><a href="alignment-diversity.html"><i class="fa fa-check"></i><b>B.1</b> Alignment Diversity</a></li>
 <li class="chapter" data-level="B.2" data-path="proportion-of-gaps-in-alignment.html"><a href="proportion-of-gaps-in-alignment.html"><i class="fa fa-check"></i><b>B.2</b> Proportion of Gaps in Alignment</a></li>
@@ -225,6 +232,16 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
 <li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
+<li class="chapter" data-level="D.1" data-path="cd-large-alpha-large-neff.html"><a href="cd-large-alpha-large-neff.html"><i class="fa fa-check"></i><b>D.1</b> Divergence of objective function for big learning rates and Neff values</a></li>
+<li class="chapter" data-level="D.2" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rates</a></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -249,31 +266,31 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="higher-order-dependencies-between-couplings" class="section level2">
 <h2><span class="header-section-number">2.4</span> Higher Order Dependencies Between Couplings</h2>
-<p>The analyses in the previous sections focused on single coupling values of the <span class="math inline">\(20 \times 20\)</span>-dimensional coupling matrices. As mentioned before, looking at single variables might be misleading if they are dependent on another. Unfortunately, it is not possible to reasonably visualize the high dimensional coupling matrices. But there are several ways to identify interesting dimensions.</p>
-<p>First of all, 2-dimensional scatter plots of couplings for biological relevant pairings confirm the previous trend that couplings reflect amino acid interactions.</p>
-<p>Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-er-0-8">2.9</a> and <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-ee-0-8">2.10</a> illustrate the distribution of attractive and repulsive ionic interactions at <span class="math inline">\(\Cb\)</span> distances less than <span class="math inline">\(8\AA\)</span>. Whereas coupling values for R-E and E-R are positively correlated, coupling values for R-E and E-E are negatively correlated. Hydrophobic coupling values for residue pairs at <span class="math inline">\(\Cb\)</span> distances less than <span class="math inline">\(8\AA\)</span> are symmetrically distributed around zero, in agreement with all previous analyses (Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-vi-il-0-8">2.11</a>).</p>
+<p>The analyses in the previous sections focused on single coupling values picked from the <span class="math inline">\(20 \times 20\)</span>-dimensional coupling matrices <span class="math inline">\(\wij\)</span>. As mentioned before, analysing only single dimension might be misleading and further insights might be concealed in a higher order relationships. Unfortunately, it is not possible to reasonably visualize the high dimensional coupling matrices.</p>
+<p>But taking a look at two dimensional coupling scatter plots already reveals some further insights and confirms the previous observations that couplings reflect biological relevant amino acid interactions. Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-er-0-8">2.9</a> and <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-ee-0-8">2.10</a> illustrate the distribution of couplings at <span class="math inline">\(\Cb\)</span> distances less than <span class="math inline">\(8\angstrom\)</span> between the attractive ionic pairings of E-R and R-E and between the ionic pairing R-E and the repulsive pair of equally charged residues E-E, respectively. Whereas coupling values for R-E and E-R are positively correlated, coupling values for R-E and E-E are negatively correlated.</p>
 
 <div class="figure"><span id="fig:2d-coupling-profile-re-er-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.html" width="75%" height="400px">
+<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.html" width="75%" height="550px">
 </iframe>
 <p class="caption">
-Figure 2.9: Two-dimensional distribution of coupling values R-E and E-R for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\AA\)</span>. The distribution is almost symmetrical and the coupling values are positively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>).
+Figure 2.9: Two-dimensional distribution of coupling values R-E and E-R for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The distribution is almost symmetric and the coupling values are positively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>.
 </p>
 </div>
 
 <div class="figure"><span id="fig:2d-coupling-profile-re-ee-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.html" width="75%" height="400px">
+<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.html" width="75%" height="550px">
 </iframe>
 <p class="caption">
-Figure 2.10: Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\AA\)</span>. The coupling values are negatively correlated. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>).
+Figure 2.10: Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The distribution is almost symmetric and the coupling values are negatively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>.
 </p>
 </div>
+<p>Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-vi-il-0-8">2.11</a> shows distributions between couplings for hydrophobic pairings that are almost symmetric and broadly centered around zero. Coupling distributions for residue pairs that are not physically interacting (<span class="math inline">\(\Cb &gt;&gt; 8 \angstrom\)</span>) resemble the distribution for hydrophobic pairings in that there is no correlation, but at high distance the distributions are much tighter centered around zero.</p>
 
 <div class="figure"><span id="fig:2d-coupling-profile-vi-il-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.html" width="75%" height="400px">
+<iframe src="img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.html" width="75%" height="550px">
 </iframe>
 <p class="caption">
-Figure 2.11: Two-dimensional distribution of coupling values V-I and I-L for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\AA\)</span>. The coupling values are symmetrically distributed around zero. Residue paris have been filtered for sequence separation, percentage of gaps and evidence in alignment (see Methods <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>).
+Figure 2.11: Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The coupling values are symmetrically distributed around zero without visible correlation. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">6.3.2</a>.
 </p>
 </div>
 
@@ -354,7 +371,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

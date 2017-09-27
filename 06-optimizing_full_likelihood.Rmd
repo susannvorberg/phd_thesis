@@ -1,34 +1,48 @@
 # Optimizing the Full-Likelihood {#optimizing-full-likelihood}
 
+Section \@ref(maxent) introduced the *Potts model* for contact prediction that is able to distinguish between directly and indirectly coupled residue pairs by jointly modelling the probabilty of a protein sequence over all residues.
+Maximum-likelihood inference of the model parameters is numerically challenging due to the exponential complexity of the partition function that normalizes the probability distribution. 
+Several approximate inference techniques for the full likelihood have been developed trying to sidestep the exact computation of the partition function.
+At this point in time, pseudo-likelihood is the most successful approximate solution with regard to the specific problem of predicting residue-residue contacts.
+It has been shown that the pseudo-likelihood is a consistent estimator to the full likelihood in the limit of large amounts of data, however, it is unclear whether it represents a good approximation when there is only little data, in other words for small protein families that are typical of contact prediction.
 
-## Likelihood of the sequences as a Potts model
+Computing the gradient of the likelihood analytically is infeasible, because computing $p(x_i \eq a, x_j \eq b | \v, \w) = \sum_{y_1, \dots, y_L =1}^{20} p(y_1,  \dots, y_L | \v, \w) I(y_i \eq a, y_j \eq b)$ would require summing over $20^L$ sequences $(y_1,\ldots,y_L)$. 
+Several approaches have been used to get around this problem as described in section \@ref(infering-max-ent-models). 
+The most popular one for protein contact prediction is to optimize the pseudo likelihood instead (see section \@ref(pseudo-likelihood)). 
+Its gradient involves a sum over just the 20 amino acids instead of over all possible sequences of length $L$. 
 
-We denote the $N$ sequences in the [MSA](#abbrev) $\X$ with ${\seq_1, ..., \seq_N}$. 
+
+
+While the function value of the full likelihood cannot efficiently be computed, it is possible to approximate the gradient of the full likelihood with an approach called *contrastive divergence* that makes use of [MCMC](#abbrev) sampling techniques [@Hinton2002]. 
+
+In the next sections I am going to specify the exact model that differs from the *Potts model* as it is used for pseudo-likelihood inference as explained in section \@ref(pseudo-likelihood}) in some small details.
+Then I will discuss how the gradient of the likelihood can be approximated with *contrastive divergence* and present the results for this optimization stratedgy.
+
+## The Likelihood of the Sequences as a Potts Model
+
+
+The $N$ sequences of the [MSA](#abbrev) $\X$ are denoted as ${\seq_1, ..., \seq_N}$. 
 Each sequence $\seq_n = (\seq_{n1}, ..., \seq_{nL})$ is a string of $L$ letters from an alphabet indexed by $\{0, ..., 20\}$, where 0 stands for a gap and $\{1, ... , 20\}$ stand for the 20 types of amino acids. 
-The goal is to predict from $\X$ the distances $r_{ij}$ between the $\Cb$ atoms of all pairs of residues $(i, j) \in \{1, ..., L\}$.
-The link between the [MSA](#abbrev) $\X$ and the vector $\mathbf{r}$ of all inter-$\Cb$ distances is described via the evolutionary couplings of residue pairs that are the $20^2$-dimensional vectors $w_{ij}$.
 
-As already described in detail in section \@ref(maxent), we model the likelihood of the sequences in an [MSA](#abbrev) with a Potts Model, also known as [MRF](#abbrev): 
+As already described in detail in section \@ref(maxent), the likelihood of the sequences in the [MSA](#abbrev) of the protein family is modelled with a *Potts Model*: 
 
-\begin{equation}
-    p(\X | \v, \w) = \prod_{n=1}^N p(\seq_n | \v, \w) = \prod_{n=1}^N \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i < j \leq L} w_{ij}(x_{ni}, x_{nj}) \right)
-\end{equation}
+\begin{align}
+    p(\X | \v, \w) &= \prod_{n=1}^N p(\seq_n | \v, \w) \nonumber \\
+                   &= \prod_{n=1}^N \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i < j \leq L} w_{ij}(x_{ni}, x_{nj}) \right)
+\end{align}
 
-The coefficients $\via$ are the single potentials and $\wijab$ denote the coupling strengths for pairs of residues. 
-$Z(\v, \w)$ is the so-called partition sum that normalizes the probability distribution $p(\seq_n |\v, \w)$:
+The coefficients $\via$ and $\wijab$ are referred to as single potentials and couplings, respectively that describe the tendency of an amino acid a (and b) to (co-)occur at the respective positions in the [MSA](#abbrev).
+$Z(\v, \w)$ is the partition function that normalizes the probability distribution $p(\seq_n |\v, \w)$:
 
 \begin{equation}
   Z(\v, \w) = \sum_{y_1, ..., y_L = 1}^{20} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i < j \leq L} w_{ij}(y_i, y_j)  \right)
 \end{equation}
 
-TODO: this is irrelevant for CD, isn't it?
-For an efficient computational implementation, we might sum over all $1 \le i, j \le L$ without demanding $i < j$ and enforce trivial constraints $\wijab = w_{jiba}$ during the optimization.
-
 
 
 ## Treating Gaps as Missing Information {#gap-treatment}
 
-Treating gaps explicitly as 0’th letter of the alphabet would lead to couplings between columns that are not in physical contact. 
+Treating gaps explicitly as 0’th letter of the alphabet will lead to couplings between columns that are not in physical contact. 
 To see why, imagine a hypothetical alignment consisting of two sets of sequences as it is illustrated in Figure \@ref(fig:gap-treatment). 
 The first set has sequences covering only the left half of columns in the MSA, while the second set has sequences covering only the right half of columns. 
 The two blocks could correspond to protein domains that were aligned to a single query sequence. 
@@ -54,14 +68,14 @@ The gradient of the log likelihood for couplings is
 (\#eq:gradient-LLreg-gaps-single)
 \end{align}
 
-Note that the empirical frequencies are equal to the model probabilities at the maximum of the likelihood when the gradient vanishes.
+Note that the empirical frequencies $q(x_{i} \eq a, x_{j} \eq b)$ are equal to the model probabilities $p(x_i \eq a, x_j \eq b | \v,\w)$ at the maximum of the likelihood when the gradient vanishes.
 Therefore, $p(x_i \eq a, x_j \eq b | \v, \w)$ would have to be zero in the optimum when the empirical amino acid frequencies $q(x_i \eq a, x_j \eq b)$ vanish for pairs of columns as described above.
-However, $p(x_i \eq a, x_j \eq b | \v, \w)$ can only become zero, when the exponential term in $p(x_i \eq a, x_j \eq b | \v, \w)$ ammounts to zero, which would only be possible if $\wijab$ goes to $−\infty$. 
-This is clearly undesirable, as we want to deduce physical contacts from the size of the couplings.
+However, $p(x_i \eq a, x_j \eq b | \v, \w)$ can only become zero, when the exponential term is zero, which would only be possible if $\wijab$ goes to $−\infty$. 
+This is clearly undesirable, as physical contacts will be deduced from the size of the couplings.
 
 The solution is to treat gaps as missing information. 
 This means that the normalisation of $p(\seq_n | \v, \w)$ should not run over all positions $i \in \{1,... , L\}$ but only over those $i$ that are not gaps in $\seq_n$.
-Therefore we define the set of sequences $\Sn$ used for normalization of $p(\seq_n | \v, \w)$ as:
+Therefore, the set of sequences $\Sn$ used for normalization of $p(\seq_n | \v, \w)$ in the partition function will be defined as:
 
 \begin{equation}
 \Sn := \{(y_1,... , y_L): 0 \leq y_i \leq 20 \land (y_i \eq 0 \textrm{ iff } x_{ni} \eq 0) \}
@@ -73,11 +87,12 @@ and the partition function becomes:
   Z_n(\v, \w) = \sum_{\mathbf{y} \in \Sn} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i < j \leq L} w_{ij}(y_i, y_j)  \right)
 \end{equation}
 
-To ensure that the gaps in $x_n$ do not contribute anything to the sums, we fix all parameters associated with a gap to 0:
-
-$v_i(0) = 0$ and $w_{ij}(0, b) = w_{ij}(a, 0) = 0$ for all $i, j \in \{1, ..., L\}$ and $a, b \in \{0, ..., 20\}$.
-
-Furthermore, we redefine the empirical amino acid frequencies $q_{ia}$ and $q_{ijab}$ such that they are normalised over $\{1, ..., 20\}$:
+To ensure that the gaps in $x_n$ do not contribute anything to the sums, the parameters associated with a gap will be fixed to 0:
+$$
+\vi(0) = \wij(0, b) = \wij(a, 0) = 0 \; ,
+$$
+for all $i, j \in \{1, ..., L\}$ and $a, b \in \{0, ..., 20\}$.
+Furthermore, the empirical amino acid frequencies $q_{ia}$ and $q_{ijab}$ need to be redefined such that they are normalised over $\{1, ..., 20\}$:
 
 \begin{align}
    N_i :=& \sum_{n=1}^N  I(x_{ni} \!\ne\! 0) &  q_{ia} = q(x_i \eq a) :=& \frac{1}{N_i} \sum_{n=1}^N I(x_{ni} \eq a)   \\
@@ -93,24 +108,12 @@ With this definition, empirical amino acid frequencies are normalized without ga
 
 
 
-## Gauge transformation 
-
-The model  contains $L \times  20 + \frac{L(L − 1)}{2} \times 20^2$ parameters, but the parameters are not uniquely determined. 
-For example, for any fixed position $i$ and amino acid a we can add a constant to $\via$ and subtract the same constant from the $20L$ coefficients $\wijab$ with $b \in \{1, ..., 20\}$ and $j  \in \{1, ..., L\}$. This overparametrization, the so-called gauge transformation, would leave the probabilities for all sequences under the model unchanged.
-
-We could eliminate parameters by enforcing the restraints 
-$\sum_{a=1}^{20} v_{ia} = 0$ and $\sum_{a=1}^{20} \wijab = 0 = \sum_{a=1}^{20} w_{ijba}$. 
-However, it is easier to rather formulate carefully the link between the distribution of $\w_{ij}$ vectors and the distance $r_ij$ while taking the non-uniqueness of parameters into acount, as we will see below.
+## The Regularized Log Likelihood and its Gradient
 
 
-
-
-## The regularized log likelihood function LLreg(v,w)
-
-In pseudo-likelihood based methods, a regularisation is commonly used that can be interpreted to arise from a prior probability. 
-We will do the same here, constraining $\v$ and $\w$ by Gaussian priors $\mathcal{N}( \v | \v^*, \lambda_v^{-1} \I)$ and $\mathcal{N}( \w |\boldsymbol 0, \lambda_w^{-1} \I)$. 
-The choice of $v^*$ will be discussed in the section \@ref(prior-v). 
-By including the logarithm of this prior into the log likelihood using the gap treatment described in section \@ref{gap-treatment}, we obtain the regularised likelihood,
+As with pseudo-likelihood based methods, Gaussian priors $\mathcal{N}( \v | \v^*, \lambda_v^{-1} \I)$ and $\mathcal{N}( \w |\boldsymbol 0, \lambda_w^{-1} \I)$ will be used to constrain the parameters $\v$ and $\w$ and to fix the Gauge (see section \@ref(pseudo-likelihood)).
+The choice of $v^*$ will be discussed in section \@ref(prior-v). 
+By including the logarithm of this prior into the log likelihood using the gap treatment described in the last section, the regularised likelihood is obtained,
 
 \begin{equation}
     \LLreg(\v,\w)  = \log \left[ p(\X | \v,\w) \;  \Gauss (\v | \v^*, \lambda_v^{-1} \I)  \; \Gauss( \w | \boldsymbol 0, \lambda_w^{-1} \I) \right] 
@@ -124,10 +127,6 @@ or explicitely,
 \end{align}
 
 
-
-
-
-## The gradient of the regularized log likelihood
 
 The gradient of the regularized log likelihood has single components
 
@@ -150,17 +149,7 @@ and pair components
 \end{align}
 
 
-Note that (without regulariation $\lambda_v = \lambda_w = 0$) the empirical frequencies $q(x_i \eq a)$ and $q(x_i \eq a, x_j=b)$ are equal to the model probabilities at the maximum of the likelihood.
-
-If the proportion of gap positions in $\X$ is small (e.g. $<5\%$, also compare percentage of gaps in dataset in Appendix Figure \@ref(fig:dataset-gaps)), we can approximate the sums over $\mathbf{y} \in \Sn$ in eqs. \@ref(eq:gradient-LLreg-single) and \@ref(eq:gradient-LLreg-pair) by $p(x_i=a | \v,\w) I(x_{ni} \ne 0)$ and $p(x_i=a, x_j=b | \v,\w) I(x_{ni} \ne 0, x_{nj} \ne 0)$, respectively, and the partial derivatives become
-
-\begin{align}
-  \frac{\partial \LLreg}{\partial \via}   =& \; N_i q(x_i \eq a) -  N_i \; p(x_i \eq a  | \v,\w)  - \lambda_v (\via - \via^*)  \\
-  \frac{\partial \LLreg}{\partial \wijab} =& \; N_{ij} q(x_i \eq a, x_j=b) - N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w) - \lambda_w \wijab
-  (\#eq:gradient-LLreg-approx)
-\end{align}
-
-Note that the couplings between columns $i$ and $j$ in our hypothetical MSA (see section \@ref(gap-treatment)) will now vanish since $N_{ij} \eq 0$ and the gradient with respect to $\wijab$ is equal to $-\lambda_w \wijab$.
+Note that (without regulariation $\lambda_v = \lambda_w = 0$) the empirical frequencies $q(x_i \eq a)$ and $q(x_i \eq a, x_j=b)$ are equal to the model probabilities at the maximum of the likelihood when the gradient becomes zero.
 
 
 
@@ -168,30 +157,31 @@ Note that the couplings between columns $i$ and $j$ in our hypothetical MSA (see
 
 Most previous approaches chose a prior around the origin, $p(\v) = \Gauss ( \v| \mathbf{0}, \lambda_v \I)$. 
 This choice has an obvious draw-back. 
-To see why, we take the sum over $b=1,\ldots, 20$ of the gradient of couplings in eq. \@ref(eq:gradient-LLreg-approx) at the optimum, where the gradient vanishes. 
+Taking the sum over $b=1,\ldots, 20$ at the optimum of the gradient of couplings in eq. \@ref(eq:gradient-LLreg-approx), yields
 
-This yields
 \begin{equation}
     0 =   N_{ij}\, q(x_i \eq a, x_j \ne 0)   - N_{ij}\, p(x_i \eq a | \v, \w)  - \lambda_w \sum_{b=1}^{20} \wijab.
+    (\#eq:sum-over-b-at-optimum)
 \end{equation}
 
 
-Incidentally, we note that by taking the sum over $a$ we find 
+Incidentally, by taking the sum over $a$ it follows that, 
+
 \begin{equation}
     \sum_{a,b=1}^{20} \wijab  = 0.
 (\#eq:zero-sum-wij)
 \end{equation}
 
-At the optimum the gradient with respect to $v_{ia}$ vanishes and we can substitute $p(x_i=a|\v,\w) = q(x_i=a) - \lambda_v (\via - \via^*) / N_i$, yielding   
+At the optimum the gradient with respect to $\via$ vanishes and $p(x_i=a|\v,\w) = q(x_i=a) - \lambda_v (\via - \via^*) / N_i$ can be substituted into equation  \@ref(eq:sum-over-b-at-optimum), yielding 
 
 \begin{equation}
-    0 =  N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a) + \frac{N_{ij}}{N_i}\lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab .
+    0 =  N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a) + \frac{N_{ij}}{N_i}\lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab \; ,
 (\#eq:gauge-opt-1)
 \end{equation}
 
 for all $i,j \in \{1,\ldots,L\}$ and all $a \in \{1,\ldots,20\}$. 
-To show that the choice $\v^*= \mathbf{0}$ leads to undesirable results, we take an [MSA](#abbrev) without gaps.
-The first two terms $N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a)$ vanish as they add up to zero, which leaves
+Considering a [MSA](#abbrev) without gaps, it can be shown how the choice $\v^*= \mathbf{0}$ leads to undesirable results.
+The first two terms $N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a)$ cancel out, leaving
 
 \begin{equation}
     0 =  \lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab .
@@ -201,16 +191,16 @@ The first two terms $N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a)$ va
 Consider a column $i$ that is not coupled to any other and assume that amino acid $a$ was frequent in column $i$ and therefore $\via$ would be large and positive. 
 Then according to eq. \@ref(eq:gauge-opt-2),  for any other column $j$ the 20 coefficients $\wijab$ for $b \in \{1,\ldots,20\}$ would have to take up the bill and deviate from zero! 
 
-To correct this unwanted behaviour, we instead chose a Gaussian prior centered around $\v^*$ obeying 
+This unwanted behaviour can be corrected by instead choosing a Gaussian prior centered around $\v^*$ obeying 
 \begin{equation}
   \frac{\exp(\via^*)}{\sum_{a'=1}^{20} \exp(v_{ia'}^*)} = q(x_i=a) .
 \end{equation}
 
-This choice ensures that if no columns are coupled, i.e. $p(\seq | \v,\w) = \prod_{i=1}^L p(x_i)$, $\v=\v^*$ and $\w= \mathbf{0}$ gives the correct probability model for the sequences in the MSA. 
-If we impose the restraint $\sum_{a=1}^{20} \via = 0$ to fix the gauge of the $\via$ (i.e. to remove the indeterminacy), we get
+This choice ensures that if no columns are coupled, i.e. $p(\seq | \v,\w) = \prod_{i=1}^L p(x_i)$, $\v=\v^*$ and $\w= \mathbf{0}$ gives the correct probability model for the sequences in the [MSA](#abbrev). 
+Furthermore imposing the restraint $\sum_{a=1}^{20} \via \eq 0$ to fix the gauge of the $\via$ (i.e. to remove the indeterminacy), yields
 
 \begin{align}
-\via^* = \log q(x_i=a) - \frac{1}{20} \sum_{a'=1}^{20} \log q(x_i=a') .
+\via^* = \log q(x_i \eq a) - \frac{1}{20} \sum_{a^{\prime}=1}^{20} \log q(x_i \eq a^{\prime}) .
 (\#eq:prior-v)
 \end{align}
 
@@ -220,46 +210,68 @@ Another way to understand the choice of $\v^*$ in eq. \@ref(eq:prior-v) as oppos
 Therefore, if $q(x_i \eq a,x_j \eq b) = q(x_i \eq a) \, q(x_j \eq b)$ it follows that $p(x_i \eq a, x_j \eq b | \v,\w) \approx  q(x_i \eq a, x_j \eq b)  = p(x_i \eq a | \v^*,\w^*)\,  p(x_j \eq b | \v^*,\w^*)$, i.e. we would correctly conclude that $\wijab=0$ and $(i,a)$ and $(j,b)$ are not coupled.
 
 
+Regarding \@ref(eq:gradient-LLreg-approx):
+Note that the couplings between columns $i$ and $j$ in the hypothetical MSA presented in the last section \@ref(gap-treatment) will now vanish since $N_{ij} \eq 0$ and the gradient with respect to $\wijab$ is equal to $-\lambda_w \wijab$.
 
 
 
 
 
+## Optimizing the Full Likelihood with Contrastive Divergence {#full-likelihood-gradient}
+
+
+If the proportion of gap positions in $\X$ is small (e.g. $<5\%$, also compare percentage of gaps in dataset in Appendix Figure \@ref(fig:dataset-gaps)), the sums over $\mathbf{y} \in \Sn$ in eqs. \@ref(eq:gradient-LLreg-single) and \@ref(eq:gradient-LLreg-pair) can be approximated by $p(x_i=a | \v,\w) I(x_{ni} \ne 0)$ and $p(x_i=a, x_j=b | \v,\w) I(x_{ni} \ne 0, x_{nj} \ne 0)$, respectively, and the partial derivatives become
+
+\begin{align}
+  \frac{\partial \LLreg}{\partial \via}   =& \; N_i q(x_i \eq a) -  N_i \; p(x_i \eq a  | \v,\w)  - \lambda_v (\via - \via^*)  \\
+  \frac{\partial \LLreg}{\partial \wijab} =& \; N_{ij} q(x_i \eq a, x_j=b) - N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w) - \lambda_w \wijab
+  (\#eq:gradient-LLreg-approx)
+\end{align}
+
+The gradients consist of the empirical single and pairwise amino acid counts, which are constant and can be computed once from the alignment and the model probability terms that cannot be computed analytically. 
+
+MCMC algorithms are typically used in Bayesian statistics to generate samples from probability distributions that involve the computation of complex integrals and therefore cannot be computed analytically. 
+Samples are generated from an distribution as the current state of a running Markov chain. 
+The equilibrium statistics identical to true prob distribution statistics if MCMC is run long enough
+Lapedes et al. applied such a scheme in 1999 but running the Markov Chain until reaching its stationary distribution is only feasible for small proteins. 
+
+Hinton suggests CD as an approximation to MCMC methods. 
+- represents a general framework that is applicable to all kinds of likelihoods evenhtough originally proposed for products of experts models
+- approach that is applicable to all kinds of ML problems and that makes use of another class of MCMC algorithms: Gibbs sampling. 
+Instead of starting a Markov Chain from a random point, it is initialized from a data sample.
+It is then evolved for only one Gibbs step and the newly generated samples are used to compute estimate marginal distribution from simple statistics. 
+$N$ Markov chains will be initialized with the $N$ sequences from the [MSA](#abbrev) and $N$ new samples will be generated by a single step of Gibbs sampling from each of the $N$ sequences.
+Single and pairwise amino acid counts can be computed from the newly generated sample that correspond to an estimate of the marginal probabilies from the model. 
+
+
+Gibbs sampling works only when conditional probabilites of the target distribution can be exactly computed.  
+This is the case and the conditionals look like this:
+
+One step of Gibbs sampling samples a new amino acid according to the conditional probability for each position in the sequence (randomly selected).
+When enough sampling steps are made, samples can be considered independent of one another. 
 
 
 
 
-## Full-likelihood
+- gradient is really noisy but hinton showed empirically and later it was shown proven that CD gradients becomes zero when full likelihood is at optimum
+- The intuition is that one obtains a rough estimate of the gradient even though the sampler has not reached the equilibrium distribution
+Even though the approximation for the second term is very bad, it can be seen that this approximate gradient will become zero approximately where the true gradient of the likelihood also becomes zero. To see this, imagine $(\v^*, \w^*)$ is the maximum of the likelihood. Then, starting from the sequences in the MSA, the Gibbs sampling step should not lead away from the empirical distribution, because the parameters $(\v^*, \w^*)$  already describe the empirical distribution correctly. This equality of the two maxima is accurate to the extent that the empirical distribution with its finite number of sequences $N$ can represent the true distribution given by parameters $(\v^*, \w^*)$. Therefore, the larger $N$, the better CD will optimise into the maximum of the true likelihood.
+- It can be shown that [CD](#abbrev) using one step of Gibbs sampling for on only one variable for fully visible Boltzman machines  is exactly equivalent to optimising the pseudo likelihood. In general CD can be considered an approximation to pLL [@Hyvarinen2006; @Hyvarinen2007].
+- it was shown that CD10 works better than CD 1, but of course more computational complex
+- PCD is a variation of CD in that the markov chain is NOT reinitialized at every iteration
+- tieleman showed improved convergence properties
 
 
-
-Computing the gradient of the likelihood analytically according to the previous equations is infeasible, because computing $p(x_i \eq a, x_j \eq b | \v, \w) = \sum_{y_1, \dots, y_L =1}^{20} p(y_1,  \dots, y_L | \v, \w) I(y_i \eq a, y_j \eq b)$ would require summing over $20^L$ sequences $(y_1,\ldots,y_L)$. 
-Several approaches have been used to get around this problem as described in section \@ref(infering-max-ent-models). 
-The most popular one for protein contact prediction is to optimize the pseudo likelihood instead (see section \@ref(pseudo-likelihood)). 
-Its gradient involves a sum over just the 20 amino acids instead of over all possible sequences of length $L$. 
-
-It is possible though to optimize the true likelihood by employing an approach called "persistent contrastive divergence" [PCD](#abbrev) that extends the "contrastive divergence" [CD](#abbrev) approach by G.E.~Hinton introduced in "Training products of experts by minimizing contrastive divergence", \emph{Neural computation} (2002).
-
-In CD, we initialise $N$ Markov chains, one with each of the $N$ sequences from our MSA, and we generate $N$ new samples by a single step of Gibbs sampling from each of the $N$ sequences. From the $N$ new sequences we can estimate the frequencies of pairs $(x_{i}\!=\! a, x_{j}=b)$ to approximate the second term in \eqref{eq:dLLdw_gaps}, just as the first term is computed from the original $N$ sequences. Even though the approximation for the second term is very bad, it can be seen that this approximate gradient will become zero approximately where the true gradient of the likelihood also becomes zero. To see this, imagine $(\v^*, \w^*)$ is the maximum of the likelihood. Then, starting from the sequences in the MSA, the Gibbs sampling step should not lead away from the empirical distribution, because the parameters $(\v^*, \w^*)$  already describe the empirical distribution correctly. This equality of the two maxima is accurate to the extent that the empirical distribution with its finite number of sequences $N$ can represent the true distribution given by parameters $(\v^*, \w^*)$. Therefore, the larger $N$, the better CD will optimise into the maximum of the true likelihood. It can be shown that CD using a single-step Gibbs sampling is exactly equivalent to optimising the pseudo likelihood.
 
 For [PCD](#abbrev), the Markov chains are not restarted from the $N$ sequences in the MSA every time a new gradient is computed. Instead the Markov chains are evolved between successive gradient computations without resetting them. This ensures that, as we approach the maximum $(\v^*, \w^*)$, we acquire more and more samples from the distribution corresponding to parameters $(\v,\w)$ near the optimum. Hence our approximation to the gradient of the likelihood gets better the longer we sample, independent of the number of sequences $N$ in the MSA. 
 
-The optimization of the true likelihood with [CD](#abbrev) and [PCD](#abbrev) is discussed in section \@ref{optimizing-full-likelihood}.
+
 
 
 
 Dr Stefan Seemayer provided a Python implementation of CCMpred that was extended to optimize the full-likelihood of the [MRF](#abbrev).
 
 
-
-The full likelihood of the maximum entropy model cannot be optimized with [ML](#abbrev) methods due to the exponential complexity of the partition function (see section \@ref(maxent)).
-As elaborated in the introduction, many approximations to maximum likelihood inference have been developed that resolve the computational intractability of the partition function. 
-Pseudo-likelihood methods are now the state-of-the-art model for contact prediction that outperformed other approximations like mean-field methods or methods based on the Bethe-approximation or sparse inverse covariance. 
-Even though pseudo-likelihood maximation has been shown to be a consistent estimator in the limit of infinite data [@Besag1975 @Aurell2012], it is not clear how well pseudo-likelihood approximation is for real-world datasets. 
-
-
-
-## Contrastive Divergence
 
 CD is about the difference between the original data set and a perturbed data set 
 perturbed data set : The contrasting data set needs to represent A data sample characteristic of the current PARAMETERS --> Gibbs Sampling starting from data

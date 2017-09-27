@@ -19,6 +19,8 @@
 
 **MAP** Maximum a posteriori
 
+**MCMC** Markov Chain Monte Carlo
+
 **MI** mutual information
 
 **ML** Maximum-Likelihood
@@ -35,7 +37,23 @@
 
 **PDB** protein data bank
 
-%%%% used as: [MRF](#abbrev)
+**SGD** stochastic gradient descent
+
+## Amino Acid Alphabet {#amino-acids}
+
+| One-letter Abbreviation | Three-letter Abbreviation | Amino Acid  | |  One-letter Abbreviation | Three-letter Abbreviation | Amino Acid | 
+|:------------:|:-----------:|:------------|-|:-----------:|:-----------:|:-----------|
+| A | Ala | **A**lanine         | | M | Met | **M**ethionine | 
+| C | Cys | **C**ysteine        | | N | Asn | Asparagi**N**e | 
+| D | Asp | Aspartic Aci**D**   | | P | Pro | **P**roline | 
+| E | Glu | Glutamic Acid       | | Q | Gln | Glutamine | 
+| F | Phe | Phenylalanine       | | R | Arg | A**R**ginine | 
+| G | Gly | **G**lycine         | | S | Ser | **S**erine | 
+| H | His | **H**istidine       | | T | Thr | **T**hreonine | 
+| I | Ile | **I**soleucine      | | V | Val | **V**aline | 
+| K | Lys | Lysine              | | T | Trp | **T**ryptophan | 
+| L | Leu | **L**eucine         | | Y | Tyr | T**Y**rosine | 
+
 
 
 
@@ -135,3 +153,70 @@ knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aolA00_17_34_n
 ```{r aromatic-network, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-aromatic-network)'}
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 ```
+
+# Optimizing Full Likelihood with Gradient Descent
+
+## Divergence of objective function for big learning rates and Neff values {#cd-large-alpha-large-neff}
+
+When using large learning rates with alignments comprising many sequences (=large Neff), the optimization diverges.
+
+
+
+## Number of iterations for different learning rates 
+
+(ref:caption-full-likelihood-opt-different-alphas-numit) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different learning rates. The learning rate is decreased according to $\alpha = \alpha_0 / (1 + 0.01 \cdot t)$ with t being the iteration number and the maximum number of iterations is set to 5000.  *cd_alpha-1e-4*: using an initial learning rate of 1e-4. *cd_alpha-5e-4*: using an initial learning rate of 5e-4. *cd_alpha-1e-3*: using an initial learning rate of 1e-3. *cd_alpha-5e-3*: using an initial learning rate of 5e-3.
+
+```{r full-likelihood-opt-different-alphas-numit, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_lindecay1e-1_different_alphas.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-different-alphas-numit)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_lindecay1e-1_different_alphas.html", height = "600px")
+```
+
+## Number of iterations for different learning rate schedules and fixed initial learning rate $\alpha_0 =$ 1e-4 {#learning-rate-schedules-distribution-iterations}
+
+(ref:caption-full-likelihood-opt-numit_lin_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a default learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha = \alpha_0 / (1 + \gamma \cdot t)$ with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
+
+```{r full-likelihood-opt-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_lindecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_lindecay.html", height = "600px")
+```
+
+(ref:caption-full-likelihood-opt-numit_sig_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a sigmoidal learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
+
+```{r full-likelihood-opt-numit-sig-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sigdecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-sig-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sigdecay.html", height = "600px")
+```
+
+(ref:caption-full-likelihood-opt-numit_sqrt_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a square root learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
+
+```{r full-likelihood-opt-numit-sqrt-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sqrtdecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sqrtdecay.html", height = "600px")
+```
+
+
+
+# Training of the Random Forest Contact Prior
+
+
+## Evaluating window size with 5-fold Cross-validation {#rf-window-size}
+
+(ref:caption-random-forest-window-size-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of window size for single position features. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
+
+```{r random-forest-window-size-cv, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_windowsize.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-random-forest-window-size-cv)'}
+knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_windowsize.html", height = "600px")
+```
+
+## Evaluating non-contact threshold with 5-fold Cross-validation {#rf-noncontact-threshold}
+
+(ref:caption-random-forest-noncontactthr-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of the non-contact threshold to define non-contacts. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
+
+```{r random-forest-noncontactthr-cv, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_noncontactthr.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-random-forest-noncontactthr-cv)'}
+knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_noncontactthr.html", height = "600px")
+```
+
+## Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation {#rf-ratio-noncontacts}
+
+(ref:caption-random-forest-rationoncontactthr-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of dataset composition with respect to the ratio of contacts and non-contacts. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
+
+```{r random-forest-rationoncontactthr-cv, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_ratio.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-random-forest-rationoncontactthr-cv)'}
+knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_ratio.html", height = "600px")
+```
+
+

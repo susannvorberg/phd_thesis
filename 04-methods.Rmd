@@ -160,42 +160,7 @@ where $N_{pc} > 0$.
 The formula for $q(x_i \eq a, x_j \eq b)$ in the second line in eq \@ref(eq:pseudocounts) was chosen such that for $\tau \eq0$ we obtain $q(x_i \eq a, x_j \eq b) = q_0(x_i \eq a, x_j  \eq b)$, and furthermore
  $q(x_i \eq a, x_j  \eq b) = q(x_i \eq a)  q(x_j \eq b)$ exactly if $q_0(x_i \eq a, x_j  \eq b) = q_0(x_i \eq a)  q_0(x_j \eq b)$.
 
-### Regularization {#regularization}
 
-As the model is overparameterized, regularization is an alternative solution compared to choosing a gauge.
-Furthermore it helps preventing overfitting. 
-
-L2-regularization which corresponds to using a Gaussian prior, has proven to work better than L1 regularization [@cite].
-
-\begin{equation}
-  R(\v, \w) = \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})  + \mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) 
-\end{equation}
-
-
-\begin{align}
- \mathcal{N}(\v |  \vec{0}, \lambda_v \I^{-1})   &= \lambda_v ||\v||_2^2 \\
-                                                &= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  \via^2
-\end{align}
-
-
-\begin{align}
-\mathcal{N}(\w | \vec{0}, \lambda_w \I^{-1}) &= \lambda_w ||\w||_2^2 \\
-                                            &= \frac{\lambda_w}{2} \sum_{i=1}^L \sum_{\substack{j=1 \\ i \neq j}}^L  \sum_{a,b=1}^{20} \wijab^2
-\end{align}
-
-
-However, it makes sense to use a Gaussian prior for single emission potentials that is centered at the [ML](#abbrev) estimate of the single potentials. 
-Consider, .....
-
-
-\begin{align}
- \mathcal{N}(\v |  \v^{*}, \lambda_v \I^{-1}) &= \lambda_v ||\v - \v^{*}||_2^2 \\
-                                               &= \frac{\lambda_v}{2} \sum_{i=1}^L \sum_{a=1}^{20}  (\via - \via^{*})^2   
-\end{align}
-
-\begin{equation}
-  \via^* = \log q(x_i=a) - \frac{1}{20} \sum_{a'=1}^{20} \log q(x_i=a')
-\end{equation}
 
 
 ## Analysis of Coupling Matrices
@@ -220,6 +185,8 @@ For one-dimensional coupling distribution plots the residue pairs and respective
     - $N_{ij}$ is the number of sequences with neither a gap at position i nor at position j
     - $q_i(a)$ and $q_j(b)$ are the frequencies of amino acids a and b at positions i and j (computed as described in section \@ref(amino-acid-frequencies)) 
     
+These criteria ensure that uninformative couplings are neglected, e.g. sequence neighbors albeit being contacts according to the $\Cb$ contact definition cannot be assumed to express biological meaningful coupling patterns, or couplings for amino acid pairings that do not have statistical relevant counts in the alignment.
+
 The same criteria have been applied for selecting couplings for the two-dimensional distribution plots with the difference that evidence for a single coupling term has to be $N_{ij} \cdot q_i(a) \cdot q_j(b) < 80.$
 
 
@@ -232,68 +199,186 @@ The same criteria have been applied for selecting couplings for the two-dimensio
 
 ## Optimizing the Full-Likelihood {#methods-optimizing-full-likelihood}
 
-Given the likelihood gradient estimate utilizing contrastive divergence, the full likelihood can now be minimized using a gradient descent optimization algorithm.
-Second order optimization algorithms that make use of the (approximate) partial second derivates cannot be applied here, as the computation of the Hessian is too complex.
+Given the likelihood gradient estimates obtained with [CD](#abbrev), the full likelihood can now be minimized using a gradient descent optimization algorithm.
+Second order optimization algorithms that make use of the (approximate) partial second derivates cannot be applied here, as the computation of the second derivatives of the full likelihood is too complex.
 
-Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters.
-Stochastic gradient descent is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. 
-Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function.
-These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
-By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
-
-However, choosing an optimal learning rate for parameter updates as well as an appropriate learning rate decay offers a challenge and needs manual tuning. 
-The following sections describe the hyperparameter optimization of two stochastic gradient descent optimization algorithms: simple stochastic gradient descent and ADAM [@Kingma2014].
-The performance for tested parameter settings is evaluated on a benchmark set of ~ 500 proteins, that is a subset of the data set described in methods section \@ref(dataset).
-The reference method for all new developed scores is the pseudo-likelihood method that uses the corrected L2norm as a final contact score as explained in section \@ref(post-processing-heuristics).
+The following sections will describe the hyperparameter tuning for the stochastic gradient descent optimization as well as tuning different aspects of the Gibbs Sampler used to approximate the gradient with  [CD](#abbrev). The performance will be evaluated as the mean precision of the top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section \@ref(dataset).
+The reference method for all new developments is the pseudo-likelihood method that uses the [APC](#abbrev) corrected L2norm as a contact score as explained in section \@ref(post-processing-heuristics).
 Pseudo-likelihood couplings are computed with the tool CCMpredPy that is introduced in methods section \@ref(diff-ccmpred-ccmpredpy).
-Contact scores for the methods under developments are computed using the corrected L2norm of the couplings, just as for the pseudo-likelihood method.
+Contact scores for couplings optimized with [CD](#abbrev) are computed in the same way as for the pseudo-likelihood.
 
 ### Hyperparameter Optimization for Stochastic Gradient Descent
 
-Stochastic gradient descent updates the coupling parameters $\w$ using the approximate gradient to the log likelihood $\nabla_w \LLreg(\v,\w)$ obtained with contrastive divergence and a learning rate $\alpha$ according to  
+Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters.
+Stochastic gradient descent [SGD](#abbrev) is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. 
+Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function.
+These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
+By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
+However, choosing an optimal step size for parameter updates, referred to as learning rate, as well as finding the optimal rate of decay offers a challenge and needs manual tuning [@Schaul2013]. 
+
+When optimizing [CD](#abbrev) with [SGD](#abbrev), the stochasticity is not so much introduced by looking only at subsamples of the data but rather by the stochastic nature of the Gibbs sampling process to approximate the gradient.
+The coupling parameters $\w$ will be updated in each iteration $t$ by taking a step of size $\alpha$ along the direction of the negative gradient of the full log likelihood $- \nabla_w \LLreg(\v,\w)$ that has been approximated with contrastive divergence,
 
 \begin{equation}
   \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
 \end{equation}
 
-In order to get a first intuition of the optimization problem, I used $\alpha \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ and a standard learning rate schedule,
 
-\begin{equation}
-  \alpha  = \frac{\alpha_0}{1 + \gamma \cdot t} \; ,
-\end{equation}
-
-with $\gamma=0.1$ being the decay rate and $t$ the current iteration [@Bottou2012].
-It is not feasible to compute the function value at each iteration in order to decide when the optimization has converged.
-Therefore the optimization will stop whenever the gradient norm changes less than a small $\epsilon=1\mathrm{e}{-8}$ or when 5000 iterations are reached.
+In order to get a first intuition of the optimization problem, I used an initial learning rate $\alpha_0 \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ with a standard learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$, with $\gamma=0.1$ being the decay rate and $t$ the current iteration [@Bottou2012].
+Typically, the algorithm has converged and is stopped whenever the difference of subsequent function evaluations is less than a small value $\epsilon$.
+However, as it is not feasible to evaluate the full likelihood function at each iteration, because of the exponential complexity of the partition function, it is necessary to define a different stopping criteron.
+Therefore the optimization will stop whenever the gradient norm changes less than a small $\epsilon=1\mathrm{e}{-8}$ as in [@Carreira-Perpinan2005] or when a maximum of 5000 iterations has been reached.
+Furthermore, parameters are initialized with the pseudo-likelihood optimum, assuming that it is already close to the full likelihood optimum.
 
 
-Figure \@ref(fig:performance-cd-alphaopt) shows the benchmark for the optimizations with the four different learning rates. 
-In general, the top ranked contacts are predicted with equal accuracy as the reference method (<span style="color:green">"ccmpred-pll-centerv+apc"</span>) when using small learning rates $\alpha \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3} \}$.
-Predictions for lower ranked contacts (top $0.6-L$ predictions) are less accurate. 
-Using a high learning rate $5\mathrm{e}{-3}$ yields much less accurate predictions. 
-When evaluating the methods with respect to alignment size (see Figure \@ref(fig:performance-cd-alphaopt-neff)) it becomes clear that a high learning rate of $5\mathrm{e}{-3}$ does only not work well for proteins with large alignments. 
-The magnitude of the gradient depends on the size of the alignment because the gradient is computed as a difference of amino acid counts. 
-Therefore proteins with large alignments will generally have larger gradients than proteins with small alignments.
-When analysing individual proteins with large alignments it becomes clear that choosing a learning rate that is too large causes the optimization to diverge. 
-Furthermore, when using a small learning rate, most of the optimizations did not converge but reached the maximum number of 5000 iterations.
+Figure \@ref(fig:performance-cd-alphaopt) shows the mean precision against top ranked contacts computed from pseudo-likelihood couplings and [CD](#abbrev) couplings optimized with four different learning rates. 
+Overall, mean precision for [CD](#abbrev) contacts is comparable to <span style="color:blue">pseudo-likelihood</span> contacts.
+Using smaller learning rates with the stochastic gradient descent optimizer results in higher mean precision.
 
-(ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over ~500 proteins. <span style="color:green; font-weight: bold">ccmpred-pll-centerv+apc</span>:  L2norm + APC score for pseudo-likelihood couplings. The other methods derive contact scores as the L2norm + APC for couplings computed with contrastive divergence using stochastic gradient descent and different learning rates: <span style="color:red; font-weight: bold">cd_alpha_1e-4+apc</span>: learning rate $1\mathrm{e}{-4}$. <span style="color:blue; font-weight: bold">cd_alpha_5e-4+apc</span>: learning rate $5\mathrm{e}{-4}$. <span style="color:purple; font-weight: bold">cd_alpha_1e-3+apc</span>: learning rate $1\mathrm{e}{-3}$. <span style="color:dark; font-weight: bold">cd_alpha_5e-3+apc</span>: learning rate $5\mathrm{e}{-3}$.
+(ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over 286 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. <span style="color:blue;">pseudo-likelihood</span>:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with different initial learning rates $\alpha_0$ as specified in the legend.
 
 ```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
 knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html", height = "500px")
 ```
 
+When evaluating the learning rate settings with respect to alignment size (see Figure \@ref(fig:performance-cd-alphaopt-neff)) it seems that higher learning rates do not work well for proteins with large alignments. 
+The magnitude of the gradient scales with the number of sequences in the alignment because the gradient is computed as a difference of amino acid counts between observed and sampled sequences (see section \@ref(full-likelihood-gradient)).  
+And since alignments with many sequences produce high amino acid counts, their gradients will generally be higher compared to alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is still big.
+Analysis of individual proteins with large alignments that perform bad in the benchmark reveals that high learning rates lead the parameters to diverge as can be seen in appendix \@ref(cd-large-alpha-large-neff).
 
-(ref:caption-performance-cd-alphaopt-neff) Mean precision for top ranked contact predictions over ~500 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
 
-```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
-knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.html", height = "500px")
+(ref:caption-performance-cd-alphaopt-neff) Mean precision for top ranked contact predictions over 286 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
+
+```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
+knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
+```
+
+Furthermore, the smaller the learning rate, the more iterations are necessary for the optimization ot converge. 
+With a learning rate of $1\mathrm{e}{-4}$ no protein converged with less than the maximum number of 5000 iterations (see Figure in Appendix \@ref(fig:full-likelihood-opt-different-alphas-numit)).
+It is therefore necessary to find a more appropriate learning rate schedule and decay rate.
+
+I evaluated the following learning rate schedules and decay rates for an initial learning rate $\alpha_0 = 1\mathrm{e}{-4}$ which gave highest precision in the previous benchmark but slow convergence:
+
+- default learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
+- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma \cdot t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1, 10\}$
+- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}, 1\mathrm{e}{-2}\}$
+
+The decay schedules with different decay rates are visualized in Figure \@ref(fig:learning-rate-schedules)
+
+(ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the default learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Blue legend represents the sigmoidal learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$ with $\gamma$. Green legend represents the square root learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The iteration number is given by $t$. Initial learning rate $\alpha_0$ is set to 1e-4 and $\gamma$ is the decay rate and its value is given in brackets in the legend.
+
+```{r learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/learning_rate_schedules_alpha0_00001_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-learning-rate-schedules)'}
+knitr::include_url("img/full_likelihood/learning_rate_schedules_alpha0_00001_notitle.html", height = "500px")
+```
+
+Only the sigmoidal learning rate schedule achieves precision comparable to the pseudo-likelihood score while improving convergence speed measured by the number of iterations. 
+Appendix \@ref(learning-rate-schedules-distribution-iterations) shows benchmarks as well as the distribution over the number of iterations until convergence for all learning rate schedules that have been evaluated.
+Whereas none of the proteins except one did converge within 5000 iterations using the default learning rate schedule with decay rate $\gamma = 1\mathrm{e}{-1}$ (blue box plot in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules)), all proteins converged within 2000 or 1000 iterations using the sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, respectively (orange and green box plot respectively in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules)).
+
+
+Because the gradient of the full likelihood scales with number of sequences in the [MSA](#abbrev), I defined the initial learning rate $\alpha_0$ and the decay rate $\gamma$ for the sigmoidal learning rate schedule as functions of [Neff](#abbrev). 
+Aiming to obtain values for the initial learning rate $\alpha_0$ and the decay rate $\gamma$ around 1e-4, as these values yield good performance and fast convergence, I defined $\alpha_0 = \gamma = \frac{3\mathrm{e}{-4}}{\log N_{\text{eff}}}$. 
+Assuming small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 = \gamma \approx 1.7\mathrm{e}{-4}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 = \gamma \approx 7\mathrm{e}{-5}$. 
+The distribution of the number of iterations until convergence is displayed as red box plot in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules), and is in the range of the sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, as expected.
+
+All following analyses are conducted using the sigmoidal learning rate schedule with initial learning rate and decay rate defined as functions of [Neff](#abbrev) as $\alpha_0 = \gamma = \frac{3\mathrm{e}{-4}}{\log N_{\text{eff}}}$.
+
+(ref:caption-distribution-num-it-for-best-learning-rate-schedules) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood for different learning rate schedules. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. Blue box plot displays default learning rate schedule with decay rate $\gamma = 1\mathrm{e}{-1}$. Orange and green boxplot represent sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, respectively. Red boxplot displays sigmoidal learning rate schedule with $\alpha_0$ and decay rate $\gamma$ defined as functions of [Neff](#abbrev).
+
+```{r distribution-num-it-for-best-learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/distribution_numiterations_against_different_learning_rate_schedules.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-distribution-num-it-for-best-learning-rate-schedules)'}
+knitr::include_url("img/full_likelihood/distribution_numiterations_against_different_learning_rate_schedules.html", height = "500px")
+```
+
+Interestingly, and in contradiction to the benchmark results, using higher initial learning rates usually leads the parameters to diverge further from the pseudo-likelihood initializations than using smaller and faster decaying learning rates. 
+Figure \@ref(fig:cd-parameter-optimum-for-1mkca00-different-learning-rates) illustrates this effect for protein *1mkc*.
+Determining the learning and decay rate with respect to [Neff](#abbrev), as just described, yields $\alpha_0 = \gamma \approx 6.6e-5$. 
+Optimization converges after $\approx 600$ iterations with an L2-norm over couplings $||\w||_2 = 15.28$.
+When using a larger learning rate  $\alpha_0 = 1e-3$ the optimization has converged after $\approx 560$ iterations with an L2-norm over couplings $||\w||_2 = 12.66$.
+
+
+
+
+
+### Optimizing Regularization Coefficients for Contrastive Divergence
+
+Gaussian priors are put on the single potentials $\v$ and the couplings $\w$ when optimizing the full likelihood with [CD](#abbrev) just as it is done for pseudo-likelihood optimization (compare section \@ref(pseudo-likelihood)).
+A difference compared to pseudo-likelihood optimization that uses zero centered priors, is the centering of the Gaussian prior for the single potentials $\v$ at $v^*$ as described in section \@ref(prior-v).
+The hyperparameter tuning for stochastic gradient descent described in the last section applied the default pseudo-likelihood regularization coefficients $\lambda_v \eq 10$ and $\lambda_w \eq 0.2\cdot(L-1)$. 
+The regularization coefficient $\lambda_w$ for couplings $\w$ is defined with respect to protein length $L$ owing to the fact that the number of possible contacts in a protein increases quadratically with $L$ whereas the number of observed contacts only increases linearly as can be seen in Figure \@ref(fig:number-contacts-against-L).
+
+(ref:caption-number-contacts-against-L) Number of contacts ($\Cb < 8 \angstrom$) with respect to protein length and sequence separation has a linear relationship.
+
+```{r number-contacts-against-L, echo = FALSE, screenshot.alt="img/full_likelihood/no_contacts_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-number-contacts-against-L)'}
+knitr::include_url("img/full_likelihood/no_contacts_vs_protein_length_thr8.html", height = "500px")
+```
+
+It is possible that [CD](#abbrev) achieves optimal performance using stronger or weaker regularization coefficients compared to pseudo-likelihood.
+Therefore, I evaluated performance of contrastive divergence using different regularization coefficients $\lambda_w \in \{ 1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 0.2, 1\} \cdot(L-1)$ while leaving the regularization for single potentials at the default value $\lambda_v \eq 10$.
+Furthermore, I analysed whether precision is impacted by only optimizing the couplings $\w$ (with default regularization) while fixing the single potentials $\vi$ to their best estimates $\vi^*$ as described in section \@ref(prior-v).
+
+As can be seen in Figure \@ref(fig:precison-cd-regularization), using strong regularization for the couplings $\lambda_w \eq (L-1)$ results in a drop of mean precision.
+Using weaker regularization or fixing the single potentials hardly has an impact on precision with using $\lambda_w \eq 1\mathrm{e}{-2}(L-1)$ yielding slightly improved precision for the top ranked contacts.
+
+(ref:caption-precison-cd-regularization) Performance of contrastive divergence optimization of the full likelihood with different regularization settings compared to pseudo-likelihood (blue) for 280 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Default regularization coefficients as used with pseudo-likelihood are $\lambda_v \eq 10$ and $\lambda_w \eq 0.2(L-1)$. "fixed vi" (orange) uses [CD](#abbrev) to optimize only couplings with default regularization while keeping the single potentials $\vi$ fixed at their [MLE](#abbrev) optimum $\vi^*$. The other optimization runs with [CD](#abbrev) (green, red, purple, brown) use default regularization for the single potentials and a regularization coefficient for the couplings according to legend description.
+
+```{r precison-cd-regularization, echo = FALSE, screenshot.alt="img/full_likelihood/precision_vs_rank_notitle_cd_comparing_regularizers.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precison-cd-regularization)'}
+knitr::include_url("img/full_likelihood/precision_vs_rank_notitle_cd_comparing_regularizers.html", height = "500px")
+```
+
+
+### Optimizing the Sampling Scheme for Contrastive Divergence
+
+I analysed whether choosing a different number of sequences for the approximation of the gradient via Gibbs sampling can improve performance.
+Randomly selecting only a subset $N^{\prime}$ of the $N$ observed sequences corresponds to the stochastic gradient descent idea of a minibatch and introduces additional stochasticity over the random Gibbs sampling process. 
+Using $N^{\prime} < N$ sequences for Gibbs sampling has the further advantage of decreasing the runtime at each iteration. 
+Note, that the reference counts from the observed sequences $N_{ij} q(x_i \eq a, x_j \eq b)$ that are part of the gradient calculation will be kept constant.
+Therefore it is necessary, however to rescale the amino acid counts from the sampled sequences in a way such that the total sample counts match the total observed counts. 
+
+I evaluated two different schemes for randomly selecting $N^{\prime} \eq xL$ sequences from the $N$ given sequences of the alignment at every iteration:
+
+- **without** replacement (enforcing $N^{\prime} \eq \min(N, xL)$)
+- **with** replacement
+
+with $x \in \{ 1, 5, 10, 50 \}$.
+
+As can be seen in the Figure \@ref(fig:cd-sampling-size), the choice of minibatch size which corresponds to the number sequences that are selected to approximate the gradient, has no influence on precision.
+
+PLOT PEFORMANCE SMAPLING SIZE
+
+This results is somewhat unexpected, because using more samples to approximate the gradient should result in a better gradient approximation and thus in a better performance. 
+Indeed, the magnitude of the gradient norms decreases when more sequences are used for sampling as can be seen in Figure \@ref(fig:cd-gradient-norm).
+However, this does apparantly not translate into better parameter values. 
+
+PLOT GRADIENT NORMS
+
+
+
+The default [CD](#abbrev) algorithm as described by Hinton in 2002 applies only one full step of Gibbs sampling on each data sample to generate a sampled data set that will be used to approximate the gradient [@Hinton2002].
+One full step of Gibbs sampling corresponds to sampling each position in a protein sequence according to the conditional probabilities computed from the current model probabilties as described in \@ref(gibbs-sampling).
+The sampled sequences obtained after only one step of Gibbs sampling will be very similar to the input sequences.
+It has been shown that sampling with $n>1$ steps gives more precise results but increases computational cost per gradient evaluation [@Bengio2009; @Tieleman2008].
+
+In the following I analysed the impact on performance when Gibbs sampling each sequence with 1, 5 and 10 full steps.
+As can be seen, there is hardly an impact on precision while having much longer runtimes (by a factor or 5 and 10). 
+
+(ref:caption-precision-cd-gibbs-steps) Performance of contrastive divergence optimization of the full likelihood with different number of Gibbs steps compared to pseudo-likelihood (blue) for 287 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) with different number of Gibbs sampling steps. 
+
+```{r precision-cd-gibbs-steps, echo = FALSE, screenshot.alt="img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_sampling_steps.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-cd-gibbs-steps)'}
+knitr::include_url("img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_sampling_steps.html", height = "500px")
 ```
 
 
 
 
+Another variant of [CD](#abbrev) that has been suggested by Tieleman in 2008 is [*PCD*](#abbrev)[@Tieleman2008] that does not reset the Markov Chains at every iteration.
+The reason being that when using small learning rates, the model changes only slightly between iterations and the true data distribution can be better approximated 
+However, subsequent samples of [*PCD*](#abbrev) will be highly correlated creating a kind of momentum effect. 
+Furthermore is has been found that [*PCD*](#abbrev) should be used with smaller learning rates and higher minibatch sizes.
 
+As PCD might require samller update steps and larger minibatches, I analysed the performance of PCD for the default settings of CD and additionally for smaller learning and decay rates and larger minibatches.
+Note that one Markov chain is kept for every sequence of the input alignment. At each iteration a subset $N^{\prime} < N$ of the Markov chains is randomly selected (without replacement) and used to for another round of Gibss sampling at the current iteration.
+
+PLOT PCD for different LEARNIGN  RATEWS and SAMPLE SIZES
 
 
 
@@ -848,46 +933,21 @@ knitr::include_url("img/random_forest_contact_prior/model_linreg_transformlogL_n
 
 ### Hyperparameter Optimization for Random Forest Prior {#rf-hyperparameter-optimization}
 
-There are several parameters that need to be tuned in such a way as to obtain a trade-off between model performance and size of the model.
-Apart from requiring a lot of disk space, the larger the model becomes, the longer it will take to train and to make predictions:
+There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime.
+While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. 
+A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree [@Bernard2009].
+Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. 
+Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. 
+In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. 
+Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal node size with respect to the number of features per node. 
+A positive side-effect of taking these measures is a speedup of the algorithm. [@Louppe2014]
 
-The module `ensemble.RandomForestClassifier` in the Python package `sklearn (v. 0.19)` was used to learn random forest classifiers over sequence features described in section \@ref(seq-features)  [@Pedregosa2011].
-Hyperparamters of the random forest were optimized with a grid search over parameter space using 5-fold cross-validation on a dataset with 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") using a window size of 5 for single position features as described in section \@ref(seq-features-single).
+In the following, I use 5-fold cross-validation to identify the optimal architecture of the random forest. 
+I used the module [RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier) in the Python package `sklearn (v. 0.19)`  [@Pedregosa2011] and trained the models on sequence features extracted from [MSAs](#abbrev) as described in section \@ref(seq-features). 
+Single position features are computed with a window of size five as described in section \@ref(seq-features-single). 
 
-First of all, I performed grid search over the parameters *n_estimators*, defining the number of trees in the forest and *max_features*, defining the number of randomly selected features considerd for each split using the following settings:
-
-- *n_estimators*: [100,500,1000]
-- *max_features*: ['sqrt', 'log2', None]
-
-Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) visualizes the results of the grid search. Considering only $\log_2 \approx 8$ features for every split yields highest precision averaged over the five cross-validation runs regardless of how many trees are learned. I chose *n_estimators* = 1000 and *max_features* = log2 for further analysis.
-
-(ref:caption-rf-gridsearch-nestimators-maxfeatures) Distribution of precision for 5-fold cross-validation of a grid search over parameters *n_estiamtors* and *max_features*. Using 1000 trees and randomly selecting $\log_2$ feautures at every split yields highest mean precision over the five runs.
-
-```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/gridsearch/grid_search_cv_results_precision_random_forest_notitle_nrestimators_maxfeatures.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
-knitr::include_url("img/random_forest_contact_prior/gridsearch/grid_search_cv_results_precision_random_forest_notitle_nrestimators_maxfeatures.html", height = "600px")
-```
-
-Next, I optimized the parameters *min_samples_leaf* defining the minimum number of samples required to be at a leaf node and *max_depth* defining the maximum depth of the trees using the following settings:
-
-- *min_samples_leaf*: [1, 10, 100]
-- *max_depth*: [10, 100, 1000, None]
-
-
-
-
-Evluated using precision for out-of-bag samples????
-PLOT GRID SEARCH RESULTS
-
-Using the optimal setting of hyperparameters (`n_estimators=1000, min_samples_leaf=100, max_depth=100, max_features=sqrt`) obtained from the grid search, cross-validation was used to optimize the window-size of features (see section\@ref(seq-features-single)):
-
-- window size:
-  [5, 7, 9, 11]
-  
-  
-PLOT PRECISISON FOR WINDOW SIZES
-  
-  
-The problem of predicting contacting residues is a highly imbalanced problem with approximately 5% contacts.
+Proteins constitute highly imbalanced datasets with respect to the number of residue pairs that form and form not physical contacts. 
+As can be seen in Figure \@ref(fig:fraction-contacts-vs-protein-length), depending on the enforced sequence separation threshold the percentage of contacts varies between approximately 1% and 5%.
 
 (ref:caption-fraction-contacts-vs-protein-length) Fraction of contacts among all possible contacts ($\frac{L(L-1)}{2}$) in a protein against protein length L. The distribution has a non-linear relationship. At a sequence separation threshold >8 positions the fraction of contacts for intermediate size proteins with length >100 is approximately 2%. 
 
@@ -895,37 +955,74 @@ The problem of predicting contacting residues is a highly imbalanced problem wit
 knitr::include_url("img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.html", height = "500px")
 ```
 
+Most studies applying machine learning algorithms to the problem of predicting residue-residue contacts, chose the standard approach of rebalancing the data set by undersampling of the majority class.
+
+| Study | Proportion of Contacts| Proportion of Non-contacts | 
+|-------------------------------------:|:--------:|:--------:|
+| Wu et al. (2008) [@Wu2008] | 1 | 4 |
+| Li et al. (2011) [@Li2011] | 1 | 1, 2 |
+| Wang et al. (2011) [@Wang2011] | 1 | 4 |
+| DiLena et al. (2012) [@DiLena2012a] | 1 | ~4 |
+| Wang et al. (2013) [@Wang2013] | 1 | ~4 |
+
+I followed the same strategy and undersampled residue pairs that are not physical contacts with a proportion of contacts to non-contacts of 1:5.
+The training set is comprised of 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") so that each of the five cross-validation models will be trained on 40.000 contacts and 200.000 non-contacts. 
+As the training set has been undersampled for non-contacts, it is not representative of real world proteins and the models should be validated on a more realistic validation set. 
+Each of the five models is therefore cross-validated on an own independent dataset of residue pairs extracted from 40 proteins by means of the standard contact prediction benchmark (mean precision against top ranked contacts).
 
 
-Therefore, the ratio of contacts to non-contacts was optimized with 5-fold crossvalidation while performing a grid seardch over the `class-weight` parameter which assigns a weight to each datasample according to the class label.
+First I assessed performance of models for combinations of the parameter *n_estimators*, defining the number of trees in the forest and the parameter *max_depth* defining the maximum depth of the trees:
 
-- varying class ratios using equal amount of total data:
-  - 1:1   = 250 000 : 250 000
-  - 1:3   = 125 000 : 375 000
-  - 1:5   = 85 000 : 415 000
-  - 1:10  = 45 000 : 455 000
-- 'class_weight': [ None,                     # equal class weights
-                    "balanced",               # n_samples / (n_classes * np.bincount(y))
-                    {0: 0.6,   1: 3},         # ==> "balanced" for ratio 1:5
-                    {0: 0.55,  1: 5.5},       # ==> "balanced" for ratio 1:10
-                    {0: 0.525, 1: 10.5},      # ==> "balanced" for ratio 1:20
-                    {0: 10.5, 1: 0.525}       # ==> "balanced" for ratio 20:1 (sanity check)
-                  ]
+- *n_estimators* $\in \{100,500,1000\}$
+- *max_depth* $\in \{10, 100, 1000\}$
 
+Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) shows that using 1000 trees and a maximum tree depth of 100 or 1000 gives highest mean precision over the validation set. 
+For further analysis I will use `n_estimators=1000` and `max_depth=100`.
 
+(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models that were trained with the same parameter settings. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and *max_depth*=10 or *max_depth*=100 perform nearly identical as well as models with 500 trees and *max_depth*=10 or *max_depth*=100.
 
-PLOT GRID SEARCH RESULTS FOR EVERY DATASET (=4 plots)
+```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth1000_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth1000_top5_notitle.html", height = "600px")
+```
+
+Next, I optimized the parameters *min_samples_leaf*, defining the minimum number of samples required to be at a leaf node and *max_features*, defining the number of randomly selected features considered for each split using the following settings:
+
+- *min_samples_leaf* $\in \{1, 10, 100\}$
+- *max_features* $\in \{\text{sqrt}, \text{log2}, 0.15, 0.3\}$
+
+Randomly selecting 15% of features (=34 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
+I chose `max_features = 0.15` and `min_samples_leaf = 10` for further analysis.
+Tuning the hyperparameters in a different order or on a larger dataset gives similar results.
+
+(ref:rf-gridsearch-maxdepth-minsampleleaf) Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of *min_samples_leaf* and *max_features*.  Dashed lines show the performance of models with the same parameter setting that have been learned on the five different subsets of training data. Solid lines give the mean precision over these five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
+
+```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth100_for_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth100_for_maxfeatures_minsampleleaf_top5_notitle.html", height = "600px")
+```
+
+In a next step I assessed dataset specific settings, such as the window size over which single positions features will be computed, the distance threshold to define non-contacts and the optimal proportions of contacts and non-contacts in the training set.
+I used the previously identified settings of random forest hyperparameters (`n_estimators=1000, min_samples_leaf=10, max_depth=100, max_features=0.15`).
+
+- ratio of non-contacts/contacts $\in \{2, 5, 10, 20 \}$ within a fixed total dataset size of 300 000 residue pairs
+- window size:  $\in \{5, 7, 9, 11\}$
+- non-contact threshold $\in \{8, 15, 20\}$
+
+As can be seen in appendix \@ref(rf-window-size) and \@ref(rf-noncontact-threshold), the default choice of using a window size of five positions and the non-contact threshold of $8 \angstrom$ proves to be the optimal setting.
+Furthermore, using five-times as many non-contacts as contacts in the training set results in highest mean precision as can be seen in appendix \@ref(rf-ratio-noncontacts). 
+These estimates might be biased in a way since the random forest hyperparameters have been optimized on a dataset using exactly these optimal settings. 
+
 
 ### Feature Selection {#rf-feature-selection}
 
-Many features obtain low *Gini importance* scores and can most likely be removed from the data set, thus also reducig model complexity. 
+Many features obtain low *Gini importance* scores and can most likely be removed from the data set which will also reduce model complexity. 
 It has been found, that prediction performance might even increase after removing the most irrelevant feaures [@Menze2009].
 For example, during the development of *EPSILON-CP*, a deep neural network method for contact prediction, the authors performed feature selection using boosted trees.
 By removing 75% of the most non-informative features (mostly attributed to amino acid composition), the performance of their predictor increased slightly [@Stahl2017]. 
+Other studies have also emphasized the importance of feature selection to improve performance and reduce model complexity [@Cheng2007; @Li2011].
 
-I therefore developed a feature selection pipeline with which to retrain the random forest on subsets of features.
-As subsets I chose those feautures with *Gini importance* larger than the $\{10, 30, 50, 70, 90\}$-percentile of *Gini importance* values.
-Performance is then evaluated for the models trained on these subsets of features. 
+I therefore developed a feature selection pipeline that retrains the random forest model on subsets of features.
+The subsets are composed of those features having *Gini importance* larger than the $\{10, 30, 50, 70, 90\}$-percentile of the distribution obtained by training a model on all features.
+Performance is then evaluated by means of the standard contact prediction benchmark (mean precision against top ranked contacts) for the models trained on these subsets of features. 
 
 
 ### Using Pseudo-likelihood Coevolution Score as Additional Feature {#rf-with-pll-score}

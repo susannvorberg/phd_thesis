@@ -1,8 +1,5 @@
 # Introduction {#general-intro}
 
-dsfgdsfg $\AA$ ds dfg 
-
-
 In his Nobel Prize speech in 1973 [@Anfinsen1973] Anfinsen postulated one of the basic principles in molecular biology, which is known as *Anfinsen's dogma*: a protein's native structure is uniquely determined by its amino acid sequence. 
 With certain exceptions (e.g. [IDP](#abbrev) [@Wright1999]), this dogma has proven to hold true for the majority of proteins.
 
@@ -64,10 +61,10 @@ The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and hi
 Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure.
 Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. 
 The $\pi$-electron systems favour T-shaped or offset stacked conformations [@Waters2002].
-Preferred distances between aromatic residues have been observed between 4.5$\AA \; \;$ and 7$\AA \; \;$ of their ring centroids [@Burley1985].
+Preferred distances between aromatic residues have been observed between 4.5$\angstrom$ and 7$\angstrom$ of their ring centroids [@Burley1985].
 
 Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains.
-They comprise the strongest side chain interactions in protein structures and their length varies between 3.5$\AA \; \;$ to 4$\AA \; \;$.
+They comprise the strongest side chain interactions in protein structures and their length varies between 3.5$\angstrom$ to 4$\angstrom$.
 Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. 
 Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees [@Thornton1981].
 They play a very important role in stabilizing protein structures. 
@@ -76,17 +73,17 @@ It has also been found that disulfide bonds are more frequently observed in prot
 
 Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). 
 The strength of electrostatic interactions, as described by Coulomb's law, decreases with distance between the point charges at the functional groups. 
-It has been found to be maximal at 4$\AA \; \;$ with respect to the functional groups of the both residues [@Donald2011].
+It has been found to be maximal at 4$\angstrom$ with respect to the functional groups of the both residues [@Donald2011].
 
 Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. 
 They are electrostatic interactions as well and thus their strength depends on distance as well. 
-Hydrogen bonds are formed at distances of 2.4$\AA \; \;$ to 3.5$\AA \; \;$ between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
+Hydrogen bonds are formed at distances of 2.4$\angstrom$ to 3.5$\angstrom$ between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
 
 Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). 
 The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).
 
 Cation–$\pi$ interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). 
-The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4$\AA \; \;$ and 6$\AA \; \;$ [@Burley1986] [@Crowley2005]
+The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4$\angstrom$ and 6$\angstrom$ [@Burley1986] [@Crowley2005]
 Their role in stabilizing protein structures is still under debate [@Slutsky2004].
 
 Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. 
@@ -181,12 +178,12 @@ Highly constrained residues and interactions will be strongly conserved [@Godzik
 Another possibility to maintain structural integrity is the mutual compensation of unbeneficial mutations.
 For example, the unfavourable mutation of a small amino acid residue into a bulky residue in the densely packed protein core might have been compensated in the course of evolution by a particularly small side chain in a neighboring position. 
 Other physico-chemical quantities such as amino acid charge or hydrogen bonding capacity can also induce compensatory effects[@Neher1994].
-In a [MSA](#abbrev) of a protein family, evolutionary related amino acid sequences that have descended from a common ancestor are aligned in a way that the homologous residues line up with each other in columns. 
+The [MSA](#abbrev) of a protein family comprises homolog sequences that have descended from a common ancestor and are aligned relative to each other.
 According to the hypothesis, compensatory mutations show up as correlations between the amino acid types of pairs of [MSA](#abbrev) columns and can be used to infer spatial proximity of residue pairs (see Figure \@ref(fig:correlated-mutations)).
 
 (ref:caption-correlated-mutations)  The evolutionary record of a protein family reveals evidence of compensatory mutations between spatially neighboring residues that are under selective pressure with respect to some physico-chemical constraints. Mining protein family sequence alignments for residue pairs with strong coevolutionary signals using statistical methods allows inference of spatial proximity for these residue pairs.
 
-```{r correlated-mutations, echo = FALSE, out.width = '80%', fig.align = 'center', fig.cap = '(ref:caption-correlated-mutations)'}
+```{r correlated-mutations, echo = FALSE, out.width = '70%', fig.align = 'center', fig.cap = '(ref:caption-correlated-mutations)'}
 knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 ```
 
@@ -225,50 +222,38 @@ Their fast Bayesian network model incorporates additional prior information and 
 ### Machine Learning Methods and Meta-Predictors {#meta-predictors}
 
 
-With the steady increase in protein sequence data, purely machine learning based methods emerged that are trained on features extracted from [MSAs](#abbrev).
-Currently, the most accurate methods to predict residue-residue contacts are meta-predictors, combining one or several coevolution methods with sequence derived features and other sources of information. 
-An overview of machine learning predictors is given in section \@ref(meta-predictors.)
+With the steady increase in protein sequence data, machine learning based methods have emerged that extract features from [MSAs](#abbrev) in order to learn associations between input features and residue-residue contacts.
+Sequence features typically include predicted solvent accessibility, predicted secondary structure, contact potentials, conservation scores, global protein features, pairwise coevolution statistics and averages of certain features over sequence windows. 
 
-These methods combine abundant information on sequence and
-amino acid properties in order to learn associations between input features and residue-residue
-contacts. Methods differ mainly in the type of the applied Machine Learning (ML) algorithm,
-e.g Neural Networks (NNs), Support Vector Machines (SVMs) or Random Forests (RFs) and the
-chosen input features, e.g. contact predictions, solvent accessibility, physico-chemical properties
-of amino acids, secondary structure predictions or evolutionary information. (Kukic et al.,
-2014; Alfonso Marquez-Chamorro, 2013; Li et al., 2011) The problem with these methods is
-interpretability, as it is diffcult to elucidate which feature patterns contribute in which amount
-to the model.
+Numerous sequence-based methods have been developed using machine learning algorithms, such as support support vector machines (*SVMCon* [@Cheng2007], *SVM-SEQ* [@Wu2008]), random forests (*ProC_S3* [@Li2011], *TMhhcp* [@Wang2011], *PhyCMap* [@Wang2013]), neural networks (*NETCSS* [@Fariselli2001a], *SAM* [@Shackelford2007], [@Hamilton2004a], *SPINE-2D* [@Xue2009a], *NNCon* [@Tegge2009a]) deep neural networks (*DNCon* [@Eickholt2012], *CMAPpro* [@DiLena2012a]) and ensembles of genetic algorithm classfiers (*GaC* [@Chen2010]).
+Their performance is less dependent on the number of available sequence homologs compared to coevolution methods and therefore they can outperform pure coevolution methods in low data ranges [@Wang2013; @Kosciolek2015a].
 
+Sequence-based contact predictors and coevolution methods provide orthogonal information on the likelihood that a pair of residues makes a contact.
+The next logical step in method development therefore constitutes the combination of several base predictors and classical sequence-derived features in the form of meta-predictors.
 
+The first published meta-predictor was *PconsC* in 2013, combining *PSICOV* and *plmDCA* and in a later version *PhyCMap*, *gaussianDCA* and *plmDCA* with sequence features [@Skwark2013; @Skwark2016].
+*EPC-MAP* uses *GREMLIN* as coevolution feature and physicochemical information from predicted ab initio protein structures [@Schneider2014].
+In 2015, *MetaPSICOV* was released combining predictions from *PSICOV*, *mfDCA* and *CCMpred* with other sequence derived feautures [@Jones2015a].
+*RaptorX* uses *CCMpred* predictions as coevolution feature and other standard contact prediction features within an ultra-deep neural network [@Wang2016a].
+The newest developments *EPSILON-CP* and *NeBcon* both comprise the most comprehensive usage of contact prediction methods so far, combining five and eight state-of-the-art contact predictors, respectively [@Stahl2017; @He2017]. 
 
-
-- combining different approaches
- - jones et al: overlap between methods but also many unique predictions
-- machine learning methods incorporate sequence-derived features:
-  - secondary structure predictions
-  - solvent accessibilty
-  - contact potentials
-  - msa properties
-  - pssms 
-  - physico-chemcial properties of amino acids
-
-However, Meta-predictors will improve if basic methods improve. Ultra-deep learning paper identifies coevolution features as crucial feature. 
-
+Eventhough a benchmark comparing the recently developed meta-predictors is yet to be made, it becomes clear from the recent [CASP](#abbrev) experiments, that meta-predictors outperform pure coevolution methods [@Monastyrskyy2015].
+As coevolution scores comprise the most informative feautures among the set of input features, it is clear that meta-predictors will benefit from further improvements of pure coevolution methods [@Wang2016a; @Stahl2017]. 
 
 
 ## Modelling Protein Families with Potts Model {#maxent}
 
-It has been shown that global statistical models, that models the joint probability distribution over all residues in the protein sequence is able to disentangle direct from indirect effects.
-A well motivated and well established model in statistical physics is the Potts model that has used by all successfull methods.
- 
-The Potts model is well motivated as the solution having maximal entropy and is derived in the following.
+Infering contacts from a joint probability distribution over all residues in a protein sequence instead of using simple pairwise statistics has been proven to enable the distinction of direct statistical dependencies between residues from indirect dependencies mediated through other residues.
+The global statistical model that is commonly used to describe this joint probability distribution is the *Potts model*. 
+It is a well-established model in statistical mechanics and can be derived from a maximum entropy assumption which is explained in the following.
 
 The principle of maximum entropy, proposed by Jaynes in 1957 [@Jaynes1957a; @Jaynes1957b], states that the probability distribution which makes minimal assumptions and best represents observed data is the one that is in agreement with measured constraints (prior information) and has the largest entropy. 
 In other words, from all distributions that are consistent with measured data, the distribution with maximal entropy should be chosen.
 
-A protein family is represented by a [MSA](#abbrev) $\X = \{ \seq_1, \ldots, \seq_N \}$ comprising $N$ aligned sequences.
-Every sequence $\seq = (x_1, \ldots, x_L)$ is of length $L$ and the categorical variables $x_{i}$ can take one of $q=21$ values representing the 20 naturally occuring amino acids and a gap ('-').
-The empirically observed single and pairwise amino acid frequencies can be calculated as
+A protein family is represented by a [MSA](#abbrev) $\X = \{ \seq_1, \ldots, \seq_N \}$ of $N$ protein sequences.
+Every protein sequence of the protein family represents a sample drawn from a target distribution $p(\seq)$, so that each protein sequence is associated with a probability. 
+Every sequence $\seq = (x_1, \ldots, x_L)$ is of length $L$ and every position in the sequences constitutes a categorical variables $x_{i}$ that can take one of $q=21$ values representing the 20 naturally occuring amino acids and a gap ('-').
+The measured constraints are given by the empirically observed single and pairwise amino acid frequencies that can be calculated as
 
 <!--
 Applied to the problem of modelling protein families, one seeks a probability distribution $p(\seq)$ for protein sequences $\seq = (x_1, \ldots, x_L)$ of length $L$ from the protein family under study. 
@@ -276,9 +261,13 @@ The categorical variables $x_{i}$ can take one of $q=21$ values representing the
 Given $N$ sequences of the protein family in a [MSA](#abbrev) with $\X = \{ \seq_1, \ldots, \seq_N \}$, the empirically observed single and pairwise amino acid frequencies can be calculated as
 -->
 
+
 \begin{equation}
-    \mathcal{f}_i(a) = \mathcal{f}(x_i\eq a) = \frac{1}{N}\sum_{n=1}^N I(x_{ni} \eq a) \\
-    \mathcal{f}_{ij}(a,b) = \mathcal{f}(x_i\eq a, x_j\eq b) = \frac{1}{N} \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \; .
+    f_i(a) = f(x_i\eq a) = \frac{1}{N}\sum_{n=1}^N I(x_{ni} \eq a) \; ,
+\end{equation}
+
+\begin{equation}
+    f_{ij}(a,b) = f(x_i\eq a, x_j\eq b) = \frac{1}{N} \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \; .
  (\#eq:emp-freq)
 \end{equation}
 
@@ -286,15 +275,15 @@ Given $N$ sequences of the protein family in a [MSA](#abbrev) with $\X = \{ \seq
 According to the maximum entropy principle, the distribution $p(\seq)$ should have maximal entropy and reproduce the empirically observed amino acid frequencies, so that
 
 \begin{align}
-   \mathcal{f}(x_i\eq a)            &\equiv p(x_i\eq a)  \\
+   f(x_i\eq a)            &\equiv p(x_i\eq a)  \nonumber\\
                                     &= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} p(x\prime) I(x\prime_i \eq a) \\
-  \mathcal{f}(x_i\eq a, x_j\eq b)   &\equiv p(x_i\eq a, x_j \eq b) \\
+  f(x_i\eq a, x_j\eq b)   &\equiv p(x_i\eq a, x_j \eq b) \nonumber \\
                                     &= \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q}  p(x\prime) I(x\prime_i\eq a, x\prime_j \eq b)  \; .
  (\#eq:maxent-reproducing-emp-freq)
 \end{align}
 
 
-Solving for the distribution $p(\seq)$ that maximizes the Shannon entropy $S= -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime)$ while satisfying the constraints given in eq. \@ref(eq:maxent-reproducing-emp-freq) by introducing the Lagrange multipliers $\wij$ and $\vi$, 
+Solving for the distribution $p(\seq)$ that maximizes the Shannon entropy $S= -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime)$ while satisfying the constraints given by the empircial amino acid frequencies in eq. \@ref(eq:maxent-reproducing-emp-freq) by introducing Lagrange multipliers $\wij$ and $\vi$, results in the formulation of the *Potts model*,
 
 <!--
 \begin{align}
@@ -306,10 +295,8 @@ F \left[ p(\seq) \right] =& -\sum_{\seq\prime} p(\seq\prime) \log p(\seq\prime) 
 \end{align}
 -->
 
-results in the formulation of an exponential model known as *Potts model* in statistical physics or [MRF](#abbrev) in statistics,
-
 \begin{equation}
-    p(\seq | \v, \w ) = \frac{1}{Z} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
+    p(\seq | \v, \w ) = \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
 (\#eq:max-ent-model)
 \end{equation}
 
@@ -317,40 +304,47 @@ The Lagrange multipliers $\wij$ and $\vi$ remain as model parameters to be fitte
 $Z$ is a normalization constant also known as *partition function* that ensures the total probabilty adds up to one by summing over all possible assignments to $\seq$, 
 
 \begin{equation}
-  Z = \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
+  Z(\v, \w) = \sum_{\seq\prime_1, \ldots, \seq\prime_L = 1}^{q} \exp  \left( \sum_{i=1}^L v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right) \; .
   (\#eq:partition-fct-likelihood)
 \end{equation}
 
 
 
-#### Model Properties 
+### Model Properties {#potts-model-properties}
 
 The Potts model is specified by singlet terms $\via$ which describe the tendency for each amino acid a to appear at position $i$, and pair terms $\wijab$, also called couplings, which describe the tendency of amino acid a at position $i$ to co-occur with amino acid b at position $j$.
-In contrast to mere correlations, the couplings explain the causative dependence structure between positions by jointly modelling the distribution of all positions in a protein sequence and thus account for transitive effects (see \@ref(local-methods)). 
+In contrast to mere correlations, the couplings explain the causative dependence structure between positions by jointly modelling the distribution of all positions in a protein sequence and thus account for transitive effects. 
+By doing so, a major source of noise in contact prediction methods is eliminated.
+
+To get some intuition for the coupling coefficients, note that $\wijab = 1$ corresponds to a 2.7-fold higher probability for a and b to occur together than what is expected from the singlet frequencies if
+a and b were independent. 
+Pairs of residues that are not in contact tend to have negligable couplings, $\wij \approx 0$, whereas pairs in contact tend to have vectors significantly different from 0.
+For contacting residues $i$ and $j$ in real world [MSAs](#abbrev) typical coupling strengths are on the order of $||\wij || \approx 0.1$ (regularization dependent).
+
 
 Maximum entropy models naturally give rise to exponential family distributions that express useful properties for statistical modelling, such as the convexity of the likelihood function which consequently has a unique, global minimum [@Wainwright2007; @Murphy2012]. 
 
 The Potts model is a discrete instance of what is referred to as a pairwise [Markov random field](#abbrev) in the statistics community.
 [MRFs](#abbrev) belong to the class of undirected graphical models, that represent the probability distribution in terms of a graph with nodes and edges characterizing the variables and the dependence structure between variables, respectively.
 
+#### Gauge Invariance {#gauge-invariance}
 
-##### Gauge Invariance {-}
+As every variable $x_{ni}$ can take $q=21$ values, the model has $L \! \times \! q + L(L-1)/2 \! \times \! q^2$ parameters.
+But the parameters are not uniquely determined and multiple parametrizations yield identical probability distributions. 
 
-As $x_{ni}$ can take $q=21$ values, the model has $L \! \times \! q + L(L-1)/2 \! \times \! q^2$ parameters but the parameters are not uniquely determined as multiple parametrizations yield identical probability distributions. 
-
-For example, adding a constant $c_i$ to all elements in $v_i$ for any fixed position $i$ or similarly adding a constant $c_{ia}$ to $\via$ for any fixed position $i$ and amino acid $a$ and subtracting the same constant from the $qL$ coefficients $\wijab$ with $b \in \{1, \ldots, q\}$ and $j \in \{1, \ldots, L \}$ leaves the probabilities for all sequences under the model unchanged, since such a change will be compensated by a change of $Z$ in eq. \@ref(eq:partition-fct-likelihood).
+For example, adding a constant to all elements in $v_i$ for any fixed position $i$ or similarly adding a constant to $\via$ for any fixed position $i$ and amino acid $a$ and subtracting the same constant from the $qL$ coefficients $\wijab$ with $b \in \{1, \ldots, q\}$ and $j \in \{1, \ldots, L \}$ leaves the probabilities for all sequences under the model unchanged, since such a change will be compensated by a change of $Z(\v, \w)$ in eq. \@ref(eq:partition-fct-likelihood).
 
 
-The overparametrization, referred to as *gauge invariance* in statistical physics literature, can be eliminated by removing parameters.
+The overparametrization is referred to as *gauge invariance* in statistical physics literature and can be eliminated by removing parameters [@Weigt2009; @Morcos2011].
 An appropriate choice of which parameters to remove, referred to as *gauge choice*, reduces the number of parameters to $L \! \times \! (q-1) + L(L-1)/2 \! \times \! (q-1)^2$.
-Popular gauge choices are the *zero-sum gauge* or *Ising-gauge* used by [@Weigt2009] imposed by the restraints,
+Popular gauge choices are the *zero-sum gauge* or *Ising-gauge* used by Weigt et al. [@Weigt2009] imposed by the restraints,
 
 \begin{equation}
     \sum_{a=1}^{q} v_{ia} = \sum_{a=1}^{q} \wijab = \sum_{a=1}^{q} w_{ijba} = 0
 (\#eq:zero-sum-gauge)
 \end{equation}
 
-for all $i,j,b$  or the *lattice-gas gauge* used by [@Morcos2011; @Marks2011] imposed by restraints
+for all $i,j,b$  or the *lattice-gas gauge* used by Morcos et al [@Morcos2011] and Marks et al [@Marks2011] imposed by restraints
 
 \begin{equation}
     \wij(q,a) = \wij(a,q) = \vi(q) = 0
@@ -363,79 +357,80 @@ Alternatively, the indeterminacy can be fixed by including a regularization prio
 The regularizer selects for a unique solution among all parametrizations of the optimal distribution and therefore eliminates the need to choose a gauge [@Koller2009; @Ekeberg2013;  @Stein2015a].
 
 
-##### Regularization {-}
+
+### Inferring Parameters for the Potts Model  {#potts-mle}
+
+Typically, parameter estimates are obtained by maximizing the log-likelihood function of the parameters over observed data.
+For the Potts model, the log-likelihood function is computed over sequences in the alignment $\mathbf{X}$: 
+
+\begin{align}
+    \text{LL}(\v, \w | \mathbf{X}) =& \sum_{n=1}^N \log p(\seq_n)  \nonumber\\
+    =& \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1 \leq i < j \leq L}^L w_{ij}(x_{xn}, x_{nj}) - \log Z \right]
+(\#eq:full-log-likelihood)
+\end{align}
+
 
 The number of parameters in a Potts model is typically larger than the number of observations, i.e. the number of sequences in the [MSA](#abbrev).
 Considering a protein of length $L=100$, there are approximately $2 \times 10^6$ parameters in the model whereas the largest protein families comprise only around $10^5$ sequences (see Figure \@ref(fig:pfam)).
-An underdetermined problem like this renders the use of regularizer neccessary in order to prevent overfitting.
+An underdetermined problem like this renders the use of regularizers neccessary in order to prevent overfitting.
 
 Typically, an L2-regularization is used that pushes the single and pairwise terms smoothly towards zero and is equivalent to the logarithm of a zero-centered Gaussian prior,
 
 \begin{align}
-  R(\v, \w)  &= \log \left[ \mathcal{N}(\v | \mathbf{0}, \lambda_v^{-1} I) \mathcal{N}(\w | \mathbf{0}, \lambda_w^{-1} I) \right] \\
+  R(\v, \w)  &= \log \left[ \mathcal{N}(\v | \mathbf{0}, \lambda_v^{-1} I) \mathcal{N}(\w | \mathbf{0}, \lambda_w^{-1} I) \right] \nonumber \\
              &= -\frac{\lambda_v}{2} ||\v||_2^2 - \frac{\lambda_w}{2} ||\w||_2^2 + \text{const.} \; ,
 (\#eq:l2-reg)
 \end{align}
 
 where the strength of regularization is tuned via the regularization coefficients $\lambda_v$ and $\lambda_w$ [@Seemayer2014; @Ekeberg2014; @Kamisetty2013].
 
-#### Intractability of the Partition Function {#partition-function}
+However, optimizing the log-likelihood requires computing the partition function $Z$ given in eq. \@ref(eq:partition-fct-likelihood) that sums $q^L$ terms.
+Computing this sum is intractable for realistic protein domains with more than 100 residues.
+Consequently, evaluating the likelihood function at each iteration of an optimization procedure is infeasible due to the exponential complexity of the partition function in protein length $L$.
 
-Typically, one obtains parameter estimates by maximizing the log-likelihood function of the parameters over observed data.
-For the Potts model, the log-likelihood function is computed over sequences in the alignment $\mathbf{X}$: 
+Many approximate inference techniques have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts that are briefly explained in the next section. 
 
-\begin{align}
-    \text{LL}(\v, \w | \mathbf{X}) =& \sum_{n=1}^N \log p(\seq_n) \\
-    =& \sum_{n=1}^N \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1 \leq i < j \leq L}^L w_{ij}(x_{xn}, x_{nj}) - \log Z \right] \\
-(\#eq:full-log-likelihood)
-\end{align}
+### Solving the Inverse Potts Problem {#potts-model-solutions}
 
-However, optimizing the log-likelihood requires computing the partition function $Z$ given in eq. \@ref(eq:partition-fct-likelihood) that sums $q^L$ terms, with $L$ being in the hundreds for naturally occurig protein domains.
-Because of this exponential complexity in protein length $L$, it is computationally intractable to evaluate the log-likelihood function at every iteration of an optimization procedure. 
-
-Several approximate solutions have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts between residues that are briefly explained in the next section. 
-
-#### Solving the Inverse Potts Problem
-
-In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle  transitive effects [@Lapedes1999].
+In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle transitive effects [@Lapedes1999].
 They used an iterative Monte Carlo procedure to obtain estimates of the partition function. 
 As the calculations involved were very time-consuming and at that time required supercomputing resources, the wider implications were not noted yet.
 
-In 2009 Weight et al proposed an iterative message-passing algorithm, here referred to as *mpDCA*, to approximate the partition function [@Weigt2009].
-Eventhough their approach is computationally very expensive and in practive only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.
+Ten years later Weight et al proposed an iterative message-passing algorithm, here referred to as *mpDCA*, to approximate the partition function [@Weigt2009].
+Eventhough their approach is computationally very expensive and in practice only applicable to small proteins, they obtained remarkable results for the two-component signaling system in bacteria.
 
-Balakrishnan et al [@Balakrishnan2011] were the first to apply pseudo-likelihood approximations to the full likelihood in 2011. 
+Balakrishnan et al were the first to apply pseudo-likelihood approximations to the full likelihood in 2011  [@Balakrishnan2011]. 
 The pseudo-likelihood optimizes a different objective and replaces the global partition function $Z$ with local estimates.
 Balakrishnan and colleagues applied their method *GREMLIN* to learn sparse graphical models for 71 protein families.
-In a follow-up study in 2013 [@Kamisetty2013], an improved version of *GREMLIN* incorporating prior information was evaluated in a comprehensive benchmark tailored towards the contact prediction problem.
+In a follow-up study in 2013, the authors proposed an improved version of *GREMLIN* that uses additional prior information [@Kamisetty2013].
 
 Also in 2011, Morcos et al. introduced a naive mean-field inversion approximation to the partition function, named *mfDCA* [@Morcos2011].
 This method allows for drastically shorter running times as the mean-field approach boils down to inverting the empirical covariance matrix calculated from observed amino acid frequencies for each residue pair $i$ and $j$ of the alignment.
 This study performed the first high-throughput analysis of intradomain contacts for 131 protein families and facilitated the prediction of protein structures from accurately predicted contacts in [@Marks2011].
 
 The initial work by Balakrishnan and collegueas went almost unnoted as it was not primarily targeted to the problem of contact prediction.
-Ekeberg and collegueas independently developed the pseudo-likelihood method *plmDCA*  and showed its superior precision towards *mfDCA* [@Ekeberg2013].
+Ekeberg and collegueas independently developed the pseudo-likelihood method *plmDCA*  in 2013 and showed its superior precision over *mfDCA* [@Ekeberg2013].
 
-A related approach to mean-field approximation is sparse inverse covariance estimation, named *PSICOV*, by Jones et al [@Jones2012]. 
-They use L1-regularization, known as graphical Lasso, to invert the correlation matrix and learn a sparse graphical model [@Friedman2008].
+A related approach to mean-field approximation is sparse inverse covariance estimation, named *PSICOV*, developed by Jones et al. (2012) [@Jones2012]. 
+PSICOV uses an L1-regularization, known as graphical Lasso, to invert the correlation matrix and learn a sparse graphical model [@Friedman2008].
 Both procedures, *mfDCA* and *PSICOV*, assume the model distribution to be a multivariate Gaussian. 
-It has been shown by Banerjee et al. (2008) that this dual optimization solution also applies to binary data (as is the case in this application). 
-In order to represent the [MSA](#abbrev) as continuous distributed, each position is encoded as a 20-dimensional binary vector. 
+It has been shown by Banerjee et al. (2008)that this dual optimization solution also applies to binary data, as is the case in this application, where each position is encoded as a 20-dimensional binary vector [@Banerjee2008]. 
 
 Another related approach to *mfDCA* and *PSICOV* is *gaussianDCA*, proposed in 2014 by Baldassi et al. [@Baldassi2014].
 Similar to the other both approaches, they model the data as multivariate Gaussian but within a simple Bayesian formalism by using a suitable prior and estimating parameters over the posterior distribution.
 
-So far, pseudo-likelihood maximization has proven to be the most accurate approach with respect to the standard evaluation procedures for contact prediction presented in the following section. 
+So far, pseudo-likelihood has proven to be the most successful approximation of the likelihood with respect to contact prediction performance. 
 Currently, there exist several implementations of pseudo-likelihood maximization that vary in slight details, perform similarly and thus are equally popular in the community, such as CCMpred [@Seemayer2014], plmDCA[@Ekeberg2014] and GREMLIN [@Kamisetty2013].
 
-#### Pseudo-Likelihood {#pseudo-likelihood}
+#### Maximum Likelihood Inference for Pseudo-Likelihood {#pseudo-likelihood}
 
-Instead of the full likelihood, Besag suggested to optimize a different objective function that he called *pseudo-likelihood* [@Besag1975].
-The pseudo-likelihood approximates the joint probability with the product over conditionals for each variable, i.e. the conditional probability of observing one variable given all the others:
+The pseudo-likelihood is a rather old estimation principle that was suggested by Besag already in 1975 [@Besag1975].
+It represents a different objective function than the full likelihood and approximates the joint probability with the product over conditionals for each variable, i.e. the conditional probability of observing one variable given all the others:
 
-\begin{equation}
-  p(\seq | \v,\w) \approx   \prod_{i=1}^L p(x_i | \seq_{\backslash xi}, \v,\w) =  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right)
-\end{equation}
+\begin{align}
+  p(\seq | \v,\w) \approx&   \prod_{i=1}^L p(x_i | \seq_{\backslash xi}, \v,\w) \nonumber \\
+                        =&  \prod_{i=1}^L \frac{1}{Z_i} \exp \left(  v_i(x_i) \sum_{1 \leq i < j \leq L}^L w_{ij}(x_i, x_j) \right)
+\end{align}
 
 Here, the normalization term $Z_i$ sums only over all assignments to one position $i$ in sequence:
 
@@ -449,11 +444,11 @@ Replacing the global partition function in the full likelihood with local estima
 Hence, it is feasible to maximize the pseudo-log-likelihood function,
 
 \begin{align}
-    \text{pLL}(\v, \w | \mathbf{X}) =& \sum_{n=1}^N \sum_{i=1}^L \log p(x_i | \seq_{\backslash xi}, \v,\w) \\
+    \text{pLL}(\v, \w | \mathbf{X}) =& \sum_{n=1}^N \sum_{i=1}^L \log p(x_i | \seq_{\backslash xi}, \v,\w) \nonumber \\
     =& \sum_{n=1}^N \sum_{i=1}^L  \left[ v_i(x_{ni}) + \sum_{j=i+1}^L  w_{ij}(x_{ni}, x_{nj}) - \log Z_{ni} \right] \;,
 \end{align}
 
-plus an additional regularization term in order to prevent overfitting and to fix the gauge (see section on [Gauge Invariance] and eq. \@ref(eq:l2-reg)) to arrive at a [MAP](#abbrev) estimate of the parameters, 
+plus an additional regularization term in order to prevent overfitting and to fix the gauge to arrive at a [MAP](#abbrev) estimate of the parameters, 
 
 \begin{equation}
     \hat{\v}, \hat{\w} = \underset{\v, \w}{\operatorname{argmax}} \; \text{pLL}(\v, \w | \mathbf{X}) + R(\v, \w) \; .
@@ -461,30 +456,28 @@ plus an additional regularization term in order to prevent overfitting and to fi
 
 
 Eventhough the pseudo-likelihood optimizes a different objective than the full-likelihood, it has been found to work well in practice for many problems, including contact prediction [@Koller2009; @Murphy2012; @Stein2015a; @Ekeberg2013].
-The pseudo-likelihood function retains the concavity of the likelihood and it has been shown to be a consistent estimator in the limit of infinite data for models of the exponential family [@Besag1975; @Gidas1988; @Koller2009]. 
+The pseudo-likelihood function retains the concavity of the likelihood and it has been proven to be a consistent estimator in the limit of infinite data for models of the exponential family [@Besag1975; @Gidas1988; @Koller2009]. 
 That is, as the number of sequences in the alignment increases, pseudo-likelihood estimates converge towards the true full likelihood parameters.
 
 
 
-#### Computing Contact Maps {#post-processing-heuristics}
+### Computing Contact Maps {#post-processing-heuristics}
 
 Model inference as described in the last section yields [MAP](#abbrev) estimates of the couplings $\hat{\w}_{ij}$. 
-In order to obtain a scalar measure for the coupling strength between two residues $i$ and $j$, current methods heuristically map the $q \! \times \! q$ dimensional coupling matrix $\wij$ to a single scalar quantity.
+In order to obtain a scalar measure for the coupling strength between two residues $i$ and $j$, all available methods presented in section \@ref(potts-model-solutions) heuristically map the $q \! \times \! q$ dimensional coupling matrix $\wij$ to a single scalar quantity.
 
 *mpDCA* [@Weigt2009] and *mfDCA* [@Morcos2011; @Marks2011] employ a score called [DI](#abbrev), that essentially computes the [MI](#abbrev) for two positions $i$ and $j$ using the couplings $\wij$ instead of pairwise amino acid frequencies.
-However, [DI](#abbrev) scores have quickly been replaced by the Frobenius norm as it was found to improve prediction performance over [DI](#abbrev) [@Ekeberg2013; @Baldassi2014].
-
-Currently, all pseudo-likelihood methods (*plmDCA* [@Ekeberg2013; @Ekeberg2014], *CCMpred* [@Seemayer2014], *GREMLIN* [@Kamisetty2013]) compute the *Frobenius norm* of the coupling matrix $\wij$ to obtain a scalar contact score $C_{ij}$,
+All pseudo-likelihood methods (*plmDCA* [@Ekeberg2013; @Ekeberg2014], *CCMpred* [@Seemayer2014], *GREMLIN* [@Kamisetty2013]) compute the *Frobenius norm* of the coupling matrix $\wij$ to obtain a scalar contact score $C_{ij}$,
 
 \begin{equation}
     C_{ij}  = ||\wij||_2 = \sqrt{\sum_{a,b=1}^q \wijab^2} \; .
 (\#eq:frobenius-norm)
 \end{equation}
 
-It was found that prediction precision improves further when the Frobenius norm is computed only on the $20 \times 20$ submatrix, thus ignoring contributions from gaps [@Feinauer2014].
+The Frobenius norm improves prediction performance over [DI](#abbrev) and further improvements can be obtained by computing the Frobenius norm only on the $20 \times 20$ submatrix thus ignoring contributions from gaps [@Ekeberg2013; @Baldassi2014; @Feinauer2014].
 *PSICOV* [@Jones2012] uses an L1-norm on the $20 \times 20$ submatrix instead of the Frobenius norm.
 
-The Frobenius norm is gauge dependent and is minimized by the *zero-sum gauge* [@Weigt2009].
+Furthermore it should be noted that the Frobenius norm is gauge dependent and is minimized by the *zero-sum gauge* [@Weigt2009].
 Therefore, in [@Ekeberg2013; @Ekeberg2014; @Seemayer2014; @Baldassi2014] the coupling matrices are transformed to *zero-sum gauge* before computing the Frobenius norm:
 
 \begin{equation}
@@ -507,8 +500,8 @@ It substracts a term that is computed as the product over average row and column
 
 
 It was long under debate why [APC](#abbrev) works so well and how it can be interpreted. 
-Zhang et al. showed that [APC](#abbrev) essentially approximates the removal of the first principal component of the contact matrix and therefore removes the highest variability in the matrix that is assumed to arise from background biases [@Zhang2016].
-Furthermore, they studied an advanced decomposition technique, called low-rank and sparse matrix decomposition (LRS), that decomposes the contact matrix into a low-rank and a sparse component, representing background noise and true correlations, respectively.  
+Zhang et al. showed that [APC](#abbrev) essentially approximates the first principal component of the contact matrix and therefore removes the highest variability in the matrix that is assumed to arise from background biases [@Zhang2016].
+Furthermore, they studied an advanced decomposition technique, called LRS matrix decomposition, that decomposes the contact matrix into a low-rank and a sparse component, representing background noise and true correlations, respectively.  
 Inferring contacts from the sparse component works astonishing well, improving precision further over [APC](#abbrev) independent of the underlying statistical model.
 
 Dr Stefan Seemayer could show that the main component of background noise can be attributed to entropic effects and that a substantial part of [APC](#abbrev) amounts to correcting for these entropic biases (unpublished).
@@ -516,15 +509,13 @@ In his doctoral thesis, he developed a proper entropy correction, computed as th
 The entropy correction has the advantage that it is computed from input statistics and therefore is independent of the statistical model used to infer the couplings.
 In contrast, [APC](#abbrev) and other denoising techniques such as LRS [@Zhang2016] discussed above, estimate a background model from the final contact matrix, thus depending on the statistical model used to infer the contact matrix. 
 
-The general "smoothing" effect observed when applying [APC](#abbrev) that can mainly be attributed to removing entropy bias is illustrated in Figure \@ref(fig:apc-correction).
+The general "smoothing" effect on the contact maps observed when applying [APC](#abbrev) is illustrated in Figure \@ref(fig:apc-correction).
 
-(ref:caption-apc-correction) Contact Matrices computed from  pseudo-likelihood couplings. **a**: Contact map computed with Frobenius norm as in eq. \@ref(eq:frobenius-norm). Overall coupling values are dominated by entropic effects, i.e. the amount of variation for a [MSA](#abbrev) position, leading to striped patterns. **b**: Contact map from (a) corrected for background noise with the [APC](#abbrev) as in eq. \@ref(eq:apc).
+(ref:caption-apc-correction) Contact maps computed from  pseudo-likelihood couplings. Subplot on top of the contact maps illustrates the normalized Shannon entropy (<span style="color:#e7539d;">pink </span> line) and percentage of gaps for every position in the alignment (<span style="color:brown;">brown </span> line). **Left**: Contact map computed with Frobenius norm as in eq. \@ref(eq:frobenius-norm). Overall coupling values are dominated by entropic effects, i.e. the amount of variation for a [MSA](#abbrev) position, leading to striped brightness patterns. For example, positions with high column entropy (e.g. positions 7, 12 or 31) have higher overall coupling values than positions with low column entropy (e.g. positions 11, 24 or 33). **b**: previous contact map but corrected for background noise with the [APC](#abbrev) as in eq. \@ref(eq:apc).
 
-```{r apc-correction, echo = FALSE, out.width = '100%', fig.show = 'hold', fig.cap = '(ref:caption-apc-correction)'}
-knitr::include_graphics("img/intro/apc_correction_transparent.png")
+```{r apc-correction, echo = FALSE, out.width = '80%', fig.align='center', fig.show = 'hold', fig.cap = '(ref:caption-apc-correction)'}
+knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 ```
-
-
 
 
 
@@ -547,11 +538,11 @@ From these considerations emerged various standard benchmarks that have been est
 [CASP](#abbrev), the well-respected and independent competition for the structural bioinformatic's community introduced the contact prediction category in 1996.
 Taking place every two years, the progress in the field is assessed in a blind competition and the community discusses the outcome in a subsequent meeting. 
 
-According to the [CASP](#abbrev) regulations, a pair of residues is defined to be in physical contact when the distance between their $\Cb$ atoms ($C\alpha$ in case of glycine) is less than 8 $\AA \; \;$ in the reference protein structure.
+According to the [CASP](#abbrev) regulations, a pair of residues is defined to be in physical contact when the distance between their $\Cb$ atoms ($C\alpha$ in case of glycine) is less than 8 $\angstrom$ in the reference protein structure.
 The overall performance of a contact predictor is evaluated by the mean precision over a testset of proteins with known high quality 3D structures against the top scoring predictions from every protein.
 The number of top scoring predictions per protein is typically normalized with respect to protein length $L$ and precision is defined as the number of true contacts among the top scoring predicted contacts.
 
-A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth.
+A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth [@Ashkenazy2009].
 
 During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies [@Monastyrskyy2015].
 
@@ -567,15 +558,15 @@ Figure \@ref(fig:Cb-distribution) shows the distribution of $\Cb$ distances for 
 
 (ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over 6741 proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds.
 
-```{r Cb-distribution, echo = FALSE, screenshot.alt="img/dataset_statistics/Cb_distribution_all_data43579541_log.png", out.width = '100%', fig.cap = '(ref:caption-Cb-distribution)'}
+```{r Cb-distribution, echo = FALSE, screenshot.alt="img/dataset_statistics/Cb_distribution_all_data43579541_log.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-Cb-distribution)'}
 knitr::include_url("img/dataset_statistics/Cb_distribution_all_data43579541_log.html", height="500px")
 ```
 
-Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around $5.5\AA  \; \;$, $7.4\AA \; \;$ and $10.6\AA \; \;$ that can be attributed to local interactions in e.g. helices (see Figure \@ref(fig:peaks-Cb-distribution)).
+Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around $5.5\angstrom$, $7.4\angstrom$ and $10.6\angstrom$ that can be attributed to local interactions in e.g. helices (see Figure \@ref(fig:peaks-Cb-distribution)).
  
-(ref:caption-peaks-Cb-distribution) $\Cb$ distances between neighboring residues in $\alpha$-helices. Left: Direct neighbors in $\alpha$-helices have $\Cb$ distances around $5.4\AA \; \;$ due to the geometrical constraints from $\alpha$-helical architecture. Right: Residues separated by two positions ($|i-j| = 2$) are less geometrically restricted to $\Cb$ distances between $7\AA \; \;$ and $7.5\AA \; \;$.
+(ref:caption-peaks-Cb-distribution) $\Cb$ distances between neighboring residues in $\alpha$-helices. Left: Direct neighbors in $\alpha$-helices have $\Cb$ distances around $5.4\angstrom$ due to the geometrical constraints from $\alpha$-helical architecture. Right: Residues separated by two positions ($|i-j| = 2$) are less geometrically restricted to $\Cb$ distances between $7\angstrom$ and $7.5\angstrom$.
 
-```{r peaks-Cb-distribution, echo = FALSE, out.width = '400px', fig.show = 'hold', fig.align='center', fig.cap = '(ref:caption-peaks-Cb-distribution)'}
+```{r peaks-Cb-distribution, echo = FALSE, out.width = '40%', fig.show = 'hold', fig.align='center', fig.cap = '(ref:caption-peaks-Cb-distribution)'}
 knitr::include_graphics(c("img/dataset_statistics/cb_distribution_peak_5-6.png","img/dataset_statistics/cb_distribution_peak_7.png"))
 ```
 
@@ -601,7 +592,7 @@ Some of these challenges have been successfully met (e.g. disentangling transiti
 
 Sequences in [MSAs](#abbrev) do not represent independent samples of a protein family. 
 In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. 
-This uneven sampling of a protein family's sequence space leaves certain regions unexplored whereas others are statistically overrepresented [@Morcos2011; @Marks2012]. 
+This uneven sampling of a protein family's sequence space leaves certain regions unexplored whereas others are statistically overrepresented [@Morcos2011; @Marks2012; @Cocco2017]. 
 
 Furthermore, due to their evolutionary relationship, sequences of a protein family have a complicated dependence structure.
 Closely related sequences can cause spurious correlations between positions, as there was not sufficient time for the sequences to diverge from their common ancestor [@Gouveia_Oliveira2007; @Lapedes1999; @Burger2010]. 
@@ -613,10 +604,10 @@ Figure \@ref(fig:phylogenetic-effect) illustrates a simplified example, where de
 knitr::include_graphics("img/intro/phylogenetic_effect.png")
 ```
 
-To reduce the effects of redundant sequences, a popular sequence reweighting strategy has been found to improve contact prediction performance, where every sequence receives a weight that is the inverse of the number of similar sequences according to an identity threshold (see section \@ref(seq-reweighting)) [@Buslje2009; @Morcos2011; @Jones2012]. 
+To reduce the effects of redundant sequences, a popular sequence reweighting strategy has been found to improve contact prediction performance, where every sequence receives a weight that is the inverse of the number of similar sequences according to an identity threshold (see section \@ref(seq-reweighting)) [@Buslje2009; @Morcos2011; @Jones2012; @Cocco2017]. 
 
 
-#### Entropic bias {-}
+### Entropic bias {-}
 
 Another source for noise is entropy bias that is closely linked to phylogenetic effects.
 By nature, methods detecting signals from correlated mutations rely on a certain degree of covariation between sequence positions [@Burger2010].
@@ -625,11 +616,6 @@ This results in generally higher co-evolution signals from positions with high e
 
 Several heuristics have been proposed to reduce entropy effects, such as Row-Column-Weighting (RCW) [@Gouveia_Oliveira2007] or Average Product Correction (APC) [@Dunn2008] (see section \@ref(post-processing-heuristics)).
 
-(ref:caption-contact-map-entropy-bias) Contact Map computed from pseudo-likelihood couplings for protein 1mkc (domain A00). Subplot on top of the contact map illustrates the normalized Shannon entropy and percentage of gaps for every position in the alignment. Positions with high column entropy (e.g. positions 7, 12 or 31) have higher overall coupling values than positions with low column entropy (e.g. positions 11, 24 or 33), leading to striped brightness patterns in predicted contact maps.
-
-```{r contact-map-entropy-bias, echo = FALSE, screenshot.alt="img/intro/1mkcA00_seqsep4_contacthr8.png", out.width='75%', fig.asp=1, fig.cap = '(ref:caption-contact-map-entropy-bias)', fig.align='center'}
-knitr::include_url("img/intro/1mkcA00_seqsep4_contacthr8.html", height = "600px")
-```
 
 
 ### Finite Sampling Effects {-}
@@ -667,7 +653,7 @@ In contrast, global statistical models presented in section \@ref(global-methods
 (ref:caption-transitive-effect) Effects of chained covariation obscure signals from true physical interactions. Consider residues A through E with physical interactions between the residue pairs A-B, B-C and D-E. The thickness of the lines between residues reflects the strength of statistical dependencies between the corresponding alignment columns. Strong statistical dependencies between residue pairs (A,B) and (B,C) can induce a strong dependencies between the spatially distant residues A and C. Covariation signals arising from transitive effects can become even stronger than other direct covariation signals and lead to false positive predictions.  
 
 
-```{r transitive-effect, echo = FALSE, out.width='200px',  fig.align='center', fig.cap = '(ref:caption-transitive-effect)'}
+```{r transitive-effect, echo = FALSE, out.width='25%',  fig.align='center', fig.cap = '(ref:caption-transitive-effect)'}
 knitr::include_graphics("img/intro/transitive_effects.png")
 ```
 
@@ -682,10 +668,11 @@ Especially, repeat proteins have been found to produce many false positive conta
 Therefore, [MSAs](#abbrev) need to be generated with great care and covariation methods need to be tailored to these specific types of proteins [@Espada2014; @Toth-Petroczy2016].
 
 Sensitivity of sequence search is critically dependent on the research question at hand and on the protein family under study. 
-Many diverse sequences in general increase precision of predictions.
+Many diverse sequences in general increase precision of predictions [@Ashkenazy2009; @Avila-Herrera2015a].
 However, deep alignments can capture coevolutionary signals from different subfamilies. 
 If only a specific subfamily is of interest, many false predictions might arise from strong coevolutionary signals specific to another subfamily that constitutes a prominent subset in the alignment.
 Therefore, a trade-off between specificity and diversity of the alignment is required to reach optimal results [@Hopf2012]. 
+
 
 Another intrinsic characteristic of [MSAs](#abbrev) are repeated stretches of gaps that result from commonly utilized gap-penalty schemes assigning large penalties to insert a gap and lower penalties to gap extensions. 
 Most statistical models treat gaps as the 21st amino acid, thus introducing an imbalance as gaps and amino acids express different behaviours which often results in gap-induced artefacts [@Feinauer2014]. 
@@ -694,15 +681,15 @@ Most statistical models treat gaps as the 21st amino acid, thus introducing an i
 ### Evaluation Strategy {-}
 
 Contact prediction methods are typically evaluated based on a rigid definition of a residue contact.
-The standard definition of a true contact constitutes an $8\AA \; \; \Cb$ distance cutoff as discussed in section \@ref(intro-cp-evaluation).
+The standard definition of a true contact constitutes an $8\angstrom \Cb$ distance cutoff as discussed in section \@ref(intro-cp-evaluation).
 
 However, whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.
 More importantly, interactions between side-chains depend on their physico-chemical properties, on their orientation and different environments within proteins [@Bettsa] (see section \@ref(amino-acid-interactions)). 
 A simple $\Cb$ distance threshold not only misses to reflect biological interaction preferences of amino acids but also provides a questionable gold-standard for benchmarking.
 
 Other distance thresholds and definitions for physical contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well.
-In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\AA \; \;$ and 11$\AA \; \;$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
-Anishchenko and colleagues [@Anishchenko2017] analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \AA \; \;$, as they found that this cutoff optimally defines direct physical interactions of residue pairs.
+In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\angstrom$ and 11$\angstrom$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
+Anishchenko and colleagues [@Anishchenko2017] analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \angstrom$, as they found that this cutoff optimally defines direct physical interactions of residue pairs.
 
 Definitely, choosing different distance cutoffs and reference atoms for defining a true contact changes the evaluation outcome.
 These crucial specifications need to be considered when evaluating methods and when comparing independent benchmarks that utilize different definitions.
@@ -710,7 +697,7 @@ These crucial specifications need to be considered when evaluating methods and w
 
 Related to the problem of choosing the right trade-off between sensitivity and specificity when generating alignments is the issue of structural variation within a protein family.
 Evolutionary couplings are inferred from all family memebers in the [MSA](#abbrev) and thus might be physical contacts in one family member but not in another. 
-Anishchenko et al. could show that more than $80\%$ of false positives at intermediate distances (minimal heavy atom distance $5-15 \AA \;\;$) are true contacts in at least one homolog structure [@Anishchenko2017].
+Anishchenko et al. could show that more than $80\%$ of false positives at intermediate distances (minimal heavy atom distance 5-15$\angstrom$) are true contacts in at least one homolog structure [@Anishchenko2017].
 
 
 ### Alternative Sources of Coevolution {-}
@@ -720,14 +707,14 @@ With the objective to predict physical contacts it is therefore necessary to ide
 
 (ref:caption-sources-coevolution) Possible sources of coevolutionary signals. **a)** Physical interactions between intra-domain residues. **b)** Interactions across the interface of predominantly homo-oligomeric complexes. **c)** Interactions mediated by ligands or metal atoms. **d)** Transient interactions due to conformational flexibility.
 
-```{r sources-coevolution, echo = FALSE, out.width='80%', fig.align='center', fig.cap = '(ref:caption-sources-coevolution)'}
+```{r sources-coevolution, echo = FALSE, out.width='90%', fig.align='center', fig.cap = '(ref:caption-sources-coevolution)'}
 knitr::include_graphics("img/intro/sources_of_coevolution.png")
 ```
 
 
 Many proteins form homo-oligomers with evolutionary conserved interaction surfaces.
 Currently it is hard to reliably distinguish intra- and inter-molecular contacts.
-Anishchenko et al. found that approximately one third of strong co-evolutionary signals between residue pairs at long distances (minimal heavy atom distance $>15 \AA \;\;$) can be attributed to interactions across homo-oligomeric interfaces [@Anishchenko2017].
+Anishchenko et al. found that approximately one third of strong co-evolutionary signals between residue pairs at long distances (minimal heavy atom distance >15$\angstrom$) can be attributed to interactions across homo-oligomeric interfaces [@Anishchenko2017].
 Several studies specifically analysed co-evolution across homo-oligomeric interfaces for proteins of known structure by filtering for residue pairs with strong couplings at long distances [@Hopf2012; @Lee2009; @Wang2015; @Sutto2015; @Jana2014] or used co-evolutionary signals to predict homo-dimeric complexes [@DosSantos2015a].   
 
 It has been proposed that co-evolutionary signals can also arise from ligand or atom mediated interactions between residues or from critical interactions in intermediate folding states [@Buslje2009; @Ovchinnikov2015b].
@@ -743,6 +730,7 @@ Several studies demonstrated successfully that coevolutionary signals can captur
 
 ## Developing a Bayesian Model for Contact Prediction
 
+Coevolution methods ad
 
 The most popular and successfull methods for contact prediction optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
 
