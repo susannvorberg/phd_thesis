@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-27">
+<meta name="date" content="2017-09-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -166,7 +166,12 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
 <li class="chapter" data-level="3.3" data-path="the-regularized-log-likelihood-and-its-gradient.html"><a href="the-regularized-log-likelihood-and-its-gradient.html"><i class="fa fa-check"></i><b>3.3</b> The Regularized Log Likelihood and its Gradient</a></li>
 <li class="chapter" data-level="3.4" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
-<li class="chapter" data-level="3.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.5</b> Optimizing the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.5</b> Approximation of the Gradient with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.6" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.6</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-adam"><i class="fa fa-check"></i><b>3.6.1</b> Optimizing with ADAM</a></li>
+<li class="chapter" data-level="3.6.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-sgd"><i class="fa fa-check"></i><b>3.6.2</b> Optimizing with vanilla stochastic gradient descent</a></li>
+<li class="chapter" data-level="3.6.3" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#altering-gibbs-sampling-schemes"><i class="fa fa-check"></i><b>3.6.3</b> Altering Gibbs sampling Schemes</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>4</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="4.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>4.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
@@ -194,9 +199,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="6.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>6.3.2</b> Coupling Distribution Plots</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>6.4</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#hyperparameter-optimization-for-stochastic-gradient-descent"><i class="fa fa-check"></i><b>6.4.1</b> Hyperparameter Optimization for Stochastic Gradient Descent</a></li>
-<li class="chapter" data-level="6.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.2</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
-<li class="chapter" data-level="6.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.3</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
+<li class="chapter" data-level="6.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>6.4.1</b> Full Likelihood Optimization with <em>ADAM</em></a></li>
+<li class="chapter" data-level="6.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#full-likelihood-optimization-with-stochastic-gradient-descent"><i class="fa fa-check"></i><b>6.4.2</b> Full Likelihood Optimization with Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="6.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.3</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="6.4.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.4</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>6.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>6.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
@@ -234,9 +240,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="cd-large-alpha-large-neff.html"><a href="cd-large-alpha-large-neff.html"><i class="fa fa-check"></i><b>D.1</b> Divergence of objective function for big learning rates and Neff values</a></li>
-<li class="chapter" data-level="D.2" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
+<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -266,7 +271,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="random-forest-classifiers" class="section level2">
 <h2><span class="header-section-number">5.1</span> Random Forest Classifiers</h2>
-<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">121</a>–<a href="#ref-Breiman2001">123</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">124</a>]</span>.</p>
+<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">125</a>–<a href="#ref-Breiman2001">127</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">128</a>]</span>.</p>
 <p>Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator. Random forests are ensembles of decision trees where randomness is introduced in two ways:</p>
 <ol style="list-style-type: decimal">
 <li>every tree is build on a random sample that is of the same size but drawn with replacement from the training set (i.e., a bootstrap sample)</li>
@@ -279,22 +284,22 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p><span class="math display">\[
 \Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI(N_{\textrm{left}}) - p_{\textrm{right}} GI(N_{\textrm{left}})
 \]</span></p>
-<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">124</a>]</span>.</p>
-<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">125</a>]</span>.</p>
+<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">128</a>]</span>.</p>
+<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">129</a>]</span>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ho1998">
-<p>121. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+<p>125. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
 </div>
 <div id="ref-Breiman2001">
-<p>123. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+<p>127. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
 </div>
 <div id="ref-Menze2009">
-<p>124. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+<p>128. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
 </div>
 <div id="ref-Strobl2007">
-<p>125. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
+<p>129. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>

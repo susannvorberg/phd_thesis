@@ -217,7 +217,7 @@ Note that the couplings between columns $i$ and $j$ in the hypothetical MSA pres
 
 
 
-## Optimizing the Full Likelihood with Contrastive Divergence {#full-likelihood-gradient}
+## Approximation of the Gradient with Contrastive Divergence {#full-likelihood-gradient}
 
 
 If the proportion of gap positions in $\X$ is small (e.g. $<5\%$, also compare percentage of gaps in dataset in Appendix Figure \@ref(fig:dataset-gaps)), the sums over $\mathbf{y} \in \Sn$ in eqs. \@ref(eq:gradient-LLreg-single) and \@ref(eq:gradient-LLreg-pair) can be approximated by $p(x_i=a | \v,\w) I(x_{ni} \ne 0)$ and $p(x_i=a, x_j=b | \v,\w) I(x_{ni} \ne 0, x_{nj} \ne 0)$, respectively, and the partial derivatives become
@@ -254,6 +254,7 @@ When enough sampling steps are made, samples can be considered independent of on
 
 
 - gradient is really noisy but hinton showed empirically and later it was shown proven that CD gradients becomes zero when full likelihood is at optimum
+-Just performing a single Gibbs sampling step away from the original data vectors r n moves the sampled r n,t into the direction of the equilibrium posterior distribution, and therefore promises to yield a similar direction of change as the true gradient of the likelihood.
 - The intuition is that one obtains a rough estimate of the gradient even though the sampler has not reached the equilibrium distribution
 Even though the approximation for the second term is very bad, it can be seen that this approximate gradient will become zero approximately where the true gradient of the likelihood also becomes zero. To see this, imagine $(\v^*, \w^*)$ is the maximum of the likelihood. Then, starting from the sequences in the MSA, the Gibbs sampling step should not lead away from the empirical distribution, because the parameters $(\v^*, \w^*)$  already describe the empirical distribution correctly. This equality of the two maxima is accurate to the extent that the empirical distribution with its finite number of sequences $N$ can represent the true distribution given by parameters $(\v^*, \w^*)$. Therefore, the larger $N$, the better CD will optimise into the maximum of the true likelihood.
 - It can be shown that [CD](#abbrev) using one step of Gibbs sampling for on only one variable for fully visible Boltzman machines  is exactly equivalent to optimising the pseudo likelihood. In general CD can be considered an approximation to pLL [@Hyvarinen2006; @Hyvarinen2007].
@@ -279,6 +280,64 @@ Note: as contrasting dataset towards true_parameters, the elements of the gradie
 – At the limit of the Markov chain, the CD converges to the actual MLE
 
 
+## Optimizing the Full Likelihood {#full-likelihood-optimization}
+
+Given the likelihood gradient estimates obtained with [CD](#abbrev), the full negative log likelihood can now be minimized using a gradient descent optimization algorithm.
+Gradient descent algorithms are used to find the minimum of an objective function with respect to its parametrization by iteratively updating the parameters values in the opposite direction of the gradient of the objective function with respect to these parameters.
+[SGD](#abbrev) is a variant thereof that uses an stochastic estimate of the gradient whose average over many updates approaches the true gradient.
+The stochasticity is commonly obtained by evaluating a random subsample of the data at each iteration. 
+For [CD](#abbrev) stochasticity additionally arises from the Gibbs sampling process in order to obtain a gradient estimate in the first place.
+
+As a consequence of stochasticity, the gradient estimates are noisy, resulting in parameter updates with high variance and strong fluctuations of the objective function.
+These fluctuations enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
+By slowly decreasing the step size, which is also called learning rate, of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
+However, choosing an optimal step size for parameter updates as well as finding the optimal annealing schedule offers a challenge and needs manual tuning [@Schaul2013]. 
+If the step size is chosen too small, progress will be unnecessarily slow, if it is chosen too large, the optimum will be overshot and parameter estimates might diverge.
+Another key challenge is that one specific step size often is not an optimal choice for all parameters.
+Because the magnitudes of gradients might vary considerably for different parameters, e.g. because of sparse data, different parameters require different optimal step sizes.
+Another disadvantage of [SGD](#abbrev) methods is that it is not easy to identify suitable convergence criteria.
+
+Unfortunately, it is neither possible to use second order optimization algorithms nor sophisticated first order algorithms like conjugate gradients to optimize the full likelihood.
+While the former class of algorithms requires (approximate) computation of the second partial derivatives, the latter requires evaluating the objective function in order to identify the optimal step size via linesearch, both being computationally too demanding.
+
+There exist many variants of stochastic gradient descent algorithms that deal with the aforementioned challenges e.g. speeding up convergence rates using momentum or defining adaptive learning rates for each parameter [@Ruder2017]. 
+One of these [SGD](#abbrev) variants is Adaptive Moment Estimation (*ADAM*) [@Kingma2014], an algorithm that computes adaptive learning rates for each parameter including momentum (see methods section \@ref(methods-full-likelihood-adam) for details). 
+A major advantage is that *ADAM* does not require tuning many hyperparameters as the default values have been found to work quite well. 
+
+
+
+
+
+### Optimizing with ADAM {#full-likelihood-adam}
+
+- explain adam with its advantage of adaptive learning rates
+
+- define optimal learning rate and decay dependent on neff --> see methods
+
+- violates sum_wijab condition, sum_wijab could be used as convergence criterium but practice shows that it is esp hard to reach for huge Neff, L?
+  use change in parameter values as criteria instead
+
+- benchmark plot with PLL
+- correlation plot for some proteins with pLL
+
+
+
+### Optimizing with vanilla stochastic gradient descent {#full-likelihood-sgd}
+
+- need to manually tune learning rate and decay
+- no adaptivity --> harder to choose learning rate and decay than for adam
+- however sum_wijab condition is not violated
+- convergence criteria change of parameter values
+
+- benchmark plot with pLL
+- correlation plot with pLL
+
+### Altering Gibbs sampling Schemes
+
+- until now: cd-1
+- but cd-k has been found to improve performance
+- pcd
+- nr of sequences that are sampled..
 
 
 

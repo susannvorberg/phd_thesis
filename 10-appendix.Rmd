@@ -156,12 +156,6 @@ knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 
 # Optimizing Full Likelihood with Gradient Descent
 
-## Divergence of objective function for big learning rates and Neff values {#cd-large-alpha-large-neff}
-
-When using large learning rates with alignments comprising many sequences (=large Neff), the optimization diverges.
-
-
-
 ## Number of iterations for different learning rates 
 
 (ref:caption-full-likelihood-opt-different-alphas-numit) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different learning rates. The learning rate is decreased according to $\alpha = \alpha_0 / (1 + 0.01 \cdot t)$ with t being the iteration number and the maximum number of iterations is set to 5000.  *cd_alpha-1e-4*: using an initial learning rate of 1e-4. *cd_alpha-5e-4*: using an initial learning rate of 5e-4. *cd_alpha-1e-3*: using an initial learning rate of 1e-3. *cd_alpha-5e-3*: using an initial learning rate of 5e-3.

@@ -199,41 +199,123 @@ The same criteria have been applied for selecting couplings for the two-dimensio
 
 ## Optimizing the Full-Likelihood {#methods-optimizing-full-likelihood}
 
-Given the likelihood gradient estimates obtained with [CD](#abbrev), the full likelihood can now be minimized using a gradient descent optimization algorithm.
-Second order optimization algorithms that make use of the (approximate) partial second derivates cannot be applied here, as the computation of the second derivatives of the full likelihood is too complex.
+The following sections will describe the hyperparameter tuning for the stochastic gradient descent optimization as well as tuning different aspects of the Gibbs sampling scheme used to approximate the gradient with  [CD](#abbrev). 
 
-The following sections will describe the hyperparameter tuning for the stochastic gradient descent optimization as well as tuning different aspects of the Gibbs Sampler used to approximate the gradient with  [CD](#abbrev). The performance will be evaluated as the mean precision of the top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section \@ref(dataset).
-The reference method for all new developments is the pseudo-likelihood method that uses the [APC](#abbrev) corrected L2norm as a contact score as explained in section \@ref(post-processing-heuristics).
+In theory the algorithm has converged and the optimum of the objective function has been reached when the gradient becomes zero. 
+In practice the gradients will never be exactly zero, especially due to the stochasticity of the gradient estimates when using stochastic gradient descent. 
+
+For this reason, usually some kind of convergence criterion is designed and convergence is assumed whenever the criterion is met. 
+A common criterion is the when the relative change of objective function value between iterations is close to zero. 
+However, because the evaluation of the full likelihood function is too expensive, the function value cannot be used to define a criterion. 
+
+Another possibility is to stop learning when the norm of the gradient is close to zero [@Carreira-Perpinan2005].
+For [CD](#abbrev) however, the gradients will be far off zero depending on how many sequences are used for sampling.
+Only when sampling large number of sequences, the gradients will eventually be close to zero (see section \@ref(sampling more seq)).
+This is however achieved at the expense of runtine which increases linearly in the number of sequences for sampling.
+
+An alternative is to check the relative change over the norm of gradients between iterations and stop the algorithm whenever it falls below a small threshold $\epsilon$, 
+
+\begin{equation}
+  \frac{|\nabla_\theta f(\theta_{t-1}) - \nabla_\theta f(\theta_{t})|}{|\nabla_\theta f(\theta_{t-1})|}  < \; \epsilon \; .
+  (\#eq:gradient-convergence-criterion)
+\end{equation}
+
+However, as gradient estimates are very noisy for stochastic gradient descent, gradient fluctuations complicate the proper assessment of this criterion.
+It is also possible to monitor the relative change over the norm of parameter estimates between iterations, 
+
+\begin{equation}
+  \frac{|\theta_{t-1} - \theta_t|}{|\theta_t|}  < \; \epsilon  \; .
+  (\#eq:parameter-convergence-criterion)
+\end{equation}
+
+This criterion is more stable as parameter updates are dampened by the step size are not quite as noisy compared to subsequent gradient estimates. 
+
+Another idea is to monitor the direction of gradients. 
+Once getting close to the optimum, gradients will start to fluctuate as the optimizer will oscillate around the true optimum. 
+From my experience, it is hard to find a general threshold that applies to all proteins, as every protein reflects a problem of varying complexity (number of parameters scales with $L^2$, L being protein length).
+Furthermore this analysis is complicated when using momentum, as the computed gradient is not actually used to change the parameters but it is combined with previous gradient estimates. 
+
+A necessary but not sufficient criterion for convergence is given by $\sum_{a,b=1}^{20} \wijab = 0$ as derived in section \@ref(prior-v).
+When using plain stochastic gradient descent without momentum and without adaptive learning rates, this criterion is never violated when parameters are initialized uniformly.
+This is due to the fact that the 400 gradients $\wijab$ for $a,b \in {1, ..., 20\}$ are not independent.
+The sum over the 400 pairwise amino acid counts for two positions i and j is identical for the observed and sampled alignment,
+
+\begin{equation}
+  \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; ,
+\end{equation}
+
+and therefore the gradients, computed as the difference of pairwise counts between observed and sampled alignment, are symmetrical. 
+Considering residue pair (i,j) and assuming amino acid pair (a,b) has higher counts in the sampled alignment compared to the true alignment, then this differnce in counts must be compensated by other amino acid pairs (c,d) having less counts in the sampled alignment compared to the true alignment.
+This symmetry is translated into parameter updates when the same learning rate is used to update all parameters. 
+However, when using adaptive learning rates, this symmetry is broken and the condition $\sum_{a,b=1}^{20} \wijab = 0$ can be violated during the optimization processs.
+It is therefore interesting to monitor $\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab$.
+
+
+Finally, the simplest strategy is to specify a maximum number of iterations for the optimization procedure. 
+This also ensures that the algorithm will stop eventually if none of the other convergence criteria is met.
+
+In the following, I will set the maximum number of iterations to 5000 and I will stop the optimization when the relative change over the norm of parameter estimates falls below the threshold of $\epsilon = 1e-8$.
+Furthermore, I will follow the pragmatic standard strategy and run the optimization algorithm with many hyperparameter settings and pick the model that gives the best performance on a validation set [@Le2011].
+
+The performance will be evaluated as the mean precision of the top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section \@ref(dataset).
 Pseudo-likelihood couplings are computed with the tool CCMpredPy that is introduced in methods section \@ref(diff-ccmpred-ccmpredpy).
-Contact scores for couplings optimized with [CD](#abbrev) are computed in the same way as for the pseudo-likelihood.
+Contact scores for couplings obtained with pseudo-likelihood and [CD](#abbrev) are computed as the [APC](#abbrev) corrected Frobenius norm as explained in section \@ref(post-processing-heuristics).
 
-### Hyperparameter Optimization for Stochastic Gradient Descent
+  
+Coupling parameters are initialized at 0.
+  
+### Full Likelihood Optimization with *ADAM* {#methods-full-likelihood-adam}
 
-Gradient descent algorithms in general minimize an objective function by iteratively updating the function parameters in the opposite direction of the gradient of the objective function with respect to the parameters.
-Stochastic gradient descent [SGD](#abbrev) is a variant thereof that uses only a subsample of the data at each step of the optimization procedure to estimate the gradient. 
-Consequently, the gradient estimates are noisy resulting in parameter updates with high variance and strong fluctuations of the objective function.
-These fluctuation enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
-By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
-However, choosing an optimal step size for parameter updates, referred to as learning rate, as well as finding the optimal rate of decay offers a challenge and needs manual tuning [@Schaul2013]. 
+*ADAM* [@Kingma2014] stores an exponentially decaying average of past gradients and squared gradients,
 
-When optimizing [CD](#abbrev) with [SGD](#abbrev), the stochasticity is not so much introduced by looking only at subsamples of the data but rather by the stochastic nature of the Gibbs sampling process to approximate the gradient.
-The coupling parameters $\w$ will be updated in each iteration $t$ by taking a step of size $\alpha$ along the direction of the negative gradient of the full log likelihood $- \nabla_w \LLreg(\v,\w)$ that has been approximated with contrastive divergence,
+\begin{align}
+  m_t &= \beta_1 m_{t−1} + (1 − \beta_1) g \\
+  v_t &= \beta_2 v_{t−1} + (1 − \beta_2) g^2 \; ,
+\end{align}
+
+with $g = \nabla_w \LLreg(\v,\w)$  and the rate of decay being determined by hyperparameters $\beta_1$ and $\beta_2$.
+Both terms $m_t$ and $v_t$ represent estimates of the first and second moments of the gradient, respectively. 
+Because $m_t$ and $v_t$ are initialized as vectors of zeros, the following bias correction terms are supposed to counteract the initialization bias towards zero, 
+
+\begin{align}
+  \hat{m_t} &= \frac{m_t}{1-\beta_1^t} \\
+  \hat{v_t} &= \frac{v_t}{1-\beta_2^t} \; .
+\end{align}
+
+Parameters are then updated using step size $\alpha$, a small noise term $\epsilon$ and the corrected moment estimates $\hat{m_t}$, $\hat{v_t}$, according to 
+\begin{equation}
+  x_{t+1} = x_t - \alpha \cdot \frac{\hat{m_t}}{\sqrt{\hat{v_t}} + \epsilon}
+\end{equation}
+
+Kingma et al. proposed the default values $\beta_1=0.9$, $\beta_2=0.999$ and $\epsilon=1e−8$ and a constant learning rate $\alpha_0=1e-3$, because *ADAM* performs a kind of step size annealing by nature.
+However, popular implementations of *ADAM* in the [Keras](https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385) [@Chollet2015] and [Lasagne](https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629) [@Dieleman2015] packages allow the use of a linear annealing schedule for the learning rate $\alpha$ of the form $\alpha =  \frac{\alpha_0}{1 + \gamma t}$, for an initial learning rate $\alpha_0$, decay rate $\gamma$ and timestep $t$.
+
+
+I first tested three different constant learning rates $\alpha \in \{1e-4, 1e-3, 5e-3\}$ and default parameters $\beta_1=0.9$, $\beta_2=0.999$ and $\epsilon=1e−8$.
+
+PLOT
+
+As can be seen in the performance: not goot.
+Looking at individual proteins: 
+
+
+
+
+### Full Likelihood Optimization with Stochastic Gradient Descent
+
+
+The coupling parameters $\w$ will be updated in each iteration $t$ by taking a step of size $\alpha$ along the direction of the negative gradient of the regularized full log likelihood $- \nabla_w \LLreg(\v,\w)$ that has been approximated with [CD](#abbrev),
 
 \begin{equation}
   \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
 \end{equation}
 
+In order to get a first intuition of the optimization problem, I tested initial learning rates $\alpha_0 \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ with a standard learning rate annealing schedule, $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ with decay rate $\gamma=0.01$ and timestep $t$ [@Bottou2012].
 
-In order to get a first intuition of the optimization problem, I used an initial learning rate $\alpha_0 \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ with a standard learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$, with $\gamma=0.1$ being the decay rate and $t$ the current iteration [@Bottou2012].
-Typically, the algorithm has converged and is stopped whenever the difference of subsequent function evaluations is less than a small value $\epsilon$.
-However, as it is not feasible to evaluate the full likelihood function at each iteration, because of the exponential complexity of the partition function, it is necessary to define a different stopping criteron.
-Therefore the optimization will stop whenever the gradient norm changes less than a small $\epsilon=1\mathrm{e}{-8}$ as in [@Carreira-Perpinan2005] or when a maximum of 5000 iterations has been reached.
-Furthermore, parameters are initialized with the pseudo-likelihood optimum, assuming that it is already close to the full likelihood optimum.
+Figure \@ref(fig:performance-cd-alphaopt) shows the mean precision for top ranked contacts computed from pseudo-likelihood couplings and the [CD](#abbrev) couplings optimized with stochastic gradient descent using the four different learning rates. 
+Overall, mean precision for [CD](#abbrev) contacts is smaller than for pseudo-likelihood contacts.
+Especially the smallest ($1\mathrm{e}{-4}$) and biggest learning ($5\mathrm{e}{-3}$) rate perform bad.
 
-
-Figure \@ref(fig:performance-cd-alphaopt) shows the mean precision against top ranked contacts computed from pseudo-likelihood couplings and [CD](#abbrev) couplings optimized with four different learning rates. 
-Overall, mean precision for [CD](#abbrev) contacts is comparable to <span style="color:blue">pseudo-likelihood</span> contacts.
-Using smaller learning rates with the stochastic gradient descent optimizer results in higher mean precision.
 
 (ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over 286 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. <span style="color:blue;">pseudo-likelihood</span>:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with different initial learning rates $\alpha_0$ as specified in the legend.
 
@@ -241,27 +323,44 @@ Using smaller learning rates with the stochastic gradient descent optimizer resu
 knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html", height = "500px")
 ```
 
-When evaluating the learning rate settings with respect to alignment size (see Figure \@ref(fig:performance-cd-alphaopt-neff)) it seems that higher learning rates do not work well for proteins with large alignments. 
-The magnitude of the gradient scales with the number of sequences in the alignment because the gradient is computed as a difference of amino acid counts between observed and sampled sequences (see section \@ref(full-likelihood-gradient)).  
-And since alignments with many sequences produce high amino acid counts, their gradients will generally be higher compared to alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is still big.
-Analysis of individual proteins with large alignments that perform bad in the benchmark reveals that high learning rates lead the parameters to diverge as can be seen in appendix \@ref(cd-large-alpha-large-neff).
+Looking at individual proteins it turns out that the optimal learning rate depends on alignment size.
+Figure \@ref(fig:sgd-single-proteins-initial-learning-rate) shows convergence plots for two different proteins, where convergence is measured as the L2-norm of coupling parameters $||\w||_2$.
+For an exemplary protein with a small alignment (left plot), a small learning rate $1\mathrm{e}{-4}$ lets the optimization run very slowly and not reach convergence within 5000 iterations.
+A large learning rate of $5\mathrm{e}{-3}$ overshoots the optimum at the beginning of the optimization but as the learning rate decays over time the parameter estimates converge. 
+
+In contrast, for a protein with a big alignment (right plot) the effects of the learning rate choice are much more pronounced.
+With a small initial learning rate of $1\mathrm{e}{-4}$ the optimization runs slowly but almost converges within 5000 iterations.
+Using a big initial  learning rate of $5\mathrm{e}{-3}$, the parameter estimates diverged too far from the optimum and never reach the optimum.
+With learning rates $5\mathrm{e}{-4}$ and $1\mathrm{e}{-3}$, the optimum is well overshot at the beginning of the optimization but the parameter estimates eventually converge as the learning rates decreases over time.
+
+These observations are explained by the fact that the magnitude of the gradient scales with the number of sequences in the alignment.
+Because the gradient is computed from amino acid counts (see section \@ref(full-likelihood-gradient)), alignments with many sequences will generally produce larger gradients compared to alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is largest.
 
 
-(ref:caption-performance-cd-alphaopt-neff) Mean precision for top ranked contact predictions over 286 proteins splitted into four equally sized subsets according to [Neff](#abbrev). Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-cd-alphaopt).
+Following the observations I defined the initial learning rate $\alpha_0$ as a function of [Neff](#abbrev).  
+Aiming to obtain values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and values for $\alpha_0$ around 1e-4 for large [Neff](#abbrev), the initial learning rate is defined as 
 
-```{r performance-cd-alphaopt-neff, echo = FALSE, screenshot.alt="img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-neff)'}
-knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
+\begin{equation}
+  \alpha_0 = \frac{5\mathrm{e}{-2}}{\sqrt{N_{\text{eff}}}} \; .
+  (\#eq:learning-rate-wrt-neff)
+\end{equation}
+
+For small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 = \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 = \approx 3.5\mathrm{e}{-4}$. 
+Mean precision (see XXXcolor in in Figure \@ref(fig:performance-cd-alphaopt)) is comparable to the optimizations using $\alpha_0 = 5e-4$ and $\alpha_0 = 1e-3$.
+All following analyses are conducted using the initial learning rate defined as a funciton of [Neff](#abbrev) as defined above.
+
+(ref:caption-sgd-single-proteins-initial-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates. **Left** For protein 1mkc_A_00 with length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** For protein 1c75_A_00 with length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Initial learning rates $\alpha_0$ as stated in the legend. Default linear learning rate annealing schedule with decay rate $\gamma=0.01$.
+
+```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '45%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
+knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png", "img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png"))
 ```
 
-Furthermore, the smaller the learning rate, the more iterations are necessary for the optimization ot converge. 
-With a learning rate of $1\mathrm{e}{-4}$ no protein converged with less than the maximum number of 5000 iterations (see Figure in Appendix \@ref(fig:full-likelihood-opt-different-alphas-numit)).
-It is therefore necessary to find a more appropriate learning rate schedule and decay rate.
+In a next step, I tried to find an optimal learning rate annealing schedule and an optimal decay rate.
+I evaluated the following learning rate schedules and decay rates using an initial learning rate defined as a funciton of [Neff](#abbrev) as in eq. \@ref(eq:learning-rate-wrt-neff).
 
-I evaluated the following learning rate schedules and decay rates for an initial learning rate $\alpha_0 = 1\mathrm{e}{-4}$ which gave highest precision in the previous benchmark but slow convergence:
-
-- default learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
-- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma \cdot t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1, 10\}$
-- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}, 1\mathrm{e}{-2}\}$
+- default linear learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
+- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma \cdot t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
+- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}\}$
 
 The decay schedules with different decay rates are visualized in Figure \@ref(fig:learning-rate-schedules)
 
@@ -855,7 +954,7 @@ Every residue pair $(i,j)$ will be described by two features, once for each posi
 |number of ungapped sequences       | $\sum_n w_n I(x_{ni} \neq 20)$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
 |percentage of gaps                 | $\frac{\sum_n w_n I(x_{ni} = 20)}{N_{\text{eff}}}$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
 |Average physico-chemical properties| Atchley Factors 1-5 [@Atchley2005] | 10 |
-|Average physico-chemical properties| Polarity accordign to Grantham, 1974. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102) [@Kawashima2008]. | 2 |
+|Average physico-chemical properties| Polarity according to Grantham, 1974. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102) [@Kawashima2008]. | 2 |
 |Average physico-chemical properties| Polarity according to Zimmermann et al., 1986. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103) [@Kawashima2008]. | 2 |
 |Average physico-chemical properties| Isoelectric point according to Zimmermann et al., 1968. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104) [@Kawashima2008]. | 2 |
 |Average physico-chemical properties| Hydrophobicity scale according to Wimley & White, 1996. Data taken from [UCSF Chimera](https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt) [@Wimley1996]. | 2 |
@@ -981,8 +1080,8 @@ For further analysis I will use `n_estimators=1000` and `max_depth=100`.
 
 (ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models that were trained with the same parameter settings. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and *max_depth*=10 or *max_depth*=100 perform nearly identical as well as models with 500 trees and *max_depth*=10 or *max_depth*=100.
 
-```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth1000_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
-knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth1000_top5_notitle.html", height = "600px")
+```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html", height = "600px")
 ```
 
 Next, I optimized the parameters *min_samples_leaf*, defining the minimum number of samples required to be at a leaf node and *max_features*, defining the number of randomly selected features considered for each split using the following settings:
@@ -990,7 +1089,7 @@ Next, I optimized the parameters *min_samples_leaf*, defining the minimum number
 - *min_samples_leaf* $\in \{1, 10, 100\}$
 - *max_features* $\in \{\text{sqrt}, \text{log2}, 0.15, 0.3\}$
 
-Randomly selecting 15% of features (=34 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
+Randomly selecting 15% of features (=38 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
 I chose `max_features = 0.15` and `min_samples_leaf = 10` for further analysis.
 Tuning the hyperparameters in a different order or on a larger dataset gives similar results.
 
