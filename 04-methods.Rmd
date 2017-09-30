@@ -345,14 +345,14 @@ Aiming to obtain values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and
   (\#eq:learning-rate-wrt-neff)
 \end{equation}
 
-For small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 = \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 = \approx 3.5\mathrm{e}{-4}$. 
+For small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 \approx 3.5\mathrm{e}{-4}$. 
 Mean precision (see XXXcolor in in Figure \@ref(fig:performance-cd-alphaopt)) is comparable to the optimizations using $\alpha_0 = 5e-4$ and $\alpha_0 = 1e-3$.
 All following analyses are conducted using the initial learning rate defined as a funciton of [Neff](#abbrev) as defined above.
 
-(ref:caption-sgd-single-proteins-initial-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates. **Left** For protein 1mkc_A_00 with length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** For protein 1c75_A_00 with length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Initial learning rates $\alpha_0$ as stated in the legend. Default linear learning rate annealing schedule with decay rate $\gamma=0.01$.
+(ref:caption-sgd-single-proteins-initial-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates. Linear learning rate annealing schedule has been used with decay rate $\gamma=0.01$ and initial learning rates $\alpha_0$ as stated in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Figure is cut at the yaxis at $||\w||_2=1500$, but learning rate of $5\mathrm{e}{-3}$ reaches $||\w||_2 \approx 13000$.
 
-```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '45%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
-knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png", "img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png"))
+```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
+knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png"))
 ```
 
 In a next step, I tried to find an optimal learning rate annealing schedule and an optimal decay rate.
