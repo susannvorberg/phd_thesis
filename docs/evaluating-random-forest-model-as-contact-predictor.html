@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-09-30">
+<meta name="date" content="2017-10-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="random-forest-classifiers.html">
-<link rel="next" href="methods.html">
+<link rel="next" href="additional-coevolution-features-improves-precision.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -82,7 +82,7 @@
       wijcd: "\\mathcal{w}_{ijcd}",
       wklcd: "\\mathcal{w}_{klcd}",
       X: "\\mathbf{X}",
-      angstrom: "\\AA \\;"
+      angstrom: "\\AA \\; \\;"
       }
   }
 });
@@ -128,99 +128,101 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
 <li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
-<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>1.2.3</b> contact assisted de-novo predictions</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="contact-prediction.html"><a href="contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Contact Prediction</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="contact-prediction.html"><a href="contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.3.1</b> Local Statistical Models</a></li>
-<li class="chapter" data-level="1.3.2" data-path="contact-prediction.html"><a href="contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.3.2</b> Global Statistical Models</a></li>
-<li class="chapter" data-level="1.3.3" data-path="contact-prediction.html"><a href="contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.3.3</b> Machine Learning Methods and Meta-Predictors</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>1.4</b> Modelling Protein Families with Potts Model</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="maxent.html"><a href="maxent.html#potts-model-properties"><i class="fa fa-check"></i><b>1.4.1</b> Model Properties</a></li>
-<li class="chapter" data-level="1.4.2" data-path="maxent.html"><a href="maxent.html#potts-mle"><i class="fa fa-check"></i><b>1.4.2</b> Inferring Parameters for the Potts Model</a></li>
-<li class="chapter" data-level="1.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>1.4.3</b> Solving the Inverse Potts Problem</a></li>
-<li class="chapter" data-level="1.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>1.4.4</b> Computing Contact Maps</a></li>
-</ul></li>
-<li class="chapter" data-level="1.5" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.5</b> Evaluating Contact Prediction Methods</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.5.1</b> Sequence Separation</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.6</b> Challenges in Coevolutionary Inference</a><ul>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#phylogenetic-bias"><i class="fa fa-check"></i>Phylogenetic Bias</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#entropic-bias"><i class="fa fa-check"></i>Entropic bias</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i>Finite Sampling Effects</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#transitive-effects"><i class="fa fa-check"></i>Transitive Effects</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i>Multiple Sequence Alignments</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#evaluation-strategy"><i class="fa fa-check"></i>Evaluation Strategy</a></li>
-<li class="chapter" data-level="" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i>Alternative Sources of Coevolution</a></li>
-</ul></li>
-<li class="chapter" data-level="1.7" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>1.7</b> Developing a Bayesian Model for Contact Prediction</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
-<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
-<li class="chapter" data-level="2.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
-<li class="chapter" data-level="2.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>2.3</b> Coupling Profiles Vary with Distance</a></li>
-<li class="chapter" data-level="2.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="3.1" data-path="the-likelihood-of-the-sequences-as-a-potts-model.html"><a href="the-likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>3.1</b> The Likelihood of the Sequences as a Potts Model</a></li>
-<li class="chapter" data-level="3.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>3.2</b> Treating Gaps as Missing Information</a></li>
-<li class="chapter" data-level="3.3" data-path="the-regularized-log-likelihood-and-its-gradient.html"><a href="the-regularized-log-likelihood-and-its-gradient.html"><i class="fa fa-check"></i><b>3.3</b> The Regularized Log Likelihood and its Gradient</a></li>
-<li class="chapter" data-level="3.4" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>3.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
-<li class="chapter" data-level="3.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.5</b> Approximation of the Gradient with Contrastive Divergence</a></li>
-<li class="chapter" data-level="3.6" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.6</b> Optimizing the Full Likelihood</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-adam"><i class="fa fa-check"></i><b>3.6.1</b> Optimizing with ADAM</a></li>
-<li class="chapter" data-level="3.6.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-sgd"><i class="fa fa-check"></i><b>3.6.2</b> Optimizing with vanilla stochastic gradient descent</a></li>
-<li class="chapter" data-level="3.6.3" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#altering-gibbs-sampling-schemes"><i class="fa fa-check"></i><b>3.6.3</b> Altering Gibbs sampling Schemes</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>4</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
-<li class="chapter" data-level="4.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>4.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
-<li class="chapter" data-level="4.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>4.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\rij\)</span></a></li>
-<li class="chapter" data-level="4.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>4.3</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>4.3.1</b> Iterative improvement of Laplace approximation</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="2.1" data-path="local-methods.html"><a href="local-methods.html"><i class="fa fa-check"></i><b>2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="2.2" data-path="global-methods.html"><a href="global-methods.html"><i class="fa fa-check"></i><b>2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="2.3" data-path="meta-predictors.html"><a href="meta-predictors.html"><i class="fa fa-check"></i><b>2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="2.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>2.4</b> Modelling Protein Families with Potts Model</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="maxent.html"><a href="maxent.html#potts-model-properties"><i class="fa fa-check"></i><b>2.4.1</b> Model Properties</a></li>
+<li class="chapter" data-level="2.4.2" data-path="maxent.html"><a href="maxent.html#potts-mle"><i class="fa fa-check"></i><b>2.4.2</b> Inferring Parameters for the Potts Model</a></li>
+<li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
+<li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>4.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
-<li class="chapter" data-level="4.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>4.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>2.5.1</b> contact assisted de-novo predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Contact Prior</a><ul>
-<li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="5.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>5.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a><ul>
-<li class="chapter" data-level="6.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>6.1</b> Dataset</a></li>
-<li class="chapter" data-level="6.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>6.2</b> Optimizing Pseudo-Likelihood</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>6.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
-<li class="chapter" data-level="6.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>6.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
-<li class="chapter" data-level="6.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>6.2.3</b> Sequence Reweighting</a></li>
-<li class="chapter" data-level="6.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>6.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.7" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>2.7</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>2.7.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="2.7.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>2.7.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="2.7.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>2.7.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="2.7.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>2.7.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="2.7.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>2.7.5</b> Alternative Sources of Coevolution</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>6.3</b> Analysis of Coupling Matrices</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation of Couplings with Contact Class</a></li>
-<li class="chapter" data-level="6.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>6.3.2</b> Coupling Distribution Plots</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>6.4</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>6.4.1</b> Full Likelihood Optimization with <em>ADAM</em></a></li>
-<li class="chapter" data-level="6.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#full-likelihood-optimization-with-stochastic-gradient-descent"><i class="fa fa-check"></i><b>6.4.2</b> Full Likelihood Optimization with Stochastic Gradient Descent</a></li>
-<li class="chapter" data-level="6.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.3</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
-<li class="chapter" data-level="6.4.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>6.4.4</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>3</b> Developing a Bayesian Model for Contact Prediction</a></li>
+<li class="chapter" data-level="4" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>4</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="4.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>4.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="4.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>4.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="4.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>4.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="4.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>4.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>6.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>6.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="6.5.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>6.5.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="6.5.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>6.5.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
-<li class="chapter" data-level="6.5.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>6.5.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
-<li class="chapter" data-level="6.5.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>6.5.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="6.5.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>6.5.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>5</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="5.1" data-path="the-likelihood-of-the-sequences-as-a-potts-model.html"><a href="the-likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>5.1</b> The Likelihood of the Sequences as a Potts Model</a></li>
+<li class="chapter" data-level="5.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>5.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="5.3" data-path="the-regularized-log-likelihood-and-its-gradient.html"><a href="the-regularized-log-likelihood-and-its-gradient.html"><i class="fa fa-check"></i><b>5.3</b> The Regularized Log Likelihood and its Gradient</a></li>
+<li class="chapter" data-level="5.4" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>5.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>5.5</b> Approximation of the Gradient with Contrastive Divergence</a></li>
+<li class="chapter" data-level="5.6" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>5.6</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-adam"><i class="fa fa-check"></i><b>5.6.1</b> Optimizing with ADAM</a></li>
+<li class="chapter" data-level="5.6.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-sgd"><i class="fa fa-check"></i><b>5.6.2</b> Optimizing with vanilla stochastic gradient descent</a></li>
+<li class="chapter" data-level="5.6.3" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#altering-gibbs-sampling-schemes"><i class="fa fa-check"></i><b>5.6.3</b> Altering Gibbs sampling Schemes</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>6.6</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="6.6.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>6.6.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
-<li class="chapter" data-level="6.6.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>6.6.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>6.7</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="6.7.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>6.7.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="6.7.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>6.7.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="6.7.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>6.7.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="6.7.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>6.7.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>6.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="6.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>6.3</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>6.3.1</b> Iterative improvement of Laplace approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>6.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
+<li class="chapter" data-level="6.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>6.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
+<li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
+<li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>8.2</b> Optimizing Pseudo-Likelihood</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>8.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
+<li class="chapter" data-level="8.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>8.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="8.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>8.2.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="8.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>8.2.4</b> Computing Amino Acid Frequencies</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>8.3</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>8.3.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="8.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>8.3.2</b> Coupling Distribution Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>8.4</b> Optimizing the Full-Likelihood</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>8.4.1</b> Full Likelihood Optimization with <em>ADAM</em></a></li>
+<li class="chapter" data-level="8.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#full-likelihood-optimization-with-stochastic-gradient-descent"><i class="fa fa-check"></i><b>8.4.2</b> Full Likelihood Optimization with Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="8.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>8.4.3</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="8.4.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>8.4.4</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>8.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>8.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="8.5.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>8.5.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="8.5.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>8.5.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="8.5.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>8.5.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="8.5.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>8.5.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="8.5.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>8.5.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>8.6</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.6.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="8.6.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.6.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.7</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.7.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="8.7.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.7.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="8.7.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.7.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="8.7.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.7.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -270,64 +272,59 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="evaluating-random-forest-model-as-contact-predictor" class="section level2">
-<h2><span class="header-section-number">5.2</span> Evaluating Random Forest Model as Contact Predictor</h2>
-<p>I trained a random forest classifier on the feature set described in methods section <a href="training-random-forest-contat-prior.html#seq-features">6.7.1</a> and optimized model hyperparameters as well as some data set specific settings (e.g window size and class ratios) with 5-fold cross-validation as described in methods section <a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization">6.7.2</a>.</p>
-<p>Ranking features by <em>Gini importance</em> reveals that both local statistical contact scores, OMES and mutual information (see (local-methods)), constitute the most important features (see Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">5.1</a>). Further important features include the log protein length and the contact prior based on protein length. Solvent accessibility predictions also rank highly as well as some of the mean potential scores.</p>
+<h2><span class="header-section-number">7.2</span> Evaluating Random Forest Model as Contact Predictor</h2>
+<p>I trained a random forest classifier on the feature set described in methods section <a href="training-random-forest-contat-prior.html#seq-features">8.7.1</a> and optimized model hyperparameters as well as some data set specific settings (e.g window size and class ratios) with 5-fold cross-validation as described in methods section <a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization">8.7.2</a>.</p>
+<p>Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.1</a> shows the ranking of the ten most important features according to <em>Gini importance</em>. Both local statistical contact scores, <em>OMES</em> <span class="citation">[<a href="#ref-Fodor2004a">142</a>]</span> and <a href="abbrev.html#abbrev">MI</a> (mutual information between amino acid counts), constitute the most important features besides the mean pair potentials acording to Miyazawa &amp; Jernigan <span class="citation">[<a href="#ref-Miyazawa1999a">143</a>]</span> and Li&amp;Fang<span class="citation">[<a href="#ref-Li2011">54</a>]</span>. Further important features include the relative solvent accessibility at both pair positions, the total percentage of gaps at both positions, the correlation between mean isoelectric point property at both positions, sequence separation and the beta-sheet propensity in a window of size five around position i.</p>
 
 <div class="figure"><span id="fig:rf-feature-importance"></span>
 <iframe src="img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 5.1: Top ten features ranked according to <em>Gini importance</em>. omes_apc = OMES contact score with <a href="abbrev.html#abbrev">APC</a>, MI_apc = mutual information score with <a href="abbrev.html#abbrev">APC</a>, prior_L = contact prior based on protein length as described in methods section <a href="training-random-forest-contat-prior.html#seq-features-global">6.7.1.1</a>, log_L = logarithm of protein length, miyasawajernigan1999water = mean pairwise contact potential based on quasi-chemical potential by Miyazawa &amp; Jernigan (1999) <span class="citation">[<a href="#ref-Miyazawa1999a">130</a>]</span>, rsa_i amd rsa_j = solvent accessibility prediction for residues i and j with NetsurfP <span class="citation">[<a href="#ref-Petersen2009a">131</a>]</span>, LiFang = mean pairwise contact potential as used by Li &amp; Fang <span class="citation">[<a href="#ref-Li2011">53</a>]</span>.
+Figure 7.1: Top ten features ranked according to <em>Gini importance</em>. Features are described in detail in methods section <a href="training-random-forest-contat-prior.html#seq-features">8.7.1</a>.
 </p>
 </div>
-<p>Many features receive only very low <em>Gini importance</em> scores. In order to reduce the complexity of the model that comprises 225 features, it is convenient to evaluate model performance on subsets of highly important features only (see methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">6.7.3</a>). As can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-performance-feature-selection">5.2</a>, most models trained on subsets of the feature space perform nearly identical to the model trained on the complete feature set. When using only the 26 most relevant features, performance of the model drops compared to using at least 75 features.</p>
+<p>Many features have low <em>Gini importance</em> scores which means they are rarely considered for splitting a node and can likely be removed from the dataset. Removing irrelevant features from the dataset is a convenient procedure to reduce model complexity. As described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>, I performed feature selection by evaluating model performance on subsets of features of decreasing importance. Most models trained on subsets of the total feature space perform nearly identical compared to the model trained on all features, as can be seen in Figure <a href="#fig:rf-performance-feature-selection"><strong>??</strong></a>. When using only the 26 most relevant features, performance of the model drops compared to using at least 75 features. The model using the 75 most important features has been selected for further analysis.</p>
 
-<div class="figure"><span id="fig:rf-performance-feature-selection"></span>
-<iframe src="img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_forest_optimized_hyperparameters_25features.html" width="100%" height="500px">
+<div class="figure"><span id="fig:rf-feature-selection"></span>
+<iframe src="img/random_forest_contact_prior/precision_vs_rank_featureselection_random_forest_optimized_hyperparameters.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 5.2: Average precision of random forest models trained on subsets of sequence derived features. Subsets of features have been selected as described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">6.7.3</a>.
+Figure 7.2: Average precision of random forest models trained on subsets of sequence derived features. Subsets of features have been selected as described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>.
 </p>
 </div>
-<p>The model using the 75 most important features according to <em>Gini importance</em> has been selected for further analysis. Figure <a href="training-random-forest-contat-prior.html#rf-with-pll-score">6.7.4</a> compares performance of various models. The random forest model trained on the 75 most important features (green line) has a mean precision of 0.33 for the top 5L contacts compared to a precision of 0.47 for the conventional L2norm + APC contact score based on pseudo-likelihood optimization (red line). The performance of the two local statistical contact scores, OMES+APC and MI+APC, which also constitute the two most important features of the random forest model, are shown as blue and yellow lines in Figure <a href="training-random-forest-contat-prior.html#rf-with-pll-score">6.7.4</a>. The random forest model improves approximately ten percentage points in precision over both methods.</p>
+<p>Figure <a href="#performance-rf"><strong>??</strong></a> shows the mean precision for the random forest model trained on the 75 most important feautures and for several contact scores. The pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm) is shown as a reference method. The random forest model has a mean precision of 0.33 for the top 5L contacts compared to a precision of 0.47 for pseudo-likelihood. Furthermore, the random forest model improves approximately ten percentage points in precision over the local statistical contact scores, <em>OMES</em> and mutual information (MI). Both methods comprise important features of the random forest model as can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.1</a>.</p>
 
-<div class="figure"><span id="fig:performance-rf-with-pll-score"></span>
+<div class="figure"><span id="fig:performance-rf"></span>
 <iframe src="img/random_forest_contact_prior/precision_vs_rank_notitle.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 5.3: Mean precision for top ranked contacts on a test set of 761 proteins. <strong>omes_fodoraldrich+apc</strong> = OMES score with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">6.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">6.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). <strong>ccmpred-pll-centerv+apc</strong> = conventional pseudo-likelihood contact score (L2norm + APC)
+Figure 7.3: Mean precision for top ranked contacts on a test set of 761 proteins. <strong>omes_fodoraldrich+apc</strong> = OMES score with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). <strong>ccmpred-pll-centerv+apc</strong> = conventional pseudo-likelihood contact score (L2norm + APC)
 </p>
 </div>
-<p>When analysing performance with respect to alignment size it is clear that the random forest model outperforms the pseudo-likelihood score for small alignments. Both, OMES and MI also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences. This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size <span class="citation">[<a href="#ref-Stahl2017">70</a>]</span>.</p>
-<p>Mean precision for top ranked contact predictions over 286 proteins splitted into four equally sized subsets according to <a href="abbrev.html#abbrev">Neff</a>. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. Methods are the same as in Figure <a href="methods-optimizing-full-likelihood.html#fig:performance-cd-alphaopt">6.3</a>.</p>
+<p>When analysing performance with respect to alignment size it can be found that the random forest model outperforms the pseudo-likelihood score for small alignments (see Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.4</a>).<br />
+Both, local statistial models <em>OMES</em> and <a href="abbrev.html#abbrev">MI</a> also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences. This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size <span class="citation">[<a href="#ref-Stahl2017">71</a>]</span>.</p>
 
-<div class="figure"><span id="fig:performance-neff-rf-with-pll-score"></span>
+<div class="figure"><span id="fig:performance-neff-rf"></span>
 <iframe src="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.4: Mean precision for top ranked contacts on a test set of 761 proteins splitted into four equally sized subsets according to <a href="abbrev.html#abbrev">Neff</a>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. <strong>omes_fodoraldrich+apc</strong> = OMES score with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">6.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">6.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>). <strong>ccmpred-pll-centerv+apc</strong> = <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span> computed with pseudo-likelihood.
+Figure 7.4: Mean precision for top ranked contacts on a test set of 761 proteins splitted into four equally sized subsets according to <a href="abbrev.html#abbrev">Neff</a>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. <strong>omes_fodoraldrich+apc</strong> = OMES score with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>). <strong>ccmpred-pll-centerv+apc</strong> = <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span> computed with pseudo-likelihood.
 </p>
 </div>
-<p>In order to evaluate how much the sequence derived features can improve contact prediction over the coevolutionary contact scores, the coevolutionary contact score can simply be included as an additional feature into the Random Forest model.</p>
-<p>The model was trained as described in methods section <a href="training-random-forest-contat-prior.html#rf-with-pll-score">6.7.4</a> using the additional pseudo-likelihood score feature. As expected, the pseudo-likelihood score comprises the most important feature in the model as can be seen in Figure <a href="training-random-forest-contat-prior.html#fig:feature-importance-rf-with-pll-score">6.16</a>. As can be seen in Figure <a href="training-random-forest-contat-prior.html#fig:feature-selection-rf-with-pll-score">6.17</a>, using only the 26 most important features improves the predictive power of the model even further.</p>
-<p>Finally, the comparison of the extended random forest model (“pLL-L2normapc-RF”) to the pseudo-likelihood score in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-rf-with-pll-score">5.3</a> reveals that the additional coevolutionary feature indeed improves performance over the score without prior information. Especially for small alignments, the improvment is substantial as can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf-with-pll-score">5.4</a>. In contrast, the improvement on large alignments is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable.</p>
-
 </div>
-<!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-Miyazawa1999a">
-<p>130. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
+<div id="ref-Fodor2004a">
+<p>142. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
-<div id="ref-Petersen2009a">
-<p>131. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+<div id="ref-Miyazawa1999a">
+<p>143. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
 </div>
 <div id="ref-Li2011">
-<p>53. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+<p>54. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
 </div>
 <div id="ref-Stahl2017">
-<p>70. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
+<p>71. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -355,7 +352,7 @@ s.setAttribute('data-timestamp', +new Date());
         </div>
       </div>
 <a href="random-forest-classifiers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="additional-coevolution-features-improves-precision.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -405,7 +402,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

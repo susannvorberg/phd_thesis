@@ -317,10 +317,10 @@ Overall, mean precision for [CD](#abbrev) contacts is smaller than for pseudo-li
 Especially the smallest ($1\mathrm{e}{-4}$) and biggest learning ($5\mathrm{e}{-3}$) rate perform bad.
 
 
-(ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over 286 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. <span style="color:blue;">pseudo-likelihood</span>:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with different initial learning rates $\alpha_0$ as specified in the legend.
+(ref:caption-performance-cd-alphaopt) Mean precision for top ranked contact predictions over 286 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with different initial learning rates $\alpha_0$ as specified in the legend.
 
-```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
-knitr::include_url("img/full_likelihood/alpha_opt_precision_vs_rank_notitle.html", height = "500px")
+```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/precision_vs_rank_learning_rates.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
+knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_learning_rates.html", height = "500px")
 ```
 
 Looking at individual proteins it turns out that the optimal learning rate depends on alignment size.
@@ -346,8 +346,8 @@ Aiming to obtain values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and
 \end{equation}
 
 For small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 \approx 3.5\mathrm{e}{-4}$. 
-Mean precision (see XXXcolor in in Figure \@ref(fig:performance-cd-alphaopt)) is comparable to the optimizations using $\alpha_0 = 5e-4$ and $\alpha_0 = 1e-3$.
-All following analyses are conducted using the initial learning rate defined as a funciton of [Neff](#abbrev) as defined above.
+Using this learning rate defined as a function of [Neff](#bbrev), precision improves over the previous fixed learning rates (brown line in Figure \@ref(fig:performance-cd-alphaopt)).
+All following analyses are conducted using the [Neff](#abbrev) dependent learning rate.
 
 (ref:caption-sgd-single-proteins-initial-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates. Linear learning rate annealing schedule has been used with decay rate $\gamma=0.01$ and initial learning rates $\alpha_0$ as stated in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Figure is cut at the yaxis at $||\w||_2=1500$, but learning rate of $5\mathrm{e}{-3}$ reaches $||\w||_2 \approx 13000$.
 
@@ -922,8 +922,8 @@ Every pair of residues $(i,j)$ from the same protein will be attributed the same
 
 | Feature | Description | No. Features per residue pair $(i, j)$ | 
 |-----------------------------:|:------------------------------------------------------------------|:---------------------:|
-| L                                 | log of protein length L | 1 |
-| N                                 | number of sequences N | 1 |
+| L                                 | log of protein length | 1 |
+| N                                 | number of sequences | 1 |
 | Neff                              | number of effective sequences Neff computed as the sum over sequence weights (see section \@ref(seq-reweighting)) | 1 |
 | gaps                              | average percentage of gaps over all positions | 1 |
 | diversity                         | $\frac{\sqrt{N}}{L}$, N=number of sequences, L=protein length| 1 |
@@ -988,8 +988,8 @@ These features are computed for every pair of columns $(i, j)$ in the alignment 
 | pairwise potential                    | Average statistical potential from residue pairs in beta-sheets by Zhu&Braun [@Zhu1999] | 1 |
 | joint_shannon_entropy (20 state)      | $- \sum_{a=1}^{20}\sum_{b=1}^{20} p(a,b) \log p(a,b)$ | 1 |
 | joint_shannon_entropy (21 state)      | $- \sum_{a=1}^{21}\sum_{b=1}^{21} p(a,b) \log p(a,b)$ | 1 |
-| mutual information (MI)               | several variants: MI with pseudo-counts, MI with pseudo-counts + APC, normalized MI| 3 |
-| OMES                                  | according to Fodor&Aldrich [@Fodor2004a] with and without APC | 2 |
+| mutual information (MI)               | mutual information of amino acid counts at two positions; several variants: MI with pseudo-counts, MI with pseudo-counts + [APC](#abbrev), normalized MI| 3 |
+| OMES                                  | according to Fodor&Aldrich [@Fodor2004a] with and without [APC](#abbrev) | 2 |
 : Pairwise Sequence Features
 
 There are in total **26** pairwise sequence features. 
@@ -1073,12 +1073,13 @@ Each of the five models is therefore cross-validated on an own independent datas
 First I assessed performance of models for combinations of the parameter *n_estimators*, defining the number of trees in the forest and the parameter *max_depth* defining the maximum depth of the trees:
 
 - *n_estimators* $\in \{100,500,1000\}$
-- *max_depth* $\in \{10, 100, 1000\}$
+- *max_depth* $\in \{10, 100, 1000, None\}$
 
-Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) shows that using 1000 trees and a maximum tree depth of 100 or 1000 gives highest mean precision over the validation set. 
-For further analysis I will use `n_estimators=1000` and `max_depth=100`.
+Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) shows that the top five parameter combinations perform nearly identical. 
+Random forests with 1000 trees perform slightly better than models constituting 500 trees, irrespective of the depth of the trees.
+In order to keep model complexity small, `n_estimators=1000` and `max_depth=100` for further analysis.
 
-(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models that were trained with the same parameter settings. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and *max_depth*=10 or *max_depth*=100 perform nearly identical as well as models with 500 trees and *max_depth*=10 or *max_depth*=100.
+(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five highest mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and maximum depth of trees of either 100, 1000 or unrestricted tree depth perform nearly identical (lines overlap). Random forest models with 500 trees and *max_depth*=10 or *max_depth*=100 perform slightly worse.
 
 ```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
 knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html", height = "600px")
@@ -1089,18 +1090,18 @@ Next, I optimized the parameters *min_samples_leaf*, defining the minimum number
 - *min_samples_leaf* $\in \{1, 10, 100\}$
 - *max_features* $\in \{\text{sqrt}, \text{log2}, 0.15, 0.3\}$
 
-Randomly selecting 15% of features (=38 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
-I chose `max_features = 0.15` and `min_samples_leaf = 10` for further analysis.
+Randomly selecting 39% of features (=75 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
+I chose `max_features = 0.30` and `min_samples_leaf = 10` for further analysis.
 Tuning the hyperparameters in a different order or on a larger dataset gives similar results.
 
-(ref:rf-gridsearch-maxdepth-minsampleleaf) Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of *min_samples_leaf* and *max_features*.  Dashed lines show the performance of models with the same parameter setting that have been learned on the five different subsets of training data. Solid lines give the mean precision over these five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
+(ref:rf-gridsearch-maxdepth-minsampleleaf) Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of *min_samples_leaf* and *max_features*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
 
-```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth100_for_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
-knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxdepth100_for_maxfeatures_minsampleleaf_top5_notitle.html", height = "600px")
+```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.html", height = "600px")
 ```
 
 In a next step I assessed dataset specific settings, such as the window size over which single positions features will be computed, the distance threshold to define non-contacts and the optimal proportions of contacts and non-contacts in the training set.
-I used the previously identified settings of random forest hyperparameters (`n_estimators=1000, min_samples_leaf=10, max_depth=100, max_features=0.15`).
+I used the previously identified settings of random forest hyperparameters (`n_estimators=1000, min_samples_leaf=10, max_depth=100, max_features=0.30`).
 
 - ratio of non-contacts/contacts $\in \{2, 5, 10, 20 \}$ within a fixed total dataset size of 300 000 residue pairs
 - window size:  $\in \{5, 7, 9, 11\}$
