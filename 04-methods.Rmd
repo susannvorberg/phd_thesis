@@ -25,7 +25,7 @@ Another filtering step was applied to remove 80 proteins that do not hold the fo
 *  more than 10 sequences in the multiple sequence alignment ($N>10$)
 *  protein length between 30 and 600 residues ($30 \leq L \leq 600$)
 *  less than 80% gaps in the multiple sequence alignment (percent gaps < 0.8)
-*  at least one residue-pair in contact at $C_\beta < 8\AA$ and minimum sequence separation of 6 positions
+*  at least one residue-pair in contact at $C_\beta < 8\angstrom$ and minimum sequence separation of 6 positions
 
 The final dataset is comprised of **6368** proteins with almost evenly distributed CATH classes over the ten subsets  (Figure \@ref(fig:dataset-cath-topologies)).
 
@@ -172,8 +172,8 @@ Approximately 100000 residue pairs have been filtered for contacts and non-conta
 - consider only residue pairs separated by at least 10 positions in sequence
 - minimal diversity ($=\frac{\sqrt{N}}{L}$) of alignment = 0.3
 - minimal number of non-gapped sequences = 1000
-- $\Cb$ distance threshold for contact: $<8\AA$
-- $\Cb$ distance threshold for noncontact: $>25\AA$
+- $\Cb$ distance threshold for contact: $<8\angstrom$
+- $\Cb$ distance threshold for noncontact: $>25\angstrom$
 
 ### Coupling Distribution Plots {#method-coupling-profile}
 
@@ -237,7 +237,7 @@ Furthermore this analysis is complicated when using momentum, as the computed gr
 
 A necessary but not sufficient criterion for convergence is given by $\sum_{a,b=1}^{20} \wijab = 0$ as derived in section \@ref(prior-v).
 When using plain stochastic gradient descent without momentum and without adaptive learning rates, this criterion is never violated when parameters are initialized uniformly.
-This is due to the fact that the 400 gradients $\wijab$ for $a,b \in {1, ..., 20\}$ are not independent.
+This is due to the fact that the 400 gradients $\wijab$ for $a,b \in \{1, \ldots, 20\}$ are not independent.
 The sum over the 400 pairwise amino acid counts for two positions i and j is identical for the observed and sampled alignment,
 
 \begin{equation}
@@ -275,6 +275,8 @@ Coupling parameters are initialized at 0.
 
 with $g = \nabla_w \LLreg(\v,\w)$  and the rate of decay being determined by hyperparameters $\beta_1$ and $\beta_2$.
 Both terms $m_t$ and $v_t$ represent estimates of the first and second moments of the gradient, respectively. 
+
+The full Adam update also includes a bias correction mechanism, which compensates for the fact that in the first few time steps the vectors m,v are both initialized and therefore biased at zero, before they fully “warm up”. 
 Because $m_t$ and $v_t$ are initialized as vectors of zeros, the following bias correction terms are supposed to counteract the initialization bias towards zero, 
 
 \begin{align}
@@ -325,19 +327,16 @@ knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_learning_rates.htm
 
 Looking at individual proteins it turns out that the optimal learning rate depends on alignment size.
 Figure \@ref(fig:sgd-single-proteins-initial-learning-rate) shows convergence plots for two different proteins, where convergence is measured as the L2-norm of coupling parameters $||\w||_2$.
-For an exemplary protein with a small alignment (left plot), a small learning rate $1\mathrm{e}{-4}$ lets the optimization run very slowly and not reach convergence within 5000 iterations.
+For an exemplary protein with a small alignment (left plot in Figure \@ref(fig:sgd-single-proteins-initial-learning-rate)), a small learning rate $1\mathrm{e}{-4}$ lets the optimization run very slowly and not reach convergence within 5000 iterations.
 A large learning rate of $5\mathrm{e}{-3}$ overshoots the optimum at the beginning of the optimization but as the learning rate decays over time the parameter estimates converge. 
-
-In contrast, for a protein with a big alignment (right plot) the effects of the learning rate choice are much more pronounced.
+In contrast, for a protein with a big alignment (right plot in Figure \@ref(fig:sgd-single-proteins-initial-learning-rate)) the learning rate choice has a more pronounced effect.
 With a small initial learning rate of $1\mathrm{e}{-4}$ the optimization runs slowly but almost converges within 5000 iterations.
-Using a big initial  learning rate of $5\mathrm{e}{-3}$, the parameter estimates diverged too far from the optimum and never reach the optimum.
+A large initial learning rate of $5\mathrm{e}{-3}$ lets the parameters diverge quickly and the optimum cannot be revovered.
 With learning rates $5\mathrm{e}{-4}$ and $1\mathrm{e}{-3}$, the optimum is well overshot at the beginning of the optimization but the parameter estimates eventually converge as the learning rates decreases over time.
 
 These observations are explained by the fact that the magnitude of the gradient scales with the number of sequences in the alignment.
 Because the gradient is computed from amino acid counts (see section \@ref(full-likelihood-gradient)), alignments with many sequences will generally produce larger gradients compared to alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is largest.
-
-
-Following the observations I defined the initial learning rate $\alpha_0$ as a function of [Neff](#abbrev).  
+Following these observation,s I defined the initial learning rate $\alpha_0$ as a function of [Neff](#abbrev).  
 Aiming to obtain values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and values for $\alpha_0$ around 1e-4 for large [Neff](#abbrev), the initial learning rate is defined as 
 
 \begin{equation}
@@ -346,7 +345,7 @@ Aiming to obtain values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and
 \end{equation}
 
 For small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 \approx 3.5\mathrm{e}{-4}$. 
-Using this learning rate defined as a function of [Neff](#bbrev), precision improves over the previous fixed learning rates (brown line in Figure \@ref(fig:performance-cd-alphaopt)).
+Using this learning rate defined as a function of [Neff](#bbrev), precision improves over the previous fixed learning rates (see Figure \@ref(fig:performance-cd-alphaopt)).
 All following analyses are conducted using the [Neff](#abbrev) dependent learning rate.
 
 (ref:caption-sgd-single-proteins-initial-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates. Linear learning rate annealing schedule has been used with decay rate $\gamma=0.01$ and initial learning rates $\alpha_0$ as stated in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Figure is cut at the yaxis at $||\w||_2=1500$, but learning rate of $5\mathrm{e}{-3}$ reaches $||\w||_2 \approx 13000$.
@@ -356,45 +355,42 @@ knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alphas
 ```
 
 In a next step, I tried to find an optimal learning rate annealing schedule and an optimal decay rate.
-I evaluated the following learning rate schedules and decay rates using an initial learning rate defined as a funciton of [Neff](#abbrev) as in eq. \@ref(eq:learning-rate-wrt-neff).
+I evaluated the following learning rate schedules and decay rates using the [Neff](#abbrev) dependent definition of the initial learning given in eq. \@ref(eq:learning-rate-wrt-neff):
 
-- default linear learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
-- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma \cdot t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1\}$
-- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma \cdot t}$ with $\gamma \in \{1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}\}$
+- default linear learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with $\gamma \in \{1\mathrm{e}{-3}, 1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}$
+- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}$
+- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma t}$ with $\gamma \in \{1\mathrm{e}{-6}, 1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}\}$
+- exponential learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$ with $\gamma \in \{5\mathrm{e}{-4}, 1\mathrm{e}{-4}, 5\mathrm{e}{-3}\}$
 
-The decay schedules with different decay rates are visualized in Figure \@ref(fig:learning-rate-schedules)
+The different learning rate annealing schedules and decay rates are visualized in Appendix Figure \@ref(fig:learning-rate-schedules) and the respective benchmark plots can be found in Appendix \@ref(benchmark-learning-rate-annealing-schedules).
+None of the learning rate schedules achieves an average precision for the top ranked contacts that is comparable to the pseudo-likelihood score.
+The highest precision, being one to two percentage points below the pseudo-likelihood score, is obtained with a linear learning rate schedule and decay rate $\gamma \eq 1\mathrm{e}{-2}$ and with a sigmoidal learning rate schedule and decay rates $\gamma \eq 1\mathrm{e}{-5}$ and $\gamma \eq 1\mathrm{e}{-6}$.
+The square root learning rate schedule gives ovarally bad results and does not lead to convergence because the learning rate decays slowly at later time steps.
+The exp decay rate TODOOOO.
 
-(ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the default learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Blue legend represents the sigmoidal learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$ with $\gamma$. Green legend represents the square root learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The iteration number is given by $t$. Initial learning rate $\alpha_0$ is set to 1e-4 and $\gamma$ is the decay rate and its value is given in brackets in the legend.
+In contrast to the findings regarding the initial learning rate earlier, an optimal decay rate is independent of the alignment size.
+Figure \@ref(fig:sgd-single-proteins-learning-rate-schedule) shows convergence plots for the same two exemplary proteins with small and big alignments as in Figure \@ref(fig:sgd-single-proteins-initial-learning-rate).
+For proteins with small [Neff](#abbrev), a quickly decaying learning rate such as $\gamma \eq 1\mathrm{e}{-1}$ with a linear schedule or $\gamma \eq 1\mathrm{e}{-4}$ with a sigmoidal schedule guide the optimization  closely to the presumed optimum at $||w||_2 \approx 12.5$, as can be seen in the left plot in Figure \@ref(fig:sgd-single-proteins-learning-rate-schedule).
+Proteins with big [Neff](#abbrev) are generally stronger adversely affected by quickly decaying learning rates and the optimum at $||w||_2 \approx 125$ is not reached before the learning rate diminishes, effectively preventing further optimization progress.
+Learning rates decaying less quickly, such as  $\gamma \eq 1\mathrm{e}{-2}$ with a linear schedule or $\gamma \eq 1\mathrm{e}{-6}$ with a sigmoidal schedule, guide the parameter estimates close to the expected optimum, both for proteins with small and big [Neff](#abbrev). 
 
-```{r learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/learning_rate_schedules_alpha0_00001_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-learning-rate-schedules)'}
-knitr::include_url("img/full_likelihood/learning_rate_schedules_alpha0_00001_notitle.html", height = "500px")
+(ref:caption-sgd-single-proteins-learning-rate-schedule) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate $\alpha_0$ is defined with respect to [Neff](#abbrev) as given in eq. \@ref(eq:learning-rate-wrt-neff). Learning rate schedules and decay rates are used according to the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
+
+```{r sgd-single-proteins-learning-rate-schedule, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-learning-rate-schedule)'}
+knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alpha0_different_schedules.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules.png"))
 ```
 
-Only the sigmoidal learning rate schedule achieves precision comparable to the pseudo-likelihood score while improving convergence speed measured by the number of iterations. 
-Appendix \@ref(learning-rate-schedules-distribution-iterations) shows benchmarks as well as the distribution over the number of iterations until convergence for all learning rate schedules that have been evaluated.
-Whereas none of the proteins except one did converge within 5000 iterations using the default learning rate schedule with decay rate $\gamma = 1\mathrm{e}{-1}$ (blue box plot in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules)), all proteins converged within 2000 or 1000 iterations using the sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, respectively (orange and green box plot respectively in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules)).
+While the three learning rate choices, linear learning rate schedule with decay rate $\gamma \eq 1\mathrm{e}{-2}$ and sigmoidal learning rate schedule with decay rates $\gamma \eq 1\mathrm{e}{-5}$ and $\gamma \eq 1\mathrm{e}{-6}$, give almost identical precision in the benchmarks shown in Appendix \@ref(benchmark-learning-rate-annealing-schedules), they differ in their average rate until convergence.
+Figure \@ref(fig:distribution-num-iterations) shows the distribution over the number of iterations until convergence for all three choices of learning rate schedules. 
+Optimization converges on average within 3584 iterations with a sigmoidal schedule and $\gamma \eq 1\mathrm{e}{-6}$ and within 1356 iterations when setting the decay rate $\gamma \eq 1\mathrm{e}{-5}$.
+On the contrary, when using a linear learning rate schedule with $\gamma \eq 1\mathrm{e}{-2}$, optimization converges on average within 4276 iterations but the distribution has a median of 5000.
+Under these considerations, I chose a sigmoidal learning rate schedule with $\gamma \eq 5\mathrm{e}{-6}$ for all further analysis.
 
+(ref:caption-distribution-num-iterations) Distribution of the number of iterations until convergence for [SGD](#abbrev) optimizations of the full likelihood for different learning rate schedules. Convergence is reached when the relative difference of parameter norms $||\w||_2$ falls below $\epsilon \eq 1e-8$. Initial learning rate $\alpha_0$ is defined with respect to [Neff](#abbrev) as given in eq. \@ref(eq:learning-rate-wrt-neff) and maximum number of iterations is set to 5000. Learning rate schedules and decay rates are used according to the legend.
 
-Because the gradient of the full likelihood scales with number of sequences in the [MSA](#abbrev), I defined the initial learning rate $\alpha_0$ and the decay rate $\gamma$ for the sigmoidal learning rate schedule as functions of [Neff](#abbrev). 
-Aiming to obtain values for the initial learning rate $\alpha_0$ and the decay rate $\gamma$ around 1e-4, as these values yield good performance and fast convergence, I defined $\alpha_0 = \gamma = \frac{3\mathrm{e}{-4}}{\log N_{\text{eff}}}$. 
-Assuming small [Neff](#abbrev) $\approx 50$ this yields $\alpha_0 = \gamma \approx 1.7\mathrm{e}{-4}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 = \gamma \approx 7\mathrm{e}{-5}$. 
-The distribution of the number of iterations until convergence is displayed as red box plot in Figure \@ref(fig:distribution-num-it-for-best-learning-rate-schedules), and is in the range of the sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, as expected.
-
-All following analyses are conducted using the sigmoidal learning rate schedule with initial learning rate and decay rate defined as functions of [Neff](#abbrev) as $\alpha_0 = \gamma = \frac{3\mathrm{e}{-4}}{\log N_{\text{eff}}}$.
-
-(ref:caption-distribution-num-it-for-best-learning-rate-schedules) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood for different learning rate schedules. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. Blue box plot displays default learning rate schedule with decay rate $\gamma = 1\mathrm{e}{-1}$. Orange and green boxplot represent sigmoidal learning rate schedule with decay rates $\gamma = 1\mathrm{e}{-5}$ and $\gamma = 1\mathrm{e}{-4}$, respectively. Red boxplot displays sigmoidal learning rate schedule with $\alpha_0$ and decay rate $\gamma$ defined as functions of [Neff](#abbrev).
-
-```{r distribution-num-it-for-best-learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/distribution_numiterations_against_different_learning_rate_schedules.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-distribution-num-it-for-best-learning-rate-schedules)'}
-knitr::include_url("img/full_likelihood/distribution_numiterations_against_different_learning_rate_schedules.html", height = "500px")
+```{r distribution-num-iterations, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/distribution_numiterations_against_selected_learningrate_schedules.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-distribution-num-iterations)'}
+knitr::include_url("img/full_likelihood/sgd/distribution_numiterations_against_selected_learningrate_schedules.html", height = "500px")
 ```
-
-Interestingly, and in contradiction to the benchmark results, using higher initial learning rates usually leads the parameters to diverge further from the pseudo-likelihood initializations than using smaller and faster decaying learning rates. 
-Figure \@ref(fig:cd-parameter-optimum-for-1mkca00-different-learning-rates) illustrates this effect for protein *1mkc*.
-Determining the learning and decay rate with respect to [Neff](#abbrev), as just described, yields $\alpha_0 = \gamma \approx 6.6e-5$. 
-Optimization converges after $\approx 600$ iterations with an L2-norm over couplings $||\w||_2 = 15.28$.
-When using a larger learning rate  $\alpha_0 = 1e-3$ the optimization has converged after $\approx 560$ iterations with an L2-norm over couplings $||\w||_2 = 12.66$.
-
-
 
 
 
@@ -1054,6 +1050,13 @@ As can be seen in Figure \@ref(fig:fraction-contacts-vs-protein-length), dependi
 knitr::include_url("img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.html", height = "500px")
 ```
 
+
+(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five highest mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and maximum depth of trees of either 100, 1000 or unrestricted tree depth perform nearly identical (lines overlap). Random forest models with 500 trees and *max_depth*=10 or *max_depth*=100 perform slightly worse.
+
+```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html", height = "600px")
+```
+
 Most studies applying machine learning algorithms to the problem of predicting residue-residue contacts, chose the standard approach of rebalancing the data set by undersampling of the majority class.
 
 | Study | Proportion of Contacts| Proportion of Non-contacts | 
@@ -1065,10 +1068,11 @@ Most studies applying machine learning algorithms to the problem of predicting r
 | Wang et al. (2013) [@Wang2013] | 1 | ~4 |
 
 I followed the same strategy and undersampled residue pairs that are not physical contacts with a proportion of contacts to non-contacts of 1:5.
-The training set is comprised of 50.000 residue pairs $< 8 \AA$ ("contacts"") and 250.000 residue pairs $> 8 \AA$ ("non-contacts") so that each of the five cross-validation models will be trained on 40.000 contacts and 200.000 non-contacts. 
+The training set is comprised of 50.000 residue pairs $< 8 \angstrom$ ("contacts"") and 250.000 residue pairs $> 8 \angstrom$ ("non-contacts") so that each of the five cross-validation models will be trained on 40.000 contacts and 200.000 non-contacts. 
 As the training set has been undersampled for non-contacts, it is not representative of real world proteins and the models should be validated on a more realistic validation set. 
 Each of the five models is therefore cross-validated on an own independent dataset of residue pairs extracted from 40 proteins by means of the standard contact prediction benchmark (mean precision against top ranked contacts).
 
+\pagebreak
 
 First I assessed performance of models for combinations of the parameter *n_estimators*, defining the number of trees in the forest and the parameter *max_depth* defining the maximum depth of the trees:
 
@@ -1079,12 +1083,6 @@ Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) shows that the top five 
 Random forests with 1000 trees perform slightly better than models constituting 500 trees, irrespective of the depth of the trees.
 In order to keep model complexity small, `n_estimators=1000` and `max_depth=100` for further analysis.
 
-(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five highest mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and maximum depth of trees of either 100, 1000 or unrestricted tree depth perform nearly identical (lines overlap). Random forest models with 500 trees and *max_depth*=10 or *max_depth*=100 perform slightly worse.
-
-```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
-knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html", height = "600px")
-```
-
 Next, I optimized the parameters *min_samples_leaf*, defining the minimum number of samples required to be at a leaf node and *max_features*, defining the number of randomly selected features considered for each split using the following settings:
 
 - *min_samples_leaf* $\in \{1, 10, 100\}$
@@ -1094,9 +1092,10 @@ Randomly selecting 39% of features (=75 features) and requiring at least 10 samp
 I chose `max_features = 0.30` and `min_samples_leaf = 10` for further analysis.
 Tuning the hyperparameters in a different order or on a larger dataset gives similar results.
 
+
 (ref:rf-gridsearch-maxdepth-minsampleleaf) Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of *min_samples_leaf* and *max_features*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
 
-```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
+```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
 knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.html", height = "600px")
 ```
 
@@ -1115,35 +1114,38 @@ These estimates might be biased in a way since the random forest hyperparameters
 ### Feature Selection {#rf-feature-selection}
 
 Many features obtain low *Gini importance* scores and can most likely be removed from the data set which will also reduce model complexity. 
-It has been found, that prediction performance might even increase after removing the most irrelevant feaures [@Menze2009].
+It has been found, that prediction performance might even increase after removing the most irrelevant features [@Menze2009].
 For example, during the development of *EPSILON-CP*, a deep neural network method for contact prediction, the authors performed feature selection using boosted trees.
-By removing 75% of the most non-informative features (mostly attributed to amino acid composition), the performance of their predictor increased slightly [@Stahl2017]. 
+By removing 75% of the most non-informative features (mostly features related to amino acid composition), the performance of their predictor increased slightly [@Stahl2017]. 
 Other studies have also emphasized the importance of feature selection to improve performance and reduce model complexity [@Cheng2007; @Li2011].
 
 I therefore developed a feature selection pipeline that retrains the random forest model on subsets of features.
-The subsets are composed of those features having *Gini importance* larger than the $\{10, 30, 50, 70, 90\}$-percentile of the distribution obtained by training a model on all features.
-Performance is then evaluated by means of the standard contact prediction benchmark (mean precision against top ranked contacts) for the models trained on these subsets of features. 
+The subsets are composed of those features having *Gini importance* larger than the $\{10, 30, 50, 70, 90\}$-percentile of the distribution of *Gini importance* values obtained by training a model on all features.
+Performance of the models trained on these subsets of features is evaluated on a validation set. 
 
 
 ### Using Pseudo-likelihood Coevolution Score as Additional Feature {#rf-with-pll-score}
 
-In addition to the 250 sequence derived features, the pseudo-likelihood contact score (L2norm + APC) is used as a feature. 
-The random forest was trained on 100.000 residue pairs in contact ($\Delta \Cb < 8 \AA \; \;$) and 500.000 residue pairs not in contact ($\Delta \Cb > 8 \AA \; \;$) using the cross-validated hyperparameters as described in the last section.
+Besides the 250 sequence derived features, the pseudo-likelihood contact score ([APC](#abbrev) corrected Frobenius norm of couplings) is used as an additional feature. 
+The random forest was trained on 100.000 residue pairs in physical contact ($\Delta \Cb < 8 \angstrom \; \;$) and 500.000 residue pairs not in physical contact ($\Delta \Cb > 8 \angstrom \; \;$) using the cross-validated hyperparameters as described earlier.
 
-The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the following Figure \@ref(fig:feature-importance-rf-with-pll-score).
+The pseudo-likelihood contact score comprises by far the most important feature as can be seen in the Figure \@ref(fig:feature-importance-rf-with-pll-score).
+Other important features include the local statistical contact scores OMES and mutual information, the mean pairwise potentials according to Miyasawa & Jernigan [@Miyazawa1999a] and Li & Fang [@Li2011], relative solvent accessibilty predictions (with NetsurfP [@Petersen2009a]). 
+The most important features apart from the pseudo-likelihood contact score, are the same features that are highly relevant for the basic random forest model (see Figure \@ref(fig:rf-feature-importance)).
 
-(ref:caption-feature-importance-rf-with-pll-score) Most important features in the random forest model. Features are ranked according to Gini importance which is the mean decrease in Gini impurity over all splits and all trees in the forest.
+(ref:caption-feature-importance-rf-with-pll-score) Top ten features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
 
-```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.png",out.width = '90%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/feature_plll2norm_random_forest_nestimators1000_maxfeaturesauto_251features_top.html", height = "500px")
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.html", height = "600px")
 ```
 
-Training the model only on the 26 most important features improves precision of the model compared to using the full feature set as is illustrated in the following figure \@ref(fig:feature-importance-rf-with-pll-score).
+Models that have been trained on subsets of features, comprising 226, 176, 126 or 76 of the most important features with respect to *Gini importance*, perform equally well as the model trained on the complete set of features (see Figure \@ref(fig:feature-selection-rf-with-pll-score)).
+Only the model trained on the 26 most important features has slighlty decreased precision for the top L/10 ranked contacts. 
 
-(ref:caption-feature-selection-rf-with-pll-score) Mean precision over proteins in testset for the top ranked contacts for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). Learning a random forest model on the 26 most important features yields the best model with respect to precision.
+(ref:caption-feature-selection-rf-with-pll-score) Mean precision for top ranked contacts over 200 proteins for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). 
 
-```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_featureselection_plll2norm_random_forest_nestimators1000_maxfeaturesauto_26features_notitle.png",out.width = '90%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_featureselection_plll2norm_random_forest_nestimators1000_maxfeaturesauto_26features_notitle.html", height = "500px")
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
 ```
 
 

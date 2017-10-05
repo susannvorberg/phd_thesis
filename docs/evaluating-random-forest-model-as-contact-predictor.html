@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="random-forest-classifiers.html">
-<link rel="next" href="additional-coevolution-features-improves-precision.html">
+<link rel="next" href="methods.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -75,6 +75,7 @@
       Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
       vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
@@ -186,7 +187,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
-<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -242,8 +242,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -274,54 +285,64 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="evaluating-random-forest-model-as-contact-predictor" class="section level2">
 <h2><span class="header-section-number">7.2</span> Evaluating Random Forest Model as Contact Predictor</h2>
 <p>I trained a random forest classifier on the feature set described in methods section <a href="training-random-forest-contat-prior.html#seq-features">8.7.1</a> and optimized model hyperparameters as well as some data set specific settings (e.g window size and class ratios) with 5-fold cross-validation as described in methods section <a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization">8.7.2</a>.</p>
-<p>Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.1</a> shows the ranking of the ten most important features according to <em>Gini importance</em>. Both local statistical contact scores, <em>OMES</em> <span class="citation">[<a href="#ref-Fodor2004a">142</a>]</span> and <a href="abbrev.html#abbrev">MI</a> (mutual information between amino acid counts), constitute the most important features besides the mean pair potentials acording to Miyazawa &amp; Jernigan <span class="citation">[<a href="#ref-Miyazawa1999a">143</a>]</span> and Li&amp;Fang<span class="citation">[<a href="#ref-Li2011">54</a>]</span>. Further important features include the relative solvent accessibility at both pair positions, the total percentage of gaps at both positions, the correlation between mean isoelectric point property at both positions, sequence separation and the beta-sheet propensity in a window of size five around position i.</p>
+<p>Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.2</a> shows the ranking of the ten most important features according to <em>Gini importance</em>. Both local statistical contact scores, <em>OMES</em> <span class="citation">[<a href="#ref-Fodor2004a">144</a>]</span> and <a href="abbrev.html#abbrev">MI</a> (mutual information between amino acid counts), constitute the most important features besides the mean pair potentials acording to Miyazawa &amp; Jernigan <span class="citation">[<a href="#ref-Miyazawa1999a">145</a>]</span> and Li&amp;Fang<span class="citation">[<a href="#ref-Li2011">54</a>]</span>. Further important features include the relative solvent accessibility at both pair positions, the total percentage of gaps at both positions, the correlation between mean isoelectric point property at both positions, sequence separation and the beta-sheet propensity in a window of size five around position i.</p>
 
 <div class="figure"><span id="fig:rf-feature-importance"></span>
-<iframe src="img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.html" width="100%" height="500px">
+<iframe src="img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 7.1: Top ten features ranked according to <em>Gini importance</em>. Features are described in detail in methods section <a href="training-random-forest-contat-prior.html#seq-features">8.7.1</a>.
+Figure 7.2: Top ten features ranked according to <em>Gini importance</em>. <strong>OMES+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected OMES score according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">144</a>]</span>. <strong>mean pair potential (Miyasawa &amp; Jernigan)</strong>: average quasi-chemical energy of transfer of amino acids from water to the protein environment <span class="citation">[<a href="#ref-Miyazawa1999a">145</a>]</span>. <strong>MI+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected mutual information between amino acid counts (using pseudo-counts). <strong>mean pair potential (Li&amp;Fang)</strong>: average general contact potential by Li &amp; Fang <span class="citation">[<a href="#ref-Li2011">54</a>]</span>. <strong>rel. solvent accessibilty i(j)</strong>: RSA score computed with Netsurfp (v1.0) <span class="citation">[<a href="#ref-Petersen2009a">146</a>]</span> for position i(j). <strong>pairwise gap%</strong>: percentage of gapped sequences at either position i and j. <strong>correlation mean isoelectric feature</strong>: Pearson correlation between the mean isoelectric point feature (according to Zimmermann et al., 1968) for positions i and j. <strong>sequence separation</strong>: |j-i|. <strong>beta sheet propensity window(i)</strong>: beta-sheet propensity according to Psipred <span class="citation">[<a href="#ref-Jones1999">147</a>]</span> computed within a window of five positions around i. eatures are described in detail in methods section <a href="training-random-forest-contat-prior.html#seq-features">8.7.1</a>.
 </p>
 </div>
-<p>Many features have low <em>Gini importance</em> scores which means they are rarely considered for splitting a node and can likely be removed from the dataset. Removing irrelevant features from the dataset is a convenient procedure to reduce model complexity. As described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>, I performed feature selection by evaluating model performance on subsets of features of decreasing importance. Most models trained on subsets of the total feature space perform nearly identical compared to the model trained on all features, as can be seen in Figure <a href="#fig:rf-performance-feature-selection"><strong>??</strong></a>. When using only the 26 most relevant features, performance of the model drops compared to using at least 75 features. The model using the 75 most important features has been selected for further analysis.</p>
+<p>Many features have low <em>Gini importance</em> scores which means they are rarely considered for splitting a node and can likely be removed from the dataset. Removing irrelevant features from the dataset is a convenient procedure to reduce model complexity. As described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>, I performed feature selection by evaluating model performance on subsets of features of decreasing importance. Most models trained on subsets of the total feature space perform nearly identical compared to the model trained on all features, as can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-selection-performance">7.3</a>. Performance of the random forest models drops noticeably when using only the 25 most important features. For the further analysis I am using the random forest model trained on the 75 most important features as this model constitutes the smallest set of features while performing nearly identical compared to the model trained on the complete feature set.</p>
 
-<div class="figure"><span id="fig:rf-feature-selection"></span>
+<div class="figure"><span id="fig:rf-feature-selection-performance"></span>
 <iframe src="img/random_forest_contact_prior/precision_vs_rank_featureselection_random_forest_optimized_hyperparameters.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 7.2: Average precision of random forest models trained on subsets of sequence derived features. Subsets of features have been selected as described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>.
+Figure 7.3: Mean precision of top ranked predictions over 200 proteins for random forest models trained on subsets of features of decreasing importance. Subsets of features have been selected as described in methods section <a href="training-random-forest-contat-prior.html#rf-feature-selection">8.7.3</a>.
 </p>
 </div>
-<p>Figure <a href="#performance-rf"><strong>??</strong></a> shows the mean precision for the random forest model trained on the 75 most important feautures and for several contact scores. The pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm) is shown as a reference method. The random forest model has a mean precision of 0.33 for the top 5L contacts compared to a precision of 0.47 for pseudo-likelihood. Furthermore, the random forest model improves approximately ten percentage points in precision over the local statistical contact scores, <em>OMES</em> and mutual information (MI). Both methods comprise important features of the random forest model as can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.1</a>.</p>
+<p>Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-rf">7.4</a> shows the mean precision for the random forest model trained on the 75 most important features. The random forest model has a mean precision of 0.33 for the top <span class="math inline">\(0.5\cdot L\)</span> contacts compared to a precision of 0.47 for pseudo-likelihood. Furthermore, the random forest model improves approximately ten percentage points in precision over the local statistical contact scores, <em>OMES</em> and mutual information (MI). Both methods comprise important features of the random forest model as can be seen in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.2</a>.</p>
+<p>When analysing performance with respect to alignment size it can be found that the random forest model outperforms the pseudo-likelihood score for small alignments (see Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.5</a>).<br />
+Both, local statistial models <em>OMES</em> and <a href="abbrev.html#abbrev">MI</a> also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences. This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size <span class="citation">[<a href="#ref-Stahl2017">71</a>]</span>.</p>
 
 <div class="figure"><span id="fig:performance-rf"></span>
 <iframe src="img/random_forest_contact_prior/precision_vs_rank_notitle.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 7.3: Mean precision for top ranked contacts on a test set of 761 proteins. <strong>omes_fodoraldrich+apc</strong> = OMES score with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with APC as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (L2norm + APC). <strong>ccmpred-pll-centerv+apc</strong> = conventional pseudo-likelihood contact score (L2norm + APC)
+Figure 7.4: Mean precision for top ranked contacts on a test set of 774 proteins. <strong>random forest (pLL)</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings). <strong>pseudo-likelihood</strong> = <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings computed with pseudo-likelihood. <strong>random forest</strong> = random forest model trained on 75 sequence derived features. <strong>OMES</strong> = <a href="abbrev.html#abbrev">APC</a> corrected <em>OMES</em> contact score according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">144</a>]</span>. <strong>mutual information</strong> = <a href="abbrev.html#abbrev">APC</a> corrected mutual information between amino acid counts (using pseudo-counts).
 </p>
 </div>
-<p>When analysing performance with respect to alignment size it can be found that the random forest model outperforms the pseudo-likelihood score for small alignments (see Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.4</a>).<br />
-Both, local statistial models <em>OMES</em> and <a href="abbrev.html#abbrev">MI</a> also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences. This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size <span class="citation">[<a href="#ref-Stahl2017">71</a>]</span>.</p>
 
 <div class="figure"><span id="fig:performance-neff-rf"></span>
 <iframe src="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 7.4: Mean precision for top ranked contacts on a test set of 761 proteins splitted into four equally sized subsets according to <a href="abbrev.html#abbrev">Neff</a>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. <strong>omes_fodoraldrich+apc</strong> = OMES score with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>mi_pc + APC</strong> = mutual information with <a href="abbrev.html#abbrev">APC</a> as described in section <a href="training-random-forest-contat-prior.html#seq-features-pairwise">8.7.1.3</a>. <strong>rf_contact_prior</strong> = random forest model using only sequence derived features. <strong>pLL-L2normapc-RF</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>). <strong>ccmpred-pll-centerv+apc</strong> = <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span> computed with pseudo-likelihood.
+Figure 7.5: Mean precision for top ranked contacts on a test set of 774 proteins splitted into four equally sized subsets with respect to <a href="abbrev.html#abbrev">Neff</a>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. <strong>random forest (pLL)</strong> = random forest model using sequence derived features and pseudo-likelihood contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings). <strong>pseudo-likelihood</strong> = <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings computed with pseudo-likelihood. <strong>random forest</strong> = random forest model trained on 75 sequence derived features. <strong>OMES</strong> = <a href="abbrev.html#abbrev">APC</a> corrected <em>OMES</em> contact score according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">144</a>]</span>. <strong>mutual information</strong> = <a href="abbrev.html#abbrev">APC</a> corrected mutual information between amino acid counts (using pseudo-counts).
 </p>
 </div>
+<p>Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.5</a> showed that the random forest predictor improves over the pseudo-likelihood coevolution method when the alignment consists of only few sequences. In order to assess this improvement in a more direct manner, it is possible to build a combined random forest predictor that is not only trained on the sequence derived features but also on the pseudo-likelihood contact score as an additional feature (see methods section <a href="training-random-forest-contat-prior.html#rf-with-pll-score">8.7.4</a> for details). As expected, the pseudo-likelihood score comprises the most important feature in the model (Figure <a href="training-random-forest-contat-prior.html#fig:feature-importance-rf-with-pll-score">8.16</a> in methods section) followed by the same sequence features that were found in the previous analysis in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:rf-feature-importance">7.2</a>.</p>
+<p>Finally, comparing the random forest model trained on sequence features and pseudo-likelihood contact score to the pseudo-likelihood score in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-rf">7.4</a> reveals that combining both types of information indeed improves predictive power over both single approaches. Especially for small alignments, the improvement is substantial as can be seen in in the left upper plot in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.5</a>. In contrast, the improvement on large alignments (right lower plot in Figure <a href="evaluating-random-forest-model-as-contact-predictor.html#fig:performance-neff-rf">7.5</a>) is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable.</p>
+
 </div>
+<!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Fodor2004a">
-<p>142. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
+<p>144. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
 <div id="ref-Miyazawa1999a">
-<p>143. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
+<p>145. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
 </div>
 <div id="ref-Li2011">
 <p>54. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+</div>
+<div id="ref-Petersen2009a">
+<p>146. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+</div>
+<div id="ref-Jones1999">
+<p>147. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
 </div>
 <div id="ref-Stahl2017">
 <p>71. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
@@ -352,7 +373,7 @@ s.setAttribute('data-timestamp', +new Date());
         </div>
       </div>
 <a href="random-forest-classifiers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="additional-coevolution-features-improves-precision.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -402,7 +423,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

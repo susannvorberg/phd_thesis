@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,6 +75,7 @@
       Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
       vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
@@ -186,7 +187,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
-<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -242,8 +242,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -675,88 +686,91 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>133. Bottou, L. (2012). Stochastic Gradient Descent Tricks. In Neural networks: Tricks of the trade (Springer, Berlin, Heidelberg), pp. 421–436. Available at: <a href="http://link.springer.com/10.1007/978-3-642-35289-8{\_}25" class="uri">http://link.springer.com/10.1007/978-3-642-35289-8{\_}25</a>.</p>
 </div>
 <div>
-<p>134. Schaul, T., Zhang, S., and Lecun, Y. (2013). No More Pesky Learning Rates. arXiv. Available at: <a href="https://arxiv.org/pdf/1206.1106.pdf" class="uri">https://arxiv.org/pdf/1206.1106.pdf</a>.</p>
+<p>134. Bottou, L. (2010). Large-Scale Machine Learning with Stochastic Gradient Descent. 177–186. Available at: <a href="https://link.springer.com/chapter/10.1007/978-3-7908-2604-3{\_}16" class="uri">https://link.springer.com/chapter/10.1007/978-3-7908-2604-3{\_}16</a>.</p>
 </div>
 <div>
-<p>135. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+<p>135. Schaul, T., Zhang, S., and Lecun, Y. (2013). No More Pesky Learning Rates. arXiv. Available at: <a href="https://arxiv.org/pdf/1206.1106.pdf" class="uri">https://arxiv.org/pdf/1206.1106.pdf</a>.</p>
 </div>
 <div>
-<p>136. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
+<p>136. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
 </div>
 <div>
-<p>137. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+<p>137. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
 </div>
 <div>
-<p>138. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf. doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278–282. Available at: <a href="http://ieeexplore.ieee.org/document/598994/" class="uri">http://ieeexplore.ieee.org/document/598994/</a>.</p>
+<p>138. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
 </div>
 <div>
-<p>139. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+<p>139. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf. doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278–282. Available at: <a href="http://ieeexplore.ieee.org/document/598994/" class="uri">http://ieeexplore.ieee.org/document/598994/</a>.</p>
 </div>
 <div>
-<p>140. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+<p>140. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
 </div>
 <div>
-<p>141. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
+<p>141. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
 </div>
 <div>
-<p>142. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
+<p>142. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
 </div>
 <div>
-<p>143. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
+<p>143. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
 </div>
 <div>
-<p>144. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
+<p>144. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
 <div>
-<p>145. Carreira-Perpiñán, M. a, and Hinton, G.E. (2005). On Contrastive Divergence Learning. Artif. Intell. Stat. <em>0</em>, 17. Available at: <a href="http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf" class="uri">http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf</a>.</p>
+<p>145. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
 </div>
 <div>
-<p>146. Le, Q.V., Ngiam, J., Coates, A., Lahiri, A., Prochnow, B., and Ng, A.Y. (2011). On optimization methods for deep learning ([International Machine Learning Society]) Available at: <a href="https://dl.acm.org/citation.cfm?id=3104516" class="uri">https://dl.acm.org/citation.cfm?id=3104516</a>.</p>
+<p>146. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
 </div>
 <div>
-<p>147. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
+<p>147. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
 </div>
 <div>
-<p>148. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
+<p>148. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson, N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. <em>et al.</em> (2015). CATH: comprehensive structural and functional annotations for genome sequences. Nucleic Acids Res. <em>43</em>, D376–D381. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947</a>.</p>
 </div>
 <div>
-<p>149. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
+<p>149. Carreira-Perpiñán, M. a, and Hinton, G.E. (2005). On Contrastive Divergence Learning. Artif. Intell. Stat. <em>0</em>, 17. Available at: <a href="http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf" class="uri">http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf</a>.</p>
 </div>
 <div>
-<p>150. Tieleman, T. (2008). Training Restricted Boltzmann Machines using Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach. Learn. <em>307</em>, 7.</p>
+<p>150. Le, Q.V., Ngiam, J., Coates, A., Lahiri, A., Prochnow, B., and Ng, A.Y. (2011). On optimization methods for deep learning ([International Machine Learning Society]) Available at: <a href="https://dl.acm.org/citation.cfm?id=3104516" class="uri">https://dl.acm.org/citation.cfm?id=3104516</a>.</p>
 </div>
 <div>
-<p>151. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
+<p>151. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
 </div>
 <div>
-<p>152. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+<p>152. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
 </div>
 <div>
-<p>153. Robinson, A.B., and Robinson, L.R. (1991). Distribution of glutamine and asparagine residues and their near neighbors in peptides and proteins. Proc. Natl. Acad. Sci. U. S. A. <em>88</em>, 8880–4. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614</a>.</p>
+<p>153. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
 </div>
 <div>
-<p>154. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005). Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U. S. A. <em>102</em>, 6395–400. Available at: <a href="http://www.pnas.org/content/102/18/6395.abstract" class="uri">http://www.pnas.org/content/102/18/6395.abstract</a>.</p>
+<p>154. Tieleman, T. (2008). Training Restricted Boltzmann Machines using Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach. Learn. <em>307</em>, 7.</p>
 </div>
 <div>
-<p>155. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A., Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index database, progress report 2008. Nucleic Acids Res. <em>36</em>, D202–5. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890</a>.</p>
+<p>155. Robinson, A.B., and Robinson, L.R. (1991). Distribution of glutamine and asparagine residues and their near neighbors in peptides and proteins. Proc. Natl. Acad. Sci. U. S. A. <em>88</em>, 8880–4. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614</a>.</p>
 </div>
 <div>
-<p>156. Wimley, W.C., and White, S.H. (1996). Experimentally determined hydrophobicity scale for proteins at membrane interfaces. Nat. Struct. Biol. <em>3</em>, 842–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8836100" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8836100</a>.</p>
+<p>156. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005). Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U. S. A. <em>102</em>, 6395–400. Available at: <a href="http://www.pnas.org/content/102/18/6395.abstract" class="uri">http://www.pnas.org/content/102/18/6395.abstract</a>.</p>
 </div>
 <div>
-<p>157. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky, J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational techniques for detecting amphipathic structures in proteins. J. Mol. Biol. <em>195</em>, 659–685. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283687901896" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283687901896</a>.</p>
+<p>157. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A., Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index database, progress report 2008. Nucleic Acids Res. <em>36</em>, D202–5. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890</a>.</p>
 </div>
 <div>
-<p>158. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical potentials, and three-dimensional structure prediction with self-correcting distance geometry calculations of beta-sheet formation in proteins. Protein Sci. <em>8</em>, 326–42. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>158. Wimley, W.C., and White, S.H. (1996). Experimentally determined hydrophobicity scale for proteins at membrane interfaces. Nat. Struct. Biol. <em>3</em>, 842–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8836100" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8836100</a>.</p>
 </div>
 <div>
-<p>159. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
+<p>159. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky, J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational techniques for detecting amphipathic structures in proteins. J. Mol. Biol. <em>195</em>, 659–685. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283687901896" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283687901896</a>.</p>
 </div>
 <div>
-<p>160. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
+<p>160. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical potentials, and three-dimensional structure prediction with self-correcting distance geometry calculations of beta-sheet formation in proteins. Protein Sci. <em>8</em>, 326–42. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div>
-<p>161. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg, V. <em>et al.</em> (2011). Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. <em>12</em>, 2825–2830. Available at: <a href="http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html" class="uri">http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html</a>.</p>
+<p>161. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
+</div>
+<div>
+<p>162. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg, V. <em>et al.</em> (2011). Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. <em>12</em>, 2825–2830. Available at: <a href="http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html" class="uri">http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html</a>.</p>
 </div>
 </div>
 </div>
@@ -835,7 +849,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

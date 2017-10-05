@@ -1,0 +1,33 @@
+
+
+# general
+
+  - check quality/resolution of screenshots in pdf
+
+# intro
+
+  - benchmark plot with raptorx/espilon cp
+  
+# random forest
+
+  - update evaluation files with CORRECT random forest .pkl model file
+  - update benchmark plots after evaluation files have been updated
+  - warum keine verbesserung wenn adding mehrere scores:
+    they are not complementary: they are noisy, in a similar way, correlated noise
+    
+# contrastive divergence
+
+  - update benchmark plot for lin, sig, exp schedule in appendix
+  - update exp schedule in  methods
+  - decide what to do about sqrt schedule
+
+# bayesian model
+
+  - change theory from distances to contacs!
+  - positive controls:
+    - synthetic couplings
+    - add hessian on diagonal
+  - problems:
+    - abschaetzen der block matrizen
+    - sparsity? estimation of correlation between couplings too hard because of sparsity
+    - diagonal matrices cannot capture correlations between couplings

@@ -1,0 +1,5 @@
+(py27)vorberg (master *) phd_thesis $ sed -i -e 's/(178,223,138)/(77,175,74)/g' img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsamleleaf_top5_notitle.html 
+(py27)vorberg (master *) phd_thesis $ sed -i -e 's/(251,154,153)/(255,127,0)/g' img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsamleleaf_top5_notitle.html 
+(py27)vorberg (master *) phd_thesis $ sed -i -e 's/(51,160,44)/(152,78,163)/g' img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsamleleaf_top5_notitle.html 
+(py27)vorberg (master *) phd_thesis $ sed -i -e 's/(31,120,180)/(55,126,184)/g' img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsamleleaf_top5_notitle.html 
+(py27)vorberg (master *) phd_thesis $ sed -i -e 's/(166,206,227)/(228,26,28)/g' img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsamleleaf_top5_notitle.html

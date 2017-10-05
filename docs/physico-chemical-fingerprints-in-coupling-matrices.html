@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,6 +75,7 @@
       Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
       vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
@@ -186,7 +187,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
-<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -242,8 +242,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -273,23 +284,23 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="physico-chemical-fingerprints-in-coupling-matrices" class="section level2">
 <h2><span class="header-section-number">4.2</span> Physico-Chemical Fingerprints in Coupling Matrices</h2>
-<p>The correlation analysis of coupling matrices in the last section revealed that certain couplings are more indicative of a contact than others. Individual coupling matrices for a residue pair that is in physcial contact often display striking patterns that agree with the previous findings. Most often, these patterns allow a biological interpreation of the coupling values that reveal details of the interdependency between both residues.</p>
-<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">4.3</a> visualizes the inferred coupling matrix for a residue pair using the pseudo-likelihood method. Clearly visible is a cluster of strong coupling values for charged and polar residues (E,D,K,R,Q). Positive coupling values can be observed between positively charged residues (R,K) and negatively charged residues (E,D), whereas couplings between equally charged residues have negative values. The coupling matrix perfectly reflects the interaction preference for residues forming salt bridges. Indeed, in the protein structure the first residue (glutamic acid) forms a salt bridge with the second residue (lysine) as can be seen in the left Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a>.</p>
+<p>The correlation analysis of coupling matrices in the last section revealed that certain couplings are more indicative of a contact than others. Individual coupling matrices for a residue pair that is in physcial contact often display striking patterns that agree with the previous findings. These patterns allow a biological interpreation of the coupling values that reveal details of the physico-chemical interdependency between both residues.</p>
+<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">4.3</a> visualizes the inferred coupling matrix for a residue pair using the pseudo-likelihood method. A cluster of strong coupling values can be observed for the couplings between the charged residues glutamic acid (E), aspartic acid (D), lysine (K) and arginine (R) and the polar residue glutamine (Q). Positive coupling values arise between positively charged residues (K, R) and negatively charged residues (E, D), whereas couplings between equally charged residues have negative values. These exemplary couplings (E-R, E-K, K-D) perfectly reflect the interaction preference for residues forming salt bridges. Indeed, in the protein structure the first residue (E) forms a salt bridge with the second residue (R) as can be seen in the left plot in Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a>.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-ionic-interaction"></span>
 <iframe src="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
-Figure 4.3: Coupling matrix computed with pseudo-likelihood for residues 6 and 82 in protein 1awq chain A. Size of the bubbles represents coupling strength and color represents positive (red) and negative (blue) coupling values. Bars at the x-axis and y-axis represent the corresponding single potentials for both residue positions. Height of the bars stands for potential strength and color for positive (red) and negative (blue) values.
+Figure 4.3: Coupling matrix computed with pseudo-likelihood for residues 6 and 82 in protein chain 1a9x_A_05. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value <span class="math inline">\(|\wijab|\)</span>. Bars at the x-axis and y-axis correspond to the <em>Potts model</em> single potentials <span class="math inline">\(\vi\)</span> and <span class="math inline">\(\vj\)</span>. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix <a href="amino-acids.html#amino-acids">A.1</a>.
 </p>
 </div>
-<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-hydrophobic-interaction">4.4</a> visualizes the coupling matrix for a pair of hydrophobic residues. Hydrophobic pairings have strong coupling values but the couplings also reflect a sterical constraint. Alanine as a small hydrophobic residue is favoured at either of both residue positions as it has strong positive couplings with isoleucine, leucine and methionine. But alanine is disfavoured to appear at both positions at the same time as the A-A coupling is negative. Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a> illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.</p>
+<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-hydrophobic-interaction">4.4</a> visualizes the coupling matrix for a pair of hydrophobic residues. Hydrophobic pairings, such as alanine (A) - isoleucine (I), or glycine (G) - isoleucine (I) have strong coupling values but the couplings also reflect a sterical constraint. Alanine is a small hydrophobic residue and it is favoured at both residue positions because it has strong positive couplings with isoleucine (I), leucine (L) and methionine (M). But alanine is disfavoured to appear at both positions at the same time as the A-A coupling is negative. Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a> illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-hydrophobic-interaction"></span>
 <iframe src="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
-Figure 4.4: Coupling matrix computed with pseudo-likelihood for residues 29 and 39 in protein 1ae9 chain A. Size of the bubbles represents coupling strength and color represents positive (red) and negative (blue) coupling values. Bars at the x-axis and y-axis represent the corresponding single potentials for both residues. Height of the bars stands for potential strength and color for positive (red) and negative (blue) values.
+Figure 4.4: Coupling matrix computed with pseudo-likelihood for residues 29 and 39 in protein chain 1ae9_A_00. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value <span class="math inline">\(|\wijab|\)</span>. Bars at the x-axis and y-axis correspond to the <em>Potts model</em> single potentials <span class="math inline">\(\vi\)</span> and <span class="math inline">\(\vj\)</span>. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix <a href="amino-acids.html#amino-acids">A.1</a>.
 </p>
 </div>
 <!---
@@ -297,9 +308,9 @@ Figure 4.4: Coupling matrix computed with pseudo-likelihood for residues 29 and 
 -->
 
 <div class="figure"><span id="fig:coupling-matrix-pymol"></span>
-<img src="img/coupling_matrix_analysis/1a9xA05_6_82.png" alt="Interactions between protein side chains. Left: residue 6 (glutamic acid) forms a salt bridge with residue 82 (lysine) in protein 1awq, chain A. Right: residue 29 (alanine) and residue 39 (leucine) within the hydrophobic core of protein 1ae9 chain A." width="50%" /><img src="img/coupling_matrix_analysis/1ae9A00_29_39.png" alt="Interactions between protein side chains. Left: residue 6 (glutamic acid) forms a salt bridge with residue 82 (lysine) in protein 1awq, chain A. Right: residue 29 (alanine) and residue 39 (leucine) within the hydrophobic core of protein 1ae9 chain A." width="50%" />
+<img src="img/coupling_matrix_analysis/1a9xA05_6_82.png" alt="Interactions between protein side chains. Left: residue 6 (E) forms a salt bridge with residue 82 (R) in protein chain 1a9x_A_05. Right: residue 29 (A) and residue 39 (L) within the hydrophobic core of protein chain 1ae9_A_00." width="50%" /><img src="img/coupling_matrix_analysis/1ae9A00_29_39.png" alt="Interactions between protein side chains. Left: residue 6 (E) forms a salt bridge with residue 82 (R) in protein chain 1a9x_A_05. Right: residue 29 (A) and residue 39 (L) within the hydrophobic core of protein chain 1ae9_A_00." width="50%" />
 <p class="caption">
-Figure 4.5: Interactions between protein side chains. <strong>Left</strong>: residue 6 (glutamic acid) forms a salt bridge with residue 82 (lysine) in protein 1awq, chain A. <strong>Right</strong>: residue 29 (alanine) and residue 39 (leucine) within the hydrophobic core of protein 1ae9 chain A.
+Figure 4.5: Interactions between protein side chains. <strong>Left</strong>: residue 6 (E) forms a salt bridge with residue 82 (R) in protein chain 1a9x_A_05. <strong>Right</strong>: residue 29 (A) and residue 39 (L) within the hydrophobic core of protein chain 1ae9_A_00.
 </p>
 </div>
 <p>Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Appendix <a href="pi-cation.html#pi-cation">C.1</a>), aromatic-proline interactions (see Appendix <a href="aromatic-proline.html#aromatic-proline">C.3</a>), sulfur-aromatic interactions or disulphide bonds (see Appendix <a href="disulfide.html#disulfide">C.2</a>).</p>
@@ -386,7 +397,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

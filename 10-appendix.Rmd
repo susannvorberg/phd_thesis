@@ -39,22 +39,33 @@
 
 **SGD** stochastic gradient descent
 
+\pagebreak
+
 ## Amino Acid Alphabet {#amino-acids}
 
-| One-letter Abbreviation | Three-letter Abbreviation | Amino Acid  | |  One-letter Abbreviation | Three-letter Abbreviation | Amino Acid | 
-|:------------:|:-----------:|:------------|-|:-----------:|:-----------:|:-----------|
-| A | Ala | **A**lanine         | | M | Met | **M**ethionine | 
-| C | Cys | **C**ysteine        | | N | Asn | Asparagi**N**e | 
-| D | Asp | Aspartic Aci**D**   | | P | Pro | **P**roline | 
-| E | Glu | Glutamic Acid       | | Q | Gln | Glutamine | 
-| F | Phe | Phenylalanine       | | R | Arg | A**R**ginine | 
-| G | Gly | **G**lycine         | | S | Ser | **S**erine | 
-| H | His | **H**istidine       | | T | Thr | **T**hreonine | 
-| I | Ile | **I**soleucine      | | V | Val | **V**aline | 
-| K | Lys | Lysine              | | T | Trp | **T**ryptophan | 
-| L | Leu | **L**eucine         | | Y | Tyr | T**Y**rosine | 
 
-
+| One-letter Code  | Three-letter Code | Amino Acid  | Physico-chemical properties | 
+|:------:|:-----:|:---------------|:----------------------------------------------------|
+| A | Ala | **A**lanine         | tiny, hydrophobic       |
+| C | Cys | **C**ysteine        | small, hydrophobic, polar ($C_{S-H}$)|
+| D | Asp | Aspartic Aci**D**   | small, negatively charged, polar    | 
+| E | Glu | Glutamic Acid       | negatively charged, polar | 
+| F | Phe | Phenylalanine       | aromatic, hydrophobic | 
+| G | Gly | **G**lycine         | tiny, hydrophobic | 
+| H | His | **H**istidine       | hydrophobic, aromatic, polar, (positively charged)  | 
+| I | Ile | **I**soleucine      | aliphatic, hydrophobic    | 
+| K | Lys | Lysine              | positively charged, polar | 
+| L | Leu | **L**eucine         | aliphatic, hydrophobic | 
+| M | Met | **M**ethionine      | hydrophobic | 
+| N | Asn | Asparagi**N**e      | small, polar | 
+| P | Pro | **P**roline         | small | 
+| Q | Gln | Glutamine           | tiny, hydrophobic |
+| R | Arg | A**R**ginine        | positively charged, polar | 
+| S | Ser | **S**erine          | tiny, polar | 
+| T | Thr | **T**hreonine       | hydrophobic, polar |
+| V | Val | **V**aline          | small, aliphatic | 
+| W | Trp | **T**ryptophan      | aromatic, hydrophobic, polar |
+| Y | Tyr | T**Y**rosine        | aromatic, hydrophobic, polar | 
 
 
 # Dataset Properties
@@ -156,33 +167,68 @@ knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 
 # Optimizing Full Likelihood with Gradient Descent
 
-## Number of iterations for different learning rates 
+## Visualisation of learning rate schedules
 
-(ref:caption-full-likelihood-opt-different-alphas-numit) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different learning rates. The learning rate is decreased according to $\alpha = \alpha_0 / (1 + 0.01 \cdot t)$ with t being the iteration number and the maximum number of iterations is set to 5000.  *cd_alpha-1e-4*: using an initial learning rate of 1e-4. *cd_alpha-5e-4*: using an initial learning rate of 5e-4. *cd_alpha-1e-3*: using an initial learning rate of 1e-3. *cd_alpha-5e-3*: using an initial learning rate of 5e-3.
+(ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the **exponential** learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$. Blue legend group represents the **linear** learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Green legend group represents the **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$ with $\gamma$. Purple legend group represents the **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The iteration number is given by $t$. Initial learning rate $\alpha_0$ is set to 1e-4 and $\gamma$ is the decay rate and its value is given in brackets in the legend.
 
-```{r full-likelihood-opt-different-alphas-numit, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_lindecay1e-1_different_alphas.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-different-alphas-numit)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_lindecay1e-1_different_alphas.html", height = "600px")
+```{r learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-learning-rate-schedules)'}
+knitr::include_url("img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.html", height = "500px")
 ```
 
-## Number of iterations for different learning rate schedules and fixed initial learning rate $\alpha_0 =$ 1e-4 {#learning-rate-schedules-distribution-iterations}
+## Benchmarking learning rate schedules {#benchmark-learning-rate-annealing-schedules}
 
-(ref:caption-full-likelihood-opt-numit_lin_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a default learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha = \alpha_0 / (1 + \gamma \cdot t)$ with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
+### Linear learning rate schedule
 
-```{r full-likelihood-opt-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_lindecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_lindecay.html", height = "600px")
+(ref:caption-performance-cd-linschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect tp [Neff](#abbrev) and a *linear* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with decay rate $\gamma$ as specified in the legend.
+
+```{r performance-cd-linschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_linear_learninrate_schedule.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-linschedule)'}
+knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_linear_learninrate_schedule.html", height = "500px")
 ```
 
-(ref:caption-full-likelihood-opt-numit_sig_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a sigmoidal learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
+### Sigmoidal learning rate schedule
 
-```{r full-likelihood-opt-numit-sig-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sigdecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-sig-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sigdecay.html", height = "600px")
+(ref:caption-performance-cd-sigschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect tp [Neff](#abbrev) and a *sigmoidal* learning rate annealing schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma t}$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
+
+```{r performance-cd-sigschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sigmoidal_learninrate_schedule", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-sigschedule)'}
+knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sigmoidal_learninrate_schedule", height = "500px")
 ```
+
+### Square root learning rate schedule
+
+### Exponential learning rate schedule
+
+
+## Number of iterations until convergence for different learning rate schedules {#learning-rate-schedules-distribution-iterations}
+
+### Linear learning rate schedule
+
+(ref:caption-full-likelihood-opt-numit_lin_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a *linear* learning rate schedule $\alpha = \alpha_0 / (1 + \gamma \cdot t)$ with t being the iteration number and the decay rate $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect tp [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+
+```{r full-likelihood-opt-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.html", height = "600px")
+```
+
+### Sigmoidal learning rate schedule
+
+(ref:caption-numit_convergence-sig_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a *sigmoidal* learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and the decay rate $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect tp [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+
+```{r numit_convergence-sig_learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-numit_convergence-sig_learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.html", height = "600px")
+```
+
+### Square root learning rate schedule
 
 (ref:caption-full-likelihood-opt-numit_sqrt_learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a square root learning rate schedule. Initial learning rate $\alpha_0$ is fixed to 1e-4 and maximum number of iterations is set to 5000. The learning rate is decreased according to $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and $\gamma$ the decay rate and its value is given after the underscore in the legend names.
 
 ```{r full-likelihood-opt-numit-sqrt-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sqrtdecay.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)'}
 knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_alpha1e-4_sqrtdecay.html", height = "600px")
 ```
+
+### Exponential learning rate schedule
+
+
+
+
 
 
 

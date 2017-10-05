@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,6 +75,7 @@
       Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
       vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
@@ -186,7 +187,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
-<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -242,8 +242,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -273,31 +284,15 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="higher-order-dependencies-between-couplings" class="section level2">
 <h2><span class="header-section-number">4.4</span> Higher Order Dependencies Between Couplings</h2>
-<p>The analyses in the previous sections focused on single coupling values picked from the <span class="math inline">\(20 \times 20\)</span>-dimensional coupling matrices <span class="math inline">\(\wij\)</span>. As mentioned before, analysing only single dimension might be misleading and further insights might be concealed in a higher order relationships. Unfortunately, it is not possible to reasonably visualize the high dimensional coupling matrices.</p>
-<p>But taking a look at two dimensional coupling scatter plots already reveals some further insights and confirms the previous observations that couplings reflect biological relevant amino acid interactions. Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-er-0-8">4.9</a> and <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-re-ee-0-8">4.10</a> illustrate the distribution of couplings at <span class="math inline">\(\Cb\)</span> distances less than <span class="math inline">\(8\angstrom\)</span> between the attractive ionic pairings of E-R and R-E and between the ionic pairing R-E and the repulsive pair of equally charged residues E-E, respectively. Whereas coupling values for R-E and E-R are positively correlated, coupling values for R-E and E-E are negatively correlated.</p>
+<p>The analyses in the previous sections focused on single coupling values picked from the <span class="math inline">\(20 \times 20\)</span>-dimensional coupling matrices <span class="math inline">\(\wij\)</span>. As mentioned before, analysing only single dimensions might be misleading when variables are dependent on each other and further insights might be concealed in higher order relationships. Unfortunately, it is not possible to reasonably visualize high dimensional coupling matrices.</p>
+<p>Exploring two dimensional coupling scatter plots strengthens the observation that couplings matrices contain signals that reflect biological relevant amino acid interactions. The plots in the top row in Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profiles-0-8">4.9</a> show the distribution of couplings for filtered residue pairs with <span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&lt; 8\angstrom\)</span> between the ionic pairings of E-R and R-E and between the ionic pairing R-E and the equally charged residues E-E, respectively. Coupling values for R-E and E-R are positively correlated with predominantly positive values. This means when the amino acid pair R-E is frequently observed at two positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, then it also likely that the amino acid pair E-R can be frequently observed. This situation indicates an important ionic interaction whereby the location of the positively and negatively charged residue at position <span class="math inline">\(i\)</span> or <span class="math inline">\(j\)</span> is irrelevant.</p>
+<p>On the contrary, coupling values for R-E and E-E are negatively correlated, with positive values for R-E and negative values for E-E. This distribution can be interpreted with frequently occuring amino acid pairs R-E at two positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> while at the same time the amino acid pair E-E cannot be observed. Again, this situation coincides with amino acid pairings that would be expected for an ionic interaction.</p>
+<p>The bottom left plot in Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profiles-0-8">4.9</a> shows the distribution between couplings for the hydrophobic pairings I-L and V-I that is almost symmetric and broadly centered around zero. Coupling distributions for residue pairs that are not physically interacting (<span class="math inline">\(\Cb \gg 8 \angstrom\)</span>) resemble the distribution for hydrophobic pairings in that there is no correlation, but at high distance the distributions are much tighter centered around zero (bottom right plot in Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profiles-0-8">4.9</a>).</p>
 
-<div class="figure"><span id="fig:2d-coupling-profile-re-er-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.html" width="75%" height="550px">
-</iframe>
+<div class="figure"><span id="fig:2d-coupling-profiles-0-8"></span>
+<img src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_notitle.png" alt="Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. Top Left The 2-dimensional distribution of couplings E-R and R-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are positively correlated. Top Right The 2-dimensional distribution of couplings E-R and E-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are negatively correlated. Bottom Left The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is symmetrically distributed around zero without visible correlation. Bottom Right The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&gt; 20 \angstrom\) is tighly distributed around zero. ." width="50%" /><img src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.png" alt="Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. Top Left The 2-dimensional distribution of couplings E-R and R-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are positively correlated. Top Right The 2-dimensional distribution of couplings E-R and E-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are negatively correlated. Bottom Left The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is symmetrically distributed around zero without visible correlation. Bottom Right The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&gt; 20 \angstrom\) is tighly distributed around zero. ." width="50%" /><img src="img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.png" alt="Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. Top Left The 2-dimensional distribution of couplings E-R and R-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are positively correlated. Top Right The 2-dimensional distribution of couplings E-R and E-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are negatively correlated. Bottom Left The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is symmetrically distributed around zero without visible correlation. Bottom Right The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&gt; 20 \angstrom\) is tighly distributed around zero. ." width="50%" /><img src="img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_20_50_notitle.png" alt="Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. Top Left The 2-dimensional distribution of couplings E-R and R-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are positively correlated. Top Right The 2-dimensional distribution of couplings E-R and E-E for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is almost symmetric and the coupling values are negatively correlated. Bottom Left The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&lt; 8 \angstrom\) is symmetrically distributed around zero without visible correlation. Bottom Right The 2-dimensional distribution of couplings I-L and V-I for residue pairs with \(\Cb-\Cb\) distances \(&gt; 20 \angstrom\) is tighly distributed around zero. ." width="50%" />
 <p class="caption">
-Figure 4.9: Two-dimensional distribution of coupling values R-E and E-R for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The distribution is almost symmetric and the coupling values are positively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">8.3.2</a>.
-</p>
-</div>
-
-<div class="figure"><span id="fig:2d-coupling-profile-re-ee-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_R-E_E-E_Cbdistance_0_8_notitle.html" width="75%" height="550px">
-</iframe>
-<p class="caption">
-Figure 4.10: Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The distribution is almost symmetric and the coupling values are negatively correlated. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">8.3.2</a>.
-</p>
-</div>
-<p>Figure <a href="higher-order-dependencies-between-couplings.html#fig:2d-coupling-profile-vi-il-0-8">4.11</a> shows distributions between couplings for hydrophobic pairings that are almost symmetric and broadly centered around zero. Coupling distributions for residue pairs that are not physically interacting (<span class="math inline">\(\Cb &gt;&gt; 8 \angstrom\)</span>) resemble the distribution for hydrophobic pairings in that there is no correlation, but at high distance the distributions are much tighter centered around zero.</p>
-
-<div class="figure"><span id="fig:2d-coupling-profile-vi-il-0-8"></span>
-<iframe src="img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_notitle.html" width="75%" height="550px">
-</iframe>
-<p class="caption">
-Figure 4.11: Two-dimensional distribution of coupling values R-E and E-E for approximately 10000 residue pairs with <span class="math inline">\(\Delta\Cb &lt; 8\angstrom\)</span>. The coupling values are symmetrically distributed around zero without visible correlation. Residue pairs have been filtered for sequence separation, percentage of gaps and evidence in alignment as explained in methods section <a href="analysis-of-coupling-matrices.html#method-coupling-profile">8.3.2</a>.
+Figure 4.9: Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. <strong>Top Left</strong> The 2-dimensional distribution of couplings E-R and R-E for residue pairs with <span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&lt; 8 \angstrom\)</span> is almost symmetric and the coupling values are positively correlated. <strong>Top Right</strong> The 2-dimensional distribution of couplings E-R and E-E for residue pairs with <span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&lt; 8 \angstrom\)</span> is almost symmetric and the coupling values are negatively correlated. <strong>Bottom Left</strong> The 2-dimensional distribution of couplings I-L and V-I for residue pairs with <span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&lt; 8 \angstrom\)</span> is symmetrically distributed around zero without visible correlation. <strong>Bottom Right</strong> The 2-dimensional distribution of couplings I-L and V-I for residue pairs with <span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&gt; 20 \angstrom\)</span> is tighly distributed around zero. .
 </p>
 </div>
 
@@ -378,7 +373,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

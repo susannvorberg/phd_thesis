@@ -3,7 +3,7 @@ book_filename: "PhD_thesis_Susann_Vorberg"
 output_dir: "docs"
 rmd_files:
   html: ["index.md", "03-intro.Rmd", "04-intro-contact-prediction.Rmd", "05-interpretation-coupling-matrices.Rmd", "06-optimizing_full_likelihood.Rmd", "07-posterior-distribution.Rmd", "08-contact-prior.Rmd", "04-methods.Rmd", "10-appendix.Rmd", "12-references.md"]
-  latex: ["index.md", "03-intro.Rmd", "04-intro-contact-prediction.Rmd", "05-interpretation-coupling-matrices.Rmd", "06-optimizing_full_likelihood.Rmd", "07-posterior-distribution.Rmd", "08-contact-prior.Rmd", "04-methods.Rmd", "10-appendix.Rmd", "12-references.md"]
+  latex: ["index.md", "05-interpretation-coupling-matrices.Rmd", "08-contact-prior.Rmd", "04-methods.Rmd", "10-appendix.Rmd", "12-references.md"]
 language:
   label:
     fig: 'Figure '

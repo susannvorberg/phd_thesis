@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.4)  30 SEP 2017 08:56
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.9.4)  5 OCT 2017 17:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -620,24 +620,24 @@ Package: amsthm 2015/03/04 v2.20.2
 (./PhD_thesis_Susann_Vorberg.aux)
 \openout1 = `PhD_thesis_Susann_Vorberg.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 169.
-LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
 \AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring ON on input line 169.
+Package hyperref Info: Link coloring ON on input line 170.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -645,12 +645,14 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count174
 )
-LaTeX Info: Redefining \ref on input line 169.
-LaTeX Info: Redefining \pageref on input line 169.
-LaTeX Info: Redefining \nameref on input line 169.
-(./PhD_thesis_Susann_Vorberg.out) (./PhD_thesis_Susann_Vorberg.out)
+LaTeX Info: Redefining \ref on input line 170.
+LaTeX Info: Redefining \pageref on input line 170.
+LaTeX Info: Redefining \nameref on input line 170.
 \@outlinefile=\write3
 \openout3 = `PhD_thesis_Susann_Vorberg.out'.
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -694,11 +696,11 @@ Dictionary: translator-basic-dictionary, Language: English
 File: siunitx-abbreviations.cfg 2016/03/01 v2.6q siunitx: Abbreviated units
 )
 \c__siunitx_mathsf_int=\count175
-LaTeX Font Info:    Try loading font information for U+msa on input line 169.
+LaTeX Font Info:    Try loading font information for U+msa on input line 170.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 169.
+LaTeX Font Info:    Try loading font information for U+msb on input line 170.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -725,14 +727,14 @@ Missing character: There is no ü in font cmr12!
 [5] [6
 
 ]
-LaTeX Font Info:    Try loading font information for T1+pbk on input line 207.
+LaTeX Font Info:    Try loading font information for T1+pbk on input line 208.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pbk.fd
 File: t1pbk.fd 2001/06/04 font definitions for T1/pbk.
 )
 LaTeX Font Info:    Font shape `T1/pbk/b/n' in size <24.88> not available
-(Font)              Font shape `T1/pbk/db/n' tried instead on input line 207.
+(Font)              Font shape `T1/pbk/db/n' tried instead on input line 208.
 LaTeX Font Info:    Font shape `T1/pbk/b/n' in size <80> not available
-(Font)              Font shape `T1/pbk/db/n' tried instead on input line 207.
+(Font)              Font shape `T1/pbk/db/n' tried instead on input line 208.
 [1
 
 
@@ -740,7 +742,7 @@ LaTeX Font Info:    Font shape `T1/pbk/b/n' in size <80> not available
 
 ] [3] [4
 
-] (./PhD_thesis_Susann_Vorberg.toc)
+]
 \tf@toc=\write4
 \openout4 = `PhD_thesis_Susann_Vorberg.toc'.
 
@@ -748,151 +750,221 @@ LaTeX Font Info:    Font shape `T1/pbk/b/n' in size <80> not available
 
 ]
 Chapter 1.
-File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
- (type QTm)
-<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 261--261
-[]\OT1/cmr/m/n/12 Figure 1.1: []Yearly growth of num-ber of solved struc-tures
- []
+
+LaTeX Warning: Reference `post-processing-heuristics' on page 1 undefined on in
+put line 230.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 261--261
-\OT1/cmr/m/n/12 in the PDB[@Berman2000] and pro-tein se-quences in the
- []
+LaTeX Warning: Reference `post-processing-heuristics' on page 1 undefined on in
+put line 243.
+
+
+LaTeX Warning: Reference `fig:sq-coupling-correlation' on page 1 undefined on i
+nput line 248.
+
+
+LaTeX Warning: Reference `method-coupling-correlation' on page 1 undefined on i
+nput line 252.
+
+
+LaTeX Warning: Reference `fig:sq-coupling-correlation' on page 1 undefined on i
+nput line 262.
+
+File: img/coupling_matrix_analysis/combi_squared_couplings_correlation_and_stdd
+ev_heatmap_notitle.png Graphic file (type QTm)
+
+<use  "img/coupling_matrix_analysis/combi_squared_couplings_correlation_and_std
+dev_heatmap_notitle.png" >
+
+LaTeX Warning: Reference `method-coupling-correlation' on page 1 undefined on i
+nput line 290.
+
+
+LaTeX Warning: Reference `amino-acids' on page 1 undefined on input line 290.
+
+
+LaTeX Warning: Reference `method-coupling-correlation' on page 1 undefined on i
+nput line 290.
+
+
+LaTeX Warning: Reference `amino-acids' on page 1 undefined on input line 290.
 
 [1
 
-] [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 321.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 321.
-[3] [4]
-File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
- (type QTm)
-<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" > [5] [6]
-Missing character: There is no ˜ in font cmr12!
-[7]
-File: img/intro/correlated-mutations-transparent.png Graphic file (type QTm)
-<use  "img/intro/correlated-mutations-transparent.png" > [8] [9]
-Underfull \hbox (badness 4872) in paragraph at lines 744--744
-[]\OT1/cmr/bx/n/17.28 Modelling Pro-tein Fam-i-lies with Potts
- []
-
-[10]
-Underfull \hbox (badness 3646) in paragraph at lines 797--803
-[]\OT1/cmr/m/n/12 Solving for the dis-tri-bu-tion $\OML/cmm/m/it/12 p\OT1/cmr/m
-/n/12 (\OT1/cmr/bx/n/12 x\OT1/cmr/m/n/12 )$ that max-i-mizes the Shan-non en-tr
-opy
- []
-
-[11] [12] [13] [14] [15] [16]
-File: img/intro/apc_correction_with_entropy.png Graphic file (type QTm)
-<use  "img/intro/apc_correction_with_entropy.png" > [17]
-Underfull \hbox (badness 1082) in paragraph at lines 1262--1266
-[]\OT1/cmr/m/n/12 During CASP11 fur-ther eval-u-a-tion met-rics have been in-tr
-o-duced, such as
- []
-
-File: img/dataset_statistics/Cb_distribution_all_data43579541_log.png Graphic f
-ile (type QTm)
-<use  "img/dataset_statistics/Cb_distribution_all_data43579541_log.png" >
-File: img/dataset_statistics/cb_distribution_peak_5-6.png Graphic file (type QT
-m)
-<use  "img/dataset_statistics/cb_distribution_peak_5-6.png" >
-File: img/dataset_statistics/cb_distribution_peak_7.png Graphic file (type QTm)
-
-<use  "img/dataset_statistics/cb_distribution_peak_7.png" > [18] [19]
-File: img/intro/phylogenetic_effect.png Graphic file (type QTm)
-<use  "img/intro/phylogenetic_effect.png" > [20]
-File: img/pfam_pdb_notitle.png Graphic file (type QTm)
-<use  "img/pfam_pdb_notitle.png" >
-Underfull \vbox (badness 6775) has occurred while \output is active []
-
-[21]
-File: img/intro/transitive_effects.png Graphic file (type QTm)
-<use  "img/intro/transitive_effects.png" > [22] [23]
-File: img/intro/sources_of_coevolution.png Graphic file (type QTm)
-<use  "img/intro/sources_of_coevolution.png" >
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 1636
-.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
-File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 1636.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[24] [25] [26
-
 ]
-Chapter 2.
-[27]
-File: img/coupling_matrix_analysis/squared_couplings_correlation_and_stddev_not
-itle.png Graphic file (type QTm)
 
-<use  "img/coupling_matrix_analysis/squared_couplings_correlation_and_stddev_no
-title.png" >
-File: img/coupling_matrix_analysis/couplings_correlation_and_stddev_notitle.png
- Graphic file (type QTm)
+LaTeX Warning: Reference `fig:coupling-correlation' on page 2 undefined on inpu
+t line 296.
 
-<use  "img/coupling_matrix_analysis/couplings_correlation_and_stddev_notitle.pn
-g" >
+File: img/coupling_matrix_analysis/combi_couplings_correlation_and_stddev_heatm
+ap_notitle.png Graphic file (type QTm)
+
+<use  "img/coupling_matrix_analysis/combi_couplings_correlation_and_stddev_heat
+map_notitle.png" >
+
+LaTeX Warning: Reference `method-coupling-correlation' on page 2 undefined on i
+nput line 326.
+
+
+LaTeX Warning: Reference `amino-acids' on page 2 undefined on input line 326.
+
+
+LaTeX Warning: Reference `method-coupling-correlation' on page 2 undefined on i
+nput line 326.
+
+
+LaTeX Warning: Reference `amino-acids' on page 2 undefined on input line 326.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[28]
+[2]
+
+LaTeX Warning: Reference `fig:coupling-matrix-ionic-interaction' on page 3 unde
+fined on input line 345.
+
+
+LaTeX Warning: Reference `fig:coupling-matrix-pymol' on page 3 undefined on inp
+ut line 356.
+
 File: img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.png Gra
 phic file (type QTm)
 
 <use  "img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.png" >
+
+LaTeX Warning: Reference `amino-acids' on page 3 undefined on input line 377.
+
+
+LaTeX Warning: Reference `amino-acids' on page 3 undefined on input line 377.
+
+
+LaTeX Warning: Reference `fig:coupling-matrix-hydrophobic-interaction' on page 
+3 undefined on input line 380.
+
+
+LaTeX Warning: Reference `fig:coupling-matrix-pymol' on page 3 undefined on inp
+ut line 388.
+
 File: img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.png Gr
 aphic file (type QTm)
 
 <use  "img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.png" 
 >
+
+LaTeX Warning: Reference `amino-acids' on page 3 undefined on input line 412.
+
+
+LaTeX Warning: Reference `amino-acids' on page 3 undefined on input line 412.
+
+[3] [4]
 File: img/coupling_matrix_analysis/1a9xA05_6_82.png Graphic file (type QTm)
 <use  "img/coupling_matrix_analysis/1a9xA05_6_82.png" >
 File: img/coupling_matrix_analysis/1ae9A00_29_39.png Graphic file (type QTm)
 <use  "img/coupling_matrix_analysis/1ae9A00_29_39.png" >
-Overfull \hbox (2.61107pt too wide) in paragraph at lines 1905--1909
+Overfull \hbox (2.61107pt too wide) in paragraph at lines 421--424
 [][] [] 
  []
 
 
-LaTeX Warning: Reference `pi-cation' on page 29 undefined on input line 1914.
+LaTeX Warning: Reference `pi-cation' on page 5 undefined on input line 429.
 
 
-LaTeX Warning: Reference `aromatic-proline' on page 29 undefined on input line 
-1915.
+LaTeX Warning: Reference `aromatic-proline' on page 5 undefined on input line 4
+30.
 
 
-LaTeX Warning: Reference `disulfide' on page 29 undefined on input line 1916.
+LaTeX Warning: Reference `disulfide' on page 5 undefined on input line 431.
 
-[29] [30] [31]
+[5]
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-0-5' on page 6 undefined on i
+nput line 458.
+
+
+LaTeX Warning: Reference `method-coupling-profile' on page 6 undefined on input
+ line 461.
+
+
+LaTeX Warning: Reference `correlation-between-couplings-and-class' on page 6 un
+defined on input line 471.
+
 File: img/coupling_matrix_analysis/1d_coupling_profile_0_5.png Graphic file (ty
 pe QTm)
-<use  "img/coupling_matrix_analysis/1d_coupling_profile_0_5.png" > [32]
+<use  "img/coupling_matrix_analysis/1d_coupling_profile_0_5.png" >
+
+LaTeX Warning: Reference `method-coupling-profile' on page 6 undefined on input
+ line 510.
+
+
+LaTeX Warning: Reference `method-coupling-profile' on page 6 undefined on input
+ line 510.
+
+[6]
 File: img/coupling_matrix_analysis/1d_coupling_profile_8_12.png Graphic file (t
 ype QTm)
 <use  "img/coupling_matrix_analysis/1d_coupling_profile_8_12.png" >
 
-LaTeX Warning: Reference `fig:aromatic-network' on page 33 undefined on input l
-ine 2050.
+LaTeX Warning: Reference `method-coupling-profile' on page 7 undefined on input
+ line 534.
+
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-0-5' on page 7 undefined on i
+nput line 534.
+
+
+LaTeX Warning: Reference `method-coupling-profile' on page 7 undefined on input
+ line 534.
+
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-0-5' on page 7 undefined on i
+nput line 534.
+
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-20-50' on page 7 undefined on
+ input line 537.
+
+
+LaTeX Warning: Reference `correlation-between-couplings-and-class' on page 7 un
+defined on input line 546.
+
+
+LaTeX Warning: Reference `fig:aromatic-network' on page 7 undefined on input li
+ne 555.
 
 File: img/coupling_matrix_analysis/1d_coupling_profile_20_50.png Graphic file (
 type QTm)
 <use  "img/coupling_matrix_analysis/1d_coupling_profile_20_50.png" >
+
+LaTeX Warning: Reference `method-coupling-profile' on page 7 undefined on input
+ line 571.
+
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-0-5' on page 7 undefined on i
+nput line 571.
+
+
+LaTeX Warning: Reference `method-coupling-profile' on page 7 undefined on input
+ line 571.
+
+
+LaTeX Warning: Reference `fig:1d-coupling-profile-0-5' on page 7 undefined on i
+nput line 571.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[33] [34]
+[7] [8]
 
-LaTeX Warning: Reference `fig:2d-coupling-profile-re-er-0-8' on page 35 undefin
-ed on input line 2090.
+LaTeX Warning: Reference `fig:2d-coupling-profiles-0-8' on page 9 undefined on 
+input line 588.
+
+
+LaTeX Warning: Reference `fig:2d-coupling-profiles-0-8' on page 9 undefined on 
+input line 608.
+
+
+LaTeX Warning: Reference `fig:2d-coupling-profiles-0-8' on page 9 undefined on 
+input line 615.
 
 File: img/coupling_matrix_analysis/pairwise_couplings_R-E_E-R_Cbdistance_0_8_no
 title.png Graphic file (type QTm)
@@ -908,305 +980,885 @@ File: img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_no
 title.png Graphic file (type QTm)
 
 <use  "img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_0_8_n
-otitle.png" > [35] [36] [37] [38
+otitle.png" >
+File: img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_20_50_
+notitle.png Graphic file (type QTm)
 
-]
-Chapter 3.
-
-LaTeX Warning: Reference `infering-max-ent-models' on page 39 undefined on inpu
-t line 2177.
-
-
-Underfull \vbox (badness 2088) has occurred while \output is active []
-
-[39]
-File: img/gap_treatment.png Graphic file (type QTm)
-<use  "img/gap_treatment.png" >
-Overfull \hbox (384.64401pt too wide) in paragraph at lines 2252--2260
- [][] 
+<use  "img/coupling_matrix_analysis/pairwise_couplings_V-I_I-L_Cbdistance_20_50
+_notitle.png" >
+Overfull \hbox (2.61107pt too wide) in paragraph at lines 633--646
+[][] []
  []
 
 
-Underfull \vbox (badness 2671) has occurred while \output is active []
-
-[40] [41]
-Missing character: There is no − in font cmr12!
-[42] [43] [44]
-
-LaTeX Warning: Reference `fig:dataset-gaps' on page 45 undefined on input line 
-2464.
-
-[45] [46] [47]
-
-LaTeX Warning: Reference `methods-full-likelihood-adam' on page 48 undefined on
- input line 2634.
-
-[48] [49] [50
-
-]
-Chapter 4.
-
-Underfull \hbox (badness 1072) in paragraph at lines 2723--2723
-[]\OT1/cmr/bx/n/17.28 Computing the Pos-te-rior Dis-tri-bu-tion of
+Overfull \hbox (2.61107pt too wide) in paragraph at lines 633--646
+[] [] 
  []
 
-[51] [52] [53]
+[9] [10]
+Chapter 2.
 
-LaTeX Warning: Reference `neg-Hessian-computation' on page 54 undefined on inpu
-t line 2871.
-
-
-LaTeX Warning: Reference `eq:' on page 54 undefined on input line 2887.
+LaTeX Warning: Reference `meta-predictors' on page 11 undefined on input line 6
+52.
 
 
-LaTeX Warning: Reference `training-hyperparameters' on page 54 undefined on inp
-ut line 2897.
-
-
-Underfull \hbox (badness 1005) in paragraph at lines 2895--2905
-[]\OT1/cmr/m/n/12 Supppose the op-ti-mal prior pa-ram-e-ters $([]\OML/cmm/m/it/
-12 ; []\OT1/cmr/m/n/12 )$ have been trained as de-
- []
-
-[54] [55]
-
-LaTeX Warning: Reference `Hessian-offdiagonal' on page 56 undefined on input li
-ne 2987.
-
-
-LaTeX Warning: Reference `eq:Hw-offdiag' on page 56 undefined on input line 299
-2.
-
-[56] [57] [58]
-Chapter 5.
-
-LaTeX Warning: Reference `seq-features' on page 59 undefined on input line 3111
+LaTeX Warning: Reference `local-methods' on page 11 undefined on input line 659
 .
 
 
-LaTeX Warning: Reference `bayesian-approach' on page 59 undefined on input line
- 3117.
+LaTeX Warning: Reference `seq-features' on page 11 undefined on input line 673.
 
-[59
+
+
+LaTeX Warning: Reference `bayesian-approach' on page 11 undefined on input line
+ 679.
+
+[11
 
 ]
 
-LaTeX Warning: Reference `seq-features' on page 60 undefined on input line 3204
-.
+LaTeX Warning: Reference `fig:rf-intro' on page 12 undefined on input line 728.
 
 
-LaTeX Warning: Reference `rf-hyperparameter-optimization' on page 60 undefined 
-on input line 3207.
+File: img/random_forest_contact_prior/intro_random_forest.png Graphic file (typ
+e QTm)
+<use  "img/random_forest_contact_prior/intro_random_forest.png" > [12]
 
-[60]
+LaTeX Warning: Reference `seq-features' on page 13 undefined on input line 793.
 
-LaTeX Warning: Reference `(' on page 61 undefined on input line 3211.
+
+
+LaTeX Warning: Reference `rf-hyperparameter-optimization' on page 13 undefined 
+on input line 796.
+
+
+LaTeX Warning: Reference `fig:rf-feature-importance' on page 13 undefined on in
+put line 798.
 
 File: img/random_forest_contact_prior/feature_random_forest_optimalhyperparamet
 ers_topfeatures.png Graphic file (type QTm)
 
 <use  "img/random_forest_contact_prior/feature_random_forest_optimalhyperparame
 ters_topfeatures.png" >
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 858.
 
-LaTeX Warning: Reference `seq-features-global' on page 61 undefined on input li
-ne 3244.
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 858.
 
-
-LaTeX Warning: Reference `seq-features-global' on page 61 undefined on input li
-ne 3244.
-
-
-LaTeX Warning: Reference `rf-feature-selection' on page 61 undefined on input l
-ine 3251.
-
-File: img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom_
-forest_optimized_hyperparameters_25features.png Graphic file (type QTm)
-
-<use  "img/random_forest_contact_prior/precision_vs_rank_featureselectionrandom
-_forest_optimized_hyperparameters_25features.png" >
-
-LaTeX Warning: Reference `rf-feature-selection' on page 61 undefined on input l
-ine 3267.
+LaTeX Warning: Reference `seq-features' on page 13 undefined on input line 858.
 
 
-LaTeX Warning: Reference `rf-feature-selection' on page 61 undefined on input l
-ine 3267.
+
+LaTeX Warning: Reference `seq-features' on page 13 undefined on input line 858.
 
 
-LaTeX Warning: Reference `rf-with-pll-score' on page 61 undefined on input line
- 3272.
+
+LaTeX Warning: Reference `rf-feature-selection' on page 13 undefined on input l
+ine 865.
 
 
-LaTeX Warning: Reference `rf-with-pll-score' on page 61 undefined on input line
- 3279.
+LaTeX Warning: Reference `fig:rf-feature-selection-performance' on page 13 unde
+fined on input line 869.
 
-[61]
+[13] [14]
+File: img/random_forest_contact_prior/precision_vs_rank_featureselection_random
+_forest_optimized_hyperparameters.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/precision_vs_rank_featureselection_rando
+m_forest_optimized_hyperparameters.png" >
+
+LaTeX Warning: Reference `rf-feature-selection' on page 15 undefined on input l
+ine 887.
+
+
+LaTeX Warning: Reference `rf-feature-selection' on page 15 undefined on input l
+ine 887.
+
+
+LaTeX Warning: Reference `fig:performance-rf' on page 15 undefined on input lin
+e 890.
+
+
+LaTeX Warning: Reference `fig:rf-feature-importance' on page 15 undefined on in
+put line 898.
+
+
+LaTeX Warning: Reference `fig:performance-neff-rf' on page 15 undefined on inpu
+t line 902.
+
 File: img/random_forest_contact_prior/precision_vs_rank_notitle.png Graphic fil
 e (type QTm)
 <use  "img/random_forest_contact_prior/precision_vs_rank_notitle.png" >
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3306.
-
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3306.
-
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3306.
-
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3306.
-
-
-LaTeX Warning: Reference `fig:performance-cd-alphaopt' on page 62 undefined on 
-input line 3330.
-
 File: img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitl
 e.png Graphic file (type QTm)
 
 <use  "img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notit
 le.png" >
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 982.
 
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3377.
+(/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 982.
 
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3377.
-
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3377.
-
-
-LaTeX Warning: Reference `seq-features-pairwise' on page 62 undefined on input 
-line 3377.
+LaTeX Warning: Reference `fig:performance-neff-rf' on page 15 undefined on inpu
+t line 985.
 
 
-LaTeX Warning: Reference `rf-with-pll-score' on page 62 undefined on input line
- 3386.
+LaTeX Warning: Reference `rf-with-pll-score' on page 15 undefined on input line
+ 991.
 
 
-LaTeX Warning: Reference `fig:feature-importance-rf-with-pll-score' on page 62 
-undefined on input line 3389.
+LaTeX Warning: Reference `fig:feature-importance-rf-with-pll-score' on page 15 
+undefined on input line 994.
 
 
-LaTeX Warning: Reference `fig:feature-selection-rf-with-pll-score' on page 62 u
-ndefined on input line 3390.
+LaTeX Warning: Reference `fig:rf-feature-importance' on page 15 undefined on in
+put line 996.
 
-[62] [63] [64] [65] [66
+[15] [16] [17]
 
-]
-Chapter 6.
+LaTeX Warning: Reference `fig:performance-rf' on page 18 undefined on input lin
+e 1000.
 
-Underfull \hbox (badness 10000) in paragraph at lines 3432--3434
+
+LaTeX Warning: Reference `fig:performance-neff-rf' on page 18 undefined on inpu
+t line 1004.
+
+
+LaTeX Warning: Reference `fig:performance-neff-rf' on page 18 undefined on inpu
+t line 1005.
+
+[18]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1036--1038
 []\OT1/cmtt/m/n/12 hhblits -maxfilt 100000 -realign[]max 100000 -B 100000 -Z 10
 0000 -n 5
  []
 
-[67]
+[19
+
+]
+
+LaTeX Warning: Reference `fig:dataset-cath-topologies' on page 20 undefined on 
+input line 1063.
+
 File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
  (type QTm)
-<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" > [68]
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" > [20]
 
-LaTeX Warning: Reference `regularization' on page 69 undefined on input line 35
-26.
+LaTeX Warning: Reference `regularization' on page 21 undefined on input line 11
+30.
 
 
-LaTeX Warning: Reference `regularization' on page 69 undefined on input line 35
-45.
+LaTeX Warning: Reference `amino-acid-frequencies' on page 21 undefined on input
+ line 1131.
 
-[69]
+
+LaTeX Warning: Reference `regularization' on page 21 undefined on input line 11
+49.
+
+
+LaTeX Warning: Reference `amino-acid-frequencies' on page 21 undefined on input
+ line 1150.
+
+
+LaTeX Warning: Reference `fig:cmmpredvanilla-vs-ccmpredpy' on page 21 undefined
+ on input line 1161.
+
+[21]
 File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
  (type QTm)
 <use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
-Overfull \hbox (32.52155pt too wide) in paragraph at lines 3594--3594
+
+LaTeX Warning: Reference `diff-ccmpred-ccmpredpy' on page 22 undefined on input
+ line 1178.
+
+
+LaTeX Warning: Reference `diff-ccmpred-ccmpredpy' on page 22 undefined on input
+ line 1178.
+
+
+LaTeX Warning: Reference `fig:cmmpredvanilla-vs-ccmpredpy' on page 22 undefined
+ on input line 1181.
+
+
+Overfull \hbox (32.52155pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --maxit 250                       # Compute a maximum of MAX
 IT operations[] 
  []
 
 
-Overfull \hbox (230.12164pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (230.12164pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --center-v                        # Use a Gaussian prior for
  single potentials centered at ML estimate v*[] 
  []
 
 
-Overfull \hbox (100.44658pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (100.44658pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --reg-l2-lambda-single 10         # regularization coefficie
 nt for single potentials[] 
  []
 
 
-Overfull \hbox (396.84673pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (396.84673pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --reg-l2-lambda-pair-factor 0.2   # regularization coefficie
 nt for pairwise potentials computed as reg-l2-lambda-pair-factor * (L-1)[] 
  []
 
 
-Overfull \hbox (199.24663pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (199.24663pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --pc-uniform                      # use uniform pseudocounts
  (1/21 for 20 amino acids + 1 gap state)[] 
  []
 
 
-Overfull \hbox (273.34666pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (273.34666pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --pc-count 1                      # defining pseudo count ad
 mixture coefficient rho = pc-count/( pc-count+ Neff)[] 
  []
 
 
-Overfull \hbox (217.77164pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (217.77164pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --epsilon 1e-5                    # convergence criterion fo
 r minimum decrease in the last K iterations[] 
  []
 
 
-Overfull \hbox (81.92157pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (81.92157pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --ofn-pll                         # using pseudo-likelihood 
 as objective function[] 
  []
 
 
-Overfull \hbox (143.6716pt too wide) in paragraph at lines 3594--3594
+Overfull \hbox (143.6716pt too wide) in paragraph at lines 1198--1198
 []\OT1/cmtt/m/n/12 --alg-cg                          # using conjugate gradient
  to optimize objective function[] 
  []
 
 
-Overfull \hbox (81.92157pt too wide) in paragraph at lines 3603--3603
+Overfull \hbox (81.92157pt too wide) in paragraph at lines 1207--1207
 []\OT1/cmtt/m/n/12 -l 0.2    # LFACTOR:  Set pairwise regularization coefficien
 ts to LFACTOR * (L-1)[] 
  []
 
 
-Overfull \hbox (51.04655pt too wide) in paragraph at lines 3603--3603
+Overfull \hbox (51.04655pt too wide) in paragraph at lines 1207--1207
 []\OT1/cmtt/m/n/12 -w 0.8    # IDTHRES:  Set sequence reweighting identity thre
 shold to IDTHRES[] 
  []
 
 
-Overfull \hbox (223.94664pt too wide) in paragraph at lines 3603--3603
+Overfull \hbox (223.94664pt too wide) in paragraph at lines 1207--1207
 []\OT1/cmtt/m/n/12 -e 1e-5   # EPSILON:  Set convergence criterion for minimum 
 decrease in the last K iterations to EPSILON[] 
  []
 
-[70] [71] [72] [73]
-! Missing } inserted.
-<inserted text> 
-                }
-l.3810 ...\(\wijab\) for \(a,b \in {1, ..., 20\}\)
-                                                   are not 
-Here is how much of TeX's memory you used:
- 19376 strings out of 493638
- 351550 string characters out of 6146797
- 394067 words of memory out of 5000000
- 22596 multiletter control sequences out of 15000+600000
- 21213 words of font info for 74 fonts, out of 8000000 for 9000
- 1328 hyphenation exceptions out of 8191
- 34i,11n,43p,10376b,782s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on PhD_thesis_Susann_Vorberg.pdf (85 pages).
+LaTeX Warning: Reference `challenges' on page 22 undefined on input line 1211.
+
+[22] [23]
+
+LaTeX Warning: Reference `seq-reweighting' on page 24 undefined on input line 1
+250.
+
+
+LaTeX Warning: Reference `eq:pseudocounts' on page 24 undefined on input line 1
+277.
+
+[24]
+
+LaTeX Warning: Reference `amino-acid-frequencies' on page 25 undefined on input
+ line 1331.
+
+[25]
+
+LaTeX Warning: Reference `prior-v' on page 26 undefined on input line 1410.
+
+[26]
+
+LaTeX Warning: Reference `dataset' on page 27 undefined on input line 1450.
+
+
+LaTeX Warning: Reference `diff-ccmpred-ccmpredpy' on page 27 undefined on input
+ line 1452.
+
+
+LaTeX Warning: Reference `post-processing-heuristics' on page 27 undefined on i
+nput line 1456.
+
+Missing character: There is no − in font cmr8!
+Missing character: There is no − in font cmr12!
+Missing character: There is no − in font cmr8!
+Missing character: There is no − in font cmr12!
+Missing character: There is no − in font cmr8!
+Missing character: There is no − in font cmr12!
+Missing character: There is no − in font cmr8!
+Missing character: There is no − in font cmr12!
+Missing character: There is no − in font cmr12!
+[27]
+Missing character: There is no − in font cmr12!
+
+LaTeX Warning: Reference `fig:performance-cd-alphaopt' on page 28 undefined on 
+input line 1539.
+
+File: img/full_likelihood/sgd/precision_vs_rank_learning_rates.png Graphic file
+ (type QTm)
+<use  "img/full_likelihood/sgd/precision_vs_rank_learning_rates.png" >
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-initial-learning-rate' on pag
+e 28 undefined on input line 1575.
+
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-initial-learning-rate' on pag
+e 28 undefined on input line 1579.
+
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-initial-learning-rate' on pag
+e 28 undefined on input line 1586.
+
+
+LaTeX Warning: Reference `full-likelihood-gradient' on page 28 undefined on inp
+ut line 1599.
+
+[28]
+
+LaTeX Warning: Reference `fig:performance-cd-alphaopt' on page 29 undefined on 
+input line 1622.
+
+File: img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png Gra
+phic file (type QTm)
+
+<use  "img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png" >
+File: img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png Gra
+phic file (type QTm)
+
+<use  "img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png" >
+
+LaTeX Warning: Reference `eq:learning-rate-wrt-neff' on page 29 undefined on in
+put line 1662.
+
+
+Overfull \hbox (15.50487pt too wide) in paragraph at lines 1675--1679
+[]\OT1/cmr/m/n/12 sigmoidal learn-ing rate sched-ule $\OML/cmm/m/it/12 ^^K[] \O
+T1/cmr/m/n/12 = []$ with $\OML/cmm/m/it/12 ^^M \OMS/cmsy/m/n/12 2 f\OT1/cmr/m/n
+/12 1e[]\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1e[]\OML/cmm/m/it/12 ; \OT1/cmr/m/n/
+12 1e[]\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1e[]\OMS/cmsy/m/n/12 g$ 
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 1679--1682
+[]\OT1/cmr/m/n/12 exponential learn-ing rate sched-ule $\OML/cmm/m/it/12 ^^K[] 
+\OT1/cmr/m/n/12 = \OML/cmm/m/it/12 ^^K[] \OMS/cmsy/m/n/12 ^^A []\OT1/cmr/m/n/12
+ (\OMS/cmsy/m/n/12 ^^@\OML/cmm/m/it/12 ^^Mt\OT1/cmr/m/n/12 )$ with $\OML/cmm/m/
+it/12 ^^M \OMS/cmsy/m/n/12 2
+ []
+
+
+LaTeX Warning: Reference `fig:learning-rate-schedules' on page 29 undefined on 
+input line 1685.
+
+
+LaTeX Warning: Reference `benchmark-learning-rate-annealing-schedules' on page 
+29 undefined on input line 1687.
+
+[29] [30]
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-learning-rate-schedule' on pa
+ge 31 undefined on input line 1701.
+
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-initial-learning-rate' on pag
+e 31 undefined on input line 1703.
+
+
+LaTeX Warning: Reference `fig:sgd-single-proteins-learning-rate-schedule' on pa
+ge 31 undefined on input line 1709.
+
+File: img/full_likelihood/sgd/parameter_norm_1mkca00_alpha0_different_schedules
+.png Graphic file (type QTm)
+
+<use  "img/full_likelihood/sgd/parameter_norm_1mkca00_alpha0_different_schedule
+s.png" >
+File: img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules
+.png Graphic file (type QTm)
+
+<use  "img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedule
+s.png" >
+
+LaTeX Warning: Reference `eq:learning-rate-wrt-neff' on page 31 undefined on in
+put line 1750.
+
+
+LaTeX Warning: Reference `eq:learning-rate-wrt-neff' on page 31 undefined on in
+put line 1750.
+
+
+LaTeX Warning: Reference `benchmark-learning-rate-annealing-schedules' on page 
+31 undefined on input line 1758.
+
+
+LaTeX Warning: Reference `fig:distribution-num-iterations' on page 31 undefined
+ on input line 1760.
+
+File: img/full_likelihood/sgd/distribution_numiterations_against_selected_learn
+ingrate_schedules.png Graphic file (type QTm)
+
+<use  "img/full_likelihood/sgd/distribution_numiterations_against_selected_lear
+ningrate_schedules.png" >
+
+LaTeX Warning: Reference `eq:learning-rate-wrt-neff' on page 31 undefined on in
+put line 1798.
+
+
+LaTeX Warning: Reference `eq:learning-rate-wrt-neff' on page 31 undefined on in
+put line 1798.
+
+
+Underfull \hbox (badness 2142) in paragraph at lines 1802--1802
+[]\OT1/cmr/bx/n/14.4 Optimizing Reg-u-lar-iza-tion Co-ef-fi-cients for Con-
+ []
+
+
+LaTeX Warning: Reference `pseudo-likelihood' on page 31 undefined on input line
+ 1807.
+
+
+LaTeX Warning: Reference `prior-v' on page 31 undefined on input line 1810.
+
+
+LaTeX Warning: Reference `fig:number-contacts-against-L' on page 31 undefined o
+n input line 1818.
+
+File: img/full_likelihood/no_contacts_vs_protein_length_thr8.png Graphic file (
+type QTm)
+<use  "img/full_likelihood/no_contacts_vs_protein_length_thr8.png" >
+
+LaTeX Warning: Reference `prior-v' on page 31 undefined on input line 1844.
+
+[31] [32] [33]
+
+LaTeX Warning: Reference `fig:precison-cd-regularization' on page 34 undefined 
+on input line 1846.
+
+File: img/full_likelihood/precision_vs_rank_notitle_cd_comparing_regularizers.p
+ng Graphic file (type QTm)
+
+<use  "img/full_likelihood/precision_vs_rank_notitle_cd_comparing_regularizers.
+png" > [34]
+
+LaTeX Warning: Reference `fig:cd-sampling-size' on page 35 undefined on input l
+ine 1923.
+
+
+LaTeX Warning: Reference `fig:cd-gradient-norm' on page 35 undefined on input l
+ine 1933.
+
+
+LaTeX Warning: Reference `gibbs-sampling' on page 35 undefined on input line 19
+44.
+
+File: img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_sa
+mpling_steps.png Graphic file (type QTm)
+
+<use  "img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_s
+ampling_steps.png" > [35]
+
+LaTeX Warning: Reference `eq:gradient-LLreg-pair' on page 36 undefined on input
+ line 2018.
+
+
+Overfull \hbox (2.13556pt too wide) in alignment at lines 2020--2024
+ [][][] []
+ []
+
+
+Overfull \hbox (26.5014pt too wide) in alignment at lines 2029--2039
+ [][][] []
+ []
+
+[36]
+Overfull \hbox (5.24689pt too wide) in alignment at lines 2049--2054
+ [][][] []
+ []
+
+
+Overfull \hbox (1.56601pt too wide) in alignment at lines 2059--2063
+ [][][] []
+ []
+
+[37]
+
+LaTeX Warning: Reference `eq:gradient-LLreg-approx' on page 38 undefined on inp
+ut line 2096.
+
+
+LaTeX Warning: Reference `eq:Hw-diag' on page 38 undefined on input line 2114.
+
+
+LaTeX Warning: Reference `eq:Hw-diag' on page 38 undefined on input line 2127.
+
+
+LaTeX Warning: Reference `coupling-prior' on page 38 undefined on input line 21
+39.
+
+
+LaTeX Warning: Reference `modeling-dep-of-wij' on page 38 undefined on input li
+ne 2142.
+
+
+LaTeX Warning: Reference `eq:mat-Hij' on page 38 undefined on input line 2144.
+
+[38]
+
+LaTeX Warning: Reference `eq:normalized-emp-freq' on page 39 undefined on input
+ line 2152.
+
+
+LaTeX Warning: Reference `eq:zero-sum-wij' on page 39 undefined on input line 2
+152.
+
+
+LaTeX Warning: Reference `eq:mat-Lijk' on page 39 undefined on input line 2154.
+
+
+
+LaTeX Warning: Reference `eq:fast-inverse-mat-Lijk' on page 39 undefined on inp
+ut line 2194.
+
+
+LaTeX Warning: Reference `eq:p-X-r-final' on page 39 undefined on input line 21
+97.
+
+[39]
+
+LaTeX Warning: Reference `eq:pXr-final' on page 40 undefined on input line 2250
+.
+
+
+LaTeX Warning: Reference `eq:ll-coupling-prior' on page 40 undefined on input l
+ine 2262.
+
+[40]
+
+LaTeX Warning: Reference `eq:gradient-mukab' on page 41 undefined on input line
+ 2287.
+
+
+Overfull \hbox (45.75928pt too wide) detected at line 2303
+[][] [] [] \OT1/cmr/m/n/12 = [][] []  \OML/cmm/m/it/12 :
+ []
+
+
+LaTeX Warning: Reference `eq:gradient-LL-mukab' on page 41 undefined on input l
+ine 2334.
+
+[41]
+
+LaTeX Warning: Reference `eq:matrix-gradient' on page 42 undefined on input lin
+e 2343.
+
+
+Overfull \hbox (65.59322pt too wide) in paragraph at lines 2373--2373
+[] 
+ []
+
+
+LaTeX Warning: Reference `eq:grad-log-N-N-lambdakabcd' on page 42 undefined on 
+input line 2375.
+
+
+LaTeX Warning: Reference `eq:gradient-LL-mukab' on page 42 undefined on input l
+ine 2384.
+
+
+LaTeX Warning: Reference `eq:def-g-k-binary' on page 42 undefined on input line
+ 2400.
+
+[42]
+
+LaTeX Warning: Reference `coupling-prior' on page 43 undefined on input line 24
+44.
+
+
+LaTeX Warning: Reference `eq:definition-mixture-coupling-prior' on page 43 unde
+fined on input line 2447.
+
+
+LaTeX Warning: Reference `(' on page 43 undefined on input line 2449.
+
+File: img/theory/softmax_linear_fct.png Graphic file (type QTm)
+<use  "img/theory/softmax_linear_fct.png" > [43]
+
+LaTeX Warning: Reference `seq-reweighting' on page 44 undefined on input line 2
+511.
+
+
+LaTeX Warning: Reference `seq-reweighting' on page 44 undefined on input line 2
+559.
+
+
+LaTeX Warning: Reference `contact-prior-protein-length' on page 44 undefined on
+ input line 2605.
+
+[44] [45] [46]
+
+LaTeX Warning: Reference `seq-features-single' on page 47 undefined on input li
+ne 2873.
+
+
+Overfull \hbox (17.09837pt too wide) in paragraph at lines 2913--2915
+ []|\OT1/cmr/m/n/12 joint[]shannon[]entropy
+ []
+
+
+Overfull \hbox (17.09837pt too wide) in paragraph at lines 2920--2922
+ []|\OT1/cmr/m/n/12 joint[]shannon[]entropy
+ []
+
+[47]
+
+LaTeX Warning: Reference `fig:avg-nr-contacts-per-residue-vs-protein-length' on
+ page 48 undefined on input line 2955.
+
+File: img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length
+_thr8.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_lengt
+h_thr8.png" >
+
+LaTeX Warning: Reference `fig:avg-nr-contacts-per-residue-vs-log-protein-length
+-linfit' on page 48 undefined on input line 2976.
+
+[48]
+File: img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_pe
+r_residue_vs_protein_length_thr8.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_p
+er_residue_vs_protein_length_thr8.png" > [49]
+
+LaTeX Warning: Reference `seq-features' on page 50 undefined on input line 3050
+.
+
+
+LaTeX Warning: Reference `seq-features-single' on page 50 undefined on input li
+ne 3052.
+
+
+LaTeX Warning: Reference `fig:fraction-contacts-vs-protein-length' on page 50 u
+ndefined on input line 3056.
+
+File: img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.
+png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8
+.png" >
+File: img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_te
+st_random_forest_nestimators_maxdepth_top5_notitle.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_t
+est_random_forest_nestimators_maxdepth_top5_notitle.png" >
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 3.4 on input line 3135.
+
+[50]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[51] [52]
+
+LaTeX Warning: Reference `fig:rf-gridsearch-nestimators-maxfeatures' on page 53
+ undefined on input line 3164.
+
+
+LaTeX Warning: Reference `fig:rf-gridsearch-maxdepth-minsampleleaf' on page 53 
+undefined on input line 3186.
+
+File: img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_te
+st_random_forest_maxfeatures_minsampleleaf_top5_notitle.png Graphic file (type 
+QTm)
+
+<use  "img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_t
+est_random_forest_maxfeatures_minsampleleaf_top5_notitle.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 3216--3222
+\OT1/cmr/m/n/12 per-pa-ram-e-ters (\OT1/cmtt/m/n/12 n[]estimators=1000, min[]sa
+mples[]leaf=10, max[]depth=100,
+ []
+
+[53]
+
+LaTeX Warning: Reference `rf-window-size' on page 54 undefined on input line 32
+34.
+
+
+LaTeX Warning: Reference `rf-noncontact-threshold' on page 54 undefined on inpu
+t line 3235.
+
+
+LaTeX Warning: Reference `rf-ratio-noncontacts' on page 54 undefined on input l
+ine 3239.
+
+
+LaTeX Warning: Reference `fig:feature-importance-rf-with-pll-score' on page 54 
+undefined on input line 3282.
+
+
+LaTeX Warning: Reference `fig:rf-feature-importance' on page 54 undefined on in
+put line 3291.
+
+[54]
+File: img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLL
+feature.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pL
+Lfeature.png" >
+
+LaTeX Warning: Reference `contact-prior-protein-length' on page 55 undefined on
+ input line 3345.
+
+
+LaTeX Warning: Reference `seq-features' on page 55 undefined on input line 3345
+.
+
+
+LaTeX Warning: Reference `contact-prior-protein-length' on page 55 undefined on
+ input line 3345.
+
+
+LaTeX Warning: Reference `seq-features' on page 55 undefined on input line 3345
+.
+
+
+LaTeX Warning: Reference `fig:feature-selection-rf-with-pll-score' on page 55 u
+ndefined on input line 3352.
+
+File: img/random_forest_contact_prior/pll_feature/precision_vs_rank_featuresele
+ction_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_
+pLLfeature.png Graphic file (type QTm)
+
+<use  "img/random_forest_contact_prior/pll_feature/precision_vs_rank_featuresel
+ection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10
+_pLLfeature.png" >
+
+LaTeX Warning: Reference `rf-feature-selection' on page 55 undefined on input l
+ine 3370.
+
+
+LaTeX Warning: Reference `rf-feature-selection' on page 55 undefined on input l
+ine 3370.
+
+[55] [56]
+Appendix A.
+
+Underfull \vbox (badness 1354) has occurred while \output is active []
+
+[57
+
+]
+Overfull \hbox (125.41748pt too wide) in alignment at lines 3423--3449
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (125.41748pt too wide) in alignment at lines 3449--3450
+ [] [] [] [] 
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table A.1 on input line 3450.
+
+[58]
+Appendix B.
+
+LaTeX Warning: Reference `dataset' on page 59 undefined on input line 3455.
+
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" > [59
+
+] [60] [61] [62] [63] [64
+
+]
+Appendix C.
+
+LaTeX Warning: Reference `fig:coupling-matrix-pication-pymol' on page 65 undefi
+ned on input line 3505.
+
+
+LaTeX Warning: Reference `fig:coupling-matrix-pication-interaction' on page 65 
+undefined on input line 3508.
+
+File: img/coupling_matrix_analysis/2ayda01_37_48.png Graphic file (type QTm)
+<use  "img/coupling_matrix_analysis/2ayda01_37_48.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+
+LaTeX Warning: Reference `fig:coupling-matrix-disulfide-pymol' on page 65 undef
+ined on input line 3543.
+
+
+LaTeX Warning: Reference `fig:coupling-matrix-disulfide-interaction' on page 65
+ undefined on input line 3546.
+
+File: img/coupling_matrix_analysis/1aluA00_54_64.png Graphic file (type QTm)
+<use  "img/coupling_matrix_analysis/1aluA00_54_64.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+
+LaTeX Warning: Reference `fig:coupling-matrix-aromatic-proline' on page 65 unde
+fined on input line 3582.
+
+[65] [66]
+File: img/coupling_matrix_analysis/1aolA00_17_34.png Graphic file (type QTm)
+<use  "img/coupling_matrix_analysis/1aolA00_17_34.png" >
+File: img/amino_acid_physico_chemical_properties_venn_diagramm.png Graphic file
+ (type QTm)
+<use  "img/amino_acid_physico_chemical_properties_venn_diagramm.png" >
+File: img/coupling_matrix_analysis/aromatic_bundle.png Graphic file (type QTm)
+<use  "img/coupling_matrix_analysis/aromatic_bundle.png" > [67] [68] [69] [70] 
+[71] [72
+
+]
+Appendix D.
+File: img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.
+png Graphic file (type QTm)
+
+<use  "img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle
+.png" >
+
+! LaTeX Error: File `img/full_likelihood/appendix/precision_vs_rank_alpha0_0_li
+near_learninrate_schedule' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3690 ...nk_alpha0_0_linear_learninrate_schedule}
+                                                   
+Here is how much of TeX's memory you used:
+ 19350 strings out of 493638
+ 352646 string characters out of 6146797
+ 378807 words of memory out of 5000000
+ 22537 multiletter control sequences out of 15000+600000
+ 20455 words of font info for 73 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 34i,17n,43p,10376b,816s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on PhD_thesis_Susann_Vorberg.pdf (84 pages).

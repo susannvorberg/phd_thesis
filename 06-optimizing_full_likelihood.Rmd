@@ -290,7 +290,7 @@ For [CD](#abbrev) stochasticity additionally arises from the Gibbs sampling proc
 
 As a consequence of stochasticity, the gradient estimates are noisy, resulting in parameter updates with high variance and strong fluctuations of the objective function.
 These fluctuations enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. 
-By slowly decreasing the step size, which is also called learning rate, of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012].
+By slowly decreasing the step size, which is also called learning rate, of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions [@Ruder2017; @Bottou2012; @Bottou2010].
 However, choosing an optimal step size for parameter updates as well as finding the optimal annealing schedule offers a challenge and needs manual tuning [@Schaul2013]. 
 If the step size is chosen too small, progress will be unnecessarily slow, if it is chosen too large, the optimum will be overshot and parameter estimates might diverge.
 Another key challenge is that one specific step size often is not an optimal choice for all parameters.

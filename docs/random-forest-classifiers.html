@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,6 +75,7 @@
       Sn: "\\mathcal{S}_n",
       v: "\\mathbf{v}",
       vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
@@ -186,7 +187,6 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
-<li class="chapter" data-level="7.3" data-path="additional-coevolution-features-improves-precision.html"><a href="additional-coevolution-features-improves-precision.html"><i class="fa fa-check"></i><b>7.3</b> Additional Coevolution Features improves Precision</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -242,8 +242,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="D.1" data-path="number-of-iterations-for-different-learning-rates.html"><a href="number-of-iterations-for-different-learning-rates.html"><i class="fa fa-check"></i><b>D.1</b> Number of iterations for different learning rates</a></li>
-<li class="chapter" data-level="D.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.2</b> Number of iterations for different learning rate schedules and fixed initial learning rate <span class="math inline">\(\alpha_0 =\)</span> 1e-4</a></li>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -273,35 +284,44 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="random-forest-classifiers" class="section level2">
 <h2><span class="header-section-number">7.1</span> Random Forest Classifiers</h2>
-<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">137</a>–<a href="#ref-Breiman2001">139</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">140</a>]</span>.</p>
+<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">138</a>–<a href="#ref-Breiman2001">140</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">141</a>]</span>.</p>
 <p>Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator. Random forests are ensembles of decision trees where randomness is introduced in two ways:</p>
 <ol style="list-style-type: decimal">
-<li>every tree is build on a random sample that is of the same size but drawn with replacement from the training set (i.e., a bootstrap sample)</li>
-<li>every split of a node is performed on a random subset of features</li>
+<li>every tree is build on a random sample that is drawn with replacement from the training set and has the same size as the training set (i.e., a bootstrap sample)</li>
+<li>every split of a node is evaluated on a random subset of features</li>
 </ol>
-<p>Predictions from all trees are averaged to obtain the final prediction.</p>
-<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting.</p>
-<p>Random forests are capable of regression and classification tasks. For classification, predictions for new data are obtained by running a data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf.</p>
-<p>Typically, <em>Gini impurity</em>, which is a computationally efficient approximation to the entropy, is used as a split criterion to estimate the quality of a split of a node. It measures the degree of purity in a data set regarding class labels as <span class="math inline">\(GI = (1 - \sum_{k=1}^K p_k^2)\)</span>, where <span class="math inline">\(p_k\)</span> is the proportion of class <span class="math inline">\(k\)</span> in the data set. The feature <span class="math inline">\(f\)</span> with the highest <em>decrease in Gini impurity</em> <span class="math inline">\(\Delta GI_f\)</span> over the two resulting child node subsets will be used to split the data set at the given node <span class="math inline">\(N\)</span>,</p>
+<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting <span class="citation">[<a href="#ref-Louppe2014">142</a>]</span>. It is still advisable to restrict the depth of single trees in a random forest, not only to counteract overfitting but also to reduce model complexity and to speedup the algorithm.</p>
+<p>Random forests are capable of regression and classification tasks. For classification, predictions for new data are obtained by running each data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. Figure <a href="random-forest-classifiers.html#fig:rf-intro">7.1</a> visualizes the procedure of classifying a new data sample.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:rf-intro"></span>
+<img src="img/random_forest_contact_prior/intro_random_forest.png" alt="Classifying new data with random forests. A new data sample is run down every tree in the forest until it ends up in a leaf node. Every leaf node has associated class probabilities \(p(c)\) reflecting the fraction of training samples belonging to every class \(c\). The color of the leaf nodes reflects the class with highest probability. The predictions from all trees in form of the class probabilties are averaged over all trees and yield the final prediction." width="80%" />
+<p class="caption">
+Figure 7.1: Classifying new data with random forests. A new data sample is run down every tree in the forest until it ends up in a leaf node. Every leaf node has associated class probabilities <span class="math inline">\(p(c)\)</span> reflecting the fraction of training samples belonging to every class <span class="math inline">\(c\)</span>. The color of the leaf nodes reflects the class with highest probability. The predictions from all trees in form of the class probabilties are averaged over all trees and yield the final prediction.
+</p>
+</div>
+<p>Typically, <em>Gini impurity</em>, which is a computationally efficient approximation to the entropy, is used as a split criterion to evaluate the quality of a split. It measures the degree of purity in a data set regarding class labels as <span class="math inline">\(GI = (1 - \sum_{k=1}^K p_k^2)\)</span>, where <span class="math inline">\(p_k\)</span> is the proportion of class <span class="math inline">\(k\)</span> in the data set. For every feature <span class="math inline">\(f\)</span> in the random subset that is considered for splitting a particular node <span class="math inline">\(N\)</span>, the <em>decrease in Gini impurity</em> <span class="math inline">\(\Delta GI_f\)</span> will be computed as,</p>
 <p><span class="math display">\[
-\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI(N_{\textrm{left}}) - p_{\textrm{right}} GI(N_{\textrm{left}})
+\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI_f(N_{\textrm{left}}) - p_{\textrm{right}} GI_f(N_{\textrm{left}})
 \]</span></p>
-<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">140</a>]</span>.</p>
-<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">141</a>]</span>.</p>
+<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">141</a>]</span>. The feature <span class="math inline">\(f\)</span> with highest <span class="math inline">\(\Delta GI_f\)</span> over the two resulting child node subsets will be used to split the data set at the given node <span class="math inline">\(N\)</span>.</p>
+<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">143</a>]</span>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ho1998">
-<p>137. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+<p>138. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
 </div>
 <div id="ref-Breiman2001">
-<p>139. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+<p>140. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
 </div>
 <div id="ref-Menze2009">
-<p>140. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+<p>141. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+</div>
+<div id="ref-Louppe2014">
+<p>142. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
 </div>
 <div id="ref-Strobl2007">
-<p>141. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
+<p>143. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -379,7 +399,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
