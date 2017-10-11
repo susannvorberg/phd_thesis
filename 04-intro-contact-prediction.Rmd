@@ -101,9 +101,10 @@ It is a well-established model in statistical mechanics and can be derived from 
 The principle of maximum entropy, proposed by Jaynes in 1957 [@Jaynes1957a; @Jaynes1957b], states that the probability distribution which makes minimal assumptions and best represents observed data is the one that is in agreement with measured constraints (prior information) and has the largest entropy. 
 In other words, from all distributions that are consistent with measured data, the distribution with maximal entropy should be chosen.
 
+
 A protein family is represented by a [MSA](#abbrev) $\X = \{ \seq_1, \ldots, \seq_N \}$ of $N$ protein sequences.
 Every protein sequence of the protein family represents a sample drawn from a target distribution $p(\seq)$, so that each protein sequence is associated with a probability. 
-Every sequence $\seq = (x_1, \ldots, x_L)$ is of length $L$ and every position in the sequences constitutes a categorical variables $x_{i}$ that can take one of $q=21$ values representing the 20 naturally occuring amino acids and a gap ('-').
+Each sequence $\seq_n = (\seq_{n1}, ..., \seq_{nL})$ is of length $L$ and every position constitutes a categorical variable $x_{i}$ that can take values from an alphabet indexed by $\{0, ..., 20\}$, where 0 stands for a gap and $\{1, ... , 20\}$ stand for the 20 types of amino acids. 
 The measured constraints are given by the empirically observed single and pairwise amino acid frequencies that can be calculated as
 
 <!--
