@@ -376,110 +376,30 @@ knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 ## Applications
 
 The most popular and historically motivated application for contact prediction is contact-guided denovo structure prediction. 
-Protein fold reconstruction from contact maps has a long history since reliable inter-residue proximity constraints can be obtained from experiments such as cross-linking/mass specttrometry, fluorescence resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments [@Li2004; @Li2003a; @Aszodi1995a].
 
-#native contacts works
-In 1997, Vendruscolo and colleagues showed that it is possible to reconstruct the protein fold from subsets of native contacts alone [@Vendruscolo1997].
-It was shown that a subset of native contacts alone is sufficient and to nativelike conformation of a protein and that rational strategies can be applied to select a minimal subset [@Sathyapriya2009; @Chen2007; @Vassura2007; @Vendruscolo1997].
-
-
-
-Predicted contacts have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011].
-With the emergence of global statistical models that drastically reduced false-positive rates of predictions was it possible to use predicted contacts for structure prediction.
-In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach *mfDCA* are sufficiently accurate to successfully reconstruct the protein fold [@Marks2011].
+It has long been known that a protein 3D structure can be reconstructed from a native contact map [@Vendruscolo1997].
+Also, protein fold reconstruction from inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, fluorescence resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Li2003a; @Aszodi1995a].
+Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011].
+Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in denovo structure prediction aided by predicted contacts.
+In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach *mfDCA* are sufficiently accurate to successfully deduce the native fold of the protein [@Marks2011].
 In the following years, methods to predict contacts have been improved and applied to model many more protein structures culminating in the high-throughput prediction of 614 protein structures out of which more than 100 represent novel folds by Ovchinnikov and colleagues in 2017 [@Hopf2012; @Ovchinnikov2014a; @Hopf2014; @Hayat2015a; @Hopf2015a; @Raval2015a; @Wang2015; @Ovchinnikov2015a; @Ovchinnikov2017].
 
-Many contact-guided protocols have been established that mostly integrate predicted contacts in form of distance constraints into an energy function to guide the folding process and restrict the overal fold: Unicon3D [@Bhattacharya2016], RASREC [@Braun2015], RBOAleph [@Mabrouk2015a],  GDFuzz3D [@Pietal2015a], PconsFold [@Michel2014], C2S_Pipeline [@Konopka2014], FRAGFOLD + PSICOV [@Kosciolek2014], FILM3 [@Nugent2012], EVFold [@Marks2011], FT-COMAR [@Vasura2008],  I-TASSER [@Wu2011]. 
-The question arises how many protein contacts need to be predicted and what is the quality of proteins built based on such residue–residue interactions.
+Many contact-guided protocols have been established since, that mostly integrate predicted contacts in form of distance constraints into an energy function to guide the folding process and restrict the overal fold: Unicon3D [@Bhattacharya2016], RASREC [@Braun2015], RBOAleph [@Mabrouk2015a],  GDFuzz3D [@Pietal2015a], PconsFold [@Michel2014], C2S_Pipeline [@Konopka2014], FRAGFOLD + PSICOV [@Kosciolek2014], FILM3 [@Nugent2012], EVFold [@Marks2011].
+FT-COMAR [@Vasura2008],  I-TASSER [@Wu2011]. 
 
-We show that 30 % of error-free contact information is needed to obtain accurate structures of KcsA, if contacts are selected randomly. This number increases to 70 % in case of erroneous maps in which the remaining contacts or non-contacts are changed to the opposite [@Konopka2014]
-One contact for every twelve residues allows robust and accurate topology-level protein structure modeling [@Kim2014].
-In [@Sathyapriya2009] is was shown that selecting 8% of native contact according to a rational strategy helps reconstruct the structure to 4.8Ca RMSD, and 20-30% of randomly selected contacts.
+There are ongoing discussions about the necessary quality of predictions and how to effectively utilize the inferred contact information.
+It has long been known that only a subset of native contacts is sufficient to produce accurate structural models [@Konopka2014; @Vendruscolo1997; @Sathyapriya2009; @Chen2007; @Vassura2007]. 
+Sathyapriya and colleagues showed that 8% of native contacts selected according to a rational strategy helps to reconstruct the structure to near native resolution, otherwise 20-30% of randomly selected contacts are sufficient [@Sathyapriya2009].
+Kim and colleagues formulated that only one correct contact for every 12 residues in the protein is sufficient to allow accurate topology level modeling given that the contacts are nonlocal and broadly distributed [@Kim2014].
+Many reconstruction protocols can tolerate missing contact information much better than erroneous contact information and it has been stressed that only highly confident contacts are helpful [@Duarte2010].
+Zhang et al. found that their tool Touchstone II required the ratio of correctly predicted contacts to protein length to be at least 20% to generate a positive effect to structure prediction [@Zhang2003].
+Marks and colelagues observed that isolated false positives have a much stronger detrimental effect on structure prediction than false positives close to true contacts [@Marks2011].
+Frequently, protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts [@Wang2016; @Adhikari2015a].
+A consistent finding is that long-range contacts are more important than short-range contacts for structure reconstruction, even though their information alone is not sufficient [@Sathyapriya2009; @Kosciolek2014; @DiLena2009a].
+Long-range contacts are rare and most informative for protein structure prediction because they define the overal fold and packing of tertiary structure whereas short-range contacts define local secondary structure.
+Apart from accuracy and distribution of predicted contacts, model quality depends on many other factors such as the secondary structure composition of the structure, other sources of information used, the type of distance constraint function and the structure reconstruction protocol.
 
-Zhang, et al., 2003 found that contact predictions should have an accuracy of at least 22% to generate a positive effect to the ab initio struc- ture prediction. 
-These threading-based restraints in most cases can significantly improve the folding results, even if the prediction accuracy is low. More specifically, when the accuracy of contact prediction is higher than 22% or the ratio of correctly predicted contact number to protein length is larger than 20%, the effect of restraints on the folding is almost always positive. [@Zhang2003] touchstone II
-
-Frequently, protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts [@Wang2016 = coinfold; @Adhikari2015a =confold].
-The type of distance constriant function can also avoid false positives by penalizing non-satisfied contacts proportional to P with the penalty decaying with d.
-Furthermore, Long-range contacts are more important than short-range contacts for structure reconstruction, even though their information alone is not sufficient [@Sathyapriya2009; @Kosciolek2014].
-Long-range contacts define the overal fold and packing of tertiary structure whereas short-range contacts define secondary structure.
-Apart from accuracy and distribution of predicted contacts, model quality depends on many factors such as the secondary structure composition, the type of distance constraint function and the structure reconstruction protocol.
-
-
-
-
-### contact assisted de-novo predictions {#contact-assisted-str-pred}
-
-
-
-"""Assessing Predicted Contacts for Building Protein Three-Dimensional Models""!!
-
-
-Structure Reconstruction from true contacts maps works well. 
-Even a small number of contacts is sufficient to reconstruct the fold of the protein. 
-The number of contacts which can be accurately predicted increases with the number of effective sequences: to robustly generate accurate three-dimensional structure models requires roughly fivefold more sequences (Ovchinnikov et al., 2017)
-Distance maps work even better. 
-
-What is the optimal distance cutoff to define a contact? 
-Duarte et al 2010: between 8 and 12A
-Dyrka et al 2016
-Konopka et al 2014
-Sathyapriya et al 2009
-
-Many studies that successfuly predict structures denovo with the help of predicted contact.[Ovchinnikov2015a]
-
-Vice versa, because contacts at large primary distances are rare, they are most informative for protein structure prediction: Izarzugaza J, Gran O, Tress M, Valencia A, Clarke N (2007) Assessment of intramolecular contact predictions for CASP7
-
-only one correct contact for every 12 residues in the protein to allow accurate topology level modeling[@Kim2014] also nonlocal and broadly distributed
-
-observe that false positives are not equal in terms of their detrimental effect on structure prediction[@Marks2011]
-
-
-- unicon3d: 
-    http://sysbio.rnet.missouri.edu/UniCon3D/
-
--Saint 2 (not published yet)
-    https://github.com/sauloho/SAINT2
-    Saint 2 was used in the Oliveira 2016 study
-- CoinFold (Wang 2016)
-    unsatisfied constraints are filtered
-- RASREC (Braun 2015)
-    using contacts from EVFOLD-plm and EVFOLD-mf (other contact maps can be used)
-    Rosetta RASREC protocol
-    distance restraints function: shallow sigmoidal potential
-    https://www.rosettacommons.org/demos/latest/protocol_capture/rasrec_evolutionary_restraints/README
-- CONFOLD (Cheng 2015)
-    principal idea behind CONFOLD is to build models in two stages to detect self- conflicting contacts
-    can provide own contacts, validation in paper using EVfold predictions
-    two stage modelling:
-    1) SSE and contact predictions are transformed to distance restraints and bond and angle restraints and models are build using CNS
-    2) filter out unsatisfied contacts
-    http://protein.rnet.missouri.edu/confold/
-- RBO_ALEPH (Mabrouk 2015)
-    automatically decides on either template-based modelling or ab initio modelling
-    in case of ab initio modelling:
-    uses EPC for contact prediction (users can upload there own predictions: server linearly combines user defined contacts with its own predicted contacts by EPC-map. Currently, both contact lists have equal weight in the linear)
-    uses model-based search (MBS) for structure prediction
-    http://compbio.robotics.tu-berlin.de/rbo_aleph/
-- GDFuzz3D (Pietal 2015)
-    contact map as input
-    predict 2D distance map from contact map
-    use distance map to generate coarse-grained Calpha model
-    refine with Modeller + REFINER using distance restraints
-    http://iimcb.genesilico.pl/gdserver/GDFuzz3D/
-- C2S_pipeline (Konopka 2014)
-    contact map as input (for validation they use real contact maps + derived erroneous CMaps)
-- FT-COMAR to construct Calpha trace
-    SABBAC for backbone reconstruction
-    SCWRL for side-chain prediction and optimization
-    http://comprec-lin.iiar.pwr.edu.pl/c2sInput/
-- PconsFold (Michel 2014)
-    smoothed square well restraint scoring function
-    https://github.com/ElofssonLab/pcons-fold
-- Fragfold + coevolutionary Info (Kosciolek 2014)
-    square well function with exponential decay
-- EVFold (Marks 2011)
-- CNS
+### other applications
 
 
 
