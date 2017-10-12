@@ -56,7 +56,7 @@ knitr::include_graphics("img/intro/transitive_effects.png")
 A huge leap forward was the development of sophisticated statistical models that make predictions for a single residue pair while considering all other pairs in the protein.
 These global models allow for the distinction between transitive and causal interactions which has been referred to in the literature as [DCA](#abbrev) [@Lapedes1999; @Weigt2009].
 
-In 1999 Lapedes et al. were the first to propose a global statistical approach for the prediction of residue-residue contacts in order to disentangle  transitive effects [@Lapedes1999].
+In 1999 Lapedes et al. were the first to propose a global statistical approach for the prediction of residue-residue contacts in order to disentangle transitive effects [@Lapedes1999].
 They consider a Pott's model that can be derived under a maximum entropy assumption and use the model specific coupling parameters to infer interactions.
 At that time the wider implications of this advancement went unnoted, but meanwhile the Pott's Model has become the most prominent statistical model for contact prediction.
 Section \@ref(maxent) deals extensively with the derivation and properties of the Pott's model, its application to contact prediction and its numerous realizations.
@@ -244,7 +244,7 @@ Many approximate inference techniques have been developed to sidestep the infeas
 ### Solving the Inverse Potts Problem {#potts-model-solutions}
 
 In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle transitive effects [@Lapedes1999].
-They used an iterative Monte Carlo procedure to obtain estimates of the partition function. 
+In 2002 they applied their idea to 11 small proteins using an iterative Monte Carlo procedure to obtain estimates of the model parameters and achieved an increase in accuracy of 10-20% compared to the local statistical models [@Lapedes2012a]. 
 As the calculations involved were very time-consuming and at that time required supercomputing resources, the wider implications were not noted yet.
 
 Ten years later Weight et al proposed an iterative message-passing algorithm, here referred to as *mpDCA*, to approximate the partition function [@Weigt2009].
