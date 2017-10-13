@@ -375,75 +375,76 @@ knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 
 ## Applications
 
-The most popular and historically motivated application for contact prediction is contact-guided denovo structure prediction. 
+The most popular and historically motivated application for contact prediction is contact-guided *denovo* structure prediction. 
 
-It has long been known that a protein 3D structure can be reconstructed from a native contact map [@Vendruscolo1997].
-Also, protein fold reconstruction from inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, fluorescence resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Li2003a; @Aszodi1995a].
+It has long been known that the native protein 3D structure can be reconstructed from an error-free contact map [@Vendruscolo1997].
+Also, protein fold reconstruction from inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, fluorescence resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Li2003a; @Bowers2000; @Kolinski1998; @Aszodi1995a].
 Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011].
-Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in denovo structure prediction aided by predicted contacts.
+Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in *denovo* structure prediction aided by predicted contacts.
 In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach *mfDCA* are sufficiently accurate to successfully deduce the native fold of the protein [@Marks2011].
 In the following years, methods to predict contacts have been improved and applied to model many more protein structures culminating in the high-throughput prediction of 614 protein structures out of which more than 100 represent novel folds by Ovchinnikov and colleagues in 2017 [@Hopf2012; @Ovchinnikov2014a; @Hopf2014; @Hayat2015a; @Hopf2015a; @Raval2015a; @Wang2015; @Ovchinnikov2015a; @Ovchinnikov2017].
 
 Many contact-guided protocols have been established since, that mostly integrate predicted contacts in form of distance constraints into an energy function to guide the folding process and restrict the overal fold: Unicon3D [@Bhattacharya2016], RASREC [@Braun2015], RBOAleph [@Mabrouk2015a],  GDFuzz3D [@Pietal2015a], PconsFold [@Michel2014], C2S_Pipeline [@Konopka2014], FRAGFOLD + PSICOV [@Kosciolek2014], FILM3 [@Nugent2012], EVFold [@Marks2011].
 FT-COMAR [@Vasura2008],  I-TASSER [@Wu2011]. 
 
-There are ongoing discussions about the necessary quality of predictions and how to effectively utilize the inferred contact information.
-It has long been known that only a subset of native contacts is sufficient to produce accurate structural models [@Konopka2014; @Vendruscolo1997; @Sathyapriya2009; @Chen2007; @Vassura2007]. 
-Sathyapriya and colleagues showed that 8% of native contacts selected according to a rational strategy helps to reconstruct the structure to near native resolution, otherwise 20-30% of randomly selected contacts are sufficient [@Sathyapriya2009].
+The necessary quality of contact predictions and how to effectively utilize the inferred contact information is still subject to discussion and further research.
+It has been demonstrated that only a small subset of native contacts is sufficient to produce accurate structural models [@Konopka2014; @Vendruscolo1997; @Sathyapriya2009; @Chen2007; @Vassura2007]. 
+Sathyapriya and colleagues developed a rational strategy to select important native contacts and successfully reconstructed the structure to near native resolution with only 8% of contacts [@Sathyapriya2009].
 Kim and colleagues formulated that only one correct contact for every 12 residues in the protein is sufficient to allow accurate topology level modeling given that the contacts are nonlocal and broadly distributed [@Kim2014].
+These studies emphasize that certain contacts are more important than others. 
+Long-range contacts are rare and most informative for protein structure prediction because they define the overal fold and packing of tertiary structure whereas short-range contacts define local secondary structure [@Adhikari2017].
+It is a consistent finding that eventhough long-range contacts are of higher relevance than short-range contacts for structure reconstruction, their information alone is not sufficient [@Sathyapriya2009; @Kosciolek2014; @DiLena2009a].
 Many reconstruction protocols can tolerate missing contact information much better than erroneous contact information and it has been stressed that only highly confident contacts are helpful [@Duarte2010].
 Zhang et al. found that their tool Touchstone II required the ratio of correctly predicted contacts to protein length to be at least 20% to generate a positive effect to structure prediction [@Zhang2003].
 Marks and colelagues observed that isolated false positives have a much stronger detrimental effect on structure prediction than false positives close to true contacts [@Marks2011].
 Frequently, protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts [@Wang2016; @Adhikari2015a].
-A consistent finding is that long-range contacts are more important than short-range contacts for structure reconstruction, even though their information alone is not sufficient [@Sathyapriya2009; @Kosciolek2014; @DiLena2009a].
-Long-range contacts are rare and most informative for protein structure prediction because they define the overal fold and packing of tertiary structure whereas short-range contacts define local secondary structure.
-Apart from accuracy and distribution of predicted contacts, model quality depends on many other factors such as the secondary structure composition of the structure, other sources of information used, the type of distance constraint function and the structure reconstruction protocol.
+Generally it is assumed that higher precision of predicted contacts (of well distributed contacts) results in improved structural models, albeit there is no strong correlation as model quality depends on many other factors such as the secondary structure composition of the protein, the domain size, the usage of additional sources of structural information, the type of distance constraint function and the particular structure reconstruction protocol [@Adhikari2017; @DeOliveira2016; @Kosciolek2014; @Marks2011].
 
 ### other applications
 
+The success story of residue-residue contact prediction has spread to new areas of application. 
+An obvious extension of denovo structure prediction using predicted contacts is the prediction and modelling of protein-protein interactions (Dos Santos et al., 2015; Ovchinnikov et al., 2014; Hopf et al., 2014, Skerker et al., 2008). 
+A new challenge arises in the correct pairing of sequences from two proteins, as paralogs and orthologs need to be dissected.
+There are two promising approaches that will build concatenated alignments for the purpose of contact prediction between proteins.
+- generation of the multiple sequence alignment for EC methods is challenging because orthologous interacting pairs of sequences must reliably be identified from a large number of species
+- Typically, sequences from individual alignments are paired using bacterial genome coordinates, i.e. the closer their location in the genome the more likely their co-expression and physical interaction 
+- A second, simpler method: matches orthologous sequence pairs using genome BLAST scores (Iserte et al., 2015; Yu et al., 2016; Ochoa & Pazos, 2010)
+- and new methods may well improve the accuracy for these organisms (Gueudre´ et al., 2016; Bitbol et al., 2016)
+- case study: Feinauer2016a 
 
+Contacts are also used to analyse potential alternative cofnormations of proteins. 
+It is not possible to distinguish contacts from alternative conformations without a protein structure though (Parisi et al., 2015; Morcos et al.,2013, Sfriso2016)
 
-Moreover, many studies employ residue-residue contacts to successfully predict structures of
-unsolved proteins (Wang and Barth, 2015; Hayat et al., 2015; Ovchinnikov et al., 2015), to
-elucidate the binding interface between proteins (Dos Santos et al., 2015; Ovchinnikov et al.,
-2014; Hopf et al., 2014) or to analyse conformational changes (Parisi et al., 2015; Morcos et al.,
-2013). Only in 2015, ve studies (Adhikari et al., 2015; Mabrouk et al., 2015; Pietal et al.,
-2015; Tang et al., 2015; Wang and Barth, 2015) present protocols for contact assisted de novo
-protein structure prediction which highlights the immense interest to tap the full potential of
-evolutionary derived information
-
-
-- protein-protein interactions
-    - generation of the multiple sequence alignment for EC methods is challenging because orthologous interacting pairs of sequences must reliably be identified from a large number of species
-    - Typically, sequences from individual alignments are paired using bacterial genome coordinates, i.e. the closer their location in the genome the more likely their co-expression and physical interaction (Ovchinnikov et al., 2014; Hopf et al., 2014; Skerker et al., 2008).
-    - A second, simpler method: matches orthologous sequence pairs using genome BLAST scores (Iserte et al., 2015; Yu et al., 2016; Ochoa & Pazos, 2010)
-    - and new methods may well improve the accuracy for these organisms (Gueudre´ et al., 2016; Bitbol et al., 2016)
-    - case study: Feinauer2016a
-- alternative conformations
-    - Sfriso2016
-    -  Parisi2015a
-- rna structure prediction
+Contact prediction methods developed for protein sequences have also been applied to RNA structure prediction
     - "Structural biology: RNA structure from sequence" tal nawy, 2016 nature
-- mutational landscapes
+
+The Potts can be interpreted as a boltzmann model giving energies and therefore mutated sequences can be evalutated.
     - EVmutation [@Hopf2017]: unsupervised statistical method for predicting the effects of mutations that explicitly captures residue dependencies between positions
     - assess the quantitative effects of mutations in genes of any organism
     - "Maximum-Entropy Models of Sequenced Immune Repertoires Predict Antigen-Antibody Affinity."
-- protein design
+    
+Related is the idea to use the Potts model for protein design. 
     Franceus2016
-- gene interactions [@Skwark2017]
-    *genomeDCA* identify epistatic loci == polymorphic loci under strongest coevolutionary pressure = identify coevolving locus pairs (underlying ppi that is under evolutionart pressure)
-    result: > 3/4 coevolution loci found in genes that determine beta-lactam (antibiotic) resistence
+    
+Skwark and colleagues applied the popular coevolution models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017].
+They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
+In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
+
+    
 - network deconvolution
-- domain parsing [sadowski 2013]
-    - Predicting domain boundaries using predicted contacts (Fig. 1) is based on a very simple idea: that native contacts, and hence predicted contacts, are more abundant within domains than between domains
+
+Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
+    
+Predicted contacts can be of great benefit for other problems in structural biology, like model quality assessment, distinguishing properly folded from misfolded proteins.
 - distinguish properly folded proteins from crap 
     - ("Correlated mutations distinguish misfolded and properly folded proteins"): DCA correctly predicts significantly more contacts for properly folded structures than for misfolded ones
     - properly oriented model from mirror models: Kurczynska2016
     - model wuality assessment: "QAcon: single model quality assessment using protein structural and contact information with machine learning techniques"
-
 Simkovic2017 review!!! Tang2015 NMR
 
-Fox2016 : turn it around: uses DCA to evaluate MSA quality; rationale: better alignments give better contact preictions
+Fox and colleagues turn the idea of DCA upside down.
+They developed a benchmark for testing the accuracy of large [MSAs](#abbrev), by evaluating the agreeement between the predicted and the native contacts [@Fox2016].
+
 
 ## Evaluating Contact Prediction Methods {#intro-cp-evaluation}
 
