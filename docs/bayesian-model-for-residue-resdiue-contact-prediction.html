@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-05">
+<meta name="date" content="2017-10-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="methods-optimizing-full-likelihood.html">
+<link rel="prev" href="cd-sampling-optimization.html">
 <link rel="next" href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -62,6 +62,7 @@
       I: "\\mathbf{I}",
       Lijk: "\\mathbf{\\Lambda}_{ij,k}",
       Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
       LLreg: "L\\!L_\\mathrm{reg}",
       muijk: "\\mathbf{\\mu}_{ij,k}",
       muk: "\\mathbf{\\mu}_k",
@@ -142,7 +143,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#contact-assisted-str-pred"><i class="fa fa-check"></i><b>2.5.1</b> contact assisted de-novo predictions</a></li>
+<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#other-applications"><i class="fa fa-check"></i><b>2.5.1</b> other applications</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
@@ -163,17 +164,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>4.3</b> Coupling Profiles Vary with Distance</a></li>
 <li class="chapter" data-level="4.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>4.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>5</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="5.1" data-path="the-likelihood-of-the-sequences-as-a-potts-model.html"><a href="the-likelihood-of-the-sequences-as-a-potts-model.html"><i class="fa fa-check"></i><b>5.1</b> The Likelihood of the Sequences as a Potts Model</a></li>
-<li class="chapter" data-level="5.2" data-path="gap-treatment.html"><a href="gap-treatment.html"><i class="fa fa-check"></i><b>5.2</b> Treating Gaps as Missing Information</a></li>
-<li class="chapter" data-level="5.3" data-path="the-regularized-log-likelihood-and-its-gradient.html"><a href="the-regularized-log-likelihood-and-its-gradient.html"><i class="fa fa-check"></i><b>5.3</b> The Regularized Log Likelihood and its Gradient</a></li>
-<li class="chapter" data-level="5.4" data-path="prior-v.html"><a href="prior-v.html"><i class="fa fa-check"></i><b>5.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
-<li class="chapter" data-level="5.5" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>5.5</b> Approximation of the Gradient with Contrastive Divergence</a></li>
-<li class="chapter" data-level="5.6" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>5.6</b> Optimizing the Full Likelihood</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-adam"><i class="fa fa-check"></i><b>5.6.1</b> Optimizing with ADAM</a></li>
-<li class="chapter" data-level="5.6.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#full-likelihood-sgd"><i class="fa fa-check"></i><b>5.6.2</b> Optimizing with vanilla stochastic gradient descent</a></li>
-<li class="chapter" data-level="5.6.3" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#altering-gibbs-sampling-schemes"><i class="fa fa-check"></i><b>5.6.3</b> Altering Gibbs sampling Schemes</a></li>
+<li class="chapter" data-level="5" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>5</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="5.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>5.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="5.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>5.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>5.2.1</b> Varying the Sample Size</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>5.3</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="5.4" data-path="comparing-cd-couplings-to-pll-couplings.html"><a href="comparing-cd-couplings-to-pll-couplings.html"><i class="fa fa-check"></i><b>5.4</b> Comparing CD couplings to pLL couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
@@ -190,39 +187,47 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
-<li class="chapter" data-level="8.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html"><i class="fa fa-check"></i><b>8.2</b> Optimizing Pseudo-Likelihood</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#pseudo-likelihood-objective-function-and-its-gradients"><i class="fa fa-check"></i><b>8.2.1</b> Pseudo-Likelihood Objective Function and its Gradients</a></li>
-<li class="chapter" data-level="8.2.2" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>8.2.2</b> Differences between CCMpred and CCMpredpy</a></li>
-<li class="chapter" data-level="8.2.3" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#seq-reweighting"><i class="fa fa-check"></i><b>8.2.3</b> Sequence Reweighting</a></li>
-<li class="chapter" data-level="8.2.4" data-path="optimizing-pseudo-likelihood.html"><a href="optimizing-pseudo-likelihood.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>8.2.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="8.2" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html"><i class="fa fa-check"></i><b>8.2</b> Computing Pseudo-Likelihood Couplings</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>8.2.1</b> Differences between CCMpred and CCMpredpy</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>8.3</b> Analysis of Coupling Matrices</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>8.3.1</b> Correlation of Couplings with Contact Class</a></li>
-<li class="chapter" data-level="8.3.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>8.3.2</b> Coupling Distribution Plots</a></li>
+<li class="chapter" data-level="8.3" data-path="seq-reweighting.html"><a href="seq-reweighting.html"><i class="fa fa-check"></i><b>8.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="8.4" data-path="amino-acid-frequencies.html"><a href="amino-acid-frequencies.html"><i class="fa fa-check"></i><b>8.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="8.5" data-path="methods-regularization.html"><a href="methods-regularization.html"><i class="fa fa-check"></i><b>8.5</b> Regularization</a></li>
+<li class="chapter" data-level="8.6" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html"><i class="fa fa-check"></i><b>8.6</b> The Potts Model</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#gap-treatment"><i class="fa fa-check"></i><b>8.6.1</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="8.6.2" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>8.6.2</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="8.6.3" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#prior-v"><i class="fa fa-check"></i><b>8.6.3</b> The prior on <span class="math inline">\(\v\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>8.4</b> Optimizing the Full-Likelihood</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>8.4.1</b> Full Likelihood Optimization with <em>ADAM</em></a></li>
-<li class="chapter" data-level="8.4.2" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#full-likelihood-optimization-with-stochastic-gradient-descent"><i class="fa fa-check"></i><b>8.4.2</b> Full Likelihood Optimization with Stochastic Gradient Descent</a></li>
-<li class="chapter" data-level="8.4.3" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-regularization-coefficients-for-contrastive-divergence"><i class="fa fa-check"></i><b>8.4.3</b> Optimizing Regularization Coefficients for Contrastive Divergence</a></li>
-<li class="chapter" data-level="8.4.4" data-path="methods-optimizing-full-likelihood.html"><a href="methods-optimizing-full-likelihood.html#optimizing-the-sampling-scheme-for-contrastive-divergence"><i class="fa fa-check"></i><b>8.4.4</b> Optimizing the Sampling Scheme for Contrastive Divergence</a></li>
+<li class="chapter" data-level="8.7" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>8.7</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>8.7.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="8.7.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>8.7.2</b> Coupling Distribution Plots</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>8.5</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>8.5.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="8.5.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>8.5.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="8.5.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>8.5.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
-<li class="chapter" data-level="8.5.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>8.5.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
-<li class="chapter" data-level="8.5.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>8.5.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="8.5.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>8.5.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="8.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>8.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#convergence-criterion-for-stochastic-gradient-descent"><i class="fa fa-check"></i><b>8.8.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="8.8.2" data-path="methods-sgd.html"><a href="methods-sgd.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>8.8.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+<li class="chapter" data-level="8.8.3" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>8.8.3</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
 </ul></li>
-<li class="chapter" data-level="8.6" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>8.6</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="8.6.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.6.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
-<li class="chapter" data-level="8.6.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.6.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+<li class="chapter" data-level="8.9" data-path="regularization-for-cd-with-sgd.html"><a href="regularization-for-cd-with-sgd.html"><i class="fa fa-check"></i><b>8.9</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="8.10" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>8.10</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>8.10.1</b> Varying the number of Gibbs Steps</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.7</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="8.7.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.7.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="8.7.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.7.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="8.7.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.7.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="8.7.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.7.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="8.11" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>8.11</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
+<li class="chapter" data-level="8.11.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>8.11.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="8.11.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>8.11.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="8.11.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>8.11.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="8.11.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>8.11.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="8.11.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>8.11.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="8.11.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>8.11.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.12" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>8.12</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="8.13" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.13</b> Training Random Forest Contat Prior</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.13.1</b> Sequence Derived Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.13.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
+<li class="chapter" data-level="8.13.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.13.3</b> Feature Selection</a></li>
+<li class="chapter" data-level="8.13.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.13.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -255,6 +260,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
 <li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
 </ul></li>
+<li class="chapter" data-level="D.4" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>D.4</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
+<li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
@@ -283,11 +290,11 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="bayesian-model-for-residue-resdiue-contact-prediction" class="section level2">
-<h2><span class="header-section-number">8.5</span> Bayesian Model for Residue-Resdiue Contact Prediction</h2>
+<h2><span class="header-section-number">8.11</span> Bayesian Model for Residue-Resdiue Contact Prediction</h2>
 <div id="neg-Hessian-computation" class="section level3">
-<h3><span class="header-section-number">8.5.1</span> Efficiently Computing the negative Hessian of the regularized log-likelihood</h3>
+<h3><span class="header-section-number">8.11.1</span> Efficiently Computing the negative Hessian of the regularized log-likelihood</h3>
 <p>Surprisingly, the elements of the Hessian at the mode <span class="math inline">\(\w^*\)</span> are easy to compute. Let <span class="math inline">\(i,j,k,l \in \{1,\ldots,L\}\)</span> be columns in the <a href="abbrev.html#abbrev">MSA</a> and let <span class="math inline">\(a, b, c, d \in \{1,\ldots,20\}\)</span> represent amino acids.</p>
-<p>The partial derivative <span class="math inline">\(\partial / \partial \w_{klcd}\)</span> of the second term in the gradient of the couplings in eq. <a href="the-regularized-log-likelihood-and-its-gradient.html#eq:gradient-LLreg-pair">(5.4)</a> is</p>
+<p>The partial derivative <span class="math inline">\(\partial / \partial \w_{klcd}\)</span> of the second term in the gradient of the couplings in eq. <a href="potts-full-likelihood.html#eq:gradient-LLreg-pair">(8.9)</a> is</p>
 <span class="math display">\[\begin{eqnarray}
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab } 
     &amp;=&amp;  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\partial \left( \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i &lt; j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} \right)}{\partial \wklcd}   I(y_i \eq a, y_j \eq b) \\
@@ -339,9 +346,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
     \mathrm{case~3:} (\H)_{klcd, ijab}  
     &amp;=&amp;   N_{ijkl} \, p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d  | \v^*,\w^*) \nonumber \\
     &amp;&amp;    - N_{ijkl} \, p(x_i \eq a, x_j \eq b | \v^*,\w^*)\, p(x_k \eq c, x_l \eq d | \v^*,\w^*) \,.
-\tag{8.8}
+\tag{8.20}
 \end{eqnarray}\]</span>
-<p>We know from eq. <a href="full-likelihood-gradient.html#eq:gradient-LLreg-approx">(5.10)</a> that at the mode <span class="math inline">\(\w^*\)</span> the model probabilities match the empirical frequencies up to a small regularization term,</p>
+<p>We know from eq. <a href="#eq:gradient-LLreg-approx">(<strong>??</strong>)</a> that at the mode <span class="math inline">\(\w^*\)</span> the model probabilities match the empirical frequencies up to a small regularization term,</p>
 <span class="math display">\[\begin{equation}
     p(x_i \eq a, x_j \eq b | \v^*,\w^*) = q(x_i \eq a, x_j \eq b) - \frac{\lambda_w}{N_{ij}}  \wijab^* \,,
 \end{equation}\]</span>
@@ -351,9 +358,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
    (\H)_{ijab, ijab} =&amp; N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
    &amp; + \lambda_w \\
    (\H)_{ijcd, ijab} =&amp; -N_{ij} \left(\,q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( q(x_i \eq c, x_j \eq d) -\frac{\lambda_w}{N_{ij}} \wijcd^* \right) .
-\tag{8.9}
+\tag{8.21}
 \end{align}\]</span>
-<p>In order to write the previous eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:Hw-diag">(8.9)</a> in matrix form, the <em>regularised</em> empirical frequencies <span class="math inline">\(\qij\)</span> will be defined as</p>
+<p>In order to write the previous eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:Hw-diag">(8.21)</a> in matrix form, the <em>regularised</em> empirical frequencies <span class="math inline">\(\qij\)</span> will be defined as</p>
 <span class="math display">\[\begin{equation}
     (\qij)_{ab} = q&#39;_{ijab} := q(x_i \eq a, x_j \eq b) - \lambda_w  \wijab^* / N_{ij} \,,
 \end{equation}\]</span>
@@ -361,21 +368,21 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display">\[\begin{equation}
     \Qij := \text{diag}(\qij) \; .
 \end{equation}\]</span>
-<p>Now eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:Hw-diag">(8.9)</a> can be written in matrix form</p>
+<p>Now eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:Hw-diag">(8.21)</a> can be written in matrix form</p>
 <span class="math display" id="eq:mat-Hij">\[\begin{equation}
      \H_{ij} = N_{ij} \left( \Qij -  \qij \qij^{\mathrm{T}} \right)  + \lambda_w \I \; .
-\tag{8.10}
+\tag{8.22}
 \end{equation}\]</span>
 </div>
 <div id="inv-lambda-ij-k" class="section level3">
-<h3><span class="header-section-number">8.5.2</span> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></h3>
+<h3><span class="header-section-number">8.11.2</span> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></h3>
 <p>It is possible to efficiently invert the matrix <span class="math inline">\(\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k\)</span>, that is introduced in <a href="coupling-prior.html#coupling-prior">6.2</a> where <span class="math inline">\(\H_{ij}\)</span> is the <span class="math inline">\(400 \times 400\)</span> diagonal block submatrix <span class="math inline">\((\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}\)</span> and <span class="math inline">\(\Lambda_k\)</span> is an invertible diagonal precision matrix that is introduced in section <a href="#modeling-dep-of-wij"><strong>??</strong></a>.</p>
-<p>Equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:mat-Hij">(8.10)</a> can be used to write <span class="math inline">\(\Lijk\)</span> in matrix form as</p>
+<p>Equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:mat-Hij">(8.22)</a> can be used to write <span class="math inline">\(\Lijk\)</span> in matrix form as</p>
 <span class="math display" id="eq:mat-Lijk">\[\begin{equation}
      \Lijk = \H_{ij} - \lambda_w \I + \Lk = N_{ij} \Qij- N_{ij} \qij \qij^{\mathrm{T}} + \Lk \,.
-\tag{8.11}
+\tag{8.23}
 \end{equation}\]</span>
-<p>Owing to eqs. <a href="gap-treatment.html#eq:normalized-emp-freq">(5.2)</a> and <a href="prior-v.html#eq:zero-sum-wij">(5.6)</a>, <span class="math inline">\(\sum_{a,b=1}^{20} q&#39;_{ijab} = 1\)</span>. The previous equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:mat-Lijk">(8.11)</a> facilitates the calculation of the inverse of this matrix using the <em>Woodbury identity</em> for matrices</p>
+<p>Owing to eqs. <a href="potts-full-likelihood.html#eq:normalized-emp-freq">(8.7)</a> and <a href="potts-full-likelihood.html#eq:zero-sum-wij">(8.13)</a>, <span class="math inline">\(\sum_{a,b=1}^{20} q&#39;_{ijab} = 1\)</span>. The previous equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:mat-Lijk">(8.23)</a> facilitates the calculation of the inverse of this matrix using the <em>Woodbury identity</em> for matrices</p>
 <span class="math display">\[\begin{equation}
     (\mathbf{A} + \mathbf{B} \mathbf{D}^{-1} \mathbf{C})^{-1} = \mathbf{A}^{-1} - \mathbf{A}^{-1} \mathbf{B} (\mathbf{D} + \mathbf{C} \mathbf{A}^{-1} \mathbf{B}) ^{-1} \mathbf{C} \mathbf{A}^{-1} \;. 
 \end{equation}\]</span>
@@ -389,7 +396,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display" id="eq:fast-inverse-mat-Lijk">\[\begin{align}
       \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} &amp; = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \\
      &amp; = \mathbf{A}^{-1} + \frac{ (\mathbf{A}^{-1} \qij) (\mathbf{A}^{-1} \qij)^{\mathrm{T}} }{ N_{ij}^{-1} - \qij^\mathrm{T} \mathbf{A}^{-1} \qij} \,.
-\tag{8.12}
+\tag{8.24}
 \end{align}\]</span>
 <p>Note that <span class="math inline">\(\mathbf{A}\)</span> is diagonal as <span class="math inline">\(\Qij\)</span> and <span class="math inline">\(\Lk\)</span> are diagonal matrices: <span class="math inline">\(\mathbf{A} = \text{diag}(N_{ij} q&#39;_{ijab} + (\Lk)_{ab,ab})\)</span>. Moreover, <span class="math inline">\(\mathbf{A}\)</span> has only positive diagonal elements, because <span class="math inline">\(\Lk\)</span> is invertible and has only positive diagonal elements and because <span class="math inline">\(q&#39;_{ijab} = p(x_i \eq a, x_j \eq b | \v^*,\w^*) \ge 0\)</span>.</p>
 <p>Therefore <span class="math inline">\(\mathbf{A}\)</span> is invertible: <span class="math inline">\(\mathbf{A}^{-1} = \text{diag}(N_{ij} q&#39;_{ijab} + (\Lk)_{ab,ab} )^{-1}\)</span>.</p>
@@ -397,7 +404,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display">\[\begin{equation}
     N_{ij}^{-1} - \sum_{a,b=1}^{20}  \frac{{q&#39;}_{ijab}^2}{N_{ij} q&#39;_{ijab} + {(\Lk)}_{ab,ab} } &gt; N_{ij}^{-1} - \sum_{a,b=1}^{20} \frac{{q&#39;}^2_{ijab}}{N_{ij} q&#39;_{ijab}} = 0
 \end{equation}\]</span>
-<p>and therefore the inverse of <span class="math inline">\(\Lijk\)</span> in eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:fast-inverse-mat-Lijk">(8.12)</a> is well defined.</p>
+<p>and therefore the inverse of <span class="math inline">\(\Lijk\)</span> in eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:fast-inverse-mat-Lijk">(8.24)</a> is well defined.</p>
 <p>The log determinant of <span class="math inline">\(\Lijk\)</span> is necessary to compute the ratio of Gaussians (see equation <a href="#eq:p-X-r-final">(<strong>??</strong>)</a>) and can be computed using the matrix determinant lemma:</p>
 <span class="math display">\[\begin{equation}
   \det(\mathbf{A} + \mathbf{uv}^\mathrm{T}) = (1+\mathbf{v}^\mathrm{T} \mathbf{A}^{-1} \mathbf{u}) \det(\mathbf{A})
@@ -409,7 +416,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p><span class="math inline">\(\mathbf{A}\)</span> is diagonal and has only positive diagonal elements so that <span class="math inline">\(\log(\det(\mathbf{A})) = \sum \log \left( \text{diag}(\mathbf{A}) \right)\)</span>.</p>
 </div>
 <div id="training-hyperparameters" class="section level3">
-<h3><span class="header-section-number">8.5.3</span> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></h3>
+<h3><span class="header-section-number">8.11.3</span> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></h3>
 <p>The model parameters <span class="math inline">\(\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)\)</span>, <span class="math inline">\(\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)\)</span> and <span class="math inline">\(\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)\)</span> will be trained by maximizing the logarithm of the full likelihood over a set of training <a href="abbrev.html#abbrev">MSAs</a> <span class="math inline">\(\X^1,\ldots,\X^N\)</span> and associated structures with distance vectors <span class="math inline">\(\r^1,\ldots,\r^N\)</span> plus a regularizer <span class="math inline">\(R(\mathbf{\mu}, \mathbf{\Lambda})\)</span>:</p>
 <span class="math display">\[\begin{equation}
     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^N  \log p(\X^n | \r^n, \mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
@@ -418,19 +425,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display" id="eq:reg">\[\begin{align}
     R(\mathbf{\mu}, \mathbf{\Lambda}) = -\frac{1}{2 \sigma_{\mu}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \mu_{k,ab}^2 
                         -\frac{1}{2 \sigma_\text{diag}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \Lambda_{k,ab,ab}^2
-\tag{8.13}
+\tag{8.25}
 \end{align}\]</span>
 <p>Reasonable values are <span class="math inline">\(\sigma_{\mu}=0.1\)</span>, <span class="math inline">\(\sigma_\text{diag} = 100\)</span>.</p>
 <p>The log likelihood can be optimized using LBFG-S-B<span class="citation">[<span class="citeproc-not-found" data-reference-id="CITE"><strong>???</strong></span>]</span>, which requires the computation of the gradient of the log likelihood. For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index <span class="math inline">\(n\)</span> in <span class="math inline">\(\rij^n\)</span>, <span class="math inline">\((\wij^n)^*\)</span> and <span class="math inline">\(\Hij^n\)</span>.</p>
 <p>From eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a> the log likelihood for a single protein is</p>
 <span class="math display" id="eq:ll-coupling-prior">\[\begin{equation}
     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i &lt; j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
-\tag{8.14}
+\tag{8.26}
 \end{equation}\]</span>
 </div>
 <div id="the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu" class="section level3">
-<h3><span class="header-section-number">8.5.4</span> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></h3>
-<p>By applying the formula <span class="math inline">\(d f(x) / dx = f(x) \, d \log f(x) / dx\)</span> to compute the gradient of eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:ll-coupling-prior">(8.14)</a> (neglecting the regularization term) with respect to <span class="math inline">\(\mu_{k,ab}\)</span>, one obtains</p>
+<h3><span class="header-section-number">8.11.4</span> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></h3>
+<p>By applying the formula <span class="math inline">\(d f(x) / dx = f(x) \, d \log f(x) / dx\)</span> to compute the gradient of eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:ll-coupling-prior">(8.26)</a> (neglecting the regularization term) with respect to <span class="math inline">\(\mu_{k,ab}\)</span>, one obtains</p>
 <span class="math display" id="eq:gradient-mukab">\[\begin{equation}
  \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     = \sum_{1\le i&lt;j\le L}  
@@ -438,20 +445,20 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
         g_{k}(\rij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
              \frac{\partial}{\partial \mu_{k,ab}}  \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)  
      } { \sum_{k&#39;=0}^K g_{k&#39;}(\rij) \, \frac{ \Gauss(\mathbf{0} | \muk&#39;, \Lk&#39;^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
-\tag{8.15}
+\tag{8.27}
 \end{equation}\]</span>
 <p>To simplify this expression, we define the responsibility of component <span class="math inline">\(k\)</span> for the posterior distribution of <span class="math inline">\(\wij\)</span>, the probability that <span class="math inline">\(\wij\)</span> has been generated by component <span class="math inline">\(k\)</span>:</p>
 <span class="math display" id="eq:responsibilities">\[\begin{align}
       p(k|ij)  = 
       \frac{ g_{k}(\rij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
     {\sum_{k&#39;=0}^K g_{k&#39;}(\rij) \frac{ \Gauss(\mathbf{0} | \muk&#39;, \Lk&#39;^{-1})}{\Gauss( \mathbf{0} | \muijk&#39;, \Lijk&#39;^{-1})} }  \,.
-\tag{8.16}
+\tag{8.28}
 \end{align}\]</span>
-<p>By substituting the definition for responsibility, <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-mukab">(8.15)</a> simplifies</p>
+<p>By substituting the definition for responsibility, <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-mukab">(8.27)</a> simplifies</p>
 <span class="math display" id="eq:gradient-LL-mukab">\[\begin{equation}
   \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     = \sum_{1\le i&lt;j\le L}  p(k | ij)  \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right) ,
-\tag{8.17}
+\tag{8.29}
 \end{equation}\]</span>
 <p>and analogously for partial derivatives with respect to <span class="math inline">\(\Lambda_{k,ab,cd}\)</span>.</p>
 The partial derivative inside the sum can be written
@@ -462,7 +469,7 @@ The partial derivative inside the sum can be written
 Using the following formula for a matrix <span class="math inline">\(\mathbf{A}\)</span>, a real variable <span class="math inline">\(x\)</span> and a vector <span class="math inline">\(\mathbf{y}\)</span> that depends on <span class="math inline">\(x\)</span>,
 <span class="math display" id="eq:matrix-gradient">\[\begin{equation}
     \frac{\partial}{\partial x} \left( \mathbf{y}^\mathrm{T} \mathbf{A} \mathbf{y} \right) = \frac{\partial \mathbf{y}^\mathrm{T}}{\partial x}  \mathbf{A} \mathbf{y} + \mathbf{y}^\mathrm{T} \mathbf{A} \frac{\partial \mathbf{y}}{\partial x}  =  \mathbf{y}^\mathrm{T} (\mathbf{A} + \mathbf{A}^\mathrm{T}) \frac{\partial \mathbf{y}}{\partial x} 
-\tag{8.18}
+\tag{8.30}
 \end{equation}\]</span>
 <p>the partial derivative therefore becomes</p>
 <span class="math display">\[\begin{align}
@@ -474,19 +481,19 @@ Using the following formula for a matrix <span class="math inline">\(\mathbf{A}\
 <span class="math display" id="eq:gradient-muk-final">\[\begin{align}
     \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     =  \sum_{1\le i&lt;j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
-\tag{8.19}
+\tag{8.31}
 \end{align}\]</span>
 </div>
 <div id="the-gradient-of-the-log-likelihood-with-respect-to-lk" class="section level3">
-<h3><span class="header-section-number">8.5.5</span> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></h3>
-<p>Analogously to eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-LL-mukab">(8.17)</a> one first needs to solve</p>
+<h3><span class="header-section-number">8.11.5</span> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></h3>
+<p>Analogously to eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-LL-mukab">(8.29)</a> one first needs to solve</p>
 <span class="math display" id="eq:grad-log-N-N-lambdakabcd">\[\begin{align}
      &amp; \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
     = \\
     &amp;\frac{1}{2}  \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \left( \log |\Lk| - \muk^\mathrm{T} \Lk \muk - \log |\Lijk| + \muijk^\mathrm{T} \Lijk \muijk \right) \,,
-\tag{8.20}
+\tag{8.32}
 \end{align}\]</span>
-<p>by applying eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:matrix-gradient">(8.18)</a> as before as well as the formulas</p>
+<p>by applying eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:matrix-gradient">(8.30)</a> as before as well as the formulas</p>
 <span class="math display">\[\begin{align}
     \frac{\partial}{\partial x} \log |\mathbf{A} | &amp;= \text{Tr}\left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x}  \right) , \\
     \frac{\partial \mathbf{A}^{-1}}{\partial x} &amp;= - \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \,.
@@ -513,21 +520,21 @@ Using the following formula for a matrix <span class="math inline">\(\mathbf{A}\
     - 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk\\
     &amp;= (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
 \end{align}\]</span>
-<p>Inserting these results into eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:grad-log-N-N-lambdakabcd">(8.20)</a> yields</p>
+<p>Inserting these results into eq. <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:grad-log-N-N-lambdakabcd">(8.32)</a> yields</p>
 <span class="math display">\[\begin{align}
      \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
     = \frac{1}{2} \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right)_{ab,cd}\,.
 \end{align}\]</span>
-<p>Substituting this expression into the equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-LL-mukab">(8.17)</a> analogous to the derivation of gradient for <span class="math inline">\(\mu_{k,ab}\)</span> yields the equation</p>
+<p>Substituting this expression into the equation <a href="bayesian-model-for-residue-resdiue-contact-prediction.html#eq:gradient-LL-mukab">(8.29)</a> analogous to the derivation of gradient for <span class="math inline">\(\mu_{k,ab}\)</span> yields the equation</p>
 <span class="math display" id="eq:gradient-lambdak-final">\[\begin{align}
     \nabla_{\Lk}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     =  \frac{1}{2} \sum_{1\le i&lt;j\le L}  p(k|ij)  \, 
         \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right). 
-\tag{8.21}
+\tag{8.33}
 \end{align}\]</span>
 </div>
 <div id="the-gradient-of-the-log-likelihood-with-respect-to-gamma_k" class="section level3">
-<h3><span class="header-section-number">8.5.6</span> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></h3>
+<h3><span class="header-section-number">8.11.6</span> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></h3>
 <p>With <span class="math inline">\(\rij \in \{0,1\}\)</span> defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. <a href="coupling-prior.html#eq:def-g-k-binary">(6.5)</a>. The derivative of the mixing weights <span class="math inline">\(g_k(\rij)\)</span> is:</p>
 <span class="math display">\[\begin{eqnarray}
 \frac{\partial g_{k&#39;}(\rij)} {\partial \gamma_k} = \left\{
@@ -584,7 +591,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="methods-optimizing-full-likelihood.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cd-sampling-optimization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
