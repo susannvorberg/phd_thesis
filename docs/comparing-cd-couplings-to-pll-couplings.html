@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-13">
+<meta name="date" content="2017-10-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -78,6 +78,7 @@
       vi: "\\mathcal{v}_{i}",
       vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
       wijab: "\\mathcal{w}_{ijab}",
@@ -142,9 +143,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
 <li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#other-applications"><i class="fa fa-check"></i><b>2.5.1</b> other applications</a></li>
-</ul></li>
+<li class="chapter" data-level="2.5" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a></li>
 <li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
 <li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
@@ -183,7 +182,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="7.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>7.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="7.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -223,11 +223,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
 <li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
-<li class="chapter" data-level="8.13" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.13</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="8.13.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.13.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="8.13.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.13.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="8.13.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.13.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="8.13.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.13.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="8.13" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>8.13</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>8.13.1</b> Global Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>8.13.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="8.13.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>8.13.3</b> Pairwise Features</a></li>
+</ul></li>
+<li class="chapter" data-level="8.14" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>8.14</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="8.14.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.14.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -245,6 +247,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
 <li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+<li class="chapter" data-level="C.5" data-path="aromatic-residues-at-short-distance-ranges.html"><a href="aromatic-residues-at-short-distance-ranges.html"><i class="fa fa-check"></i><b>C.5</b> Aromatic residues at short distance ranges</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
 <li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
@@ -264,9 +267,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.2" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.3" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>E.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -291,12 +295,29 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="comparing-cd-couplings-to-pll-couplings" class="section level2">
 <h2><span class="header-section-number">5.4</span> Comparing CD couplings to pLL couplings</h2>
+<p>Scatter Plots for couplings wijab: nice correlation - pearson correlation? gibt 3 outlier und das sind auch noch die staerksten couplings hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)</p>
+<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-scatter1"></span>
+<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 5.6: dideldum
+</p>
+</div>
 <p>Boxplots for couplings wijab: sieht ma nicht viel</p>
 <div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot1"></span>
 <iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.6: dideldum
+Figure 5.7: dideldum
+</p>
+</div>
+<hr />
+<p>Scatter for l2norm over couplings ||wij||_2: hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL und man sieht die drei outlier</p>
+<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter2"></span>
+<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 5.8: dideldum
 </p>
 </div>
 <p>Boxplots for l2norm over couplings ||wij||_2: contrastive divergence hat kleineren scores signifikant?</p>
@@ -304,7 +325,23 @@ Figure 5.6: dideldum
 <iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcFalse.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.7: dideldum
+Figure 5.9: dideldum
+</p>
+</div>
+<hr />
+<p>Scatter for l2norm-apc over couplings ||wij||_2 - apc: das gleiche mit apc: systematisch kleinere scores (absolut)</p>
+<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter3"></span>
+<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 5.10: dideldum
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot3"></span>
+<iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 5.11: dideldum
 </p>
 </div>
 <p>Boxplots for l2norm-apc over couplings ||wij||_2 - apc: auch mit apc: es gibt weniger starke scores mit CD signifikant?</p>
@@ -312,37 +349,9 @@ Figure 5.7: dideldum
 <p>scipy.stats.ranksums(l2norm_apc_pll, l2norm_apc_cd) #RanksumsResult(statistic=0.38719674947266086, pvalue=0.69861055638055758)</p>
 <p>scipy.stats.kendalltau(l2norm_apc_pll, l2norm_apc_cd) #KendalltauResult(correlation=0.76655297812416368, pvalue=1.3239009316846667e-260)</p>
 <p>scipy.stats.spearmanr(l2norm_apc_pll, l2norm_apc_cd) #SpearmanrResult(correlation=0.92532449605319178, pvalue=0.0)</p>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot3"></span>
-<iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 5.8: dideldum
-</p>
-</div>
-<p>Scatter Plots for couplings wijab: nice correlation - pearson correlation? gibt 3 outlier und das sind auch noch die staerksten couplings hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)</p>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-scatter1"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 5.9: dideldum
-</p>
-</div>
-<p>Scatter for l2norm over couplings ||wij||_2: hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL und man sieht die drei outlier</p>
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter2"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 5.10: dideldum
-</p>
-</div>
-<p>Scatter for l2norm-apc over couplings ||wij||_2 - apc: das gleiche mit apc: systematisch kleinere scores (absolut)</p>
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter3"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 5.11: dideldum
-</p>
-</div>
+<p>scipy.stats.ks_2samp(l2norm_apc_pll, l2norm_apc_cd) Ks_2sampResult(statistic=0.067552602436323439, pvalue=0.030922873101286375)</p>
+<p>The two score distributions are significantly different (kolmogorov smirnov test, two-sided p-value of 0.03).</p>
+<hr />
 <p>Comparing the ranking: geiler plot ranking ist sehr aehnlich, besonders fuer top contacts nur diese drei outlier sind bei CD sehr viel hoeher gerankt als bei pLL</p>
 <div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-ranking"></span>
 <iframe src="img/full_likelihood/comparing_couplings/comparative_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive divergence.html" width="100%" height="600px">
@@ -351,12 +360,21 @@ Figure 5.11: dideldum
 Figure 5.12: dideldum
 </p>
 </div>
+Comparing the ranking with q-q plot:
+<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-ranking-qq"></span>
+<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1mkcA00_method1_pLL_apc_rank_method2_CD_apc_rank_score.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 5.13: dideldum
+</p>
+</div>
+<hr />
 <p>Showing the contact maps: pLL</p>
 <div class="figure" style="text-align: center"><span id="fig:contact-map-1c75a00-pll"></span>
 <iframe src="img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_pll.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.13: dideldum
+Figure 5.14: dideldum
 </p>
 </div>
 CD
@@ -364,7 +382,7 @@ CD
 <iframe src="img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_cd.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.14: dideldum
+Figure 5.15: dideldum
 </p>
 </div>
 <p>Showing precision:</p>
@@ -372,11 +390,11 @@ Figure 5.14: dideldum
 <iframe src="img/full_likelihood/comparing_couplings/1c75A00_precision_vs_rank_8seqsep_8contacthr.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure 5.15: dideldum
+Figure 5.16: dideldum
 </p>
 </div>
 <ul>
-<li>convergence criterion: mention paper <span class="citation">[<a href="#ref-Mahsereci2017">169</a>]</span></li>
+<li>convergence criterion: mention paper <span class="citation">[<a href="#ref-Mahsereci2017">192</a>]</span></li>
 </ul>
 
 </div>
@@ -384,7 +402,7 @@ Figure 5.15: dideldum
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Mahsereci2017">
-<p>169. Mahsereci, M., Balles, L., Lassner, C., and Hennig, P. (2017). Early Stopping without a Validation Set. arXiv. Available at: <a href="http://arxiv.org/abs/1703.09580" class="uri">http://arxiv.org/abs/1703.09580</a>.</p>
+<p>192. Mahsereci, M., Balles, L., Lassner, C., and Hennig, P. (2017). Early Stopping without a Validation Set. arXiv. Available at: <a href="http://arxiv.org/abs/1703.09580" class="uri">http://arxiv.org/abs/1703.09580</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -462,7 +480,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

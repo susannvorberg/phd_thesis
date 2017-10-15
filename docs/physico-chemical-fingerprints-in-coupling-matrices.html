@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-13">
+<meta name="date" content="2017-10-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -78,6 +78,7 @@
       vi: "\\mathcal{v}_{i}",
       vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
       wijab: "\\mathcal{w}_{ijab}",
@@ -142,9 +143,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
 <li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#other-applications"><i class="fa fa-check"></i><b>2.5.1</b> other applications</a></li>
-</ul></li>
+<li class="chapter" data-level="2.5" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a></li>
 <li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
 <li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
@@ -183,7 +182,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="7.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>7.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="7.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -223,11 +223,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
 <li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
-<li class="chapter" data-level="8.13" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.13</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="8.13.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.13.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="8.13.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.13.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="8.13.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.13.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="8.13.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.13.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="8.13" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>8.13</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>8.13.1</b> Global Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>8.13.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="8.13.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>8.13.3</b> Pairwise Features</a></li>
+</ul></li>
+<li class="chapter" data-level="8.14" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>8.14</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="8.14.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.14.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -245,6 +247,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
 <li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+<li class="chapter" data-level="C.5" data-path="aromatic-residues-at-short-distance-ranges.html"><a href="aromatic-residues-at-short-distance-ranges.html"><i class="fa fa-check"></i><b>C.5</b> Aromatic residues at short distance ranges</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
 <li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
@@ -264,9 +267,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.2" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.3" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>E.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -291,17 +295,17 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="physico-chemical-fingerprints-in-coupling-matrices" class="section level2">
 <h2><span class="header-section-number">4.2</span> Physico-Chemical Fingerprints in Coupling Matrices</h2>
-<p>The correlation analysis of coupling matrices in the last section revealed that certain couplings are more indicative of a contact than others. Individual coupling matrices for a residue pair that is in physcial contact often display striking patterns that agree with the previous findings. These patterns allow a biological interpreation of the coupling values that reveal details of the physico-chemical interdependency between both residues.</p>
-<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">4.3</a> visualizes the inferred coupling matrix for a residue pair using the pseudo-likelihood method. A cluster of strong coupling values can be observed for the couplings between the charged residues glutamic acid (E), aspartic acid (D), lysine (K) and arginine (R) and the polar residue glutamine (Q). Positive coupling values arise between positively charged residues (K, R) and negatively charged residues (E, D), whereas couplings between equally charged residues have negative values. These exemplary couplings (E-R, E-K, K-D) perfectly reflect the interaction preference for residues forming salt bridges. Indeed, in the protein structure the first residue (E) forms a salt bridge with the second residue (R) as can be seen in the left plot in Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a>.</p>
+<p>The correlation analysis of coupling matrices in the last section revealed that certain couplings are more indicative of a contact than others. Individual coupling matrices for a residue pair that is in physcial contact often display striking patterns that agree with the previous findings. These patterns allow a biological interpretation of the coupling values that reveal details of the physico-chemical interdependency between both residues.</p>
+<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-ionic-interaction">4.3</a> visualizes the inferred coupling matrix and single potentials <span class="math inline">\(\vi\)</span> and <span class="math inline">\(\vj\)</span> for a residue pair <span class="math inline">\((i,j)\)</span> computed with the pseudo-likelihood method. The single potentials <span class="math inline">\(\via\)</span> and <span class="math inline">\(\vja\)</span> describe the tendency for each amino acid <span class="math inline">\(a\)</span> to appear at positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, and the couplings <span class="math inline">\(\wijab\)</span> describe the tendency of amino acid <span class="math inline">\(a\)</span> at position <span class="math inline">\(i\)</span> to co-occur with amino acid <span class="math inline">\(b\)</span> at position <span class="math inline">\(j\)</span>. A cluster of strong coupling values can be observed for the couplings between the charged residues glutamic acid (E), aspartic acid (D), lysine (K) and arginine (R) and the polar residue glutamine (Q). Positive coupling values arise between positively charged residues (K, R) and negatively charged residues (E, D), whereas couplings between equally charged residues have negative values. These exemplary couplings (E-R, E-K, K-D) perfectly reflect the interaction preference for residues forming salt bridges. Indeed, in the protein structure the first residue (E) forms a salt bridge with the second residue (R) as can be seen in the left plot in Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a>.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-ionic-interaction"></span>
 <iframe src="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
-Figure 4.3: Coupling matrix computed with pseudo-likelihood for residues 6 and 82 in protein chain 1a9x_A_05. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value <span class="math inline">\(|\wijab|\)</span>. Bars at the x-axis and y-axis correspond to the <em>Potts model</em> single potentials <span class="math inline">\(\vi\)</span> and <span class="math inline">\(\vj\)</span>. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix <a href="amino-acids.html#amino-acids">A.1</a>.
+Figure 4.3: Inferred couplings <span class="math inline">\(\wijab\)</span> and single potentials <span class="math inline">\(\via\)</span> and <span class="math inline">\(\vja\)</span> computed with pseudo-likelihood for residues 6 and 82 in protein chain 1a9x_A_05. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value <span class="math inline">\(|\wijab|\)</span>. Bars at the x-axis and y-axis correspond to the <em>Potts model</em> single potentials <span class="math inline">\(\vi\)</span> and <span class="math inline">\(\vj\)</span>. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix <a href="amino-acids.html#amino-acids">A.1</a>.
 </p>
 </div>
-<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-hydrophobic-interaction">4.4</a> visualizes the coupling matrix for a pair of hydrophobic residues. Hydrophobic pairings, such as alanine (A) - isoleucine (I), or glycine (G) - isoleucine (I) have strong coupling values but the couplings also reflect a sterical constraint. Alanine is a small hydrophobic residue and it is favoured at both residue positions because it has strong positive couplings with isoleucine (I), leucine (L) and methionine (M). But alanine is disfavoured to appear at both positions at the same time as the A-A coupling is negative. Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a> illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.</p>
+<p>Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-hydrophobic-interaction">4.4</a> visualizes the coupling matrix for a pair of hydrophobic residues. Hydrophobic pairings, such as alanine (A) - isoleucine (I), or glycine (G) - isoleucine (I) have strong coupling values but the couplings also reflect a sterical constraint. Alanine is a small hydrophobic residue and it is favoured at both residue positions: it has strong positive single potentials <span class="math inline">\(\vi(A)\)</span> and <span class="math inline">\(\vj(A)\)</span> and strong positive couplings with isoleucine (I), leucine (L) and methionine (M). But alanine is disfavoured to appear at both positions at the same time since the A-A coupling is negative. Figure <a href="physico-chemical-fingerprints-in-coupling-matrices.html#fig:coupling-matrix-pymol">4.5</a> illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.</p>
 
 <div class="figure"><span id="fig:coupling-matrix-hydrophobic-interaction"></span>
 <iframe src="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html" width="90%" height="600px">
@@ -321,12 +325,12 @@ Figure 4.5: Interactions between protein side chains. <strong>Left</strong>: res
 </p>
 </div>
 <p>Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Appendix <a href="pi-cation.html#pi-cation">C.1</a>), aromatic-proline interactions (see Appendix <a href="aromatic-proline.html#aromatic-proline">C.3</a>), sulfur-aromatic interactions or disulphide bonds (see Appendix <a href="disulfide.html#disulfide">C.2</a>).</p>
-<p>Coucke and collegues performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs <span class="citation">[<a href="#ref-Coucke2016">156</a>]</span>. They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. By looking at specific populations of residues, like buried and exposed residues or residues from specific protein classes (small, mainly <span class="math inline">\(\alpha\)</span>, etc), the eigenmodes of corresponding coupling matrices are found to capture very characteristic interactions for each class, e.g. rare disulfide contacts within small proteins and hydrophilic contacts between exposed residues. Their study confirms the qualitative observations presented above that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices.</p>
+<p>Coucke and collegues performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs <span class="citation">[<a href="#ref-Coucke2016">179</a>]</span>. They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. By looking at specific populations of residues, like buried and exposed residues or residues from specific protein classes (small, mainly <span class="math inline">\(\alpha\)</span>, etc), the eigenmodes of corresponding coupling matrices are found to capture very characteristic interactions for each class, e.g. rare disulfide contacts within small proteins and hydrophilic contacts between exposed residues. Their study confirms the qualitative observations presented above that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Coucke2016">
-<p>156. Coucke, A., Uguzzoni, G., Oteri, F., Cocco, S., Monasson, R., and Weigt, M. (2016). Direct coevolutionary couplings reflect biophysical residue interactions in proteins. J. Chem. Phys. <em>145</em>, 174102. Available at: <a href="http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156" class="uri">http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156</a>.</p>
+<p>179. Coucke, A., Uguzzoni, G., Oteri, F., Cocco, S., Monasson, R., and Weigt, M. (2016). Direct coevolutionary couplings reflect biophysical residue interactions in proteins. J. Chem. Phys. <em>145</em>, 174102. Available at: <a href="http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156" class="uri">http://scitation.aip.org/content/aip/journal/jcp/145/17/10.1063/1.4966156</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -404,7 +408,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

@@ -137,8 +137,6 @@ knitr::include_graphics("img/coupling_matrix_analysis/1aluA00_54_64.png")
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aluA00_54_64_notitle.html", height = "750px")
 ```
 
-
-
 ## Aromatic-Proline Interactions {#aromatic-proline}
 
 Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol )shows a proline and a tryptophan residue forming such a CH/$\pi$ interaction in protein 1aol.
@@ -164,6 +162,16 @@ knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aolA00_17_34_n
 ```{r aromatic-network, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-aromatic-network)'}
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 ```
+
+## Aromatic residues at short distance ranges
+
+(ref:caption-aromatic-residues-at-short-distances) Aromatic residues occuring at short $Cb-\Cb$ distances. Aromatic residues enjoy large rotational freedom in their $C_\alpha$-$\Cb$ bond and therefore the the bulky aromatic ring system can point into different directions allowing for short $\Cb$ distances.
+
+```{r aromatic-residues-at-short-distances, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-aromatic-residues-at-short-distances)'}
+knitr::include_graphics("img/coupling_matrix_analysis/aromatic_residues_short_distance.png")
+```
+
+
 
 # Optimizing Full Likelihood with Gradient Descent
 
@@ -267,6 +275,22 @@ knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_fo
 ```
 
 # Training of the Random Forest Contact Prior
+
+## Training Random Forest Model with pseudo-likelihood Feature
+
+(ref:caption-feature-importance-rf-with-pll-score) Top ten features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
+
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.html", height = "600px")
+```
+
+
+(ref:caption-feature-selection-rf-with-pll-score) Mean precision for top ranked contacts over 200 proteins for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). 
+
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
+```
+
 
 
 ## Evaluating window size with 5-fold Cross-validation {#rf-window-size}

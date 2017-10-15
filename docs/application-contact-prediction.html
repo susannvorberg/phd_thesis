@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-15">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="maxent.html">
+<link rel="next" href="intro-cp-evaluation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="2.1" data-path="local-methods.html"><a href="local-methods.html"><i class="fa fa-check"></i><b>2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="2.2" data-path="global-methods.html"><a href="global-methods.html"><i class="fa fa-check"></i><b>2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="2.3" data-path="meta-predictors.html"><a href="meta-predictors.html"><i class="fa fa-check"></i><b>2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="2.4" data-path="maxent.html"><a href="maxent.html"><i class="fa fa-check"></i><b>2.4</b> Modelling Protein Families with Potts Model</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="maxent.html"><a href="maxent.html#potts-model-properties"><i class="fa fa-check"></i><b>2.4.1</b> Model Properties</a></li>
+<li class="chapter" data-level="2.4.2" data-path="maxent.html"><a href="maxent.html#potts-mle"><i class="fa fa-check"></i><b>2.4.2</b> Inferring Parameters for the Potts Model</a></li>
+<li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
+<li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a></li>
+<li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>2.7</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>2.7.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="2.7.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>2.7.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="2.7.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>2.7.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="2.7.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>2.7.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="2.7.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>2.7.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="developing-a-bayesian-model-for-contact-prediction.html"><a href="developing-a-bayesian-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>3</b> Developing a Bayesian Model for Contact Prediction</a></li>
+<li class="chapter" data-level="4" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>4</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="4.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>4.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="4.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>4.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="4.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>4.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="4.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>4.4</b> Higher Order Dependencies Between Couplings</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>5</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="5.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>5.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="5.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>5.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>5.2.1</b> Varying the Sample Size</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>5.3</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="5.4" data-path="comparing-cd-couplings-to-pll-couplings.html"><a href="comparing-cd-couplings-to-pll-couplings.html"><i class="fa fa-check"></i><b>5.4</b> Comparing CD couplings to pLL couplings</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Distribution of Distances <span class="math inline">\(p(\r | \X)\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>6.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\rij\)</span></a></li>
+<li class="chapter" data-level="6.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>6.3</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>6.3.1</b> Iterative improvement of Laplace approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>6.4</b> Computing the likelihood function of distances <span class="math inline">\(p(\X | \r)\)</span></a></li>
+<li class="chapter" data-level="6.5" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>6.5</b> The posterior probability distribution for <span class="math inline">\(\rij\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
+<li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="7.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>7.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="7.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
+<li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html"><i class="fa fa-check"></i><b>8.2</b> Computing Pseudo-Likelihood Couplings</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>8.2.1</b> Differences between CCMpred and CCMpredpy</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="seq-reweighting.html"><a href="seq-reweighting.html"><i class="fa fa-check"></i><b>8.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="8.4" data-path="amino-acid-frequencies.html"><a href="amino-acid-frequencies.html"><i class="fa fa-check"></i><b>8.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="8.5" data-path="methods-regularization.html"><a href="methods-regularization.html"><i class="fa fa-check"></i><b>8.5</b> Regularization</a></li>
+<li class="chapter" data-level="8.6" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html"><i class="fa fa-check"></i><b>8.6</b> The Potts Model</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#gap-treatment"><i class="fa fa-check"></i><b>8.6.1</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="8.6.2" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>8.6.2</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="8.6.3" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#prior-v"><i class="fa fa-check"></i><b>8.6.3</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>8.7</b> Analysis of Coupling Matrices</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>8.7.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="8.7.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>8.7.2</b> Coupling Distribution Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>8.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#convergence-criterion-for-stochastic-gradient-descent"><i class="fa fa-check"></i><b>8.8.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="8.8.2" data-path="methods-sgd.html"><a href="methods-sgd.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>8.8.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+<li class="chapter" data-level="8.8.3" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>8.8.3</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="regularization-for-cd-with-sgd.html"><a href="regularization-for-cd-with-sgd.html"><i class="fa fa-check"></i><b>8.9</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="8.10" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>8.10</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>8.10.1</b> Varying the number of Gibbs Steps</a></li>
+</ul></li>
+<li class="chapter" data-level="8.11" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html"><i class="fa fa-check"></i><b>8.11</b> Bayesian Model for Residue-Resdiue Contact Prediction</a><ul>
+<li class="chapter" data-level="8.11.1" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>8.11.1</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="8.11.2" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>8.11.2</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="8.11.3" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#training-hyperparameters"><i class="fa fa-check"></i><b>8.11.3</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="8.11.4" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu"><i class="fa fa-check"></i><b>8.11.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span></a></li>
+<li class="chapter" data-level="8.11.5" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-lk"><i class="fa fa-check"></i><b>8.11.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="8.11.6" data-path="bayesian-model-for-residue-resdiue-contact-prediction.html"><a href="bayesian-model-for-residue-resdiue-contact-prediction.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>8.11.6</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.12" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>8.12</b> Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
+<li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
+</ul></li>
+<li class="chapter" data-level="8.13" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>8.13</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>8.13.1</b> Global Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>8.13.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="8.13.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>8.13.3</b> Pairwise Features</a></li>
+</ul></li>
+<li class="chapter" data-level="8.14" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>8.14</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="8.14.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.14.1</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a><ul>
+<li class="chapter" data-level="A.1" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>A.1</b> Amino Acid Alphabet</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>B</b> Dataset Properties</a><ul>
+<li class="chapter" data-level="B.1" data-path="alignment-diversity.html"><a href="alignment-diversity.html"><i class="fa fa-check"></i><b>B.1</b> Alignment Diversity</a></li>
+<li class="chapter" data-level="B.2" data-path="proportion-of-gaps-in-alignment.html"><a href="proportion-of-gaps-in-alignment.html"><i class="fa fa-check"></i><b>B.2</b> Proportion of Gaps in Alignment</a></li>
+<li class="chapter" data-level="B.3" data-path="alignment-size-number-of-sequences.html"><a href="alignment-size-number-of-sequences.html"><i class="fa fa-check"></i><b>B.3</b> Alignment Size (number of sequences)</a></li>
+<li class="chapter" data-level="B.4" data-path="protein-length.html"><a href="protein-length.html"><i class="fa fa-check"></i><b>B.4</b> Protein Length</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><a href="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><i class="fa fa-check"></i><b>C</b> Amino Acid Interaction Preferences Reflected in Coupling Matrices</a><ul>
+<li class="chapter" data-level="C.1" data-path="pi-cation.html"><a href="pi-cation.html"><i class="fa fa-check"></i><b>C.1</b> Pi-Cation interactions</a></li>
+<li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
+<li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
+<li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+<li class="chapter" data-level="C.5" data-path="aromatic-residues-at-short-distance-ranges.html"><a href="aromatic-residues-at-short-distance-ranges.html"><i class="fa fa-check"></i><b>C.5</b> Aromatic residues at short distance ranges</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
+<li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="D.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>D.2</b> Benchmarking learning rate schedules</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>D.2.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>D.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.1</b> Linear learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.2</b> Sigmoidal learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.3</b> Square root learning rate schedule</a></li>
+<li class="chapter" data-level="D.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>D.3.4</b> Exponential learning rate schedule</a></li>
+</ul></li>
+<li class="chapter" data-level="D.4" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>D.4</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
+<li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="E.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>E.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="application-contact-prediction" class="section level2">
+<h2><span class="header-section-number">2.5</span> Applications</h2>
+<p>The most popular and historically motivated application for contact prediction is contact-guided <em>denovo</em> structure prediction.</p>
+<p>It has long been known that the native protein 3D structure can be reconstructed from an error-free contact map <span class="citation">[<a href="#ref-Vendruscolo1997">98</a>]</span>. Also, protein fold reconstruction from sparse inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, Foerster resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated <span class="citation">[<a href="#ref-Li2004">99</a>–<a href="#ref-Aszodi1995a">104</a>]</span>. Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates <span class="citation">[<a href="#ref-Wu2011">105</a>,<a href="#ref-Tress2010">106</a>]</span>. Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in <em>denovo</em> structure prediction aided by predicted contacts. In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach <em>mfDCA</em> are sufficiently accurate to successfully deduce the native fold of the protein <span class="citation">[<a href="#ref-Marks2011">81</a>]</span>. In the following years, methods to predict contacts have been improved and applied to model many more protein structures culminating in the high-throughput prediction of 614 protein structures out of which more than 100 represent novel folds by Ovchinnikov and colleagues in 2017 <span class="citation">[<a href="#ref-Hopf2012">107</a>–<a href="#ref-Ovchinnikov2017">115</a>]</span>.</p>
+<p>Many contact-guided protocols have been established since, that typically integrate predicted contacts in form of distance constraints into an energy function to guide the conformational sampling process: Unicon3D <span class="citation">[<a href="#ref-Bhattacharya2016">116</a>]</span>, RASREC <span class="citation">[<a href="#ref-Braun2015">117</a>]</span>, RBOAleph <span class="citation">[<a href="#ref-Mabrouk2015a">118</a>]</span>, GDFuzz3D <span class="citation">[<a href="#ref-Pietal2015a">119</a>]</span>, PconsFold <span class="citation">[<a href="#ref-Michel2014">120</a>]</span>, C2S_Pipeline <span class="citation">[<a href="#ref-Konopka2014">121</a>]</span>, FRAGFOLD + PSICOV <span class="citation">[<a href="#ref-Kosciolek2014">122</a>]</span>, FILM3 <span class="citation">[<a href="#ref-Nugent2012">123</a>]</span>, EVFold <span class="citation">[<a href="#ref-Marks2011">81</a>]</span>. Figure <a href="application-contact-prediction.html#fig:contact-assisted-structure-prediction">2.4</a> presents a generalized structure prediction pipeline using predicted contacts.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:contact-assisted-structure-prediction"></span>
+<img src="img/intro/contact_assisted_structure_prediction.png" alt="Generalized structure prediction pipeline integrating predicted contacts in form of distance constraints that guide conformational sampling." width="100%" />
+<p class="caption">
+Figure 2.4: Generalized structure prediction pipeline integrating predicted contacts in form of distance constraints that guide conformational sampling.
+</p>
+</div>
+<p>The optimal quality of inferred contacts and their effective utilization is still subject to discussion and further research. It has been demonstrated that only a small subset of native contacts is sufficient to produce accurate structural models <span class="citation">[<a href="#ref-Chen2007">12</a>,<a href="#ref-Vendruscolo1997">98</a>,<a href="#ref-Konopka2014">121</a>,<a href="#ref-Kim2014">124</a>–<a href="#ref-Vassura2007">126</a>]</span>. Sathyapriya and colleagues developed a rational strategy to select important native contacts and successfully reconstructed the structure to near native resolution with only 8% of contacts <span class="citation">[<a href="#ref-Sathyapriya2009">125</a>]</span>. Kim and colleagues formulated that only one correct contact for every 12 residues in the protein is sufficient to allow accurate topology level modeling given that the contacts are nonlocal and broadly distributed <span class="citation">[<a href="#ref-Kim2014">124</a>]</span>. These studies emphasize that certain contacts are more important than others. Long-range contacts are rare and most informative for protein structure prediction because they define the overal fold and packing of tertiary structure whereas short-range contacts define local secondary structure <span class="citation">[<a href="#ref-Adhikari2017">127</a>]</span>. It is a consistent finding that eventhough long-range contacts are of higher relevance than short-range contacts for structure reconstruction, their information alone is not sufficient <span class="citation">[<a href="#ref-Kosciolek2014">122</a>,<a href="#ref-Sathyapriya2009">125</a>,<a href="#ref-DiLena2009a">128</a>]</span>. Since a small number of correct residue-residue contacts is sufficient to improve protein structure prediction and many reconstruction protocols can tolerate missing contact information much better than erroneous contact information, it has been stressed that methods development should focus on predicting a small number of high confident contacts <span class="citation">[<a href="#ref-Kim2014">124</a>,<a href="#ref-Duarte2010">129</a>]</span>. Marks and colleagues observed that isolated false positives have a much stronger detrimental effect on structure prediction than false positives close to true contacts <span class="citation">[<a href="#ref-Marks2011">81</a>]</span>. Zhang et al. found that their tool Touchstone II required an accuracy of long-range contact predictions of at least 22% to generate a positive effect to structure prediction <span class="citation">[<a href="#ref-Zhang2003">130</a>]</span>. Frequently, folding protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts <span class="citation">[<a href="#ref-Wang2016">131</a>,<a href="#ref-Adhikari2015a">132</a>]</span>. Generally it is assumed that higher precision of predicted long-range contacts results in improved structural models, albeit there is no strong correlation as model quality depends on many other factors such as the secondary structure composition of the protein, the domain size, the usage of additional sources of structural information, the type of distance constraint function and the particular structure reconstruction protocol <span class="citation">[<a href="#ref-Marks2011">81</a>,<a href="#ref-Kosciolek2014">122</a>,<a href="#ref-Adhikari2017">127</a>,<a href="#ref-Zhang2003">130</a>,<a href="#ref-DeOliveira2016">133</a>]</span>.</p>
+<p>Coevolution has not only been studied for residues pairs within a protein but also for residue pairs across protein–protein interfaces <span class="citation">[<a href="#ref-Ovchinnikov2014a">108</a>,<a href="#ref-Hopf2014">109</a>,<a href="#ref-Ovchinnikov2015a">114</a>,<a href="#ref-Rodriguez-Rivas2016">134</a>,<a href="#ref-Feinauer2016a">135</a>]</span>. Eventhough the methodology of detecting coevolving amino acid pairs from the <a href="abbrev.html#abbrev">MSA</a> is the same, a new challenge arises for the correct identification of orthologous interacting partners. Without the correct pairing of interacting partners for every species the detection of coevolutionary signals would be compromised. However, the generation of a <a href="abbrev.html#abbrev">MSA</a> of paired sequences is complicated in the presence of multiple paralogs of a gene in a single genome. The problem of paralog matching is visualized in Figure <a href="application-contact-prediction.html#fig:matching-sequences-ppi">2.5</a>. For prokaryotes, sequence paires are typically identified by exploiting the bacterial gene organisation in form of operons, i.e. co-localized genes will be co-expressed and are more likely to physically interact. Co-localisation of genes has also been applied to match genes from eurkaryotes, assuming that Uniprot accession numbers can be used as a proxy for genomic distances <span class="citation">[<a href="#ref-Feinauer2016a">135</a>]</span>. New strategies have been developed based on the idea that an alignment with correctly matched paralogs will maximize the coevolution score <span class="citation">[<a href="#ref-Gueudre2016">136</a>,<a href="#ref-Bitbol2016">137</a>]</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:matching-sequences-ppi"></span>
+<img src="img/intro/matching_sequences_ppi.png" alt="Concatenating two multiple sequence alignments. In case multiple paralogs exist for a gene in one species the correct interaction partner needs to be identified and matched (marked with arrows). Sequences that cannot be paired with a unique interaction partner need to be discarded (marked with x)." width="100%" />
+<p class="caption">
+Figure 2.5: Concatenating two multiple sequence alignments. In case multiple paralogs exist for a gene in one species the correct interaction partner needs to be identified and matched (marked with arrows). Sequences that cannot be paired with a unique interaction partner need to be discarded (marked with x).
+</p>
+</div>
+<p>A related objective is the study of the oligomerization status of proteins. The study of homo-oligomers is simplified in the sense that the identical protein sequence of both interaction partners renders the concatenation of two <a href="abbrev.html#abbrev">MSAs</a> unnessary and allows to work with one <a href="abbrev.html#abbrev">MSA</a>. A different challenge lies in the correct distinction between the physical contacts of the monomeric structure and the interprotein contacts. With the availability of monomeric structural data the idea is to filter out those high scoring contacts that form contacts in the monomeric structure or are located in the protein core. The remaining high scoring false positive contacts at the surface of the protein are potential contacts at the interface that can be incorporated into a docking protocol to drive complex formation <span class="citation">[<a href="#ref-Uguzzoni2017">138</a>,<a href="#ref-DosSantos2015a">139</a>]</span>.</p>
+<p>Contacts are also used to analyse potential alternative conformations of proteins <span class="citation">[<a href="#ref-Parisi2015a">140</a>–<a href="#ref-Jeon2011a">145</a>]</span>. Coevolutionary analysis detects all evolutionarily significant residue–residue correlations, regardless of whether the interaction is formed in a transient state of the protein or its stable form. Therefore, predicted contact maps might capture multiple states of a protein, since they are of functional importance and thus under evolutionary pressure. Sfriso and colleagues developed an automated pipiline that introduces filtered predicted contacts as ensemble restraints into a molecular dynamics simulations and is able to detect alternative relevant conformational states <span class="citation">[<a href="#ref-Sfriso2016">141</a>]</span>.</p>
+<p>Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology. Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts <span class="citation">[<a href="#ref-Tress2010">106</a>,<a href="#ref-Wozniak2017">146</a>]</span>. Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model <span class="citation">[<a href="#ref-Cao2016">147</a>,<a href="#ref-Terashi2014a">148</a>]</span>.</p>
+<p>As mentioned before, methods for protein fold reconstruction from experimental distance constraints have been successfully applied for many years. Several integrative approaches have been developed that combine complementary sources of sparse structural constraints, including predicted contacts, to accurately determine protein structure <span class="citation">[<a href="#ref-Tang2015">149</a>,<a href="#ref-Ward2013">150</a>]</span>.</p>
+<p>Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains <span class="citation">[<a href="#ref-Sadowski2013">151</a>]</span>.</p>
+<p>Eventhough the coevolutionary methods have been developed for proteins, they have been successfully applied to analyse nucleotide coevolution and to predict RNA tertiary structures with the help of predicted nucleotide-nucleotide contacts <span class="citation">[<a href="#ref-Nawy2016">152</a>–<a href="#ref-DeLeonardis2015a">154</a>]</span>. Much less RNA sequences are required compared to protein sequences in order to extract statistically significant signals because of the reduced number of model parameters when working with a four letter alphabet (compared to a 20 letter alphabet with proteins). On the downside, alignment errors resulting from the complicated determination of RNA multiple sequence alignments limits the accuracy of coevolution analysis <span class="citation">[<a href="#ref-DeLeonardis2015a">154</a>]</span>. Despite the diminished accuracy, predicted nucleotide contacts have been demonstrated to improve RNA structure prediction over conventional methods <span class="citation">[<a href="#ref-Weinreb2015">153</a>]</span>.</p>
+<p>The stastistical models used for coevolution analysis provide information about which residue pairs are important in evolution for folding or functional constraints. They can be used to assign probabilities to sequences that reflect the overal compliance of a sequence with the protein family under study and thereby provide quantitative predictions of mutational effects <span class="citation">[<a href="#ref-Hopf2017">155</a>–<a href="#ref-Figliuzzi2015">157</a>]</span>. Computational screening of mutational effects can support and complement the costly and time-consuming directed evolution or mutational screening experiments <span class="citation">[<a href="#ref-Hopf2017">155</a>]</span>. With a similar idea in mind, the coevolution models have been applied to sequences of human immune repertoires <span class="citation">[<a href="#ref-Asti2016">158</a>,<a href="#ref-Elhanati2014">159</a>]</span>. Antibody affinity maturation can be viewed as a Darwinian process with the affinity to the target antigen being the main fitness criterion. Therefore, given the model representing the antibody sequence family, the probability for a sequence reflects the binding affinity to the target antigen. Quantifying the effect of mutations is also helpful for protein design. Coevolving positions might be of particular interest as hotspots for engineering protein stability or functional specificity because they determine positions relevant to protein structure and function <span class="citation">[<a href="#ref-Franceus2016">160</a>]</span>.</p>
+<p>Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called <em>genomeDCA</em> <span class="citation">[<a href="#ref-Skwark2017">161</a>]</span>. They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure. In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.</p>
+<p>Fox and colleagues turn the idea of <a href="abbrev.html#abbrev">DCA</a> upside down. They developed a benchmark for testing the accuracy of large <a href="abbrev.html#abbrev">MSAs</a> by evaluating the agreeement between the predicted and the native contacts <span class="citation">[<a href="#ref-Fox2016">162</a>]</span>. Based on the assumption that better alignments provide more accurate contact predictions, the alignment quality is inferred from the precision of predicted contacts.</p>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Vendruscolo1997">
+<p>98. Vendruscolo, M., Kussell, E., and Domany, E. (1997). Recovery of protein structure from contact maps. Fold. Des. <em>2</em>, 295–306. Available at: <a href="http://dx.doi.org/10.1016/S1359-0278(97)00041-2" class="uri">http://dx.doi.org/10.1016/S1359-0278(97)00041-2</a>.</p>
+</div>
+<div id="ref-Li2004">
+<p>99. Li, W., Zhang, Y., and Skolnick, J. (2004). Application of sparse NMR restraints to large-scale protein structure prediction. Biophys. J. <em>87</em>, 1241–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15298926 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1304462" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15298926 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1304462</a>.</p>
+</div>
+<div id="ref-Aszodi1995a">
+<p>104. Aszódi, A., Taylor, W.R., and Gradwell, M.J. (1995). Global Fold Determination from a Small Number of Distance Restraints. J. Mol. Biol. <em>251</em>, 308–326. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S0022283685704366?via{\%}3Dihub" class="uri">http://www.sciencedirect.com/science/article/pii/S0022283685704366?via{\%}3Dihub</a>.</p>
+</div>
+<div id="ref-Wu2011">
+<p>105. Wu, S., Szilagyi, A., and Zhang, Y. (2011). Improving protein structure prediction using multiple sequence-based contact predictions. Structure <em>19</em>, 1182–91. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3154634{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3154634{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Tress2010">
+<p>106. Tress, M.L., and Valencia, A. (2010). Predicted residue-residue contacts can help the scoring of 3D models. Proteins Struct. Funct. Bioinforma. <em>78</em>, NA–NA. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/20408174 http://doi.wiley.com/10.1002/prot.22714" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/20408174 http://doi.wiley.com/10.1002/prot.22714</a>.</p>
+</div>
+<div id="ref-Marks2011">
+<p>81. Marks, D.S., Colwell, L.J., Sheridan, R., Hopf, T.A., Pagnani, A., Zecchina, R., and Sander, C. (2011). Protein 3D structure computed from evolutionary sequence variation. PLoS One <em>6</em>, e28766. Available at: <a href="http://dx.plos.org/10.1371/journal.pone.0028766" class="uri">http://dx.plos.org/10.1371/journal.pone.0028766</a>.</p>
+</div>
+<div id="ref-Hopf2012">
+<p>107. Hopf, T.A., Colwell, L.J., Sheridan, R., Rost, B., Sander, C., and Marks, D.S. (2012). Three-dimensional structures of membrane proteins from genomic sequencing. Cell <em>149</em>, 1607–21. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3641781{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Ovchinnikov2017">
+<p>115. Ovchinnikov, S., Park, H., Varghese, N., Huang, P.-S., Pavlopoulos, G.A., Kim, D.E., Kamisetty, H., Kyrpides, N.C., and Baker, D. (2017). Protein structure determination using metagenome sequence data. Science <em>355</em>, 294–298. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28104891 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5493203" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28104891 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5493203</a>.</p>
+</div>
+<div id="ref-Bhattacharya2016">
+<p>116. Bhattacharya, D., Cao, R., and Cheng, J. (2016). UniCon3D: de novo protein structure prediction using united-residue conformational search via stepwise, probabilistic sampling. Bioinformatics, btw316. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27259540" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27259540</a>.</p>
+</div>
+<div id="ref-Braun2015">
+<p>117. Braun, T., Koehler Leman, J., and Lange, O.F. (2015). Combining Evolutionary Information and an Iterative Sampling Strategy for Accurate Protein Structure Prediction. PLoS Comput. Biol. <em>11</em>, e1004661. Available at: <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004661" class="uri">http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004661</a>.</p>
+</div>
+<div id="ref-Mabrouk2015a">
+<p>118. Mabrouk, M., Putz, I., Werner, T., Schneider, M., Neeb, M., Bartels, P., and Brock, O. (2015). RBO Aleph: leveraging novel information sources for protein structure prediction. Nucleic Acids Res. <em>43</em>, W343–8. Available at: <a href="http://nar.oxfordjournals.org/content/43/W1/W343" class="uri">http://nar.oxfordjournals.org/content/43/W1/W343</a>.</p>
+</div>
+<div id="ref-Pietal2015a">
+<p>119. Pietal, M.J., Bujnicki, J.M., and Kozlowski, L.P. (2015). GDFuzz3D: a method for protein 3D structure reconstruction from contact maps, based on a non-Euclidean distance function. Bioinformatics, btv390. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/07/23/bioinformatics.btv390" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/07/23/bioinformatics.btv390</a>.</p>
+</div>
+<div id="ref-Michel2014">
+<p>120. Michel, M., Hayat, S., Skwark, M.J., Sander, C., Marks, D.S., and Elofsson, A. (2014). PconsFold: improved contact predictions improve protein models. Bioinformatics <em>30</em>, i482–i488. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/30/17/i482.long" class="uri">http://bioinformatics.oxfordjournals.org/content/30/17/i482.long</a>.</p>
+</div>
+<div id="ref-Konopka2014">
+<p>121. Konopka, B.M., Ciombor, M., Kurczynska, M., and Kotulska, M. (2014). Automated Procedure for Contact-Map-Based Protein Structure Reconstruction. J. Membr. Biol. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/24682239" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/24682239</a>.</p>
+</div>
+<div id="ref-Kosciolek2014">
+<p>122. Kosciolek, T., and Jones, D.T. (2014). De novo structure prediction of globular proteins aided by sequence variation-derived contacts. PLoS One <em>9</em>, e92197. Available at: <a href="http://dx.plos.org/10.1371/journal.pone.0092197" class="uri">http://dx.plos.org/10.1371/journal.pone.0092197</a>.</p>
+</div>
+<div id="ref-Nugent2012">
+<p>123. Nugent, T., and Jones, D.T. (2012). Accurate de novo structure prediction of large transmembrane protein domains using fragment-assembly and correlated mutation analysis. Proc. Natl. Acad. Sci. U. S. A. <em>109</em>, E1540–7. Available at: <a href="http://www.pnas.org/content/early/2012/05/21/1120036109" class="uri">http://www.pnas.org/content/early/2012/05/21/1120036109</a>.</p>
+</div>
+<div id="ref-Chen2007">
+<p>12. Chen, Y., Ding, F., and Dokholyan, N.V. (2007). Fidelity of the Protein Structure Reconstruction from Inter-Residue Proximity Constraints. J. Phys. Chem. B <em>111</em>, 7432–7438. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/17542631 http://pubs.acs.org/doi/abs/10.1021/jp068963t" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/17542631 http://pubs.acs.org/doi/abs/10.1021/jp068963t</a>.</p>
+</div>
+<div id="ref-Kim2014">
+<p>124. Kim, D.E., Dimaio, F., Yu-Ruei Wang, R., Song, Y., and Baker, D. (2014). One contact for every twelve residues allows robust and accurate topology-level protein structure modeling. Proteins <em>82 Suppl 2</em>, 208–18. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23900763" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23900763</a>.</p>
+</div>
+<div id="ref-Vassura2007">
+<p>126. Vassura, M., Margara, L., Di Lena, P., Medri, F., Fariselli, P., and Casadio, R. (2007). Reconstruction of 3D structures from protein contact maps. IEEE/ACM Trans. Comput. Biol. Bioinform. <em>5</em>, 357–67. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18670040" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18670040</a>.</p>
+</div>
+<div id="ref-Sathyapriya2009">
+<p>125. Sathyapriya, R., Duarte, J.M., Stehr, H., Filippis, I., and Lappe, M. (2009). Defining an essence of structure determining residue contacts in proteins. PLoS Comput. Biol. <em>5</em>, e1000584. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000584" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000584</a>.</p>
+</div>
+<div id="ref-Adhikari2017">
+<p>127. Adhikari, B., Bhattacharya, D., Cao, R., and Cheng, J. (2017). Assessing Predicted Contacts for Building Protein Three-Dimensional Models. Methods Mol. Biol. <em>1484</em>, 115–126. Available at: <a href="http://link.springer.com/10.1007/978-1-4939-6406-2{\_}9" class="uri">http://link.springer.com/10.1007/978-1-4939-6406-2{\_}9</a>.</p>
+</div>
+<div id="ref-DiLena2009a">
+<p>128. Di Lena, P., Vassura, M., Margara, L., Fariselli, P., and Casadio, R. (2009). On the Reconstruction of Three-dimensional Protein Structures from Contact Maps. Algorithms <em>2</em>, 76–92. Available at: <a href="http://www.mdpi.com/1999-4893/2/1/76" class="uri">http://www.mdpi.com/1999-4893/2/1/76</a>.</p>
+</div>
+<div id="ref-Duarte2010">
+<p>129. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe, M. (2010). Optimal contact definition for reconstruction of contact maps. BMC Bioinformatics <em>11</em>, 283. Available at: <a href="http://www.biomedcentral.com/1471-2105/11/283" class="uri">http://www.biomedcentral.com/1471-2105/11/283</a>.</p>
+</div>
+<div id="ref-Zhang2003">
+<p>130. Zhang, Y., Kolinski, A., and Skolnick, J. (2003). TOUCHSTONE II: a new approach to ab initio protein structure prediction. Biophys. J. <em>85</em>, 1145–64. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=1303233{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=1303233{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Wang2016">
+<p>131. Wang, S., Li, W., Zhang, R., Liu, S., and Xu, J. (2016). CoinFold: a web server for protein contact prediction and contact-assisted protein folding. Nucleic Acids Res., gkw307. Available at: <a href="http://nar.oxfordjournals.org/content/early/2016/04/25/nar.gkw307.long" class="uri">http://nar.oxfordjournals.org/content/early/2016/04/25/nar.gkw307.long</a>.</p>
+</div>
+<div id="ref-Adhikari2015a">
+<p>132. Adhikari, B., Bhattacharya, D., Cao, R., and Cheng, J. (2015). CONFOLD: Residue-residue contact-guided ab initio protein folding. Proteins <em>83</em>, 1436–49. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/25974172" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/25974172</a>.</p>
+</div>
+<div id="ref-DeOliveira2016">
+<p>133. Oliveira, S.H.P. de, Shi, J., and Deane, C.M. (2016). Comparing co-evolution methods and their application to template-free protein structure prediction. Bioinformatics, btw618. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27682254" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27682254</a>.</p>
+</div>
+<div id="ref-Ovchinnikov2014a">
+<p>108. Ovchinnikov, S., Kamisetty, H., and Baker, D. (2014). Robust and accurate prediction of residue-residue interactions across protein interfaces using evolutionary information. Elife <em>3</em>, e02030. Available at: <a href="http://elifesciences.org/content/3/e02030.abstract" class="uri">http://elifesciences.org/content/3/e02030.abstract</a>.</p>
+</div>
+<div id="ref-Hopf2014">
+<p>109. Hopf, T.A., Schärfe, C.P.I., Rodrigues, J.P.G.L.M., Green, A.G., Sander, C., Bonvin, A.M.J.J., and Marks, D.S. (2014). Sequence co-evolution gives 3D contacts and structures of protein complexes. Available at: <a href="http://arxiv.org/abs/1405.0929" class="uri">http://arxiv.org/abs/1405.0929</a>.</p>
+</div>
+<div id="ref-Ovchinnikov2015a">
+<p>114. Ovchinnikov, S., Kinch, L., Park, H., Liao, Y., Pei, J., Kim, D.E., Kamisetty, H., Grishin, N.V., and Baker, D. (2015). Large scale determination of previously unsolved protein structures using evolutionary information. Elife <em>4</em>, e09248. Available at: <a href="http://elifesciences.org/content/early/2015/09/03/eLife.09248.abstract" class="uri">http://elifesciences.org/content/early/2015/09/03/eLife.09248.abstract</a>.</p>
+</div>
+<div id="ref-Rodriguez-Rivas2016">
+<p>134. Rodriguez-Rivas, J., Marsili, S., Juan, D., and Valencia, A. (2016). Conservation of coevolving protein interfaces bridges prokaryote-eukaryote homologies in the twilight zone. Proc. Natl. Acad. Sci. U. S. A. <em>113</em>, 15018–15023. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27965389 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5206536" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27965389 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5206536</a>.</p>
+</div>
+<div id="ref-Feinauer2016a">
+<p>135. Feinauer, C., Szurmant, H., Weigt, M., and Pagnani, A. (2016). Inter-Protein Sequence Co-Evolution Predicts Known Physical Interactions in Bacterial Ribosomes and the Trp Operon. PLoS One <em>11</em>, e0149166. Available at: <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0149166" class="uri">http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0149166</a>.</p>
+</div>
+<div id="ref-Gueudre2016">
+<p>136. Gueudré, T., Baldassi, C., Zamparo, M., Weigt, M., and Pagnani, A. (2016). Simultaneous identification of specifically interacting paralogs and inter-protein contacts by Direct-Coupling Analysis. 19. Available at: <a href="http://arxiv.org/abs/1605.03745" class="uri">http://arxiv.org/abs/1605.03745</a>.</p>
+</div>
+<div id="ref-Bitbol2016">
+<p>137. Bitbol, A.-F., Dwyer, R.S., Colwell, L.J., and Wingreen, N.S. (2016). Inferring interaction partners from protein sequences. Proc. Natl. Acad. Sci. <em>113</em>, 12180–12185. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27663738 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5087060 http://www.pnas.org/lookup/doi/10.1073/pnas.1606762113" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27663738 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5087060 http://www.pnas.org/lookup/doi/10.1073/pnas.1606762113</a>.</p>
+</div>
+<div id="ref-Uguzzoni2017">
+<p>138. Uguzzoni, G., John Lovis, S., Oteri, F., Schug, A., Szurmant, H., and Weigt, M. (2017). Large-scale identification of coevolution signals across homo-oligomeric protein interfaces by direct coupling analysis. Proc. Natl. Acad. Sci. <em>114</em>, E2662–E2671. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28289198 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5380090 http://www.pnas.org/lookup/doi/10.1073/pnas.1615068114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28289198 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5380090 http://www.pnas.org/lookup/doi/10.1073/pnas.1615068114</a>.</p>
+</div>
+<div id="ref-DosSantos2015a">
+<p>139. Dos Santos, R.N., Morcos, F., Jana, B., Andricopulo, A.D., and Onuchic, J.N. (2015). Dimeric interactions and complex formation using direct coevolutionary couplings. Sci. Rep. <em>5</em>, 13652. Available at: <a href="http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html" class="uri">http://www.nature.com/srep/2015/150904/srep13652/full/srep13652.html</a>.</p>
+</div>
+<div id="ref-Parisi2015a">
+<p>140. Parisi, G., Zea, D.J., Monzon, A.M., and Marino-Buslje, C. (2015). Conformational diversity and the emergence of sequence signatures during evolution. Curr. Opin. Struct. Biol. <em>32C</em>, 58–65. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S0959440X15000147" class="uri">http://www.sciencedirect.com/science/article/pii/S0959440X15000147</a>.</p>
+</div>
+<div id="ref-Jeon2011a">
+<p>145. Jeon, J., Nam, H.-J., Choi, Y.S., Yang, J.-S., Hwang, J., and Kim, S. (2011). Molecular evolution of protein conformational changes revealed by a network of evolutionarily coupled residues. Mol. Biol. Evol. <em>28</em>, 2675–85. Available at: <a href="http://mbe.oxfordjournals.org/content/28/9/2675.full" class="uri">http://mbe.oxfordjournals.org/content/28/9/2675.full</a>.</p>
+</div>
+<div id="ref-Sfriso2016">
+<p>141. Sfriso, P., Duran-Frigola, M., Mosca, R., Emperador, A., Aloy, P., and Orozco, M. (2016). Residues Coevolution Guides the Systematic Identification of Alternative Functional Conformations in Proteins. Structure <em>24</em>, 116–126. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S0969212615004657" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S0969212615004657</a>.</p>
+</div>
+<div id="ref-Wozniak2017">
+<p>146. Woźniak, P., Kotulska, M., and Vriend, G. (2017). Correlated mutations distinguish misfolded and properly folded proteins. Bioinformatics <em>33</em>, 1497–1504.</p>
+</div>
+<div id="ref-Cao2016">
+<p>147. Cao, R., Adhikari, B., Bhattacharya, D., Sun, M., Hou, J., and Cheng, J. (2016). QAcon: single model quality assessment using protein structural and contact information with machine learning techniques. Bioinformatics <em>14</em>, btw694. Available at: <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btw694" class="uri">https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btw694</a>.</p>
+</div>
+<div id="ref-Terashi2014a">
+<p>148. Terashi, G., Nakamura, Y., Shimoyama, H., and Takeda-Shitaka, M. (2014). Quality Assessment Methods for 3D Protein Structure Models Based on a Residue–Residue Distance Matrix Prediction. Chem. Pharm. Bull. <em>62</em>, 744–753. Available at: <a href="https://www.jstage.jst.go.jp/article/cpb/62/8/62{\_}c13-00973/{\_}article" class="uri">https://www.jstage.jst.go.jp/article/cpb/62/8/62{\_}c13-00973/{\_}article</a>.</p>
+</div>
+<div id="ref-Tang2015">
+<p>149. Tang, Y., Huang, Y.J., Hopf, T.A., Sander, C., Marks, D.S., and Montelione, G.T. (2015). Protein structure determination by combining sparse NMR data with evolutionary couplings. Nat. Methods <em>advance on</em>. Available at: <a href="http://dx.doi.org/10.1038/nmeth.3455" class="uri">http://dx.doi.org/10.1038/nmeth.3455</a>.</p>
+</div>
+<div id="ref-Ward2013">
+<p>150. Ward, A.B., Sali, A., and Wilson, I.A. (2013). Biochemistry. Integrative structural biology. Science <em>339</em>, 913–5. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23430643 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3633482" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23430643 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3633482</a>.</p>
+</div>
+<div id="ref-Sadowski2013">
+<p>151. Sadowski, M.I. (2013). Prediction of protein domain boundaries from inverse covariances. Proteins <em>81</em>, 253–60. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/22987736 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3563215" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/22987736 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3563215</a>.</p>
+</div>
+<div id="ref-Nawy2016">
+<p>152. Nawy, T. (2016). Structural biology: RNA structure from sequence. Nat. Methods <em>13</em>, 465–465. Available at: <a href="http://dx.doi.org/10.1038/nmeth.3892" class="uri">http://dx.doi.org/10.1038/nmeth.3892</a>.</p>
+</div>
+<div id="ref-DeLeonardis2015a">
+<p>154. De Leonardis, E., Lutz, B., Ratz, S., Cocco, S., Monasson, R., Schug, A., and Weigt, M. (2015). Direct-Coupling Analysis of nucleotide coevolution facilitates RNA secondary and tertiary structure prediction. Nucleic Acids Res., gkv932. Available at: <a href="http://nar.oxfordjournals.org/content/early/2015/09/29/nar.gkv932.full" class="uri">http://nar.oxfordjournals.org/content/early/2015/09/29/nar.gkv932.full</a>.</p>
+</div>
+<div id="ref-Weinreb2015">
+<p>153. Weinreb, C., Gross, T., Sander, C., and Marks, D.S. (2015). 3D RNA from evolutionary couplings. Available at: <a href="http://arxiv.org/abs/1510.01420" class="uri">http://arxiv.org/abs/1510.01420</a>.</p>
+</div>
+<div id="ref-Hopf2017">
+<p>155. Hopf, T.A., Ingraham, J.B., Poelwijk, F.J., Schärfe, C.P.I., Springer, M., Sander, C., and Marks, D.S. (2017). Mutation effects predicted from sequence co-variation. Nat. Biotechnol. <em>35</em>, 128–135. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28092658 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5383098 http://www.nature.com/doifinder/10.1038/nbt.3769" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28092658 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5383098 http://www.nature.com/doifinder/10.1038/nbt.3769</a>.</p>
+</div>
+<div id="ref-Figliuzzi2015">
+<p>157. Figliuzzi, M., Jacquier, H., Schug, A., Tenaillon, O., and Weigt, M. (2015). Coevolutionary landscape inference and the context-dependence of mutations in beta-lactamase TEM-1. Mol. Biol. Evol., msv211. Available at: <a href="http://mbe.oxfordjournals.org/content/early/2015/10/06/molbev.msv211.abstract" class="uri">http://mbe.oxfordjournals.org/content/early/2015/10/06/molbev.msv211.abstract</a>.</p>
+</div>
+<div id="ref-Asti2016">
+<p>158. Asti, L., Uguzzoni, G., Marcatili, P., and Pagnani, A. (2016). Maximum-Entropy Models of Sequenced Immune Repertoires Predict Antigen-Antibody Affinity. PLoS Comput. Biol. <em>12</em>, e1004870. Available at: <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004870" class="uri">http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004870</a>.</p>
+</div>
+<div id="ref-Elhanati2014">
+<p>159. Elhanati, Y., Murugan, A., Callan, C.G., Mora, T., and Walczak, A.M. (2014). Quantifying selection in immune receptor repertoires. Proc. Natl. Acad. Sci. U. S. A. <em>111</em>, 9875–80. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/24941953 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4103359" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/24941953 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4103359</a>.</p>
+</div>
+<div id="ref-Franceus2016">
+<p>160. Franceus, J., Verhaeghe, T., and Desmet, T. (2016). Correlated positions in protein evolution and engineering. J. Ind. Microbiol. Biotechnol., 1–9. Available at: <a href="http://link.springer.com/10.1007/s10295-016-1811-1" class="uri">http://link.springer.com/10.1007/s10295-016-1811-1</a>.</p>
+</div>
+<div id="ref-Skwark2017">
+<p>161. Skwark, M.J., Croucher, N.J., Puranen, S., Chewapreecha, C., Pesonen, M., Xu, Y.Y., Turner, P., Harris, S.R., Beres, S.B., and Musser, J.M. <em>et al.</em> (2017). Interacting networks of resistance, virulence and core machinery genes identified by genome-wide epistasis analysis. PLOS Genet. <em>13</em>, e1006508. Available at: <a href="http://dx.plos.org/10.1371/journal.pgen.1006508" class="uri">http://dx.plos.org/10.1371/journal.pgen.1006508</a>.</p>
+</div>
+<div id="ref-Fox2016">
+<p>162. Fox, G., Sievers, F., and Higgins, D.G. (2016). Using de novo protein structure predictions to measure the quality of very large multiple sequence alignments. Bioinformatics <em>32</em>, 814–20. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26568625" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26568625</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="maxent.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intro-cp-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-intro-contact-prediction.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

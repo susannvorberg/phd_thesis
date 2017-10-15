@@ -57,9 +57,68 @@ The random forest model cannot distinguish between correlated features and it wi
 Furthermore, it has been found that feature selection based on *Gini importance* is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores [@Strobl2007].
 
 
+## Hyperparameter Optimization for Random Forest
+
+There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime.
+While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. 
+A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree [@Bernard2009].
+Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. 
+Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. 
+In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. 
+Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal leaf node size regarding the minimal number of data samples ending in a leaf node. 
+Again, a positive side-effect of pruning and requiring minimal leaf node size is a speedup of the algorithm. [@Louppe2014]
+
+
+In the following, I use 5-fold cross-validation to identify the optimal architecture of the random forest.
+Details about the training set and he cross-validation procedure can be found  in method section \@ref(rf-training).
+First I assessed performance of models for combinations of the parameter *n_estimators*, defining the number of trees in the forest and the parameter *max_depth* defining the maximum depth of the trees:
+
+- *n_estimators* $\in \{100,500,1000\}$
+- *max_depth* $\in \{10, 100, 1000, None\}$
+
+Figure \@ref(fig:rf-gridsearch-nestimators-maxfeatures) shows that the top five parameter combinations perform nearly identical. 
+Random forests with 1000 trees perform slightly better than models constituting 500 trees, irrespective of the depth of the trees.
+In order to keep model complexity small, I chose `n_estimators=1000` and `max_depth=100` for further analysis.
+
+
+(ref:caption-rf-gridsearch-nestimators-maxfeatures) Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of *n_estimators* and *max_depth*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five highest mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and maximum depth of trees of either 100, 1000 or unrestricted tree depth perform nearly identical (lines overlap). Random forest models with 500 trees and *max_depth*=10 or *max_depth*=100 perform slightly worse.
+
+```{r rf-gridsearch-nestimators-maxfeatures, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-rf-gridsearch-nestimators-maxfeatures)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html", height = "600px")
+```
+
+Next, I optimized the parameters *min_samples_leaf*, defining the minimum number of samples required at a leaf node and *max_features*, defining the number of randomly selected features considered for each split using the following settings:
+
+- *min_samples_leaf* $\in \{1, 10, 100\}$
+- *max_features* $\in \{8, 16, 38, 75 \}$ representing $\sqrt{N}$, $\log2{N}$, $0.15N$ and $0.3N$ respectively with $N=250$ being the number of features listed in method section \@ref(seq-features).
+
+Randomly selecting 30% of features (=75 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure \@ref(fig:rf-gridsearch-maxdepth-minsampleleaf).
+I chose `max_features=0.30` and `min_samples_leaf=10` for further analysis.
+Tuning the hyperparameters in a different order or on a larger dataset gives similar results.
+
+
+(ref:rf-gridsearch-maxdepth-minsampleleaf) Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of *min_samples_leaf* and *max_features*.  Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
+
+```{r rf-gridsearch-maxdepth-minsampleleaf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:rf-gridsearch-maxdepth-minsampleleaf)'}
+knitr::include_url("img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.html", height = "600px")
+```
+
+In a next step I assessed dataset specific settings, such as the window size over which single positions features will be computed, the distance threshold to define non-contacts and the optimal proportions of contacts and non-contacts in the training set.
+I used the previously identified settings of random forest hyperparameters (`n_estimators=1000, min_samples_leaf=10, max_depth=100, max_features=0.30`).
+
+- proportion of contacts/non-contacts $\in \{1\!:\!2, 1\!:\!5, 1\!:\!10, 1\!:\!20 \}$ while keeping total dataset size fixed at 300,000 residue pairs
+- window size:  $\in \{5, 7, 9, 11\}$
+- non-contact threshold $\in \{8, 15, 20\}$
+
+As can be seen in appendix \@ref(rf-window-size) and \@ref(rf-noncontact-threshold), the default choice of using a window size of five positions and the non-contact threshold of $8 \angstrom$ proves to be the optimal setting.
+Furthermore, using five-times as many non-contacts as contacts in the training set results in highest mean precision as can be seen in appendix \@ref(rf-ratio-noncontacts). 
+These estimates might be biased in a way since the random forest hyperparameters have been optimized on a dataset using exactly these optimal settings. 
+
+
+
 ## Evaluating Random Forest Model as Contact Predictor
 
-I trained a random forest classifier on the feature set described in methods section \@ref(seq-features) and optimized model hyperparameters as well as some data set specific settings (e.g window size and class ratios) with 5-fold cross-validation as described in methods section \@ref(rf-hyperparameter-optimization).
+I trained a random forest classifier on the feature set described in methods section \@ref(seq-features) and using the optimal hyperparameters identified with 5-fold cross-validation as described in the last section. 
 
 Figure \@ref(fig:rf-feature-importance) shows the ranking of the ten most important features according to *Gini importance*.
 Both local statistical contact scores, *OMES* [@Fodor2004a] and [MI](#abbrev) (mutual information between amino acid counts), constitute the most important features besides the mean pair potentials acording to Miyazawa & Jernigan [@Miyazawa1999a] and Li&Fang[@Li2011].
@@ -71,8 +130,13 @@ Further important features include the relative solvent accessibility at both pa
 knitr::include_url("img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures.html", height = "600px")
 ```
 
-Many features have low *Gini importance* scores which means they are rarely considered for splitting a node and can likely be removed from the dataset. 
+Many features have low *Gini importance* scores which means they are rarely considered for splitting a node and can most likely be removed from the dataset. 
 Removing irrelevant features from the dataset is a convenient procedure to reduce model complexity.
+It has been found, that prediction performance might even increase after removing the most irrelevant features [@Menze2009].
+For example, during the development of *EPSILON-CP*, a deep neural network method for contact prediction, the authors performed feature selection using boosted trees.
+By removing 75% of the most non-informative features (mostly features related to amino acid composition), the performance of their predictor increased slightly [@Stahl2017]. 
+Other studies have also emphasized the importance of feature selection to improve performance and reduce model complexity [@Cheng2007; @Li2011].
+
 As described in methods section \@ref(rf-feature-selection), I performed feature selection by evaluating model performance on subsets of features of decreasing importance.
 Most models trained on subsets of the total feature space perform nearly identical compared to the model trained on all features, as can be seen in Figure \@ref(fig:rf-feature-selection-performance).
 Performance of the random forest models drops noticeably when using only the 25 most important features.
@@ -110,10 +174,12 @@ knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_b
 
 
 
-
 Figure \@ref(fig:performance-neff-rf) showed that the random forest predictor improves over the pseudo-likelihood coevolution method when the alignment consists of only few sequences. 
-In order to assess this improvement in a more direct manner, it is possible to build a combined random forest predictor that is not only trained on the sequence derived features but also on the pseudo-likelihood contact score as an additional feature (see methods section \@ref(rf-with-pll-score) for details). 
-As expected, the pseudo-likelihood score comprises the most important feature in the model (Figure \@ref(fig:feature-importance-rf-with-pll-score) in methods section) followed by the same sequence features that were found in the previous analysis in Figure \@ref(fig:rf-feature-importance).
+In order to assess this improvement in a more direct manner, it is possible to build a combined random forest predictor that is not only trained on the sequence derived features but also on the pseudo-likelihood contact score as an additional feature. 
+As expected, the pseudo-likelihood score comprises the most important feature in the model (see Appendix Figure \@ref(fig:feature-importance-rf-with-pll-score)) followed by the same sequence features that were found in the previous analysis in Figure \@ref(fig:rf-feature-importance).
+Models trained on subsets of features as described in method section \@ref(rf-feature-selection) perform equally well as the model trained on the complete set of features (see Appendix Figure \@ref(fig:feature-selection-rf-with-pll-score)).
+Only the model trained on the 26 most important features has slighlty decreased precision for the top L/10 ranked contacts. 
+The model trained on 76 features was selected as the final model.
 
 Finally, comparing the random forest model trained on sequence features and pseudo-likelihood contact score to the pseudo-likelihood score in Figure \@ref(fig:performance-rf) reveals that combining both types of information indeed improves predictive power over both single approaches.
 Especially for small alignments, the improvement is substantial as can be seen in in the left upper plot in Figure \@ref(fig:performance-neff-rf).

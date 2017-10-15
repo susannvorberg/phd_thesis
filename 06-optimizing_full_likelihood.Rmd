@@ -183,6 +183,15 @@ knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/1c75A00_gradient_n
 
 
 
+Scatter Plots for couplings wijab:
+nice correlation - pearson correlation?
+gibt 3 outlier und das sind auch noch die staerksten couplings
+hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)
+
+```{r comapring-cd-pll-scatter1, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
+knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html", height = "600px")
+```
+
 
 Boxplots for couplings wijab: 
 sieht ma nicht viel
@@ -191,6 +200,19 @@ sieht ma nicht viel
 knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score.html", height = "600px")
 ```
 
+
+---
+
+
+Scatter for l2norm over couplings ||wij||_2: 
+hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL
+und man sieht die drei outlier
+
+```{r comparing-cd-pll-scatter2, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
+knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html", height = "600px")
+```
+
+
 Boxplots for l2norm over couplings ||wij||_2: 
 contrastive divergence hat kleineren scores
 signifikant?
@@ -198,6 +220,22 @@ signifikant?
 
 ```{r comapring-cd-pll-boxplot2, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
 knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcFalse.html", height = "600px")
+```
+
+
+---
+
+Scatter for l2norm-apc over couplings ||wij||_2 - apc: 
+das gleiche mit apc:
+systematisch kleinere scores (absolut)
+
+```{r comparing-cd-pll-scatter3, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
+knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html", height = "600px")
+```
+
+
+```{r comapring-cd-pll-boxplot3, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
+knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html", height = "600px")
 ```
 
 Boxplots for l2norm-apc over couplings ||wij||_2 - apc: 
@@ -216,37 +254,12 @@ scipy.stats.kendalltau(l2norm_apc_pll, l2norm_apc_cd)
 scipy.stats.spearmanr(l2norm_apc_pll, l2norm_apc_cd)
 #SpearmanrResult(correlation=0.92532449605319178, pvalue=0.0)
 
+scipy.stats.ks_2samp(l2norm_apc_pll, l2norm_apc_cd)
+Ks_2sampResult(statistic=0.067552602436323439, pvalue=0.030922873101286375)
 
-```{r comapring-cd-pll-boxplot3, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html", height = "600px")
-```
+The two score distributions are significantly different (kolmogorov smirnov test,  two-sided p-value of 0.03).
 
-
-Scatter Plots for couplings wijab:
-nice correlation - pearson correlation?
-gibt 3 outlier und das sind auch noch die staerksten couplings
-hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)
-
-```{r comapring-cd-pll-scatter1, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html", height = "600px")
-```
-
-Scatter for l2norm over couplings ||wij||_2: 
-hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL
-und man sieht die drei outlier
-
-```{r comparing-cd-pll-scatter2, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html", height = "600px")
-```
-
-Scatter for l2norm-apc over couplings ||wij||_2 - apc: 
-das gleiche mit apc:
-systematisch kleinere scores (absolut)
-
-```{r comparing-cd-pll-scatter3, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html", height = "600px")
-```
-
+---
 
 Comparing the ranking:
 geiler plot
@@ -257,6 +270,14 @@ nur diese drei outlier sind bei CD sehr viel hoeher gerankt als bei pLL
 knitr::include_url("img/full_likelihood/comparing_couplings/comparative_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive divergence.html", height = "600px")
 ```
 
+
+Comparing the ranking with q-q plot:
+```{r comparing-cd-pll-ranking-qq, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_samplesize.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
+knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1mkcA00_method1_pLL_apc_rank_method2_CD_apc_rank_score.html", height = "600px")
+```
+
+
+---
 
 Showing the contact maps:
 pLL

@@ -14,7 +14,7 @@ According to the hypothesis, compensatory mutations show up as correlations betw
 
 (ref:caption-correlated-mutations)  The evolutionary record of a protein family reveals evidence of compensatory mutations between spatially neighboring residues that are under selective pressure with respect to some physico-chemical constraints. Mining protein family sequence alignments for residue pairs with strong coevolutionary signals using statistical methods allows inference of spatial proximity for these residue pairs.
 
-```{r correlated-mutations, echo = FALSE, fig.align = 'center', fig.cap = '(ref:caption-correlated-mutations)'}
+```{r correlated-mutations, echo = FALSE, out.width='90%', fig.align = 'center', fig.cap = '(ref:caption-correlated-mutations)'}
 knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 ```
 
@@ -365,7 +365,7 @@ In contrast, [APC](#abbrev) and other denoising techniques such as LRS [@Zhang20
 
 (ref:caption-apc-correction) Contact maps computed from  pseudo-likelihood couplings. Subplot on top of the contact maps illustrates the normalized Shannon entropy (<span style="color:#e7539d;">pink </span> line) and percentage of gaps for every position in the alignment (<span style="color:brown;">brown </span> line). **Left**: Contact map computed with Frobenius norm as in eq. \@ref(eq:frobenius-norm). Overall coupling values are dominated by entropic effects, i.e. the amount of variation for a [MSA](#abbrev) position, leading to striped brightness patterns. For example, positions with high column entropy (e.g. positions 7, 12 or 31) have higher overall coupling values than positions with low column entropy (e.g. positions 11, 24 or 33). **b**: previous contact map but corrected for background noise with the [APC](#abbrev) as in eq. \@ref(eq:apc).
 
-```{r apc-correction, echo = FALSE, out.width = '80%', fig.align='center', fig.show = 'hold', fig.cap = '(ref:caption-apc-correction)'}
+```{r apc-correction, echo = FALSE, out.width = '80%', fig.align='center', fig.cap = '(ref:caption-apc-correction)'}
 knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 ```
 
@@ -373,83 +373,108 @@ knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 
 
 
-## Applications
+## Applications {#application-contact-prediction}
 
 The most popular and historically motivated application for contact prediction is contact-guided *denovo* structure prediction. 
 
 It has long been known that the native protein 3D structure can be reconstructed from an error-free contact map [@Vendruscolo1997].
-Also, protein fold reconstruction from inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, fluorescence resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Li2003a; @Bowers2000; @Kolinski1998; @Aszodi1995a].
-Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011].
+Also, protein fold reconstruction from sparse inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, Foerster resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Yu2013; @Kalinin2012; @Bowers2000; @Kolinski1998; @Aszodi1995a].
+Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011; @Tress2010].
 Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in *denovo* structure prediction aided by predicted contacts.
 In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach *mfDCA* are sufficiently accurate to successfully deduce the native fold of the protein [@Marks2011].
 In the following years, methods to predict contacts have been improved and applied to model many more protein structures culminating in the high-throughput prediction of 614 protein structures out of which more than 100 represent novel folds by Ovchinnikov and colleagues in 2017 [@Hopf2012; @Ovchinnikov2014a; @Hopf2014; @Hayat2015a; @Hopf2015a; @Raval2015a; @Wang2015; @Ovchinnikov2015a; @Ovchinnikov2017].
 
-Many contact-guided protocols have been established since, that mostly integrate predicted contacts in form of distance constraints into an energy function to guide the folding process and restrict the overal fold: Unicon3D [@Bhattacharya2016], RASREC [@Braun2015], RBOAleph [@Mabrouk2015a],  GDFuzz3D [@Pietal2015a], PconsFold [@Michel2014], C2S_Pipeline [@Konopka2014], FRAGFOLD + PSICOV [@Kosciolek2014], FILM3 [@Nugent2012], EVFold [@Marks2011].
-FT-COMAR [@Vasura2008],  I-TASSER [@Wu2011]. 
+Many contact-guided protocols have been established since, that typically integrate predicted contacts in form of distance constraints into an energy function to guide the conformational sampling process: Unicon3D [@Bhattacharya2016], RASREC [@Braun2015], RBOAleph [@Mabrouk2015a],  GDFuzz3D [@Pietal2015a], PconsFold [@Michel2014], C2S_Pipeline [@Konopka2014], FRAGFOLD + PSICOV [@Kosciolek2014], FILM3 [@Nugent2012], EVFold [@Marks2011].
+Figure \@ref(fig:contact-assisted-structure-prediction) presents a generalized structure prediction pipeline using predicted contacts.
 
-The necessary quality of contact predictions and how to effectively utilize the inferred contact information is still subject to discussion and further research.
-It has been demonstrated that only a small subset of native contacts is sufficient to produce accurate structural models [@Konopka2014; @Vendruscolo1997; @Sathyapriya2009; @Chen2007; @Vassura2007]. 
+(ref:caption-contact-assisted-structure-prediction) Generalized structure prediction pipeline integrating predicted contacts in form of distance constraints that guide conformational sampling.
+
+```{r contact-assisted-structure-prediction, echo = FALSE, out.width = '100%', fig.align='center', fig.cap = '(ref:caption-contact-assisted-structure-prediction)'}
+knitr::include_graphics("img/intro/contact_assisted_structure_prediction.png")
+```
+
+
+The optimal quality of inferred contacts and their effective utilization is still subject to discussion and further research.
+It has been demonstrated that only a small subset of native contacts is sufficient to produce accurate structural models [@Kim2014; @Konopka2014; @Vendruscolo1997; @Sathyapriya2009; @Chen2007; @Vassura2007]. 
 Sathyapriya and colleagues developed a rational strategy to select important native contacts and successfully reconstructed the structure to near native resolution with only 8% of contacts [@Sathyapriya2009].
 Kim and colleagues formulated that only one correct contact for every 12 residues in the protein is sufficient to allow accurate topology level modeling given that the contacts are nonlocal and broadly distributed [@Kim2014].
 These studies emphasize that certain contacts are more important than others. 
 Long-range contacts are rare and most informative for protein structure prediction because they define the overal fold and packing of tertiary structure whereas short-range contacts define local secondary structure [@Adhikari2017].
 It is a consistent finding that eventhough long-range contacts are of higher relevance than short-range contacts for structure reconstruction, their information alone is not sufficient [@Sathyapriya2009; @Kosciolek2014; @DiLena2009a].
-Many reconstruction protocols can tolerate missing contact information much better than erroneous contact information and it has been stressed that only highly confident contacts are helpful [@Duarte2010].
-Zhang et al. found that their tool Touchstone II required the ratio of correctly predicted contacts to protein length to be at least 20% to generate a positive effect to structure prediction [@Zhang2003].
-Marks and colelagues observed that isolated false positives have a much stronger detrimental effect on structure prediction than false positives close to true contacts [@Marks2011].
-Frequently, protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts [@Wang2016; @Adhikari2015a].
-Generally it is assumed that higher precision of predicted contacts (of well distributed contacts) results in improved structural models, albeit there is no strong correlation as model quality depends on many other factors such as the secondary structure composition of the protein, the domain size, the usage of additional sources of structural information, the type of distance constraint function and the particular structure reconstruction protocol [@Adhikari2017; @DeOliveira2016; @Kosciolek2014; @Marks2011].
+Since a small number of correct residue-residue contacts is sufficient to improve protein structure prediction and many reconstruction protocols can tolerate missing contact information much better than erroneous contact information, it has been stressed that methods development should focus on predicting a small number of high confident contacts [@Kim2014; @Duarte2010].
+Marks and colleagues observed that isolated false positives have a much stronger detrimental effect on structure prediction than false positives close to true contacts [@Marks2011].
+Zhang et al. found that their tool Touchstone II required an accuracy of long-range contact predictions of at least 22% to generate a positive effect to structure prediction [@Zhang2003].
+Frequently, folding protocols employ a filtering step to eliminate unsatisfied or conflicting constraints possibly originating from false-positive contacts [@Wang2016; @Adhikari2015a].
+Generally it is assumed that higher precision of predicted long-range contacts results in improved structural models, albeit there is no strong correlation as model quality depends on many other factors such as the secondary structure composition of the protein, the domain size, the usage of additional sources of structural information, the type of distance constraint function and the particular structure reconstruction protocol [@Adhikari2017; @DeOliveira2016; @Kosciolek2014; @Marks2011; @Zhang2003].
 
-### other applications
+Coevolution has not only been studied for residues pairs within a protein but also for residue pairs across protein–protein interfaces  [@Rodriguez-Rivas2016; @Ovchinnikov2015a; @Ovchinnikov2014a; @Hopf2014;  @Feinauer2016a]. 
+Eventhough the methodology of detecting coevolving amino acid pairs from the [MSA](#abbrev) is the same, a new challenge arises for the correct identification of orthologous interacting partners.
+Without the correct pairing of interacting partners for every species the detection of coevolutionary signals would be compromised.
+However, the generation of a [MSA](#abbrev) of paired sequences is complicated in the presence of multiple paralogs of a gene in a single genome.
+The problem of paralog matching is visualized in Figure \@ref(fig:matching-sequences-ppi).
+For prokaryotes, sequence paires are typically identified by exploiting the bacterial gene organisation in form of operons, i.e. co-localized genes will be co-expressed and are more likely to physically interact.
+Co-localisation of genes has also been applied to match genes from eurkaryotes, assuming that Uniprot accession numbers can be used as a proxy for genomic distances [@Feinauer2016a].
+New strategies have been developed based on the idea that an alignment with correctly matched paralogs will maximize the coevolution score [@Gueudre2016; @Bitbol2016].
 
-The success story of residue-residue contact prediction has spread to new areas of application. 
-An obvious extension of denovo structure prediction using predicted contacts is the prediction and modelling of protein-protein interactions (Dos Santos et al., 2015; Ovchinnikov et al., 2014; Hopf et al., 2014, Skerker et al., 2008). 
-A new challenge arises in the correct pairing of sequences from two proteins, as paralogs and orthologs need to be dissected.
-There are two promising approaches that will build concatenated alignments for the purpose of contact prediction between proteins.
-- generation of the multiple sequence alignment for EC methods is challenging because orthologous interacting pairs of sequences must reliably be identified from a large number of species
-- Typically, sequences from individual alignments are paired using bacterial genome coordinates, i.e. the closer their location in the genome the more likely their co-expression and physical interaction 
-- A second, simpler method: matches orthologous sequence pairs using genome BLAST scores (Iserte et al., 2015; Yu et al., 2016; Ochoa & Pazos, 2010)
-- and new methods may well improve the accuracy for these organisms (Gueudre´ et al., 2016; Bitbol et al., 2016)
-- case study: Feinauer2016a 
+(ref:caption-matching-sequences-ppi) Concatenating two multiple sequence alignments. In case multiple paralogs exist for a gene in one species the correct interaction partner needs to be identified and matched (marked with arrows). Sequences that cannot be paired with a unique interaction partner need to be discarded (marked with x). 
 
-Contacts are also used to analyse potential alternative cofnormations of proteins. 
-It is not possible to distinguish contacts from alternative conformations without a protein structure though (Parisi et al., 2015; Morcos et al.,2013, Sfriso2016)
+```{r matching-sequences-ppi, echo = FALSE, out.width = '100%', fig.align='center', fig.cap = '(ref:caption-matching-sequences-ppi)'}
+knitr::include_graphics("img/intro/matching_sequences_ppi.png")
+```
 
-Contact prediction methods developed for protein sequences have also been applied to RNA structure prediction
-    - "Structural biology: RNA structure from sequence" tal nawy, 2016 nature
+A related objective is the study of the oligomerization status of proteins. 
+The study of homo-oligomers is simplified in the sense that the identical protein sequence of both interaction partners renders the concatenation of two [MSAs](#abbrev) unnessary and allows to work with one [MSA](#abbrev).
+A different challenge lies in the correct distinction between the physical contacts of the monomeric structure and the interprotein contacts.
+With the availability of monomeric structural data the idea is to filter out those high scoring contacts that form contacts in the monomeric structure or are located in the protein core. 
+The remaining high scoring false positive contacts at the surface of the protein are potential contacts at the interface that can be incorporated into a docking protocol to drive complex formation [@Uguzzoni2017; @DosSantos2015a].
 
-The Potts can be interpreted as a boltzmann model giving energies and therefore mutated sequences can be evalutated.
-    - EVmutation [@Hopf2017]: unsupervised statistical method for predicting the effects of mutations that explicitly captures residue dependencies between positions
-    - assess the quantitative effects of mutations in genes of any organism
-    - "Maximum-Entropy Models of Sequenced Immune Repertoires Predict Antigen-Antibody Affinity."
-    
-Related is the idea to use the Potts model for protein design. 
-    Franceus2016
-    
-Skwark and colleagues applied the popular coevolution models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017].
+Contacts are also used to analyse potential alternative conformations of proteins [@Parisi2015a; @Sfriso2016; @Sutto2015; @Jana2014; @Morcos2013a; @Jeon2011a].
+Coevolutionary analysis detects all evolutionarily significant residue–residue correlations, regardless of whether the interaction is formed in a transient state of the protein or its stable form.
+Therefore, predicted contact maps might capture multiple states of a protein, since they are of functional importance and thus under evolutionary pressure.
+Sfriso and colleagues developed an automated pipiline that introduces filtered predicted contacts as ensemble restraints into a molecular dynamics simulations and is able to detect alternative relevant conformational states [@Sfriso2016].
+
+Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology.
+Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts [@Wozniak2017; @Tress2010].
+Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model [@Cao2016; @Terashi2014a].
+
+As mentioned before, methods for protein fold reconstruction from experimental distance constraints have been successfully applied for many years. 
+Several integrative approaches have been developed that combine complementary sources of sparse structural constraints, including predicted contacts, to accurately determine protein structure [@Tang2015; @Ward2013].
+
+Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
+
+Eventhough the coevolutionary methods have been developed for proteins, they have been successfully applied to analyse nucleotide coevolution and to predict RNA tertiary structures with the help of predicted nucleotide-nucleotide contacts  [@Nawy2016; @Weinreb2015; @DeLeonardis2015a]. 
+Much less RNA sequences are required compared to protein sequences in order to extract statistically significant signals because of the reduced number of model parameters when working with a four letter alphabet (compared to a 20 letter alphabet with proteins).
+On the downside, alignment errors resulting from the complicated determination of RNA multiple sequence alignments limits the accuracy of coevolution analysis [@DeLeonardis2015a]. 
+Despite the diminished accuracy, predicted nucleotide contacts have been demonstrated to improve RNA structure prediction over conventional methods [@Weinreb2015]. 
+
+
+The stastistical models used for coevolution analysis provide information about which residue pairs are important in evolution for folding or functional constraints.
+They can be used to assign probabilities to sequences that reflect the overal compliance of a sequence with the protein family under study and thereby provide quantitative predictions of mutational effects [@Hopf2017; @Wu2016; @Figliuzzi2015].
+Computational screening of mutational effects can support and complement the costly and time-consuming directed evolution or mutational screening experiments [@Hopf2017].
+With a similar idea in mind, the coevolution models have been applied to sequences of human immune repertoires [@Asti2016; @Elhanati2014].
+Antibody affinity maturation can be viewed as a Darwinian process with the affinity to the target antigen being the main fitness criterion. 
+Therefore, given the model representing the antibody sequence family, the probability for a sequence reflects the binding affinity to the target antigen.
+Quantifying the effect of mutations is also helpful for protein design.
+Coevolving positions might be of particular interest as hotspots for engineering protein stability or functional specificity because they determine positions relevant to protein structure and function [@Franceus2016].
+
+
+Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017].
 They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
 In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
 
-    
-- network deconvolution
+Fox and colleagues turn the idea of [DCA](#abbrev) upside down.
+They developed a benchmark for testing the accuracy of large [MSAs](#abbrev) by evaluating the agreeement between the predicted and the native contacts [@Fox2016].
+Based on the assumption that better alignments provide more accurate contact predictions, the alignment quality is inferred from the precision of predicted contacts. 
 
-Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
     
-Predicted contacts can be of great benefit for other problems in structural biology, like model quality assessment, distinguishing properly folded from misfolded proteins.
-- distinguish properly folded proteins from crap 
-    - ("Correlated mutations distinguish misfolded and properly folded proteins"): DCA correctly predicts significantly more contacts for properly folded structures than for misfolded ones
-    - properly oriented model from mirror models: Kurczynska2016
-    - model wuality assessment: "QAcon: single model quality assessment using protein structural and contact information with machine learning techniques"
-Simkovic2017 review!!! Tang2015 NMR
 
-Fox and colleagues turn the idea of DCA upside down.
-They developed a benchmark for testing the accuracy of large [MSAs](#abbrev), by evaluating the agreeement between the predicted and the native contacts [@Fox2016].
+
 
 
 ## Evaluating Contact Prediction Methods {#intro-cp-evaluation}
 
 Choosing an appropriate benchmark for contact prediction is determined by the further utilization of the predictions.
-Most prominently, predicted contacts are used to assist structure prediction as outlined in the last section \@ref(contact-assisted-str-pred).
+Most prominently, predicted contacts are used to assist structure prediction as outlined in the last section \@ref(application-contact-prediction).
 Therefore, one could assess the quality of structural models computed with the help of predicted contacts.
 However, predicting structural models adds not only another layer of computational complexity but also raises questions about implementation details of the folding protocol. 
 
@@ -460,9 +485,27 @@ Taking place every two years, the progress in the field is assessed in a blind c
 According to the [CASP](#abbrev) regulations, a pair of residues is defined to be in physical contact when the distance between their $\Cb$ atoms ($C_{\alpha}$ in case of glycine) is less than $8 \angstrom$ in the reference protein structure.
 
 The overall performance of a contact predictor is evaluated by the mean precision over a testset of proteins with known high quality 3D structures against the top scoring predictions from every protein.
-The number of top scoring predictions per protein is typically normalized with respect to protein length $L$ and precision is defined as the number of true contacts among the top scoring predicted contacts.
+The number of top scoring predictions per protein is typically normalized with respect to protein length $L$ and precision is defined as the number of true contacts among the top scoring predicted contacts, 
+
+\begin{equation}
+    \textrm{precision}  = \frac{TP}{TP + FP} \; ,
+\end{equation}
+
+where $TP$ is a true positive contact and $FP$ is false positive contact.
 A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth [@Ashkenazy2009].
 During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies [@Monastyrskyy2015].
+Another informative metric is mean error defined as:
+
+\begin{equation}
+    \textrm{mean error}  = \frac{\textrm{error}}{TP + FP} 
+        \begin{cases}
+            error = \Delta\Cb - T & \text{if } \Delta\Cb > T\\
+            error = 0, &\text{otherwise }
+        \end{cases}
+\end{equation}
+
+where $\Delta\Cb$ is the actual distance of a residue pair in the native structure, and $T$ is the distance threshold defining a true contact.
+The mean error helps to asses how wrong false positive predictions are.
 
 Currently best methods perform in the range XXX.
 Sequence feature based methods:
@@ -502,7 +545,6 @@ A simple $\Cb$ distance threshold not only misses to reflect biological interact
 Other distance thresholds and definitions for physical contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well.
 In fact, Duarte and colleagues found that using a $\Cb$ distance threshold between 9$\angstrom$ and 11$\angstrom$ yields optimal results when predicting the 3D structure from the respective contacts [@Duarte2010].
 Anishchenko and colleagues analysed false positive predictions with respect to a minimal atom distance threshold $< 5 \angstrom$, as they found that this cutoff optimally defines direct physical interactions of residue pairs [@Anishchenko2017].
-Definitely, choosing different distance cutoffs and reference atoms for defining a true contact changes the evaluation outcome.
 
 Another issue concerns structural variation within a protein family. 
 Evolutionary couplings are inferred from all family members in the [MSA](#abbrev) and therefore predicted contacts might be physical contacts in one family member but not in another. 
@@ -585,15 +627,13 @@ Therefore, [MSAs](#abbrev) need to be generated with great care and covariation 
 Furthermore, sensitivity of sequence search is critically dependent on the research question at hand and on the protein family under study. 
 Many diverse sequences in general increase precision of predictions [@Ashkenazy2009; @Avila-Herrera2015a].
 However, deep alignments can capture coevolutionary signals from different subfamilies [@Uguzzoni2017]. 
-If only a specific subfamily is of interest, many false predictions might arise from strong coevolutionary signals specific to another subfamily that constitutes a prominent subset in the alignment.
+If only a specific subfamily is of interest, many false predictions might arise from strong coevolutionary signals specific to another subfamily that constitutes a prominent subset in the alignment [@Franceus2016].
 Therefore, a trade-off between specificity and diversity of the alignment is required to reach optimal results [@Hopf2012]. 
 
 
 Another intrinsic characteristic of [MSAs](#abbrev) are repeated stretches of gaps that result from commonly utilized gap-penalty schemes assigning large penalties to insert a gap and lower penalties to gap extensions. 
 Most statistical coevolution models for contact prediction treat gaps as the 21st amino acid.
 This introduces an imbalance as gaps and amino acids express different behaviours which can result in gap-induced artefacts [@Feinauer2014]. 
-
-
 
 
 

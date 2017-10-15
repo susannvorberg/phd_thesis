@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-13">
+<meta name="date" content="2017-10-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -78,6 +78,7 @@
       vi: "\\mathcal{v}_{i}",
       vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
       wijab: "\\mathcal{w}_{ijab}",
@@ -142,9 +143,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
 <li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#other-applications"><i class="fa fa-check"></i><b>2.5.1</b> other applications</a></li>
-</ul></li>
+<li class="chapter" data-level="2.5" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a></li>
 <li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
 <li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
@@ -183,7 +182,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="7.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>7.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="7.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -223,11 +223,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
 <li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
-<li class="chapter" data-level="8.13" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.13</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="8.13.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.13.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="8.13.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.13.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="8.13.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.13.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="8.13.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.13.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="8.13" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>8.13</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>8.13.1</b> Global Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>8.13.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="8.13.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>8.13.3</b> Pairwise Features</a></li>
+</ul></li>
+<li class="chapter" data-level="8.14" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>8.14</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="8.14.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.14.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -245,6 +247,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
 <li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+<li class="chapter" data-level="C.5" data-path="aromatic-residues-at-short-distance-ranges.html"><a href="aromatic-residues-at-short-distance-ranges.html"><i class="fa fa-check"></i><b>C.5</b> Aromatic residues at short distance ranges</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
 <li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
@@ -264,9 +267,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.2" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.3" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>E.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -297,8 +301,8 @@ The gradient of the regularized full log likelihood with respect to the coupling
 \tag{5.1}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(N_{ij} q(x_i \eq a, x_j=b)\)</span> are the empirical pairwise amino acid counts, <span class="math inline">\(p(x_i \eq a, x_j \eq b | \v,\w)\)</span> corresponds to the marginal distribution of the <em>Potts model</em> and <span class="math inline">\(\lambda_w \wijab\)</span> is the partial derivative of the L2-regularizer used to constrain the couplings <span class="math inline">\(\w\)</span>. The empirical amino acid counts are constant and need to be computed only once from the alignment. The model probability term cannot be computed analytically as it involves the partition function that has exponential complexity.</p>
-<p><a href="abbrev.html#abbrev">MCMC</a> algorithms are predominantlyused in Bayesian statistics to generate samples from probability distributions that involve the computation of complex integrals and therefore cannot be computed analytically <span class="citation">[<a href="#ref-Murphy2012">79</a>,<a href="#ref-Andrieu2003">158</a>]</span>. Samples are generated from a probability distribution as the current state of a running Markov chain. If the Markov chain is run long enough, the equilibrium statistics of the samples will be identical to the true probability distribution statistics. In 2002, Lapedes et al. applied <a href="abbrev.html#abbrev">MCMC</a> sampling to approximate the probability terms in the gradient of the full likelihood <span class="citation">[<a href="#ref-Lapedes2012a">89</a>]</span>. They obtained sequence samples from a Markov chain that was run for 4,000,000 steps by keeping every tenth configuration of the chain. Optimization converged after 10,000 - 15,000 epochs when the gradient had become zero. The expected amino acid counts according to the model distribution, <span class="math inline">\(N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w)\)</span>, were estimated from the generated samples. Their approach was successfull but is computationally feasible only for small proteins and points out the limits of applying <a href="abbrev.html#abbrev">MCMC</a> algorithms. Typically, they require many sampling steps to obtain unbiased estimates from the stationary distribution which comes at high computational costs.</p>
-<p>In 2002, Hinton invented <a href="abbrev.html#abbrev">CD</a> as an approximation to <a href="abbrev.html#abbrev">MCMC</a> methods <span class="citation">[<a href="#ref-Hinton2002">157</a>]</span>. It was originally developed for training products of experts models but it can generally be applied to maximizing log likelihoods and has become overly popular for training restricted Boltzmann machines <span class="citation">[<a href="#ref-Murphy2012">79</a>,<a href="#ref-Fischer2012">159</a>,<a href="#ref-Bengio2009">160</a>]</span>. The idea is simple: instead of starting a Markov chain from a random point and running it until it has reached the stationary distribution, it is initialized with a data sample and evolved for only a small number of steps. Obviously the chain has not yet converged to its stationary distribution and the data sample obtained from the current configuration of the chain presents a biased estimate. The intuition behind <a href="abbrev.html#abbrev">CD</a> is that eventhough the gradient estimate is very noisy and biased, it points roughly into a similar direction as the true gradient of the full likelihood. Therefore the approximate <a href="abbrev.html#abbrev">CD</a> gradient should become zero approximately where the true gradient of the likelihood becomes zero. Once the parameters are close to the optimum, starting a Gibbs chain from a data sample should reproduce the empirical distribution and not lead away from it, because the parameters already describe the empirical distribution correctly.</p>
+<p><a href="abbrev.html#abbrev">MCMC</a> algorithms are predominantlyused in Bayesian statistics to generate samples from probability distributions that involve the computation of complex integrals and therefore cannot be computed analytically <span class="citation">[<a href="#ref-Murphy2012">79</a>,<a href="#ref-Andrieu2003">181</a>]</span>. Samples are generated from a probability distribution as the current state of a running Markov chain. If the Markov chain is run long enough, the equilibrium statistics of the samples will be identical to the true probability distribution statistics. In 2002, Lapedes et al. applied <a href="abbrev.html#abbrev">MCMC</a> sampling to approximate the probability terms in the gradient of the full likelihood <span class="citation">[<a href="#ref-Lapedes2012a">89</a>]</span>. They obtained sequence samples from a Markov chain that was run for 4,000,000 steps by keeping every tenth configuration of the chain. Optimization converged after 10,000 - 15,000 epochs when the gradient had become zero. The expected amino acid counts according to the model distribution, <span class="math inline">\(N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w)\)</span>, were estimated from the generated samples. Their approach was successfull but is computationally feasible only for small proteins and points out the limits of applying <a href="abbrev.html#abbrev">MCMC</a> algorithms. Typically, they require many sampling steps to obtain unbiased estimates from the stationary distribution which comes at high computational costs.</p>
+<p>In 2002, Hinton invented <a href="abbrev.html#abbrev">CD</a> as an approximation to <a href="abbrev.html#abbrev">MCMC</a> methods <span class="citation">[<a href="#ref-Hinton2002">180</a>]</span>. It was originally developed for training products of experts models but it can generally be applied to maximizing log likelihoods and has become overly popular for training restricted Boltzmann machines <span class="citation">[<a href="#ref-Murphy2012">79</a>,<a href="#ref-Fischer2012">182</a>,<a href="#ref-Bengio2009">183</a>]</span>. The idea is simple: instead of starting a Markov chain from a random point and running it until it has reached the stationary distribution, it is initialized with a data sample and evolved for only a small number of steps. Obviously the chain has not yet converged to its stationary distribution and the data sample obtained from the current configuration of the chain presents a biased estimate. The intuition behind <a href="abbrev.html#abbrev">CD</a> is that eventhough the gradient estimate is very noisy and biased, it points roughly into a similar direction as the true gradient of the full likelihood. Therefore the approximate <a href="abbrev.html#abbrev">CD</a> gradient should become zero approximately where the true gradient of the likelihood becomes zero. Once the parameters are close to the optimum, starting a Gibbs chain from a data sample should reproduce the empirical distribution and not lead away from it, because the parameters already describe the empirical distribution correctly.</p>
 The approximation of the full likelihood gradient with <a href="abbrev.html#abbrev">CD</a> is visualized in Figure <a href="full-likelihood-gradient.html#fig:gibbs-sampling">5.1</a>. <span class="math inline">\(N\)</span> Markov chains will be initialized with the <span class="math inline">\(N\)</span> sequences from the <a href="abbrev.html#abbrev">MSA</a> and <span class="math inline">\(N\)</span> new samples will be generated by a single step of Gibbs sampling from each of the <span class="math inline">\(N\)</span> sequences. One full step of Gibbs sampling will update every sequence position <span class="math inline">\(i \in \{1, \ldots, L\}\)</span> subsequently by randomly selecting an amino acid based on the conditional probabilities for observing an amino acid <span class="math inline">\(a\)</span> at position <span class="math inline">\(i\)</span> given the model parameters and all other sequence positions:
 <span class="math display" id="eq:conditional-prob-full-likelihood">\[\begin{equation}
   p(\seq_i = a | (x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_L), \v, \w) \propto \exp \left( \vi(a) + \sum_{j=1; i \ne j}^L \wij(a, x_j)  \right)
@@ -312,7 +316,7 @@ The approximation of the full likelihood gradient with <a href="abbrev.html#abbr
 Figure 5.1: Approximating the full likelihood gradient with <a href="abbrev.html#abbrev">CD</a>. Pairwise amino acid counts are computed from the observed sequences of the input alignment shown in red on the left. Expected amino acid frequencies according to the model distribution are computed from a sampled alignment shown in blue on the right. The <a href="abbrev.html#abbrev">CD</a> approximation of the likelihood gradient is obtained by computing the difference in amino acid counts of the observed and sampled alignment. A Markov chain is initialized with an observed sequence and a newly sampled sequence is generated by evolving the Markov chain for one full Gibbs step. The Gibbs step involves updating every position in the sequence (unless it is a gap) according to the conditional probabilities for this position.
 </p>
 </div>
-<p>It has been shown that taking more than one Gibbs steps gives more precise results. Taking more Gibbs steps reduces the bias of the gradient estimate as the Markov chain approaches its stationary distribution. Whern running the Markov chain infinitely long the <a href="abbrev.html#abbrev">CD</a> estimate converges to the actual <a href="abbrev.html#abbrev">MLE</a> estimate. Surprising results have also been obtained by taking only one step <span class="citation">[<a href="#ref-Bengio2009">160</a>]</span>. Several connections have been found to other approximation schemes. For example, it can be shown that <a href="abbrev.html#abbrev">CD</a> with Gibbs sampling only one variable is exactly equivalent to optimising the pseudo-likelihood <span class="citation">[<a href="#ref-Hyvarinen2006">161</a>,<a href="#ref-Hyvarinen2007">162</a>]</span>.</p>
+<p>It has been shown that taking more than one Gibbs steps gives more precise results. Taking more Gibbs steps reduces the bias of the gradient estimate as the Markov chain approaches its stationary distribution. Whern running the Markov chain infinitely long the <a href="abbrev.html#abbrev">CD</a> estimate converges to the actual <a href="abbrev.html#abbrev">MLE</a> estimate. Surprising results have also been obtained by taking only one step <span class="citation">[<a href="#ref-Bengio2009">183</a>]</span>. Several connections have been found to other approximation schemes. For example, it can be shown that <a href="abbrev.html#abbrev">CD</a> with Gibbs sampling only one variable is exactly equivalent to optimising the pseudo-likelihood <span class="citation">[<a href="#ref-Hyvarinen2006">184</a>,<a href="#ref-Hyvarinen2007">185</a>]</span>.</p>
 <p><a href="abbrev.html#abbrev">PCD</a> is a variation of <a href="abbrev.html#abbrev">CD</a> such that the Markov chain is not reinitialized at a data sample every time a new gradient is computed. Instead the Markov chains are evolved between successive gradient computations without resetting them. The fundamental idea behind <a href="abbrev.html#abbrev">PCD</a> when using small learning rates is that the model changes only slightly between parameter updates and the chains stay close to the stationary distribution PCD can explore the distribution further and as the optimum is approached the approximation to the gradient shoul dbecome better.</p>
 <ul>
 <li>tieleman showed improved convergence properties</li>
@@ -325,25 +329,25 @@ Figure 5.1: Approximating the full likelihood gradient with <a href="abbrev.html
 <p>79. Murphy, K.P. (2012). Machine Learning: A Probabilistic Perspective (MIT Press).</p>
 </div>
 <div id="ref-Andrieu2003">
-<p>158. Andrieu, C., Freitas, N. de, Doucet, A., and Jordan, M.I. (2003). An Introduction to MCMC for Machine Learning. Mach. Learn. <em>50</em>, 5–43. Available at: <a href="http://link.springer.com/10.1023/A:1020281327116" class="uri">http://link.springer.com/10.1023/A:1020281327116</a>.</p>
+<p>181. Andrieu, C., Freitas, N. de, Doucet, A., and Jordan, M.I. (2003). An Introduction to MCMC for Machine Learning. Mach. Learn. <em>50</em>, 5–43. Available at: <a href="http://link.springer.com/10.1023/A:1020281327116" class="uri">http://link.springer.com/10.1023/A:1020281327116</a>.</p>
 </div>
 <div id="ref-Lapedes2012a">
 <p>89. Lapedes, A., Giraud, B., and Jarzynski, C. (2012). Using Sequence Alignments to Predict Protein Structure and Stability With High Accuracy. Available at: <a href="http://arxiv.org/abs/1207.2484" class="uri">http://arxiv.org/abs/1207.2484</a>.</p>
 </div>
 <div id="ref-Hinton2002">
-<p>157. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
+<p>180. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
 </div>
 <div id="ref-Fischer2012">
-<p>159. Fischer, A., and Igel, C. (2012). An Introduction to Restricted Boltzmann Machines. Lect. Notes Comput. Sci. Prog. Pattern Recognition, Image Anal. Comput. Vision, Appl. <em>7441</em>, 14–36. Available at: <a href="http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2" class="uri">http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2</a>.</p>
+<p>182. Fischer, A., and Igel, C. (2012). An Introduction to Restricted Boltzmann Machines. Lect. Notes Comput. Sci. Prog. Pattern Recognition, Image Anal. Comput. Vision, Appl. <em>7441</em>, 14–36. Available at: <a href="http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2" class="uri">http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2</a>.</p>
 </div>
 <div id="ref-Bengio2009">
-<p>160. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
+<p>183. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
 </div>
 <div id="ref-Hyvarinen2006">
-<p>161. Hyvärinen, A. (2006). Consistency of pseudolikelihood estimation of fully visible Boltzmann machines. Available at: <a href="https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf" class="uri">https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf</a>.</p>
+<p>184. Hyvärinen, A. (2006). Consistency of pseudolikelihood estimation of fully visible Boltzmann machines. Available at: <a href="https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf" class="uri">https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf</a>.</p>
 </div>
 <div id="ref-Hyvarinen2007">
-<p>162. Hyvarinen, A. (2007). Connections Between Score Matching, Contrastive Divergence, and Pseudolikelihood for Continuous-Valued Variables. IEEE Trans. Neural Networks <em>18</em>, 1529–1531. Available at: <a href="http://ieeexplore.ieee.org/document/4298117/" class="uri">http://ieeexplore.ieee.org/document/4298117/</a>.</p>
+<p>185. Hyvarinen, A. (2007). Connections Between Score Matching, Contrastive Divergence, and Pseudolikelihood for Continuous-Valued Variables. IEEE Trans. Neural Networks <em>18</em>, 1529–1531. Available at: <a href="http://ieeexplore.ieee.org/document/4298117/" class="uri">http://ieeexplore.ieee.org/document/4298117/</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -421,7 +425,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

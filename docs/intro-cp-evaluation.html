@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-13">
+<meta name="date" content="2017-10-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="applications.html">
+<link rel="prev" href="application-contact-prediction.html">
 <link rel="next" href="challenges.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -78,6 +78,7 @@
       vi: "\\mathcal{v}_{i}",
       vj: "\\mathcal{v}_{j}",
       via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
       w: "\\mathbf{w}",
       wij: "\\mathbf{w}_{ij}",
       wijab: "\\mathcal{w}_{ijab}",
@@ -142,9 +143,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="2.4.3" data-path="maxent.html"><a href="maxent.html#potts-model-solutions"><i class="fa fa-check"></i><b>2.4.3</b> Solving the Inverse Potts Problem</a></li>
 <li class="chapter" data-level="2.4.4" data-path="maxent.html"><a href="maxent.html#post-processing-heuristics"><i class="fa fa-check"></i><b>2.4.4</b> Computing Contact Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="applications.html"><a href="applications.html#other-applications"><i class="fa fa-check"></i><b>2.5.1</b> other applications</a></li>
-</ul></li>
+<li class="chapter" data-level="2.5" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>2.5</b> Applications</a></li>
 <li class="chapter" data-level="2.6" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>2.6</b> Evaluating Contact Prediction Methods</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>2.6.1</b> Sequence Separation</a></li>
 <li class="chapter" data-level="2.6.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>2.6.2</b> Interpretation of Evaluation Results</a></li>
@@ -183,7 +182,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul></li>
 <li class="chapter" data-level="7" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>7</b> Contact Prior</a><ul>
 <li class="chapter" data-level="7.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>7.1</b> Random Forest Classifiers</a></li>
-<li class="chapter" data-level="7.2" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.2</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="7.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>7.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="7.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>7.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a><ul>
 <li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
@@ -223,11 +223,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="8.12.1" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#modelling-the-dependence-of-wij-on-distance"><i class="fa fa-check"></i><b>8.12.1</b> Modelling the dependence of <span class="math inline">\(\wij\)</span> on distance</a></li>
 <li class="chapter" data-level="8.12.2" data-path="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html"><a href="bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances.html#training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior"><i class="fa fa-check"></i><b>8.12.2</b> Training the Hyperparameters <span class="math inline">\(\rho_k\)</span> and <span class="math inline">\(\alpha_k\)</span> for distance-dependent prior</a></li>
 </ul></li>
-<li class="chapter" data-level="8.13" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html"><i class="fa fa-check"></i><b>8.13</b> Training Random Forest Contat Prior</a><ul>
-<li class="chapter" data-level="8.13.1" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#seq-features"><i class="fa fa-check"></i><b>8.13.1</b> Sequence Derived Features</a></li>
-<li class="chapter" data-level="8.13.2" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-hyperparameter-optimization"><i class="fa fa-check"></i><b>8.13.2</b> Hyperparameter Optimization for Random Forest Prior</a></li>
-<li class="chapter" data-level="8.13.3" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.13.3</b> Feature Selection</a></li>
-<li class="chapter" data-level="8.13.4" data-path="training-random-forest-contat-prior.html"><a href="training-random-forest-contat-prior.html#rf-with-pll-score"><i class="fa fa-check"></i><b>8.13.4</b> Using Pseudo-likelihood Coevolution Score as Additional Feature</a></li>
+<li class="chapter" data-level="8.13" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>8.13</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="8.13.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>8.13.1</b> Global Features</a></li>
+<li class="chapter" data-level="8.13.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>8.13.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="8.13.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>8.13.3</b> Pairwise Features</a></li>
+</ul></li>
+<li class="chapter" data-level="8.14" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>8.14</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="8.14.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>8.14.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -245,6 +247,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="C.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>C.2</b> Disulfide Bonds</a></li>
 <li class="chapter" data-level="C.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>C.3</b> Aromatic-Proline Interactions</a></li>
 <li class="chapter" data-level="C.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>C.4</b> Network-like structure of aromatic residues</a></li>
+<li class="chapter" data-level="C.5" data-path="aromatic-residues-at-short-distance-ranges.html"><a href="aromatic-residues-at-short-distance-ranges.html"><i class="fa fa-check"></i><b>C.5</b> Aromatic residues at short distance ranges</a></li>
 </ul></li>
 <li class="chapter" data-level="D" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>D</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
 <li class="chapter" data-level="D.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>D.1</b> Visualisation of learning rate schedules</a></li>
@@ -264,9 +267,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="D.5" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>D.5</b> Monitoring Optimization for different Sample Sizes</a></li>
 </ul></li>
 <li class="chapter" data-level="E" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>E</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="E.1" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.1</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.2" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="E.3" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>E.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
+<li class="chapter" data-level="E.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>E.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>E.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="E.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>E.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -291,36 +295,48 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="intro-cp-evaluation" class="section level2">
 <h2><span class="header-section-number">2.6</span> Evaluating Contact Prediction Methods</h2>
-<p>Choosing an appropriate benchmark for contact prediction is determined by the further utilization of the predictions. Most prominently, predicted contacts are used to assist structure prediction as outlined in the last section <a href="#contact-assisted-str-pred"><strong>??</strong></a>. Therefore, one could assess the quality of structural models computed with the help of predicted contacts. However, predicting structural models adds not only another layer of computational complexity but also raises questions about implementation details of the folding protocol.</p>
-<p>It has been found that in general a small number of accurate contacts is sufficient to constrain the overal protein fold as already discussed. From these considerations emerged various standard benchmarks that have been established by the <a href="abbrev.html#abbrev">CASP</a> community over many years <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>,<a href="#ref-Monastyrskyy2011">135</a>,<a href="#ref-Monastyrskyy2014a">136</a>]</span>. <a href="abbrev.html#abbrev">CASP</a>, the well-respected and independent competition for the structural bioinformatic’s community introduced the contact prediction category in 1996. Taking place every two years, the progress in the field is assessed in a blind competition and the community discusses the outcome in a subsequent meeting. According to the <a href="abbrev.html#abbrev">CASP</a> regulations, a pair of residues is defined to be in physical contact when the distance between their <span class="math inline">\(\Cb\)</span> atoms (<span class="math inline">\(C_{\alpha}\)</span> in case of glycine) is less than <span class="math inline">\(8 \angstrom\)</span> in the reference protein structure.</p>
-<p>The overall performance of a contact predictor is evaluated by the mean precision over a testset of proteins with known high quality 3D structures against the top scoring predictions from every protein. The number of top scoring predictions per protein is typically normalized with respect to protein length <span class="math inline">\(L\)</span> and precision is defined as the number of true contacts among the top scoring predicted contacts. A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth <span class="citation">[<a href="#ref-Ashkenazy2009">137</a>]</span>. During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>]</span>.</p>
-<p>Currently best methods perform in the range XXX. Sequence feature based methods: Their performance is less dependent on the number of available sequence homologs compared to coevolution methods and therefore they can outperform pure coevolution methods in low data ranges <span class="citation">[<a href="#ref-Wang2013">56</a>,<a href="#ref-Kosciolek2015a">138</a>]</span>. TODOOOPLOT</p>
+<p>Choosing an appropriate benchmark for contact prediction is determined by the further utilization of the predictions. Most prominently, predicted contacts are used to assist structure prediction as outlined in the last section <a href="application-contact-prediction.html#application-contact-prediction">2.5</a>. Therefore, one could assess the quality of structural models computed with the help of predicted contacts. However, predicting structural models adds not only another layer of computational complexity but also raises questions about implementation details of the folding protocol.</p>
+<p>It has been found that in general a small number of accurate contacts is sufficient to constrain the overal protein fold as already discussed. From these considerations emerged various standard benchmarks that have been established by the <a href="abbrev.html#abbrev">CASP</a> community over many years <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>,<a href="#ref-Monastyrskyy2011">163</a>,<a href="#ref-Monastyrskyy2014a">164</a>]</span>. <a href="abbrev.html#abbrev">CASP</a>, the well-respected and independent competition for the structural bioinformatic’s community introduced the contact prediction category in 1996. Taking place every two years, the progress in the field is assessed in a blind competition and the community discusses the outcome in a subsequent meeting. According to the <a href="abbrev.html#abbrev">CASP</a> regulations, a pair of residues is defined to be in physical contact when the distance between their <span class="math inline">\(\Cb\)</span> atoms (<span class="math inline">\(C_{\alpha}\)</span> in case of glycine) is less than <span class="math inline">\(8 \angstrom\)</span> in the reference protein structure.</p>
+<p>The overall performance of a contact predictor is evaluated by the mean precision over a testset of proteins with known high quality 3D structures against the top scoring predictions from every protein. The number of top scoring predictions per protein is typically normalized with respect to protein length <span class="math inline">\(L\)</span> and precision is defined as the number of true contacts among the top scoring predicted contacts,</p>
+<span class="math display">\[\begin{equation}
+    \textrm{precision}  = \frac{TP}{TP + FP} \; ,
+\end{equation}\]</span>
+<p>where <span class="math inline">\(TP\)</span> is a true positive contact and <span class="math inline">\(FP\)</span> is false positive contact. A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth <span class="citation">[<a href="#ref-Ashkenazy2009">165</a>]</span>. During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>]</span>. Another informative metric is mean error defined as:</p>
+<span class="math display">\[\begin{equation}
+    \textrm{mean error}  = \frac{\textrm{error}}{TP + FP} 
+        \begin{cases}
+            error = \Delta\Cb - T &amp; \text{if } \Delta\Cb &gt; T\\
+            error = 0, &amp;\text{otherwise }
+        \end{cases}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\Delta\Cb\)</span> is the actual distance of a residue pair in the native structure, and <span class="math inline">\(T\)</span> is the distance threshold defining a true contact. The mean error helps to asses how wrong false positive predictions are.</p>
+<p>Currently best methods perform in the range XXX. Sequence feature based methods: Their performance is less dependent on the number of available sequence homologs compared to coevolution methods and therefore they can outperform pure coevolution methods in low data ranges <span class="citation">[<a href="#ref-Wang2013">56</a>,<a href="#ref-Kosciolek2015a">166</a>]</span>. TODOOOPLOT</p>
 <div id="seq-sep" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> Sequence Separation</h3>
-<p>Local residue pairs separated by only some positions in sequence (e.g <span class="math inline">\(|i-j| &lt; 6\)</span>) are usually filtered out for evaluating contact prediction methods. They are trivial to predict as they typically correspond to contacts within secondary structure elements and reflect the local geometrical constraints. Figure <a href="intro-cp-evaluation.html#fig:Cb-distribution">2.4</a> shows the distribution of <span class="math inline">\(\Cb\)</span> distances for various minimal sequence separation thresholds. Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around <span class="math inline">\(5.5\angstrom\)</span>, <span class="math inline">\(7.4\angstrom\)</span> and <span class="math inline">\(10.6\angstrom\)</span> that can be attributed to local interactions in e.g. helices (see Figure <a href="intro-cp-evaluation.html#fig:peaks-Cb-distribution">2.5</a>).</p>
+<p>Local residue pairs separated by only some positions in sequence (e.g <span class="math inline">\(|i-j| &lt; 6\)</span>) are usually filtered out for evaluating contact prediction methods. They are trivial to predict as they typically correspond to contacts within secondary structure elements and reflect the local geometrical constraints. Figure <a href="intro-cp-evaluation.html#fig:Cb-distribution">2.6</a> shows the distribution of <span class="math inline">\(\Cb\)</span> distances for various minimal sequence separation thresholds. Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around <span class="math inline">\(5.5\angstrom\)</span>, <span class="math inline">\(7.4\angstrom\)</span> and <span class="math inline">\(10.6\angstrom\)</span> that can be attributed to local interactions in e.g. helices (see Figure <a href="intro-cp-evaluation.html#fig:peaks-Cb-distribution">2.7</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:Cb-distribution"></span>
 <iframe src="img/dataset_statistics/Cb_distribution_all_data43579541_log.html" width="90%" height="500px">
 </iframe>
 <p class="caption">
-Figure 2.4: Distribution of residue pair <span class="math inline">\(\Cb\)</span> distances over 6741 proteins in the dataset (see Methods <a href="dataset.html#dataset">8.1</a>) at different minimal sequence separation thresholds.
+Figure 2.6: Distribution of residue pair <span class="math inline">\(\Cb\)</span> distances over 6741 proteins in the dataset (see Methods <a href="dataset.html#dataset">8.1</a>) at different minimal sequence separation thresholds.
 </p>
 </div>
 
 <div class="figure" style="text-align: center"><span id="fig:peaks-Cb-distribution"></span>
 <img src="img/dataset_statistics/cb_distribution_peak_5-6.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\angstrom\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\angstrom\) and \(7.5\angstrom\)." width="40%" /><img src="img/dataset_statistics/cb_distribution_peak_7.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\angstrom\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\angstrom\) and \(7.5\angstrom\)." width="40%" />
 <p class="caption">
-Figure 2.5: <span class="math inline">\(\Cb\)</span> distances between neighboring residues in <span class="math inline">\(\alpha\)</span>-helices. Left: Direct neighbors in <span class="math inline">\(\alpha\)</span>-helices have <span class="math inline">\(\Cb\)</span> distances around <span class="math inline">\(5.4\angstrom\)</span> due to the geometrical constraints from <span class="math inline">\(\alpha\)</span>-helical architecture. Right: Residues separated by two positions (<span class="math inline">\(|i-j| = 2\)</span>) are less geometrically restricted to <span class="math inline">\(\Cb\)</span> distances between <span class="math inline">\(7\angstrom\)</span> and <span class="math inline">\(7.5\angstrom\)</span>.
+Figure 2.7: <span class="math inline">\(\Cb\)</span> distances between neighboring residues in <span class="math inline">\(\alpha\)</span>-helices. Left: Direct neighbors in <span class="math inline">\(\alpha\)</span>-helices have <span class="math inline">\(\Cb\)</span> distances around <span class="math inline">\(5.4\angstrom\)</span> due to the geometrical constraints from <span class="math inline">\(\alpha\)</span>-helical architecture. Right: Residues separated by two positions (<span class="math inline">\(|i-j| = 2\)</span>) are less geometrically restricted to <span class="math inline">\(\Cb\)</span> distances between <span class="math inline">\(7\angstrom\)</span> and <span class="math inline">\(7.5\angstrom\)</span>.
 </p>
 </div>
-<p>Commonly, sequence separation bins are applied to distuinguish short (<span class="math inline">\(6 &lt; |i-j| \le 12\)</span>), medium (<span class="math inline">\(12 &lt; |i-j| \le 24\)</span>) and long range (<span class="math inline">\(|i-j| &gt; 24\)</span>) contacts <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>,<a href="#ref-Monastyrskyy2014a">136</a>]</span>. Especially long range contacts are of importance for structure prediction as they are the most informative and able to constrain the overal fold of a protein <span class="citation">[<a href="#ref-Monastyrskyy2011">135</a>]</span>.</p>
+<p>Commonly, sequence separation bins are applied to distuinguish short (<span class="math inline">\(6 &lt; |i-j| \le 12\)</span>), medium (<span class="math inline">\(12 &lt; |i-j| \le 24\)</span>) and long range (<span class="math inline">\(|i-j| &gt; 24\)</span>) contacts <span class="citation">[<a href="#ref-Monastyrskyy2015">75</a>,<a href="#ref-Monastyrskyy2014a">164</a>]</span>. Especially long range contacts are of importance for structure prediction as they are the most informative and able to constrain the overal fold of a protein <span class="citation">[<a href="#ref-Monastyrskyy2011">163</a>]</span>.</p>
 </div>
 <div id="interpretation-of-evaluation-results" class="section level3">
 <h3><span class="header-section-number">2.6.2</span> Interpretation of Evaluation Results</h3>
 <p>There are certain subtleties to be considered when interpreting contact prediction evaluation results.</p>
-<p>First of all, the rigid <span class="math inline">\(\Cb\)</span> distance definition of a contact is a very rough measure of true physical interactions between amino acid sidechains. <!--Whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.--> More importantly, interactions between sidechains depend on their physico-chemical properties, on their orientation and different environments within proteins (see section <a href="protein-structure.html#amino-acid-interactions">1.1.1</a>) <span class="citation">[<a href="#ref-Bettsa">139</a>]</span>. A simple <span class="math inline">\(\Cb\)</span> distance threshold not only misses to reflect biological interaction preferences of amino acids but also provides a questionable gold-standard for benchmarking. Other distance thresholds and definitions for physical contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well. In fact, Duarte and colleagues found that using a <span class="math inline">\(\Cb\)</span> distance threshold between 9<span class="math inline">\(\angstrom\)</span> and 11<span class="math inline">\(\angstrom\)</span> yields optimal results when predicting the 3D structure from the respective contacts <span class="citation">[<a href="#ref-Duarte2010">127</a>]</span>. Anishchenko and colleagues analysed false positive predictions with respect to a minimal atom distance threshold <span class="math inline">\(&lt; 5 \angstrom\)</span>, as they found that this cutoff optimally defines direct physical interactions of residue pairs <span class="citation">[<a href="#ref-Anishchenko2017">140</a>]</span>. Definitely, choosing different distance cutoffs and reference atoms for defining a true contact changes the evaluation outcome.</p>
-<p>Another issue concerns structural variation within a protein family. Evolutionary couplings are inferred from all family members in the <a href="abbrev.html#abbrev">MSA</a> and therefore predicted contacts might be physical contacts in one family member but not in another. Anishchenko et al. could show that more than <span class="math inline">\(80\%\)</span> of false positives at intermediate distances (minimal heavy atom distance 5-15<span class="math inline">\(\angstrom\)</span>) are true contacts in at least one homolog structure <span class="citation">[<a href="#ref-Anishchenko2017">140</a>]</span>. Therefore, choosing the right trade-off between sensitivity and specificity when generating alignments is a crucial step as well as choosing the target protein structure for evaluation.</p>
-<p>Finally, an important aspect not considered in the standard benchmarks is the spread of predicted contacts. It is perfectly possible to improve precison of predicted contacts without translating this improvement to better structural models. The reason being that structurally redundant contacts, that is contacts in the immediate sequence neighborhood of other contacts, do not give additional information to constrain the fold <span class="citation">[<a href="#ref-Jones2015">65</a>,<a href="#ref-Marks2011">81</a>,<a href="#ref-Kim2014">124</a>]</span>. For example, given a contact between residues <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, there is hardly an added value knowing that there is a contact between residues <span class="math inline">\(i\!+\!1\)</span> and <span class="math inline">\(j\!+\!1\)</span> when it comes to predicting the overal topology. This observation is highly relevant for deep learning methods due to their unique ability to abstract higher order interactions and recognize contact patterns. Several measures of the contact spread have been developed, like the mean euclidian distance between true and predicted contacts, but are not commonly evaluated yet <span class="citation">[<a href="#ref-Marks2011">81</a>,<a href="#ref-DeOliveira2016">131</a>]</span>.</p>
+<p>First of all, the rigid <span class="math inline">\(\Cb\)</span> distance definition of a contact is a very rough measure of true physical interactions between amino acid sidechains. <!--Whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.--> More importantly, interactions between sidechains depend on their physico-chemical properties, on their orientation and different environments within proteins (see section <a href="protein-structure.html#amino-acid-interactions">1.1.1</a>) <span class="citation">[<a href="#ref-Bettsa">167</a>]</span>. A simple <span class="math inline">\(\Cb\)</span> distance threshold not only misses to reflect biological interaction preferences of amino acids but also provides a questionable gold-standard for benchmarking. Other distance thresholds and definitions for physical contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well. In fact, Duarte and colleagues found that using a <span class="math inline">\(\Cb\)</span> distance threshold between 9<span class="math inline">\(\angstrom\)</span> and 11<span class="math inline">\(\angstrom\)</span> yields optimal results when predicting the 3D structure from the respective contacts <span class="citation">[<a href="#ref-Duarte2010">129</a>]</span>. Anishchenko and colleagues analysed false positive predictions with respect to a minimal atom distance threshold <span class="math inline">\(&lt; 5 \angstrom\)</span>, as they found that this cutoff optimally defines direct physical interactions of residue pairs <span class="citation">[<a href="#ref-Anishchenko2017">168</a>]</span>.</p>
+<p>Another issue concerns structural variation within a protein family. Evolutionary couplings are inferred from all family members in the <a href="abbrev.html#abbrev">MSA</a> and therefore predicted contacts might be physical contacts in one family member but not in another. Anishchenko et al. could show that more than <span class="math inline">\(80\%\)</span> of false positives at intermediate distances (minimal heavy atom distance 5-15<span class="math inline">\(\angstrom\)</span>) are true contacts in at least one homolog structure <span class="citation">[<a href="#ref-Anishchenko2017">168</a>]</span>. Therefore, choosing the right trade-off between sensitivity and specificity when generating alignments is a crucial step as well as choosing the target protein structure for evaluation.</p>
+<p>Finally, an important aspect not considered in the standard benchmarks is the spread of predicted contacts. It is perfectly possible to improve precison of predicted contacts without translating this improvement to better structural models. The reason being that structurally redundant contacts, that is contacts in the immediate sequence neighborhood of other contacts, do not give additional information to constrain the fold <span class="citation">[<a href="#ref-Jones2015">65</a>,<a href="#ref-Marks2011">81</a>,<a href="#ref-Kim2014">124</a>]</span>. For example, given a contact between residues <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, there is hardly an added value knowing that there is a contact between residues <span class="math inline">\(i\!+\!1\)</span> and <span class="math inline">\(j\!+\!1\)</span> when it comes to predicting the overal topology. This observation is highly relevant for deep learning methods due to their unique ability to abstract higher order interactions and recognize contact patterns. Several measures of the contact spread have been developed, like the mean euclidian distance between true and predicted contacts, but are not commonly evaluated yet <span class="citation">[<a href="#ref-Marks2011">81</a>,<a href="#ref-DeOliveira2016">133</a>]</span>.</p>
 </div>
 </div>
 <h3>References</h3>
@@ -329,28 +345,28 @@ Figure 2.5: <span class="math inline">\(\Cb\)</span> distances between neighbori
 <p>75. Monastyrskyy, B., D’Andrea, D., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2015). New encouraging developments in contact prediction: Assessment of the CASP11 results. Proteins. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26474083" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26474083</a>.</p>
 </div>
 <div id="ref-Monastyrskyy2011">
-<p>135. Monastyrskyy, B., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2011). Evaluation of residue-residue contact predictions in CASP9. Proteins <em>79 Suppl 1</em>, 119–25. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919</a>.</p>
+<p>163. Monastyrskyy, B., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2011). Evaluation of residue-residue contact predictions in CASP9. Proteins <em>79 Suppl 1</em>, 119–25. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919</a>.</p>
 </div>
 <div id="ref-Monastyrskyy2014a">
-<p>136. Monastyrskyy, B., D’Andrea, D., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2014). Evaluation of residue-residue contact prediction in CASP10. Proteins <em>82 Suppl 2</em>, 138–53. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>164. Monastyrskyy, B., D’Andrea, D., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2014). Evaluation of residue-residue contact prediction in CASP10. Proteins <em>82 Suppl 2</em>, 138–53. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Ashkenazy2009">
-<p>137. Ashkenazy, H., Unger, R., and Kliger, Y. (2009). Optimal data collection for correlated mutation analysis. Proteins <em>74</em>, 545–55. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18655065" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18655065</a>.</p>
+<p>165. Ashkenazy, H., Unger, R., and Kliger, Y. (2009). Optimal data collection for correlated mutation analysis. Proteins <em>74</em>, 545–55. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18655065" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18655065</a>.</p>
 </div>
 <div id="ref-Wang2013">
 <p>56. Wang, Z., and Xu, J. (2013). Predicting protein contact map using evolutionary and physical constraints by integer programming. Bioinformatics <em>29</em>, i266–73. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Kosciolek2015a">
-<p>138. Kosciolek, T., and Jones, D.T. (2015). Accurate contact predictions using coevolution techniques and machine learning. Proteins Struct. Funct. Bioinforma., n/a–n/a. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26205532" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26205532</a>.</p>
+<p>166. Kosciolek, T., and Jones, D.T. (2015). Accurate contact predictions using coevolution techniques and machine learning. Proteins Struct. Funct. Bioinforma., n/a–n/a. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26205532" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26205532</a>.</p>
 </div>
 <div id="ref-Bettsa">
-<p>139. Betts, M.J., and Russell, R.B. Amino Acid Properties and Consequences of Substitutions. In Bioinforma. genet. (Chichester, UK: John Wiley &amp; Sons, Ltd), pp. 289–316. Available at: <a href="http://doi.wiley.com/10.1002/0470867302.ch14" class="uri">http://doi.wiley.com/10.1002/0470867302.ch14</a>.</p>
+<p>167. Betts, M.J., and Russell, R.B. Amino Acid Properties and Consequences of Substitutions. In Bioinforma. genet. (Chichester, UK: John Wiley &amp; Sons, Ltd), pp. 289–316. Available at: <a href="http://doi.wiley.com/10.1002/0470867302.ch14" class="uri">http://doi.wiley.com/10.1002/0470867302.ch14</a>.</p>
 </div>
 <div id="ref-Duarte2010">
-<p>127. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe, M. (2010). Optimal contact definition for reconstruction of contact maps. BMC Bioinformatics <em>11</em>, 283. Available at: <a href="http://www.biomedcentral.com/1471-2105/11/283" class="uri">http://www.biomedcentral.com/1471-2105/11/283</a>.</p>
+<p>129. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe, M. (2010). Optimal contact definition for reconstruction of contact maps. BMC Bioinformatics <em>11</em>, 283. Available at: <a href="http://www.biomedcentral.com/1471-2105/11/283" class="uri">http://www.biomedcentral.com/1471-2105/11/283</a>.</p>
 </div>
 <div id="ref-Anishchenko2017">
-<p>140. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D. (2017). Origins of coevolution between residues distant in protein 3D structures. Proc. Natl. Acad. Sci., 201702664. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114</a>.</p>
+<p>168. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D. (2017). Origins of coevolution between residues distant in protein 3D structures. Proc. Natl. Acad. Sci., 201702664. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114</a>.</p>
 </div>
 <div id="ref-Jones2015">
 <p>65. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
@@ -362,7 +378,7 @@ Figure 2.5: <span class="math inline">\(\Cb\)</span> distances between neighbori
 <p>124. Kim, D.E., Dimaio, F., Yu-Ruei Wang, R., Song, Y., and Baker, D. (2014). One contact for every twelve residues allows robust and accurate topology-level protein structure modeling. Proteins <em>82 Suppl 2</em>, 208–18. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23900763" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23900763</a>.</p>
 </div>
 <div id="ref-DeOliveira2016">
-<p>131. Oliveira, S.H.P. de, Shi, J., and Deane, C.M. (2016). Comparing co-evolution methods and their application to template-free protein structure prediction. Bioinformatics, btw618. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27682254" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27682254</a>.</p>
+<p>133. Oliveira, S.H.P. de, Shi, J., and Deane, C.M. (2016). Comparing co-evolution methods and their application to template-free protein structure prediction. Bioinformatics, btw618. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27682254" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27682254</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -389,7 +405,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="applications.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="application-contact-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="challenges.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -440,7 +456,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
