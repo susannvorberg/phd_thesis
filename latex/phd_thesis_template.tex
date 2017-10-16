@@ -10,15 +10,19 @@
 \usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
 \usepackage[top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage{siunitx}
-\usepackage{xcolor}
-\usepackage{textcomp}
-
+\usepackage{lscape}
+\usepackage{pdfpages}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% pandoc does not parse latex environment
+% for landscape tables
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
 
 %predefined commands
 \newcommand{\Cb}{C_\beta} 

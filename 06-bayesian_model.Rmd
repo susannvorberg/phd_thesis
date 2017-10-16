@@ -1,5 +1,17 @@
 # Bayesian Model for Contact Prediction {#bayesian-approach}
 
+
+The most popular and successfull methods for contact prediction optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
+
+By doing so valuable information in contact matrices is lost. 
+Analyses in section 1 shows what information is contained in coupling matrices and that the signal in coupling matrices varies with $\Cb$ distance. 
+
+This thesis introcudes a principled Bayesian statistical approach that eradicates these heuristics to fully exploit the information in coupling matrices.
+Instead of transforming the model parameters $\w$ into heuristic contact scores, one can compute the posterior probability distributions of the distances $r_{ij}$ between $\Cb$ atoms of all residues pairs $i$ and $j$, given the [MSA](#abbrev) $\X$. 
+The coupling parameters $\w$ are treated as hidden variables that will be integrated out analytically. 
+This approach also allows for extraction of information contained in the particular types of amino acids, since each pair of amino acids will have a different preference to be coupled at certain distances.
+---
+
 The most popular and successfull methods for contact prediction so far optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
 
 The next sections introduce a principled Bayesian statistical approach that eradicates these heuristics.

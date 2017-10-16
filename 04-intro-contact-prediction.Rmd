@@ -367,7 +367,7 @@ In contrast, [APC](#abbrev) and other denoising techniques such as LRS [@Zhang20
 
 (ref:caption-apc-correction) Contact maps computed from  pseudo-likelihood couplings. Subplot on top of the contact maps illustrates the normalized Shannon entropy (<span style="color:#e7539d;">pink </span> line) and percentage of gaps for every position in the alignment (<span style="color:brown;">brown </span> line). **Left**: Contact map computed with Frobenius norm as in eq. \@ref(eq:frobenius-norm). Overall coupling values are dominated by entropic effects, i.e. the amount of variation for a [MSA](#abbrev) position, leading to striped brightness patterns. For example, positions with high column entropy (e.g. positions 7, 12 or 31) have higher overall coupling values than positions with low column entropy (e.g. positions 11, 24 or 33). **b**: previous contact map but corrected for background noise with the [APC](#abbrev) as in eq. \@ref(eq:apc).
 
-```{r apc-correction, echo = FALSE, out.width = '80%', fig.align='center', fig.cap = '(ref:caption-apc-correction)'}
+```{r apc-correction, echo = FALSE, out.width = '90%', fig.align='center', fig.cap = '(ref:caption-apc-correction)'}
 knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 ```
 
@@ -377,12 +377,12 @@ knitr::include_graphics("img/intro/apc_correction_with_entropy.png")
 
 ## Applications {#application-contact-prediction}
 
-The most popular and historically motivated application for contact prediction is contact-guided *denovo* structure prediction. 
+The most popular and historically motivated application for contact prediction is contact-guided *de novo* structure prediction. 
 
 It has long been known that the native protein 3D structure can be reconstructed from an error-free contact map [@Vendruscolo1997].
 Also, protein fold reconstruction from sparse inter-residue proximity constraints obtained from experiments such as cross-linking/mass spectrometry, Foerster resonance energy transfer (FRET) or sparse nuclear Overhauser enhancement (NOE) distance data generated from NMR experiments has been demonstrated [@Li2004; @Yu2013; @Kalinin2012; @Bowers2000; @Kolinski1998; @Aszodi1995a].
 Predicted contacts, however, have long been regarded as being of little use for structure prediction because of their high false-positive rates [@Wu2011; @Tress2010].
-Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in *denovo* structure prediction aided by predicted contacts.
+Only with the emergence of global statistical models for contact prediction which drastically reduced false-positive rates there has been renewed interest in *de novo* structure prediction aided by predicted contacts.
 In 2011, Marks et al. showed that the top scoring contacts predicted with their mean-field approach *mfDCA* are sufficiently accurate to successfully deduce the native fold of the protein [@Marks2011].
 In the following years, methods to predict contacts have been improved and applied to model many more protein structures culminating in the high-throughput prediction of 614 protein structures out of which more than 100 represent novel folds by Ovchinnikov and colleagues in 2017 [@Hopf2012; @Ovchinnikov2014a; @Hopf2014; @Hayat2015a; @Hopf2015a; @Raval2015a; @Wang2015; @Ovchinnikov2015a; @Ovchinnikov2017].
 
@@ -495,7 +495,6 @@ The number of top scoring predictions per protein is typically normalized with r
 
 where $TP$ is a true positive contact and $FP$ is false positive contact.
 A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth [@Ashkenazy2009].
-During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies [@Monastyrskyy2015].
 Another informative metric is mean error defined as:
 
 \begin{equation}
@@ -508,6 +507,7 @@ Another informative metric is mean error defined as:
 
 where $\Delta\Cb$ is the actual distance of a residue pair in the native structure, and $T$ is the distance threshold defining a true contact.
 The mean error helps to asses how wrong false positive predictions are.
+During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies [@Monastyrskyy2015].
 
 Currently best methods perform in the range XXX.
 Sequence feature based methods:
@@ -523,7 +523,7 @@ Without filtering local residue pairs (sequence separation 1), there are several
 
 (ref:caption-Cb-distribution) Distribution of residue pair $\Cb$ distances over 6741 proteins in the dataset (see Methods \@ref(dataset)) at different minimal sequence separation thresholds.
 
-```{r Cb-distribution, echo = FALSE, screenshot.alt="img/dataset_statistics/Cb_distribution_all_data43579541_log.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-Cb-distribution)'}
+```{r Cb-distribution, echo = FALSE, screenshot.alt="img/dataset_statistics/Cb_distribution_all_data43579541_log.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-Cb-distribution)'}
 knitr::include_url("img/dataset_statistics/Cb_distribution_all_data43579541_log.html", height="500px")
 ```
 
@@ -540,7 +540,7 @@ Especially long range contacts are of importance for structure prediction as the
 
 There are certain subtleties to be considered when interpreting contact prediction evaluation results.
 
-First of all, the rigid $\Cb$ distance definition of a contact is a very rough measure of true physical interactions between amino acid sidechains.
+The rigid $\Cb$ distance definition of a contact is a very rough measure of true physical interactions between amino acid sidechains.
 <!--Whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.-->
 More importantly, interactions between sidechains depend on their physico-chemical properties, on their orientation and different environments within proteins (see section \@ref(amino-acid-interactions)) [@Bettsa]. 
 A simple $\Cb$ distance threshold not only misses to reflect biological interaction preferences of amino acids but also provides a questionable gold-standard for benchmarking.
@@ -582,7 +582,7 @@ To reduce the effects of redundant sequences, a popular sequence reweighting str
 
 (ref:caption-phylogenetic-effect) The phylogenetic dependence of closely related sequences can produce covariation signals. Here, two independent mutation events (highlighted in red) in two branches of the tree result in a perfect covariation signal for two positions.
 
-```{r phylogenetic-effect, echo = FALSE, out.width='50%', fig.align='center', fig.cap = '(ref:caption-phylogenetic-effect)'}
+```{r phylogenetic-effect, echo = FALSE, out.width='60%', fig.align='center', fig.cap = '(ref:caption-phylogenetic-effect)'}
 knitr::include_graphics("img/intro/phylogenetic_effect.png")
 ```
 
@@ -663,35 +663,5 @@ Another important aspect is conformational flexibility (Figure \@ref(fig:sources
 PDB structures used to evaluate coevolution methods represent only rigid snapshots taken in an unnatural crystalline environment. 
 Yet proteins possess huge conformational plasticity and can adopt distinct alternative conformations or adapt shape when interacting with other proteins in an induced fit manner [@Noel2016].
 Several studies demonstrated successfully that coevolutionary signals can capture interactions specific to different distinct conformations [@Hopf2012; @Jana2014; @Sfriso2016; @Morcos2011]. 
-
-
-
-
-# Developing a Bayesian Model for Contact Prediction
-
-Coevolution methods ad
-
-The most popular and successfull methods for contact prediction optimize the pseudo-log-likelihood of the [MSA](#abbrev) and use several heuristics to calculate a contact score (see section \@ref(post-processing-heuristics)). 
-
-By doing so valuable information in contact matrices is lost. 
-Analyses in section 1 shows what information is contained in coupling matrices and that the signal in coupling matrices varies with $\Cb$ distance. 
-
-This thesis introcudes a principled Bayesian statistical approach that eradicates these heuristics to fully exploit the information in coupling matrices.
-Instead of transforming the model parameters $\w$ into heuristic contact scores, one can compute the posterior probability distributions of the distances $r_{ij}$ between $\Cb$ atoms of all residues pairs $i$ and $j$, given the [MSA](#abbrev) $\X$. 
-The coupling parameters $\w$ are treated as hidden variables that will be integrated out analytically. 
-This approach also allows for extraction of information contained in the particular types of amino acids, since each pair of amino acids will have a different preference to be coupled at certain distances.
-
-TODO Figure ! ! 
-
-In section 2 introduces max ent model for protein families that will produce the model parameters for the Bayesian model.
-
-In section 3 describes in detail how the posterior distribution of distances can be computed.
-
-Section 4 presents the optimizaton of the coupling prior. 
-
-And the Bayesian model will be evalutated in  section 5.
-
-The outlook describes an extension of the model to predict inter-residue distances. 
-Development is ongoing.
 
 

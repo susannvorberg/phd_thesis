@@ -50,12 +50,14 @@ All computations in this thesis are performed with CCMpredPy unless stated other
 
 CCMpredPy differs from CCMpred [@Seemayer2014] which is available at https://github.com/soedinglab/CCMpred in several details:
 
-- Initialization of potentials $\v$ and $\w$
-    - CCMpred initializes single potentials $\v_i(a) = \log f_i(a) - \log f_i(a= "-")$ with $f_i(a)$ being the frequency of amino acid a at position i and $a="-"$ representing a gap. A single pseudo-count has been added before computing the frequencies. Pair potentials $\w$ are intialized at 0.
-    - CCMpredPy initializes single potentials $\v$ with the [ML](#abbrev) estimate of single potentials (see section \@ref(regularization)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). Pair potentials $\w$ are initialized at 0.
-- Regularization
-    - CCMpred uses a Gaussian regularization prior centered at zero for both single and pair potentials. The regularization coefficient for single potentials $\lambda_v = 0.01$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
-    - CCMpredPy uses a Gaussian regularization prior centered at zero for the pair potentials. For the single potentials the Gaussian regularization prior is centered at the [ML](#abbrev) estimate of single potentials (see section \@ref(regularization)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). The regularization coefficient for single potentials $\lambda_v = 10$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
+Initialization of potentials $\v$ and $\w$: 
+- CCMpred initializes single potentials $\v_i(a) = \log f_i(a) - \log f_i(a= "-")$ with $f_i(a)$ being the frequency of amino acid a at position i and $a="-"$ representing a gap. A single pseudo-count has been added before computing the frequencies. Pair potentials $\w$ are intialized at 0.
+- CCMpredPy initializes single potentials $\v$ with the [ML](#abbrev) estimate of single potentials (see section \@ref(prior-v)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). Pair potentials $\w$ are initialized at 0.
+  
+Regularization:
+
+- CCMpred uses a Gaussian regularization prior centered at zero for both single and pair potentials. The regularization coefficient for single potentials $\lambda_v = 0.01$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
+- CCMpredPy uses a Gaussian regularization prior centered at zero for the pair potentials. For the single potentials the Gaussian regularization prior is centered at the [ML](#abbrev) estimate of single potentials (see section \@ref(prior-v)) using amino acid frequencies computed as described in section \@ref(amino-acid-frequencies). The regularization coefficient for single potentials $\lambda_v = 10$ and for pair potentials $\lambda_w = 0.2 * (L-1)$ with $L$ being protein length.
 
 Default settings for CCMpredPy have been chosen to best reproduce CCMpred results.
 A benchmark over a subset of approximately 3000 proteins confirms that performance measured as [PPV](#abbrev) for both methods is almost identical (see Figure \@ref(fig:cmmpredvanilla-vs-ccmpredpy)). 
@@ -69,25 +71,36 @@ knitr::include_url("img/methods/ccmpredvanilla_vs_ccmpredpy_precision_vs_rank.ht
 
 The benchmark in Figure \@ref(fig:cmmpredvanilla-vs-ccmpredpy) as well as all contacts predicted with CCMpred and CCMPredPy (using pseudo-likelihood) in my thesis have been computed using the following flags:
 
-CCMpredPy
+flags for computing pseudo-likelihood couplings with CCMpredPy:
 ```
---maxit 250                       # Compute a maximum of MAXIT operations
---center-v                        # Use a Gaussian prior for single potentials centered at ML estimate v*
---reg-l2-lambda-single 10         # regularization coefficient for single potentials
---reg-l2-lambda-pair-factor 0.2   # regularization coefficient for pairwise potentials computed as reg-l2-lambda-pair-factor * (L-1)
---pc-uniform                      # use uniform pseudocounts (1/21 for 20 amino acids + 1 gap state) 
---pc-count 1                      # defining pseudo count admixture coefficient rho = pc-count/( pc-count+ Neff)
---epsilon 1e-5                    # convergence criterion for minimum decrease in the last K iterations
---ofn-pll                         # using pseudo-likelihood as objective function
---alg-cg                          # using conjugate gradient to optimize objective function
+--maxit 250                  # Compute a maximum of MAXIT operations
+--center-v                   # Use a Gaussian prior for single potentials 
+                             # centered at ML estimate v*          
+--reg-l2-lambda-single 10    # regularization coefficient for 
+                             # single potentials
+--reg-l2-lambda-pair-factor 0.2   # regularization coefficient for 
+                                  # pairwise potentials computed as 
+                                  # reg-l2-lambda-pair-factor * (L-1)
+--pc-uniform        # use uniform pseudocounts 
+                    # (1/21 for 20 amino acids + 1 gap state) 
+--pc-count 1        # defining pseudo count admixture coefficient 
+                    # rho = pc-count/( pc-count+ Neff)
+--epsilon 1e-5      # convergence criterion for minimum decrease 
+                    # in the last K iterations
+--ofn-pll           # using pseudo-likelihood as objective function
+--alg-cg            # using conjugate gradient to optimize 
+                    # objective function
 ```
 
-CCMpred
+flags for computing pseudo-likelihood couplings with CCMpred:
 ```
 -n 250    # NUMITER:  Compute a maximum of NUMITER operations
--l 0.2    # LFACTOR:  Set pairwise regularization coefficients to LFACTOR * (L-1) 
--w 0.8    # IDTHRES:  Set sequence reweighting identity threshold to IDTHRES
--e 1e-5   # EPSILON:  Set convergence criterion for minimum decrease in the last K iterations to EPSILON
+-l 0.2    # LFACTOR:  Set pairwise regularization coefficients 
+          # to LFACTOR * (L-1) 
+-w 0.8    # IDTHRES:  Set sequence reweighting identity 
+          # threshold to IDTHRES
+-e 1e-5   # EPSILON:  Set convergence criterion for minimum 
+          # decrease in the last K iterations to EPSILON
 ```
 
 ## Sequence Reweighting {#seq-reweighting}
@@ -145,7 +158,7 @@ The formula for $q(x_i \eq a, x_j \eq b)$ in the second line in eq \@ref(eq:pseu
 
 ## Regularization {#methods-regularization}
 
-*CCMpredPy* offers an L2-regularization that pushes the single and pairwise terms smoothly towards zero and is equivalent to the logarithm of a zero-centered Gaussian prior,
+*CCMpredPy* uses an L2-regularization per default that pushes the single and pairwise terms smoothly towards zero and is equivalent to the logarithm of a zero-centered Gaussian prior,
 
 \begin{align}
   R(\v, \w)  &= \log \left[ \mathcal{N}(\v | \v^*, \lambda_v^{-1} I) \mathcal{N}(\w | \w^*, \lambda_w^{-1} I) \right] \nonumber \\
@@ -154,10 +167,6 @@ The formula for $q(x_i \eq a, x_j \eq b)$ in the second line in eq \@ref(eq:pseu
 \end{align}
 
 where the regularization coefficients $\lambda_v$ and $\lambda_w$ determine the strength of regularization.
-Most previous pseudo-likelihood approaches using L2-regularization for pseudo-likelihood optimization set $\v^* \eq \w^* \eq \mathbf{0}$ [@Seemayer2014; @Ekeberg2014; @Kamisetty2013].
-A different choice for $v^*$ is discussed in section \@ref(prior-v) that is is used with *CCMpredPy* for pseudo-likelihood optimization.
-The single potentials will not be optimized with [CD](#abbrev) but will be fixed at the $v^*$ given in eq. \@ref(eq:prior-v).
-Furthermore, *CCMpredPy* uses regularization coefficients $\lambda_v \eq 10$ and $\lambda_w \eq 0.2\cdot(L-1)$ for pseudo-likelihood optimization and the choice for $\lambda_w$ used with [CD](#abbrev) is discussed in section \@ref(regularization-for-cd-with-sgd).
 
 The regularization coefficient $\lambda_w$ for couplings $\w$ is defined with respect to protein length $L$ owing to the fact that the number of possible contacts in a protein increases quadratically with $L$ whereas the number of observed contacts only increases linearly as can be seen in Figure \@ref(fig:number-contacts-against-L).
 
@@ -166,6 +175,12 @@ The regularization coefficient $\lambda_w$ for couplings $\w$ is defined with re
 ```{r number-contacts-against-L, echo = FALSE, screenshot.alt="img/full_likelihood/no_contacts_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-number-contacts-against-L)'}
 knitr::include_url("img/full_likelihood/no_contacts_vs_protein_length_thr8.html", height = "500px")
 ```
+
+Most previous pseudo-likelihood approaches using L2-regularization for pseudo-likelihood optimization set $\v^* \eq \w^* \eq \mathbf{0}$ [@Seemayer2014; @Ekeberg2014; @Kamisetty2013].
+A different choice for $v^*$ is discussed in section \@ref(prior-v) that is is used per default with *CCMpredPy*.
+The single potentials will not be optimized with [CD](#abbrev) but will be fixed at $v^*$ given in eq. \@ref(eq:prior-v).
+Furthermore, *CCMpredPy* uses regularization coefficients $\lambda_v \eq 10$ and $\lambda_w \eq 0.2\cdot(L-1)$ for pseudo-likelihood optimization and the choice for $\lambda_w$ used with [CD](#abbrev) is discussed in section \@ref(regularization-for-cd-with-sgd).
+
 
 
 
@@ -228,7 +243,7 @@ Since no sequence (except the single query sequence) overlaps both domains, the 
 
 (ref:caption-gap-treatment) Hypothetical [MSA](#abbrev) consisting of two sets of sequences: the first set has sequences covering only the left half of columns, while the second set has sequences covering only the right half of columns. The two blocks could correspond to protein domains that were aligned to a single query sequence. Empirical amino acid pair frequencies $q(x_i \eq a, x_j \eq b)$ will vanish for positions $i$ from the left half and $j$ from the right half of the alignment.
 
-```{r gap-treatment, echo = FALSE, fig.align='center', fig.cap = '(ref:caption-gap-treatment)'}
+```{r gap-treatment, echo = FALSE, fig.align='center', out.width="100%", fig.cap = '(ref:caption-gap-treatment)'}
 knitr::include_graphics("img/gap_treatment.png")
 ```
 
@@ -407,17 +422,13 @@ For one-dimensional coupling distribution plots the residue pairs and respective
 
 - sequence separation of residue pairs $\ge 10$
 - percentage of gaps per column $\le 30\%$
-- evidence for a coupling $\wijab$ from the alignment, $N_{ij} \cdot q_i(a)  \cdot q_j(b) \ge 100$ with:
-    - $N_{ij}$: number of sequences with neither a gap at position $i$ nor at position $j$
+- evidence for a coupling $\wijab$ estimated from the alignment, $N_{ij} \cdot q_i(a)  \cdot q_j(b) \ge 100$ with:
+    - $N_{ij}$: number of sequences with no gaps at positions $i$ or $j$
     - $q_i(a)$, $q_j(b)$: frequencies of amino acids $a$ and $b$ at positions $i$ and $j$, respectively (computed as described in section \@ref(amino-acid-frequencies)) 
     
 These criteria ensure that uninformative couplings are neglected, e.g. sequence neighbors albeit being contacts according to the $\Cb$ contact definition cannot be assumed to express biological meaningful coupling patterns, or couplings for amino acid pairings that do not have enough statistical power due to insufficient counts in the alignment.
 
 The same criteria have been applied for selecting couplings for the two-dimensional distribution plots with the difference that evidence for a single coupling term has to be $N_{ij} \cdot q_i(a) \cdot q_j(b) > 80.$
-
-
-
-
 
 
 
@@ -753,13 +764,16 @@ PLOT PCD for different LEARNIGN  RATEWS and SAMPLE SIZES
 Discussion:
 - as could be seen: improved gradients and different solutions do not translate into improved precision of top ranked contacts
 - APC corrected l2norm might not be an appropriate measure for CD couplings:
-  look at correlation plot of couplings (pll vs cd) and l2norm (pll vs cd) and apc l2norm  (pll vs cd) --> differences vanish
-- ranking of residues might not be influenced by subtle changes in parameters when crude l2norm is computed --> rank plot: merged list of top ranked contacts from both methods
+  look at correlation plot of couplings (pll vs cd) and l2norm (pll vs cd) and apc l2norm  (pll vs cd) -> differences vanish
+- ranking of residues might not be influenced by subtle changes in parameters when crude l2norm is computed -> rank plot: merged list of top ranked contacts from both methods
   what can we see: 
     - generally pll has stronger scores (see also boxplot over all proteins? statistic?)
     - ranking is very similar, especially for top ranked contacts (thats why benchmark plots so similar)
-    
-- 
+
+
+
+
+<!--
 
 ## Bayesian Model for Residue-Resdiue Contact Prediction
 
@@ -845,8 +859,10 @@ We know from eq. \@ref(eq:gradient-LLreg-approx) that at the mode $\w^*$ the mod
 
 and therefore the negative Hessian elements in cases 1 and 2 can be expressed as
 
-
+-->
 <!-- The first term ($N_{ij} \left(\,q(x_i\!=\!a, x_j\!=\!b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right)$) actually is accurate and only the second $(\dots)$ iss approximated according to the gap approximation in eq. \@ref(eq:gradient-LLreg-approx) -->
+
+<!--
 
 \begin{align}
    (\H)_{ijab, ijab} =& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
@@ -1181,7 +1197,7 @@ Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $
 ### Training the Hyperparameters $\rho_k$ and $\alpha_k$ for distance-dependent prior
 
 
-
+-->
 
 ## Features used to train Random Forest Model {#seq-features}
 
@@ -1211,6 +1227,7 @@ Every pair of residues $(i,j)$ from the same protein will be attributed the same
 
 There are in total 32 global alignment features per reside pair. 
 
+The last feature listed in table \@ref(tab:global-features) ("contact prior protein length") stands for a simple contact predictor based on expected number of contacts per protein with respect to protein length.
 The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length $L$ as can be seen in Figure \@ref(fig:avg-nr-contacts-per-residue-vs-protein-length).
 
 (ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation |j-i|.
@@ -1219,8 +1236,7 @@ The average number of contats per residue, computed as the observed number of co
 knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
 ```
 
-
-In log space, the average number of contats per residue can be fitted with a linear regression (see Figure \@ref(fig:avg-nr-contacts-per-residue-vs-log-protein-length-linfit)) and yields the following functions:
+In log space, the average number of contats per residue can be fitted with a linear regression (see Figure \@ref(fig:simple-contact-prior-linfit)) and yields the following functions:
 
 - $f(L) = 1.556 + 0.596 \log (L)$ for sequence separation of 0 positions
 - $f(L) = -1.273 + 0.59 \log (L)$ for sequence separation of 8 positions
@@ -1315,12 +1331,12 @@ Table \@ref(tab:rebalancing-dataset) lists choices for the proportion of contact
 I followed the same strategy and undersampled residue pairs that are not physical contacts with a proportion of contacts to non-contacts of 1:5.
 
 | Study | Machine Learning Algorithm | Proportion of Contacts : Non-contacts | 
-|------------------------:|:--------:|:--------------------:|
-| Wu et al. (2008) [@Wu2008] | SVM | 1 : 4 |
-| Li et al. (2011) [@Li2011] | Random Forest | 1 : 1, 1: 2 |
-| Wang et al. (2011) [@Wang2011] | RandomForest | 1 : 4 |
-| DiLena et al. (2012) [@DiLena2012a] | deep neural network| 1 : ~4 (sampling 20% of non-contacts) |
-| Wang et al. (2013) [@Wang2013] | Random Forest |  1 : ~4 (sampling 20% of non-contacts) |
+|-----------------------:|:------------:|:--------------------:|
+| Wu et al. (2008) [@Wu2008] | SVM | 1:4 |
+| Li et al. (2011) [@Li2011] | Random Forest | 1:1, 1:2 |
+| Wang et al. (2011) [@Wang2011] | Random Forest | 1:4 |
+| DiLena et al. (2012) [@DiLena2012a] | deep neural network| 1:$\approx \!4$ (sampling 20% of non-contacts) |
+| Wang et al. (2013) [@Wang2013] | Random Forest |  1:$\approx 4$ (sampling 20% of non-contacts) |
 :(#tab:rebalancing-dataset) Important machine learning contact prediction approaches and their choices for rebalancing the data set.
 
 
@@ -1331,7 +1347,7 @@ knitr::include_url("img/random_forest_contact_prior/fraction_contacts_vs_protein
 ```
 
 
-The total training set is comprised of 50,000 residue pairs $< 8 \angstrom$ ("contacts") and 250,000 residue pairs $> 8 \angstrom$ ("non-contacts").
+The total training set is comprised of 50,000 residue pairs $<8 \angstrom$ ("contacts") and 250,000 residue pairs $>8 \angstrom$ ("non-contacts").
 I filtered residue pairs using a sequence separation of 12 positions and selected at maximum 100 contacts and 500 non-contacts per protein.
 The data is collected in equal parts from data subsets 1-5 (see methods section  \@ref(methods)), so that the training set consists of five subsets that are non-redundand at the fold level.
 Each of the five models for cross-validation will be trained on 40,000 contacts and 200,000 non-contacts originating from four of the five subsets.

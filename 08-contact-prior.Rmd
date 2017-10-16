@@ -32,7 +32,7 @@ Random forests are capable of regression and classification tasks.
 For classification, predictions for new data are obtained by running each data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. 
 Figure \@ref(fig:rf-intro) visualizes the procedure of classifying a new data sample.
 
-(ref:caption-rf-intro) Classifying new data with random forests. A new data sample is run down every tree in the forest until it ends up in a leaf node. Every leaf node has associated class probabilities $p(c)$ reflecting the fraction of training samples belonging to every class $c$. The color of the leaf nodes reflects the class with highest probability. The predictions from all trees in form of the class probabilties are averaged over all trees and yield the final prediction. 
+(ref:caption-rf-intro) Classifying new data with random forests. A new data sample is run down every tree in the forest until it ends up in a leaf node. Every leaf node has associated class probabilities $p(c)$ reflecting the fraction of training samples at this leaf node belonging to every class $c$. The color of the leaf nodes reflects the class with highest probability. The predictions from all trees in form of the class probabilties are averaged and yield the final prediction. 
 
 ```{r rf-intro, echo = FALSE, out.width='80%', fig.align='center', fig.cap = '(ref:caption-rf-intro)'}
 knitr::include_graphics("img/random_forest_contact_prior/intro_random_forest.png")

@@ -39,67 +39,85 @@
 
 **SGD** stochastic gradient descent
 
-\pagebreak
 
-## Amino Acid Alphabet {#amino-acids}
+# Amino Acid Alphabet {#amino-acids}
 
+\blandscape
 
-| One-letter Code  | Three-letter Code | Amino Acid  | Physico-chemical properties | 
-|:------:|:-----:|:---------------|:----------------------------------------------------|
-| A | Ala | **A**lanine         | tiny, hydrophobic       |
-| C | Cys | **C**ysteine        | small, hydrophobic, polar ($C_{S-H}$)|
-| D | Asp | Aspartic Aci**D**   | small, negatively charged, polar    | 
-| E | Glu | Glutamic Acid       | negatively charged, polar | 
-| F | Phe | Phenylalanine       | aromatic, hydrophobic | 
-| G | Gly | **G**lycine         | tiny, hydrophobic | 
-| H | His | **H**istidine       | hydrophobic, aromatic, polar, (positively charged)  | 
-| I | Ile | **I**soleucine      | aliphatic, hydrophobic    | 
-| K | Lys | Lysine              | positively charged, polar | 
-| L | Leu | **L**eucine         | aliphatic, hydrophobic | 
-| M | Met | **M**ethionine      | hydrophobic | 
-| N | Asn | Asparagi**N**e      | small, polar | 
-| P | Pro | **P**roline         | small | 
-| Q | Gln | Glutamine           | tiny, hydrophobic |
-| R | Arg | A**R**ginine        | positively charged, polar | 
-| S | Ser | **S**erine          | tiny, polar | 
-| T | Thr | **T**hreonine       | hydrophobic, polar |
-| V | Val | **V**aline          | small, aliphatic | 
-| W | Trp | **T**ryptophan      | aromatic, hydrophobic, polar |
-| Y | Tyr | T**Y**rosine        | aromatic, hydrophobic, polar | 
+| One letter Code | Three letter Code | Amino Acid | Physico-chemical properties | 
+|:---:|:------:|----------:|:-------------|
+| A | Ala | **A**lanine         | tiny, hydrophobic                     |
+| C | Cys | **C**ysteine        | small, hydrophobic, polar ($C_{S-H}$) |
+| D | Asp | Aspartic Aci**D**   | small, negatively charged, polar      |
+| E | Glu | Glutamic Acid       | negatively charged, polar             |
+| F | Phe | Phenylalanine       | aromatic, hydrophobic                 |
+| G | Gly | **G**lycine         | tiny, hydrophobic                     |
+| H | His | **H**istidine       | hydrophobic, aromatic, polar, (positively charged)  |
+| I | Ile | **I**soleucine      | aliphatic, hydrophobic                |
+| K | Lys | Lysine              | positively charged, polar             |
+| L | Leu | **L**eucine         | aliphatic, hydrophobic                |
+| M | Met | **M**ethionine      | hydrophobic                           |
+| N | Asn | Asparagi**N**e      | small, polar                          |
+| P | Pro | **P**roline         | small                                 |
+| Q | Gln | Glutamine           | tiny, hydrophobic                     |
+| R | Arg | A**R**ginine        | positively charged, polar             |
+| S | Ser | **S**erine          | tiny, polar                           |
+| T | Thr | **T**hreonine       | hydrophobic, polar                    |
+| V | Val | **V**aline          | small, aliphatic                      |
+| W | Trp | **T**ryptophan      | aromatic, hydrophobic, polar          |
+| Y | Tyr | T**Y**rosine        | aromatic, hydrophobic, polar          |
+:(#tab:amino-acid-prop) Amino acid abbreviations and physico-chemical properties according to Livingstone et al., 1993 [@Livingstone1993]
 
+\elandscape
 
 # Dataset Properties
 
 The following figures display various statistics about the dataset used throughout this thesis. 
 See section \@ref(dataset) for information on how this dataset has been generated. 
 
-## Alignment Diversity
-(ref:caption-dataset-diversity) Distribution of alignment diversity ($=\sqrt(\frac{N}{L})$) in the dataset an its ten subsets.
 
-```{r dataset-diversity, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-dataset-diversity)'}
+(ref:caption-dataset-diversity) Distribution of alignment diversity ($=\sqrt(\frac{N}{L})$) in the dataset and its ten subsets.
+
+```{r dataset-diversity, echo = FALSE, screenshot.alt="img/dataset_statistics/diversity_dataset_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-dataset-diversity)'}
 knitr::include_url("img/dataset_statistics/diversity_dataset_boxplot_notitle.html")
 ```
 
-## Proportion of Gaps in Alignment
-(ref:caption-gaps) Distribution of gap percentage of alignments in the dataset an its ten subsets.
+(ref:caption-gaps) Distribution of gap percentage of alignments in the dataset and its ten subsets.
 
-```{r dataset-gaps, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-gaps)'}
+```{r dataset-gaps, echo = FALSE, screenshot.alt="img/dataset_statistics/gap_percentage_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-gaps)'}
 knitr::include_url("img/dataset_statistics/gap_percentage_boxplot_notitle.html")
 ```
 
-## Alignment Size (number of sequences)
-(ref:caption-alignment-size) Distribution of alignment size (number of sequences N) in the dataset an its ten subsets.
 
-```{r dataset-alignment-size, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-alignment-size)'}
+(ref:caption-alignment-size) Distribution of alignment size (number of sequences N) in the dataset and its ten subsets.
+
+```{r dataset-alignment-size, echo = FALSE, screenshot.alt="img/dataset_statistics/msa_size_dataset_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-alignment-size)'}
 knitr::include_url("img/dataset_statistics/msa_size_dataset_boxplot_notitle.html")
 ```
 
-## Protein Length
-(ref:caption-protein-length) Distribution of protein length L in the dataset an its ten subsets.
+(ref:caption-protein-length) Distribution of protein length L in the dataset and its ten subsets.
 
-```{r dataset-protein-length, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width = '100%', fig.cap = '(ref:caption-protein-length)'}
+```{r dataset-protein-length, echo = FALSE, screenshot.alt="img/dataset_statistics/protein_length_dataset_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-protein-length)'}
 knitr::include_url("img/dataset_statistics/protein_length_dataset_boxplot_notitle.html")
 ```
+
+
+# Standard Deviation of Couplings for Noncontacts
+
+
+(ref:caption-stdev-squared-couplings-noncontacts) Standard deviation of squared coupling values ${\wijab}^2$ for residue pairs not in physical contact ($\Delta \Cb > 25 \angstrom$). Dataset contains 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids)
+
+```{r stdev-squared-couplings-noncontacts, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle.png", out.width = '100%', fig.cap = '(ref:caption-stdev-squared-couplings-noncontacts)'}
+knitr::include_url("img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle.html", height="500px")
+```
+
+
+(ref:caption-stdev-raw-couplings-noncontacts) Standard deviation of coupling values $\wijab$ for residue pairs not in physical contact ($\Delta \Cb > 25 \angstrom$). Dataset contains 100.000 residue pairs per class (for details see section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
+
+```{r stdev-raw-couplings-noncontacts, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle.png", out.width = '100%', fig.cap = '(ref:caption-stdev-raw-couplings-noncontacts)'}
+knitr::include_url("img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle.html", height="500px")
+```
+
 
 # Amino Acid Interaction Preferences Reflected in Coupling Matrices
 
@@ -108,17 +126,21 @@ knitr::include_url("img/dataset_statistics/protein_length_dataset_boxplot_notitl
 Figure \@ref(fig:coupling-matrix-pication-pymol) shows a Tyrosine and a Lysine residue forming a cation-$\pi$ interaction in protein 2ayd.
 The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-pication-interaction) reflects the strong interaction preference. 
 
-(ref:caption-coupling-matrix-pication-pymol) Tyrosing (residue 37) and Lysine (residue 48) forming a cation-$\pi$ interaction in protein 2ayd.
+(ref:caption-coupling-matrix-pication-pymol) Tyrosine (residue 37) and Lysine (residue 48) forming a cation-$\pi$ interaction in protein 2ayd.
 
 ```{r coupling-matrix-pication-pymol, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-coupling-matrix-pication-pymol)'}
 knitr::include_graphics("img/coupling_matrix_analysis/2ayda01_37_48.png")
 ```
+
+<!--
 
 (ref:caption-coupling-matrix-pication-interaction) Coupling Matrix for residue pair i=37 and j=48 of PDB 2ayd chain A domain 1. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=37 and bars at the y-axis represent single potentials for residue j=48. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
 ```{r coupling-matrix-pication-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-pication-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_2aydA01_37_48_notitle.html", height = "750px")
 ```
+
+-->
 
 ## Disulfide Bonds {#disulfide}
 
@@ -131,22 +153,30 @@ The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-disulfide-
 knitr::include_graphics("img/coupling_matrix_analysis/1aluA00_54_64.png")
 ```
 
+<!--
+
 (ref:caption-coupling-matrix-disulfide-interaction) Coupling Matrix for residue pair i=54 and j=64 of PDB 1alu chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=54 and bars at the y-axis represent single potentials for residue j=64. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
 ```{r coupling-matrix-disulfide-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-disulfide-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aluA00_54_64_notitle.html", height = "750px")
 ```
 
+-->
+
 ## Aromatic-Proline Interactions {#aromatic-proline}
 
-Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol )shows a proline and a tryptophan residue forming such a CH/$\pi$ interaction in protein 1aol.
+Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol) shows a proline and a tryptophan residue forming such a CH/$\pi$ interaction in protein 1aol.
 The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-aromatic-proline) reflects this interaction with strong positive coupling between proline and tryptophan. 
 
-(ref:caption-coupling-matrix-aromatic-proline-pymol) Proline and tryptophan  (residues 17 and 34)  stacked on top of each otherengaging in a CH/$\pi$ interaction in protein 1alu.
+
+(ref:caption-coupling-matrix-aromatic-proline-pymol) Proline and tryptophan (residues 17 and 34) stacked on top of each otherengaging in a CH/$\pi$ interaction in protein chain 1aol_A_00.
 
 ```{r coupling-matrix-aromatic-proline-pymol, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-coupling-matrix-aromatic-proline-pymol)'}
 knitr::include_graphics("img/coupling_matrix_analysis/1aolA00_17_34.png")
 ```
+
+
+<!--
 
 (ref:caption-coupling-matrix-aromatic-proline) Coupling Matrix for residue pair i=17 and j=34 of PDB 1aol chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=17 and bars at the y-axis represent single potentials for residue j=34. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
 
@@ -154,6 +184,7 @@ knitr::include_graphics("img/coupling_matrix_analysis/1aolA00_17_34.png")
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aolA00_17_34_notitle.html", height = "750px")
 ```
 
+--> 
 
 ## Network-like structure of aromatic residues {#aromatic-network}
 
@@ -163,15 +194,15 @@ knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aolA00_17_34_n
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 ```
 
-## Aromatic residues at short distance ranges
+## Aromatic Sidechains at small $Cb$-$\Cb$ distances {#aromatic-small-distances}
 
-(ref:caption-aromatic-residues-at-short-distances) Aromatic residues occuring at short $Cb-\Cb$ distances. Aromatic residues enjoy large rotational freedom in their $C_\alpha$-$\Cb$ bond and therefore the the bulky aromatic ring system can point into different directions allowing for short $\Cb$ distances.
+(ref:caption-aromatic-residues-at-short-distances) The planar ring system of aromatic sidechains at short $\Cb$-$\Cb$ distances (e.g. $\Delta \Cb < 5 \angstrom$) often points away from each other to avoid steric hindrance.
 
 ```{r aromatic-residues-at-short-distances, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-aromatic-residues-at-short-distances)'}
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_residues_short_distance.png")
 ```
 
-
+<!--
 
 # Optimizing Full Likelihood with Gradient Descent
 
@@ -273,6 +304,9 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html"
 ```{r cd-samplesize-protein1ahoa00, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-samplesize-protein1ahoa00)'}
 knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes.png", "img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes.png"))
 ```
+
+--> 
+
 
 # Training of the Random Forest Contact Prior
 

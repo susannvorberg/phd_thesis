@@ -10,15 +10,19 @@
 \usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
 \usepackage[top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage{siunitx}
-\usepackage{xcolor}
-\usepackage{textcomp}
-
+\usepackage{lscape}
+\usepackage{pdfpages}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% pandoc does not parse latex environment
+% for landscape tables
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
 
 %predefined commands
 \newcommand{\Cb}{C_\beta} 
@@ -943,7 +947,7 @@ statistical model used to infer the contact matrix.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{img/intro/apc_correction_with_entropy} 
+{\centering \includegraphics[width=0.9\linewidth]{img/intro/apc_correction_with_entropy} 
 
 }
 
@@ -965,7 +969,7 @@ the \protect\hyperlink{abbrev}{APC} as in eq. \eqref{eq:apc}.}\label{fig:apc-cor
 \section{Applications}\label{application-contact-prediction}
 
 The most popular and historically motivated application for contact
-prediction is contact-guided \emph{denovo} structure prediction.
+prediction is contact-guided \emph{de novo} structure prediction.
 
 It has long been known that the native protein 3D structure can be
 reconstructed from an error-free contact map
@@ -981,7 +985,7 @@ use for structure prediction because of their high false-positive rates
 {[}\protect\hyperlink{ref-Wu2011}{76},\protect\hyperlink{ref-Tress2010}{77}{]}.
 Only with the emergence of global statistical models for contact
 prediction which drastically reduced false-positive rates there has been
-renewed interest in \emph{denovo} structure prediction aided by
+renewed interest in \emph{de novo} structure prediction aided by
 predicted contacts. In 2011, Marks et al. showed that the top scoring
 contacts predicted with their mean-field approach \emph{mfDCA} are
 sufficiently accurate to successfully deduce the native fold of the
@@ -1263,11 +1267,7 @@ contact. A popular variant of this benchmark plot shows the mean
 precision of a certain fraction of top ranked predictions (e.g.~L/5 top
 ranked predictions) against specific properties of the test proteins
 such as protein length or alignment depth
-{[}\protect\hyperlink{ref-Ashkenazy2009}{137}{]}. During CASP11 further
-evaluation metrics have been introduced, such as Matthews correlation
-coefficient, area under the precision-recall curve or F1 measure but
-they are rarely used in studies
-{[}\protect\hyperlink{ref-Monastyrskyy2015}{46}{]}. Another informative
+{[}\protect\hyperlink{ref-Ashkenazy2009}{137}{]}. Another informative
 metric is mean error defined as:
 
 \begin{equation}
@@ -1281,7 +1281,10 @@ metric is mean error defined as:
 where \(\Delta\Cb\) is the actual distance of a residue pair in the
 native structure, and \(T\) is the distance threshold defining a true
 contact. The mean error helps to asses how wrong false positive
-predictions are.
+predictions are. During CASP11 further evaluation metrics have been
+introduced, such as Matthews correlation coefficient, area under the
+precision-recall curve or F1 measure but they are rarely used in studies
+{[}\protect\hyperlink{ref-Monastyrskyy2015}{46}{]}.
 
 Currently best methods perform in the range XXX. Sequence feature based
 methods: Their performance is less dependent on the number of available
@@ -1310,7 +1313,7 @@ be attributed to local interactions in e.g.~helices (see Figure
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{img/dataset_statistics/Cb_distribution_all_data43579541_log} 
+{\centering \includegraphics[width=1\linewidth]{img/dataset_statistics/Cb_distribution_all_data43579541_log} 
 
 }
 
@@ -1357,10 +1360,10 @@ Results}\label{interpretation-of-evaluation-results}
 There are certain subtleties to be considered when interpreting contact
 prediction evaluation results.
 
-First of all, the rigid \(\Cb\) distance definition of a contact is a
-very rough measure of true physical interactions between amino acid
-sidechains. More importantly, interactions between sidechains depend on
-their physico-chemical properties, on their orientation and different
+The rigid \(\Cb\) distance definition of a contact is a very rough
+measure of true physical interactions between amino acid sidechains.
+More importantly, interactions between sidechains depend on their
+physico-chemical properties, on their orientation and different
 environments within proteins (see section \ref{amino-acid-interactions})
 {[}\protect\hyperlink{ref-Bettsa}{139}{]}. A simple \(\Cb\) distance
 threshold not only misses to reflect biological interaction preferences
@@ -1447,7 +1450,7 @@ of the number of similar sequences according to an identity threshold
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{img/intro/phylogenetic_effect} 
+{\centering \includegraphics[width=0.6\linewidth]{img/intro/phylogenetic_effect} 
 
 }
 
@@ -1637,48 +1640,6 @@ demonstrated successfully that coevolutionary signals can capture
 interactions specific to different distinct conformations
 {[}\protect\hyperlink{ref-Morcos2011}{51},\protect\hyperlink{ref-Hopf2012}{78},\protect\hyperlink{ref-Sfriso2016}{113},\protect\hyperlink{ref-Jana2014}{115}{]}.
 
-\chapter{Developing a Bayesian Model for Contact
-Prediction}\label{developing-a-bayesian-model-for-contact-prediction}
-
-Coevolution methods ad
-
-The most popular and successfull methods for contact prediction optimize
-the pseudo-log-likelihood of the \protect\hyperlink{abbrev}{MSA} and use
-several heuristics to calculate a contact score (see section
-\ref{post-processing-heuristics}).
-
-By doing so valuable information in contact matrices is lost. Analyses
-in section 1 shows what information is contained in coupling matrices
-and that the signal in coupling matrices varies with \(\Cb\) distance.
-
-This thesis introcudes a principled Bayesian statistical approach that
-eradicates these heuristics to fully exploit the information in coupling
-matrices. Instead of transforming the model parameters \(\w\) into
-heuristic contact scores, one can compute the posterior probability
-distributions of the distances \(r_{ij}\) between \(\Cb\) atoms of all
-residues pairs \(i\) and \(j\), given the
-\protect\hyperlink{abbrev}{MSA} \(\X\). The coupling parameters \(\w\)
-are treated as hidden variables that will be integrated out
-analytically. This approach also allows for extraction of information
-contained in the particular types of amino acids, since each pair of
-amino acids will have a different preference to be coupled at certain
-distances.
-
-TODO Figure ! !
-
-In section 2 introduces max ent model for protein families that will
-produce the model parameters for the Bayesian model.
-
-In section 3 describes in detail how the posterior distribution of
-distances can be computed.
-
-Section 4 presents the optimizaton of the coupling prior.
-
-And the Bayesian model will be evalutated in section 5.
-
-The outlook describes an extension of the model to predict inter-residue
-distances. Development is ongoing.
-
 \chapter{Interpretation of Coupling
 Matrices}\label{interpreting-coupling-matrices}
 
@@ -1705,27 +1666,27 @@ the coupling matrix,
 \(C_{i,j}=||\wij||_2 = \sqrt{\sum_{a,b=1}^{20} {\wijab}^2}\).
 
 The plots in Figure \ref{fig:sq-coupling-correlation} show the
-correlation of squared coupling values \((\wijab)^2\) with binary
+correlation of squared coupling values \({\wijab}^2\) with binary
 contact class (contact=1, non-contact=0) and the standard deviation of
-squared coupling values \((\wijab)^2\) for contacts computed on dataset
-of 100.000 residue pairs per class (for details see methods section
-\ref{method-coupling-correlation}). All couplings have a weak positive
-class correlation, meaning the stronger the squared coupling value, the
-more likely a contact can be inferred. Correlation is weak because most
-couplings \(wijab\) are close to zero since typically only few amino
-acid pairigns per residue pair carry evidence and produce a signal.
-Generally, couplings that involve an aliphatic amino acid such as
-isoleucine (I), leucine (L), valine (V) or an alanine (A) express the
+squared coupling values \({\wijab}^2\) for contacts computed on a
+dataset of 100.000 residue pairs per class (for details see methods
+section \ref{method-coupling-correlation}). All couplings have a weak
+positive class correlation, meaning the stronger the squared coupling
+value, the more likely a contact can be inferred. Correlation is weak
+because most couplings \(\wijab\) are close to zero since typically only
+few amino acid pairings per residue pair carry evidence and produce a
+signal. Generally, couplings that involve an aliphatic amino acid such
+as isoleucine (I), leucine (L), valine (V) or an alanine (A) express the
 strongest class correlation. In contrast, cysteine pairs (C-C) or pairs
 involving only the charged residus arginine (R), glutamic acid (E),
 lysine (K) or aspartic acid (D) correlate only weakly with contact
 class. Interestingly, for residue pairs being in physical contact, C-C
 and couplings involving charged residues have the highest
 standard-deviation among all couplings as can be seen in the right plot
-in Figure \ref{fig:sq-coupling-correlation}. Standard deviation for
+in Figure \ref{fig:sq-coupling-correlation}. Standard deviation of
 squared coupling values from non-contacts shows no relevant patterns and
-is on average one magnitude smaller (mean standard deviation over 400
-squared couplings = 0.05) than for the contact class.
+is on average one magnitude smaller than for the contact class (see
+Appendix Figure \ref{fig:stdev-squared-couplings-noncontacts}).
 
 
 
@@ -1756,10 +1717,13 @@ Different couplings are of varying importance for contact inference and
 have distinct characteristics. When looking at the raw coupling values
 (without squaring), these charateristics become even more pronounced.
 The plots in Figure \ref{fig:coupling-correlation} show the correlation
-of raw coupling values \((\wijab)\) with contact class and the standard
-deviation of coupling values for contacts. Interestingly, in contrast to
-the findings for squared coupling values, couplings for charged residue
-pairs, involving arginine (R), glutamic acid (E), lysine (K) and
+of raw coupling values \(\wijab\) with contact class and the standard
+deviation of coupling values for contacts. Standard deviation of
+coupling values for non-contacts shows no relevant patterns and is on
+average half as big as for the contact class (see Appendix Figure
+\ref{fig:stdev-raw-couplings-noncontacts}). Interestingly, in contrast
+to the findings for squared coupling values, couplings for charged
+residue pairs, involving arginine (R), glutamic acid (E), lysine (K) and
 aspartic acid (D), have the strongest class correlation (positive and
 negative), whereas aliphatic coupling pairs correlate to a much lesser
 extent. This implies that squared coupling value is a better indicator
@@ -1836,17 +1800,21 @@ be seen in the left plot in Figure \ref{fig:coupling-matrix-pymol}.
 
 
 
+
+
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle} \caption{Inferred couplings
-\(\wijab\) and single potentials \(\via\) and \(\vja\) computed with
-pseudo-likelihood for residues 6 and 82 in protein chain 1a9x\_A\_05.
-Color represents coupling strength and direction (red = positive
-coupling value, blue = negative coupling value) and diameter of bubbles
-represents absolute coupling value \(|\wijab|\). Bars at the x-axis and
-y-axis correspond to the \emph{Potts model} single potentials \(\vi\)
-and \(\vj\). Amino acids are abbreviated with one-letter code and they
-are broadly grouped with respect to physico-chemical properties listed
-in Appendix \ref{amino-acids}.}\label{fig:coupling-matrix-ionic-interaction}
+\includegraphics[width=1\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle} \caption{Couplings \(\wijab\) and
+single potentials \(\via\) and \(\vja\) computed with pseudo-likelihood
+for residues 6 and 82 in protein chain 1a9x\_A\_05. The matrix shows the
+20x20 couplings \(\wijab\) with color representing coupling strength and
+direction (red = positive coupling value, blue = negative coupling
+value) and diameter of bubbles representing absolute coupling value
+\(|\wijab|\). Bars at the x-axis and y-axis correspond to the
+\emph{Potts} model single potentials \(\vi\) and \(\vj\) respectively.
+Color reflects the value of single potentials. Amino acids are
+abbreviated with one-letter code and they are broadly grouped with
+respect to physico-chemical properties listed in Appendix
+\ref{amino-acids}.}\label{fig:coupling-matrix-ionic-interaction}
 \end{figure}
 
 Figure \ref{fig:coupling-matrix-hydrophobic-interaction} visualizes the
@@ -1873,16 +1841,22 @@ packed and the limited space allows for only small hydrophobic residues.
 
 
 
+
+
+
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle} \caption{Coupling matrix
-computed with pseudo-likelihood for residues 29 and 39 in protein chain
-1ae9\_A\_00. Color represents coupling strength and direction (red =
-positive coupling value, blue = negative coupling value) and diameter of
-bubbles represents absolute coupling value \(|\wijab|\). Bars at the
-x-axis and y-axis correspond to the \emph{Potts model} single potentials
-\(\vi\) and \(\vj\). Amino acids are abbreviated with one-letter code
-and they are broadly grouped with respect to physico-chemical properties
-listed in Appendix \ref{amino-acids}.}\label{fig:coupling-matrix-hydrophobic-interaction}
+\includegraphics[width=1\linewidth]{img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle} \caption{Couplings
+\(\wijab\) and single potentials \(\via\) and \(\vja\) computed with
+pseudo-likelihood for residues 29 and 39 in protein chain 1ae9\_A\_00.
+The matrix shows the 20x20 couplings \(\wijab\) with color representing
+coupling strength and direction (red = positive coupling value, blue =
+negative coupling value) and diameter of bubbles representing absolute
+coupling value \(|\wijab|\). Bars at the x-axis and y-axis correspond to
+the \emph{Potts} model single potentials \(\vi\) and \(\vj\)
+respectively. Color reflects the value of single potentials. Amino acids
+are abbreviated with one-letter code and they are broadly grouped with
+respect to physico-chemical properties listed in Appendix
+\ref{amino-acids}.}\label{fig:coupling-matrix-hydrophobic-interaction}
 \end{figure}
 
 
@@ -1967,12 +1941,15 @@ hydrophobic residue at a certain position.
 The distribution of aromatic coupling values like F-W is slightly skewed
 towards negative values, accounting for steric hindrance of their large
 sidechains at small distances. The yet very pronounced positive coupling
-signal for the bulky aromatic residues at this short distance range
-might be explained by the fact that the rotational freedom of the
-\(C_\alpha\)-\(\Cb\) allows the bulky planar aromatic rings to point
-away from each other (see Apendix Figure
-\ref{fig:aromatic-residues-at-short-distances}) and thus to avoid
-sterical hindrance in the densely packed protein core.
+signal for the bulky aromatic residues at this short distance range is
+not clear. The bulky planar aromatic rings of two aromatic residues
+often point away from each other when their \(\Cb\)-\(\Cb\) distances
+are small to avoid steric hindrance (see Apendix Figure
+\ref{fig:aromatic-residues-at-short-distances}). A positive coupling
+signal might originate from other structural constraints from the local
+environment affecting both sidechains, similar to the scenario
+hypothetically explaining the negative coupling signal for hydrophobic
+residues.
 
 
 
@@ -1986,7 +1963,7 @@ sterical hindrance in the densely packed protein core.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{img/coupling_matrix_analysis/1d_coupling_profile_0_5} 
+{\centering \includegraphics[width=1\linewidth]{img/coupling_matrix_analysis/1d_coupling_profile_0_5} 
 
 }
 
@@ -2137,7 +2114,7 @@ V-I for residue pairs with \(\Cb-\Cb\) distances \(< 8 \angstrom\) is
 symmetrically distributed around zero without visible correlation.
 \textbf{Bottom Right} The 2-dimensional distribution of couplings I-L
 and V-I for residue pairs with \(\Cb-\Cb\) distances \(> 20 \angstrom\)
-is tighly distributed around zero. .}\label{fig:2d-coupling-profiles-0-8}
+is tighly distributed around zero.}\label{fig:2d-coupling-profiles-0-8}
 \end{figure}
 
 \chapter{Contact Prior}\label{contact-prior}
@@ -2239,10 +2216,10 @@ a new data sample.
 \caption{Classifying new data with random forests. A new
 data sample is run down every tree in the forest until it ends up in a
 leaf node. Every leaf node has associated class probabilities \(p(c)\)
-reflecting the fraction of training samples belonging to every class
-\(c\). The color of the leaf nodes reflects the class with highest
-probability. The predictions from all trees in form of the class
-probabilties are averaged over all trees and yield the final prediction.}\label{fig:rf-intro}
+reflecting the fraction of training samples at this leaf node belonging
+to every class \(c\). The color of the leaf nodes reflects the class
+with highest probability. The predictions from all trees in form of the
+class probabilties are averaged and yield the final prediction.}\label{fig:rf-intro}
 \end{figure}
 
 Typically, \emph{Gini impurity}, which is a computationally efficient
@@ -2757,48 +2734,35 @@ CCMpredPy differs from CCMpred
 {[}\protect\hyperlink{ref-Seemayer2014}{57}{]} which is available at
 \url{https://github.com/soedinglab/CCMpred} in several details:
 
+Initialization of potentials \(\v\) and \(\w\): - CCMpred initializes
+single potentials \(\v_i(a) = \log f_i(a) - \log f_i(a= "-")\) with
+\(f_i(a)\) being the frequency of amino acid a at position i and
+\(a="-"\) representing a gap. A single pseudo-count has been added
+before computing the frequencies. Pair potentials \(\w\) are intialized
+at 0. - CCMpredPy initializes single potentials \(\v\) with the
+\protect\hyperlink{abbrev}{ML} estimate of single potentials (see
+section \ref{prior-v}) using amino acid frequencies computed as
+described in section \ref{amino-acid-frequencies}. Pair potentials
+\(\w\) are initialized at 0.
+
+Regularization:
+
 \begin{itemize}
 \tightlist
 \item
-  Initialization of potentials \(\v\) and \(\w\)
-
-  \begin{itemize}
-  \tightlist
-  \item
-    CCMpred initializes single potentials
-    \(\v_i(a) = \log f_i(a) - \log f_i(a= "-")\) with \(f_i(a)\) being
-    the frequency of amino acid a at position i and \(a="-"\)
-    representing a gap. A single pseudo-count has been added before
-    computing the frequencies. Pair potentials \(\w\) are intialized at
-    0.
-  \item
-    CCMpredPy initializes single potentials \(\v\) with the
-    \protect\hyperlink{abbrev}{ML} estimate of single potentials (see
-    section \ref{regularization}) using amino acid frequencies computed
-    as described in section \ref{amino-acid-frequencies}. Pair
-    potentials \(\w\) are initialized at 0.
-  \end{itemize}
+  CCMpred uses a Gaussian regularization prior centered at zero for both
+  single and pair potentials. The regularization coefficient for single
+  potentials \(\lambda_v = 0.01\) and for pair potentials
+  \(\lambda_w = 0.2 * (L-1)\) with \(L\) being protein length.
 \item
-  Regularization
-
-  \begin{itemize}
-  \tightlist
-  \item
-    CCMpred uses a Gaussian regularization prior centered at zero for
-    both single and pair potentials. The regularization coefficient for
-    single potentials \(\lambda_v = 0.01\) and for pair potentials
-    \(\lambda_w = 0.2 * (L-1)\) with \(L\) being protein length.
-  \item
-    CCMpredPy uses a Gaussian regularization prior centered at zero for
-    the pair potentials. For the single potentials the Gaussian
-    regularization prior is centered at the
-    \protect\hyperlink{abbrev}{ML} estimate of single potentials (see
-    section \ref{regularization}) using amino acid frequencies computed
-    as described in section \ref{amino-acid-frequencies}. The
-    regularization coefficient for single potentials \(\lambda_v = 10\)
-    and for pair potentials \(\lambda_w = 0.2 * (L-1)\) with \(L\) being
-    protein length.
-  \end{itemize}
+  CCMpredPy uses a Gaussian regularization prior centered at zero for
+  the pair potentials. For the single potentials the Gaussian
+  regularization prior is centered at the \protect\hyperlink{abbrev}{ML}
+  estimate of single potentials (see section \ref{prior-v}) using amino
+  acid frequencies computed as described in section
+  \ref{amino-acid-frequencies}. The regularization coefficient for
+  single potentials \(\lambda_v = 10\) and for pair potentials
+  \(\lambda_w = 0.2 * (L-1)\) with \(L\) being protein length.
 \end{itemize}
 
 Default settings for CCMpredPy have been chosen to best reproduce
@@ -2832,27 +2796,38 @@ all contacts predicted with CCMpred and CCMPredPy (using
 pseudo-likelihood) in my thesis have been computed using the following
 flags:
 
-CCMpredPy
+flags for computing pseudo-likelihood couplings with CCMpredPy:
 
 \begin{verbatim}
---maxit 250                       # Compute a maximum of MAXIT operations
---center-v                        # Use a Gaussian prior for single potentials centered at ML estimate v*
---reg-l2-lambda-single 10         # regularization coefficient for single potentials
---reg-l2-lambda-pair-factor 0.2   # regularization coefficient for pairwise potentials computed as reg-l2-lambda-pair-factor * (L-1)
---pc-uniform                      # use uniform pseudocounts (1/21 for 20 amino acids + 1 gap state) 
---pc-count 1                      # defining pseudo count admixture coefficient rho = pc-count/( pc-count+ Neff)
---epsilon 1e-5                    # convergence criterion for minimum decrease in the last K iterations
---ofn-pll                         # using pseudo-likelihood as objective function
---alg-cg                          # using conjugate gradient to optimize objective function
+--maxit 250                  # Compute a maximum of MAXIT operations
+--center-v                   # Use a Gaussian prior for single potentials 
+                             # centered at ML estimate v*          
+--reg-l2-lambda-single 10    # regularization coefficient for 
+                             # single potentials
+--reg-l2-lambda-pair-factor 0.2   # regularization coefficient for 
+                                  # pairwise potentials computed as 
+                                  # reg-l2-lambda-pair-factor * (L-1)
+--pc-uniform        # use uniform pseudocounts 
+                    # (1/21 for 20 amino acids + 1 gap state) 
+--pc-count 1        # defining pseudo count admixture coefficient 
+                    # rho = pc-count/( pc-count+ Neff)
+--epsilon 1e-5      # convergence criterion for minimum decrease 
+                    # in the last K iterations
+--ofn-pll           # using pseudo-likelihood as objective function
+--alg-cg            # using conjugate gradient to optimize 
+                    # objective function
 \end{verbatim}
 
-CCMpred
+flags for computing pseudo-likelihood couplings with CCMpred:
 
 \begin{verbatim}
 -n 250    # NUMITER:  Compute a maximum of NUMITER operations
--l 0.2    # LFACTOR:  Set pairwise regularization coefficients to LFACTOR * (L-1) 
--w 0.8    # IDTHRES:  Set sequence reweighting identity threshold to IDTHRES
--e 1e-5   # EPSILON:  Set convergence criterion for minimum decrease in the last K iterations to EPSILON
+-l 0.2    # LFACTOR:  Set pairwise regularization coefficients 
+          # to LFACTOR * (L-1) 
+-w 0.8    # IDTHRES:  Set sequence reweighting identity 
+          # threshold to IDTHRES
+-e 1e-5   # EPSILON:  Set convergence criterion for minimum 
+          # decrease in the last K iterations to EPSILON
 \end{verbatim}
 
 \section{Sequence Reweighting}\label{seq-reweighting}
@@ -2931,9 +2906,9 @@ The formula for \(q(x_i \eq a, x_j \eq b)\) in the second line in eq
 
 \section{Regularization}\label{methods-regularization}
 
-\emph{CCMpredPy} offers an L2-regularization that pushes the single and
-pairwise terms smoothly towards zero and is equivalent to the logarithm
-of a zero-centered Gaussian prior,
+\emph{CCMpredPy} uses an L2-regularization per default that pushes the
+single and pairwise terms smoothly towards zero and is equivalent to the
+logarithm of a zero-centered Gaussian prior,
 
 \begin{align}
   R(\v, \w)  &= \log \left[ \mathcal{N}(\v | \v^*, \lambda_v^{-1} I) \mathcal{N}(\w | \w^*, \lambda_w^{-1} I) \right] \nonumber \\
@@ -2942,19 +2917,7 @@ of a zero-centered Gaussian prior,
 \end{align}
 
 where the regularization coefficients \(\lambda_v\) and \(\lambda_w\)
-determine the strength of regularization. Most previous
-pseudo-likelihood approaches using L2-regularization for
-pseudo-likelihood optimization set \(\v^* \eq \w^* \eq \mathbf{0}\)
-{[}\protect\hyperlink{ref-Seemayer2014}{57}--\protect\hyperlink{ref-Kamisetty2013}{59}{]}.
-A different choice for \(v^*\) is discussed in section \ref{prior-v}
-that is is used with \emph{CCMpredPy} for pseudo-likelihood
-optimization. The single potentials will not be optimized with
-\protect\hyperlink{abbrev}{CD} but will be fixed at the \(v^*\) given in
-eq. \eqref{eq:prior-v}. Furthermore, \emph{CCMpredPy} uses regularization
-coefficients \(\lambda_v \eq 10\) and \(\lambda_w \eq 0.2\cdot(L-1)\)
-for pseudo-likelihood optimization and the choice for \(\lambda_w\) used
-with \protect\hyperlink{abbrev}{CD} is discussed in section
-\ref{regularization-for-cd-with-sgd}.
+determine the strength of regularization.
 
 The regularization coefficient \(\lambda_w\) for couplings \(\w\) is
 defined with respect to protein length \(L\) owing to the fact that the
@@ -2976,6 +2939,19 @@ can be seen in Figure \ref{fig:number-contacts-against-L}.
 (\(\Cb < 8 \angstrom\)) with respect to protein length and sequence
 separation has a linear relationship.}\label{fig:number-contacts-against-L}
 \end{figure}
+
+Most previous pseudo-likelihood approaches using L2-regularization for
+pseudo-likelihood optimization set \(\v^* \eq \w^* \eq \mathbf{0}\)
+{[}\protect\hyperlink{ref-Seemayer2014}{57}--\protect\hyperlink{ref-Kamisetty2013}{59}{]}.
+A different choice for \(v^*\) is discussed in section \ref{prior-v}
+that is is used per default with \emph{CCMpredPy}. The single potentials
+will not be optimized with \protect\hyperlink{abbrev}{CD} but will be
+fixed at \(v^*\) given in eq. \eqref{eq:prior-v}. Furthermore,
+\emph{CCMpredPy} uses regularization coefficients \(\lambda_v \eq 10\)
+and \(\lambda_w \eq 0.2\cdot(L-1)\) for pseudo-likelihood optimization
+and the choice for \(\lambda_w\) used with
+\protect\hyperlink{abbrev}{CD} is discussed in section
+\ref{regularization-for-cd-with-sgd}.
 
 \section{The Potts Model}\label{potts-full-likelihood}
 
@@ -3056,7 +3032,7 @@ domains, the empirical amino acid pair frequencies
 
 \begin{figure}
 
-{\centering \includegraphics[width=11.11in]{img/gap_treatment} 
+{\centering \includegraphics[width=1\linewidth]{img/gap_treatment} 
 
 }
 
@@ -3305,14 +3281,14 @@ selected as follows:
 \item
   percentage of gaps per column \(\le 30\%\)
 \item
-  evidence for a coupling \(\wijab\) from the alignment,
+  evidence for a coupling \(\wijab\) estimated from the alignment,
   \(N_{ij} \cdot q_i(a) \cdot q_j(b) \ge 100\) with:
 
   \begin{itemize}
   \tightlist
   \item
-    \(N_{ij}\): number of sequences with neither a gap at position \(i\)
-    nor at position \(j\)
+    \(N_{ij}\): number of sequences with no gaps at positions \(i\) or
+    \(j\)
   \item
     \(q_i(a)\), \(q_j(b)\): frequencies of amino acids \(a\) and \(b\)
     at positions \(i\) and \(j\), respectively (computed as described in
@@ -4157,510 +4133,14 @@ Discussion: - as could be seen: improved gradients and different
 solutions do not translate into improved precision of top ranked
 contacts - APC corrected l2norm might not be an appropriate measure for
 CD couplings: look at correlation plot of couplings (pll vs cd) and
-l2norm (pll vs cd) and apc l2norm (pll vs cd) --\textgreater{}
+l2norm (pll vs cd) and apc l2norm (pll vs cd) -\textgreater{}
 differences vanish - ranking of residues might not be influenced by
 subtle changes in parameters when crude l2norm is computed
---\textgreater{} rank plot: merged list of top ranked contacts from both
+-\textgreater{} rank plot: merged list of top ranked contacts from both
 methods what can we see: - generally pll has stronger scores (see also
 boxplot over all proteins? statistic?) - ranking is very similar,
 especially for top ranked contacts (thats why benchmark plots so
 similar)
-
-\begin{itemize}
-\item
-\end{itemize}
-
-\section{Bayesian Model for Residue-Resdiue Contact
-Prediction}\label{bayesian-model-for-residue-resdiue-contact-prediction}
-
-\subsection{Efficiently Computing the negative Hessian of the
-regularized log-likelihood}\label{neg-Hessian-computation}
-
-Surprisingly, the elements of the Hessian at the mode \(\w^*\) are easy
-to compute. Let \(i,j,k,l \in \{1,\ldots,L\}\) be columns in the
-\protect\hyperlink{abbrev}{MSA} and let
-\(a, b, c, d \in \{1,\ldots,20\}\) represent amino acids.
-
-The partial derivative \(\partial / \partial \w_{klcd}\) of the second
-term in the gradient of the couplings in eq.
-\eqref{eq:gradient-LLreg-pair} is
-
-\begin{eqnarray}
-    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\partial \left( \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} \right)}{\partial \wklcd}   I(y_i \eq a, y_j \eq b) \\
-    &&- \lambda_w \delta_{ijab,klcd} \,,
-\end{eqnarray}
-
-where \(\delta_{ijab,klcd} = I(ijab=klcd)\) is the Kronecker delta.
-Applying the product rule, we find
-
-\begin{eqnarray}
-    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
-    & \times & \left[ \frac{\partial}{\partial \wklcd} \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}  w_{ij}(y_i,y_j)  \right) 
-                  - \frac{1}{Z_n(\v,\w)} \frac{\partial  Z_n(\v,\w) }{\partial\wklcd} \right] \\
-    &-& \lambda_w \delta_{ijab,klcd} \\
-    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
-    & \times & \left[ I(y_k \eq c, y_l \eq d) - \frac{\partial}{\partial \wklcd} \log Z_n(\v,\w) \right] \\
-    &-& \lambda_w \delta_{ijab,klcd} \,.
-\end{eqnarray}
-
-We simplify this expression using
-
-\begin{equation}
-    p(\mathbf{y} | \v,\w) = \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z_n(\v,\w)}  ,
-\end{equation}
-
-yielding
-
-\begin{eqnarray}
-    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab} 
-    &=&  -  \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b, y_k \eq c, y_l \eq d)  \\
-    &+& \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \mathcal{S}_n} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b ) \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w)  I(y_k \eq c, y_l \eq d ) \\
-    &-& \lambda_w \delta_{ijab,klcd} \,.
-\end{eqnarray}
-
-If \(\X\) does not contain too many gaps, this expression can be
-approximated by
-
-\begin{eqnarray}
-    \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
-    &=& - N_{ijkl} \: p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d | \v,\w)  \nonumber \\
-    && +  N_{ijkl} \: p(x_i \eq a, x_j \eq b | \v,\w) \, p(x_k \eq c, x_l \eq d | \v,\w) - \lambda_w \delta_{ijab,klcd} \,,
-\end{eqnarray}
-
-where \(N_{ijkl}\) is the number of sequences that have a residue in
-\(i\), \(j\), \(k\) and \(l\).
-
-Looking at three cases separately:
-
-\begin{itemize}
-\tightlist
-\item
-  case 1: \((k,l) = (i,j)\) and \((c,d) = (a,b)\)
-\item
-  case 2: \((k,l) = (i,j)\) and \((c,d) \ne (a,b)\)
-\item
-  case 3: \((k,l) \ne (i,j)\) and \((c,d) \ne (a,b)\),
-\end{itemize}
-
-the elements of \(\H\), which are the negative second partial
-derivatives of \(\LLreg(\v^*,\w)\) with respect to the components of
-\(\w\), are
-
-\begin{eqnarray}
-    \mathrm{case~1:} (\H)_{ijab, ijab}  
-    &=&  N_{ij} \, p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*) \,) \\
-    &&   + \lambda_w \\
-    \mathrm{case~2:} (\H)_{ijcd, ijab}  
-    &=&  - N_{ij} \, p(x_i \eq a, x_j \eq b |\v^*,\w^*) \, p(x_i \eq c, x_j \eq d |\v^*,\w^*) \\
-    \mathrm{case~3:} (\H)_{klcd, ijab}  
-    &=&   N_{ijkl} \, p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d  | \v^*,\w^*) \nonumber \\
-    &&    - N_{ijkl} \, p(x_i \eq a, x_j \eq b | \v^*,\w^*)\, p(x_k \eq c, x_l \eq d | \v^*,\w^*) \,.
-\label{eq:Hw-offdiag}
-\end{eqnarray}
-
-We know from eq. \eqref{eq:gradient-LLreg-approx} that at the mode
-\(\w^*\) the model probabilities match the empirical frequencies up to a
-small regularization term,
-
-\begin{equation}
-    p(x_i \eq a, x_j \eq b | \v^*,\w^*) = q(x_i \eq a, x_j \eq b) - \frac{\lambda_w}{N_{ij}}  \wijab^* \,,
-\end{equation}
-
-and therefore the negative Hessian elements in cases 1 and 2 can be
-expressed as
-
-\begin{align}
-   (\H)_{ijab, ijab} =& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
-   & + \lambda_w \\
-   (\H)_{ijcd, ijab} =& -N_{ij} \left(\,q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( q(x_i \eq c, x_j \eq d) -\frac{\lambda_w}{N_{ij}} \wijcd^* \right) .
-\label{eq:Hw-diag}
-\end{align}
-
-In order to write the previous eq. \eqref{eq:Hw-diag} in matrix form, the
-\emph{regularised} empirical frequencies \(\qij\) will be defined as
-
-\begin{equation}
-    (\qij)_{ab} = q'_{ijab} := q(x_i \eq a, x_j \eq b) - \lambda_w  \wijab^* / N_{ij} \,,
-\end{equation}
-
-and the \(400 \times 400\) diagonal matrix \(\Qij\) will be defined as
-
-\begin{equation}
-    \Qij := \text{diag}(\qij) \; .
-\end{equation}
-
-Now eq. \eqref{eq:Hw-diag} can be written in matrix form
-
-\begin{equation}
-     \H_{ij} = N_{ij} \left( \Qij -  \qij \qij^{\mathrm{T}} \right)  + \lambda_w \I \; .
-\label{eq:mat-Hij}
-\end{equation}
-
-\subsection{\texorpdfstring{Efficiently Computing the Inverse of Matrix
-\(\Lijk\)}{Efficiently Computing the Inverse of Matrix \textbackslash{}Lijk}}\label{inv-lambda-ij-k}
-
-It is possible to efficiently invert the matrix
-\(\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k\), that is introduced in
-\ref{coupling-prior} where \(\H_{ij}\) is the \(400 \times 400\)
-diagonal block submatrix \((\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}\) and
-\(\Lambda_k\) is an invertible diagonal precision matrix that is
-introduced in section \ref{modeling-dep-of-wij}.
-
-Equation \eqref{eq:mat-Hij} can be used to write \(\Lijk\) in matrix form
-as
-
-\begin{equation}
-     \Lijk = \H_{ij} - \lambda_w \I + \Lk = N_{ij} \Qij- N_{ij} \qij \qij^{\mathrm{T}} + \Lk \,.
-\label{eq:mat-Lijk}
-\end{equation}
-
-Owing to eqs. \eqref{eq:normalized-emp-freq} and \eqref{eq:zero-sum-wij},
-\(\sum_{a,b=1}^{20} q'_{ijab} = 1\). The previous equation
-\eqref{eq:mat-Lijk} facilitates the calculation of the inverse of this
-matrix using the \emph{Woodbury identity} for matrices
-
-\begin{equation}
-    (\mathbf{A} + \mathbf{B} \mathbf{D}^{-1} \mathbf{C})^{-1} = \mathbf{A}^{-1} - \mathbf{A}^{-1} \mathbf{B} (\mathbf{D} + \mathbf{C} \mathbf{A}^{-1} \mathbf{B}) ^{-1} \mathbf{C} \mathbf{A}^{-1} \;. 
-\end{equation}
-
-by setting
-
-\begin{align}
-  \mathbf{A} &= N_{ij} \Qij + \Lk \\
-  \mathbf{B} &= \qij \\
-  \mathbf{C} &= \qij^\mathrm{T} \\
-  \mathbf{D} &=- N_{ij}^{-1} \\
-\end{align}
-
-\begin{align}
-      \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} & = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \\
-     & = \mathbf{A}^{-1} + \frac{ (\mathbf{A}^{-1} \qij) (\mathbf{A}^{-1} \qij)^{\mathrm{T}} }{ N_{ij}^{-1} - \qij^\mathrm{T} \mathbf{A}^{-1} \qij} \,.
-\label{eq:fast-inverse-mat-Lijk}
-\end{align}
-
-Note that \(\mathbf{A}\) is diagonal as \(\Qij\) and \(\Lk\) are
-diagonal matrices:
-\(\mathbf{A} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab})\).
-Moreover, \(\mathbf{A}\) has only positive diagonal elements, because
-\(\Lk\) is invertible and has only positive diagonal elements and
-because \(q'_{ijab} = p(x_i \eq a, x_j \eq b | \v^*,\w^*) \ge 0\).
-
-Therefore \(\mathbf{A}\) is invertible:
-\(\mathbf{A}^{-1} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab} )^{-1}\).
-
-Because \(\sum_{a,b=1}^{20} q'_{ijab} = 1\), the denominator of the
-second term is
-
-\begin{equation}
-    N_{ij}^{-1} - \sum_{a,b=1}^{20}  \frac{{q'}_{ijab}^2}{N_{ij} q'_{ijab} + {(\Lk)}_{ab,ab} } > N_{ij}^{-1} - \sum_{a,b=1}^{20} \frac{{q'}^2_{ijab}}{N_{ij} q'_{ijab}} = 0
-\end{equation}
-
-and therefore the inverse of \(\Lijk\) in eq.
-\eqref{eq:fast-inverse-mat-Lijk} is well defined.
-
-The log determinant of \(\Lijk\) is necessary to compute the ratio of
-Gaussians (see equation \eqref{eq:p-X-r-final}) and can be computed using
-the matrix determinant lemma:
-
-\begin{equation}
-  \det(\mathbf{A} + \mathbf{uv}^\mathrm{T}) = (1+\mathbf{v}^\mathrm{T} \mathbf{A}^{-1} \mathbf{u}) \det(\mathbf{A})
-\end{equation}
-
-Setting \(\mathbf{A} = N_{ij} \Qij + \Lk\) and \(\v = \qij\) and
-\(\mathbf{u} = - N_{ij} \qij\) yields
-
-\begin{equation}
-  \det(\Lijk ) = \det(\H_{ij} - \lambda_w \I + \Lk) = (1 - N_{ij}\qij^\mathrm{T} \mathbf{A}^{-1}\qij) \det(\mathbf{A}) \,.
-\end{equation}
-
-\(\mathbf{A}\) is diagonal and has only positive diagonal elements so
-that
-\(\log(\det(\mathbf{A})) = \sum \log \left( \text{diag}(\mathbf{A}) \right)\).
-
-\subsection{\texorpdfstring{Training the Hyperparameters \(\muk\),
-\(\Lk\) and
-\(\gamma_k\)}{Training the Hyperparameters \textbackslash{}muk, \textbackslash{}Lk and \textbackslash{}gamma\_k}}\label{training-hyperparameters}
-
-The model parameters
-\(\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)\),
-\(\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)\)
-and \(\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)\)
-will be trained by maximizing the logarithm of the full likelihood over
-a set of training \protect\hyperlink{abbrev}{MSAs} \(\X^1,\ldots,\X^N\)
-and associated structures with distance vectors \(\r^1,\ldots,\r^N\)
-plus a regularizer \(R(\mathbf{\mu}, \mathbf{\Lambda})\):
-
-\begin{equation}
-    L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^N  \log p(\X^n | \r^n, \mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
-\end{equation}
-
-The regulariser penalizes values of \(\muk\) and \(\Lk\) that deviate
-too far from zero:
-
-\begin{align}
-    R(\mathbf{\mu}, \mathbf{\Lambda}) = -\frac{1}{2 \sigma_{\mu}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \mu_{k,ab}^2 
-                        -\frac{1}{2 \sigma_\text{diag}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \Lambda_{k,ab,ab}^2
-\label{eq:reg}
-\end{align}
-
-Reasonable values are \(\sigma_{\mu}=0.1\),
-\(\sigma_\text{diag} = 100\).
-
-The log likelihood can be optimized using LBFG-S-B{[}{\textbf{???}}{]},
-which requires the computation of the gradient of the log likelihood.
-For simplicity of notation, the following calculations consider the
-contribution of the log likelihood for just one protein, which allows to
-drop the index \(n\) in \(\rij^n\), \((\wij^n)^*\) and \(\Hij^n\).
-
-From eq. \eqref{eq:pXr-final} the log likelihood for a single protein is
-
-\begin{equation}
-    L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
-\label{eq:ll-coupling-prior}
-\end{equation}
-
-\subsection{\texorpdfstring{The gradient of the log likelihood with
-respect to
-\(\mathbf{\mu}\)}{The gradient of the log likelihood with respect to \textbackslash{}mathbf\{\textbackslash{}mu\}}}\label{the-gradient-of-the-log-likelihood-with-respect-to-mathbfmu}
-
-By applying the formula \(d f(x) / dx = f(x) \, d \log f(x) / dx\) to
-compute the gradient of eq. \eqref{eq:ll-coupling-prior} (neglecting the
-regularization term) with respect to \(\mu_{k,ab}\), one obtains
-
-\begin{equation}
- \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
-    = \sum_{1\le i<j\le L}  
-    \frac{ 
-        g_{k}(\rij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
-             \frac{\partial}{\partial \mu_{k,ab}}  \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)  
-     } { \sum_{k'=0}^K g_{k'}(\rij) \, \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
-\label{eq:gradient-mukab}
-\end{equation}
-
-To simplify this expression, we define the responsibility of component
-\(k\) for the posterior distribution of \(\wij\), the probability that
-\(\wij\) has been generated by component \(k\):
-
-\begin{align}
-      p(k|ij)  = 
-      \frac{ g_{k}(\rij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
-    {\sum_{k'=0}^K g_{k'}(\rij) \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk', \Lijk'^{-1})} }  \,.
-\label{eq:responsibilities}
-\end{align}
-
-By substituting the definition for responsibility,
-\eqref{eq:gradient-mukab} simplifies
-
-\begin{equation}
-  \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
-    = \sum_{1\le i<j\le L}  p(k | ij)  \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right) ,
-\label{eq:gradient-LL-mukab}
-\end{equation}
-
-and analogously for partial derivatives with respect to
-\(\Lambda_{k,ab,cd}\).
-
-The partial derivative inside the sum can be written
-
-\begin{equation}
-     \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
-    = \frac{1}{2}  \frac{\partial}{\partial \mu_{k,ab}}   \left( \log | \Lk | - \muk^\mathrm{T} \Lk \muk - \log | \Lijk | + \muijk^\mathrm{T} \Lijk \muijk \right)\,.
-\end{equation}
-
-Using the following formula for a matrix \(\mathbf{A}\), a real variable
-\(x\) and a vector \(\mathbf{y}\) that depends on \(x\),
-
-\begin{equation}
-    \frac{\partial}{\partial x} \left( \mathbf{y}^\mathrm{T} \mathbf{A} \mathbf{y} \right) = \frac{\partial \mathbf{y}^\mathrm{T}}{\partial x}  \mathbf{A} \mathbf{y} + \mathbf{y}^\mathrm{T} \mathbf{A} \frac{\partial \mathbf{y}}{\partial x}  =  \mathbf{y}^\mathrm{T} (\mathbf{A} + \mathbf{A}^\mathrm{T}) \frac{\partial \mathbf{y}}{\partial x} 
-\label{eq:matrix-gradient}
-\end{equation}
-
-the partial derivative therefore becomes
-
-\begin{align}
-     \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
-    =& \left( -\muk^\mathrm{T} \Lk \mathbf{e}_{ab} \, +  \muijk^\mathrm{T} \Lijk \Lijk^{-1} \Lk \mathbf{e}_{ab} \right) \\
-    =& \mathbf{e}^\mathrm{T}_{ab} \Lk ( \muijk - \muk ) \; . 
-\end{align}
-
-Finally, the gradient of the log likelihood with respect to
-\(\mathbf{\mu}\) becomes
-
-\begin{align}
-    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
-    =  \sum_{1\le i<j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
-\label{eq:gradient-muk-final}
-\end{align}
-
-\subsection{\texorpdfstring{The gradient of the log likelihood with
-respect to
-\(\Lk\)}{The gradient of the log likelihood with respect to \textbackslash{}Lk}}\label{the-gradient-of-the-log-likelihood-with-respect-to-lk}
-
-Analogously to eq. \eqref{eq:gradient-LL-mukab} one first needs to solve
-
-\begin{align}
-     & \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
-    = \\
-    &\frac{1}{2}  \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \left( \log |\Lk| - \muk^\mathrm{T} \Lk \muk - \log |\Lijk| + \muijk^\mathrm{T} \Lijk \muijk \right) \,,
-\label{eq:grad-log-N-N-lambdakabcd}
-\end{align}
-
-by applying eq. \eqref{eq:matrix-gradient} as before as well as the
-formulas
-
-\begin{align}
-    \frac{\partial}{\partial x} \log |\mathbf{A} | &= \text{Tr}\left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x}  \right) , \\
-    \frac{\partial \mathbf{A}^{-1}}{\partial x} &= - \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \,.
-\end{align}
-
-This yields
-
-\begin{align}
-\frac{\partial}{\partial \Lambda_{k,ab,cd}}  \log |\Lk|
-     &= \text{Tr} \left( \Lk^{-1} \frac{\partial \Lk}{\partial \Lambda_{k,ab,cd}} \right) 
-     = \text{Tr} \left( \Lk^{-1} \mathbf{e}_{ab} \mathbf{e}_{cd}^\mathrm{T} \right) 
-     = \Lambda^{-1}_{k,cd,ab} \\
-\frac{\partial}{\partial \Lambda_{k,ab,cd}}  \log |\Lijk|
-     &= \text{Tr} \left( \Lijk^{-1} \frac{\partial (\H_{ij} - \lambda_w \I + \Lk)}{\partial \Lambda_{k,ab,cd}}   \right) 
-     = \Lambda^{-1}_{ij,k,cd,ab} \\
-\frac{\partial (\muk^\mathrm{T} \Lk \muk)}{\partial \Lambda_{k,ab,cd}} 
-    &= \muk^\mathrm{T} \mathbf{e}_{ab} \mathbf{e}_{cd}^\mathrm{T} \muk 
-    = \mathbf{e}_{ab}^\mathrm{T} \muk \muk^\mathrm{T} \mathbf{e}_{cd} = (\muk \muk^\mathrm{T})_{ab,cd} \\
-\frac{\partial ( \muijk^\mathrm{T} \Lijk \muijk) }{\partial \Lambda_{k,ab,cd}} 
-    &= \muijk^\mathrm{T} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk 
-    + 2 \muijk^\mathrm{T} \Lijk \frac{\partial \Lijk^{-1}}{\partial \Lambda_{k,ab,cd}}  (\Hij \wij^* + \Lk \muk) 
-    + 2 \muijk^\mathrm{T} \frac{\partial \Lk}{\partial \Lambda_{k,ab,cd}} \muk \nonumber \\
-    &= (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} 
-    - 2 \muijk^\mathrm{T} \Lijk  \Lijk^{-1} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \Lijk^{-1} (\Hij\wij^* + \Lk \muk) \\
-    &= (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} 
-    - 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk\\
-    &= (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
-\end{align}
-
-Inserting these results into eq. \eqref{eq:grad-log-N-N-lambdakabcd}
-yields
-
-\begin{align}
-     \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
-    = \frac{1}{2} \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right)_{ab,cd}\,.
-\end{align}
-
-Substituting this expression into the equation
-\eqref{eq:gradient-LL-mukab} analogous to the derivation of gradient for
-\(\mu_{k,ab}\) yields the equation
-
-\begin{align}
-    \nabla_{\Lk}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
-    =  \frac{1}{2} \sum_{1\le i<j\le L}  p(k|ij)  \, 
-        \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right). 
-\label{eq:gradient-lambdak-final}
-\end{align}
-
-\subsection{\texorpdfstring{The gradient of the log likelihood with
-respect to
-\(\gamma_k\)}{The gradient of the log likelihood with respect to \textbackslash{}gamma\_k}}\label{the-gradient-of-the-log-likelihood-with-respect-to-gamma_k}
-
-With \(\rij \in \{0,1\}\) defining a residue pair in physical contact or
-not in contact, the mixing weights can be modelled as a softmax function
-according to eq. \eqref{eq:def-g-k-binary}. The derivative of the mixing
-weights \(g_k(\rij)\) is:
-
-\begin{eqnarray}
-\frac{\partial g_{k'}(\rij)} {\partial \gamma_k} = \left\{
-  \begin{array}{lr}
-    g_k(\rij) (1 - g_k(\rij)) & : k' = k\\
-    g_{k'}(\rij) - g_k(\rij)  & : k' \neq k
-  \end{array}
-  \right.
-\end{eqnarray}
-
-The partial derivative of the likelihood function with respect to
-\(\gamma_k\) is:
-
-\begin{align}
-\frac{\partial} {\partial \gamma_k}     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) 
-  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  \frac{\partial}{\partial \gamma_k} g_{k'}(\rij)  
-  \frac{\Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( 0 | \muijk, \Lijk^{-1})}}
-  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
-  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  g_{k'}(\rij)  
-  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \cdot 
-  \begin{cases} 
-   1-g_k(\rij) & \text{if } k' = k \\
-   -g_k(\rij)  & \text{if } k' \neq k
-  \end{cases}}
-  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
-  =& \sum_{1\le i<j\le L} \sum_{k'=0}^K p(k'|ij) 
-  \begin{cases} 
-    1-g_k(\rij) & \text{if } k' = k \\
-    -g_k(\rij)  & \text{if } k' \neq k 
-  \end{cases} \\
-  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij) \sum_{k'=0}^K p(k'|ij) \nonumber\\
-  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij)
-\end{align}
-
-\section{Bayesian Statistical Model for Prediction of Protein
-Residue-Residue
-Distances}\label{bayesian-statistical-model-for-prediction-of-protein-residue-residue-distances}
-
-\subsection{\texorpdfstring{Modelling the dependence of \(\wij\) on
-distance}{Modelling the dependence of \textbackslash{}wij on distance}}\label{modelling-the-dependence-of-wij-on-distance}
-
-It is straightforward to extend the model presented in
-\ref{coupling-prior} for distances.
-
-The mixture weights \(g_k(\rij)\) in eq.
-\eqref{eq:definition-mixture-coupling-prior} are modelled as softmax over
-linear functions \(\gamma_k(\rij)\) (Figure
-\ref(fig:softmax-linear-fct):
-
-\begin{align}
-      g_k(\rij)        &= \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} \, , \\
-      \gamma_k(\rij)   &= - \sum_{k'=0}^{k} \alpha_{k'} ( \rij - \rho_{k'}) .
-\label{eq:definition-mixture-weights}
-\end{align}
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=0.5\linewidth]{img/theory/softmax_linear_fct} \caption{The Gaussian mixture coefficients
-\(g_k(\rij)\) of \(p(\wij|\rij)\) are modelled as softmax over linear
-functions \(\gamma_k(\rij)\). \(\rho_k\) sets the transition point
-between neighbouring components \(g_{k-1}(\rij)\) and \(g_k(\rij)\),
-while \(\alpha_k\) quantifies the abruptness of the transition between
-\(g_{k-1}(\rij)\) and \(g_k(\rij)\).}\label{fig:softmax-linear-fct}
-\end{figure}
-
-The functions \(g_k(\rij)\) remain invariant when adding an offset to
-all \(\gamma_k(\rij)\). This degeneracy can be removed by setting
-\(\gamma_0(\rij) = 0\) (i.e., \(\alpha_0 = 0\) and \(\rho_0=0\)).
-Further, the components are ordered, \(\rho_1> \ldots > \rho_K\) and it
-is demanded that \(\alpha_k > 0\) for all \(k\). This ensures that for
-\(\rij \rightarrow \infty\) we will obtain \(g_0(\rij) \rightarrow 1\)
-and hence \(p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )\).
-
-The parameters \(\rho_k\) mark the transition points between the two
-Gaussian mixture components \(k-1\) and \(k\), i.e., the points at which
-the two components obtain equal weights. This follows from
-\(\gamma_k(\rij) - \gamma_{k-1}(r) = \alpha_{t} ( \rij - \rho_{t})\) and
-hence \(\gamma_{k-1}(\rho_k) = \gamma_k(\rho_k)\). A change in
-\(\rho_k\) or \(\alpha_k\) only changes the behaviour of
-\(g_{k-1}(\rij)\) and \(g_k(\rij)\) in the transition region around
-\(\rho_k\). Therefore, this particular definition of \(\gamma_k(\rij)\)
-makes the parameters \(\alpha_k\) and \(\rho_k\) as independent of each
-other as possible, rendering the optimisation of these parameters more
-efficient.
-
-\subsection{\texorpdfstring{Training the Hyperparameters \(\rho_k\) and
-\(\alpha_k\) for distance-dependent
-prior}{Training the Hyperparameters \textbackslash{}rho\_k and \textbackslash{}alpha\_k for distance-dependent prior}}\label{training-the-hyperparameters-rho_k-and-alpha_k-for-distance-dependent-prior}
 
 \section{Features used to train Random Forest Model}\label{seq-features}
 
@@ -4777,6 +4257,9 @@ protein with respect to protein length (see description below)\strut
 
 There are in total 32 global alignment features per reside pair.
 
+The last feature listed in table \ref{tab:global-features} (``contact
+prior protein length'') stands for a simple contact predictor based on
+expected number of contacts per protein with respect to protein length.
 The average number of contats per residue, computed as the observed
 number of contacts divided by protein length L, has a non-linear
 relationship with protein length \(L\) as can be seen in Figure
@@ -4801,8 +4284,8 @@ separation \textbar{}j-i\textbar{}.}\label{fig:avg-nr-contacts-per-residue-vs-pr
 
 In log space, the average number of contats per residue can be fitted
 with a linear regression (see Figure
-\ref{fig:avg-nr-contacts-per-residue-vs-log-protein-length-linfit}) and
-yields the following functions:
+\ref{fig:simple-contact-prior-linfit}) and yields the following
+functions:
 
 \begin{itemize}
 \tightlist
@@ -5232,9 +4715,9 @@ proportion of contacts to non-contacts of 1:5.
 prediction approaches and their choices for rebalancing the data
 set.}\tabularnewline
 \toprule
-\begin{minipage}[b]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[b]{0.32\columnwidth}\raggedleft\strut
 Study\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
 Machine Learning Algorithm\strut
 \end{minipage} & \begin{minipage}[b]{0.29\columnwidth}\centering\strut
 Proportion of Contacts : Non-contacts\strut
@@ -5242,49 +4725,49 @@ Proportion of Contacts : Non-contacts\strut
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[b]{0.32\columnwidth}\raggedleft\strut
 Study\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
 Machine Learning Algorithm\strut
 \end{minipage} & \begin{minipage}[b]{0.29\columnwidth}\centering\strut
 Proportion of Contacts : Non-contacts\strut
 \end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[t]{0.32\columnwidth}\raggedleft\strut
 Wu et al. (2008) {[}\protect\hyperlink{ref-Wu2008}{24}{]}\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
 SVM\strut
 \end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\centering\strut
-1 : 4\strut
+1:4\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[t]{0.32\columnwidth}\raggedleft\strut
 Li et al. (2011) {[}\protect\hyperlink{ref-Li2011}{25}{]}\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
 Random Forest\strut
 \end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\centering\strut
-1 : 1, 1: 2\strut
+1:1, 1:2\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[t]{0.32\columnwidth}\raggedleft\strut
 Wang et al. (2011) {[}\protect\hyperlink{ref-Wang2011}{26}{]}\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\centering\strut
-RandomForest\strut
+\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
+Random Forest\strut
 \end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\centering\strut
-1 : 4\strut
+1:4\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[t]{0.32\columnwidth}\raggedleft\strut
 DiLena et al. (2012) {[}\protect\hyperlink{ref-DiLena2012a}{34}{]}\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
 deep neural network\strut
 \end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\centering\strut
-1 : \textasciitilde{}4 (sampling 20\% of non-contacts)\strut
+1:\(\approx \!4\) (sampling 20\% of non-contacts)\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.33\columnwidth}\raggedleft\strut
+\begin{minipage}[t]{0.32\columnwidth}\raggedleft\strut
 Wang et al. (2013) {[}\protect\hyperlink{ref-Wang2013}{27}{]}\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\centering\strut
+\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
 Random Forest\strut
 \end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\centering\strut
-1 : \textasciitilde{}4 (sampling 20\% of non-contacts)\strut
+1:\(\approx 4\) (sampling 20\% of non-contacts)\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -5313,8 +4796,8 @@ contains 6368 proteins and is explained in methods section
 \end{figure}
 
 The total training set is comprised of 50,000 residue pairs
-\(< 8 \angstrom\) (``contacts'') and 250,000 residue pairs
-\(> 8 \angstrom\) (``non-contacts''). I filtered residue pairs using a
+\(<8 \angstrom\) (``contacts'') and 250,000 residue pairs
+\(>8 \angstrom\) (``non-contacts''). I filtered residue pairs using a
 sequence separation of 12 positions and selected at maximum 100 contacts
 and 500 non-contacts per protein. The data is collected in equal parts
 from data subsets 1-5 (see methods section \ref{methods}), so that the
@@ -5389,13 +4872,21 @@ of features is evaluated on the same validation set.
 
 \textbf{SGD} stochastic gradient descent
 
-\pagebreak
+\chapter{Amino Acid Alphabet}\label{amino-acids}
 
-\section{Amino Acid Alphabet}\label{amino-acids}
+\blandscape
 
-\begin{longtable}[]{@{}ccll@{}}
+\begin{longtable}[]{@{}ccrl@{}}
+\caption{\label{tab:amino-acid-prop} Amino acid abbreviations and
+physico-chemical properties according to Livingstone et al., 1993
+{[}\protect\hyperlink{ref-Livingstone1993}{189}{]}}\tabularnewline
 \toprule
-One-letter Code & Three-letter Code & Amino Acid & Physico-chemical
+One letter Code & Three letter Code & Amino Acid & Physico-chemical
+properties\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+One letter Code & Three letter Code & Amino Acid & Physico-chemical
 properties\tabularnewline
 \midrule
 \endhead
@@ -5427,52 +4918,103 @@ polar\tabularnewline
 \bottomrule
 \end{longtable}
 
+\elandscape
+
 \chapter{Dataset Properties}\label{dataset-properties}
 
 The following figures display various statistics about the dataset used
 throughout this thesis. See section \ref{dataset} for information on how
 this dataset has been generated.
 
-\section{Alignment Diversity}\label{alignment-diversity}
-
 
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of alignment diversity
-(\(=\sqrt(\frac{N}{L})\)) in the dataset an its ten subsets.}\label{fig:dataset-diversity}
+
+{\centering \includegraphics[width=1\linewidth]{img/dataset_statistics/diversity_dataset_boxplot_notitle} 
+
+}
+
+\caption{Distribution of alignment diversity
+(\(=\sqrt(\frac{N}{L})\)) in the dataset and its ten subsets.}\label{fig:dataset-diversity}
 \end{figure}
 
-\section{Proportion of Gaps in
-Alignment}\label{proportion-of-gaps-in-alignment}
-
 
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of gap percentage of alignments in the
-dataset an its ten subsets.}\label{fig:dataset-gaps}
+
+{\centering \includegraphics[width=1\linewidth]{img/dataset_statistics/gap_percentage_boxplot_notitle} 
+
+}
+
+\caption{Distribution of gap percentage of alignments in the
+dataset and its ten subsets.}\label{fig:dataset-gaps}
 \end{figure}
 
-\section{Alignment Size (number of
-sequences)}\label{alignment-size-number-of-sequences}
-
 
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of alignment size (number of
-sequences N) in the dataset an its ten subsets.}\label{fig:dataset-alignment-size}
+
+{\centering \includegraphics[width=1\linewidth]{img/dataset_statistics/msa_size_dataset_boxplot_notitle} 
+
+}
+
+\caption{Distribution of alignment size (number of
+sequences N) in the dataset and its ten subsets.}\label{fig:dataset-alignment-size}
 \end{figure}
 
-\section{Protein Length}\label{protein-length}
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/dataset_statistics/protein_length_dataset_boxplot_notitle} 
+
+}
+
+\caption{Distribution of protein length L in the
+dataset and its ten subsets.}\label{fig:dataset-protein-length}
+\end{figure}
+
+\chapter{Standard Deviation of Couplings for
+Noncontacts}\label{standard-deviation-of-couplings-for-noncontacts}
+
+
+
+
+
 
 
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Distribution of protein length L in the
-dataset an its ten subsets.}\label{fig:dataset-protein-length}
+\includegraphics[width=1\linewidth]{img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle} \caption{Standard deviation of
+squared coupling values \({\wijab}^2\) for residue pairs not in physical
+contact (\(\Delta \Cb > 25 \angstrom\)). Dataset contains 100.000
+residue pairs per class (for details see methods section
+\ref{method-coupling-correlation}). Amino acids are abbreviated with
+one-letter code and they are broadly grouped with respect to
+physico-chemical properties listed in Appendix \ref{amino-acids}}\label{fig:stdev-squared-couplings-noncontacts}
+\end{figure}
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle} \caption{Standard deviation of
+coupling values \(\wijab\) for residue pairs not in physical contact
+(\(\Delta \Cb > 25 \angstrom\)). Dataset contains 100.000 residue pairs
+per class (for details see section \ref{method-coupling-correlation}).
+Amino acids are abbreviated with one-letter code and they are broadly
+grouped with respect to physico-chemical properties listed in Appendix
+\ref{amino-acids}.}\label{fig:stdev-raw-couplings-noncontacts}
 \end{figure}
 
 \chapter{Amino Acid Interaction Preferences Reflected in Coupling
@@ -5491,29 +5033,9 @@ interaction preference.
 
 
 \begin{figure}
-\includegraphics[width=0.5\linewidth]{img/coupling_matrix_analysis/2ayda01_37_48} \caption{Tyrosing (residue 37) and
+\includegraphics[width=0.5\linewidth]{img/coupling_matrix_analysis/2ayda01_37_48} \caption{Tyrosine (residue 37) and
 Lysine (residue 48) forming a cation-\(\pi\) interaction in protein
 2ayd.}\label{fig:coupling-matrix-pication-pymol}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Coupling Matrix for
-residue pair i=37 and j=48 of PDB 2ayd chain A domain 1. Size of the
-bubbles represents coupling strength and color represents the direction
-of coupling: red = positive coupling, blue = negative coupling. Bars at
-the x-axis represent single potentials for residue i=37 and bars at the
-y-axis represent single potentials for residue j=48. Height of the bars
-represents potential strength and color represents positive (red) and
-negative (blue) values.}\label{fig:coupling-matrix-pication-interaction}
 \end{figure}
 
 \section{Disulfide Bonds}\label{disulfide}
@@ -5532,29 +5054,9 @@ interaction preference of cysteines.
 (residues 54 and 64) forming a covalent disulfide bond in protein 1alu.}\label{fig:coupling-matrix-disulfide-pymol}
 \end{figure}
 
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Coupling Matrix for
-residue pair i=54 and j=64 of PDB 1alu chain A. Size of the bubbles
-represents coupling strength and color represents the direction of
-coupling: red = positive coupling, blue = negative coupling. Bars at the
-x-axis represent single potentials for residue i=54 and bars at the
-y-axis represent single potentials for residue j=64. Height of the bars
-represents potential strength and color represents positive (red) and
-negative (blue) values.}\label{fig:coupling-matrix-disulfide-interaction}
-\end{figure}
-
 \section{Aromatic-Proline Interactions}\label{aromatic-proline}
 
-Figure @ref(fig:coupling-matrix-aromatic-proline-pymol )shows a proline
+Figure \ref{fig:coupling-matrix-aromatic-proline-pymol} shows a proline
 and a tryptophan residue forming such a CH/\(\pi\) interaction in
 protein 1aol. The corresponding coupling matrix in figure
 \ref{fig:coupling-matrix-aromatic-proline} reflects this interaction
@@ -5567,27 +5069,7 @@ with strong positive coupling between proline and tryptophan.
 \begin{figure}
 \includegraphics[width=0.5\linewidth]{img/coupling_matrix_analysis/1aolA00_17_34} \caption{Proline and
 tryptophan (residues 17 and 34) stacked on top of each otherengaging in
-a CH/\(\pi\) interaction in protein 1alu.}\label{fig:coupling-matrix-aromatic-proline-pymol}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/amino_acid_physico_chemical_properties_venn_diagramm} \caption{Coupling Matrix for
-residue pair i=17 and j=34 of PDB 1aol chain A. Size of the bubbles
-represents coupling strength and color represents the direction of
-coupling: red = positive coupling, blue = negative coupling. Bars at the
-x-axis represent single potentials for residue i=17 and bars at the
-y-axis represent single potentials for residue j=34. Height of the bars
-represents potential strength and color represents positive (red) and
-negative (blue) values.}\label{fig:coupling-matrix-aromatic-proline}
+a CH/\(\pi\) interaction in protein chain 1aol\_A\_00.}\label{fig:coupling-matrix-aromatic-proline-pymol}
 \end{figure}
 
 \section{Network-like structure of aromatic
@@ -5605,37 +5087,8 @@ such networks that are important for protein stability
 {[}\protect\hyperlink{ref-Burley1985}{153}{]}.}\label{fig:aromatic-network}
 \end{figure}
 
-\section{Aromatic residues at short distance
-ranges}\label{aromatic-residues-at-short-distance-ranges}
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=0.5\linewidth]{img/coupling_matrix_analysis/aromatic_residues_short_distance} \caption{Aromatic residues
-occuring at short \(Cb-\Cb\) distances. Aromatic residues enjoy large
-rotational freedom in their \(C_\alpha\)-\(\Cb\) bond and therefore the
-the bulky aromatic ring system can point into different directions
-allowing for short \(\Cb\) distances.}\label{fig:aromatic-residues-at-short-distances}
-\end{figure}
-
-\chapter{Optimizing Full Likelihood with Gradient
-Descent}\label{optimizing-full-likelihood-with-gradient-descent}
-
-\section{Visualisation of learning rate
-schedules}\label{visualisation-of-learning-rate-schedules}
-
-
-
-
-
-
-
-
-
+\section{\texorpdfstring{Aromatic Sidechains at small \(Cb\)-\(\Cb\)
+distances}{Aromatic Sidechains at small Cb-\textbackslash{}Cb distances}}\label{aromatic-small-distances}
 
 
 
@@ -5643,336 +5096,10 @@ schedules}\label{visualisation-of-learning-rate-schedules}
 
 
 \begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle} 
-
-}
-
-\caption{Value of learning rate against the
-number of iterations for different learning rate schedules. Red legend
-group represents the \textbf{exponential} learning rate schedule
-\(\alpha_{t+1} = \alpha_0 \cdot\exp(- \gamma t)\). Blue legend group
-represents the \textbf{linear} learning rate schedule
-\(\alpha = \alpha_0 / (1 + \gamma \cdot t)\). Green legend group
-represents the \textbf{sigmoidal} learning rate schedule
-\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma \cdot t)\) with \(\gamma\).
-Purple legend group represents the \textbf{square root} learning rate
-schedule \(\alpha = \alpha_0 / \sqrt{1 + \gamma \cdot t}\). The
-iteration number is given by \(t\). Initial learning rate \(\alpha_0\)
-is set to 1e-4 and \(\gamma\) is the decay rate and its value is given
-in brackets in the legend.}\label{fig:learning-rate-schedules}
-\end{figure}
-
-\section{Benchmarking learning rate
-schedules}\label{benchmark-learning-rate-annealing-schedules}
-
-\subsection{Linear learning rate
-schedule}\label{linear-learning-rate-schedule}
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
-pseudo-likelihood. The other methods derive contact scores from
-couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
-gradient descent with an initial learning rate defined with respect to
-\protect\hyperlink{abbrev}{Neff} and a \emph{linear} learning rate
-annealing schedule \(\alpha = \frac{\alpha_0}{1 + \gamma t}\) with decay
-rate \(\gamma\) as specified in the legend.}\label{fig:performance-cd-linschedule}
-\end{figure}
-
-\subsection{Sigmoidal learning rate
-schedule}\label{sigmoidal-learning-rate-schedule}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
-pseudo-likelihood. The other methods derive contact scores from
-couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
-gradient descent with an initial learning rate defined with respect to
-\protect\hyperlink{abbrev}{Neff} and a \emph{sigmoidal} learning rate
-annealing schedule \(\alpha_{t+1} = \frac{\alpha_{t}}{1 + \gamma t}\)
-with t being the iteration number and decay rate \(\gamma\) as specified
-in the legend.}\label{fig:performance-cd-sigschedule}
-\end{figure}
-
-\subsection{Square root learning rate
-schedule}\label{square-root-learning-rate-schedule}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
-pseudo-likelihood. The other methods derive contact scores from
-couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
-gradient descent with an initial learning rate defined with respect to
-\protect\hyperlink{abbrev}{Neff} and a \emph{square root} learning rate
-annealing schedule \(\alpha = \frac{\alpha_0}{\sqrt{1 + \gamma t}}\)
-with t being the iteration number and decay rate \(\gamma\) as specified
-in the legend.}\label{fig:performance-cd-sqrtschedule}
-\end{figure}
-
-\subsection{Exponential learning rate
-schedule}\label{exponential-learning-rate-schedule}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
-pseudo-likelihood. The other methods derive contact scores from
-couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
-gradient descent with an initial learning rate defined with respect to
-\protect\hyperlink{abbrev}{Neff} and a \emph{exponential} learning rate
-annealing schedule \(\alpha = \alpha_0 \cdot\exp(- \gamma t)\) with t
-being the iteration number and decay rate \(\gamma\) as specified in the
-legend.}\label{fig:performance-cd-expschedule}
-\end{figure}
-
-\section{Number of iterations until convergence for different learning
-rate schedules}\label{learning-rate-schedules-distribution-iterations}
-
-\subsection{Linear learning rate
-schedule}\label{linear-learning-rate-schedule-1}
-
-(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with a \textbf{linear} learning rate schedule
-\(\alpha = \alpha_0 / (1 + \gamma \cdot t)\) with \(t\) being the
-iteration number and the decay rate \(\gamma\) as specified in the
-legend. Initial learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule} 
-
-}
-
-\caption{(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-lin-learning-rate-schedule}
-\end{figure}
-
-\subsection{Sigmoidal learning rate
-schedule}\label{sigmoidal-learning-rate-schedule-1}
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule} 
-
-}
-
-\caption{Distribution
-of the number of iterations until convergence for gradient descent
-optimizations of the full likelihood using different decay rates with a
-\textbf{sigmoidal} learning rate schedule
-\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma \cdot t)\) with t being the
-iteration number and the decay rate \(\gamma\) as specified in the
-legend. Initial learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.}\label{fig:numit-convergence-sig-learning-rate-schedule}
-\end{figure}
-
-\subsection{Square root learning rate
-schedule}\label{square-root-learning-rate-schedule-1}
-
-(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with a \textbf{square root} learning rate schedule
-\(\alpha = \alpha_0 / \sqrt{1 + \gamma t}\) with t being the iteration
-number and the decay rate \(\gamma\) as specified in the legend. Initial
-learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule} 
-
-}
-
-\caption{(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-sqrt-learning-rate-schedule}
-\end{figure}
-
-\subsection{Exponential learning rate
-schedule}\label{exponential-learning-rate-schedule-1}
-
-(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with an \textbf{exponential} learning rate schedule
-\(\alpha = \alpha_0 \cdot\exp(- \gamma t)\) with t being the iteration
-number and the decay rate \(\gamma\) as specified in the legend. Initial
-learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_exponential_learningrate_schedule} 
-
-}
-
-\caption{(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-exp-learning-rate-schedule}
-\end{figure}
-
-\section{Fix single potentials at maximum-likelihood estimate
-v*}\label{fix-single-potentials-at-maximum-likelihood-estimate-v}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_fixed_v} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 300 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). \protect\hyperlink{abbrev}{SGD} settings for
-\protect\hyperlink{abbrev}{CD} optimization are as follows: sigmoidal
-learning rate schedule with decay rate \(\gamma = \mathrm{5e-6}\) and
-initial learning rate \(\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}\).
-\textbf{pseudo-likelihood}: contact scores computed from
-pseudo-likelihood. \textbf{CD fixed v at v}: contact scores computed
-from \protect\hyperlink{abbrev}{CD} with \protect\hyperlink{abbrev}{SGD}
-and single potentials \(\v\) are not optimized but fixed at \(\v^*\) as
-given in eq. \eqref{eq:prior-v}. \textbf{CD lambda\_v = 10}: contact
-scores computed from \protect\hyperlink{abbrev}{CD} with
-\protect\hyperlink{abbrev}{SGD} and single potentials \(\v\) are subject
-to optimization using L2-reglarization with \(\lambda_v \eq 10\).}\label{fig:full-likelihood-opt-fixv}
-\end{figure}
-
-\section{Monitoring Optimization for different Sample
-Sizes}\label{monitoring-optimization-for-different-sample-sizes}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes} \includegraphics[width=0.5\linewidth]{img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes} 
-
-}
-
-\caption{Monitoring parameter norm and
-gradient norm for protein 1aho\_A\_00 during
-\protect\hyperlink{abbrev}{SGD} using different sample sizes. Protein
-1c75\_A1aho\_A\_00\_00 has length L=64 and 378 sequences in the
-alignment (\protect\hyperlink{abbrev}{Neff}=229) \textbf{Left} L2-norm
-of the gradients for coupling parameters \(||\w||_2\) (without
-contribution of regularizer). The number of sequences, that is used for
-Gibbs sampling to approximate the gradient, is given in the legend.
-\textbf{Right} L2-norm of the coupling parameters \(||\w||_2\). The
-number of sequences, that is used for Gibbs sampling to approximate the
-gradient, is given in the legend.}\label{fig:cd-samplesize-protein1ahoa00}
+\includegraphics[width=0.5\linewidth]{img/coupling_matrix_analysis/aromatic_residues_short_distance} \caption{The planar ring
+system of aromatic sidechains at short \(\Cb\)-\(\Cb\) distances (e.g.
+\(\Delta \Cb < 5 \angstrom\)) often points away from each other to avoid
+steric hindrance.}\label{fig:aromatic-residues-at-short-distances}
 \end{figure}
 
 \chapter{Training of the Random Forest Contact
@@ -6287,8 +5414,9 @@ prediction. Bioinformatics \emph{24}, 924--31. Available at:
 
 \hypertarget{ref-Li2011}{}
 25. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue
-contacts using random forest models. Bioinformatics \emph{27}. Available
-at: \url{http://dx.doi.org/10.1093/bioinformatics/btr579}.
+contacts using random forest models. Bioinformatics \emph{27}, 3379--84.
+Available at:
+\url{http://bioinformatics.oxfordjournals.org/content/27/24/3379.long}.
 
 \hypertarget{ref-Wang2011}{}
 26. Wang, X.-F., Chen, Z., Wang, C., Yan, R.-X., Zhang, Z., and Song, J.
@@ -6539,11 +5667,11 @@ Improving contact prediction along three dimensions. 19. Available at:
 \url{http://arxiv.org/abs/1403.0379}.
 
 \hypertarget{ref-Zhang2016}{}
-68. Zhang, H., Huang, Q., Bei, Z., Wei, Y., and Floudas, C.A. (2016).
-COMSAT: Residue contact prediction of transmembrane proteins based on
-support vector machines and mixed integer linear programming. Proteins
-Struct. Funct. Bioinforma., n/a--n/a. Available at:
-\url{http://www.ncbi.nlm.nih.gov/pubmed/26756402}.
+68. Zhang, H., Gao, Y., Deng, M., Wang, C., Zhu, J., Li, S.C., Zheng,
+W.-M., and Bu, D. (2016). Improving residue-residue contact prediction
+via low-rank and sparse decomposition of residue correlation matrix.
+Biochem. Biophys. Res. Commun. Available at:
+\url{http://www.sciencedirect.com/science/article/pii/S0006291X16301838}.
 
 \hypertarget{ref-Vendruscolo1997}{}
 69. Vendruscolo, M., Kussell, E., and Domany, E. (1997). Recovery of
@@ -7290,6 +6418,12 @@ B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg,
 V. \emph{et al.} (2011). Scikit-learn: Machine Learning in Python. J.
 Mach. Learn. Res. \emph{12}, 2825--2830. Available at:
 \url{http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html}.
+
+\hypertarget{ref-Livingstone1993}{}
+189. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence
+alignments: a strategy for the hierarchical analysis of residue
+conservation. Bioinformatics \emph{9}, 745--756. Available at:
+\url{http://bioinformatics.oxfordjournals.org/content/9/6/745}.
 
 
 \end{document}

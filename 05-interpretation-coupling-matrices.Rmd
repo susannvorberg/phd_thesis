@@ -9,13 +9,13 @@ The following sections give some intuition for the information contained in coup
 Given the success of [DCA](#abbrev) methods, it is clear that the inferred couplings $\wij$ are good indicators of spatial proximity for residue pairs. 
 As described in section \@ref(post-processing-heuristics), a contact score $C_{i,j}$ for a residue pair $(i,j)$ is commonly computed as the Frobenius norm over the coupling matrix, $C_{i,j}=||\wij||_2 = \sqrt{\sum_{a,b=1}^{20} {\wijab}^2}$.
 
-The plots in Figure \@ref(fig:sq-coupling-correlation) show the correlation of squared coupling values $(\wijab)^2$ with binary contact class (contact=1, non-contact=0) and the standard deviation of squared coupling values $(\wijab)^2$ for contacts computed on dataset of 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)).
+The plots in Figure \@ref(fig:sq-coupling-correlation) show the correlation of squared coupling values ${\wijab}^2$ with binary contact class (contact=1, non-contact=0) and the standard deviation of squared coupling values ${\wijab}^2$ for contacts computed on a dataset of 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)).
 All couplings have a weak positive class correlation, meaning the stronger the squared coupling value, the more likely a contact can be inferred. 
-Correlation is weak because most couplings $wijab$ are close to zero since typically only few amino acid pairigns per residue pair carry evidence and produce a signal.
+Correlation is weak because most couplings $\wijab$ are close to zero since typically only few amino acid pairings per residue pair carry evidence and produce a signal.
 Generally, couplings that involve an aliphatic amino acid such as isoleucine (I), leucine (L), valine (V) or an alanine (A) express the strongest class correlation. 
 In contrast, cysteine pairs (C-C) or pairs involving only the charged residus arginine (R), glutamic acid (E), lysine (K) or aspartic acid (D) correlate only weakly with contact class.
 Interestingly, for residue pairs being in physical contact, C-C and couplings involving charged residues have the highest standard-deviation among all couplings as can be seen in the right plot in Figure \@ref(fig:sq-coupling-correlation). 
-Standard deviation for squared coupling values from non-contacts shows no relevant patterns and is on average one magnitude smaller (mean standard deviation over 400 squared couplings = 0.05) than for the contact class.
+Standard deviation of squared coupling values from non-contacts shows no relevant patterns and is on average one magnitude smaller than for the contact class (see Appendix Figure \@ref(fig:stdev-squared-couplings-noncontacts)).
 
 (ref:caption-sq-coupling) **Left** Pearson correlation of squared coupling values $(\wijab)^2$ with contact class (contact=1, non-contact=0). **Right** Standard deviation of squared coupling values for residue pairs in contact. Dataset contains 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
 
@@ -26,7 +26,8 @@ knitr::include_url("img/coupling_matrix_analysis/combi_squared_couplings_correla
 
 Different couplings are of varying importance for contact inference and have distinct characteristics. 
 When looking at the raw coupling values (without squaring), these charateristics become even more pronounced. 
-The plots in Figure \@ref(fig:coupling-correlation) show the correlation of raw coupling values $(\wijab)$ with contact class and the standard deviation of coupling values for contacts.
+The plots in Figure \@ref(fig:coupling-correlation) show the correlation of raw coupling values $\wijab$ with contact class and the standard deviation of coupling values for contacts.
+Standard deviation of coupling values for non-contacts shows no relevant patterns and is on average half as big as for the contact class (see Appendix Figure \@ref(fig:stdev-raw-couplings-noncontacts)).
 Interestingly, in contrast to the findings for squared coupling values, couplings for charged residue pairs, involving arginine (R), glutamic acid (E), lysine (K) and aspartic acid (D), have the strongest class correlation (positive and negative), whereas aliphatic coupling pairs correlate to a much lesser extent.
 This implies that squared coupling value is a better indicator of a contact than the raw signed coupling value for aliphatic couplings.
 On the contrary, the raw signed coupling values for charged residue pairs are much more indicative of a contact than the magnitude of their squared values.
@@ -57,9 +58,9 @@ Positive coupling values arise between positively charged residues (K, R) and ne
 These exemplary couplings (E-R, E-K, K-D) perfectly reflect the interaction preference for residues forming salt bridges. 
 Indeed, in the protein structure the first residue (E) forms a salt bridge with the second residue (R) as can be seen in the left plot in Figure \@ref(fig:coupling-matrix-pymol).
 
-(ref:caption-coupling-matrix-ionic-interaction) Inferred couplings $\wijab$ and single potentials $\via$ and $\vja$ computed with pseudo-likelihood for residues 6 and 82 in protein chain 1a9x_A_05. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value $|\wijab|$. Bars at the x-axis and y-axis correspond to the *Potts model* single potentials $\vi$ and $\vj$. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
+(ref:caption-coupling-matrix-ionic-interaction) Couplings $\wijab$ and single potentials $\via$ and $\vja$ computed with pseudo-likelihood for residues 6 and 82 in protein chain 1a9x_A_05. The matrix shows the 20x20 couplings $\wijab$ with color representing coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles representing absolute coupling value $|\wijab|$. Bars at the x-axis and y-axis correspond to the *Potts* model single potentials $\vi$ and $\vj$ respectively. Color reflects the value of single potentials. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
 
-```{r coupling-matrix-ionic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.png", out.width='90%', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
+```{r coupling-matrix-ionic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-ionic-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1a9xA05_6_82_notitle.html", height = "600px")
 ```
 
@@ -69,9 +70,9 @@ Alanine is a small hydrophobic residue and it is favoured at both residue positi
 But alanine is disfavoured to appear at both positions at the same time since the A-A coupling is negative.
 Figure \@ref(fig:coupling-matrix-pymol) illustrates the location of the two residues in the protein core. Here, hydrophobic residues are densely packed and the limited space allows for only small hydrophobic residues.
 
-(ref:caption-coupling-matrix-hydrophobic-interaction) Coupling matrix computed with pseudo-likelihood for residues 29 and 39 in protein chain 1ae9_A_00. Color represents coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles represents absolute coupling value $|\wijab|$. Bars at the x-axis and y-axis correspond to the *Potts model* single potentials $\vi$ and $\vj$. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
+(ref:caption-coupling-matrix-hydrophobic-interaction) Couplings $\wijab$ and single potentials $\via$ and $\vja$ computed with pseudo-likelihood for residues 29 and 39 in protein chain 1ae9_A_00. The matrix shows the 20x20 couplings $\wijab$ with color representing coupling strength and direction (red = positive coupling value, blue = negative coupling value) and diameter of bubbles representing absolute coupling value $|\wijab|$. Bars at the x-axis and y-axis correspond to the *Potts* model single potentials $\vi$ and $\vj$ respectively. Color reflects the value of single potentials. Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
 
-```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.png", out.width='90%', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
+```{r coupling-matrix-hydrophobic-interaction, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-hydrophobic-interaction)'}
 knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1ae9A00_29_39_notitle.html", height = "600px")
 ```
 
@@ -113,11 +114,13 @@ It is not clear though, why hydrophobic pairs have an equally strong negative co
 A vague explanation could be that a location in the tighly packed protein core calls for other very specific constraints, e.g. sterical fit or contact number, besides hydrophobic properties that are prohibitive for a particular hydrophobic residue at a certain position.
 
 The distribution of aromatic coupling values like F-W is slightly skewed towards negative values, accounting for steric hindrance of their large sidechains at small distances. 
-The yet very pronounced positive coupling signal for the bulky aromatic residues at this short distance range might be explained by the fact that the rotational freedom of the $C_\alpha$-$\Cb$ allows the bulky planar aromatic rings to point away from each other (see Apendix Figure \@ref(fig:aromatic-residues-at-short-distances)) and thus to avoid sterical hindrance in the densely packed protein core.
+The yet very pronounced positive coupling signal for the bulky aromatic residues at this short distance range is not clear. 
+The bulky planar aromatic rings of two aromatic residues often point away from each other when their $\Cb$-$\Cb$ distances are small to avoid steric hindrance (see Apendix Figure \@ref(fig:aromatic-residues-at-short-distances)).
+A positive coupling signal might originate from other structural constraints from the local environment affecting both sidechains, similar to the scenario hypothetically explaining the negative coupling signal for hydrophobic residues.
 
 (ref:caption-1d-coupling-profile-0-5) Distribution of selected couplings for filtered residue pairs with $\Cb-\Cb$ distances $< 5\angstrom$ (see methods section \@ref(method-coupling-profile) for details). Number of coupling values used to determine the distribution is given in brackets in the legend. $\text{R-E}$ = couplings for arginine and glutamic acid pairs, $\text{C-C}$ = coupling for cystein residue pairs, $\text{V-I}$ = coupling for valine and isoleucine pairs, $\text{F-W}$ = coupling for phenylalanine and tryptophane pairs, $\text{E-E}$ = coupling for glutamic acid residue pairs.
 
-```{r 1d-coupling-profile-0-5, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/1d_coupling_profile_0_5.png", out.width='90%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)', fig.align='center'}
+```{r 1d-coupling-profile-0-5, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/1d_coupling_profile_0_5.png", out.width='100%', fig.cap = '(ref:caption-1d-coupling-profile-0-5)', fig.align='center'}
 knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_0_5.html")
 ```
 
@@ -168,7 +171,7 @@ Again, this situation coincides with amino acid pairings that would be expected 
 The bottom left plot in Figure \@ref(fig:2d-coupling-profiles-0-8) shows the distribution between couplings for the hydrophobic pairings I-L and V-I that is almost symmetric and broadly centered around zero.
 Coupling distributions for residue pairs that are not physically interacting ($\Cb  \gg 8 \angstrom$) resemble the distribution for hydrophobic pairings in that there is no correlation, but at high distance the  distributions are much tighter centered around zero (bottom right plot in Figure \@ref(fig:2d-coupling-profiles-0-8)).
 
-(ref:caption-2d-coupling-profiles-0-8) Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. **Top Left** The 2-dimensional distribution of couplings E-R and R-E for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is almost symmetric and the coupling values are positively correlated. **Top Right** The 2-dimensional distribution of couplings E-R and E-E for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is almost symmetric and the coupling values are negatively correlated. **Bottom Left** The 2-dimensional distribution of couplings I-L and V-I for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is symmetrically distributed around zero without visible correlation.  **Bottom Right** The 2-dimensional distribution of couplings I-L and V-I for residue pairs with $\Cb-\Cb$ distances $> 20 \angstrom$ is tighly distributed around zero. .
+(ref:caption-2d-coupling-profiles-0-8) Two-dimensional distribution of approximately 10000 coupling values computed with pseudo-likelihood. **Top Left** The 2-dimensional distribution of couplings E-R and R-E for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is almost symmetric and the coupling values are positively correlated. **Top Right** The 2-dimensional distribution of couplings E-R and E-E for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is almost symmetric and the coupling values are negatively correlated. **Bottom Left** The 2-dimensional distribution of couplings I-L and V-I for residue pairs with $\Cb-\Cb$ distances $< 8 \angstrom$ is symmetrically distributed around zero without visible correlation.  **Bottom Right** The 2-dimensional distribution of couplings I-L and V-I for residue pairs with $\Cb-\Cb$ distances $> 20 \angstrom$ is tighly distributed around zero.
 
 
 ```{r 2d-coupling-profiles-0-8, echo = FALSE, out.width='50%', fig.show='hold', fig.cap = '(ref:caption-2d-coupling-profiles-0-8)'}
