@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="fix-single-potentials-at-maximum-likelihood-estimate-v.html">
-<link rel="next" href="training-of-the-random-forest-contact-prior.html">
+<link rel="prev" href="protein-structure.html">
+<link rel="next" href="structure-prediction.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -295,17 +295,20 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="monitoring-optimization-for-different-sample-sizes" class="section level2">
-<h2><span class="header-section-number">D.5</span> Monitoring Optimization for different Sample Sizes</h2>
-
-<div class="figure" style="text-align: center"><span id="fig:cd-samplesize-protein1ahoa00"></span>
-<img src="img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes.png" alt="Monitoring parameter norm and gradient norm for protein 1aho_A_00 during SGD using different sample sizes. Protein 1c75_A1aho_A_00_00 has length L=64 and 378 sequences in the alignment (Neff=229) Left L2-norm of the gradients for coupling parameters \(||\w||_2\) (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. Right L2-norm of the coupling parameters \(||\w||_2\). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend." width="50%" /><img src="img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes.png" alt="Monitoring parameter norm and gradient norm for protein 1aho_A_00 during SGD using different sample sizes. Protein 1c75_A1aho_A_00_00 has length L=64 and 378 sequences in the alignment (Neff=229) Left L2-norm of the gradients for coupling parameters \(||\w||_2\) (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. Right L2-norm of the coupling parameters \(||\w||_2\). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend." width="50%" />
-<p class="caption">
-Figure D.11: Monitoring parameter norm and gradient norm for protein 1aho_A_00 during <a href="abbrev.html#abbrev">SGD</a> using different sample sizes. Protein 1c75_A1aho_A_00_00 has length L=64 and 378 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=229) <strong>Left</strong> L2-norm of the gradients for coupling parameters <span class="math inline">\(||\w||_2\)</span> (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. <strong>Right</strong> L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span>. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend.
-</p>
+<div id="structure-determination" class="section level2">
+<h2><span class="header-section-number">1.2</span> Structure Determination</h2>
+<ul>
+<li>low resolution techniques can provide constraints Emerging exerimental techniques allow for the determination of inter- residue proximity constraints, i.e., the typical distance separation range between two residues.
+<ul>
+<li>such as intramolecular cross-linking4,5 coupled with mass spectrometry (MS)</li>
+<li>fluorescence resonance energy transfer (FRET)</li>
+<li>electron paramagnetic resonance (EPR)</li>
+<li><p>paramagnetic relaxation enhancement (PRE)</p></li>
+<li><p>cross-linking Chemical Cross-Linking [33] uses specially designed and commercially available cross- linking reagents that covalently bind to two proximal functional groups in the protein (most frequently, the amino groups found at the protein N terminus and in lysine side chains). By varying the length of the spacer section of the cross-linking reagent, functional groups that are at different distances to another can be linked together. The cross-linking products are 6 1. General Introduction to Protein Structure Prediction analyzed in a mass spectrometer, the residues participating in the cross-link identified and thus residue-residue distance restraints are determined.</p></li>
+<li><p>Nuclear Overhauser Effect Spectroscopy (NOESY) [34] can be used to infer distance information using the Nuclear Overhauser Effect (NOE) that occurs when protons in a dipole-dipole interaction exchange magnetic spins (either directly or indirectly through neighboring nuclei) in nuclear magnetic range (NMR) spectroscopy. By exploiting distance- dependent variations in the strength of the measured NOE, distance information between atoms can be derived after successful peak assignment in a 2D NMR experiment. The distance information derived from NOESY experiments is used as the primary information source when calculating protein structures from NMR data.</p></li>
+</ul></li>
+</ul>
 </div>
-</div>
-<!-- </div> -->
 <div id="disqus_thread"></div>
 <script>
 /**
@@ -330,8 +333,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="training-of-the-random-forest-contact-prior.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="protein-structure.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="structure-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -360,7 +363,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/10-appendix.Rmd",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
 "text": "Edit"
 },
 "download": ["PhD_thesis_Susann_Vorberg.pdf"],

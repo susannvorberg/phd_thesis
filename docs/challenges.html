@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-15">
+<meta name="date" content="2017-10-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,9 +128,11 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
-<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.2" data-path="structure-determination.html"><a href="structure-determination.html"><i class="fa fa-check"></i><b>1.2</b> Structure Determination</a></li>
+<li class="chapter" data-level="1.3" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Structure Prediction</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.3.1</b> Template-based methods</a></li>
+<li class="chapter" data-level="1.3.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.3.2</b> Template-free structure prediction</a></li>
+<li class="chapter" data-level="1.3.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-protein-structure-prediction"><i class="fa fa-check"></i><b>1.3.3</b> Contact assisted protein structure prediction</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
@@ -315,7 +317,7 @@ Figure 2.8: The phylogenetic dependence of closely related sequences can produce
 <h3><span class="header-section-number">2.7.3</span> Finite Sampling Effects</h3>
 <p>Spurious correlations can arise from random statistical noise and blur true co-evolution signals especially in low data scenarios. Consequently, false positive predictions attributable to random noise accumulate for protein families comprising low numbers of homologous sequences. This relationship was confirmed in many studies and as a rule of thumb it has been argued that proteins with <span class="math inline">\(L\)</span> residues need at least <em>5L</em> sequences in order to obtain confident predictions that can bet used for protein structure prediction <span class="citation">[<a href="#ref-Kamisetty2013">88</a>,<a href="#ref-Marks2012">169</a>]</span>. Recently it was shown that precision of predicted contacts saturates for protein families with more than <span class="math inline">\(10^3\)</span> diverse sequences and that precision is only dependent on protein length for families with small number of sequences <span class="citation">[<a href="#ref-Anishchenko2017">168</a>]</span>.</p>
 <p>Interesting targets for contact prediction are protein families without any associated structural information. As can be seen in Figure <a href="challenges.html#fig:pfam">2.9</a>, those protein families generally comprise low numbers of homologous sequences with a median of 185 sequences per family and are thus susceptible to finite sampling effects.</p>
-<p>With the rapidly increasing size of protein sequence databases (see section <a href="general-intro.html#general-intro">1</a>) the number of protein families with enough sequences for accuarate contact predictions will increase steadily <span class="citation">[<a href="#ref-TheUniProtConsortium2013">10</a>,<a href="#ref-Kamisetty2013">88</a>]</span>. Nevertheless, because of the already mentioned sequencing biases, better and more sensitive statistical models are indespensible to extend the applicability domain of coevolutionary methods.</p>
+<p>With the rapidly increasing size of protein sequence databases (see section <a href="general-intro.html#general-intro">1</a>) the number of protein families with enough sequences for accuarate contact predictions will increase steadily <span class="citation">[<a href="#ref-TheUniProtConsortium2013">11</a>,<a href="#ref-Kamisetty2013">88</a>]</span>. Nevertheless, because of the already mentioned sequencing biases, better and more sensitive statistical models are indespensible to extend the applicability domain of coevolutionary methods.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:pfam"></span>
 <iframe src="img/pfam_pdb_notitle.html" width="90%" height="500px">
@@ -387,7 +389,7 @@ Figure 2.10: Possible sources of coevolutionary signals. <strong>a)</strong> Phy
 <p>168. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D. (2017). Origins of coevolution between residues distant in protein 3D structures. Proc. Natl. Acad. Sci., 201702664. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114</a>.</p>
 </div>
 <div id="ref-TheUniProtConsortium2013">
-<p>10. The UniProt Consortium (2013). Update on activities at the Universal Protein Resource (UniProt) in 2013. Nucleic Acids Res. <em>41</em>, D43–7. Available at: <a href="http://nar.oxfordjournals.org/content/41/D1/D43" class="uri">http://nar.oxfordjournals.org/content/41/D1/D43</a>.</p>
+<p>11. The UniProt Consortium (2013). Update on activities at the Universal Protein Resource (UniProt) in 2013. Nucleic Acids Res. <em>41</em>, D43–7. Available at: <a href="http://nar.oxfordjournals.org/content/41/D1/D43" class="uri">http://nar.oxfordjournals.org/content/41/D1/D43</a>.</p>
 </div>
 <div id="ref-Finn2016">
 <p>171. Finn, R.D., Coggill, P., Eberhardt, R.Y., Eddy, S.R., Mistry, J., Mitchell, A.L., Potter, S.C., Punta, M., Qureshi, M., and Sangrador-Vegas, A. <em>et al.</em> (2016). The Pfam protein families database: towards a more sustainable future. Nucleic Acids Res. <em>44</em>, D279–D285. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkv1344" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkv1344</a>.</p>

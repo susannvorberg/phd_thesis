@@ -5,9 +5,8 @@ With certain exceptions (e.g. [IDP](#abbrev) [@Wright1999]), this dogma has prov
 
 Ever since, it is regarded as the biggest challenge in structural bioinformatics [@Samish2015], to realiably predict a protein's structure given only its amino acid sequence. 
 *De-novo* protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein's energy landscape. 
-However, these methods are limited by the complexity of the conformational space and the accuracy of the energy potentials. 
-Considering a protein with 150 amino acids, that has approximately 450 degrees of freedom, 
-Regarding the rotational and translational degrees of freedom of the protein chain, the complexity scales with XXX [@Anfinsen1973].
+However, due to the high degree of conformational flexibility, the search space of possible conformations cannot be explored exhaustively for proteins of typical length.
+and the accuracy of the energy potentials. 
 
 Far more successfull are template-based modelling approaches. 
 Given the observation that structure is more conserved than sequence in a protein family [@Lesk1980], the structure of a target protein can be inferred from a homologue protein [@Sander1991]. 
@@ -15,37 +14,35 @@ The degree of structural conservation is linked to the level of pairwise sequenc
 Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model [@Marti-Renom2000]. 
 By definition, homology derived models are unable to capture new folds [@Dorn2014] and their main limitation lies in the availability of suitable templates.  
 
-
-```{r seq-str-gap, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
-knitr::include_url("img/pdb_growth.html", height = "750px")
-```
-
-Unfortunately, the number of solved protein structures increases only slowly, as experimental methods are both time consuming and expensive [@Dorn2014].
+Unfortunately, the number of solved protein structures increases only slowly but steadily, as experimental methods are both time consuming and expensive [@Dorn2014].
 The [PDB](#abbrev)[@Berman2000] is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins. 
 The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the [PDB](#abbrev). 
 About 9% of protein structures have been solved using [NMR](#abbrev) and less than 1% using [EM](#abbrev) (see FIG 1).
 
 All three experimental techniques have advantages and limitations with respect to certain modelling aspects.
-X-ray crystallography requires the protein to form crystals, which is an arduous and sometimes impossible task. 
+X-ray crystallography requires the protein to form crystals and finding the the correct experimental conditions to arrive at a pure and regular crystal is a challenging and sometimes impossible task. 
 Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. 
-NMR studies the protein in an physiological environment in solution and enables the study of protein dynamics as ensembles of protein structures can be observed. However, NMR is limited to look at small proteins. 
-Recently, EM has undergone a "resolution revolution" [@Egelman2016] and macromolecular structures have been solved with resolutions up to 2A[citation]. 
+NMR studies the protein in a physiological environment in solution and enables the study of intramolecular dynamics,reaction kinetics or protein folding as ensembles of protein structures can be observed. 
+There is an upper size limit of about 25 kDa for efficient use of NMR spectroscopy[@Billeter2008]. 
+Recently, EM has undergone a "resolution revolution" and macromolecules have been solved to near-atomic resolutions [@Egelman2016]. 
 The limit of cryo-EM lies in the size of proteins.
 
 Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. 
 With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously.
 The UniProtKB [@TheUniProtConsortium2013], the leading resource for protein sequences, contains more than 80 million sequence entries (24 July 2017). 
  
-Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination [@CITE] are not expected to close this gap near in time.
-[Figure sequence structure gap]
+Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination [@CITE] are not expected to close this gap near in time (see Figure \@ref(fig:seq-str-gap).
 
-Protein structure determines protein function. Therefore, structural insights are of uttermost importance. They are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms.
-They are fundamental for the design of drugs and antibiotics. Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.
+```{r seq-str-gap, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
+knitr::include_url("img/pdb_growth.html", height = "750px")
+```
+
+Knowledge of protein structures is of fundamental importance to elucidate their biological functions due to the close relationship between structure and function.
+Structural insights are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms.
+They are fundamental for the design of drugs and antibiotics. 
+Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.
 
 The aformentioned trends illustrate the need of computational methods and motivate research to solve *Ansinsens Dogma* to reliably predict protein structures from sequence alone. 
-
-
-"At the cost of months or years of laborious work, these methods can produce high-resolution structures at the atomic level. The structures of many proteins or protein complexes cannot be determined using these methods because of the specific physical and chemical properties of these proteins or complexes.On the other hand, the knowledge of these protein structures is very important to elucidate their biological functions due to the close relationship between structure and function.Therefore, there is a pressing need for developing new methods to both increase the speed and broaden the target spectrum of protein structure determination with the rapid growth of the number of the identified proteins from genomic1,2 and proteomic studies."[@Chen2007]
 
 
 
@@ -108,6 +105,7 @@ knitr::include_graphics("img/amino_acid_physico_chemical_properties_venn_diagram
 ```
 
 
+
 ## Structure Prediction
 
 Despite the knowledge of Anfinsen's postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (fig:folding_funnel). Levinthal's paradox [@Levinthal1969] describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the "combinatorial explosion" of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.
@@ -134,13 +132,29 @@ Finally, the model is energetically optimized in an iterative procedure.
 Force fields are applied to correct the backbone and side chain conformations [@Gu2009]. 
 Several automated pipelines for homology modelling are well-established (Modeller [@Eswar2007], 3D-Jigsaw [@Bates2001], SwissModel [@Arnold2006]) which allow more or less manual intervention in the modelling process. 
 
+success of homology modelling is dependant on both the availability of a template structure and the sensitivity and alignment quality of the sequence search method used to detect cluster membership
+More sensitive sequence search methods such as HHblits [22] were developed to push the limits of homology detection through the inclusion of more evolutionary information by comparing profile hidden markov models of query and template multiple sequence alignments.
         
-Fold Recognition describes the inverse folding problem [Bowie1993]: instead of finding the compatible structure for a given sequence, one tries to find sequences that fit onto a given structure. Whether the query sequence fits a structure from the database is not determined by sequence similarities but rather energetic or environment specific measures. Thus, fold recognition methods are able to recognize structural similarity even in the absence of sequence similarity. The rationale basis for this strategy is the assumption that the fold space is limited. It has been found that seemingly unrelated proteins often adopt similar folds. This might be due to divergent evolution (proteins are related, but homology cannot be detected at the corresponding sequence level) or convergent evolution (functional requirements lead to similar folds for unrelated proteins) [Gu2009]. Early approaches include profile based methods. Here, the structural information of the protein is encoded into profiles, which subsequently are aligned to the sequences [Bowie1991,Fischer1996,Ouzounis1993]. Advanced techniques are known as  "threading" techniques, describing the process of threading a sequence through a structure and determining the optimal fit via energy functions. [Jones1992,Jones1998,Lemer1995]
+Fold Recognition describes the inverse folding problem [Bowie1993]: instead of finding the compatible structure for a given sequence, one tries to find sequences that fit onto a given structure. 
+Whether the query sequence fits a structure from the database is not determined by sequence similarities but rather energetic or environment specific measures. 
+Thus, fold recognition methods are able to recognize structural similarity even in the absence of sequence similarity. 
+The rationale basis for this strategy is the assumption that the fold space is limited. 
+It has been found that seemingly unrelated proteins often adopt similar folds. 
+This might be due to divergent evolution (proteins are related, but homology cannot be detected at the corresponding sequence level) or convergent evolution (functional requirements lead to similar folds for unrelated proteins) [Gu2009]. Early approaches include profile based methods. 
+Here, the structural information of the protein is encoded into profiles, which subsequently are aligned to the sequences [Bowie1991,Fischer1996,Ouzounis1993]. 
+Advanced techniques are known as  "threading" techniques, describing the process of threading a sequence through a structure and determining the optimal fit via energy functions. [Jones1992,Jones1998,Lemer1995]
 
 
 ### Template-free structure prediction
 
 Ab initio or de-novo modeling techniques implement Anfinsen’s Dogma most closely in mimicking the folding process based only on physico-chemical principles.
+
+predicting protein structures with- out prior information on the structure of that protein or related proteins but only general knowledge about intramolecular forces and protein folding
+based on force-field models used to rank the free energy of a conformation combined with efficient search strategies of exploring conformational space.
+
+In order to assign an energy to a conformation under consideration, force-field models
+sum up Lennard-Jones and electrostatic terms between atoms in the molecule, combined with terms for hydrogen bonding, φ/ψ angle preferences, and torsion angles to make the molecule more protein-like [24].
+
 Energy functions (physical or knowledge-based) are used to describe the folding landscape and are minimized to arrive at the global energy minimum corresponding to the native conformation. 
 Since the native conformation can be found near the global energy minimum of the folding landscape, energy functions (physical or knowledge-based) have been developed to describe this landscape.
 With respect to the idea of a folding funnel, the energy function is minimized to mimic the folding process that automatically leads to the global minimum.
@@ -148,12 +162,39 @@ With respect to the idea of a folding funnel, the energy function is minimized t
 
 Drawbacks of these methods are the time requirements due to the computational complexity of energy functions as well as their inaccuracy. 
     
-    
 
 Minimize a physical or knowledge-based energy function for the protein. This has huge complexity due to large conformational space that needs to be sampled. 
 
 
+### Contact assisted protein structure prediction
+
+
+    - cross-linking
+        Chemical Cross-Linking [33] uses specially designed and commercially available cross-
+        linking reagents that covalently bind to two proximal functional groups in the protein (most frequently, the amino groups found at the protein N terminus and in lysine side chains). By varying the length of the spacer section of the cross-linking reagent, functional groups that are at different distances to another can be linked together. The cross-linking products are
+        6 1. General Introduction to Protein Structure Prediction
+        analyzed in a mass spectrometer, the residues participating in the cross-link identified and thus residue-residue distance restraints are determined.
+
+    - Nuclear Overhauser Effect Spectroscopy (NOESY) [34] can be used to infer distance information using the Nuclear Overhauser Effect (NOE) that occurs when protons in a dipole-dipole interaction exchange magnetic spins (either directly or indirectly through neighboring nuclei) in nuclear magnetic range (NMR) spectroscopy. By exploiting distance- dependent variations in the strength of the measured NOE, distance information between atoms can be derived after successful peak assignment in a 2D NMR experiment. The distance information derived from NOESY experiments is used as the primary information source when calculating protein structures from NMR data.
 
 
 
+While only a 2D representation, residue-residue contact maps retain the full 3D structural information of a protein so that Cα atom coordinates can be reconstructed reliably using residue-residue contact maps as input. Perhaps
+
+- small number of native contacts is enough (from experimental methods)
+- with predicted contacts: precision needs to be high
+- good contact prdictions are crucial
+
+Residue-residue contacts can be visualized in a contact map which is a LxL matrix of binary values, with L being protein length. 
+The entries $C(i,j)$ in the matrix
+
+\begin{equation}
+    C(i,j) =    \begin{case}
+                    1, & \text{if} \Delta \Cb < T
+                    0, & \text{otherwis}
+                \end{case}
+\end{equation}
+
+where \Delta \Cb is the euclidean distance between $\Cb$ atoms ($C_\alpha$ for glycine) of residues $i$ and $j$  and $T$ is a distance threshhold (typically 8 $\angstrom$).
+Figure 1.1a shows an example of a residue-residue contact map generated from a small protein domain.
 

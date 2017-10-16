@@ -18,6 +18,8 @@ According to the hypothesis, compensatory mutations show up as correlations betw
 knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 ```
 
+
+
 The following sections will give an overview over important methods and developments in the field of contact prediction.
 
 
