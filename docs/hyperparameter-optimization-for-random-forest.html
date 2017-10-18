@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-16">
+<meta name="date" content="2017-10-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -261,7 +261,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="hyperparameter-optimization-for-random-forest" class="section level2">
 <h2><span class="header-section-number">6.2</span> Hyperparameter Optimization for Random Forest</h2>
-<p>There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime. While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree <span class="citation">[<a href="#ref-Bernard2009">201</a>]</span>. Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal leaf node size regarding the minimal number of data samples ending in a leaf node. Again, a positive side-effect of pruning and requiring minimal leaf node size is a speedup of the algorithm. <span class="citation">[<a href="#ref-Louppe2014">199</a>]</span></p>
+<p>There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime. While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree <span class="citation">[<a href="#ref-Bernard2009">213</a>]</span>. Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal leaf node size regarding the minimal number of data samples ending in a leaf node. Again, a positive side-effect of pruning and requiring minimal leaf node size is a speedup of the algorithm. <span class="citation">[<a href="#ref-Louppe2014">211</a>]</span></p>
 <p>In the following, I use 5-fold cross-validation to identify the optimal architecture of the random forest. Details about the training set and he cross-validation procedure can be found in method section <a href="rf-training.html#rf-training">7.12</a>. First I assessed performance of models for combinations of the parameter <em>n_estimators</em>, defining the number of trees in the forest and the parameter <em>max_depth</em> defining the maximum depth of the trees:</p>
 <ul>
 <li><em>n_estimators</em> <span class="math inline">\(\in \{100,500,1000\}\)</span></li>
@@ -301,10 +301,10 @@ Figure 6.3: Mean precision over 200 proteins against highest scoring contact pre
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Bernard2009">
-<p>201. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
+<p>213. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
 </div>
 <div id="ref-Louppe2014">
-<p>199. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
+<p>211. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -382,7 +382,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

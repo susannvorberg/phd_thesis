@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-16">
+<meta name="date" content="2017-10-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -262,12 +262,12 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="optimizing-full-likelihood" class="section level1">
 <h1><span class="header-section-number">4</span> Optimizing the Full Likelihood</h1>
 <p>Section <a href="maxent.html#maxent">2.4</a> introduced the <em>Potts model</em> for contact prediction that is able to distinguish between directly and indirectly coupled residue pairs by jointly modelling the probabilty of a protein sequence over all residues. Maximum-likelihood inference of the model parameters is numerically challenging due to the exponential complexity of the partition function that normalizes the probability distribution. Several approximate inference techniques for the full likelihood have been developed trying to sidestep the exact computation of the partition function. At this point in time, pseudo-likelihood is the most successful approximate solution with regard to the specific problem of predicting residue-residue contacts (see section <a href="maxent.html#pseudo-likelihood">2.4.3.1</a>). It has been shown that the pseudo-likelihood is a consistent estimator to the full likelihood in the limit of large amounts of data. However, it is unclear whether it represents a good approximation when there is only little data, in other words for small protein families that are the most interesting targets for contact prediction (see Figure <a href="challenges.html#fig:pfam">2.9</a>).</p>
-<p>While the partition function of the full likelihood cannot be efficiently computed, it is possible to approximate the gradient of the full likelihood with an approach called <em>contrastive divergence</em> that makes use of <a href="abbrev.html#abbrev">MCMC</a> sampling techniques <span class="citation">[<a href="#ref-Hinton2002">181</a>]</span>. This section elaborates on how <em>contrastive divergence</em> can be used to optimize the full likelihood with gradient descent techniques. Furthermore, two aspects of the underlying <em>Potts model</em>, namely gap treatment and the choice of regularization, have been refined which is explained in detail in methods section <a href="potts-full-likelihood.html#potts-full-likelihood">7.6</a>.</p> 
+<p>While the partition function of the full likelihood cannot be efficiently computed, it is possible to approximate the gradient of the full likelihood with an approach called <em>contrastive divergence</em> that makes use of <a href="abbrev.html#abbrev">MCMC</a> sampling techniques <span class="citation">[<a href="#ref-Hinton2002">193</a>]</span>. This section elaborates on how <em>contrastive divergence</em> can be used to optimize the full likelihood with gradient descent techniques. Furthermore, two aspects of the underlying <em>Potts model</em>, namely gap treatment and the choice of regularization, have been refined which is explained in detail in methods section <a href="potts-full-likelihood.html#potts-full-likelihood">7.6</a>.</p> 
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Hinton2002">
-<p>181. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
+<p>193. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -345,7 +345,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

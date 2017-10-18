@@ -1,48 +1,56 @@
 # Introduction {#general-intro}
 
-In his Nobel Prize speech in 1973 [@Anfinsen1973] Anfinsen postulated one of the basic principles in molecular biology, which is known as *Anfinsen's dogma*: a protein's native structure is uniquely determined by its amino acid sequence. 
-With certain exceptions (e.g. [IDP](#abbrev) [@Wright1999]), this dogma has proven to hold true for the majority of proteins.
+In 1972, Anfinsen and his collegues received the Nobel Prize for their research on protein folding which lead to the postulation of one of the basic principles in molecular biology, which is known as *Anfinsen's dogma*: a protein's native structure is uniquely determined by its amino acid sequence [@Anfinsen1973]. 
+With certain exceptions (e.g. intrinsically disordered proteins [@Wright1999], Prions[@Fraser2014]), this dogma has proven to hold true at least for globular proteins.
 
-Ever since, it is regarded as the biggest challenge in structural bioinformatics [@Samish2015], to realiably predict a protein's structure given only its amino acid sequence. 
-*De-novo* protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein's energy landscape. 
+Ever since, it is regarded as the biggest challenge in structural bioinformatics to realiably predict a protein's structure given only its amino acid sequence [@Samish2015]. 
+*De novo* protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein's energy landscape. 
 However, due to the high degree of conformational flexibility, the search space of possible conformations cannot be explored exhaustively for proteins of typical length.
-and the accuracy of the energy potentials. 
+Consequently, *de novo* protein structure prediction is typically limited to small proteins.
 
 Far more successfull are template-based modelling approaches. 
 Given the observation that structure is more conserved than sequence in a protein family [@Lesk1980], the structure of a target protein can be inferred from a homologue protein [@Sander1991]. 
 The degree of structural conservation is linked to the level of pairwise sequence identity [@Chothia1986]. 
 Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model [@Marti-Renom2000]. 
-By definition, homology derived models are unable to capture new folds [@Dorn2014] and their main limitation lies in the availability of suitable templates.  
+By definition, homology derived models are unable to capture new folds and their main limitation lies in the availability and identification of suitable templates [@Dorn2014].  
 
-Unfortunately, the number of solved protein structures increases only slowly but steadily, as experimental methods are both time consuming and expensive [@Dorn2014].
-The [PDB](#abbrev)[@Berman2000] is the main repository for marcomolecular structures and currently (Jul 2017) holds about 120 000 atomic models of proteins. 
+The number of solved protein structures increases steadily but only slowly, as experimental methods are both time consuming and expensive [@Dorn2014].
+The [PDB](#abbrev)[@Berman2000] is the main repository for marcomolecular structures and currently (october 2017) holds about 135,000 atomic models of proteins. 
 The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the [PDB](#abbrev). 
-About 9% of protein structures have been solved using [NMR](#abbrev) and less than 1% using [EM](#abbrev) (see FIG 1).
+About 9% of protein structures have been solved using [NMR](#abbrev) and less than 1% using [EM](#abbrev) (see \@ref(fig:seq-str-gap)).
 
 All three experimental techniques have advantages and limitations with respect to certain modelling aspects.
-X-ray crystallography requires the protein to form crystals and finding the the correct experimental conditions to arrive at a pure and regular crystal is a challenging and sometimes impossible task. 
+X-ray crystallography involves protein overexpression, purification and crystallization and finding the the correct experimental conditions to arrive at a pure and regular crystal is a challenging and sometimes impossible task. 
 Furthermore, crystal packing forces the protein into a unnatural and rigid environment preventing the observation of conformational flexibility. 
 NMR studies the protein in a physiological environment in solution and enables the study of intramolecular dynamics,reaction kinetics or protein folding as ensembles of protein structures can be observed. 
 There is an upper size limit of about 25 kDa for efficient use of NMR spectroscopy[@Billeter2008]. 
 Recently, EM has undergone a "resolution revolution" and macromolecules have been solved to near-atomic resolutions [@Egelman2016]. 
 The limit of cryo-EM lies in the size of proteins.
 
-Compared to the tedious task of revealing atomic resolution of a protein tertiary structure, it has become very easy to decipher the primary sequence of proteins. 
-With the latest sequencing technologies [examples], it takes only hours to sequence millions of basepaires at low costs [example numbers] and the number of sequenced genomes has risen tremendously.
-The UniProtKB [@TheUniProtConsortium2013], the leading resource for protein sequences, contains more than 80 million sequence entries (24 July 2017). 
- 
-Consequently, the gap between the number of protein structures and sequences is still growing and even new developments as single protein structure determination [@CITE] are not expected to close this gap near in time (see Figure \@ref(fig:seq-str-gap).
+In contrast to the tedious task of determining the tertiary structure of a protein to atomic resolution, it has become very easy to decipher the primary sequence of proteins. 
+Since the completion of the human genome in 2003, high-throughput sequencing technologies have been developed at an extraordinary pace, thereby not only decreasing the amount of time needed to sequence whole genomes but also drastically reducing costs [@Reuter2015]. 
+The price for sequencing a single genome has dropped from the US\$3 billion spent by the Human Genome Project to as little as US\$1,000 [@Goodwin2016].
+At the beginning of 2017, Illumina announced the launch of their latest high-throughput sequencing technology, NovaSeq, which is capable of sequencing ~48 human genomes in parallel at 30x coverage within ~45hours [@NovaSeqSystemSpecifications].
+Advances in sequencing technologies have led to the emergence of new fields of studies, like metagenomics and single-cell genomics, that enable sequencing of microorganisms that cannot be cultured in a lab [@Tringe2005; @Hugenholtz2008; @Wooley2010]. 
+With these approaches the genomic coverage of the microbial world is expanding which is directly reflected in a substantial increase in novel protein families [@Rinke2013; @Mukherjee2017; @Forster2017]. 
+The UniProtKB, the leading resource for protein sequences, currently holds more than 90 million sequence entries (October 2017) [@TheUniProtConsortium2013].
+
+The resultant gap between the number of protein structures and protein sequences is constantly widening despite tremendous efforts in automating experimental structure determination and new developments such as electron crystallography (see Figure \@ref(fig:seq-str-gap) [@Schwede2013; @Clabbers2017].
 
 ```{r seq-str-gap, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
 knitr::include_url("img/pdb_growth.html", height = "750px")
 ```
 
+
+The aformentioned trends illustrate the need of computational methods to complement experimental structural biology efforts to characterize the protein universe [@Schwede2013].
+Homology modelling is an established technology when homologue protein srtucture can be detected and *de novo* structure prediction aiming at predicting protein structures from sequence alone has gained new speed with the co-evolution methods being able to reliably predict accurate contacts [@Schwede2013].
+
+<!--
 Knowledge of protein structures is of fundamental importance to elucidate their biological functions due to the close relationship between structure and function.
 Structural insights are essential for a detailed understanding of chemical reactions, regulatory processes and transport mechanisms.
 They are fundamental for the design of drugs and antibiotics. 
 Moreover structural abnormalities can lead to misfolding and aggregation potentially causing diseases so studying them is pathologically relevant.
-
-The aformentioned trends illustrate the need of computational methods and motivate research to solve *Ansinsens Dogma* to reliably predict protein structures from sequence alone. 
+-->
 
 
 
@@ -110,6 +118,9 @@ knitr::include_graphics("img/amino_acid_physico_chemical_properties_venn_diagram
 
 Despite the knowledge of Anfinsen's postulate, we are not able to reliably predict the structure of a protein from its sequence alone. Generally it is assumed that a protein folds into a unique, well-defined native structure that is near the global free energy minimum (fig:folding_funnel). Levinthal's paradox [@Levinthal1969] describes the complexity of the folding process towards this minimum. It stresses the problem that it is not possible for a protein to exhaustively search the conformational space to get to its native fold. Due to the "combinatorial explosion" of possible conformations, an exhaustive search would take unreasonably long. Hence, it is not a feasible approach for structure prediction to scan all possible conformations. Different approaches have been developed over time to overcome or elude this problem.
 
+given a protein with 100 residues and assuming 3 degreed of freedom for each bond, there woud be 10^27 configurations that could not be sampled in a lifetime, even when assuming ridicuously high rates.
+The paradox, known as Levinthals paradox is that proteins fold in miliseconds 
+and the accuracy of the energy potentials. 
 
 ### Template-based methods
 

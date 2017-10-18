@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-16">
+<meta name="date" content="2017-10-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -261,10 +261,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="computing-pseudo-likelihood-couplings" class="section level2">
 <h2><span class="header-section-number">7.2</span> Computing Pseudo-Likelihood Couplings</h2>
-<p>Dr Stefan Seemayer has reimplementated the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">86</a>]</span> in Python. CCMpred optimizes the regularized negative pseudo-log-likelihood using a conjugate gradients optimizer. Based on a fork of his private github repository I continued development and extended the software, which is now called CCMpredPy. It will soon be available at <a href="https://github.com/soedinglab/CCMpredPy" class="uri">https://github.com/soedinglab/CCMpredPy</a>. All computations in this thesis are performed with CCMpredPy unless stated otherwise.</p>
+<p>Dr Stefan Seemayer has reimplementated the open-source software CCMpred <span class="citation">[<a href="#ref-Seemayer2014">98</a>]</span> in Python. CCMpred optimizes the regularized negative pseudo-log-likelihood using a conjugate gradients optimizer. Based on a fork of his private github repository I continued development and extended the software, which is now called CCMpredPy. It will soon be available at <a href="https://github.com/soedinglab/CCMpredPy" class="uri">https://github.com/soedinglab/CCMpredPy</a>. All computations in this thesis are performed with CCMpredPy unless stated otherwise.</p>
 <div id="diff-ccmpred-ccmpredpy" class="section level3">
 <h3><span class="header-section-number">7.2.1</span> Differences between CCMpred and CCMpredpy</h3>
-<p>CCMpredPy differs from CCMpred <span class="citation">[<a href="#ref-Seemayer2014">86</a>]</span> which is available at <a href="https://github.com/soedinglab/CCMpred" class="uri">https://github.com/soedinglab/CCMpred</a> in several details:</p>
+<p>CCMpredPy differs from CCMpred <span class="citation">[<a href="#ref-Seemayer2014">98</a>]</span> which is available at <a href="https://github.com/soedinglab/CCMpred" class="uri">https://github.com/soedinglab/CCMpred</a> in several details:</p>
 <p>Initialization of potentials <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span>: - CCMpred initializes single potentials <span class="math inline">\(\v_i(a) = \log f_i(a) - \log f_i(a= &quot;-&quot;)\)</span> with <span class="math inline">\(f_i(a)\)</span> being the frequency of amino acid a at position i and <span class="math inline">\(a=&quot;-&quot;\)</span> representing a gap. A single pseudo-count has been added before computing the frequencies. Pair potentials <span class="math inline">\(\w\)</span> are intialized at 0. - CCMpredPy initializes single potentials <span class="math inline">\(\v\)</span> with the <a href="abbrev.html#abbrev">ML</a> estimate of single potentials (see section <a href="potts-full-likelihood.html#prior-v">7.6.3</a>) using amino acid frequencies computed as described in section <a href="amino-acid-frequencies.html#amino-acid-frequencies">7.4</a>. Pair potentials <span class="math inline">\(\w\)</span> are initialized at 0.</p>
 <p>Regularization:</p>
 <ul>
@@ -277,7 +277,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <iframe src="img/methods/ccmpredvanilla_vs_ccmpredpy_precision_vs_rank.html" width="100%" height="500px">
 </iframe>
 <p class="caption">
-Figure 7.2: Mean precision over 3124 proteins of top ranked contacts computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings. Couplings have been computed with CCMpred <span class="citation">[<a href="#ref-Seemayer2014">86</a>]</span> and CCMpredPy as specified in the legend. Specific flags that have been used to run both methods are described in detail in the text (see section <a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy">7.2.1</a>).
+Figure 7.2: Mean precision over 3124 proteins of top ranked contacts computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings. Couplings have been computed with CCMpred <span class="citation">[<a href="#ref-Seemayer2014">98</a>]</span> and CCMpredPy as specified in the legend. Specific flags that have been used to run both methods are described in detail in the text (see section <a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy">7.2.1</a>).
 </p>
 </div>
 <p>The benchmark in Figure <a href="computing-pseudo-likelihood-couplings.html#fig:cmmpredvanilla-vs-ccmpredpy">7.2</a> as well as all contacts predicted with CCMpred and CCMPredPy (using pseudo-likelihood) in my thesis have been computed using the following flags:</p>
@@ -312,7 +312,7 @@ Figure 7.2: Mean precision over 3124 proteins of top ranked contacts computed as
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Seemayer2014">
-<p>86. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
+<p>98. Seemayer, S., Gruber, M., and Söding, J. (2014). CCMpred-fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics, btu500. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2014/08/12/bioinformatics.btu500</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -390,7 +390,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

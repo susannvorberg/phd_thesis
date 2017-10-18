@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-16">
+<meta name="date" content="2017-10-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -293,7 +293,7 @@ for seq in sequences:
 return sequences</code></pre>
 <div id="cd-gibbs-steps" class="section level3">
 <h3><span class="header-section-number">7.10.1</span> Varying the number of Gibbs Steps</h3>
-<p>The default <a href="abbrev.html#abbrev">CD</a> algorithm as described by Hinton in 2002 applies only one full step of Gibbs sampling on each data sample to generate a sampled data set that will be used to approximate the gradient <span class="citation">[<a href="#ref-Hinton2002">181</a>]</span>. One full step of Gibbs sampling corresponds to sampling each position in a protein sequence according to the conditional probabilities computed from the current model probabilties as described in <a href="#gibbs-sampling"><strong>??</strong></a>. The sampled sequences obtained after only one step of Gibbs sampling will be very similar to the input sequences. It has been shown that sampling with <span class="math inline">\(n&gt;1\)</span> steps gives more precise results but increases computational cost per gradient evaluation <span class="citation">[<a href="#ref-Bengio2009">184</a>,<a href="#ref-Tieleman2008">211</a>]</span>.</p>
+<p>The default <a href="abbrev.html#abbrev">CD</a> algorithm as described by Hinton in 2002 applies only one full step of Gibbs sampling on each data sample to generate a sampled data set that will be used to approximate the gradient <span class="citation">[<a href="#ref-Hinton2002">193</a>]</span>. One full step of Gibbs sampling corresponds to sampling each position in a protein sequence according to the conditional probabilities computed from the current model probabilties as described in <a href="#gibbs-sampling"><strong>??</strong></a>. The sampled sequences obtained after only one step of Gibbs sampling will be very similar to the input sequences. It has been shown that sampling with <span class="math inline">\(n&gt;1\)</span> steps gives more precise results but increases computational cost per gradient evaluation <span class="citation">[<a href="#ref-Bengio2009">196</a>,<a href="#ref-Tieleman2008">223</a>]</span>.</p>
 <p>In the following I analysed the impact on performance when Gibbs sampling each sequence with 1, 5 and 10 full steps. As can be seen, there is hardly an impact on precision while having much longer runtimes (by a factor or 5 and 10).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:precision-cd-gibbs-steps"></span>
@@ -303,8 +303,8 @@ return sequences</code></pre>
 Figure 7.14: Performance of contrastive divergence optimization of the full likelihood with different number of Gibbs steps compared to pseudo-likelihood (blue) for 287 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from <a href="abbrev.html#abbrev">CD</a> with different number of Gibbs sampling steps.
 </p>
 </div>
-<p>It is sometimes convenient to block some of the variables to improve mixing (Jensen, Kong, &amp; Kjærulff, 1995;Wilkinson &amp; Yeung, 2002). Mixing is slow if consecutive samples are highly dependent. Improve mixing by sampling sets of variables <span class="citation">[<a href="#ref-Jensen1995">212</a>]</span> Sample a percentage of all positions: - 100% - 90% - 65% - 50% - 1 = pLL</p>
-<p>Another variant of <a href="abbrev.html#abbrev">CD</a> that has been suggested by Tieleman in 2008 is <a href="abbrev.html#abbrev"><em>PCD</em></a><span class="citation">[<a href="#ref-Tieleman2008">211</a>]</span> that does not reset the Markov Chains at every iteration. The reason being that when using small learning rates, the model changes only slightly between iterations and the true data distribution can be better approximated However, subsequent samples of <a href="abbrev.html#abbrev"><em>PCD</em></a> will be highly correlated creating a kind of momentum effect. Furthermore is has been found that <a href="abbrev.html#abbrev"><em>PCD</em></a> should be used with smaller learning rates and higher minibatch sizes.</p>
+<p>It is sometimes convenient to block some of the variables to improve mixing (Jensen, Kong, &amp; Kjærulff, 1995;Wilkinson &amp; Yeung, 2002). Mixing is slow if consecutive samples are highly dependent. Improve mixing by sampling sets of variables <span class="citation">[<a href="#ref-Jensen1995">224</a>]</span> Sample a percentage of all positions: - 100% - 90% - 65% - 50% - 1 = pLL</p>
+<p>Another variant of <a href="abbrev.html#abbrev">CD</a> that has been suggested by Tieleman in 2008 is <a href="abbrev.html#abbrev"><em>PCD</em></a><span class="citation">[<a href="#ref-Tieleman2008">223</a>]</span> that does not reset the Markov Chains at every iteration. The reason being that when using small learning rates, the model changes only slightly between iterations and the true data distribution can be better approximated However, subsequent samples of <a href="abbrev.html#abbrev"><em>PCD</em></a> will be highly correlated creating a kind of momentum effect. Furthermore is has been found that <a href="abbrev.html#abbrev"><em>PCD</em></a> should be used with smaller learning rates and higher minibatch sizes.</p>
 <p>As PCD might require samller update steps and larger minibatches, I analysed the performance of PCD for the default settings of CD and additionally for smaller learning and decay rates and larger minibatches. Note that one Markov chain is kept for every sequence of the input alignment. At each iteration a subset <span class="math inline">\(N^{\prime} &lt; N\)</span> of the Markov chains is randomly selected (without replacement) and used to for another round of Gibss sampling at the current iteration.</p>
 <p>PLOT PCD for different LEARNIGN RATEWS and SAMPLE SIZES</p>
 <p>Discussion: - as could be seen: improved gradients and different solutions do not translate into improved precision of top ranked contacts - APC corrected l2norm might not be an appropriate measure for CD couplings: look at correlation plot of couplings (pll vs cd) and l2norm (pll vs cd) and apc l2norm (pll vs cd) -&gt; differences vanish - ranking of residues might not be influenced by subtle changes in parameters when crude l2norm is computed -&gt; rank plot: merged list of top ranked contacts from both methods what can we see: - generally pll has stronger scores (see also boxplot over all proteins? statistic?) - ranking is very similar, especially for top ranked contacts (thats why benchmark plots so similar)</p>
@@ -738,16 +738,16 @@ Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Hinton2002">
-<p>181. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
+<p>193. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
 </div>
 <div id="ref-Bengio2009">
-<p>184. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
+<p>196. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
 </div>
 <div id="ref-Tieleman2008">
-<p>211. Tieleman, T. (2008). Training Restricted Boltzmann Machines using Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach. Learn. <em>307</em>, 7.</p>
+<p>223. Tieleman, T. (2008). Training Restricted Boltzmann Machines using Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach. Learn. <em>307</em>, 7.</p>
 </div>
 <div id="ref-Jensen1995">
-<p>212. Jensen, C.S., Kjærulff, U., and Kong, A. (1995). Blocking Gibbs sampling in very large probabilistic expert systems. Int. J. Hum. Comput. Stud. <em>42</em>, 647–666. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S1071581985710294" class="uri">http://www.sciencedirect.com/science/article/pii/S1071581985710294</a>.</p>
+<p>224. Jensen, C.S., Kjærulff, U., and Kong, A. (1995). Blocking Gibbs sampling in very large probabilistic expert systems. Int. J. Hum. Comput. Stud. <em>42</em>, 647–666. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S1071581985710294" class="uri">http://www.sciencedirect.com/science/article/pii/S1071581985710294</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -825,7 +825,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
