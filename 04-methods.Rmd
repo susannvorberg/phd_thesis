@@ -437,6 +437,7 @@ The same criteria have been applied for selecting couplings for the two-dimensio
 This section describes hyperparameter tuning for the stochastic gradient descent optimization of [CD](#abbrev). 
 
 The couplings $\wijab$ are initialized at 0 and single potentials $\vi$ will not be optimized but rather kept fixed at their maximum-likleihood estimate $\vi^*$ as described in methods section \@ref(prior-v).
+The optimization is stopped when the maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates $||\w||_2$ over the last five iterations falls below the threshold of $\epsilon = 1e-8$.
 The gradient of the full likelihood is approximated with [CD](#abbrev) which involves Gibbs sampling of protein sequences according to the current model parametrization and is described in detail in methods section \@ref(cd-sampling-optimization).
 Zero centered L2-regularization is used to constrain the coupling parameters $\w$ using the regularization coefficient $\lambda_w = 0.2L$ which is the default setting for optimizing the pseudo-likelihood with *CCMpredPy*. 
 Performance will be evaluated by the mean precision of top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section \@ref(dataset).
@@ -444,156 +445,6 @@ Contact scores for couplings are computed as the [APC](#abbrev) corrected Froben
 Pseudo-likelihood couplings are computed with the tool *CCMpredPy* that is introduced in methods section \@ref(diff-ccmpred-ccmpredpy) and the pseudo-likelihood contact score will serve as general reference method for tuning the hyperparameters.
 
 
-### Convergence Criterion for Stochastic Gradient Descent
-
-In theory the gradient descent algorithm has converged and the optimum of the objective function has been reached when the gradient becomes zero. 
-In practice the gradients will never be exactly zero, especially due to the stochasticity of the gradient estimates when using stochastic gradient descent with [CD](#abbrev).
-For this reason, it is crucial to define a suitable convergence criterion that can be tested during optimization and once the criterion is met, convergence is assumed and the algorithm is stopped. 
-Typically, the objective function (or a related loss function) is periodically evaluated on a validation set and the optimizer is halted whenever the function value saturates or starts to increase.
-This technique is called early stopping and additionally prevents overfitting [@Bengio2012; @Mahsereci2017].
-Unfortunately, we cannot compute the full likelihood function due to its complexity and need to define a different convergence criterion.
-
-One possibility is to stop learning when the norm of the gradients is close to zero [@Carreira-Perpinan2005].
-As described earlier, only a subset of alignment sequences is used to estimate the gradient with [CD](#abbrev) which increases stochasticity of the gradient estimate and speeds up the algorithm.
-As a result of stochasticity, the norm of gradients does not converge to zero but saturates at a certain offset as it is described in section \@ref(cd-sampling-optimization).
-Only by using large number of sequences to estimate the gradients with [CD](#abbrev), the norm over gradients will converge towards a value close to zero.
-However, runtine increases linearly in the number of sequences used for estimating the gradient with [CD](#abbrev) by Gibbs sampling.
-Convergence can also be monitored as the relative change of the norm of gradients between a particular number of iterations and optimization can be stopped when the norm of gradients has reached a certain plateau.
-As gradient estimates are generally very noisy with stochastic gradient descent, gradient fluctuations complicate the proper assessment of this criterion.
-
-Instead of the gradients, it is also possible to observe the relative change over the norm of parameter estimates $||\w||_2$ and stop learning when it falls below a small threshold $\epsilon$,
-\begin{equation}
-  \frac{||\w_{t-1}||_2 - ||\w_t||_2}{||\w_{t-1}||_2} < \epsilon \; .
-  (\#eq:parameter-convergence-criterion)
-\end{equation}
-This measure is less noisy than subsequent gradient estimates because the magnitude of parameter updates is bounded by the learning rate.
-
-Another idea is to monitor the direction of gradients, since the assumption goes that gradients will start oscillating when approaching the optimum. 
-However, this theoretical assumption is complicated by the fact that gradient oscillations are also typically observed when the parameter surface contains narrow valleys or when the learning rate is too big, as it is visualized in the right plot in Figure \@ref(fig:gd-learning-rate-intro).
-Another interfering factor is momentum, as it is used in the *ADAM* optimizer.
-Parameters will be updated into the direction of a smoothed historical gradient and oscillations, regardless of which origin, will be dampened.
-It is therefore hard to define a general convergence criteria that uses gradient directions and can distinguish these different scenarios. 
-
-Of course, the simplest strategy to assume convergence is to specify a maximum number of iterations for the optimization procedure, which also ensures that the algorithm will stop eventually if none of the other convergence criteria is met.
-
-A necessary but not sufficient criterion for convergence for the full likelihood is given by $\sum_{a,b=1}^{20} \wijab = 0$.
-This requirement is derived in section \@ref(prior-v).
-When using plain stochastic gradient descent without momentum and without adaptive learning rates, this criterion is never violated when parameters are initialized uniformly.
-This is due to the fact that the 400 gradients $\wijab$ for $a,b \in \{1, \ldots, 20\}$ are not independent because the sum over the 400 pairwise amino acid counts at positions $i$ and $j$ is identical for the observed and the sampled alignment and amounts to,
-
-\begin{equation}
-  \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
-\end{equation}
-
-Considering a residue pair (i,j) and assuming amino acid pair (a,b) has higher counts in the sampled alignment than in the observed input alignment, then this difference in counts must be compensated by other amino acid pairs (c,d) having less counts in the sampled alignment compared to the true alignment (see Figure \@ref(fig:visualisation-wijab-constraint)).
-Therefore it holds, $\sum_{a,b=1}^{20} \nabla_{\wijab}\LLreg(\v,\w) = 0$.
-This symmetry is translated into parameter updates as long as the same learning rate is used to update all parameters. 
-However, when using adaptive learning rates, this symmetry is broken and the condition $\sum_{a,b=1}^{20} \wijab = 0$ can be violated during the optimization processs.
-It is therefore interesting to monitor $\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab$.
-
-(ref:caption-visualisation-wijab-constraint) The 400 gradients $\nabla_{\wijab}\LLreg(\v,\w)$ at position $(i,j)$ for $a,b \in \{1, \ldots, 20 \}$ are not independent. Red bars represent pairwise amino acid counts at position $(i,j)$ for the sampled alignment. Blue bars represent pairwise amino acid counts at position $(i,j)$ for the input alignment. The sum over pairwise amino acid counts at position $(i,j)$ for both alignments is $N_{ij}$, which is the number of ungapped sequences. The gradient $\nabla_{\wijab}\LLreg(\v,\w)$ is computed as the difference of pairwise amino acid counts for amino acids a and b at position $(i,j)$. The sum over gradients $\nabla_{\wijab}\LLreg(\v,\w)$ at position $(i,j)$ for all $a,b \in \{1, \ldots, 20 \}$ is zero.
-
-```{r visualisation-wijab-constraint, echo = FALSE, out.width = '60%', fig.align='center', fig.cap = '(ref:caption-visualisation-wijab-constraint)'}
-knitr::include_graphics("img/full_likelihood/constraint_wijab.png")
-```
-
-I set the maximum number of iterations to 5000 and stop the optimization algorithm when the relative change over the L2-norm of parameter estimates $||\w||_2$ falls below the threshold of $\epsilon = 1e-8$.
-
-
-### Tuning Hyperparameters of Stochastic Gradient Descent Optimizer {#sgd-hyperparameter-tuning}
-
-The coupling parameters $\w$ will be updated at each time step $t$ by taking a step of size $\alpha$ along the direction of the negative gradient of the regularized full log likelihood, $- \nabla_w \LLreg(\v,\w)$, that has been approximated with [CD](#abbrev),
-
-\begin{equation}
-  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
-\end{equation}
-
-In order to get a first intuition of the optimization problem, I tested initial learning rates $\alpha_0 \in  \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}$ with a standard learning rate annealing schedule, $\alpha  = \frac{\alpha_0}{1 + \gamma \cdot t}$ where $t$ is the time step and $\gamma$ is the decay rate that is set to 0.01[@Bottou2012].
-
-Figure \@ref(fig:performance-cd-alphaopt) shows the mean precision for top ranked contacts computed from pseudo-likelihood couplings and from [CD](#abbrev) couplings optimized with stochastic gradient descent using the four different learning rates. 
-Overall, mean precision for [CD](#abbrev) contacts is lower than for pseudo-likelihood contacts, especially when using the smallest ($\alpha_0 \eq 1\mathrm{e}{-4}$) and biggest ($\alpha_0 \eq 5\mathrm{e-}{3}$) learning rate.
-
-
-(ref:caption-performance-cd-alphaopt)  Mean precision for top ranked contact predictions over 286 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD**: couplings computed with [CD](#abbrev) using stochastic gradient descent with different initial learning rates $\alpha_0$ as specified in the legend.
-
-```{r performance-cd-alphaopt, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/precision_vs_rank_learning_rates.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt)'}
-knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_learning_rates.html", height = "500px")
-```
-
-Looking at individual proteins it turns out that the optimal learning rate depends on alignment size.
-The left plot in Figure \@ref(fig:sgd-single-proteins-initial-learning-rate) shows a convergence plot of [SGD](#abbrev) optimization using different learning rates for a protein with a small alignment.
-With a small initial learning rate $\alpha_0 \eq \mathrm{1e-4}$ the optimization runs very slowly and does not reach convergence within 5000 iterations.
-Using a large initial learning rate $\alpha_0 \eq \mathrm{5e-3}$ will result in slighly overshooting the optimum at the beginning of the optimization but with the learning rate decaying over time the parameter estimates converge. 
-In contrast, for a protein with a big alignment (right plot in Figure \@ref(fig:sgd-single-proteins-initial-learning-rate)) the choice of learning rate has a more pronounced effect.
-With a small initial learning rate  $\alpha_0 \eq \mathrm{1e-4}$ the optimization runs slowly but almost converges within 5000 iterations.
-A large initial learning rate $\alpha_0 \eq \mathrm{5e-3}$ lets the parameters diverge quickly and the optimum cannot be revovered.
-With learning rates $\alpha_0 \eq \mathrm{5e-4}$ and $\alpha_0 \eq \mathrm{1e-3}$, the optimum is well overshot at the beginning of the optimization but the parameter estimates eventually converge as the learning rate decreases over time.
-
-These observations can be explained by the fact that the magnitude of the gradient scales with the number of sequences in the alignment.
-The gradient is computed from amino acid counts as explained in section \@ref(full-likelihood-gradient).
-Therefore, alignments with many sequences will generally produce larger gradients than alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is largest.
-Following these observations, I defined the initial learning rate $\alpha_0$ as a function of [Neff](#abbrev), aiming at values for $\alpha_0$ around 5e-3 for small [Neff](#abbrev) and values for $\alpha_0$ around 1e-4 for large [Neff](#abbrev),
-
-\begin{equation}
-  \alpha_0 = \frac{5\mathrm{e}{-2}}{\sqrt{N_{\text{eff}}}} \; .
-  (\#eq:learning-rate-wrt-neff)
-\end{equation}
-
-For small [Neff](#abbrev) $\approx 50$ this definition of the learning rate yields $\alpha_0 \approx 7\mathrm{e}{-3}$ and for big [Neff](#abbrev) $\approx 20000$ this yields $\alpha_0 \approx 3.5\mathrm{e}{-4}$. 
-Using this learning rate defined as a function of [Neff](#bbrev), precision improves over the previous fixed learning rates (see Figure \@ref(fig:performance-cd-alphaopt)).
-All following analyses are conducted using the [Neff](#abbrev)-dependent learning rate.
-
-(ref:caption-sgd-single-proteins-initial-learning-rate) Convergence plots for two proteins during [SGD](#abbrev) optimization with different learning rates and convergence measured as L2-norm of the coupling parameters $||\w||_2$ . Linear learning rate annealing schedule has been used with decay rate $\gamma=0.01$ and initial learning rates $\alpha_0$ have been set as specified in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Figure is cut at the yaxis at $||\w||_2=1500$, but learning rate of $5\mathrm{e}{-3}$ reaches $||\w||_2 \approx 13000$.
-
-```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
-knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alphas_lindecay001.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png"))
-```
-
-In a next step, I evaluated the following learning rate annealing schedules and decay rates using the [Neff](#abbrev)-dependent initial learning rate given in eq. \@ref(eq:learning-rate-wrt-neff):
-
-- default linear learning rate schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with $\gamma \in \{1\mathrm{e}{-3}, 1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}$
-- square root learning rate schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma t}}$ with $\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}$
-- sigmoidal learning rate schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma t}$ with $\gamma \in \{1\mathrm{e}{-6}, 1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}\}$
-- exponential learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$ with $\gamma \in \{5\mathrm{e}{-4}, 1\mathrm{e}{-4}, 5\mathrm{e}{-3}\}$
-
-The learning rate annealing schedules are visualized for different decay rates in Appendix Figure \@ref(fig:learning-rate-schedules) and the respective benchmark plots can be found in Appendix \@ref(benchmark-learning-rate-annealing-schedules).
-Optimizing [CD](#abbrev) with [SGD](#abbrev) using any of the learning rate schedules listed above yields on average lower precision for the top ranked contacts than the pseudo-likelihood contact score.
-Several learning rate schedules perform almost equally well as can be seen in Figure \@ref(fig:performance-cd-learnignrate-schedules). 
-The highest precision, being one to two percentage points below the mean precision for the pseudo-likelihood contact score, is obtained with a linear learning rate schedule and decay rate $\gamma \eq 1\mathrm{e}{-2}$, with a sigmoidal learning rate schedule and decay rates $\gamma \eq 1\mathrm{e}{-5}$ and $\gamma \eq 1\mathrm{e}{-6}$ and with an exponential learning rate schedule and decay rate $\gamma \eq 1\mathrm{e}{-3}$ and $\gamma \eq 1\mathrm{e}{-5}$. 
-The square root learning rate schedule gives ovarally bad results and does not lead to convergence because the learning rate decays slowly at later time steps.
-
-(ref:caption-performance-cd-learnignrate-schedules) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD**: couplings computed with [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev). Learning rate annealing schedules and decay rates as specified in the legend.
-
-```{r performance-cd-learnignrate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/precision_vs_rank_schedules.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-learnignrate-schedules)'}
-knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_schedules.html", height = "500px")
-```
-
-
-In contrast to the findings regarding the initial learning rate earlier, an optimal decay rate can be defined independent of the alignment size.
-Figure \@ref(fig:sgd-single-proteins-learning-rate-schedule) shows convergence plots for the same two exemplary proteins as before.
-Proteins with low [Neff](#abbrev) are robust against the particular choice of learning rate schedule and decay rate (see left plot in Figure \@ref(fig:sgd-single-proteins-learning-rate-schedule)).
-The presumed optimum at $||w||_2 \approx 12.5$ is almost always reached.
-Proteins with high [Neff](#abbrev) are stronger adversely affected by quickly decaying learning rates and the optimum at $||w||_2 \approx 125$ cannot be reached before the learning rate diminishes which effectively prevents further optimization progress.
-Less quickly decaying learning rates, such as  $\gamma \eq 1\mathrm{e}{-2}$ with a linear schedule or $\gamma \eq 1\mathrm{e}{-6}$ with a sigmoidal schedule, guide the parameter estimates close to the expected optimum and can be used with proteins having low [Neffs](#abbrev) as well as having high [Neffs](#abbrev).
-
-(ref:caption-sgd-single-proteins-learning-rate-schedule) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate $\alpha_0$ is defined with respect to [Neff](#abbrev) as given in eq. \@ref(eq:learning-rate-wrt-neff). Learning rate schedules and decay rates are used according to the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
-
-```{r sgd-single-proteins-learning-rate-schedule, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-learning-rate-schedule)'}
-knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1mkca00_alpha0_different_schedules.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules.png"))
-```
-
-Several different learning rate annealing schedules yield almost identical mean precision for top ranked contacts, as was shown earlier (see Figure \@ref(fig:performance-cd-learnignrate-schedules)).
-But it can be found that they differ in convergence speed.
-Figure \@ref(fig:distribution-num-iterations) shows the distribution over the number of iterations until convergence for [SGD](#abbrev) optimizations with five different learning rate schedules that yield similar performance. 
-The optimization converges on average within less than 2000 iterations only when using either a sigmoidal learning rate annealing schedule with decay rate $\gamma \eq 1\mathrm{e}{-5}$ or an exponential learning rate annealing schedule with decay rate $\gamma \eq 5\mathrm{e}{-3}$, 
-On the contrary, the distribution  of iterations until convergence has a median of 5000 when using a linear learning rate annealing schedule with $\gamma \eq 1\mathrm{e}{-2}$ or an exponential schedule with decay rate $\gamma \eq 1\mathrm{e}{-3}$.
-Under these considerations, I chose a sigmoidal learning rate schedule with $\gamma \eq 5\mathrm{e}{-6}$ for all further analysis.
-
-(ref:caption-distribution-num-iterations) Distribution of the number of iterations until convergence for [SGD](#abbrev) optimizations of the full likelihood for different learning rate schedules. Convergence is reached when the relative difference of parameter norms $||\w||_2$ falls below $\epsilon \eq 1e-8$. Initial learning rate $\alpha_0$ is defined with respect to [Neff](#abbrev) as given in eq. \@ref(eq:learning-rate-wrt-neff) and maximum number of iterations is set to 5000. Learning rate schedules and decay rates are used as specified in the legend.
-
-```{r distribution-num-iterations, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/distribution_numiterations_against_selected_learningrate_schedules.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-distribution-num-iterations)'}
-knitr::include_url("img/full_likelihood/sgd/distribution_numiterations_against_selected_learningrate_schedules.html", height = "500px")
-```
 
 
 ### Tuning Hyperparameters of *ADAM* Optimizer {#methods-full-likelihood-adam}
@@ -654,30 +505,10 @@ knitr::include_graphics(c("img/full_likelihood/adam/1mkcA00_decaying_learningrat
 ```
 
 
-## Tuning Regularization Coefficients for Contrastive Divergence {#regularization-for-cd-with-sgd}
-
-For tuning the hyperparameters of the stochastic gradient descent optimizer in the last section \@ref(sgd-hyperparameter-tuning), the coupling parameters $\w$ were constrained by a Gaussian prior $\mathcal{N}(\w | 0, \lambda_w^{-1} I)$ using the default pseudo-likelihood regularization coefficient $\lambda_w \eq 1\mathrm{e}{-2}L$ as decscribed in methods section \@ref(methods-regularization).
-It is conceivable that [CD](#abbrev) achieves optimal performance using stronger or weaker regularization than used for pseudo-likelihood optimization.
-Therefore, I evaluated performance of [CD](#abbrev) using the previously identified hyperparamters for [SGD](#abbrev) and different regularization coefficients $\lambda_w \in \{ 1\mathrm{e}{-2}L, 5\mathrm{e}{-2}L, 1\mathrm{e}{-1}L, 1\mathrm{e}{-2}L, L\}$.
-The single potentials $\v$ are not subject to optimization and are kept fixed at their maximum-likelihood estimate $v^*$ given in eq. \@ref(eq:prior-v). 
-
-As can be seen in Figure \@ref(fig:precison-cd-regularization), using strong regularization for the couplings, $\lambda_w \eq L$, results in a drastic drop of mean precision.
-Using weaker regularization such as $\lambda_w \eq 1\mathrm{e}{-2}L$ or $\lambda_w \eq \mathrm{5e}{-2}L$ improves precision for the top $L/10$ and $L/5$ predicted contacts but decreases precision when including lower ranked predictions.
-As a matter of fact, a slightly weaker regularization $\lambda_w \eq \mathrm{1e}{-1}L$ than the default $\lambda_w \eq \mathrm{1e}{-2}L$ improves mean precision especially for the top $L/2$ contacts in such a way, that it is comparable to the pseudo-likelihood performance. 
-
-(ref:caption-precison-cd-regularization) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD lambda_w = X**: couplings computed with [CD](#abbrev) using L2-regularization on the couplings $\w$ with regularization coefficient $\lambda_w$ chosen as specified in the legend and keeping the single potentials $\vi$ fixed at their [MLE](#abbrev) optimum $\vi^*$ given in eq. \@ref(eq:prior-v).
-
-```{r precison-cd-regularization, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/precision_vs_rank_regularizer.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precison-cd-regularization)'}
-knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_regularizer.html", height = "500px")
-```
-
-As mentioned before, a difference compared to pseudo-likelihood optimization is that the single potentials $\v$ are not optimized with [CD](#abbrev) but rather set to their maximum-likelihood estimate as it is obtained in a single position model that is discussed in methods section \@ref(eq:prior-v).
-When the single potentials $\v$ are optimized with [CD](abbrev) using the same regularization coefficient $\lambda_v \eq 10$ as it is used when optimizing the pseudo-likelihood, performance is almost indistinguishable compared to keeping the single potentials $\v$ fixed as can be seen in appendix Figure \@ref(fig:full-likelihood-opt-fixv).
 
 
 
-
-## Tuning the Gibbs Sampling Scheme for Contrastive Divergence {#cd-sampling-optimization}
+## Gibbs Sampling Scheme for Contrastive Divergence {#methods-cd-sampling}
 
 This section describes the default Gibbs sampling scheme that is used to approximate the gradients with [CD](#abbrev). 
 
@@ -685,7 +516,8 @@ The gradient of the full log likelihood with respect to the couplings $\w$ is co
 Pairwise amino acid counts for the input alignment are computed accounting for sequence weights (described in methods section \@ref(seq-reweighting)) and including pseudo counts (described in methods section \@ref(amino-acid-frequencies)).
 Pairwise amino acid counts for the sampled alignment are computed in the same way using the same sequence weights that have been computed for the input alignment.
 A subset of sequences of size $S \eq \min(10L, N)$, with $L$ being the length of sequences and $N$ the number of sequences in the input alignment, is selected from the input alignment and used to initialize the Markov chains for the Gibbs sampling procedure.
-Because the input [MSA](#abbrev) is typically bigger than the sampled [MSA](#abbrev) (sampled alignment has $\min(10L, N)$ sequences), the weighted pairwise amino acid counts of the sampled alignment need to be rescaled such that the total sample counts match the total counts from the input alignment.
+Consequently, the input [MSA](#abbrev) is bigger than the sampled [MSA](#abbrev) whenever there are more than $10L$ sequences in the input alignment. 
+In that case, the weighted pairwise amino acid counts of the sampled alignment need to be rescaled such that the total sample counts match the total counts from the input alignment.
 
 The default implementation of the Gibbs sampler will sample new sequences by performing one full step of Gibbs sampling on each sequence as follows:
 
@@ -719,69 +551,84 @@ for seq in sequences:
 return sequences
 ```
 
-
-
-
-### Varying the number of Gibbs Steps  {#cd-gibbs-steps}
-
-The default [CD](#abbrev) algorithm as described by Hinton in 2002 applies only one full step of Gibbs sampling on each data sample to generate a sampled data set that will be used to approximate the gradient [@Hinton2002].
-One full step of Gibbs sampling corresponds to sampling each position in a protein sequence according to the conditional probabilities computed from the current model probabilties as described in \@ref(gibbs-sampling).
-The sampled sequences obtained after only one step of Gibbs sampling will be very similar to the input sequences.
-It has been shown that sampling with $n>1$ steps gives more precise results but increases computational cost per gradient evaluation [@Bengio2009; @Tieleman2008].
-
-In the following I analysed the impact on performance when Gibbs sampling each sequence with 1, 5 and 10 full steps.
-As can be seen, there is hardly an impact on precision while having much longer runtimes (by a factor or 5 and 10). 
-
-(ref:caption-precision-cd-gibbs-steps) Performance of contrastive divergence optimization of the full likelihood with different number of Gibbs steps compared to pseudo-likelihood (blue) for 287 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) with different number of Gibbs sampling steps. 
-
-```{r precision-cd-gibbs-steps, echo = FALSE, screenshot.alt="img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_sampling_steps.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-cd-gibbs-steps)'}
-knitr::include_url("img/full_likelihood/precision_vs_rank_notitle_cd_comparing_nr_of_gibbs_sampling_steps.html", height = "500px")
-```
-
-
-It is sometimes convenient to block some of the variables to improve mixing (Jensen, Kong, & Kjærulff, 1995;Wilkinson & Yeung, 2002).
-Mixing is slow if consecutive samples are highly dependent.
-Improve mixing by sampling sets of variables [@Jensen1995]
-Sample a percentage of all positions:
-- 100%
-- 90%
-- 65%
-- 50%
-- 1 = pLL
-
-
-Another variant of [CD](#abbrev) that has been suggested by Tieleman in 2008 is [*PCD*](#abbrev)[@Tieleman2008] that does not reset the Markov Chains at every iteration.
-The reason being that when using small learning rates, the model changes only slightly between iterations and the true data distribution can be better approximated 
-However, subsequent samples of [*PCD*](#abbrev) will be highly correlated creating a kind of momentum effect. 
-Furthermore is has been found that [*PCD*](#abbrev) should be used with smaller learning rates and higher minibatch sizes.
-
-As PCD might require samller update steps and larger minibatches, I analysed the performance of PCD for the default settings of CD and additionally for smaller learning and decay rates and larger minibatches.
-Note that one Markov chain is kept for every sequence of the input alignment. At each iteration a subset $N^{\prime} < N$ of the Markov chains is randomly selected (without replacement) and used to for another round of Gibss sampling at the current iteration.
-
-PLOT PCD for different LEARNIGN  RATEWS and SAMPLE SIZES
-
-
-Discussion:
-- as could be seen: improved gradients and different solutions do not translate into improved precision of top ranked contacts
-- APC corrected l2norm might not be an appropriate measure for CD couplings:
-  look at correlation plot of couplings (pll vs cd) and l2norm (pll vs cd) and apc l2norm  (pll vs cd) -> differences vanish
-- ranking of residues might not be influenced by subtle changes in parameters when crude l2norm is computed -> rank plot: merged list of top ranked contacts from both methods
-  what can we see: 
-    - generally pll has stronger scores (see also boxplot over all proteins? statistic?)
-    - ranking is very similar, especially for top ranked contacts (thats why benchmark plots so similar)
-
-
-
-
 <!--
+## The Hessian-offdiagonal elements Carry a negligible Signal {#Hessian-offdiagonal}
 
-## Bayesian Model for Residue-Resdiue Contact Prediction
 
-### Efficiently Computing the negative Hessian of the regularized log-likelihood {#neg-Hessian-computation}
+We first assume that $\lambda_w=0$, i.e., we apply no regularisation. Suppose in columns $i$ and $j$ a set of sequences in the MSA contain amino acids $a$ and $b$ and the same sequences contain $c$ and $d$ in columns $k$ and $l$. Let us also assume that $(a,b)$ occur nowhere else in columns $i,j$ and the same for $(c,d)$ and $k,l$. This means that the coupling between $(i,a)$ and $(j,b)$ can be perfectly compensated by the coupling between $(k,c)$ and $(l,d)$. Adding $10^6$ to $w_{ijab}$ and substracting $10^6$ from $w_{klcd}$ leaves $p(\X|\v,\w)$ unchanged. This means that $w_{ijab}$ and $w_{klcd}$ are almost perfectly negatively correlated in $\N(\w|\w^*,(\H)^{-1})$. Another way to see this is to evaluate $(\H)_{ijab,klcd}$ with eq.~\eqref{eq:Hw_offdiag}, which gives $(\H)_{klcd, ijab} =  N\,p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*) \, ( 1 - p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*)$ for this case. Since $N$ is typically much larger than $\lambda_w$, this precision matrix element is the same as the diagonal elements $(\H)_{ijab, ijab}$ and $(\H)_{klcd, klcd}$. 
+
+But when a realistic regularisation constant is assumed, e.g. $\lambda_w= 0.2 L \approx 20$, $w_{ijab}$ and $w_{klcd}$ will be pushed to near zero, because the matrix element that couples $w_{ijab}$ with $w_{klcd}$, $N\,p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*) \, ( 1 - p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*)$ is the number of sequences that share amino acids $ab$ at positions $ij$ and $cd$ at $kl$, and this number is usually much smaller than $\lambda_w$. 
+
+\begin{figure}[bt]
+\centering
+  \includegraphics[width=0.8\textwidth]{contact-pred-Bayesian-approach-figures/Slide3.png}
+  \vspace{-5mm}
+  \caption{\small Setting the off-diagonal block matrices to zero in $\H$ corresponds to replacing the violett Gaussian distrubution by the pink one. The ratios between the overlaps of $\N\!\left(\w \left| \w^*, \H^{-1} \right. \right)$ with the distributions $\N(\wij | \muk, \LAMk^{-1})$ for various choices of $k$ is only weakly affected by this replacement.} 
+\label{fig:simplify_Hw}
+\end{figure}
+
+For the purpose of computing the integral in eq.~\eqref{eq:int_over_w}, it is therefore a good approximation to simply set the off-diagonal block matrices (case 3) to zero! This corresponds to replacing the violett distribution in Figure \ref{fig:simplify_Hw} by the pink one. To see why, first note that the functions $g_{k_{ij}}(\rij)$ and the component distributions $\N(\wij | \bs \mu_k, \bs \Lambda_{k}^{-1})$ will be learned in such a way as to maximize the likelihood for predicting the correct distances $\rbf^n$ from the respective alignments $\X^n$ for many MSAs and proteins $m$. Therefore, these model parameters will adjust to the fact that we neglect the off-diagonal blocks in $\H$. Second, note that the integral over the product of  $\N\!\left(\w \left| \w^*, \H^{-1} \right. \right)$ and $\prod_{i<j} \N(\wij | \bs \mu_{k_{ij}}, \bs \Lambda_{k_{ij}}^{-1}) / \N(\wij|\bs 0, \lambda_w^{-1} \I)$ in eq.~\eqref{eq:int_over_w} evaluates the overlap of these two Gaussians. Third, the components of $p(\wij|\rij)$ will be very much concentrated within a radius of less than $1$ from the origin, because even residues with short $C_\beta$-$C_\beta$ distance will rarely have coupling coefficients above $1$. Fourth, the Gaussian components have no couplings between elements of $\wij$ and $\wkl$, which is why they are axis-aligned (green in Fig. \ref{fig:simplify_Hw}). For these reasons, the relative strengths of the overlaps with different mixture components labeled by $k$ in eq.~\eqref{eq:p(w|r)} should be little affected by setting the off-diagonal block matrix couplings to zero. 
+
+The first term in the integrand of eq.~\eqref{eq:int_over_w} now factorizes over $(i,j)$, 
+\begin{equation}
+  \N\!\left(\w \left| \w^*, \H^{-1} \right. \right) \approx \prod_{1\le i<j\le L} \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) ,
+\end{equation}
+where we have defined the diagonal block matrices $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. We can therefore move the product over all residue indices in front of the integral and perform each integral over $\wij$ separately, 
+\begin{eqnarray}
+ p(\X | \rbf) &\propto& \int \prod_{1\le i<j\le L} \left(  \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) \, \frac{p(\wij|\rij)}{\N(\wij|\bs 0, \lambda_w^{-1} \I)} \right) \, d\w \,.\\
+ p(\X | \rbf) &\propto& \prod_{1\le i<j\le L}  \int \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) \, \frac{p(\wij|\rij)}{\N(\wij|\bs 0, \lambda_w^{-1} \I)} \, d \wij 
+\end{eqnarray}
+and inserting eq.\ \eqref{eq:p(w|r)}, 
+ \begin{equation}
+   p(\X | \rbf) \propto \prod_{1\le i<j\le L} \, \sum_{k=0}^K g_{k}(\rij) \int d\wij \, \frac{ \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) }{\N(\wij|\bs 0, \lambda_w^{-1} \I)}  \,  \N(\wij | \bs \mu_{k}, \bs \Lambda_{k}^{-1})\,.
+\label{eq:int_over_w_3}
+\end{equation}
+The integral can be carried out using the following formula:
+\begin{equation}
+\int d\x \, \frac{ \N( \x | \bs\mu_1, \LAM_1^{-1}) }{\N(\x|0,\LAM_3^{-1})} \, \N(\x|\bs\mu_2,\LAM_2^{-1}) = \frac{\N(0| \bs\mu_1, \LAM_{1}^{-1})\N(0| \bs\mu_2, \LAM_{2}^{-1})}{\N(0|0, \LAM_{3}^{-1}) \N(0| \bs\mu_{12}, \LAM_{123}^{-1})} 
+\end{equation}
+with 
+\begin{eqnarray}
+	\LAM_{123} &:=& \LAM_1 - \LAM_3 + \LAM_2 \\
+	\bs\mu_{12}  &:=& \LAM_{123}^{-1}(\LAM_1 \bs \mu_1 + \LAM_2 \bs\mu_2).
+\end{eqnarray}
+We define 
+\begin{empheq}[box=\medfbox]{align}
+	\LAM_{ij,k} &:= \H_{ij} - \lambda_w \I + \LAMk \\ 
+	\bs\mu_{ij,k}  &:= \LAM_{ij,k}^{-1}(\H_{ij} \wij^* + \LAM_{k} \bs\mu_k) \,.
+  	\label{eq:def_Jkij}
+\end{empheq}
+and obtain
+\begin{empheq}[box=\medfbox]{align}
+p(\X | \rbf) \propto \prod_{1\le i<j\le L}  \, \sum_{k=0}^K g_{k}(\rij) \,  \frac{  \N(0 | \bs\mu_k, \LAM_{k}^{-1})}{  \N( 0 | \bs\mu_{ij,k}, \LAM_{ij,k}^{-1}) }  \,.
+  \label{eq:p(X|r)_final}
+\end{empheq}
+$\N(0 | 0, \lambda_w \I)$ and $\N( 0 | \wij^*, \H_{ij}^{-1})$ are constants that depend only on $\X$ and $\lambda_w$ and that could be omitted. 
+
+\paragraph{To gain some intuition into this result,} let us look at a simple case of two components $(K=1)$ for which $\bs\mu_k = 0$ for $k=0, 1$ and isotropic $\LAM_k = \lambda_k \I$. We further assume that also $\Hij = \text{diag}(\mathbf{h}) + \lambda_w \I$ is diagonal. Then $\LAM_{ij,k} = \text{diag}(\mathbf{h})+\lambda_k \I$ and $(\bs\mu_{ij,k})_{ab} = (h_{ab}+\lambda_w)/(h_{ab} + \lambda_k) \times \wijab^*$. The likelihood for $\X$ under the component $k$ is proportional to  
+\begin{align}
+	p(\X | k) \propto  \frac{  \N(0 | \bs\mu_k, \LAM_{k}^{-1})}{  \N( 0 | \bs\mu_{ij,k}, \LAM_{ij,k}^{-1}) } 
+	 = \prod_{a,b=1}^{20} \frac{\lambda_k}{\lambda_k + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_k}. \right)
+\end{align}
+With Bayes' theorem we conclude that $p(k | \X ) = (1 + \text{BF}^{-1})^{-1}$ with a Bayes factor whose logarithm is
+\begin{align}
+	\log \text{BF} &= \log \left( \frac{ \prod_{a,b=1}^{20} \frac{\lambda_1}{\lambda_1 + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_1}. \right) }
+			 { \prod_{a,b=1}^{20} \frac{\lambda_0}{\lambda_0 + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_0}. \right) } \times \frac{g_{1}(\rij)}{g_{0}(\rij)} \right) \\
+			 &= + \sum_{a,b=1}^{20} \log \frac{1 + h_{ab} / \lambda_0}{1 + h_{ab} / \lambda_1} + \frac{1}{2} \sum_{a,b=1}^{20}  (w^*_{ijab})^2 \left( \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_1} - \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_0} \right) + \log \frac{g_{1}(\rij)}{g_{0}(\rij)}  \nonumber \\
+			 &= - \sum_{a,b=1}^{20} \log \frac{1 + h_{ab} / \lambda_1}{1 + h_{ab} / \lambda_0} + \frac{\lambda_0 - \lambda_1}{2} \sum_{a,b=1}^{20}  (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {(h_{ab} + \lambda_1)(h_{ab} + \lambda_0)} + \log \frac{g_{1}(\rij)}{g_{0}(\rij)}  \nonumber 
+\end{align}
+To understand the effect of these two terms, let us assume that $\lambda_w = \sqrt{\lambda_0 \lambda_1}$. Then the term $\frac{(h_{ab} + \lambda_w)^2} {(h_{ab} + \lambda_1)(h_{ab} + \lambda_0)}$ is 1 for $h_{ab} = 0$ and $h_{ab} \rightarrow \infty$ and in the region between dips to a minimum at $h_{ab} = \lambda_w$ with a $y$-value that stays above 0.5 if $\lambda_0$ and $\lambda_1$ differ by less than a factor $\sim 34$. The sum in the second term therefore will behave similarly to $||\wij||^2$. 
+
+The function $\log (1 + x /\lambda_1) / (1 + x/\lambda_0) )$ in the sum of the first term is concave, rising linearly like $x/\lambda_1 - x/\lambda_0$ near 0, and it saturates after $x>\lambda_0$ to a value $\log (\lambda_0/\lambda_1)$. The sum over these terms will be smaller the more the $h_{ab}$ (whose total sum is roughly constant) is concentrated in a few $ab$-pairs with large values of $h_{ab}$. Simply speaking, the first term therefore corrects for the effect of entropy in the count distribution $N_{ijab}$ over $(a,b)$ by countering the increases of the second sum with increasing entropy.
+
+-->
+
+
+
+## Efficiently Computing the negative Hessian of the regularized log-likelihood {#neg-Hessian-computation}
 
 Surprisingly, the elements of the Hessian at the mode $\w^*$ are easy to compute. 
 Let $i,j,k,l \in \{1,\ldots,L\}$ be columns in the [MSA](#abbrev) and let $a, b, c, d \in \{1,\ldots,20\}$ represent amino acids. 
-
 The partial derivative $\partial / \partial \w_{klcd}$ of the second term in the gradient of the couplings in eq. \@ref(eq:gradient-LLreg-pair) is
 
 \begin{eqnarray}
@@ -791,7 +638,7 @@ The partial derivative $\partial / \partial \w_{klcd}$ of the second term in the
 \end{eqnarray}
 
 
-where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the product rule, we find
+where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the product rule, it is found
 
 \begin{eqnarray}
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
@@ -806,7 +653,7 @@ where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the p
 \end{eqnarray}
 
 
-We simplify this expression using
+This expression can be simpified using
 
 \begin{equation}
     p(\mathbf{y} | \v,\w) = \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z_n(\v,\w)}  ,
@@ -851,7 +698,7 @@ the elements of $\H$, which are the negative second partial derivatives of $\LLr
 (\#eq:Hw-offdiag)
 \end{eqnarray}
 
-We know from eq. \@ref(eq:gradient-LLreg-approx) that at the mode $\w^*$ the model probabilities match the empirical frequencies up to a small regularization term,
+We know from eq. \@ref(eq:gradient-LLreg-pair-approx) that at the mode $\w^*$ the model probabilities match the empirical frequencies up to a small regularization term,
 
 \begin{equation}
     p(x_i \eq a, x_j \eq b | \v^*,\w^*) = q(x_i \eq a, x_j \eq b) - \frac{\lambda_w}{N_{ij}}  \wijab^* \,,
@@ -859,10 +706,9 @@ We know from eq. \@ref(eq:gradient-LLreg-approx) that at the mode $\w^*$ the mod
 
 and therefore the negative Hessian elements in cases 1 and 2 can be expressed as
 
--->
-<!-- The first term ($N_{ij} \left(\,q(x_i\!=\!a, x_j\!=\!b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right)$) actually is accurate and only the second $(\dots)$ iss approximated according to the gap approximation in eq. \@ref(eq:gradient-LLreg-approx) -->
 
-<!--
+<!-- The first term ($N_{ij} \left(\,q(x_i\!=\!a, x_j\!=\!b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right)$) actually is accurate and only the second $(\dots)$ iss approximated according to the gap approximation in eq. \@ref(eq:gradient-LLreg-approx) 
+-->
 
 \begin{align}
    (\H)_{ijab, ijab} =& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
@@ -892,10 +738,10 @@ Now eq. \@ref(eq:Hw-diag) can be written in matrix form
 \end{equation}
 
 
-### Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
+
+## Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
 
 It is possible to efficiently invert the matrix $\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k$, that is introduced in \@ref(coupling-prior) where $\H_{ij}$ is the $400 \times 400$ diagonal block submatrix $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$ and $\Lambda_k$ is an invertible diagonal precision matrix that is introduced in section \@ref(modeling-dep-of-wij). 
-
 Equation \@ref(eq:mat-Hij) can be used to write $\Lijk$ in matrix form as
 
 \begin{equation}
@@ -927,18 +773,14 @@ by setting
 
 Note that $\mathbf{A}$ is diagonal as $\Qij$ and $\Lk$ are diagonal matrices: $\mathbf{A} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab})$.
 Moreover, $\mathbf{A}$ has only positive diagonal elements, because $\Lk$ is invertible and has only positive diagonal elements and because $q'_{ijab} = p(x_i \eq a, x_j \eq b | \v^*,\w^*) \ge 0$. 
-
 Therefore $\mathbf{A}$ is invertible: $\mathbf{A}^{-1} = \text{diag}(N_{ij} q'_{ijab} + (\Lk)_{ab,ab} )^{-1}$.
-
 Because $\sum_{a,b=1}^{20} q'_{ijab} = 1$, the denominator of the second term is 
 
 \begin{equation}
     N_{ij}^{-1} - \sum_{a,b=1}^{20}  \frac{{q'}_{ijab}^2}{N_{ij} q'_{ijab} + {(\Lk)}_{ab,ab} } > N_{ij}^{-1} - \sum_{a,b=1}^{20} \frac{{q'}^2_{ijab}}{N_{ij} q'_{ijab}} = 0
 \end{equation}
 
-
 and therefore the inverse of $\Lijk$ in eq. \@ref(eq:fast-inverse-mat-Lijk) is well defined.
-
 The log determinant of $\Lijk$ is necessary to compute the ratio of Gaussians (see equation \@ref(eq:p-X-r-final)) and can be computed using the matrix determinant lemma:
 
 \begin{equation}
@@ -957,7 +799,7 @@ $\mathbf{A}$ is diagonal and has only positive diagonal elements so that $\log(\
 
 
 
-### Training the Hyperparameters $\muk$, $\Lk$ and $\gamma_k$ {#training-hyperparameters}
+## Training the Hyperparameters $\muk$, $\Lk$ and $\gamma_k$ {#training-hyperparameters}
 
 The model parameters $\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)$,  $\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)$ and $\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)$ will be trained by maximizing the logarithm of the full likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^N$ and associated structures with distance vectors $\r^1,\ldots,\r^N$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$:
 
@@ -975,9 +817,8 @@ The regulariser penalizes values of  $\muk$ and $\Lk$ that deviate too far from 
 
 Reasonable values are $\sigma_{\mu}=0.1$, $\sigma_\text{diag} = 100$.  
 
-The log likelihood can be optimized using LBFG-S-B[@CITE], which requires the computation of the gradient of the log likelihood. 
+The log likelihood can be optimized using L-BFGS-B [@Byrd1995], which requires the computation of the gradient of the log likelihood. 
 For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index $n$ in $\rij^n$, $(\wij^n)^*$ and $\Hij^n$.
-
 From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
 
 \begin{equation}
@@ -986,8 +827,7 @@ From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
 \end{equation}
 
 
-### The gradient of the log likelihood with respect to $\mathbf{\mu}$
- 
+### The gradient of the log likelihood with respect to $\muk$ {#gradient-muk}
  
 By applying the formula $d f(x) / dx = f(x) \, d \log f(x) / dx$ to compute the gradient of eq. \@ref(eq:ll-coupling-prior) (neglecting the regularization term) with respect to $\mu_{k,ab}$, one obtains
 
@@ -1010,7 +850,6 @@ To simplify this expression, we define the responsibility of component $k$ for t
 (\#eq:responsibilities)
 \end{align}
 
-
 By substituting the definition for responsibility, \@ref(eq:gradient-mukab) simplifies
 
 \begin{equation}
@@ -1019,14 +858,15 @@ By substituting the definition for responsibility, \@ref(eq:gradient-mukab) simp
 (\#eq:gradient-LL-mukab)
 \end{equation}
 and analogously for partial derivatives with respect to $\Lambda_{k,ab,cd}$.
-
 The partial derivative inside the sum can be written
+
 \begin{equation}
 	 \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
 	= \frac{1}{2}  \frac{\partial}{\partial \mu_{k,ab}}   \left( \log | \Lk | - \muk^\mathrm{T} \Lk \muk - \log | \Lijk | + \muijk^\mathrm{T} \Lijk \muijk \right)\,.
 \end{equation}
 
 Using the following formula for a matrix $\mathbf{A}$, a real variable $x$ and a vector $\mathbf{y}$ that depends on $x$,
+
 \begin{equation}
 	\frac{\partial}{\partial x} \left( \mathbf{y}^\mathrm{T} \mathbf{A} \mathbf{y} \right) = \frac{\partial \mathbf{y}^\mathrm{T}}{\partial x}  \mathbf{A} \mathbf{y} + \mathbf{y}^\mathrm{T} \mathbf{A} \frac{\partial \mathbf{y}}{\partial x}  =  \mathbf{y}^\mathrm{T} (\mathbf{A} + \mathbf{A}^\mathrm{T}) \frac{\partial \mathbf{y}}{\partial x} 
 (\#eq:matrix-gradient)
@@ -1049,11 +889,7 @@ Finally, the gradient of the log likelihood with respect to $\mathbf{\mu}$ becom
 \end{align}
 
 
-
-
-
-
-### The gradient of the log likelihood with respect to $\Lk$
+### The gradient of the log likelihood with respect to $\Lk$ {#gradient-lambdak}
 
 Analogously to eq. \@ref(eq:gradient-LL-mukab) one first needs to solve
 
@@ -1072,9 +908,7 @@ by applying eq. \@ref(eq:matrix-gradient) as before as well as the formulas
 	\frac{\partial \mathbf{A}^{-1}}{\partial x} &= - \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \,.
 \end{align}
 
-
 This yields
-
 
 \begin{align}
 \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \log |\Lk|
@@ -1097,7 +931,6 @@ This yields
 	- 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk\\
 	&= (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
 \end{align}
-
 
 Inserting these results into eq. \@ref(eq:grad-log-N-N-lambdakabcd) yields
 
@@ -1156,19 +989,11 @@ The partial derivative of the likelihood function with respect to $\gamma_k$ is:
 
 
 
+## Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances
 
-
-
-
-
-
-## Bayesian Statistical Model for Prediction of Protein Residue-Residue Distances
-
-### Modelling the dependence of $\wij$ on distance
-
-It is straightforward to extend the model presented in \@ref(coupling-prior) for distances. 
-
-The mixture weights $g_k(\rij)$ in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax over linear functions $\gamma_k(\rij)$ (Figure \ref(fig:softmax-linear-fct):
+It is straightforward to extend the Baysian model for contact prediction presented in section \@ref(overview-posterior-distances) for distances. 
+The prior over couplings will modelled using distance dependent mixture weights $g_k(\rij)$.
+Therefore eq. \@ref(eq:definition-mixture-coupling-prior) is modified such that mixture weights $g_k(\rij)$ are modelled as softmax over linear functions $\gamma_k(\rij)$ (see Figure \@ref(fig:softmax-linear-fct):
 
 \begin{align}
 	  g_k(\rij)        &= \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} \, , \\
@@ -1178,26 +1003,108 @@ The mixture weights $g_k(\rij)$ in eq. \@ref(eq:definition-mixture-coupling-prio
 
 (ref:caption-softmax-linear-fct) The Gaussian mixture coefficients $g_k(\rij)$ of $p(\wij|\rij)$ are modelled as softmax over linear functions $\gamma_k(\rij)$. $\rho_k$ sets the transition point between neighbouring components $g_{k-1}(\rij)$ and $g_k(\rij)$, while $\alpha_k$ quantifies the abruptness of the transition between $g_{k-1}(\rij)$ and $g_k(\rij)$.
 
-```{r softmax-linear-fct, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-softmax-linear-fct)'}
+```{r softmax-linear-fct, echo = FALSE, out.width = '50%', fig.align='center', fig.cap = '(ref:caption-softmax-linear-fct)'}
 knitr::include_graphics("img/theory/softmax_linear_fct.png")
 ```
 
-
 The functions $g_k(\rij)$ remain invariant when adding an offset to all $\gamma_k(\rij)$. 
-This degeneracy can be removed by setting $\gamma_0(\rij) = 0$ (i.e., $\alpha_0 = 0$ and $\rho_0=0$). 
+This degeneracy can be removed by setting $\gamma_0(\rij) \eq 0$ (i.e., $\alpha_0 \eq 0$ and $\rho_0 \eq 0$). 
 Further, the components are ordered, $\rho_1> \ldots > \rho_K$ and it is demanded that $\alpha_k > 0$ for all $k$. 
 This ensures that for $\rij \rightarrow \infty$ we will obtain $g_0(\rij) \rightarrow 1$ and hence $p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )$.
 
 The parameters $\rho_k$ mark the transition points between the two Gaussian mixture components $k-1$ and $k$, i.e., the points at which the two components obtain equal weights. 
-This follows from $\gamma_k(\rij) - \gamma_{k-1}(r) = \alpha_{t} ( \rij - \rho_{t})$ and hence $\gamma_{k-1}(\rho_k) = \gamma_k(\rho_k)$. 
+This follows from $\gamma_k(\rij) - \gamma_{k-1}(r) \eq \alpha_{t} ( \rij - \rho_{t})$ and hence $\gamma_{k-1}(\rho_k) \eq= \gamma_k(\rho_k)$. 
 A change in $\rho_k$ or $\alpha_k$ only changes the behaviour of $g_{k-1}(\rij)$ and $g_k(\rij)$ in the transition region around $\rho_k$. 
 Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $\alpha_k$ and $\rho_k$ as independent of each other as possible, rendering the optimisation of these parameters more efficient.
 
+### The derivative of the log likelihood with respect to $\rho_k$
 
-### Training the Hyperparameters $\rho_k$ and $\alpha_k$ for distance-dependent prior
+Analogous to the derivations of $\muk$ in section \@ref(gradient-muk) and $\Lk$ in section \@ref(gradient-lambdak), the partial derivative with respect to $\rho_k$ is
+
+\begin{equation}
+\frac{\partial} {\partial \rho_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) =  \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \rho_k}  \log g_{k'}(\rij)  \,.
+	(\#eq:nabla-rhok-LL-pre)
+\end{equation}
+
+Using the definition of $g_k(\rij)$ in eq. \@ref(eq:definition-mixture-weights), we find (rember that $\alpha_0 \eq 0$ as noted in the last section) that
+\begin{eqnarray}
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \frac{\partial} {\partial \rho_k}  \log  \frac{\exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) \right) }{ \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) \right) } \nonumber \\
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& -  \frac{\partial} {\partial \rho_k}  \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} )  
+		- \frac{\partial} {\partial \rho_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) \right)  \nonumber \\
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \alpha_k \, I(l \ge k)   
+		-  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \rho_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \alpha_k \, I(l \ge k)   
+		-  \frac{ \sum_{k'=0}^K \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \alpha_k \, I(l \ge k)   
+		-  \frac{ \sum_{k'=0}^K \exp (\gamma_{k'}(\rij) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (\gamma_{k'}(\rij) ) } \nonumber \\
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \alpha_k \, I(l \ge k)   
+		-  \sum_{k'=0}^K  g_{k'}(\rij) \, \alpha_k \, I(k' \ge k)  \nonumber \\ 
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	&=& \alpha_k \, \left(  I(l \ge k)  -  \sum_{k'=k}^K  g_{k'}(\rij) \right)  \, .
+	(\#eq:dlog-gk-drho)
+\end{eqnarray}
+
+Inserting this into eq. \@ref(eq:nabla-rhok-LL-pre) yields
+
+\begin{align}
+	\frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  
+	&= \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, \alpha_k \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) \right)  \nonumber \\
+	&= \alpha_k \, \sum_{1\le i<j\le L}  \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\rij)  \right) ,
+\end{align}
+	
+and finally
+
+\begin{equation}
+	\frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  = \alpha_k \, \sum_{1\le i<j\le L}  \, \sum_{k'=k}^K  ( p(k'|ij) - g_{k'}(\rij) )  \, .
+\end{equation}
+
+This equation has an intuitive meaning: The gradient is the difference between the summed probability mass predicted to be due to components $k' \ge k$, $p(k'\ge k | ij)$, and the sum of the prior probabilities $g_k(\rij)$ for components $k' \ge k$, where the sum runs over all training points indexed by $i,j$. 
+
+### The derivative of the log likelihood with respect to $\alpha_k$
 
 
--->
+Last and similar to the previous derivation, the partial derivative with respect to $\alpha_k$ is
+
+\begin{equation}
+  \frac{\partial} {\partial \alpha_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) = \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \alpha_k}  \log g_{k'}(\rij)  \,.
+	(\#eq:nabla-alphak-LLpre)
+\end{equation}
+
+Similarly as before, 
+
+\begin{align}
+	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
+	&= \frac{\partial} {\partial \alpha_k}  \log  \frac{\exp (- \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
+	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
+	&= -  \frac{\partial} {\partial \alpha_k}  \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} )  
+		- \frac{\partial} {\partial \alpha_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) \right)  \nonumber \\
+	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
+	&= - (\rij - \rho_{k} ) \, I(l \ge k) -  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \alpha_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
+	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
+	&= - (\rij - \rho_{k} )  \, \left(  I(l \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) )  \right)  \, .
+	(\#eq:dlog-gk-dalpha)
+\end{align}
+
+Inserting this into eq. \@ref(eq:nabla-alphak-LLpre) yields
+
+\begin{align}
+	\frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) 
+	&= - \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, (\rij - \rho_k) \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) )  \right)  \nonumber \\
+	&= -\sum_{1\le i<j\le L}  \, (\rij - \rho_k) \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\rij) )  \right) ,
+\end{align}
+	
+and finally
+
+\begin{equation}
+	\frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  	= \sum_{1\le i<j\le L}  \, (\rho_k - \rij) \, \sum_{k'=k}^K  ( p(k'|ij) -  g_{k'}(\rij) )  \, .
+\end{equation}
+
 
 ## Features used to train Random Forest Model {#seq-features}
 

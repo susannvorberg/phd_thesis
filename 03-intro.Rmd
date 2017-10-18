@@ -37,8 +37,8 @@ The UniProtKB, the leading resource for protein sequences, currently holds more 
 
 The resultant gap between the number of protein structures and protein sequences is constantly widening despite tremendous efforts in automating experimental structure determination and new developments such as electron crystallography (see Figure \@ref(fig:seq-str-gap) [@Schwede2013; @Clabbers2017].
 
-```{r seq-str-gap, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
-knitr::include_url("img/pdb_growth.html", height = "750px")
+```{r seq-str-gap, echo = FALSE, screenshot.alt="img/intro/pdb_uniprot_stats.png",out.width = '100%', screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", fig.cap = 'Yearly growth of number of solved structures in the PDB[@Berman2000] and protein sequences in the Uniprot[@TheUniProtConsortium2013].'}
+knitr::include_url("img/intro/pdb_uniprot_stats.html", height = "750px")
 ```
 
 
@@ -199,13 +199,15 @@ While only a 2D representation, residue-residue contact maps retain the full 3D 
 Residue-residue contacts can be visualized in a contact map which is a LxL matrix of binary values, with L being protein length. 
 The entries $C(i,j)$ in the matrix
 
+<!--
 \begin{equation}
     C(i,j) =    \begin{case}
                     1, & \text{if} \Delta \Cb < T
                     0, & \text{otherwis}
                 \end{case}
 \end{equation}
+-->
 
-where \Delta \Cb is the euclidean distance between $\Cb$ atoms ($C_\alpha$ for glycine) of residues $i$ and $j$  and $T$ is a distance threshhold (typically 8 $\angstrom$).
+where $\Delta \Cb$ is the euclidean distance between $\Cb$ atoms ($C_\alpha$ for glycine) of residues $i$ and $j$  and $T$ is a distance threshhold (typically 8 $\angstrom$).
 Figure 1.1a shows an example of a residue-residue contact map generated from a small protein domain.
 

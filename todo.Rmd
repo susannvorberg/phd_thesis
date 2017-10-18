@@ -18,7 +18,7 @@
 # contrastive divergence
 
   - update benchmark plot for lin, sig, exp schedule in appendix
-  - update exp schedule in  methods
+  - update exp schedule in   methods
   - decide what to do about sqrt schedule
 
 # bayesian model

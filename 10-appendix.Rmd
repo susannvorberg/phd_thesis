@@ -202,7 +202,7 @@ knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_residues_short_distance.png")
 ```
 
-<!--
+
 
 # Optimizing Full Likelihood with Gradient Descent
 
@@ -286,6 +286,26 @@ knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_agai
 ```
 
 
+## Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated  
+
+
+(ref:caption-numit-convergence-convergence-prev) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different values for the number of previous iterations over which the relative change of the L2 norm of coupling parameters $||\w||_2$ will be measured. Convergence criteria is given in eq. \@ref(eq:parameter-convergence-criterion). The number of previous iterations is given on the x-axis in the plot. The optimal hyperparameters settings for [SGD](#abbrev) as described in section \@ref(sgd-hyperparameter-tuning) have been used. 
+
+
+```{r numit-convergence-convergence-prev, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-numit-convergence-convergence-prev)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.html", height = "600px")
+```
+
+
+## Number of Gibbs steps with respect to Neff
+
+(ref:caption-cd-precision-gibbssteps-neff) Mean precision for top ranked contact predictions over 300 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD #Gibbs steps = X**: contact scores computed from [CD](#abbrev) optimized with [SGD](#abbrev) and evolving each Markov chain using the number of Gibbs steps specified in the legend. 
+
+```{r cd-precision-gibbssteps-neff, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_gibbssteps.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-cd-precision-gibbssteps-neff)'}
+knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_facetted_by_neff_gibbssteps.html", height = "600px")
+```
+
+
 ## Fix single potentials at maximum-likelihood estimate v*
 
 
@@ -305,7 +325,13 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html"
 knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes.png", "img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes.png"))
 ```
 
---> 
+
+
+
+
+
+
+
 
 
 # Training of the Random Forest Contact Prior
@@ -318,14 +344,11 @@ knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_fo
 knitr::include_url("img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.html", height = "600px")
 ```
 
-
 (ref:caption-feature-selection-rf-with-pll-score) Mean precision for top ranked contacts over 200 proteins for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). 
 
 ```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
 knitr::include_url("img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
 ```
-
-
 
 ## Evaluating window size with 5-fold Cross-validation {#rf-window-size}
 
