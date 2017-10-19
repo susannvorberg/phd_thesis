@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -296,10 +296,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="local-methods" class="section level2">
 <h2><span class="header-section-number">2.1</span> Local Statistical Models</h2>
 <p>Early contact prediction methods used local pairwise statistics to infer contacts that regard pairs of amino acids in a sequence as statistically independent from another.</p>
-<p>Several of these methods use correlation coefficient based measures, such as Pearson correlation between amino acid counts, properties associated with amino acids or mutational propensities at the sites of a <a href="abbrev.html#abbrev">MSA</a> <span class="citation">[<a href="#ref-Gobel1994">42</a>,<a href="#ref-Neher1994">44</a>–<a href="#ref-Shindyalov1994">47</a>]</span>.</p>
-<p>Many methods have been developed that are rooted in information theory and use <a href="abbrev.html#abbrev">MI</a> measures to describe the dependencies between sites in the alignment <span class="citation">[<a href="#ref-Clarke1995">48</a>–<a href="#ref-Martin2005">50</a>]</span>. Phylogenetic and entropic biases have been identified as strong sources of noise that confound the true coevolution signal <span class="citation">[<a href="#ref-Martin2005">50</a>–<a href="#ref-Fodor2004">52</a>]</span>. Different variants of <a href="abbrev.html#abbrev">MI</a> based approaches address these effects and improve on the signal-to-noise ratio <span class="citation">[<a href="#ref-Atchley2000">51</a>,<a href="#ref-Tillier2003">53</a>,<a href="#ref-Gouveia_Oliveira2007">54</a>]</span>. The most prominent correction for background noises is <a href="abbrev.html#abbrev">APC</a> that is still used by many modern methods and is discussed in section <a href="maxent.html#post-processing-heuristics">2.4.4</a> <span class="citation">[<a href="#ref-Dunn2008">55</a>]</span>. Another popular method is <em>OMES</em> that essentially computes a chi-squared statistic to detect the differences between observed and expected pairwise amino acid frequencies for a pair of columns <span class="citation">[<a href="#ref-Kass2002">56</a>,<a href="#ref-Noivirt2005">57</a>]</span>.</p>
-<p>The traditional covariance approaches suffered from high false positive rates because of their inability to cope with transitive effects that arise from chains of correlations between multiple residue pairs <span class="citation">[<a href="#ref-Lapedes1999">58</a>–<a href="#ref-Weigt2009">60</a>]</span>. The concept of transitve effects is illustrated in Figure <a href="local-methods.html#fig:transitive-effect">2.2</a>. Considering three residues A, B and C, where A physically interacts with B and B with C. Strong statistical dependencies between pairs (A,B) and (B,C) can induce strong indirect signals for residues A and C, eventhough they are not physically interacting. These indirect correlations can become even larger than signals of other directly interacting pairs (D,E) and thus lead to false predictions <span class="citation">[<a href="#ref-Burger2010">59</a>]</span>.</p>
-<p>Local statistical methods consider residue pairs independent of one another which is why they cannot distinguish between direct and indirect correlation signals. In contrast, global statistical models presented in the next section learn a joint probability distribution over all residues allowing to disentangle transitive effects <span class="citation">[<a href="#ref-Burger2010">59</a>,<a href="#ref-Weigt2009">60</a>]</span>. Eventhough local statistical methods cannot compete with modern predictors, <em>OMES</em> and <a href="abbrev.html#abbrev">MI</a> based scores often serve as a baseline in performance benchmarks for contact prediction <span class="citation">[<a href="#ref-DeJuan2013">61</a>,<a href="#ref-Jones2012">62</a>]</span>.</p>
+<p>Several of these methods use correlation coefficient based measures, such as Pearson correlation between amino acid counts, properties associated with amino acids or mutational propensities at the sites of a <a href="abbrev.html#abbrev">MSA</a> <span class="citation">[<a href="#ref-Gobel1994">43</a>,<a href="#ref-Neher1994">45</a>–<a href="#ref-Shindyalov1994">48</a>]</span>.</p>
+<p>Many methods have been developed that are rooted in information theory and use <a href="abbrev.html#abbrev">MI</a> measures to describe the dependencies between sites in the alignment <span class="citation">[<a href="#ref-Clarke1995">49</a>–<a href="#ref-Martin2005">51</a>]</span>. Phylogenetic and entropic biases have been identified as strong sources of noise that confound the true coevolution signal <span class="citation">[<a href="#ref-Martin2005">51</a>–<a href="#ref-Fodor2004">53</a>]</span>. Different variants of <a href="abbrev.html#abbrev">MI</a> based approaches address these effects and improve on the signal-to-noise ratio <span class="citation">[<a href="#ref-Atchley2000">52</a>,<a href="#ref-Tillier2003">54</a>,<a href="#ref-Gouveia_Oliveira2007">55</a>]</span>. The most prominent correction for background noises is <a href="abbrev.html#abbrev">APC</a> that is still used by many modern methods and is discussed in section <a href="maxent.html#post-processing-heuristics">2.4.4</a> <span class="citation">[<a href="#ref-Dunn2008">56</a>]</span>. Another popular method is <em>OMES</em> that essentially computes a chi-squared statistic to detect the differences between observed and expected pairwise amino acid frequencies for a pair of columns <span class="citation">[<a href="#ref-Kass2002">57</a>,<a href="#ref-Noivirt2005">58</a>]</span>.</p>
+<p>The traditional covariance approaches suffered from high false positive rates because of their inability to cope with transitive effects that arise from chains of correlations between multiple residue pairs <span class="citation">[<a href="#ref-Lapedes1999">59</a>–<a href="#ref-Weigt2009">61</a>]</span>. The concept of transitve effects is illustrated in Figure <a href="local-methods.html#fig:transitive-effect">2.2</a>. Considering three residues A, B and C, where A physically interacts with B and B with C. Strong statistical dependencies between pairs (A,B) and (B,C) can induce strong indirect signals for residues A and C, eventhough they are not physically interacting. These indirect correlations can become even larger than signals of other directly interacting pairs (D,E) and thus lead to false predictions <span class="citation">[<a href="#ref-Burger2010">60</a>]</span>.</p>
+<p>Local statistical methods consider residue pairs independent of one another which is why they cannot distinguish between direct and indirect correlation signals. In contrast, global statistical models presented in the next section learn a joint probability distribution over all residues allowing to disentangle transitive effects <span class="citation">[<a href="#ref-Burger2010">60</a>,<a href="#ref-Weigt2009">61</a>]</span>. Eventhough local statistical methods cannot compete with modern predictors, <em>OMES</em> and <a href="abbrev.html#abbrev">MI</a> based scores often serve as a baseline in performance benchmarks for contact prediction <span class="citation">[<a href="#ref-DeJuan2013">62</a>,<a href="#ref-Jones2012">63</a>]</span>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:transitive-effect"></span>
 <img src="img/intro/transitive_effects.png" alt="Effects of chained covariation obscure signals from true physical interactions. Consider residues A through E with physical interactions between the residue pairs A-B, B-C and D-E. The thickness of blue lines between residues reflects the strength of statistical dependencies between the corresponding alignment columns. Strong statistical dependencies between residue pairs (A,B) and (B,C) can induce a strong dependency between the spatially distant residues A and C. Covariation signals arising from transitive effects can become even stronger than other direct covariation signals and lead to false positive predictions." width="25%" />
@@ -311,55 +311,55 @@ Figure 2.2: Effects of chained covariation obscure signals from true physical in
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Gobel1994">
-<p>42. Göbel, U., Sander, C., Schneider, R., and Valencia, A. (1994). Correlated mutations and residue contacts in proteins. Proteins <em>18</em>, 309–17. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8208723" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8208723</a>.</p>
+<p>43. Göbel, U., Sander, C., Schneider, R., and Valencia, A. (1994). Correlated mutations and residue contacts in proteins. Proteins <em>18</em>, 309–17. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8208723" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8208723</a>.</p>
 </div>
 <div id="ref-Neher1994">
-<p>44. Neher, E. (1994). How frequent are correlated changes in families of protein sequences? Proc. Natl. Acad. Sci. U. S. A. <em>91</em>, 98–102. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>45. Neher, E. (1994). How frequent are correlated changes in families of protein sequences? Proc. Natl. Acad. Sci. U. S. A. <em>91</em>, 98–102. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Shindyalov1994">
-<p>47. Shindyalov, I., Kolchanov, N., and Sander, C. (1994). Can three-dimensional contacts in protein structures be predicted by analysis of correlated mutations? &quot;Protein Eng. Des. Sel. <em>7</em>, 349–358. Available at: <a href="http://peds.oxfordjournals.org/content/7/3/349" class="uri">http://peds.oxfordjournals.org/content/7/3/349</a>.</p>
+<p>48. Shindyalov, I., Kolchanov, N., and Sander, C. (1994). Can three-dimensional contacts in protein structures be predicted by analysis of correlated mutations? &quot;Protein Eng. Des. Sel. <em>7</em>, 349–358. Available at: <a href="http://peds.oxfordjournals.org/content/7/3/349" class="uri">http://peds.oxfordjournals.org/content/7/3/349</a>.</p>
 </div>
 <div id="ref-Clarke1995">
-<p>48. Clarke, N.D. (1995). Covariation of residues in the homeodomain sequence family. Protein Sci. <em>4</em>, 2269–78. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2143025{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2143025{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>49. Clarke, N.D. (1995). Covariation of residues in the homeodomain sequence family. Protein Sci. <em>4</em>, 2269–78. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2143025{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2143025{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Martin2005">
-<p>50. Martin, L.C., Gloor, G.B., Dunn, S.D., and Wahl, L.M. (2005). Using information theory to search for co-evolving residues in proteins. Bioinformatics <em>21</em>, 4116–24. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/21/22/4116.full" class="uri">http://bioinformatics.oxfordjournals.org/content/21/22/4116.full</a>.</p>
+<p>51. Martin, L.C., Gloor, G.B., Dunn, S.D., and Wahl, L.M. (2005). Using information theory to search for co-evolving residues in proteins. Bioinformatics <em>21</em>, 4116–24. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/21/22/4116.full" class="uri">http://bioinformatics.oxfordjournals.org/content/21/22/4116.full</a>.</p>
 </div>
 <div id="ref-Fodor2004">
-<p>52. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
+<p>53. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
 <div id="ref-Atchley2000">
-<p>51. Atchley, W.R., Wollenberg, K.R., Fitch, W.M., Terhalle, W., and Dress, A.W. (2000). Correlations Among Amino Acid Sites in bHLH Protein Domains: An Information Theoretic Analysis. Mol. Biol. Evol. <em>17</em>, 164–178. Available at: <a href="http://mbe.oxfordjournals.org/content/17/1/164.abstract?ijkey=2a1f0a044a8fd2213955e4f2c17fa84682dd2571{\&amp;}keytype2=tf{\_}ipsecsha" class="uri">http://mbe.oxfordjournals.org/content/17/1/164.abstract?ijkey=2a1f0a044a8fd2213955e4f2c17fa84682dd2571{\&amp;}keytype2=tf{\_}ipsecsha</a>.</p>
+<p>52. Atchley, W.R., Wollenberg, K.R., Fitch, W.M., Terhalle, W., and Dress, A.W. (2000). Correlations Among Amino Acid Sites in bHLH Protein Domains: An Information Theoretic Analysis. Mol. Biol. Evol. <em>17</em>, 164–178. Available at: <a href="http://mbe.oxfordjournals.org/content/17/1/164.abstract?ijkey=2a1f0a044a8fd2213955e4f2c17fa84682dd2571{\&amp;}keytype2=tf{\_}ipsecsha" class="uri">http://mbe.oxfordjournals.org/content/17/1/164.abstract?ijkey=2a1f0a044a8fd2213955e4f2c17fa84682dd2571{\&amp;}keytype2=tf{\_}ipsecsha</a>.</p>
 </div>
 <div id="ref-Tillier2003">
-<p>53. Tillier, E.R., and Lui, T.W. (2003). Using multiple interdependency to separate functional from phylogenetic correlations in protein alignments. Bioinformatics <em>19</em>, 750–755. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/19/6/750.abstract?ijkey=d19c5a2492bfa46d1a02d661c29a610113da8db3{\&amp;}keytype2=tf{\_}ipsecsha" class="uri">http://bioinformatics.oxfordjournals.org/content/19/6/750.abstract?ijkey=d19c5a2492bfa46d1a02d661c29a610113da8db3{\&amp;}keytype2=tf{\_}ipsecsha</a>.</p>
+<p>54. Tillier, E.R., and Lui, T.W. (2003). Using multiple interdependency to separate functional from phylogenetic correlations in protein alignments. Bioinformatics <em>19</em>, 750–755. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/19/6/750.abstract?ijkey=d19c5a2492bfa46d1a02d661c29a610113da8db3{\&amp;}keytype2=tf{\_}ipsecsha" class="uri">http://bioinformatics.oxfordjournals.org/content/19/6/750.abstract?ijkey=d19c5a2492bfa46d1a02d661c29a610113da8db3{\&amp;}keytype2=tf{\_}ipsecsha</a>.</p>
 </div>
 <div id="ref-Gouveia_Oliveira2007">
-<p>54. Gouveia-Oliveira, R., and Pedersen, A.G. (2007). Finding coevolving amino acid residues using row and column weighting of mutual information and multi-dimensional amino acid representation. Algorithms Mol. Biol. <em>2</em>, 12. Available at: <a href="http://www.almob.org/content/2/1/12" class="uri">http://www.almob.org/content/2/1/12</a>.</p>
+<p>55. Gouveia-Oliveira, R., and Pedersen, A.G. (2007). Finding coevolving amino acid residues using row and column weighting of mutual information and multi-dimensional amino acid representation. Algorithms Mol. Biol. <em>2</em>, 12. Available at: <a href="http://www.almob.org/content/2/1/12" class="uri">http://www.almob.org/content/2/1/12</a>.</p>
 </div>
 <div id="ref-Dunn2008">
-<p>55. Dunn, S.D., Wahl, L.M., and Gloor, G.B. (2008). Mutual information without the influence of phylogeny or entropy dramatically improves residue contact prediction. Bioinformatics <em>24</em>, 333–40. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/24/3/333" class="uri">http://bioinformatics.oxfordjournals.org/content/24/3/333</a>.</p>
+<p>56. Dunn, S.D., Wahl, L.M., and Gloor, G.B. (2008). Mutual information without the influence of phylogeny or entropy dramatically improves residue contact prediction. Bioinformatics <em>24</em>, 333–40. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/24/3/333" class="uri">http://bioinformatics.oxfordjournals.org/content/24/3/333</a>.</p>
 </div>
 <div id="ref-Kass2002">
-<p>56. Kass, I., and Horovitz, A. (2002). Mapping pathways of allosteric communication in GroEL by analysis of correlated mutations. Proteins <em>48</em>, 611–7. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/12211028" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/12211028</a>.</p>
+<p>57. Kass, I., and Horovitz, A. (2002). Mapping pathways of allosteric communication in GroEL by analysis of correlated mutations. Proteins <em>48</em>, 611–7. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/12211028" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/12211028</a>.</p>
 </div>
 <div id="ref-Noivirt2005">
-<p>57. Noivirt, O., Eisenstein, M., and Horovitz, A. (2005). Detection and reduction of evolutionary noise in correlated mutation analysis. Protein Eng. Des. Sel. <em>18</em>, 247–53. Available at: <a href="http://peds.oxfordjournals.org/content/18/5/247.full" class="uri">http://peds.oxfordjournals.org/content/18/5/247.full</a>.</p>
+<p>58. Noivirt, O., Eisenstein, M., and Horovitz, A. (2005). Detection and reduction of evolutionary noise in correlated mutation analysis. Protein Eng. Des. Sel. <em>18</em>, 247–53. Available at: <a href="http://peds.oxfordjournals.org/content/18/5/247.full" class="uri">http://peds.oxfordjournals.org/content/18/5/247.full</a>.</p>
 </div>
 <div id="ref-Lapedes1999">
-<p>58. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
+<p>59. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
 </div>
 <div id="ref-Weigt2009">
-<p>60. Weigt, M., White, R.A., Szurmant, H., Hoch, J.A., and Hwa, T. (2009). Identification of direct residue contacts in protein-protein interaction by message passing. Proc. Natl. Acad. Sci. U. S. A. <em>106</em>, 67–72. Available at: <a href="http://www.pnas.org/content/106/1/67.abstract" class="uri">http://www.pnas.org/content/106/1/67.abstract</a>.</p>
+<p>61. Weigt, M., White, R.A., Szurmant, H., Hoch, J.A., and Hwa, T. (2009). Identification of direct residue contacts in protein-protein interaction by message passing. Proc. Natl. Acad. Sci. U. S. A. <em>106</em>, 67–72. Available at: <a href="http://www.pnas.org/content/106/1/67.abstract" class="uri">http://www.pnas.org/content/106/1/67.abstract</a>.</p>
 </div>
 <div id="ref-Burger2010">
-<p>59. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
+<p>60. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
 </div>
 <div id="ref-DeJuan2013">
-<p>61. Juan, D. de, Pazos, F., and Valencia, A. (2013). Emerging methods in protein co-evolution. Nat. Rev. Genet. <em>14</em>, 249–61. Available at: <a href="http://www.readcube.com/articles/10.1038/nrg3414?locale=en" class="uri">http://www.readcube.com/articles/10.1038/nrg3414?locale=en</a>.</p>
+<p>62. Juan, D. de, Pazos, F., and Valencia, A. (2013). Emerging methods in protein co-evolution. Nat. Rev. Genet. <em>14</em>, 249–61. Available at: <a href="http://www.readcube.com/articles/10.1038/nrg3414?locale=en" class="uri">http://www.readcube.com/articles/10.1038/nrg3414?locale=en</a>.</p>
 </div>
 <div id="ref-Jones2012">
-<p>62. Jones, D.T., Buchan, D.W.A., Cozzetto, D., and Pontil, M. (2012). PSICOV: precise structural contact prediction using sparse inverse covariance estimation on large multiple sequence alignments. Bioinformatics <em>28</em>, 184–90. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/2/184.full" class="uri">http://bioinformatics.oxfordjournals.org/content/28/2/184.full</a>.</p>
+<p>63. Jones, D.T., Buchan, D.W.A., Cozzetto, D., and Pontil, M. (2012). PSICOV: precise structural contact prediction using sparse inverse covariance estimation on large multiple sequence alignments. Bioinformatics <em>28</em>, 184–90. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/2/184.full" class="uri">http://bioinformatics.oxfordjournals.org/content/28/2/184.full</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -437,7 +437,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

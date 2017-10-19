@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -300,7 +300,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <iframe src="img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.html" width="100%" height="600px">
 </iframe>
 <p class="caption">
-Figure G.1: Top ten features ranked according to <em>Gini importance</em>. <strong>pseudo-likelihood</strong>: <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings computed with pseudo-likelihood. <strong>mean pair potential (Miyasawa &amp; Jernigan)</strong>: average quasi-chemical energy of transfer of amino acids from water to the protein environment <span class="citation">[<a href="#ref-Miyazawa1999a">220</a>]</span>. <strong>OMES+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected OMES score according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">219</a>]</span>. <strong>mean pair potential (Li&amp;Fang)</strong>: average general contact potential by Li &amp; Fang <span class="citation">[<a href="#ref-Li2011">66</a>]</span>. <strong>rel. solvent accessibilty i(j)</strong>: RSA score computed with Netsurfp (v1.0) <span class="citation">[<a href="#ref-Petersen2009a">221</a>]</span> for position i(j). <strong>MI+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected mutual information between amino acid counts (using pseudo-counts). <strong>contact prior wrt L</strong>: simple contact prior based on expected number of contacts wrt protein length (see methods section <a href="#contact-prior-protein-length"><strong>??</strong></a>). <strong>log protein length</strong>: logarithm of protein length. <strong>beta sheet propensity window(i)</strong>: beta-sheet propensity according to Psipred <span class="citation">[<a href="#ref-Jones1999">222</a>]</span> computed within a window of five positions around i. Features are described in detail in methods section <a href="seq-features.html#seq-features">7.14</a>.
+Figure G.1: Top ten features ranked according to <em>Gini importance</em>. <strong>pseudo-likelihood</strong>: <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of couplings computed with pseudo-likelihood. <strong>mean pair potential (Miyasawa &amp; Jernigan)</strong>: average quasi-chemical energy of transfer of amino acids from water to the protein environment <span class="citation">[<a href="#ref-Miyazawa1999a">222</a>]</span>. <strong>OMES+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected OMES score according to Fodor&amp;Aldrich <span class="citation">[<a href="#ref-Fodor2004a">221</a>]</span>. <strong>mean pair potential (Li&amp;Fang)</strong>: average general contact potential by Li &amp; Fang <span class="citation">[<a href="#ref-Li2011">67</a>]</span>. <strong>rel. solvent accessibilty i(j)</strong>: RSA score computed with Netsurfp (v1.0) <span class="citation">[<a href="#ref-Petersen2009a">223</a>]</span> for position i(j). <strong>MI+APC</strong>: <a href="abbrev.html#abbrev">APC</a> corrected mutual information between amino acid counts (using pseudo-counts). <strong>contact prior wrt L</strong>: simple contact prior based on expected number of contacts wrt protein length (see methods section <a href="#contact-prior-protein-length"><strong>??</strong></a>). <strong>log protein length</strong>: logarithm of protein length. <strong>beta sheet propensity window(i)</strong>: beta-sheet propensity according to Psipred <span class="citation">[<a href="#ref-Jones1999">224</a>]</span> computed within a window of five positions around i. Features are described in detail in methods section <a href="seq-features.html#seq-features">7.14</a>.
 </p>
 </div>
 
@@ -315,19 +315,19 @@ Figure G.2: Mean precision for top ranked contacts over 200 proteins for variaou
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Miyazawa1999a">
-<p>220. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
+<p>222. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation of inter-residue protein contact energies based on an equilibrium mixture approximation of residues. Proteins <em>34</em>, 49–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10336383" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10336383</a>.</p>
 </div>
 <div id="ref-Fodor2004a">
-<p>219. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
+<p>221. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on calculations of amino acid covariance in multiple sequence alignments. Proteins <em>56</em>, 211–21. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15211506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15211506</a>.</p>
 </div>
 <div id="ref-Li2011">
-<p>66. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+<p>67. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>. Available at: <a href="http://dx.doi.org/10.1093/bioinformatics/btr579" class="uri">http://dx.doi.org/10.1093/bioinformatics/btr579</a>.</p>
 </div>
 <div id="ref-Petersen2009a">
-<p>221. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
+<p>223. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and Lundegaard, C. (2009). BMC Structural Biology A generic method for assignment of reliability scores applied to solvent accessibility predictions. BMC Struct. Biol. <em>9</em>. Available at: <a href="http://www.biomedcentral.com/1472-6807/9/51" class="uri">http://www.biomedcentral.com/1472-6807/9/51</a>.</p>
 </div>
 <div id="ref-Jones1999">
-<p>222. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
+<p>224. Jones, D.T. (1999). Protein secondary structure prediction based on position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol. Biol. <em>292</em>, 195–202. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -405,7 +405,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

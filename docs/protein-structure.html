@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -303,19 +303,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </ul>
 <div id="amino-acid-interactions" class="section level3">
 <h3><span class="header-section-number">1.1.1</span> Amino Acid Interactions</h3>
-<p>The Venn diagram in figure <a href="protein-structure.html#fig:amino-acid-physico-chemical-properties">1.2</a> displays a typical classification of amino acids with respect to their physico-chemical properties.</p>
-<p>The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure. Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. The <span class="math inline">\(\pi\)</span>-electron systems favour T-shaped or offset stacked conformations <span class="citation">[<a href="#ref-Waters2002">25</a>]</span>. Preferred distances between aromatic residues have been observed between 4.5<span class="math inline">\(\angstrom\)</span> and 7<span class="math inline">\(\angstrom\)</span> of their ring centroids <span class="citation">[<a href="#ref-Burley1985">26</a>]</span>.</p>
-<p>Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains. They comprise the strongest side chain interactions in protein structures and their length varies between 3.5<span class="math inline">\(\angstrom\)</span> to 4<span class="math inline">\(\angstrom\)</span>. Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees <span class="citation">[<a href="#ref-Thornton1981">27</a>]</span>. They play a very important role in stabilizing protein structures. The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core. It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability <span class="citation">[<a href="#ref-Bastolla2005">28</a>]</span>.</p>
-<p>Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). The strength of electrostatic interactions, as described by Coulomb’s law, decreases with distance between the point charges at the functional groups. It has been found to be maximal at 4<span class="math inline">\(\angstrom\)</span> with respect to the functional groups of the both residues <span class="citation">[<a href="#ref-Donald2011">29</a>]</span>.</p>
+<p>The Venn diagram in figure <a href="protein-structure.html#fig:amino-acid-physico-chemical-properties">1.3</a> displays a typical classification of amino acids with respect to their physico-chemical properties.</p>
+<p>The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure. Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. The <span class="math inline">\(\pi\)</span>-electron systems favour T-shaped or offset stacked conformations <span class="citation">[<a href="#ref-Waters2002">27</a>]</span>. Preferred distances between aromatic residues have been observed between 4.5<span class="math inline">\(\angstrom\)</span> and 7<span class="math inline">\(\angstrom\)</span> of their ring centroids <span class="citation">[<a href="#ref-Burley1985">28</a>]</span>.</p>
+<p>Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains. They comprise the strongest side chain interactions in protein structures and their length varies between 3.5<span class="math inline">\(\angstrom\)</span> to 4<span class="math inline">\(\angstrom\)</span>. Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees <span class="citation">[<a href="#ref-Thornton1981">29</a>]</span>. They play a very important role in stabilizing protein structures. The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core. It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability <span class="citation">[<a href="#ref-Bastolla2005">30</a>]</span>.</p>
+<p>Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). The strength of electrostatic interactions, as described by Coulomb’s law, decreases with distance between the point charges at the functional groups. It has been found to be maximal at 4<span class="math inline">\(\angstrom\)</span> with respect to the functional groups of the both residues <span class="citation">[<a href="#ref-Donald2011">31</a>]</span>.</p>
 <p>Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. They are electrostatic interactions as well and thus their strength depends on distance as well. Hydrogen bonds are formed at distances of 2.4<span class="math inline">\(\angstrom\)</span> to 3.5<span class="math inline">\(\angstrom\)</span> between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).</p>
 <p>Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).</p>
-<p>Cation–<span class="math inline">\(\pi\)</span> interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). The preferential distance of the amino group to the <span class="math inline">\(\pi\)</span>-electron system has been determined between 3.4<span class="math inline">\(\angstrom\)</span> and 6<span class="math inline">\(\angstrom\)</span> <span class="citation">[<a href="#ref-Burley1986">30</a>]</span> <span class="citation">[<a href="#ref-Crowley2005">31</a>]</span> Their role in stabilizing protein structures is still under debate <span class="citation">[<a href="#ref-Slutsky2004">32</a>]</span>.</p>
+<p>Cation–<span class="math inline">\(\pi\)</span> interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). The preferential distance of the amino group to the <span class="math inline">\(\pi\)</span>-electron system has been determined between 3.4<span class="math inline">\(\angstrom\)</span> and 6<span class="math inline">\(\angstrom\)</span> <span class="citation">[<a href="#ref-Burley1986">32</a>]</span> <span class="citation">[<a href="#ref-Crowley2005">33</a>]</span> Their role in stabilizing protein structures is still under debate <span class="citation">[<a href="#ref-Slutsky2004">34</a>]</span>.</p>
 <p>Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. The sterical rigidity of the proline side chain restricts the backbone angle and thus affects secondary structure formation. Proline is known as a helix-breaker. Whereas other aromatic side chains are defined by their negatively charged <span class="math inline">\(\pi\)</span> faces, the face of proline side chains is partially positively charged. Thus, aromatic and proline residues can interact favorably with each other. Once due to the hydrophobic nature of the residues and also due to the interaction between the negatively charged aroamtic <span class="math inline">\(\pi\)</span> face and the polarized C-H bonds in proline, called a CH/<span class="math inline">\(\pi\)</span> interaction.</p>
 <p>Petersen et al. (2012) found clear secondary structure elements preferences for each amino acid pair. For example, residue pairs containing Alanine and Leucine are predominantly found in buried <span class="math inline">\(\alpha\)</span>-helices, whereas pairs containing Isoleucine and Valine preferentially are located in <span class="math inline">\(\beta\)</span>-sheet environments. Of course, solvent accessibility represents an important criterion for residue interactions. Hydrophobic residues are rather buried in the structure, whereas polar and charged residues are found more frequently on the protein surface and interact with water molecules.</p>
 <div class="figure"><span id="fig:amino-acid-physico-chemical-properties"></span>
 <img src="img/amino_acid_physico_chemical_properties_venn_diagramm.png" alt="Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in [@Livingstone1993]." width="50%" />
 <p class="caption">
-Figure 1.2: Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in <span class="citation">[<a href="#ref-Livingstone1993">33</a>]</span>.
+Figure 1.3: Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in <span class="citation">[<a href="#ref-Livingstone1993">35</a>]</span>.
 </p>
 </div>
 </div>
@@ -323,31 +323,31 @@ Figure 1.2: Physico-chemical properties of amino acids. The 20 naturally occurin
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Waters2002">
-<p>25. Waters, M.L. (2002). Aromatic interactions in model systems. Curr. Opin. Chem. Biol. <em>6</em>, 736–741. Available at: <a href="http://dx.doi.org/10.1016/S1367-5931(02)00359-9" class="uri">http://dx.doi.org/10.1016/S1367-5931(02)00359-9</a>.</p>
+<p>27. Waters, M.L. (2002). Aromatic interactions in model systems. Curr. Opin. Chem. Biol. <em>6</em>, 736–741. Available at: <a href="http://dx.doi.org/10.1016/S1367-5931(02)00359-9" class="uri">http://dx.doi.org/10.1016/S1367-5931(02)00359-9</a>.</p>
 </div>
 <div id="ref-Burley1985">
-<p>26. Burley, S., and Petsko, G. (1985). Aromatic-aromatic interaction: a mechanism of protein structure stabilization. Science (80-. ). <em>229</em>, 23–28. Available at: <a href="http://www.sciencemag.org/cgi/doi/10.1126/science.3892686" class="uri">http://www.sciencemag.org/cgi/doi/10.1126/science.3892686</a>.</p>
+<p>28. Burley, S., and Petsko, G. (1985). Aromatic-aromatic interaction: a mechanism of protein structure stabilization. Science (80-. ). <em>229</em>, 23–28. Available at: <a href="http://www.sciencemag.org/cgi/doi/10.1126/science.3892686" class="uri">http://www.sciencemag.org/cgi/doi/10.1126/science.3892686</a>.</p>
 </div>
 <div id="ref-Thornton1981">
-<p>27. Thornton, J.M. (1981). Disulphide bridges in globular proteins. J. Mol. Biol. <em>151</em>, 261–87. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/7338898" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/7338898</a>.</p>
+<p>29. Thornton, J.M. (1981). Disulphide bridges in globular proteins. J. Mol. Biol. <em>151</em>, 261–87. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/7338898" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/7338898</a>.</p>
 </div>
 <div id="ref-Bastolla2005">
-<p>28. Bastolla, U., and Demetrius, L. (2005). Stability constraints and protein evolution: the role of chain length, composition and disulfide bonds. Protein Eng. Des. Sel. <em>18</em>, 405–415. Available at: <a href="https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045" class="uri">https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045</a>.</p>
+<p>30. Bastolla, U., and Demetrius, L. (2005). Stability constraints and protein evolution: the role of chain length, composition and disulfide bonds. Protein Eng. Des. Sel. <em>18</em>, 405–415. Available at: <a href="https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045" class="uri">https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045</a>.</p>
 </div>
 <div id="ref-Donald2011">
-<p>29. Donald, J.E., Kulp, D.W., and DeGrado, W.F. (2011). Salt bridges: geometrically specific, designable interactions. Proteins <em>79</em>, 898–915. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>31. Donald, J.E., Kulp, D.W., and DeGrado, W.F. (2011). Salt bridges: geometrically specific, designable interactions. Proteins <em>79</em>, 898–915. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Burley1986">
-<p>30. Burley, S., and Petsko, G. (1986). Amino-aromatic interactions in proteins. FEBS Lett. <em>203</em>, 139–143. Available at: <a href="http://dx.doi.org/10.1016/0014-5793(86)80730-X" class="uri">http://dx.doi.org/10.1016/0014-5793(86)80730-X</a>.</p>
+<p>32. Burley, S., and Petsko, G. (1986). Amino-aromatic interactions in proteins. FEBS Lett. <em>203</em>, 139–143. Available at: <a href="http://dx.doi.org/10.1016/0014-5793(86)80730-X" class="uri">http://dx.doi.org/10.1016/0014-5793(86)80730-X</a>.</p>
 </div>
 <div id="ref-Crowley2005">
-<p>31. Crowley, P.B., and Golovin, A. (2005). Cation-pi interactions in protein-protein interfaces. Proteins <em>59</em>, 231–9. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15726638" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15726638</a>.</p>
+<p>33. Crowley, P.B., and Golovin, A. (2005). Cation-pi interactions in protein-protein interfaces. Proteins <em>59</em>, 231–9. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15726638" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15726638</a>.</p>
 </div>
 <div id="ref-Slutsky2004">
-<p>32. Slutsky, M.M., and Marsh, E.N.G. (2004). Cation-pi interactions studied in a model coiled-coil peptide. Protein Sci. <em>13</em>, 2244–51. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>34. Slutsky, M.M., and Marsh, E.N.G. (2004). Cation-pi interactions studied in a model coiled-coil peptide. Protein Sci. <em>13</em>, 2244–51. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Livingstone1993">
-<p>33. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence alignments: a strategy for the hierarchical analysis of residue conservation. Bioinformatics <em>9</em>, 745–756. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/9/6/745" class="uri">http://bioinformatics.oxfordjournals.org/content/9/6/745</a>.</p>
+<p>35. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence alignments: a strategy for the hierarchical analysis of residue conservation. Bioinformatics <em>9</em>, 745–756. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/9/6/745" class="uri">http://bioinformatics.oxfordjournals.org/content/9/6/745</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -425,7 +425,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

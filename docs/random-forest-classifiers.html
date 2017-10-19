@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -295,13 +295,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="random-forest-classifiers" class="section level2">
 <h2><span class="header-section-number">6.1</span> Random Forest Classifiers</h2>
-<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">212</a>–<a href="#ref-Breiman2001">214</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">215</a>]</span>.</p>
+<p>Random Forests are supervised machine learning methods that belong to the class of ensemble methods <span class="citation">[<a href="#ref-Ho1998">214</a>–<a href="#ref-Breiman2001">216</a>]</span>. They are easy to implement, fast to train and can handle large numbers of features due to implicit feature selection <span class="citation">[<a href="#ref-Menze2009">217</a>]</span>.</p>
 <p>Ensemble methods combine the predictions of several independent base estimators with the goal to improve generalizability over a single estimator. Random forests are ensembles of decision trees where randomness is introduced in two ways:</p>
 <ol style="list-style-type: decimal">
 <li>every tree is build on a random sample that is drawn with replacement from the training set and has the same size as the training set (i.e., a bootstrap sample)</li>
 <li>every split of a node is evaluated on a random subset of features</li>
 </ol>
-<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting <span class="citation">[<a href="#ref-Louppe2014">216</a>]</span>. It is still advisable to restrict the depth of single trees in a random forest, not only to counteract overfitting but also to reduce model complexity and to speedup the algorithm.</p>
+<p>A single decision tree, especially when it is grown very deep is highly susceptible to noise in the training set and therefore prone to overfitting which results in poor generalization ability. As a consequence of randomness and averaging over many decision trees, the variance of a random forest predictor decreases and therefore the risk of overfitting <span class="citation">[<a href="#ref-Louppe2014">218</a>]</span>. It is still advisable to restrict the depth of single trees in a random forest, not only to counteract overfitting but also to reduce model complexity and to speedup the algorithm.</p>
 <p>Random forests are capable of regression and classification tasks. For classification, predictions for new data are obtained by running each data sample down every tree in the forest and then either apply majority voting over single class votes or averaging the probabilistic class predictions. Probabilistic class predictions of single trees are computed as the fraction of training set samples of the same class in a leaf whereas the single class vote refers to the majority class in a leaf. Figure <a href="random-forest-classifiers.html#fig:rf-intro">6.1</a> visualizes the procedure of classifying a new data sample.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:rf-intro"></span>
@@ -314,25 +314,25 @@ Figure 6.1: Classifying new data with random forests. A new data sample is run d
 <p><span class="math display">\[
 \Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI_f(N_{\textrm{left}}) - p_{\textrm{right}} GI_f(N_{\textrm{left}})
 \]</span></p>
-<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">215</a>]</span>. The feature <span class="math inline">\(f\)</span> with highest <span class="math inline">\(\Delta GI_f\)</span> over the two resulting child node subsets will be used to split the data set at the given node <span class="math inline">\(N\)</span>.</p>
-<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">217</a>]</span>.</p>
+<p>where <span class="math inline">\(p_{\textrm{left}}\)</span> and <span class="math inline">\(p_{\textrm{right}}\)</span> refers to the fraction of samples ending up in the left and right child node respectively <span class="citation">[<a href="#ref-Menze2009">217</a>]</span>. The feature <span class="math inline">\(f\)</span> with highest <span class="math inline">\(\Delta GI_f\)</span> over the two resulting child node subsets will be used to split the data set at the given node <span class="math inline">\(N\)</span>.</p>
+<p>Summing the <em>decrease in Gini impurity</em> for a feature <span class="math inline">\(f\)</span> over all trees whenever <span class="math inline">\(f\)</span> was used for a split yields the <em>Gini importance</em> measure, which can be used as an estimate of general feature relevance. Random forests therefore are popular methods for feature selection and it is common practice to remove the least important features from a data set to reduce the complexity of the model. However, feature importance measured with respect to <em>Gini importance</em> needs to be interpreted with care. The random forest model cannot distinguish between correlated features and it will choose any of the correlated features for a split, thereby reducing the importance of the other features and introducing bias. Furthermore, it has been found that feature selection based on <em>Gini importance</em> is biased towards selecting features with more categories as they will be chosen more often for splits and therefore tend to obtain higher scores <span class="citation">[<a href="#ref-Strobl2007">219</a>]</span>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ho1998">
-<p>212. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
+<p>214. Ho, T.K. (1998). The random subspace method for constructing decision forests. IEEE Trans. Pattern Anal. Mach. Intell. <em>20</em>, 832–844. Available at: <a href="http://ieeexplore.ieee.org/document/709601/" class="uri">http://ieeexplore.ieee.org/document/709601/</a>.</p>
 </div>
 <div id="ref-Breiman2001">
-<p>214. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
+<p>216. Breiman, L. (2001). Random Forests. Mach. Learn. <em>45</em>, 5–32. Available at: <a href="http://link.springer.com/10.1023/A:1010933404324" class="uri">http://link.springer.com/10.1023/A:1010933404324</a>.</p>
 </div>
 <div id="ref-Menze2009">
-<p>215. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
+<p>217. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P., Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest and its Gini importance with standard chemometric methods for the feature selection and classification of spectral data. BMC Bioinformatics <em>10</em>, 213. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423</a>.</p>
 </div>
 <div id="ref-Louppe2014">
-<p>216. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
+<p>218. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
 </div>
 <div id="ref-Strobl2007">
-<p>217. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
+<p>219. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. BMC Bioinformatics <em>8</em>, 25. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -410,7 +410,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

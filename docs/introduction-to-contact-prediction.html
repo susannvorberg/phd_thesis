@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -296,7 +296,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="introduction-to-contact-prediction" class="section level1">
 <h1><span class="header-section-number">2</span> Introduction to Contact Prediction</h1>
 <p>Contact prediction refers to the prediction of physical contacts between amino acid side chains in the 3D protein structure, given the protein sequence as input.</p>
-<p>Historically, contact prediction was motivated by the idea that compensatory mutations between spatially neighboring residues can be traced down from evolutionary records <span class="citation">[<a href="#ref-Gobel1994">42</a>]</span>. As proteins evolve, they are under selective pressure to maintain their function and correspondingly their structure. Consequently, residues and interactions between residues constraining the fold, protein complex formation, or other aspects of function are under selective pressure. Highly constrained residues and interactions will be strongly conserved <span class="citation">[<a href="#ref-Godzik1989">43</a>]</span>. Another possibility to maintain structural integrity is the mutual compensation of unbeneficial mutations. For example, the unfavourable mutation of a small amino acid residue into a bulky residue in the densely packed protein core might have been compensated in the course of evolution by a particularly small side chain in a neighboring position. Other physico-chemical quantities such as amino acid charge or hydrogen bonding capacity can also induce compensatory effects<span class="citation">[<a href="#ref-Neher1994">44</a>]</span>. The <a href="abbrev.html#abbrev">MSA</a> of a protein family comprises homolog sequences that have descended from a common ancestor and are aligned relative to each other. According to the hypothesis, compensatory mutations show up as correlations between the amino acid types of pairs of <a href="abbrev.html#abbrev">MSA</a> columns and can be used to infer spatial proximity of residue pairs (see Figure <a href="introduction-to-contact-prediction.html#fig:correlated-mutations">2.1</a>).</p>
+<p>Historically, contact prediction was motivated by the idea that compensatory mutations between spatially neighboring residues can be traced down from evolutionary records <span class="citation">[<a href="#ref-Gobel1994">43</a>]</span>. As proteins evolve, they are under selective pressure to maintain their function and correspondingly their structure. Consequently, residues and interactions between residues constraining the fold, protein complex formation, or other aspects of function are under selective pressure. Highly constrained residues and interactions will be strongly conserved <span class="citation">[<a href="#ref-Godzik1989">44</a>]</span>. Another possibility to maintain structural integrity is the mutual compensation of unbeneficial mutations. For example, the unfavourable mutation of a small amino acid residue into a bulky residue in the densely packed protein core might have been compensated in the course of evolution by a particularly small side chain in a neighboring position. Other physico-chemical quantities such as amino acid charge or hydrogen bonding capacity can also induce compensatory effects<span class="citation">[<a href="#ref-Neher1994">45</a>]</span>. The <a href="abbrev.html#abbrev">MSA</a> of a protein family comprises homolog sequences that have descended from a common ancestor and are aligned relative to each other. According to the hypothesis, compensatory mutations show up as correlations between the amino acid types of pairs of <a href="abbrev.html#abbrev">MSA</a> columns and can be used to infer spatial proximity of residue pairs (see Figure <a href="introduction-to-contact-prediction.html#fig:correlated-mutations">2.1</a>).</p>
 
 <div class="figure" style="text-align: center"><span id="fig:correlated-mutations"></span>
 <img src="img/intro/correlated-mutations-transparent.png" alt="The evolutionary record of a protein family reveals evidence of compensatory mutations between spatially neighboring residues that are under selective pressure with respect to some physico-chemical constraints. Mining protein family sequence alignments for residue pairs with strong coevolutionary signals using statistical methods allows inference of spatial proximity for these residue pairs." width="90%" />
@@ -309,13 +309,13 @@ Figure 2.1: The evolutionary record of a protein family reveals evidence of comp
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Gobel1994">
-<p>42. Göbel, U., Sander, C., Schneider, R., and Valencia, A. (1994). Correlated mutations and residue contacts in proteins. Proteins <em>18</em>, 309–17. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8208723" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8208723</a>.</p>
+<p>43. Göbel, U., Sander, C., Schneider, R., and Valencia, A. (1994). Correlated mutations and residue contacts in proteins. Proteins <em>18</em>, 309–17. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8208723" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/8208723</a>.</p>
 </div>
 <div id="ref-Godzik1989">
-<p>43. Godzik, A., and Sander, C. (1989). Conservation of residue interactions in a family of Ca-binding proteins. &quot;Protein Eng. Des. Sel. <em>2</em>, 589–596. Available at: <a href="https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/2.8.589" class="uri">https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/2.8.589</a>.</p>
+<p>44. Godzik, A., and Sander, C. (1989). Conservation of residue interactions in a family of Ca-binding proteins. &quot;Protein Eng. Des. Sel. <em>2</em>, 589–596. Available at: <a href="https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/2.8.589" class="uri">https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/2.8.589</a>.</p>
 </div>
 <div id="ref-Neher1994">
-<p>44. Neher, E. (1994). How frequent are correlated changes in families of protein sequences? Proc. Natl. Acad. Sci. U. S. A. <em>91</em>, 98–102. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>45. Neher, E. (1994). How frequent are correlated changes in families of protein sequences? Proc. Natl. Acad. Sci. U. S. A. <em>91</em>, 98–102. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=42893{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -393,7 +393,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

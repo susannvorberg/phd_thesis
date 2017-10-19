@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2017-10-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -318,7 +318,7 @@ Figure 3.7: Distribution of selected couplings for filtered residue pairs with <
 </p>
 </div>
 <p>Figure <a href="coupling-profiles-vary-with-distance.html#fig:1d-coupling-profile-20-50">3.8</a> shows the distribution of selected couplings for residue pairs far apart in the protein structure (<span class="math inline">\(\Cb-\Cb\)</span> distances <span class="math inline">\(&gt; 20\angstrom\)</span>).<br />
-The distribution for all couplings is centered at zero and has small variance. Only for C-C coupling values, the distribution has a long tail for positve values, presumably arising from the fact that the maximum entropy model cannot distuinguish highly conserved signals of multiple disulphide bonds within a protein. This observation also agrees with the previous finding in section <a href="correlation-between-couplings-and-class.html#correlation-between-couplings-and-class">3.1</a> that C-C coupling values, albeit having large standard-deviations, correlate only weakly with contact class. The same arguments apply to couplings of aromatic pairs that have a comparably broad distribution and do not correlate strongly with the contact class. The strong coevolution signals for aromatic pairs even at high distance ranges might result from some kind of cooperative effects. Aromatic residues are known to form network-like structures in the protein core that stabilize protein structure <span class="citation">[<a href="#ref-Burley1985">26</a>]</span>. An example is given in Appendix Figure <a href="aromatic-network.html#fig:aromatic-network">E.4</a>. A possible explanation might be that the <em>Potts model</em> is limited to learning single positions and pairwise correlations. An extension to higher order couplings might resolve these cooperative effects observed between residues in the protein core.</p>
+The distribution for all couplings is centered at zero and has small variance. Only for C-C coupling values, the distribution has a long tail for positve values, presumably arising from the fact that the maximum entropy model cannot distuinguish highly conserved signals of multiple disulphide bonds within a protein. This observation also agrees with the previous finding in section <a href="correlation-between-couplings-and-class.html#correlation-between-couplings-and-class">3.1</a> that C-C coupling values, albeit having large standard-deviations, correlate only weakly with contact class. The same arguments apply to couplings of aromatic pairs that have a comparably broad distribution and do not correlate strongly with the contact class. The strong coevolution signals for aromatic pairs even at high distance ranges might result from some kind of cooperative effects. Aromatic residues are known to form network-like structures in the protein core that stabilize protein structure <span class="citation">[<a href="#ref-Burley1985">28</a>]</span>. An example is given in Appendix Figure <a href="aromatic-network.html#fig:aromatic-network">E.4</a>. A possible explanation might be that the <em>Potts model</em> is limited to learning single positions and pairwise correlations. An extension to higher order couplings might resolve these cooperative effects observed between residues in the protein core.</p>
 
 <div class="figure"><span id="fig:1d-coupling-profile-20-50"></span>
 <iframe src="img/coupling_matrix_analysis/1d_coupling_profile_20_50.html" width="100%" height="400px">
@@ -331,7 +331,7 @@ Figure 3.8: Distribution of selected couplings for filtered residue pairs with <
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Burley1985">
-<p>26. Burley, S., and Petsko, G. (1985). Aromatic-aromatic interaction: a mechanism of protein structure stabilization. Science (80-. ). <em>229</em>, 23–28. Available at: <a href="http://www.sciencemag.org/cgi/doi/10.1126/science.3892686" class="uri">http://www.sciencemag.org/cgi/doi/10.1126/science.3892686</a>.</p>
+<p>28. Burley, S., and Petsko, G. (1985). Aromatic-aromatic interaction: a mechanism of protein structure stabilization. Science (80-. ). <em>229</em>, 23–28. Available at: <a href="http://www.sciencemag.org/cgi/doi/10.1126/science.3892686" class="uri">http://www.sciencemag.org/cgi/doi/10.1126/science.3892686</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -409,7 +409,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
