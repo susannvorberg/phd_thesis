@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-19">
+<meta name="date" content="2017-10-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -126,16 +126,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
-<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
-<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-protein-structure-prediction"><i class="fa fa-check"></i><b>1.2.3</b> Contact assisted protein structure prediction</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Biological Background</a></li>
 <li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
 <li class="chapter" data-level="2.1" data-path="local-methods.html"><a href="local-methods.html"><i class="fa fa-check"></i><b>2.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="2.2" data-path="global-methods.html"><a href="global-methods.html"><i class="fa fa-check"></i><b>2.2</b> Global Statistical Models</a></li>
@@ -162,8 +153,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>3</b> Interpretation of Coupling Matrices</a><ul>
 <li class="chapter" data-level="3.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>3.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
 <li class="chapter" data-level="3.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>3.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
-<li class="chapter" data-level="3.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
-<li class="chapter" data-level="3.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="3.3" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="3.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full Likelihood</a><ul>
 <li class="chapter" data-level="4.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>4.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
@@ -175,18 +166,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>4.4</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>4.4.1</b> Varying the Sample Size</a></li>
 <li class="chapter" data-level="4.4.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.2</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="4.4.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.5</b> Using ADAM to optimize Contrastive Divergence</a></li>
 <li class="chapter" data-level="4.6" data-path="comparing-cd-couplings-to-pll-couplings.html"><a href="comparing-cd-couplings-to-pll-couplings.html"><i class="fa fa-check"></i><b>4.6</b> Comparing CD couplings to pLL couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact <span class="math inline">\(p(\c \eq 1 | \X)\)</span></a></li>
-<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
-<li class="chapter" data-level="5.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.3</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.3.1</b> Iterative improvement of Laplace approximation</a></li>
+<li class="chapter" data-level="5.2" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.2</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.2.1</b> Iterative improvement of Laplace approximation</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.3</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
 <li class="chapter" data-level="5.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>5.4</b> Computing the likelihood function of contact states <span class="math inline">\(p(\X | \c)\)</span></a></li>
-<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the model parameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
 <li class="chapter" data-level="5.6" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.6</b> The posterior probability distribution for contact states <span class="math inline">\(\cij\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>6</b> Contact Prior</a><ul>
@@ -214,25 +206,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>7.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>7.8.1</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Gibbs Sampling Scheme for Contrastive Divergence</a></li>
-<li class="chapter" data-level="7.10" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.10</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="7.11" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.12" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.12</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a><ul>
-<li class="chapter" data-level="7.12.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.12.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.12.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.12.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.12.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.12.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Computing the Gradient with Contrastive Divergence</a></li>
+<li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="7.13" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.13</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
+<li class="chapter" data-level="7.13.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.1</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="7.13.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.2</b> Model Specifications</a></li>
+<li class="chapter" data-level="7.13.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.13.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="7.13.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.13.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="7.13.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.13.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.13" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.13</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.13.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.13.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.13.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.13.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
+<li class="chapter" data-level="7.14" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.14</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="7.14.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.14.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
+<li class="chapter" data-level="7.14.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.14.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.14" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.14</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.14.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.14.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.14.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.14.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.14.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.14.3</b> Pairwise Features</a></li>
+<li class="chapter" data-level="7.15" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.15</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="7.15.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.15.1</b> Global Features</a></li>
+<li class="chapter" data-level="7.15.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.15.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="7.15.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.15.3</b> Pairwise Features</a></li>
 </ul></li>
-<li class="chapter" data-level="7.15" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.15</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.15.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.15.1</b> Feature Selection</a></li>
+<li class="chapter" data-level="7.16" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.16</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="7.16.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.16.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -265,6 +260,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.5" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.5</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for different Sample Sizes</a></li>
+<li class="chapter" data-level="F.8" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.8</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -299,7 +295,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>The couplings <span class="math inline">\(\wijab\)</span> are initialized at 0 and single potentials <span class="math inline">\(\vi\)</span> will not be optimized but rather kept fixed at their maximum-likleihood estimate <span class="math inline">\(\vi^*\)</span> as described in methods section <a href="potts-full-likelihood.html#prior-v">7.6.3</a>. The optimization is stopped when the maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates <span class="math inline">\(||\w||_2\)</span> over the last five iterations falls below the threshold of <span class="math inline">\(\epsilon = 1e-8\)</span>. The gradient of the full likelihood is approximated with <a href="abbrev.html#abbrev">CD</a> which involves Gibbs sampling of protein sequences according to the current model parametrization and is described in detail in methods section <a href="cd-sampling-optimization.html#cd-sampling-optimization">4.4</a>. Zero centered L2-regularization is used to constrain the coupling parameters <span class="math inline">\(\w\)</span> using the regularization coefficient <span class="math inline">\(\lambda_w = 0.2L\)</span> which is the default setting for optimizing the pseudo-likelihood with <em>CCMpredPy</em>. Performance will be evaluated by the mean precision of top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section <a href="dataset.html#dataset">7.1</a>. Contact scores for couplings are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm as explained in section <a href="maxent.html#post-processing-heuristics">2.4.4</a>. Pseudo-likelihood couplings are computed with the tool <em>CCMpredPy</em> that is introduced in methods section <a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy">7.2.1</a> and the pseudo-likelihood contact score will serve as general reference method for tuning the hyperparameters.</p>
 <div id="methods-full-likelihood-adam" class="section level3">
 <h3><span class="header-section-number">7.8.1</span> Tuning Hyperparameters of <em>ADAM</em> Optimizer</h3>
-<p><em>ADAM</em> <span class="citation">[<a href="#ref-Kingma2014">212</a>]</span> stores an exponentially decaying average of past gradients and squared gradients,</p>
+<p><em>ADAM</em> <span class="citation">[<a href="#ref-Kingma2014">205</a>]</span> stores an exponentially decaying average of past gradients and squared gradients,</p>
 <span class="math display">\[\begin{align}
   m_t &amp;= \beta_1 m_{t−1} + (1 − \beta_1) g \\
   v_t &amp;= \beta_2 v_{t−1} + (1 − \beta_2) g^2 \; ,
@@ -327,7 +323,7 @@ Parameters are then updated using step size <span class="math inline">\(\alpha\)
 Figure 7.5: L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> during optimization with <em>ADAM</em> and different learning rates without annealing. The learning rate <span class="math inline">\(\alpha\)</span> is specified in the legend. <strong>Left</strong> Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=96). <strong>Right</strong> Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=16808).
 </p>
 </div>
-<p>It is interesting to note in Figure <a href="methods-sgd.html#fig:adam-learning-rate">7.5</a>, that the norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges towards different values depending on the choice of the learning rate <span class="math inline">\(\alpha\)</span>. This inidicates that it is necessary to decrease the learning rate over time. By default, <em>ADAM</em> uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature. However, popular implementations of <em>ADAM</em> in the <a href="https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385">Keras</a> <span class="citation">[<a href="#ref-Chollet2015">226</a>]</span> and <a href="https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629">Lasagne</a> <span class="citation">[<a href="#ref-Dieleman2015">227</a>]</span> packages allow the use of an annealing schedule. I therefore tested different learning rate annealing schedules for <em>ADAM</em> assuming that with decreasing learning rates the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> will converge towards a consistent value. Indeed, as can be seen in Figure <a href="methods-sgd.html#fig:adam-learning-rate-annealing">7.6</a>, when using a linear or sigmoidal learning rate annealing schedule with <em>ADAM</em>, the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges roughly towards the same value that has been obtained with plain <a href="abbrev.html#abbrev">SGD</a> shown in Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">4.8</a>.</p>
+<p>It is interesting to note in Figure <a href="methods-sgd.html#fig:adam-learning-rate">7.5</a>, that the norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges towards different values depending on the choice of the learning rate <span class="math inline">\(\alpha\)</span>. This inidicates that it is necessary to decrease the learning rate over time. By default, <em>ADAM</em> uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature. However, popular implementations of <em>ADAM</em> in the <a href="https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385">Keras</a> <span class="citation">[<a href="#ref-Chollet2015">219</a>]</span> and <a href="https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629">Lasagne</a> <span class="citation">[<a href="#ref-Dieleman2015">220</a>]</span> packages allow the use of an annealing schedule. I therefore tested different learning rate annealing schedules for <em>ADAM</em> assuming that with decreasing learning rates the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> will converge towards a consistent value. Indeed, as can be seen in Figure <a href="methods-sgd.html#fig:adam-learning-rate-annealing">7.6</a>, when using a linear or sigmoidal learning rate annealing schedule with <em>ADAM</em>, the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges roughly towards the same value that has been obtained with plain <a href="abbrev.html#abbrev">SGD</a> shown in Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">4.8</a>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:adam-learning-rate-annealing"></span>
 <img src="img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during optimization with ADAM and different learning rate annealing schedules. The learning rate \(\alpha\) is specified with respect to Neff as \(\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})\). The learning rate annealing schedule is specified in the legend. Left Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (Neff=96). Right Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (Neff=16808)." width="50%" /><img src="img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during optimization with ADAM and different learning rate annealing schedules. The learning rate \(\alpha\) is specified with respect to Neff as \(\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})\). The learning rate annealing schedule is specified in the legend. Left Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (Neff=96). Right Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (Neff=16808)." width="50%" />
@@ -340,13 +336,13 @@ Figure 7.6: L2-norm of the coupling parameters <span class="math inline">\(||\w|
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Kingma2014">
-<p>212. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+<p>205. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
 </div>
 <div id="ref-Chollet2015">
-<p>226. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
+<p>219. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
 </div>
 <div id="ref-Dieleman2015">
-<p>227. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
+<p>220. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -424,7 +420,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

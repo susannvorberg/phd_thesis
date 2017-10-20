@@ -52,33 +52,6 @@ Finally, the marginals $p(\cij | \X, \phi) = \int  p(\c | \X, \phi) d \c_{\backs
 
 
 
-## Modelling the prior over couplings with dependence on $\cij$ {#coupling-prior}
-
-The prior over couplings $p(\wij|\cij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \mathbb{R}^{400}$, precision matrices $\Lk \in \mathbb{R}^{400\times 400}$, and  normalised weights $g_k(\cij)$ that depend on the contact state, 
-
-\begin{align}	
-	  p(\wij | \cij) = \sum_{k=0}^K g_k(\cij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.
-(\#eq:definition-mixture-coupling-prior)
-\end{align}
-
-The mixture weights $g_k(\cij)$  in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax: 
-
-\begin{equation}
-	g_k(\cij) = \frac{\exp \gamma_k(\cij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\cij)} 
-(\#eq:def-g-k-binary)
-\end{equation}
-
-The functions $g_k(\cij)$ remain invariant when adding an offset to all $\gamma_k(\cij)$. 
-This degeneracy can be removed by setting $\gamma_0(\cij)=1$.
-
-
-
-
-
-
-
-
-
 ## Gaussian approximation to the posterior of couplings {#laplace-approx}
 
 
@@ -100,8 +73,8 @@ The posterior distribution can be approximated with a so called "Laplace Approxi
 By performing a second order Taylor expansion around the mode $\w^*$ of the log posterior it can be written as
 
 \begin{align}
-    \log p(\w | \X , \v^*) \overset{!}{\approx} &  \;  \log p(\w^* | \X , \v^*) \\
-                & + \nabla_\w \log p(\w | \X , \v^*)|_{\w^*}(\w-\w^*) \\ 
+    \log p(\w | \X , \v^*) \overset{!}{\approx} &  \;  \log p(\w^* | \X , \v^*) \nonumber\\
+                & + \nabla_\w \log p(\w | \X , \v^*)|_{\w^*}(\w-\w^*) \nonumber\\ 
   			    & - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \H (\w-\w^*)  \; .
 \end{align}
 
@@ -123,7 +96,7 @@ Hence, the posterior of couplings can be approximated with a Gaussian
 
 \begin{align}
    p(\w | \X , \v^*) &\approx p(\w^* | \X , \v^*) \exp \left( - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \H  (\w -\w^*) \right) \nonumber \\
-              &= p(\w^* | \X , \v^*) \frac{(2 \pi)^\frac{D}{2}} { |\H|^\frac{D}{2}} \times \Gauss (\w | \w^*, \H^{-1} )  \\
+              &= p(\w^* | \X , \v^*) \frac{(2 \pi)^\frac{D}{2}} { |\H|^\frac{D}{2}} \times \Gauss (\w | \w^*, \H^{-1} ) \nonumber \\
               &\propto  \Gauss (\w | \w^*, \H^{-1}) \,,
 (\#eq:reg-lik-gauss-approx)
 \end{align}
@@ -166,6 +139,40 @@ and similarly,
 \end{align}
 
 We can now run a second optimisation with better regularisation prior, in which the $\tilde{\mathbf{\mu}}$ and $\tilde{\Lambda}$ are fixed and will not be optimised. Instead we optimise the marginal likelihood as a function of $\muk$ and $\Lk$. Since the new regularisation prior will be very close to the mode of the integrand in the marginal likelihood, our approximation for the second iteration has improved in comparison to the first iteration. In principle, a third iteration can be done in which our regularisation prior derived from the prior that was found by optimisation in the second iteration. However this is unlikely to further improve the predictions. 
+
+
+
+
+
+## Modelling the prior over couplings with dependence on $\cij$ {#coupling-prior}
+
+The prior over couplings $p(\wij|\cij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \mathbb{R}^{400}$, precision matrices $\Lk \in \mathbb{R}^{400\times 400}$, and  normalised weights $g_k(\cij)$ that depend on the contact state, 
+
+\begin{align}	
+	  p(\wij | \cij) = \sum_{k=0}^K g_k(\cij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.
+(\#eq:definition-mixture-coupling-prior)
+\end{align}
+
+The mixture weights $g_k(\cij)$  in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax: 
+
+\begin{equation}
+	g_k(\cij) = \frac{\exp \gamma_k(\cij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\cij)} 
+(\#eq:def-g-k-binary)
+\end{equation}
+
+The functions $g_k(\cij)$ remain invariant when adding an offset to all $\gamma_k(\cij)$. 
+This degeneracy can be removed by setting $\gamma_0(\cij)=1$.
+
+The assumption that the prior over couplings $p(\wij|\cij)$ can be modelled as a multivariate Gaussian is justified by the analysis of single and 2-dimensional coupling distributions presented in section \@ref(coupling-profiles) and in section \@ref(higher-order-coupling-profiles).
+The couplings $\wijab$ for this analysis have been filtered such that they have sufficient evidence in the alignment (see method section \@ref(method-coupling-correlation) for details). 
+Therefore, the presented distributions should resemble the posterior distribution of couplings $p(\w | \X , \v^*) \propto  \Gauss (\w | \w^*, \H^{-1})$ in the case that the diagonal elements $(\H)_{ijab, ijab}$ have non-negligible values.
+
+
+
+
+
+
+
 
 
 ## Computing the likelihood function of contact states $p(\X | \c)$ {#likelihood-fct-distances}
@@ -211,7 +218,7 @@ The first term in the integrand of eq. \@ref(eq:int-over-w) now factorizes over 
   \Gauss (\w | \w^{*}, \H^{-1}) \approx \prod_{1 \le i < j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) ,
 \end{equation}
 
-with the diagonal block matrices are $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. 
+with the diagonal block matrices $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. 
 Now the product over all residue indices can be moved in front of the integral and each integral can be performed over $\wij$ separately, 
 
 \begin{eqnarray}
@@ -259,9 +266,28 @@ p(\X | \c) \propto \prod_{1 \le i < j \le L}  \sum_{k=0}^K g_{k}(\cij) \frac{\Ga
 $\Gauss( \mathbf{0} | \mathbf{0}, \lambda_w^{-1} \I)$ and $\Gauss( \mathbf{0} | \wij^*, \H_{ij}^{-1})$ are constants that depend only on $\X$ and $\lambda_w$ and can be omitted. 
 
 
-## Training the model parameters $\muk$ and $\Lk$ {#bayesian-model-training-hyperparameters}
+## Training the Hyperparameters in the Likelihood Function of Contact States  {#bayesian-model-training-hyperparameters}
 
-The model hyperparameters $\muk$ and $\Lk$ representing the mean and precision matrices of the K Gaussian components of the contact state dependent coupling prior, will be trained via maximum-likelihood estimation as described in detail in method section \@ref(training-hyperparameters).
+The likelihood function of contact states given in eq. \@ref(eq:pXr-final) contains the hyperparameters $\gamma_k(\cij)$, $\muk$ and $\Lk$ representing the weights, mean vectors and precision matrices of the $K$ Gaussian components of the contact state dependent coupling prior, respectively.
+The hyperparameters will be trained by maximizing the logarithm of the likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^M$ and associated structures with contact state vectors $\c^1,\ldots,\c^M$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$ as described in detail in method section \@ref(training-hyperparameters).
+
+
+I training models with $K \in \{1,3,5\}$ Gaussian mixture components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$.
+The number of model parameters assembles as follows:
+
+- $(K-1) \times 400$ parameters for $\muk$ with $k \in \{1, \ldots, K \}$ ($\mu_0 = 0$)
+- $K \times 400$ parameters for the diagonal $(\Lk)_{ab, ab}$ with $k \in \{0, \ldots, K\}$ 
+- $2 \times (K\!-\!1)$ parameters for $\gamma_k(\cij)$ for $k \in \{1,2\}$ and $\cij \in \{0,1\}$ ($\gamma_0(\cij)\eq1$).
+
+This yields 2004 parameters for $K\eq3$, 3608 parameters for $K\eq5$ and 7618 parameters for $K\eq10$ components. 
+The models have been trained on datasets of varying sizes, consisting of 10000, 100000, 300000 and 500000 residue pairs for contacts and non-contacts respectively.
+
+
+Convergence according to the criterion, .... has only been observed for the smallest datasets with 10000 and 100000 residue pairs per contact class.
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH
+
+
+
 
 
 
@@ -271,8 +297,8 @@ The model hyperparameters $\muk$ and $\Lk$ representing the mean and precision m
 The posterior distribution for $c_{ij}$ can be computed by marginalizing over all other contact states, which are summarized in the vector $\c_{\backslash ij}$: 
 
 \begin{eqnarray}
-    p(\cij | \X, \phi) &=& \int d \c_{\backslash ij} \, p(\c |\X, \mathbf{\phi})\\
-                &\propto & \int d \c_{\backslash ij} \, p(\X|\c) \, p(\c | \phi) \\
+    p(\cij | \X, \phi) &=& \int d \c_{\backslash ij} \, p(\c |\X, \mathbf{\phi}) \nonumber\\
+                &\propto & \int d \c_{\backslash ij} \, p(\X|\c) \, p(\c | \phi) \nonumber\\
                 &\propto & \int d \c_{\backslash ij} \prod_{i'<j'} \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}
  \, \prod_{i'<j'} p(c_{i'j'} |\phi_{i'j'})  \,,
  \end{eqnarray}
@@ -281,7 +307,7 @@ The posterior distribution for $c_{ij}$ can be computed by marginalizing over al
  
  \begin{eqnarray}
     p(\cij | \X, \phi) & \propto & 
-            p(\cij |\phi_{ij}) \, \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} \\
+            p(\cij |\phi_{ij}) \, \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} \nonumber\\
             & \times  & \prod_{i'<j', (i',j') \ne (i,j)} \int d c_{i'j'} \, p(c_{i'j'} |\phi_{i'j'}) \, \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}
 \end{eqnarray}
 

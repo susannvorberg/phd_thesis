@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-19">
+<meta name="date" content="2017-10-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -126,16 +126,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
-<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
-<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-protein-structure-prediction"><i class="fa fa-check"></i><b>1.2.3</b> Contact assisted protein structure prediction</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Biological Background</a></li>
 <li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
 <li class="chapter" data-level="2.1" data-path="local-methods.html"><a href="local-methods.html"><i class="fa fa-check"></i><b>2.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="2.2" data-path="global-methods.html"><a href="global-methods.html"><i class="fa fa-check"></i><b>2.2</b> Global Statistical Models</a></li>
@@ -162,8 +153,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>3</b> Interpretation of Coupling Matrices</a><ul>
 <li class="chapter" data-level="3.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>3.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
 <li class="chapter" data-level="3.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>3.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
-<li class="chapter" data-level="3.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
-<li class="chapter" data-level="3.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="3.3" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="3.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full Likelihood</a><ul>
 <li class="chapter" data-level="4.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>4.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
@@ -175,18 +166,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>4.4</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>4.4.1</b> Varying the Sample Size</a></li>
 <li class="chapter" data-level="4.4.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.2</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="4.4.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.5</b> Using ADAM to optimize Contrastive Divergence</a></li>
 <li class="chapter" data-level="4.6" data-path="comparing-cd-couplings-to-pll-couplings.html"><a href="comparing-cd-couplings-to-pll-couplings.html"><i class="fa fa-check"></i><b>4.6</b> Comparing CD couplings to pLL couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact <span class="math inline">\(p(\c \eq 1 | \X)\)</span></a></li>
-<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
-<li class="chapter" data-level="5.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.3</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.3.1</b> Iterative improvement of Laplace approximation</a></li>
+<li class="chapter" data-level="5.2" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.2</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.2.1</b> Iterative improvement of Laplace approximation</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.3</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
 <li class="chapter" data-level="5.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>5.4</b> Computing the likelihood function of contact states <span class="math inline">\(p(\X | \c)\)</span></a></li>
-<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the model parameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
 <li class="chapter" data-level="5.6" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.6</b> The posterior probability distribution for contact states <span class="math inline">\(\cij\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>6</b> Contact Prior</a><ul>
@@ -214,25 +206,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>7.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>7.8.1</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Gibbs Sampling Scheme for Contrastive Divergence</a></li>
-<li class="chapter" data-level="7.10" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.10</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="7.11" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.12" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.12</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a><ul>
-<li class="chapter" data-level="7.12.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.12.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.12.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.12.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.12.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.12.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Computing the Gradient with Contrastive Divergence</a></li>
+<li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="7.13" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.13</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
+<li class="chapter" data-level="7.13.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.1</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="7.13.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.2</b> Model Specifications</a></li>
+<li class="chapter" data-level="7.13.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.13.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="7.13.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.13.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="7.13.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.13.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.13" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.13</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.13.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.13.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.13.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.13.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
+<li class="chapter" data-level="7.14" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.14</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="7.14.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.14.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
+<li class="chapter" data-level="7.14.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.14.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.14" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.14</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.14.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.14.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.14.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.14.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.14.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.14.3</b> Pairwise Features</a></li>
+<li class="chapter" data-level="7.15" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.15</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="7.15.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.15.1</b> Global Features</a></li>
+<li class="chapter" data-level="7.15.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.15.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="7.15.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.15.3</b> Pairwise Features</a></li>
 </ul></li>
-<li class="chapter" data-level="7.15" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.15</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.15.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.15.1</b> Feature Selection</a></li>
+<li class="chapter" data-level="7.16" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.16</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="7.16.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.16.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -265,6 +260,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.5" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.5</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for different Sample Sizes</a></li>
+<li class="chapter" data-level="F.8" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.8</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -294,93 +290,84 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances" class="section level2">
-<h2><span class="header-section-number">7.13</span> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</h2>
-<p>It is straightforward to extend the Baysian model for contact prediction presented in section <a href="overview-posterior-distances.html#overview-posterior-distances">5.1</a> for distances. The prior over couplings will modelled using distance dependent mixture weights <span class="math inline">\(g_k(\rij)\)</span>. Therefore eq. <a href="coupling-prior.html#eq:definition-mixture-coupling-prior">(5.4)</a> is modified such that mixture weights <span class="math inline">\(g_k(\rij)\)</span> are modelled as softmax over linear functions <span class="math inline">\(\gamma_k(\rij)\)</span> (see Figure <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#fig:softmax-linear-fct">7.7</a>:</p>
+<h2><span class="header-section-number">7.14</span> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</h2>
+<p>It is straightforward to extend the Baysian model for contact prediction presented in section <a href="overview-posterior-distances.html#overview-posterior-distances">5.1</a> for distances. The prior over couplings will modelled using distance dependent mixture weights <span class="math inline">\(g_k(\cij)\)</span>. Therefore eq. <a href="coupling-prior.html#eq:definition-mixture-coupling-prior">(5.5)</a> is modified such that mixture weights <span class="math inline">\(g_k(\cij)\)</span> are modelled as softmax over linear functions <span class="math inline">\(\gamma_k(\cij)\)</span> (see Figure <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#fig:softmax-linear-fct">7.8</a>:</p>
 <span class="math display" id="eq:definition-mixture-weights">\[\begin{align}
-      g_k(\rij)        &amp;= \frac{\exp \gamma_k(\rij)}{\sum_{k&#39;=0}^K \exp \gamma_{k&#39;}(\rij)} \, , \\
-      \gamma_k(\rij)   &amp;= - \sum_{k&#39;=0}^{k} \alpha_{k&#39;} ( \rij - \rho_{k&#39;}) .
+      g_k(\cij)        &amp;= \frac{\exp \gamma_k(\cij)}{\sum_{k&#39;=0}^K \exp \gamma_{k&#39;}(\cij)} \, , \\
+      \gamma_k(\cij)   &amp;= - \sum_{k&#39;=0}^{k} \alpha_{k&#39;} ( \cij - \rho_{k&#39;}) .
 \tag{7.32}
 \end{align}\]</span>
 
 <div class="figure" style="text-align: center"><span id="fig:softmax-linear-fct"></span>
-<img src="img/theory/softmax_linear_fct.png" alt="The Gaussian mixture coefficients \(g_k(\rij)\) of \(p(\wij|\rij)\) are modelled as softmax over linear functions \(\gamma_k(\rij)\). \(\rho_k\) sets the transition point between neighbouring components \(g_{k-1}(\rij)\) and \(g_k(\rij)\), while \(\alpha_k\) quantifies the abruptness of the transition between \(g_{k-1}(\rij)\) and \(g_k(\rij)\)." width="50%" />
+<img src="img/theory/softmax_linear_fct.png" alt="The Gaussian mixture coefficients \(g_k(\cij)\) of \(p(\wij|\cij)\) are modelled as softmax over linear functions \(\gamma_k(\cij)\). \(\rho_k\) sets the transition point between neighbouring components \(g_{k-1}(\cij)\) and \(g_k(\cij)\), while \(\alpha_k\) quantifies the abruptness of the transition between \(g_{k-1}(\cij)\) and \(g_k(\cij)\)." width="50%" />
 <p class="caption">
-Figure 7.7: The Gaussian mixture coefficients <span class="math inline">\(g_k(\rij)\)</span> of <span class="math inline">\(p(\wij|\rij)\)</span> are modelled as softmax over linear functions <span class="math inline">\(\gamma_k(\rij)\)</span>. <span class="math inline">\(\rho_k\)</span> sets the transition point between neighbouring components <span class="math inline">\(g_{k-1}(\rij)\)</span> and <span class="math inline">\(g_k(\rij)\)</span>, while <span class="math inline">\(\alpha_k\)</span> quantifies the abruptness of the transition between <span class="math inline">\(g_{k-1}(\rij)\)</span> and <span class="math inline">\(g_k(\rij)\)</span>.
+Figure 7.8: The Gaussian mixture coefficients <span class="math inline">\(g_k(\cij)\)</span> of <span class="math inline">\(p(\wij|\cij)\)</span> are modelled as softmax over linear functions <span class="math inline">\(\gamma_k(\cij)\)</span>. <span class="math inline">\(\rho_k\)</span> sets the transition point between neighbouring components <span class="math inline">\(g_{k-1}(\cij)\)</span> and <span class="math inline">\(g_k(\cij)\)</span>, while <span class="math inline">\(\alpha_k\)</span> quantifies the abruptness of the transition between <span class="math inline">\(g_{k-1}(\cij)\)</span> and <span class="math inline">\(g_k(\cij)\)</span>.
 </p>
 </div>
-<p>The functions <span class="math inline">\(g_k(\rij)\)</span> remain invariant when adding an offset to all <span class="math inline">\(\gamma_k(\rij)\)</span>. This degeneracy can be removed by setting <span class="math inline">\(\gamma_0(\rij) \eq 0\)</span> (i.e., <span class="math inline">\(\alpha_0 \eq 0\)</span> and <span class="math inline">\(\rho_0 \eq 0\)</span>). Further, the components are ordered, <span class="math inline">\(\rho_1&gt; \ldots &gt; \rho_K\)</span> and it is demanded that <span class="math inline">\(\alpha_k &gt; 0\)</span> for all <span class="math inline">\(k\)</span>. This ensures that for <span class="math inline">\(\rij \rightarrow \infty\)</span> we will obtain <span class="math inline">\(g_0(\rij) \rightarrow 1\)</span> and hence <span class="math inline">\(p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )\)</span>.</p>
-<p>The parameters <span class="math inline">\(\rho_k\)</span> mark the transition points between the two Gaussian mixture components <span class="math inline">\(k-1\)</span> and <span class="math inline">\(k\)</span>, i.e., the points at which the two components obtain equal weights. This follows from <span class="math inline">\(\gamma_k(\rij) - \gamma_{k-1}(r) \eq \alpha_{t} ( \rij - \rho_{t})\)</span> and hence <span class="math inline">\(\gamma_{k-1}(\rho_k) \eq= \gamma_k(\rho_k)\)</span>. A change in <span class="math inline">\(\rho_k\)</span> or <span class="math inline">\(\alpha_k\)</span> only changes the behaviour of <span class="math inline">\(g_{k-1}(\rij)\)</span> and <span class="math inline">\(g_k(\rij)\)</span> in the transition region around <span class="math inline">\(\rho_k\)</span>. Therefore, this particular definition of <span class="math inline">\(\gamma_k(\rij)\)</span> makes the parameters <span class="math inline">\(\alpha_k\)</span> and <span class="math inline">\(\rho_k\)</span> as independent of each other as possible, rendering the optimisation of these parameters more efficient.</p>
+<p>The functions <span class="math inline">\(g_k(\cij)\)</span> remain invariant when adding an offset to all <span class="math inline">\(\gamma_k(\cij)\)</span>. This degeneracy can be removed by setting <span class="math inline">\(\gamma_0(\cij) \eq 0\)</span> (i.e., <span class="math inline">\(\alpha_0 \eq 0\)</span> and <span class="math inline">\(\rho_0 \eq 0\)</span>). Further, the components are ordered, <span class="math inline">\(\rho_1&gt; \ldots &gt; \rho_K\)</span> and it is demanded that <span class="math inline">\(\alpha_k &gt; 0\)</span> for all <span class="math inline">\(k\)</span>. This ensures that for <span class="math inline">\(\cij \rightarrow \infty\)</span> we will obtain <span class="math inline">\(g_0(\cij) \rightarrow 1\)</span> and hence <span class="math inline">\(p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )\)</span>.</p>
+<p>The parameters <span class="math inline">\(\rho_k\)</span> mark the transition points between the two Gaussian mixture components <span class="math inline">\(k-1\)</span> and <span class="math inline">\(k\)</span>, i.e., the points at which the two components obtain equal weights. This follows from <span class="math inline">\(\gamma_k(\cij) - \gamma_{k-1}(r) \eq \alpha_{t} ( \cij - \rho_{t})\)</span> and hence <span class="math inline">\(\gamma_{k-1}(\rho_k) \eq= \gamma_k(\rho_k)\)</span>. A change in <span class="math inline">\(\rho_k\)</span> or <span class="math inline">\(\alpha_k\)</span> only changes the behaviour of <span class="math inline">\(g_{k-1}(\cij)\)</span> and <span class="math inline">\(g_k(\cij)\)</span> in the transition region around <span class="math inline">\(\rho_k\)</span>. Therefore, this particular definition of <span class="math inline">\(\gamma_k(\cij)\)</span> makes the parameters <span class="math inline">\(\alpha_k\)</span> and <span class="math inline">\(\rho_k\)</span> as independent of each other as possible, rendering the optimisation of these parameters more efficient.</p>
 <div id="the-derivative-of-the-log-likelihood-with-respect-to-rho_k" class="section level3">
-<h3><span class="header-section-number">7.13.1</span> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></h3>
-<p>Analogous to the derivations of <span class="math inline">\(\muk\)</span> in section <a href="training-hyperparameters.html#gradient-muk">7.12.1</a> and <span class="math inline">\(\Lk\)</span> in section <a href="training-hyperparameters.html#gradient-lambdak">7.12.2</a>, the partial derivative with respect to <span class="math inline">\(\rho_k\)</span> is</p>
+<h3><span class="header-section-number">7.14.1</span> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></h3>
+<p>Analogous to the derivations of <span class="math inline">\(\muk\)</span> in section <a href="training-hyperparameters.html#gradient-muk">7.13.3</a> and <span class="math inline">\(\Lk\)</span> in section <a href="training-hyperparameters.html#gradient-lambdak">7.13.4</a>, the partial derivative with respect to <span class="math inline">\(\rho_k\)</span> is</p>
 <span class="math display" id="eq:nabla-rhok-LL-pre">\[\begin{equation}
-\frac{\partial} {\partial \rho_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) =  \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \,  \frac{\partial} {\partial \rho_k}  \log g_{k&#39;}(\rij)  \,.
+\frac{\partial} {\partial \rho_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) =  \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \,  \frac{\partial} {\partial \rho_k}  \log g_{k&#39;}(\cij)  \,.
     \tag{7.33}
 \end{equation}\]</span>
-Using the definition of <span class="math inline">\(g_k(\rij)\)</span> in eq. <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#eq:definition-mixture-weights">(7.32)</a>, we find (rember that <span class="math inline">\(\alpha_0 \eq 0\)</span> as noted in the last section) that
+Using the definition of <span class="math inline">\(g_k(\cij)\)</span> in eq. <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#eq:definition-mixture-weights">(7.32)</a>, we find (rember that <span class="math inline">\(\alpha_0 \eq 0\)</span> as noted in the last section) that
 <span class="math display" id="eq:dlog-gk-drho">\[\begin{eqnarray}
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-    &amp;=&amp; \frac{\partial} {\partial \rho_k}  \log  \frac{\exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) \right) }{ \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) \right) } \nonumber \\
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-    &amp;=&amp; -  \frac{\partial} {\partial \rho_k}  \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} )  
-        - \frac{\partial} {\partial \rho_k}  \log  \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) \right)  \nonumber \\
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+    \frac{\partial} {\partial \rho_k}  \log g_{l}(\cij)  
+    &amp;=&amp; \frac{\partial} {\partial \rho_k}  \log  \frac{\exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) \right) }{ \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) \right) } \nonumber \\
+    &amp;=&amp; -  \frac{\partial} {\partial \rho_k}  \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} )  
+        - \frac{\partial} {\partial \rho_k}  \log  \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) \right)  \nonumber \\
     &amp;=&amp; \alpha_k \, I(l \ge k)   
-        -  \frac{ \sum_{k&#39;=0}^K \frac{\partial} {\partial \rho_k}  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+        -  \frac{ \sum_{k&#39;=0}^K \frac{\partial} {\partial \rho_k}  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
     &amp;=&amp; \alpha_k \, I(l \ge k)   
-        -  \frac{ \sum_{k&#39;=0}^K \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) \, \alpha_k \, I(k&#39; \ge k)    }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+        -  \frac{ \sum_{k&#39;=0}^K \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) \, \alpha_k \, I(k&#39; \ge k)    }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
     &amp;=&amp; \alpha_k \, I(l \ge k)   
-        -  \frac{ \sum_{k&#39;=0}^K \exp (\gamma_{k&#39;}(\rij) ) \, \alpha_k \, I(k&#39; \ge k)    }{ \sum_{k&#39;=0}^K  \exp (\gamma_{k&#39;}(\rij) ) } \nonumber \\
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+        -  \frac{ \sum_{k&#39;=0}^K \exp (\gamma_{k&#39;}(\cij) ) \, \alpha_k \, I(k&#39; \ge k)    }{ \sum_{k&#39;=0}^K  \exp (\gamma_{k&#39;}(\cij) ) } \nonumber \\
     &amp;=&amp; \alpha_k \, I(l \ge k)   
-        -  \sum_{k&#39;=0}^K  g_{k&#39;}(\rij) \, \alpha_k \, I(k&#39; \ge k)  \nonumber \\ 
-    \frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-    &amp;=&amp; \alpha_k \, \left(  I(l \ge k)  -  \sum_{k&#39;=k}^K  g_{k&#39;}(\rij) \right)  \, .
+        -  \sum_{k&#39;=0}^K  g_{k&#39;}(\cij) \, \alpha_k \, I(k&#39; \ge k)  \nonumber \\ 
+    &amp;=&amp; \alpha_k \, \left(  I(l \ge k)  -  \sum_{k&#39;=k}^K  g_{k&#39;}(\cij) \right)  \, .
     \tag{7.34}
 \end{eqnarray}\]</span>
 <p>Inserting this into eq. <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#eq:nabla-rhok-LL-pre">(7.33)</a> yields</p>
 <span class="math display">\[\begin{align}
     \frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  
-    &amp;= \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \, \alpha_k \, \left(  I(k&#39; \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\rij) \right)  \nonumber \\
-    &amp;= \alpha_k \, \sum_{1\le i&lt;j\le L}  \, \left( \sum_{k&#39;=k}^K  p(k&#39;|ij)   -  \sum _{k&#39;=0}^K  p(k&#39;|ij) \, \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\rij)  \right) ,
+    &amp;= \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \, \alpha_k \, \left(  I(k&#39; \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\cij) \right)  \nonumber \\
+    &amp;= \alpha_k \, \sum_{1\le i&lt;j\le L}  \, \left( \sum_{k&#39;=k}^K  p(k&#39;|ij)   -  \sum _{k&#39;=0}^K  p(k&#39;|ij) \, \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\cij)  \right) ,
 \end{align}\]</span>
 <p>and finally</p>
 <span class="math display">\[\begin{equation}
-    \frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  = \alpha_k \, \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=k}^K  ( p(k&#39;|ij) - g_{k&#39;}(\rij) )  \, .
+    \frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  = \alpha_k \, \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=k}^K  ( p(k&#39;|ij) - g_{k&#39;}(\cij) )  \, .
 \end{equation}\]</span>
-<p>This equation has an intuitive meaning: The gradient is the difference between the summed probability mass predicted to be due to components <span class="math inline">\(k&#39; \ge k\)</span>, <span class="math inline">\(p(k&#39;\ge k | ij)\)</span>, and the sum of the prior probabilities <span class="math inline">\(g_k(\rij)\)</span> for components <span class="math inline">\(k&#39; \ge k\)</span>, where the sum runs over all training points indexed by <span class="math inline">\(i,j\)</span>.</p>
+<p>This equation has an intuitive meaning: The gradient is the difference between the summed probability mass predicted to be due to components <span class="math inline">\(k&#39; \ge k\)</span>, <span class="math inline">\(p(k&#39;\ge k | ij)\)</span>, and the sum of the prior probabilities <span class="math inline">\(g_k(\cij)\)</span> for components <span class="math inline">\(k&#39; \ge k\)</span>, where the sum runs over all training points indexed by <span class="math inline">\(i,j\)</span>.</p>
 </div>
 <div id="the-derivative-of-the-log-likelihood-with-respect-to-alpha_k" class="section level3">
-<h3><span class="header-section-number">7.13.2</span> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></h3>
+<h3><span class="header-section-number">7.14.2</span> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></h3>
 <p>Last and similar to the previous derivation, the partial derivative with respect to <span class="math inline">\(\alpha_k\)</span> is</p>
 <span class="math display" id="eq:nabla-alphak-LLpre">\[\begin{equation}
-  \frac{\partial} {\partial \alpha_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) = \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \,  \frac{\partial} {\partial \alpha_k}  \log g_{k&#39;}(\rij)  \,.
+  \frac{\partial} {\partial \alpha_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) = \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \,  \frac{\partial} {\partial \alpha_k}  \log g_{k&#39;}(\cij)  \,.
     \tag{7.35}
 \end{equation}\]</span>
 <p>Similarly as before,</p>
 <span class="math display" id="eq:dlog-gk-dalpha">\[\begin{align}
-    \frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-    &amp;= \frac{\partial} {\partial \alpha_k}  \log  \frac{\exp (- \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
-    \frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-    &amp;= -  \frac{\partial} {\partial \alpha_k}  \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} )  
-        - \frac{\partial} {\partial \alpha_k}  \log  \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) \right)  \nonumber \\
-    \frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-    &amp;= - (\rij - \rho_{k} ) \, I(l \ge k) -  \frac{ \sum_{k&#39;=0}^K \frac{\partial} {\partial \alpha_k}  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\rij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
-    \frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-    &amp;= - (\rij - \rho_{k} )  \, \left(  I(l \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\rij) )  \right)  \, .
+    \frac{\partial} {\partial \alpha_k}  \log g_{l}(\cij)  
+    &amp;= \frac{\partial} {\partial \alpha_k}  \log  \frac{\exp (- \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
+    &amp;= -  \frac{\partial} {\partial \alpha_k}  \sum_{k&#39;&#39;=1}^{l} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} )  
+        - \frac{\partial} {\partial \alpha_k}  \log  \sum_{k&#39;=0}^K  \exp \left(- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) \right)  \nonumber \\
+    &amp;= - (\cij - \rho_{k} ) \, I(l \ge k) -  \frac{ \sum_{k&#39;=0}^K \frac{\partial} {\partial \alpha_k}  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \, \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) }{ \sum_{k&#39;=0}^K  \exp (- \sum_{k&#39;&#39;=1}^{k&#39;} \alpha_{k&#39;&#39;} (\cij - \rho_{k&#39;&#39;} ) ) } \nonumber \\
+    &amp;= - (\cij - \rho_{k} )  \, \left(  I(l \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\cij) )  \right)  \, .
     \tag{7.36}
 \end{align}\]</span>
 <p>Inserting this into eq. <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#eq:nabla-alphak-LLpre">(7.35)</a> yields</p>
 <span class="math display">\[\begin{align}
     \frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) 
-    &amp;= - \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \, (\rij - \rho_k) \, \left(  I(k&#39; \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\rij) )  \right)  \nonumber \\
-    &amp;= -\sum_{1\le i&lt;j\le L}  \, (\rij - \rho_k) \, \left( \sum_{k&#39;=k}^K  p(k&#39;|ij)   -  \sum _{k&#39;=0}^K  p(k&#39;|ij) \, \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\rij) )  \right) ,
+    &amp;= - \sum_{1\le i&lt;j\le L}  \, \sum_{k&#39;=0}^K  p(k&#39;|ij) \, (\cij - \rho_k) \, \left(  I(k&#39; \ge k)  -  \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\cij) )  \right)  \nonumber \\
+    &amp;= -\sum_{1\le i&lt;j\le L}  \, (\cij - \rho_k) \, \left( \sum_{k&#39;=k}^K  p(k&#39;|ij)   -  \sum _{k&#39;=0}^K  p(k&#39;|ij) \, \sum_{k&#39;&#39;=k}^K  g_{k&#39;&#39;}(\cij) )  \right) ,
 \end{align}\]</span>
 <p>and finally</p>
 <span class="math display">\[\begin{equation}
-    \frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)     = \sum_{1\le i&lt;j\le L}  \, (\rho_k - \rij) \, \sum_{k&#39;=k}^K  ( p(k&#39;|ij) -  g_{k&#39;}(\rij) )  \, .
+    \frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)     = \sum_{1\le i&lt;j\le L}  \, (\rho_k - \cij) \, \sum_{k&#39;=k}^K  ( p(k&#39;|ij) -  g_{k&#39;}(\cij) )  \, .
 \end{equation}\]</span>
 </div>
 </div>
@@ -459,7 +446,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

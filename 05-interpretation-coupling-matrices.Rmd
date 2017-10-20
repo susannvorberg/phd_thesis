@@ -95,7 +95,7 @@ By looking at specific populations of residues, like buried and exposed residues
 Their study confirms the qualitative observations presented above that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices. 
 
 
-## Coupling Profiles Vary with Distance
+## Coupling Profiles Vary with Distance {#coupling-profiles}
 
 Analyses in the previous sections showed that certain coupling values correlate more or less strong with contact class and that coupling matrices for contacts express biological meaningfull patterns. 
 
@@ -152,7 +152,7 @@ knitr::include_url("img/coupling_matrix_analysis/1d_coupling_profile_20_50.html"
 ```
 
 
-## Higher Order Dependencies Between Couplings 
+## Higher Order Dependencies Between Couplings {#higher-order-coupling-profiles}
 
 The analyses in the previous sections focused on single coupling values picked from the $20 \times 20$-dimensional coupling matrices $\wij$.
 As mentioned before, analysing only single dimensions might be misleading when variables are dependent on each other and further insights might be concealed in higher order relationships.

@@ -121,10 +121,9 @@ It is therefore hard to define a general convergence criteria based on the direc
 
 (ref:caption-gradient-directions) Development of the percentage of dimensions for which the derivate has changed its direction over the last iterations. Change in the direction (i.e. the sign) of the partial derivates has been evaluated over varying number of previous iterations as it is specified by *previous it.* in the legend. Optimization is performed with [SGD](#abbrev) using the optimal hyperparameters described in section \@ref(sgd-hyperparameter-tuning) using regularization ocefficient $\lambda_w \eq 0.1L$ (see section \@ref(regularization-for-cd-with-sgd)) and using one step of Gibbs sampling. Optimization is stopped when the relative change over the L2-norm of parameter estimates $||\w||_2$ over the last iterations, as specified in the legend, falls below the threshold of $\epsilon = 1e-8$. Development has been monitored for two different proteins, **Left** 1c75A00 (protein length = 71, [Neff](#abbrev) = 16808) **Right** 1ahoA00 (protein length = 64, [Neff](#abbrev) = 229). 
 
-```{r gradient-directions, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/percentage_changes_in_gradient_direction.png", out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-gradient-directions)'}
+```{r gradient-directions, echo = FALSE, screenshot.alt="img/full_likelihood/sgd/percentage_changes_in_gradient_direction.png", out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-gradient-directions)'}
 knitr::include_graphics(c("img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1c75A00.png", "img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1ahoA00.png"))
 ```
-
 
 
 Of course, the simplest strategy to assume convergence is to specify a maximum number of iterations for the optimization procedure, which also ensures that the algorithm will stop eventually if none of the other convergence criteria is met.
@@ -149,7 +148,6 @@ It is therefore interesting to monitor $\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{2
 ```{r visualisation-wijab-constraint, echo = FALSE, out.width = '60%', fig.align='center', fig.cap = '(ref:caption-visualisation-wijab-constraint)'}
 knitr::include_graphics("img/full_likelihood/constraint_wijab.png")
 ```
-
 
 
 ### Tuning Hyperparameters of Stochastic Gradient Descent Optimizer {#sgd-hyperparameter-tuning}
@@ -197,7 +195,7 @@ All following analyses are conducted using the [Neff](#abbrev)-dependent learnin
 
 (ref:caption-sgd-single-proteins-initial-learning-rate) Convergence plots for two proteins during [SGD](#abbrev) optimization with different learning rates and convergence measured as L2-norm of the coupling parameters $||\w||_2$ . Linear learning rate annealing schedule has been used with decay rate $\gamma=0.01$ and initial learning rates $\alpha_0$ have been set as specified in the legend. **Left** Convergence plot for protein 1aho_A_00 having protein length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). Figure is cut at the yaxis at $||\w||_2=1000$, but learning rate of $5\mathrm{e}{-3}$ reaches $||\w||_2 \approx 9000$.
 
-```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
+```{r sgd-single-proteins-initial-learning-rate, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-initial-learning-rate)'}
 knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1ahoa00_alphas_lindecay001.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png"))
 ```
 
@@ -231,7 +229,7 @@ Less quickly decaying learning rates, such as  $\gamma \eq 1\mathrm{e}{-3}$ with
 
 (ref:caption-sgd-single-proteins-learning-rate-schedule) L2-norm of the coupling parameters $||\w||_2$ during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate $\alpha_0$ is defined with respect to [Neff](#abbrev) as given in eq. \@ref(eq:learning-rate-wrt-neff). Learning rate schedules and decay rates are used according to the legend. **Left** Convergence plot for protein 1aho_A_00 having protein length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
 
-```{r sgd-single-proteins-learning-rate-schedule, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-learning-rate-schedule)'}
+```{r sgd-single-proteins-learning-rate-schedule, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-sgd-single-proteins-learning-rate-schedule)'}
 knitr::include_graphics(c("img/full_likelihood/sgd/parameter_norm_1ahoa00_alpha0_different_schedules.png", "img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules.png"))
 ```
 
@@ -306,6 +304,8 @@ Instead, the Markov chains are kept *persistent* that is, they are evolved betwe
 The fundamental idea behind [PCD](#abbrev) is that the model changes only slowly between parameter updates given a sufficiently small learning rate and the Markov chains will not be pushed too far from equilibrium after each update but rather stay close to the stationary distribution [@Tieleman2008; @Murphy2012; @Fischer2012].
 Tieleman and others observed that [PCD](#abbrev) often works better than [CD](#abbrev), eventhough [CD](#abbrev) can be faster in the early stages of learning and thus should be preferred when runtime is the limiting factor [@Tieleman2008; @Murphy2012].
 
+persistent CD performs better than CD in all practical cases testet and it performs similarly to CD10, a version of contrastive divergence using 10 Gibbs sampling steps instead of just one [johannes]
+
 The next sections discuss various modifications of the [CD](#abbrev) algorithm, such as varying the regularizatio strength $\lambda_w$ for constraining the coupling parameters $\w$, increasing the number of Gibbs sampling steps and varying the number of Markov chains used for sampling.
 Persistent contrastive divergence is analysed for various combinations of the above mentioned settings and eventully combined with [CD](#abbrev)-k. 
 Unless noted otherwise, all optimizations will be performed using stochastic gradient descent with the tuned hyperparameters described in the last sections. 
@@ -368,7 +368,7 @@ One explanation could be that this is some effect of overfitting, eventhough a r
 
 (ref:caption-cd-samplesize-protein1c75a00) Monitoring parameter norm and gradient norm for protein 1c75_A_00 during [SGD](#abbrev) using different sample sizes. Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808) **Left** L2-norm of the gradients for coupling parameters $||\w||_2$ (without contrbution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. **Right** L2-norm of the coupling parameters $||\w||_2$. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. 
 
-```{r cd-samplesize-protein1c75a00, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-samplesize-protein1c75a00)'}
+```{r cd-samplesize-protein1c75a00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-samplesize-protein1c75a00)'}
 knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/1c75A00_gradient_norm_for_samplesizes.png", "img/full_likelihood/gibbs_sampling/1c75A00_parameter_norm_for_samplesizes.png"))
 ```
 
@@ -394,12 +394,16 @@ knitr::include_url("img/full_likelihood/gibbs_sampling/precision_vs_rank_gibbsst
 
 
 
+### Persistent Contrastive Divergence  {#cd-gibbs-steps} 
+
+Finally I analysed [PCD](#abbrev) since it has often been found to be a better estimator of the likelihood gradient than [CD](#abbrev).
+It has been suggested to use [PCD](#abbrev) with small learning rates and larger mini-batches because the fundamental assumption is that the model does not change to quickly over iterations and therefore the Markov chains will stay close to the equilibrium distribition. 
+However, using smaller learning rates and larger minibatches not only increases runtime but also requires tuning of the learning rate and learning rate schedule. 
+Since it has been found, that CD is faster in learning at the beginning of the optimization, I tested a compromise, that uses CD-1 at the beginning of the optimization and when learning slows down, measured as the relative change of the norm of coupling parameters, I start PCD. 
+This also has the advantage that the model has already approached the optimum and the parameters $\w$ will almost be constant over many updates. 
 
 
-Another variant of [CD](#abbrev) that has been suggested by Tieleman in 2008 is [*PCD*](#abbrev)[@Tieleman2008] that does not reset the Markov Chains at every iteration.
-The reason being that when using small learning rates, the model changes only slightly between iterations and the true data distribution can be better approximated 
-However, subsequent samples of [*PCD*](#abbrev) will be highly correlated creating a kind of momentum effect. 
-Furthermore is has been found that [*PCD*](#abbrev) should be used with smaller learning rates and higher minibatch sizes.
+
 
 As PCD might require samller update steps and larger minibatches, I analysed the performance of PCD for the default settings of CD and additionally for smaller learning and decay rates and larger minibatches.
 Note that one Markov chain is kept for every sequence of the input alignment. At each iteration a subset $N^{\prime} < N$ of the Markov chains is randomly selected (without replacement) and used to for another round of Gibss sampling at the current iteration.

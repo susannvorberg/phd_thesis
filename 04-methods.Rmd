@@ -138,7 +138,7 @@ The empirical single and pair frequencies with pseudocounts, $q(x_i=a), q(x_i=a,
 
 \begin{align}
     q(x_i \eq a) :=& (1-\tau) \;  q_0(x_i \eq a) + \tau \tilde{q}(x_i\eq a) \\
-    q(x_i \eq a, x_j \eq b) :=& (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \\
+    q(x_i \eq a, x_j \eq b) :=& (1-\tau)^2  \; [ q_0(x_i \eq a, x_j \eq b) - q_0(x_i \eq a)  q_0(x_j \eq b) ] + \nonumber\\
                             & q(x_i \eq a) \; q(x_j \eq b) 
 (\#eq:pseudocounts)
 \end{align}
@@ -207,15 +207,15 @@ $Z(\v, \w)$ is the partition function that normalizes the probability distributi
 
 The log likelihood is
 \begin{align}
-    \LL &= \log p(\X | \v, \w) \\
+    \LL &= \log p(\X | \v, \w) \nonumber \\
         &= \sum_{n=1}^N \left [  \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i < j \leq L} w_{ij}(x_{ni}, x_{nj})   \right ] - N \log Z(\v, \w) .
 \end{align}
 
 
 The gradient of the log likelihood has single components
 \begin{align}
-    \frac{\partial \LL}{\partial \via} &= \sum_{n=1}^N I(x_{ni}=a)  - N \frac{\partial}{\partial \via} \log Z(\v,\w) \\
-                                        &= \sum_{n=1}^N I(x_{ni} \eq a) - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a) \\
+    \frac{\partial \LL}{\partial \via} &= \sum_{n=1}^N I(x_{ni} \eq a)  - N \frac{\partial}{\partial \via} \log Z(\v,\w) \nonumber\\
+                                        &= \sum_{n=1}^N I(x_{ni} \eq a) - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a) \nonumber\\
                                         &=  N q(x_{i} \eq a) - N p(x_i \eq a | \v,\w) 
 (\#eq:gradient-LL-single)
 \end{align}
@@ -223,11 +223,11 @@ The gradient of the log likelihood has single components
 and pair components
 
 \begin{align}
-    \frac{\partial \LL}{\partial \wijab} &= \sum_{n=1}^N I(x_{ni}=a, x_{nj}=b)  - N \frac{\partial}{\partial \wijab} \log Z(\v,\w) \\
-                                        &= \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \\
-                                        & - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
-                                        &=  N q(x_{i} \eq a, x_{j} \eq b) - N \sum_{y_1,\ldots,y_L=1}^{20} p(y_1, \ldots, y_L | \v,\w) \, I(y_i \eq a, y_j \eq b) \\
-                                        &=  N q(x_{i} \eq a, x_{j} \eq b) - N p(x_i \eq a, x_j \eq b | \v,\w) 
+    \frac{\partial \LL}{\partial \wijab} =& \sum_{n=1}^N I(x_{ni}=a, x_{nj}=b)  - N \frac{\partial}{\partial \wijab} \log Z(\v,\w) \nonumber\\
+                                        =& \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \nonumber\\
+                                        & - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a, y_j \eq b) \nonumber\\
+                                        =&  N q(x_{i} \eq a, x_{j} \eq b) - N \sum_{y_1,\ldots,y_L=1}^{20} p(y_1, \ldots, y_L | \v,\w) \, I(y_i \eq a, y_j \eq b) \nonumber\\
+                                        =&  N q(x_{i} \eq a, x_{j} \eq b) - N p(x_i \eq a, x_j \eq b | \v,\w) 
 (\#eq:gradient-LL-pair)
 \end{align}
 
@@ -305,7 +305,7 @@ By including the logarithm of this prior into the log likelihood the regularised
 or explicitely,
 
 \begin{align}
-    \LLreg(\v,\w) =& \sum_{n=1}^N  \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1\le i<j\le L} w_{ij}(x_{ni},x_{nj}) - \log Z_n(\v,\w) \right] \\
+    \LLreg(\v,\w) =& \sum_{n=1}^N  \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1\le i<j\le L} w_{ij}(x_{ni},x_{nj}) - \log Z_n(\v,\w) \right] \nonumber\\
                     & - \frac{\lambda_v}{2} \!\! \sum_{i=1}^L \sum_{a=1}^{20} (\via - \via^*)^2  - \frac{\lambda_w}{2}  \sum_{1 \le i < j \le L} \sum_{a,b=1}^{20} \wijab^2 .
 \end{align}
 
@@ -313,9 +313,9 @@ or explicitely,
 The gradient of the regularized log likelihood has single components
 
 \begin{align}
-    \frac{\partial \LLreg}{\partial \via} =& \sum_{n=1}^N I(x_{ni}=a) - \sum_{n=1}^N \frac{\partial}{\partial \via} \, \log Z_n(\v,\w) - \lambda_v (\via - \via^*)\\
-                                          =& \; N_i q(x_i \eq a) \\
-                                          & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{  \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)}  I(y_i=a) \\
+    \frac{\partial \LLreg}{\partial \via} =& \sum_{n=1}^N I(x_{ni}=a) - \sum_{n=1}^N \frac{\partial}{\partial \via} \, \log Z_n(\v,\w) - \lambda_v (\via - \via^*) \nonumber\\
+                                          =& \; N_i q(x_i \eq a) \nonumber\\
+                                          & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{  \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)}  I(y_i=a) \nonumber\\
                                           & - \lambda_v (\via - \via^*) 
 (\#eq:gradient-LLreg-single)
 \end{align}
@@ -323,9 +323,9 @@ The gradient of the regularized log likelihood has single components
 and pair components
 
 \begin{align}
-    \frac{\partial \LLreg}{\partial \wijab} =& \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) - \sum_{n=1}^N \frac{\partial}{\partial \wijab} \log Z_n(\v,\w)  - \lambda_w \wijab \\
-                                            =& \; N_{ij} q(x_i \eq a, x_j=b) \\
-                                            & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} I(y_i \eq a, y_j \eq b) \\
+    \frac{\partial \LLreg}{\partial \wijab} =& \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) - \sum_{n=1}^N \frac{\partial}{\partial \wijab} \log Z_n(\v,\w)  - \lambda_w \wijab \nonumber\\
+                                            =& \; N_{ij} q(x_i \eq a, x_j=b) \nonumber\\
+                                            & - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i<j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} I(y_i \eq a, y_j \eq b) \nonumber\\
                                             & - \lambda_w \wijab  
 (\#eq:gradient-LLreg-pair)
 \end{align}
@@ -508,18 +508,22 @@ knitr::include_graphics(c("img/full_likelihood/adam/1mkcA00_decaying_learningrat
 
 
 
-## Gibbs Sampling Scheme for Contrastive Divergence {#methods-cd-sampling}
+## Computing the Gradient with Contrastive Divergence {#methods-cd-sampling}
 
-This section describes the default Gibbs sampling scheme that is used to approximate the gradients with [CD](#abbrev). 
+This section describes the implementation details for approximating the gradient of the full likelihood with [CD](#abbrev). 
 
 The gradient of the full log likelihood with respect to the couplings $\w$ is computed as the difference of paiwise amino acid counts between the input alignment and a sampled alignment plus an additional regularization term as given in eq. \@ref(eq:gradient-wijab-full-likelihood-approx).
-Pairwise amino acid counts for the input alignment are computed accounting for sequence weights (described in methods section \@ref(seq-reweighting)) and including pseudo counts (described in methods section \@ref(amino-acid-frequencies)).
+Pairwise amino acid counts are computed from the input alignment accounting for sequence weights (described in methods section \@ref(seq-reweighting)) and including pseudo counts (described in methods section \@ref(amino-acid-frequencies)).
 Pairwise amino acid counts for the sampled alignment are computed in the same way using the same sequence weights that have been computed for the input alignment.
-A subset of sequences of size $S \eq \min(10L, N)$, with $L$ being the length of sequences and $N$ the number of sequences in the input alignment, is selected from the input alignment and used to initialize the Markov chains for the Gibbs sampling procedure.
+A subset of sequences of size $S \eq \min(10L, N)$, with $L$ being the length of sequences and $N$ the number of sequences in the input alignment, is randomly selected from the input alignment and used to initialize the Markov chains for the Gibbs sampling procedure.
 Consequently, the input [MSA](#abbrev) is bigger than the sampled [MSA](#abbrev) whenever there are more than $10L$ sequences in the input alignment. 
 In that case, the weighted pairwise amino acid counts of the sampled alignment need to be rescaled such that the total sample counts match the total counts from the input alignment.
 
-The default implementation of the Gibbs sampler will sample new sequences by performing one full step of Gibbs sampling on each sequence as follows:
+During the Gibbs sampling process, every position in every sequence will be sampled $K$ times (default $K\eq1$), according to the conditional probabilties given in eq. \@ref(eq:conditional-prob-full-likelihood).
+The sequence positions will be sampled in a random order to prevent position bias.
+Gap positions will not be sampled, because Dr. Stefan Seemayer showed that sampling gap positions leads to artefacts in the contat maps (not published).
+For [PCD](#abbrev) a copy of the input alignment is generated at the beginning of optimization that will keep the persistent Markov chains and that will be updated after the Gibbs sampling procedure.
+The default Gibbs sampling procedure is outlined in the following pseudo-code:
 
 ```
 # Input: multiple sequence alignment X  with N sequences of length L
@@ -532,6 +536,7 @@ K = 1             # number of Gibbs steps
 
 # randomly select S sequences from the input alignment X without replacement
 sequences = random.select.rows(X, size=S, replace=False)
+
 for seq in sequences:
     # perform K steps of Gibbs sampling
     for step in range(K):
@@ -540,10 +545,12 @@ for seq in sequences:
             # ignore gap positions
             if seq[i] == gap:
               continue
-            # compute conditional probabilities for every amino acid a in {1, ..., 20}
+            # compute conditional probabilities for every 
+            # amino acid a in {1, ..., 20}
             for a in range(20):
-              p_cond[a] = p(seq[i]=a | (seq[1], ..., seq[i-1], seq[i+1], ..., seq[L]), v, w)
-            # randomly select a new amino acid a in {1, ..., 20} for position i 
+              p_cond[a] = p(seq[i]=a | seq/i, v, w)
+            # randomly select a new amino acid 
+            # a in {1, ..., 20} for position i 
             # according to conditional probabilities
             seq[i] = random.integer({1, ...,20}, p_cond)
 
@@ -551,77 +558,34 @@ for seq in sequences:
 return sequences
 ```
 
-<!--
-## The Hessian-offdiagonal elements Carry a negligible Signal {#Hessian-offdiagonal}
+
+## The Hessian off-diagonal Elements Carry a Negligible Signal {#Hessian-offdiagonal}
 
 
-We first assume that $\lambda_w=0$, i.e., we apply no regularisation. Suppose in columns $i$ and $j$ a set of sequences in the MSA contain amino acids $a$ and $b$ and the same sequences contain $c$ and $d$ in columns $k$ and $l$. Let us also assume that $(a,b)$ occur nowhere else in columns $i,j$ and the same for $(c,d)$ and $k,l$. This means that the coupling between $(i,a)$ and $(j,b)$ can be perfectly compensated by the coupling between $(k,c)$ and $(l,d)$. Adding $10^6$ to $w_{ijab}$ and substracting $10^6$ from $w_{klcd}$ leaves $p(\X|\v,\w)$ unchanged. This means that $w_{ijab}$ and $w_{klcd}$ are almost perfectly negatively correlated in $\N(\w|\w^*,(\H)^{-1})$. Another way to see this is to evaluate $(\H)_{ijab,klcd}$ with eq.~\eqref{eq:Hw_offdiag}, which gives $(\H)_{klcd, ijab} =  N\,p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*) \, ( 1 - p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*)$ for this case. Since $N$ is typically much larger than $\lambda_w$, this precision matrix element is the same as the diagonal elements $(\H)_{ijab, ijab}$ and $(\H)_{klcd, klcd}$. 
+Assume that $\lambda_w=0$, i.e., no regularisation is applied. 
+Suppose in columns $i$ and $j$ a set of sequences in the MSA contain amino acids $a$ and $b$ and the same sequences contain $c$ and $d$ in columns $k$ and $l$. 
+Furthermore, assume that $(a,b)$ occur nowhere else in columns $i$ and $j$ and the same holds for $(c,d)$ in columns $k$ and $l$. 
+This means that the coupling between $a$ at position $i$ and $b$ at position $j$ can be perfectly compensated by the coupling between $c$ at position $k$ and $d$ at position $l$. 
+Adding $10^6$ to $w_{ijab}$ and substracting $10^6$ from $w_{klcd}$ leaves $p(\X|\v,\w)$ unchanged. 
+This means that $w_{ijab}$ and $w_{klcd}$ are almost perfectly negatively correlated in $\Gauss(\w|\w^*,(\H)^{-1})$. 
+Another way to see this is to evaluate $(\H)_{ijab,klcd}$ with eq. \@ref(eq:Hw-offdiag), which gives $(\H)_{klcd, ijab}=N_{ij}\,p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*)$ for this case. 
+Under the assumption $\lambda_w=0$, this precision matrix element is the same as the diagonal elements $(\H)_{ijab, ijab}$ and $(\H)_{klcd, klcd}$ (see case 2 in eq. \@ref(eq:Hw-offdiag)). 
 
-But when a realistic regularisation constant is assumed, e.g. $\lambda_w= 0.2 L \approx 20$, $w_{ijab}$ and $w_{klcd}$ will be pushed to near zero, because the matrix element that couples $w_{ijab}$ with $w_{klcd}$, $N\,p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*) \, ( 1 - p(x_i\!=\!a, x_j\!=\!b| \v^*,\w^*)$ is the number of sequences that share amino acids $ab$ at positions $ij$ and $cd$ at $kl$, and this number is usually much smaller than $\lambda_w$. 
+But when a realistic regularisation constant is assumed, e.g. $\lambda_w \eq 0.2 L \approx 20$, $w_{ijab}$ and $w_{klcd}$ will be pushed to near zero, because the matrix element that couples $w_{ijab}$ with $w_{klcd}$, $N_{ij}\,p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*)$ is the number of sequences that share amino acids $a$ and $b$ at position $(i,j)$ and $c$ and $d$ at position $(k,l)$, and this number is usually much smaller than $\lambda_w$. 
 
-\begin{figure}[bt]
-\centering
-  \includegraphics[width=0.8\textwidth]{contact-pred-Bayesian-approach-figures/Slide3.png}
-  \vspace{-5mm}
-  \caption{\small Setting the off-diagonal block matrices to zero in $\H$ corresponds to replacing the violett Gaussian distrubution by the pink one. The ratios between the overlaps of $\N\!\left(\w \left| \w^*, \H^{-1} \right. \right)$ with the distributions $\N(\wij | \muk, \LAMk^{-1})$ for various choices of $k$ is only weakly affected by this replacement.} 
-\label{fig:simplify_Hw}
-\end{figure}
+(ref:caption-hessian-off-diagonal) Setting the off-diagonal block matrices to zero in $\H$ corresponds to replacing the violett Gaussian distrubution by the pink one. The ratios between the overlaps of $\Gauss\!\left(\w \left| \w^*, \H^{-1} \right. \right)$ with the distributions $\Gauss(\wij | \muk, \Lk^{-1})$ for various choices of $k$ is only weakly affected by this replacement.
 
-For the purpose of computing the integral in eq.~\eqref{eq:int_over_w}, it is therefore a good approximation to simply set the off-diagonal block matrices (case 3) to zero! This corresponds to replacing the violett distribution in Figure \ref{fig:simplify_Hw} by the pink one. To see why, first note that the functions $g_{k_{ij}}(\rij)$ and the component distributions $\N(\wij | \bs \mu_k, \bs \Lambda_{k}^{-1})$ will be learned in such a way as to maximize the likelihood for predicting the correct distances $\rbf^n$ from the respective alignments $\X^n$ for many MSAs and proteins $m$. Therefore, these model parameters will adjust to the fact that we neglect the off-diagonal blocks in $\H$. Second, note that the integral over the product of  $\N\!\left(\w \left| \w^*, \H^{-1} \right. \right)$ and $\prod_{i<j} \N(\wij | \bs \mu_{k_{ij}}, \bs \Lambda_{k_{ij}}^{-1}) / \N(\wij|\bs 0, \lambda_w^{-1} \I)$ in eq.~\eqref{eq:int_over_w} evaluates the overlap of these two Gaussians. Third, the components of $p(\wij|\rij)$ will be very much concentrated within a radius of less than $1$ from the origin, because even residues with short $C_\beta$-$C_\beta$ distance will rarely have coupling coefficients above $1$. Fourth, the Gaussian components have no couplings between elements of $\wij$ and $\wkl$, which is why they are axis-aligned (green in Fig. \ref{fig:simplify_Hw}). For these reasons, the relative strengths of the overlaps with different mixture components labeled by $k$ in eq.~\eqref{eq:p(w|r)} should be little affected by setting the off-diagonal block matrix couplings to zero. 
+```{r hessian-off-diagonal, echo = FALSE, out.width = '80%', fig.align='center',  fig.cap = '(ref:caption-hessian-off-diagonal)'}
+knitr::include_graphics("img/theory/hessian-off-diagonal.png")
+```
 
-The first term in the integrand of eq.~\eqref{eq:int_over_w} now factorizes over $(i,j)$, 
-\begin{equation}
-  \N\!\left(\w \left| \w^*, \H^{-1} \right. \right) \approx \prod_{1\le i<j\le L} \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) ,
-\end{equation}
-where we have defined the diagonal block matrices $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. We can therefore move the product over all residue indices in front of the integral and perform each integral over $\wij$ separately, 
-\begin{eqnarray}
- p(\X | \rbf) &\propto& \int \prod_{1\le i<j\le L} \left(  \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) \, \frac{p(\wij|\rij)}{\N(\wij|\bs 0, \lambda_w^{-1} \I)} \right) \, d\w \,.\\
- p(\X | \rbf) &\propto& \prod_{1\le i<j\le L}  \int \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) \, \frac{p(\wij|\rij)}{\N(\wij|\bs 0, \lambda_w^{-1} \I)} \, d \wij 
-\end{eqnarray}
-and inserting eq.\ \eqref{eq:p(w|r)}, 
- \begin{equation}
-   p(\X | \rbf) \propto \prod_{1\le i<j\le L} \, \sum_{k=0}^K g_{k}(\rij) \int d\wij \, \frac{ \N\!\left(\wij \left| \wij^*, \H_{ij}^{-1} \right. \right) }{\N(\wij|\bs 0, \lambda_w^{-1} \I)}  \,  \N(\wij | \bs \mu_{k}, \bs \Lambda_{k}^{-1})\,.
-\label{eq:int_over_w_3}
-\end{equation}
-The integral can be carried out using the following formula:
-\begin{equation}
-\int d\x \, \frac{ \N( \x | \bs\mu_1, \LAM_1^{-1}) }{\N(\x|0,\LAM_3^{-1})} \, \N(\x|\bs\mu_2,\LAM_2^{-1}) = \frac{\N(0| \bs\mu_1, \LAM_{1}^{-1})\N(0| \bs\mu_2, \LAM_{2}^{-1})}{\N(0|0, \LAM_{3}^{-1}) \N(0| \bs\mu_{12}, \LAM_{123}^{-1})} 
-\end{equation}
-with 
-\begin{eqnarray}
-	\LAM_{123} &:=& \LAM_1 - \LAM_3 + \LAM_2 \\
-	\bs\mu_{12}  &:=& \LAM_{123}^{-1}(\LAM_1 \bs \mu_1 + \LAM_2 \bs\mu_2).
-\end{eqnarray}
-We define 
-\begin{empheq}[box=\medfbox]{align}
-	\LAM_{ij,k} &:= \H_{ij} - \lambda_w \I + \LAMk \\ 
-	\bs\mu_{ij,k}  &:= \LAM_{ij,k}^{-1}(\H_{ij} \wij^* + \LAM_{k} \bs\mu_k) \,.
-  	\label{eq:def_Jkij}
-\end{empheq}
-and obtain
-\begin{empheq}[box=\medfbox]{align}
-p(\X | \rbf) \propto \prod_{1\le i<j\le L}  \, \sum_{k=0}^K g_{k}(\rij) \,  \frac{  \N(0 | \bs\mu_k, \LAM_{k}^{-1})}{  \N( 0 | \bs\mu_{ij,k}, \LAM_{ij,k}^{-1}) }  \,.
-  \label{eq:p(X|r)_final}
-\end{empheq}
-$\N(0 | 0, \lambda_w \I)$ and $\N( 0 | \wij^*, \H_{ij}^{-1})$ are constants that depend only on $\X$ and $\lambda_w$ and that could be omitted. 
-
-\paragraph{To gain some intuition into this result,} let us look at a simple case of two components $(K=1)$ for which $\bs\mu_k = 0$ for $k=0, 1$ and isotropic $\LAM_k = \lambda_k \I$. We further assume that also $\Hij = \text{diag}(\mathbf{h}) + \lambda_w \I$ is diagonal. Then $\LAM_{ij,k} = \text{diag}(\mathbf{h})+\lambda_k \I$ and $(\bs\mu_{ij,k})_{ab} = (h_{ab}+\lambda_w)/(h_{ab} + \lambda_k) \times \wijab^*$. The likelihood for $\X$ under the component $k$ is proportional to  
-\begin{align}
-	p(\X | k) \propto  \frac{  \N(0 | \bs\mu_k, \LAM_{k}^{-1})}{  \N( 0 | \bs\mu_{ij,k}, \LAM_{ij,k}^{-1}) } 
-	 = \prod_{a,b=1}^{20} \frac{\lambda_k}{\lambda_k + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_k}. \right)
-\end{align}
-With Bayes' theorem we conclude that $p(k | \X ) = (1 + \text{BF}^{-1})^{-1}$ with a Bayes factor whose logarithm is
-\begin{align}
-	\log \text{BF} &= \log \left( \frac{ \prod_{a,b=1}^{20} \frac{\lambda_1}{\lambda_1 + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_1}. \right) }
-			 { \prod_{a,b=1}^{20} \frac{\lambda_0}{\lambda_0 + h_{ab}} \exp \left(\frac{1}{2} (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_0}. \right) } \times \frac{g_{1}(\rij)}{g_{0}(\rij)} \right) \\
-			 &= + \sum_{a,b=1}^{20} \log \frac{1 + h_{ab} / \lambda_0}{1 + h_{ab} / \lambda_1} + \frac{1}{2} \sum_{a,b=1}^{20}  (w^*_{ijab})^2 \left( \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_1} - \frac{(h_{ab} + \lambda_w)^2} {h_{ab} + \lambda_0} \right) + \log \frac{g_{1}(\rij)}{g_{0}(\rij)}  \nonumber \\
-			 &= - \sum_{a,b=1}^{20} \log \frac{1 + h_{ab} / \lambda_1}{1 + h_{ab} / \lambda_0} + \frac{\lambda_0 - \lambda_1}{2} \sum_{a,b=1}^{20}  (w^*_{ijab})^2 \frac{(h_{ab} + \lambda_w)^2} {(h_{ab} + \lambda_1)(h_{ab} + \lambda_0)} + \log \frac{g_{1}(\rij)}{g_{0}(\rij)}  \nonumber 
-\end{align}
-To understand the effect of these two terms, let us assume that $\lambda_w = \sqrt{\lambda_0 \lambda_1}$. Then the term $\frac{(h_{ab} + \lambda_w)^2} {(h_{ab} + \lambda_1)(h_{ab} + \lambda_0)}$ is 1 for $h_{ab} = 0$ and $h_{ab} \rightarrow \infty$ and in the region between dips to a minimum at $h_{ab} = \lambda_w$ with a $y$-value that stays above 0.5 if $\lambda_0$ and $\lambda_1$ differ by less than a factor $\sim 34$. The sum in the second term therefore will behave similarly to $||\wij||^2$. 
-
-The function $\log (1 + x /\lambda_1) / (1 + x/\lambda_0) )$ in the sum of the first term is concave, rising linearly like $x/\lambda_1 - x/\lambda_0$ near 0, and it saturates after $x>\lambda_0$ to a value $\log (\lambda_0/\lambda_1)$. The sum over these terms will be smaller the more the $h_{ab}$ (whose total sum is roughly constant) is concentrated in a few $ab$-pairs with large values of $h_{ab}$. Simply speaking, the first term therefore corrects for the effect of entropy in the count distribution $N_{ijab}$ over $(a,b)$ by countering the increases of the second sum with increasing entropy.
-
--->
+It is therefore a good approximation to set the off-diagonal block matrices $(\H)_{klcd, ijab}$  (case 3 in eq. \@ref(eq:Hw-offdiag)) to zero.
+This corresponds to replacing the violett distribution in Figure \@ref(fig:hessian-off-diagonal) by the pink one. 
+To see why, first note that the functions $g_k(\cij)$ and the component distributions $\Gauss(\wij | \mu_k, \Lk^{-1})$ will be learned in such a way as to maximize the likelihood for predicting the correct contact state $\c^m$ from the respective alignments $\X^m$ for many [MSAs](#abbrev) of protein families $m$. 
+Therefore, these model parameters will adjust to the fact that the off-diagonal blocks in $\H$ are neglected. 
+Second, note that the integral over the product of  $\Gauss(\w | \w^*, \H^{-1})$ and $\prod_{i<j} p(\wij | \cij) / \Gauss(\wij| 0, \lambda_w^{-1} \I)$ in eq. \@ref(eq:int-over-w) evaluates the overlap of these two Gaussians. 
+Third, the components of $p(\wij|\cij)$ will be very much concentrated within a radius of less than $1$ from the origin, because even residues with short $C_\beta$-$C_\beta$ distance will rarely have coupling coefficients above $1$. Fourth, the Gaussian components have no couplings between elements of $\wij$ and $\w_{kl}$, which is why they are axis-aligned (green in Figure \@ref(fig:hessian-off-diagonal)). 
+For these reasons, the relative strengths of the overlaps with different mixture components labeled by $k$ in eq. \@ref(eq:definition-mixture-coupling-prior) should be little affected by setting the off-diagonal block matrix couplings to zero. 
 
 
 
@@ -633,7 +597,7 @@ The partial derivative $\partial / \partial \w_{klcd}$ of the second term in the
 
 \begin{eqnarray}
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\partial \left( \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} \right)}{\partial \wklcd}   I(y_i \eq a, y_j \eq b) \\
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\partial \left( \frac{\exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} \right)}{\partial \wklcd}   I(y_i \eq a, y_j \eq b) \nonumber \\
     &&- \lambda_w \delta_{ijab,klcd} \,,
 \end{eqnarray}
 
@@ -642,14 +606,14 @@ where $\delta_{ijab,klcd} = I(ijab=klcd)$ is the Kronecker delta. Applying the p
 
 \begin{eqnarray}
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
-    & \times & \left[ \frac{\partial}{\partial \wklcd} \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}  w_{ij}(y_i,y_j)  \right) 
-                  - \frac{1}{Z_n(\v,\w)} \frac{\partial  Z_n(\v,\w) }{\partial\wklcd} \right] \\
-    &-& \lambda_w \delta_{ijab,klcd} \\
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \nonumber \\
+    && \times  \left[ \frac{\partial}{\partial \wklcd} \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}  w_{ij}(y_i,y_j)  \right) 
+                  - \frac{1}{Z_n(\v,\w)} \frac{\partial  Z_n(\v,\w) }{\partial\wklcd} \right] \nonumber\\
+    &&- \lambda_w \delta_{ijab,klcd} \\
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab  } 
-    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \\
-    & \times & \left[ I(y_k \eq c, y_l \eq d) - \frac{\partial}{\partial \wklcd} \log Z_n(\v,\w) \right] \\
-    &-& \lambda_w \delta_{ijab,klcd} \,.
+    &=&  - \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} \frac{\exp \left(\sum_{i=1}^L v_i(y_i) + \sum_{1 \le i < j \le L}^L w_{ij}(y_i,y_j)  \right)}{Z_n(\v,\w)}  I(y_i \eq a, y_j \eq b) \nonumber\\
+    && \times \left[ I(y_k \eq c, y_l \eq d) - \frac{\partial}{\partial \wklcd} \log Z_n(\v,\w) \right] \nonumber\\
+    &&- \lambda_w \delta_{ijab,klcd} \,.
 \end{eqnarray}
 
 
@@ -663,9 +627,9 @@ yielding
 
 \begin{eqnarray}
     \frac{\partial^2 \LLreg(\v^*,\w)}{\partial \wklcd \, \partial \wijab} 
-    &=&  -  \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b, y_k \eq c, y_l \eq d)  \\
-    &+& \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \mathcal{S}_n} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b ) \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w)  I(y_k \eq c, y_l \eq d ) \\
-    &-& \lambda_w \delta_{ijab,klcd} \,.
+    &=& -  \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b, y_k \eq c, y_l \eq d) \nonumber \\
+    && + \sum_{n=1}^{N} \, \sum_{\mathbf{y} \in \mathcal{S}_n} p(\mathbf{y} | \v,\w) \, I(y_i \eq a, y_j \eq b ) \sum_{\mathbf{y} \in \Sn} p(\mathbf{y} | \v,\w)  I(y_k \eq c, y_l \eq d ) \nonumber \\
+    && - \lambda_w \delta_{ijab,klcd} \,.
 \end{eqnarray}
 
 If $\X$ does not contain too many gaps, this expression can be approximated by 
@@ -687,14 +651,11 @@ Looking at three cases separately:
 the elements of $\H$, which are the negative second partial derivatives of $\LLreg(\v^*,\w)$ with respect to the components of $\w$, are
 
 \begin{eqnarray}
-    \mathrm{case~1:} (\H)_{ijab, ijab}  
-    &=&  N_{ij} \, p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*) \,) \\
-    &&   + \lambda_w \\
-    \mathrm{case~2:} (\H)_{ijcd, ijab}  
-    &=&  - N_{ij} \, p(x_i \eq a, x_j \eq b |\v^*,\w^*) \, p(x_i \eq c, x_j \eq d |\v^*,\w^*) \\
-    \mathrm{case~3:} (\H)_{klcd, ijab}  
-    &=&   N_{ijkl} \, p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d  | \v^*,\w^*) \nonumber \\
-    &&    - N_{ijkl} \, p(x_i \eq a, x_j \eq b | \v^*,\w^*)\, p(x_k \eq c, x_l \eq d | \v^*,\w^*) \,.
+  \mathrm{case~1:} (\H)_{ijab, ijab} &=& N_{ij} \, p(x_i \eq a, x_j \eq b| \v^*,\w^*) \, ( 1 - p(x_i \eq a, x_j \eq b| \v^*,\w^*) \,) \nonumber \\
+                                      && +\lambda_w \\
+  \mathrm{case~2:} (\H)_{ijcd, ijab} &=& -N_{ij} \, p(x_i \eq a, x_j \eq b |\v^*,\w^*) \, p(x_i \eq c, x_j \eq d |\v^*,\w^*) \\
+  \mathrm{case~3:} (\H)_{klcd, ijab} &=& N_{ijkl} \, p(x_i \eq a, x_j \eq b, x_k \eq c, x_l \eq d  | \v^*,\w^*) \nonumber \\
+                                      && -N_{ijkl} \, p(x_i \eq a, x_j \eq b | \v^*,\w^*)\, p(x_k \eq c, x_l \eq d | \v^*,\w^*) \,.
 (\#eq:Hw-offdiag)
 \end{eqnarray}
 
@@ -710,12 +671,12 @@ and therefore the negative Hessian elements in cases 1 and 2 can be expressed as
 <!-- The first term ($N_{ij} \left(\,q(x_i\!=\!a, x_j\!=\!b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right)$) actually is accurate and only the second $(\dots)$ iss approximated according to the gap approximation in eq. \@ref(eq:gradient-LLreg-approx) 
 -->
 
-\begin{align}
-   (\H)_{ijab, ijab} =& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \\
-   & + \lambda_w \\
-   (\H)_{ijcd, ijab} =& -N_{ij} \left(\,q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( q(x_i \eq c, x_j \eq d) -\frac{\lambda_w}{N_{ij}} \wijcd^* \right) .
+\begin{eqnarray}
+   (\H)_{ijab, ijab} &=& N_{ij} \left( q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( 1 - q(x_i \eq a, x_j \eq b) +\frac{\lambda_w}{N_{ij}} \wijab^* \right) \nonumber\\
+                      && +\lambda_w \\
+   (\H)_{ijcd, ijab} &=& -N_{ij} \left(\,q(x_i \eq a, x_j \eq b)  - \frac{\lambda_w}{N_{ij}} \wijab^* \right) \left( q(x_i \eq c, x_j \eq d) -\frac{\lambda_w}{N_{ij}} \wijcd^* \right) .
 (\#eq:Hw-diag)
-\end{align}
+\end{eqnarray}
 
 
 In order to write the previous eq. \@ref(eq:Hw-diag) in matrix form, the *regularised* empirical frequencies $\qij$ will be defined as
@@ -741,7 +702,7 @@ Now eq. \@ref(eq:Hw-diag) can be written in matrix form
 
 ## Efficiently Computing the Inverse of Matrix $\Lijk$ {#inv-lambda-ij-k}
 
-It is possible to efficiently invert the matrix $\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k$, that is introduced in \@ref(coupling-prior) where $\H_{ij}$ is the $400 \times 400$ diagonal block submatrix $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$ and $\Lambda_k$ is an invertible diagonal precision matrix that is introduced in section \@ref(modeling-dep-of-wij). 
+It is possible to efficiently invert the matrix $\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k$, that is introduced in section \@ref(likelihood-fct-distances) where $\H_{ij}$ is the $400 \times 400$ diagonal block submatrix $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$ and $\Lambda_k$ is an invertible diagonal precision matrix. 
 Equation \@ref(eq:mat-Hij) can be used to write $\Lijk$ in matrix form as
 
 \begin{equation}
@@ -759,14 +720,16 @@ The previous equation \@ref(eq:mat-Lijk) facilitates the calculation of the inve
 by setting 
 
 \begin{align}
-  \mathbf{A} &= N_{ij} \Qij + \Lk \\
-  \mathbf{B} &= \qij \\
-  \mathbf{C} &= \qij^\mathrm{T} \\
-  \mathbf{D} &=- N_{ij}^{-1} \\
+  \mathbf{A} &= N_{ij} \Qij + \Lk \nonumber\\
+  \mathbf{B} &= \qij \nonumber\\
+  \mathbf{C} &= \qij^\mathrm{T} \nonumber\\
+  \mathbf{D} &=- N_{ij}^{-1} \nonumber
 \end{align}
 
+Now, the inverse of $\Lijk$ can be computed as 
+
 \begin{align}
-	  \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} & = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \\
+	  \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} & = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \nonumber\\
      & = \mathbf{A}^{-1} + \frac{ (\mathbf{A}^{-1} \qij) (\mathbf{A}^{-1} \qij)^{\mathrm{T}} }{ N_{ij}^{-1} - \qij^\mathrm{T} \mathbf{A}^{-1} \qij} \,.
 (\#eq:fast-inverse-mat-Lijk)
 \end{align}
@@ -781,7 +744,7 @@ Because $\sum_{a,b=1}^{20} q'_{ijab} = 1$, the denominator of the second term is
 \end{equation}
 
 and therefore the inverse of $\Lijk$ in eq. \@ref(eq:fast-inverse-mat-Lijk) is well defined.
-The log determinant of $\Lijk$ is necessary to compute the ratio of Gaussians (see equation \@ref(eq:p-X-r-final)) and can be computed using the matrix determinant lemma:
+The log determinant of $\Lijk$ is necessary to compute the ratio of Gaussians (see equation \@ref(eq:pXr-final)) and can be computed using the matrix determinant lemma:
 
 \begin{equation}
   \det(\mathbf{A} + \mathbf{uv}^\mathrm{T}) = (1+\mathbf{v}^\mathrm{T} \mathbf{A}^{-1} \mathbf{u}) \det(\mathbf{A})
@@ -799,12 +762,12 @@ $\mathbf{A}$ is diagonal and has only positive diagonal elements so that $\log(\
 
 
 
-## Training the Hyperparameters $\muk$, $\Lk$ and $\gamma_k$ {#training-hyperparameters}
+## Training the Hyperparameters in the Likelihood Function of Contact States {#training-hyperparameters}
 
-The model parameters $\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)$,  $\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)$ and $\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)$ will be trained by maximizing the logarithm of the full likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^N$ and associated structures with distance vectors $\r^1,\ldots,\r^N$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$:
+The model parameters $\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)$,  $\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)$ and $\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)$ will be trained by maximizing the logarithm of the full likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^N$ and associated structures with $\c^1,\ldots,\c^M$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$:
 
 \begin{equation}
-	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^N  \log p(\X^n | \r^n, \mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
+	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^M  \log p(\X^m | \c^m, \mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
 \end{equation}
 
 The regulariser penalizes values of  $\muk$ and $\Lk$ that deviate too far from zero: 
@@ -818,13 +781,51 @@ The regulariser penalizes values of  $\muk$ and $\Lk$ that deviate too far from 
 Reasonable values are $\sigma_{\mu}=0.1$, $\sigma_\text{diag} = 100$.  
 
 The log likelihood can be optimized using L-BFGS-B [@Byrd1995], which requires the computation of the gradient of the log likelihood. 
-For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index $n$ in $\rij^n$, $(\wij^n)^*$ and $\Hij^n$.
+For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index $m$ in $\cij^m$, $(\wij^m)^*$ and $\Hij^m$.
 From eq. \@ref(eq:pXr-final) the log likelihood for a single protein is
 
 \begin{equation}
- 	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\rij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
+ 	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i < j \le L}  \log \sum_{k=0}^K g_{k}(\cij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
 (\#eq:ll-coupling-prior)
 \end{equation}
+
+For the optimization, I used the module `optimize.minimize` from the Python package `SciPy (v 0.19.1)` and the flag `method="L-BFGS-B"`.
+According to the default setting, optimization will converge when `(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} <= ftol` with `ftol=2.220446049250313e-09`.
+
+
+### Dataset Specifications {#dataset-training-hyperparmeters}
+
+An equal number of residue pairs that are in physical contact $\Delta\Cb <8 \angstrom$ and are not in contact $\Delta\Cb >8 \angstrom$ is selected according to the following criteria:
+
+- contact: $\Delta\Cb <8 \angstrom$
+- non-contact: $\Delta\Cb >8 \angstrom$ or $\Delta\Cb >20 \angstrom$
+- diversity ($\frac{\sqrt{N}}{L}$) > 0.3
+- percentage of gaps per column $\leq 0.5$
+- number of non-gapped sequences at position $i$ and $j$, $N_{ij} > 1$
+- maximum number of contacts selected per protein = 500
+- maximum number of non-contacts selected per protein = 1000
+- number residue pairs for contacts ($\cij \eq 1$) and non-contacts ($\cij \eq 0$) $\in \{10000, 100000, 30000, 500000 \}$ 
+
+Before residue pairs are selected from a protein, they are shuffled to avoid position bias. 
+Proteins from subsets 1-5 of the dataset described in method section \@ref(dataset) have been used for training. 
+Training 
+
+### Model Specifications {#model-specifications-training-hyperparmeters}
+
+The mixture weights $g_k(\cij)$ are randomly sampled from a uniform distribution over the half-open interval [0, 1) and normalized so that $\sum_k^K g_k(\cij) = 1$ for $\cij=0$ and $\cij=1$, respectively.
+Subsequently, the $g_k(\cij)$ are reparameterized as softmax functions as given in eq. \@ref(eq:def-g-k-binary) and fixing $\gamma_0(\cij)=0$ to avoid overparametrization.
+
+The 400 dimensional $\muk$ vectors for $k \in \{1, \ldots, K\}$ are initialized from 400 random draws from a normal distribution with zero mean and standard deviation $\sigma \eq 0.05$.
+The zeroth component is kept fixed at zero ($\mathbf{\mu_0} \eq 0$) and will not be optimized.
+
+
+The precision matrices $\Lk$ will be modelled as diagonal matrices, setting all off-diagonal elements to zero.
+The 400 diagonal elements $(\Lk)_{ab, ab}$ for $k \in \{1, \ldots, K\}$ are initialized from 400 random draws from a normal distribution with zero mean and standard deviation $\sigma \eq 0.005$.
+The 400 diagonal elements of the precision matrix for the zeroth component $\mathbf{\Lambda_0}$ are initialized as 400 random draws from a normal distribution with zero mean and standard deviation $\sigma \eq 0.0005$. 
+Therefore, the zeroth component is sharply centered at zero.
+Furthermore, the diagonals of the precision matrices are reparameterized as $(\Lk)_{ab, ab} = \exp((\Lk)_{ab, ab}^{\prime})$ in order to ensure that the values stay positive.
+Gradients for $\Lk$ derived in next sections have been adapted according to this reparametrization.
+
 
 
 ### The gradient of the log likelihood with respect to $\muk$ {#gradient-muk}
@@ -835,9 +836,9 @@ By applying the formula $d f(x) / dx = f(x) \, d \log f(x) / dx$ to compute the 
  \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
 	= \sum_{1\le i<j\le L}  
 	\frac{ 
-		g_{k}(\rij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
+		g_{k}(\cij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
 			 \frac{\partial}{\partial \mu_{k,ab}}  \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)  
-	 } { \sum_{k'=0}^K g_{k'}(\rij) \, \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
+	 } { \sum_{k'=0}^K g_{k'}(\cij) \, \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
 (\#eq:gradient-mukab)
 \end{equation}
 
@@ -845,8 +846,8 @@ To simplify this expression, we define the responsibility of component $k$ for t
 
 \begin{align}
       p(k|ij)  = 
-      \frac{ g_{k}(\rij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
-    {\sum_{k'=0}^K g_{k'}(\rij) \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk', \Lijk'^{-1})} }  \,.
+      \frac{ g_{k}(\cij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
+    {\sum_{k'=0}^K g_{k'}(\cij) \frac{ \Gauss(\mathbf{0} | \muk', \Lk'^{-1})}{\Gauss( \mathbf{0} | \muijk', \Lijk'^{-1})} }  \,.
 (\#eq:responsibilities)
 \end{align}
 
@@ -876,17 +877,18 @@ the partial derivative therefore becomes
 
 \begin{align}
 	 \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)
-	=& \left( -\muk^\mathrm{T} \Lk \mathbf{e}_{ab} \, +  \muijk^\mathrm{T} \Lijk \Lijk^{-1} \Lk \mathbf{e}_{ab} \right) \\
-	=& \mathbf{e}^\mathrm{T}_{ab} \Lk ( \muijk - \muk ) \; . 
+	=& \left( -\muk^\mathrm{T} \Lk \mathbf{e}_{ab} \, +  \muijk^\mathrm{T} \Lijk \Lijk^{-1} \Lk \mathbf{e}_{ab} \right) \nonumber \\
+	=& \, \mathbf{e}^\mathrm{T}_{ab} \Lk ( \muijk - \muk ) \; . 
 \end{align}
 
 Finally, the gradient of the log likelihood with respect to $\mathbf{\mu}$ becomes
 
 \begin{align}
-    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
-	=  \sum_{1\le i<j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
+    \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1\le i<j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
 (\#eq:gradient-muk-final)
 \end{align}
+
+The correct computation of the gradient $\nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)$ has been verified using finite differences.
 
 
 ### The gradient of the log likelihood with respect to $\Lk$ {#gradient-lambdak}
@@ -894,9 +896,8 @@ Finally, the gradient of the log likelihood with respect to $\mathbf{\mu}$ becom
 Analogously to eq. \@ref(eq:gradient-LL-mukab) one first needs to solve
 
 \begin{align}
-	 & \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
-	= \\
-	&\frac{1}{2}  \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \left( \log |\Lk| - \muk^\mathrm{T} \Lk \muk - \log |\Lijk| + \muijk^\mathrm{T} \Lijk \muijk \right) \,,
+	 & \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \nonumber\\
+	 &= \frac{1}{2}  \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \left( \log |\Lk| - \muk^\mathrm{T} \Lk \muk - \log |\Lijk| + \muijk^\mathrm{T} \Lijk \muijk \right) \,,
 (\#eq:grad-log-N-N-lambdakabcd)
 \end{align}
 
@@ -904,7 +905,7 @@ Analogously to eq. \@ref(eq:gradient-LL-mukab) one first needs to solve
 by applying eq. \@ref(eq:matrix-gradient) as before as well as the formulas
 
 \begin{align}
-	\frac{\partial}{\partial x} \log |\mathbf{A} | &= \text{Tr}\left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x}  \right) , \\
+	\frac{\partial}{\partial x} \log |\mathbf{A} | &= \text{Tr}\left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x}  \right) , \nonumber\\
 	\frac{\partial \mathbf{A}^{-1}}{\partial x} &= - \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \,.
 \end{align}
 
@@ -922,14 +923,14 @@ This yields
 	&= \muk^\mathrm{T} \mathbf{e}_{ab} \mathbf{e}_{cd}^\mathrm{T} \muk 
 	= \mathbf{e}_{ab}^\mathrm{T} \muk \muk^\mathrm{T} \mathbf{e}_{cd} = (\muk \muk^\mathrm{T})_{ab,cd} \\
 \frac{\partial ( \muijk^\mathrm{T} \Lijk \muijk) }{\partial \Lambda_{k,ab,cd}} 
-	&= \muijk^\mathrm{T} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk 
-	+ 2 \muijk^\mathrm{T} \Lijk \frac{\partial \Lijk^{-1}}{\partial \Lambda_{k,ab,cd}}  (\Hij \wij^* + \Lk \muk) 
-	+ 2 \muijk^\mathrm{T} \frac{\partial \Lk}{\partial \Lambda_{k,ab,cd}} \muk \nonumber \\
-	&= (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} 
-	- 2 \muijk^\mathrm{T} \Lijk  \Lijk^{-1} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \Lijk^{-1} (\Hij\wij^* + \Lk \muk) \\
-	&= (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} 
-	- 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk\\
-	&= (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
+	=& \muijk^\mathrm{T} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk 
+	+ 2 \muijk^\mathrm{T} \Lijk \frac{\partial \Lijk^{-1}}{\partial \Lambda_{k,ab,cd}}  (\Hij \wij^* + \Lk \muk) \nonumber\\
+	&+ 2 \muijk^\mathrm{T} \frac{\partial \Lk}{\partial \Lambda_{k,ab,cd}} \muk \nonumber \\
+	=& (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \nonumber \\
+	& -2 \muijk^\mathrm{T} \Lijk  \Lijk^{-1} \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \Lijk^{-1} (\Hij\wij^* + \Lk \muk) \nonumber \\
+	=& (\muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd}  
+	- 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk \nonumber\\
+	=& (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
 \end{align}
 
 Inserting these results into eq. \@ref(eq:grad-log-N-N-lambdakabcd) yields
@@ -948,17 +949,19 @@ Substituting this expression into the equation \@ref(eq:gradient-LL-mukab) analo
 (\#eq:gradient-lambdak-final)
 \end{align}
 
+The correct computation of the gradient $\nabla_{\Lk}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)$ has been verified using finite differences.
+
 
 ### The gradient of the log likelihood with respect to $\gamma_k$
 
-With $\rij \in \{0,1\}$ defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. \@ref(eq:def-g-k-binary). 
-The derivative of the mixing weights $g_k(\rij)$ is: 
+With $\cij \in \{0,1\}$ defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. \@ref(eq:def-g-k-binary). 
+The derivative of the mixing weights $g_k(\cij)$ is: 
 
 \begin{eqnarray}
-\frac{\partial g_{k'}(\rij)} {\partial \gamma_k} = \left\{
+\frac{\partial g_{k'}(\cij)} {\partial \gamma_k} = \left\{
   \begin{array}{lr}
-    g_k(\rij) (1 - g_k(\rij)) & : k' = k\\
-    g_{k'}(\rij) - g_k(\rij)  & : k' \neq k
+    g_k(\cij) (1 - g_k(\cij)) & : k' = k\\
+    g_{k'}(\cij) - g_k(\cij)  & : k' \neq k
   \end{array}
   \right.
 \end{eqnarray}
@@ -967,23 +970,23 @@ The partial derivative of the likelihood function with respect to $\gamma_k$ is:
 
 \begin{align}
 \frac{\partial} {\partial \gamma_k}  	L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) 
-  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  \frac{\partial}{\partial \gamma_k} g_{k'}(\rij)  
+  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  \frac{\partial}{\partial \gamma_k} g_{k'}(\cij)  
   \frac{\Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( 0 | \muijk, \Lijk^{-1})}}
-  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
-  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  g_{k'}(\rij)  
+  {\sum_{k'=0}^K g_{k'}(\cij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \nonumber \\
+  =&  \sum_{1\le i<j\le L} \frac{\sum_{k'=0}^K  g_{k'}(\cij)  
   \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \cdot 
   \begin{cases} 
-   1-g_k(\rij) & \text{if } k' = k \\
-   -g_k(\rij)  & \text{if } k' \neq k
+   1-g_k(\cij) & \text{if } k' = k \\
+   -g_k(\cij)  & \text{if } k' \neq k
   \end{cases}}
-  {\sum_{k'=0}^K g_{k'}(\rij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \\
+  {\sum_{k'=0}^K g_{k'}(\cij)  \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}} \nonumber\\
   =& \sum_{1\le i<j\le L} \sum_{k'=0}^K p(k'|ij) 
   \begin{cases} 
-  	1-g_k(\rij) & \text{if } k' = k \\
-   	-g_k(\rij)  & \text{if } k' \neq k 
-  \end{cases} \\
-  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij) \sum_{k'=0}^K p(k'|ij) \nonumber\\
-  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\rij)
+  	1-g_k(\cij) & \text{if } k' = k \\
+   	-g_k(\cij)  & \text{if } k' \neq k 
+  \end{cases} \nonumber\\
+  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\cij) \sum_{k'=0}^K p(k'|ij) \nonumber\\
+  =& \sum_{1 \leq i<j\leq L} p(k|ij) - g_k(\cij)
 \end{align}
 
 
@@ -992,61 +995,55 @@ The partial derivative of the likelihood function with respect to $\gamma_k$ is:
 ## Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances
 
 It is straightforward to extend the Baysian model for contact prediction presented in section \@ref(overview-posterior-distances) for distances. 
-The prior over couplings will modelled using distance dependent mixture weights $g_k(\rij)$.
-Therefore eq. \@ref(eq:definition-mixture-coupling-prior) is modified such that mixture weights $g_k(\rij)$ are modelled as softmax over linear functions $\gamma_k(\rij)$ (see Figure \@ref(fig:softmax-linear-fct):
+The prior over couplings will modelled using distance dependent mixture weights $g_k(\cij)$.
+Therefore eq. \@ref(eq:definition-mixture-coupling-prior) is modified such that mixture weights $g_k(\cij)$ are modelled as softmax over linear functions $\gamma_k(\cij)$ (see Figure \@ref(fig:softmax-linear-fct):
 
 \begin{align}
-	  g_k(\rij)        &= \frac{\exp \gamma_k(\rij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\rij)} \, , \\
-	  \gamma_k(\rij)   &= - \sum_{k'=0}^{k} \alpha_{k'} ( \rij - \rho_{k'}) .
+	  g_k(\cij)        &= \frac{\exp \gamma_k(\cij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\cij)} \, , \\
+	  \gamma_k(\cij)   &= - \sum_{k'=0}^{k} \alpha_{k'} ( \cij - \rho_{k'}) .
 (\#eq:definition-mixture-weights)
 \end{align}
 
-(ref:caption-softmax-linear-fct) The Gaussian mixture coefficients $g_k(\rij)$ of $p(\wij|\rij)$ are modelled as softmax over linear functions $\gamma_k(\rij)$. $\rho_k$ sets the transition point between neighbouring components $g_{k-1}(\rij)$ and $g_k(\rij)$, while $\alpha_k$ quantifies the abruptness of the transition between $g_{k-1}(\rij)$ and $g_k(\rij)$.
+(ref:caption-softmax-linear-fct) The Gaussian mixture coefficients $g_k(\cij)$ of $p(\wij|\cij)$ are modelled as softmax over linear functions $\gamma_k(\cij)$. $\rho_k$ sets the transition point between neighbouring components $g_{k-1}(\cij)$ and $g_k(\cij)$, while $\alpha_k$ quantifies the abruptness of the transition between $g_{k-1}(\cij)$ and $g_k(\cij)$.
 
 ```{r softmax-linear-fct, echo = FALSE, out.width = '50%', fig.align='center', fig.cap = '(ref:caption-softmax-linear-fct)'}
 knitr::include_graphics("img/theory/softmax_linear_fct.png")
 ```
 
-The functions $g_k(\rij)$ remain invariant when adding an offset to all $\gamma_k(\rij)$. 
-This degeneracy can be removed by setting $\gamma_0(\rij) \eq 0$ (i.e., $\alpha_0 \eq 0$ and $\rho_0 \eq 0$). 
+The functions $g_k(\cij)$ remain invariant when adding an offset to all $\gamma_k(\cij)$. 
+This degeneracy can be removed by setting $\gamma_0(\cij) \eq 0$ (i.e., $\alpha_0 \eq 0$ and $\rho_0 \eq 0$). 
 Further, the components are ordered, $\rho_1> \ldots > \rho_K$ and it is demanded that $\alpha_k > 0$ for all $k$. 
-This ensures that for $\rij \rightarrow \infty$ we will obtain $g_0(\rij) \rightarrow 1$ and hence $p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )$.
+This ensures that for $\cij \rightarrow \infty$ we will obtain $g_0(\cij) \rightarrow 1$ and hence $p(\w | \X) \rightarrow \Gauss(0, \sigma_0^2 \I )$.
 
 The parameters $\rho_k$ mark the transition points between the two Gaussian mixture components $k-1$ and $k$, i.e., the points at which the two components obtain equal weights. 
-This follows from $\gamma_k(\rij) - \gamma_{k-1}(r) \eq \alpha_{t} ( \rij - \rho_{t})$ and hence $\gamma_{k-1}(\rho_k) \eq= \gamma_k(\rho_k)$. 
-A change in $\rho_k$ or $\alpha_k$ only changes the behaviour of $g_{k-1}(\rij)$ and $g_k(\rij)$ in the transition region around $\rho_k$. 
-Therefore, this particular definition of $\gamma_k(\rij)$ makes the parameters $\alpha_k$ and $\rho_k$ as independent of each other as possible, rendering the optimisation of these parameters more efficient.
+This follows from $\gamma_k(\cij) - \gamma_{k-1}(r) \eq \alpha_{t} ( \cij - \rho_{t})$ and hence $\gamma_{k-1}(\rho_k) \eq= \gamma_k(\rho_k)$. 
+A change in $\rho_k$ or $\alpha_k$ only changes the behaviour of $g_{k-1}(\cij)$ and $g_k(\cij)$ in the transition region around $\rho_k$. 
+Therefore, this particular definition of $\gamma_k(\cij)$ makes the parameters $\alpha_k$ and $\rho_k$ as independent of each other as possible, rendering the optimisation of these parameters more efficient.
 
 ### The derivative of the log likelihood with respect to $\rho_k$
 
 Analogous to the derivations of $\muk$ in section \@ref(gradient-muk) and $\Lk$ in section \@ref(gradient-lambdak), the partial derivative with respect to $\rho_k$ is
 
 \begin{equation}
-\frac{\partial} {\partial \rho_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) =  \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \rho_k}  \log g_{k'}(\rij)  \,.
+\frac{\partial} {\partial \rho_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) =  \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \rho_k}  \log g_{k'}(\cij)  \,.
 	(\#eq:nabla-rhok-LL-pre)
 \end{equation}
 
-Using the definition of $g_k(\rij)$ in eq. \@ref(eq:definition-mixture-weights), we find (rember that $\alpha_0 \eq 0$ as noted in the last section) that
+Using the definition of $g_k(\cij)$ in eq. \@ref(eq:definition-mixture-weights), we find (rember that $\alpha_0 \eq 0$ as noted in the last section) that
 \begin{eqnarray}
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-	&=& \frac{\partial} {\partial \rho_k}  \log  \frac{\exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) \right) }{ \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) \right) } \nonumber \\
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-	&=& -  \frac{\partial} {\partial \rho_k}  \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} )  
-		- \frac{\partial} {\partial \rho_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) \right)  \nonumber \\
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+	\frac{\partial} {\partial \rho_k}  \log g_{l}(\cij)  
+	&=& \frac{\partial} {\partial \rho_k}  \log  \frac{\exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) \right) }{ \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) \right) } \nonumber \\
+	&=& -  \frac{\partial} {\partial \rho_k}  \sum_{k''=1}^{l} \alpha_{k''} (\cij - \rho_{k''} )  
+		- \frac{\partial} {\partial \rho_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\cij - \rho_{k''} ) \right)  \nonumber \\
 	&=& \alpha_k \, I(l \ge k)   
-		-  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \rho_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+		-  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \rho_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\cij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) ) } \nonumber \\
 	&=& \alpha_k \, I(l \ge k)   
-		-  \frac{ \sum_{k'=0}^K \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+		-  \frac{ \sum_{k'=0}^K \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) ) } \nonumber \\
 	&=& \alpha_k \, I(l \ge k)   
-		-  \frac{ \sum_{k'=0}^K \exp (\gamma_{k'}(\rij) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (\gamma_{k'}(\rij) ) } \nonumber \\
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
+		-  \frac{ \sum_{k'=0}^K \exp (\gamma_{k'}(\cij) ) \, \alpha_k \, I(k' \ge k)    }{ \sum_{k'=0}^K  \exp (\gamma_{k'}(\cij) ) } \nonumber \\
 	&=& \alpha_k \, I(l \ge k)   
-		-  \sum_{k'=0}^K  g_{k'}(\rij) \, \alpha_k \, I(k' \ge k)  \nonumber \\ 
-	\frac{\partial} {\partial \rho_k}  \log g_{l}(\rij)  
-	&=& \alpha_k \, \left(  I(l \ge k)  -  \sum_{k'=k}^K  g_{k'}(\rij) \right)  \, .
+		-  \sum_{k'=0}^K  g_{k'}(\cij) \, \alpha_k \, I(k' \ge k)  \nonumber \\ 
+	&=& \alpha_k \, \left(  I(l \ge k)  -  \sum_{k'=k}^K  g_{k'}(\cij) \right)  \, .
 	(\#eq:dlog-gk-drho)
 \end{eqnarray}
 
@@ -1054,17 +1051,17 @@ Inserting this into eq. \@ref(eq:nabla-rhok-LL-pre) yields
 
 \begin{align}
 	\frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  
-	&= \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, \alpha_k \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) \right)  \nonumber \\
-	&= \alpha_k \, \sum_{1\le i<j\le L}  \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\rij)  \right) ,
+	&= \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, \alpha_k \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\cij) \right)  \nonumber \\
+	&= \alpha_k \, \sum_{1\le i<j\le L}  \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\cij)  \right) ,
 \end{align}
 	
 and finally
 
 \begin{equation}
-	\frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  = \alpha_k \, \sum_{1\le i<j\le L}  \, \sum_{k'=k}^K  ( p(k'|ij) - g_{k'}(\rij) )  \, .
+	\frac{\partial} {\partial \rho_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  = \alpha_k \, \sum_{1\le i<j\le L}  \, \sum_{k'=k}^K  ( p(k'|ij) - g_{k'}(\cij) )  \, .
 \end{equation}
 
-This equation has an intuitive meaning: The gradient is the difference between the summed probability mass predicted to be due to components $k' \ge k$, $p(k'\ge k | ij)$, and the sum of the prior probabilities $g_k(\rij)$ for components $k' \ge k$, where the sum runs over all training points indexed by $i,j$. 
+This equation has an intuitive meaning: The gradient is the difference between the summed probability mass predicted to be due to components $k' \ge k$, $p(k'\ge k | ij)$, and the sum of the prior probabilities $g_k(\cij)$ for components $k' \ge k$, where the sum runs over all training points indexed by $i,j$. 
 
 ### The derivative of the log likelihood with respect to $\alpha_k$
 
@@ -1072,22 +1069,19 @@ This equation has an intuitive meaning: The gradient is the difference between t
 Last and similar to the previous derivation, the partial derivative with respect to $\alpha_k$ is
 
 \begin{equation}
-  \frac{\partial} {\partial \alpha_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) = \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \alpha_k}  \log g_{k'}(\rij)  \,.
+  \frac{\partial} {\partial \alpha_k} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) = \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \,  \frac{\partial} {\partial \alpha_k}  \log g_{k'}(\cij)  \,.
 	(\#eq:nabla-alphak-LLpre)
 \end{equation}
 
 Similarly as before, 
 
 \begin{align}
-	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-	&= \frac{\partial} {\partial \alpha_k}  \log  \frac{\exp (- \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
-	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-	&= -  \frac{\partial} {\partial \alpha_k}  \sum_{k''=1}^{l} \alpha_{k''} (\rij - \rho_{k''} )  
-		- \frac{\partial} {\partial \alpha_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) \right)  \nonumber \\
-	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-	&= - (\rij - \rho_{k} ) \, I(l \ge k) -  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \alpha_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\rij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\rij - \rho_{k''} ) ) } \nonumber \\
-	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\rij)  
-	&= - (\rij - \rho_{k} )  \, \left(  I(l \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) )  \right)  \, .
+	\frac{\partial} {\partial \alpha_k}  \log g_{l}(\cij)  
+	&= \frac{\partial} {\partial \alpha_k}  \log  \frac{\exp (- \sum_{k''=1}^{l} \alpha_{k''} (\cij - \rho_{k''} ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) ) } \nonumber \\
+	&= -  \frac{\partial} {\partial \alpha_k}  \sum_{k''=1}^{l} \alpha_{k''} (\cij - \rho_{k''} )  
+		- \frac{\partial} {\partial \alpha_k}  \log  \sum_{k'=0}^K  \exp \left(- \sum_{k''=1}^{k'} \, \alpha_{k''} (\cij - \rho_{k''} ) \right)  \nonumber \\
+	&= - (\cij - \rho_{k} ) \, I(l \ge k) -  \frac{ \sum_{k'=0}^K \frac{\partial} {\partial \alpha_k}  \exp (- \sum_{k''=1}^{k'} \, \alpha_{k''} (\cij - \rho_{k''} ) ) }{ \sum_{k'=0}^K  \exp (- \sum_{k''=1}^{k'} \alpha_{k''} (\cij - \rho_{k''} ) ) } \nonumber \\
+	&= - (\cij - \rho_{k} )  \, \left(  I(l \ge k)  -  \sum_{k''=k}^K  g_{k''}(\cij) )  \right)  \, .
 	(\#eq:dlog-gk-dalpha)
 \end{align}
 
@@ -1095,14 +1089,14 @@ Inserting this into eq. \@ref(eq:nabla-alphak-LLpre) yields
 
 \begin{align}
 	\frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha) 
-	&= - \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, (\rij - \rho_k) \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\rij) )  \right)  \nonumber \\
-	&= -\sum_{1\le i<j\le L}  \, (\rij - \rho_k) \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\rij) )  \right) ,
+	&= - \sum_{1\le i<j\le L}  \, \sum_{k'=0}^K  p(k'|ij) \, (\cij - \rho_k) \, \left(  I(k' \ge k)  -  \sum_{k''=k}^K  g_{k''}(\cij) )  \right)  \nonumber \\
+	&= -\sum_{1\le i<j\le L}  \, (\cij - \rho_k) \, \left( \sum_{k'=k}^K  p(k'|ij)   -  \sum _{k'=0}^K  p(k'|ij) \, \sum_{k''=k}^K  g_{k''}(\cij) )  \right) ,
 \end{align}
 	
 and finally
 
 \begin{equation}
-	\frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  	= \sum_{1\le i<j\le L}  \, (\rho_k - \rij) \, \sum_{k'=k}^K  ( p(k'|ij) -  g_{k'}(\rij) )  \, .
+	\frac{\partial} {\partial \alpha_k}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \rho, \alpha)  	= \sum_{1\le i<j\le L}  \, (\rho_k - \cij) \, \sum_{k'=k}^K  ( p(k'|ij) -  g_{k'}(\cij) )  \, .
 \end{equation}
 
 

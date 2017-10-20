@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,15 +25,15 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-19">
+<meta name="date" content="2017-10-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="general-intro.html">
-<link rel="next" href="structure-prediction.html">
+<link rel="prev" href="monitoring-optimization-for-different-sample-sizes.html">
+<link rel="next" href="training-of-the-random-forest-contact-prior.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -126,16 +126,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="protein-structure.html"><a href="protein-structure.html"><i class="fa fa-check"></i><b>1.1</b> Protein Structure</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="protein-structure.html"><a href="protein-structure.html#amino-acid-interactions"><i class="fa fa-check"></i><b>1.1.1</b> Amino Acid Interactions</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="structure-prediction.html"><a href="structure-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Structure Prediction</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="structure-prediction.html"><a href="structure-prediction.html#template-based-methods"><i class="fa fa-check"></i><b>1.2.1</b> Template-based methods</a></li>
-<li class="chapter" data-level="1.2.2" data-path="structure-prediction.html"><a href="structure-prediction.html#template-free-structure-prediction"><i class="fa fa-check"></i><b>1.2.2</b> Template-free structure prediction</a></li>
-<li class="chapter" data-level="1.2.3" data-path="structure-prediction.html"><a href="structure-prediction.html#contact-assisted-protein-structure-prediction"><i class="fa fa-check"></i><b>1.2.3</b> Contact assisted protein structure prediction</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1</b> Biological Background</a></li>
 <li class="chapter" data-level="2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>2</b> Introduction to Contact Prediction</a><ul>
 <li class="chapter" data-level="2.1" data-path="local-methods.html"><a href="local-methods.html"><i class="fa fa-check"></i><b>2.1</b> Local Statistical Models</a></li>
 <li class="chapter" data-level="2.2" data-path="global-methods.html"><a href="global-methods.html"><i class="fa fa-check"></i><b>2.2</b> Global Statistical Models</a></li>
@@ -162,8 +153,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>3</b> Interpretation of Coupling Matrices</a><ul>
 <li class="chapter" data-level="3.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>3.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
 <li class="chapter" data-level="3.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>3.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
-<li class="chapter" data-level="3.3" data-path="coupling-profiles-vary-with-distance.html"><a href="coupling-profiles-vary-with-distance.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
-<li class="chapter" data-level="3.4" data-path="higher-order-dependencies-between-couplings.html"><a href="higher-order-dependencies-between-couplings.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="3.3" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="3.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full Likelihood</a><ul>
 <li class="chapter" data-level="4.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>4.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
@@ -175,18 +166,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>4.4</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>4.4.1</b> Varying the Sample Size</a></li>
 <li class="chapter" data-level="4.4.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.2</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="4.4.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.5</b> Using ADAM to optimize Contrastive Divergence</a></li>
 <li class="chapter" data-level="4.6" data-path="comparing-cd-couplings-to-pll-couplings.html"><a href="comparing-cd-couplings-to-pll-couplings.html"><i class="fa fa-check"></i><b>4.6</b> Comparing CD couplings to pLL couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact <span class="math inline">\(p(\c \eq 1 | \X)\)</span></a></li>
-<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
-<li class="chapter" data-level="5.3" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.3</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.3.1</b> Iterative improvement of Laplace approximation</a></li>
+<li class="chapter" data-level="5.2" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>5.2</b> Gaussian approximation to the posterior of couplings</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>5.2.1</b> Iterative improvement of Laplace approximation</a></li>
 </ul></li>
+<li class="chapter" data-level="5.3" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.3</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
 <li class="chapter" data-level="5.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>5.4</b> Computing the likelihood function of contact states <span class="math inline">\(p(\X | \c)\)</span></a></li>
-<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the model parameters <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.5</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
 <li class="chapter" data-level="5.6" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.6</b> The posterior probability distribution for contact states <span class="math inline">\(\cij\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>6</b> Contact Prior</a><ul>
@@ -214,25 +206,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>7.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
 <li class="chapter" data-level="7.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>7.8.1</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Gibbs Sampling Scheme for Contrastive Divergence</a></li>
-<li class="chapter" data-level="7.10" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.10</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="7.11" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.12" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.12</b> Training the Hyperparameters <span class="math inline">\(\muk\)</span>, <span class="math inline">\(\Lk\)</span> and <span class="math inline">\(\gamma_k\)</span></a><ul>
-<li class="chapter" data-level="7.12.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.12.1</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.12.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.12.2</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.12.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.12.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Computing the Gradient with Contrastive Divergence</a></li>
+<li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="7.13" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.13</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
+<li class="chapter" data-level="7.13.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.1</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="7.13.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.2</b> Model Specifications</a></li>
+<li class="chapter" data-level="7.13.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.13.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="7.13.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.13.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="7.13.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.13.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.13" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.13</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.13.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.13.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.13.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.13.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
+<li class="chapter" data-level="7.14" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.14</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="7.14.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.14.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
+<li class="chapter" data-level="7.14.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.14.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.14" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.14</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.14.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.14.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.14.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.14.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.14.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.14.3</b> Pairwise Features</a></li>
+<li class="chapter" data-level="7.15" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.15</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="7.15.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.15.1</b> Global Features</a></li>
+<li class="chapter" data-level="7.15.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.15.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="7.15.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.15.3</b> Pairwise Features</a></li>
 </ul></li>
-<li class="chapter" data-level="7.15" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.15</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.15.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.15.1</b> Feature Selection</a></li>
+<li class="chapter" data-level="7.16" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.16</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="7.16.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.16.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -265,6 +260,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.5" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.5</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for different Sample Sizes</a></li>
+<li class="chapter" data-level="F.8" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.8</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -293,63 +289,181 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="protein-structure" class="section level2">
-<h2><span class="header-section-number">1.1</span> Protein Structure</h2>
-<ul>
-<li>Primary: Amino Acid Sewuence</li>
-<li>Secondary: Helices, sheets, coils, repeats,..</li>
-<li>tertiary: interaction of secondary structure elementws</li>
-<li>quartary: interaction of domains</li>
-</ul>
-<div id="amino-acid-interactions" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Amino Acid Interactions</h3>
-<p>The Venn diagram in figure <a href="protein-structure.html#fig:amino-acid-physico-chemical-properties">1.3</a> displays a typical classification of amino acids with respect to their physico-chemical properties.</p>
-<p>The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure. Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. The <span class="math inline">\(\pi\)</span>-electron systems favour T-shaped or offset stacked conformations <span class="citation">[<a href="#ref-Waters2002">27</a>]</span>. Preferred distances between aromatic residues have been observed between 4.5<span class="math inline">\(\angstrom\)</span> and 7<span class="math inline">\(\angstrom\)</span> of their ring centroids <span class="citation">[<a href="#ref-Burley1985">28</a>]</span>.</p>
-<p>Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains. They comprise the strongest side chain interactions in protein structures and their length varies between 3.5<span class="math inline">\(\angstrom\)</span> to 4<span class="math inline">\(\angstrom\)</span>. Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees <span class="citation">[<a href="#ref-Thornton1981">29</a>]</span>. They play a very important role in stabilizing protein structures. The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core. It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability <span class="citation">[<a href="#ref-Bastolla2005">30</a>]</span>.</p>
-<p>Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). The strength of electrostatic interactions, as described by Coulomb’s law, decreases with distance between the point charges at the functional groups. It has been found to be maximal at 4<span class="math inline">\(\angstrom\)</span> with respect to the functional groups of the both residues <span class="citation">[<a href="#ref-Donald2011">31</a>]</span>.</p>
-<p>Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. They are electrostatic interactions as well and thus their strength depends on distance as well. Hydrogen bonds are formed at distances of 2.4<span class="math inline">\(\angstrom\)</span> to 3.5<span class="math inline">\(\angstrom\)</span> between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).</p>
-<p>Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).</p>
-<p>Cation–<span class="math inline">\(\pi\)</span> interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). The preferential distance of the amino group to the <span class="math inline">\(\pi\)</span>-electron system has been determined between 3.4<span class="math inline">\(\angstrom\)</span> and 6<span class="math inline">\(\angstrom\)</span> <span class="citation">[<a href="#ref-Burley1986">32</a>]</span> <span class="citation">[<a href="#ref-Crowley2005">33</a>]</span> Their role in stabilizing protein structures is still under debate <span class="citation">[<a href="#ref-Slutsky2004">34</a>]</span>.</p>
-<p>Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. The sterical rigidity of the proline side chain restricts the backbone angle and thus affects secondary structure formation. Proline is known as a helix-breaker. Whereas other aromatic side chains are defined by their negatively charged <span class="math inline">\(\pi\)</span> faces, the face of proline side chains is partially positively charged. Thus, aromatic and proline residues can interact favorably with each other. Once due to the hydrophobic nature of the residues and also due to the interaction between the negatively charged aroamtic <span class="math inline">\(\pi\)</span> face and the polarized C-H bonds in proline, called a CH/<span class="math inline">\(\pi\)</span> interaction.</p>
-<p>Petersen et al. (2012) found clear secondary structure elements preferences for each amino acid pair. For example, residue pairs containing Alanine and Leucine are predominantly found in buried <span class="math inline">\(\alpha\)</span>-helices, whereas pairs containing Isoleucine and Valine preferentially are located in <span class="math inline">\(\beta\)</span>-sheet environments. Of course, solvent accessibility represents an important criterion for residue interactions. Hydrophobic residues are rather buried in the structure, whereas polar and charged residues are found more frequently on the protein surface and interact with water molecules.</p>
-<div class="figure"><span id="fig:amino-acid-physico-chemical-properties"></span>
-<img src="img/amino_acid_physico_chemical_properties_venn_diagramm.png" alt="Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in [@Livingstone1993]." width="50%" />
-<p class="caption">
-Figure 1.3: Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in <span class="citation">[<a href="#ref-Livingstone1993">35</a>]</span>.
-</p>
+<div id="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence" class="section level2">
+<h2><span class="header-section-number">F.8</span> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</h2>
+<table style="width:50%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>L</th>
+<th>Neff</th>
+<th>kendalltau_stat</th>
+<th>kendalltau_pvalue</th>
+<th>spearman_rho_stat</th>
+<th>spearman_rho_pvalue</th>
+<th>kolmogorov_smirnov_stat</th>
+<th>kolmogorov_smirnov_pvalue</th>
+<th>protein</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>321</td>
+<td>20.0</td>
+<td>0.725774203912045</td>
+<td>0.0</td>
+<td>0.9000083044142316</td>
+<td>0.0</td>
+<td>0.11090342679127727</td>
+<td>3.477372115932017e-275</td>
+<td>16vpA00</td>
+</tr>
+<tr class="even">
+<td>213</td>
+<td>205.36000000000001</td>
+<td>0.9224263047933574</td>
+<td>0.0</td>
+<td>0.9885593328016179</td>
+<td>0.0</td>
+<td>0.06997962618478165</td>
+<td>1.4879066279873833e-48</td>
+<td>1914A00</td>
+</tr>
+<tr class="odd">
+<td>155</td>
+<td>1266.6400000000001</td>
+<td>0.7933824977468241</td>
+<td>0.0</td>
+<td>0.9211216387520368</td>
+<td>0.0</td>
+<td>0.0928361960620025</td>
+<td>3.075139656462757e-45</td>
+<td>19hcA01</td>
+</tr>
+<tr class="even">
+<td>83</td>
+<td>1987.3599999999999</td>
+<td>0.9024528448892571</td>
+<td>0.0</td>
+<td>0.9858030831106591</td>
+<td>0.0</td>
+<td>0.02585953570379078</td>
+<td>0.20248526329852393</td>
+<td>1a0iA01</td>
+</tr>
+<tr class="odd">
+<td>156</td>
+<td>2750.04</td>
+<td>0.8786065656827933</td>
+<td>0.0</td>
+<td>0.9783949785979221</td>
+<td>0.0</td>
+<td>0.04822167080231596</td>
+<td>1.1309541604170778e-12</td>
+<td>1a0iA03</td>
+</tr>
+<tr class="even">
+<td>98</td>
+<td>21369.389999999999</td>
+<td>0.8501364723750585</td>
+<td>0.0</td>
+<td>0.966501783731736</td>
+<td>0.0</td>
+<td>0.027140753208499957</td>
+<td>0.059271965588411975</td>
+<td>1a0pA01</td>
+</tr>
+<tr class="odd">
+<td>182</td>
+<td>19856.619999999999</td>
+<td>0.784846380661977</td>
+<td>0.0</td>
+<td>0.9284100191783831</td>
+<td>0.0</td>
+<td>0.0666019063809119</td>
+<td>3.0595670875616747e-32</td>
+<td>1a0pA02</td>
+</tr>
+<tr class="even">
+<td>91</td>
+<td>536.75999999999999</td>
+<td>0.8520890890294837</td>
+<td>0.0</td>
+<td>0.9660805242316326</td>
+<td>0.0</td>
+<td>0.052258852258852295</td>
+<td>2.6171308176230558e-05</td>
+<td>1a1wA00</td>
+</tr>
+<tr class="odd">
+<td>108</td>
+<td>74.870000000000005</td>
+<td>0.681232190793956</td>
+<td>0.0</td>
+<td>0.8522871673526148</td>
+<td>0.0</td>
+<td>0.11059190031152648</td>
+<td>2.9558010734402517e-31</td>
+<td>1a1xA00</td>
+</tr>
+<tr class="even">
+<td>150</td>
+<td>702.65999999999997</td>
+<td>0.8631797929757838</td>
+<td>0.0</td>
+<td>0.9732092647811911</td>
+<td>0.0</td>
+<td>0.05762863534675615</td>
+<td>1.3511408095658639e-16</td>
+<td>1a31A03</td>
+</tr>
+<tr class="odd">
+<td>80</td>
+<td>164.80000000000001</td>
+<td>0.7108302178625667</td>
+<td>0.0</td>
+<td>0.8729907614639386</td>
+<td>0.0</td>
+<td>0.07626582278481013</td>
+<td>1.859028226567486e-08</td>
+<td>1a31A04</td>
+</tr>
+<tr class="even">
+<td>148</td>
+<td>6326.6599999999999</td>
+<td>0.8731304662036612</td>
+<td>0.0</td>
+<td>0.9766734114339887</td>
+<td>0.0</td>
+<td>0.04081632653061226</td>
+<td>2.53862259574713e-08</td>
+<td>1a3aA00</td>
+</tr>
+<tr class="odd">
+<td>40</td>
+<td>3451.2800000000002</td>
+<td>0.8933543991310359</td>
+<td>3.515664264337214e-305</td>
+<td>0.9829574392412267</td>
+<td>0.0</td>
+<td>0.03589743589743588</td>
+<td>0.6887857058762982</td>
+<td>1a5tA02</td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Waters2002">
-<p>27. Waters, M.L. (2002). Aromatic interactions in model systems. Curr. Opin. Chem. Biol. <em>6</em>, 736–741. Available at: <a href="http://dx.doi.org/10.1016/S1367-5931(02)00359-9" class="uri">http://dx.doi.org/10.1016/S1367-5931(02)00359-9</a>.</p>
-</div>
-<div id="ref-Burley1985">
-<p>28. Burley, S., and Petsko, G. (1985). Aromatic-aromatic interaction: a mechanism of protein structure stabilization. Science (80-. ). <em>229</em>, 23–28. Available at: <a href="http://www.sciencemag.org/cgi/doi/10.1126/science.3892686" class="uri">http://www.sciencemag.org/cgi/doi/10.1126/science.3892686</a>.</p>
-</div>
-<div id="ref-Thornton1981">
-<p>29. Thornton, J.M. (1981). Disulphide bridges in globular proteins. J. Mol. Biol. <em>151</em>, 261–87. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/7338898" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/7338898</a>.</p>
-</div>
-<div id="ref-Bastolla2005">
-<p>30. Bastolla, U., and Demetrius, L. (2005). Stability constraints and protein evolution: the role of chain length, composition and disulfide bonds. Protein Eng. Des. Sel. <em>18</em>, 405–415. Available at: <a href="https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045" class="uri">https://academic.oup.com/peds/article-lookup/doi/10.1093/protein/gzi045</a>.</p>
-</div>
-<div id="ref-Donald2011">
-<p>31. Donald, J.E., Kulp, D.W., and DeGrado, W.F. (2011). Salt bridges: geometrically specific, designable interactions. Proteins <em>79</em>, 898–915. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3069487{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
-</div>
-<div id="ref-Burley1986">
-<p>32. Burley, S., and Petsko, G. (1986). Amino-aromatic interactions in proteins. FEBS Lett. <em>203</em>, 139–143. Available at: <a href="http://dx.doi.org/10.1016/0014-5793(86)80730-X" class="uri">http://dx.doi.org/10.1016/0014-5793(86)80730-X</a>.</p>
-</div>
-<div id="ref-Crowley2005">
-<p>33. Crowley, P.B., and Golovin, A. (2005). Cation-pi interactions in protein-protein interfaces. Proteins <em>59</em>, 231–9. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15726638" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15726638</a>.</p>
-</div>
-<div id="ref-Slutsky2004">
-<p>34. Slutsky, M.M., and Marsh, E.N.G. (2004). Cation-pi interactions studied in a model coiled-coil peptide. Protein Sci. <em>13</em>, 2244–51. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2279832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
-</div>
-<div id="ref-Livingstone1993">
-<p>35. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence alignments: a strategy for the hierarchical analysis of residue conservation. Bioinformatics <em>9</em>, 745–756. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/9/6/745" class="uri">http://bioinformatics.oxfordjournals.org/content/9/6/745</a>.</p>
-</div>
-</div>
+<!-- </div> -->
 <div id="disqus_thread"></div>
 <script>
 /**
@@ -374,8 +488,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="general-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="structure-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="monitoring-optimization-for-different-sample-sizes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="training-of-the-random-forest-contact-prior.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -404,7 +518,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/10-appendix.Rmd",
 "text": "Edit"
 },
 "download": ["PhD_thesis_Susann_Vorberg.pdf"],
@@ -425,7 +539,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
