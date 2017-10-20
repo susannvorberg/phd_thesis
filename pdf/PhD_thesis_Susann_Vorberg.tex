@@ -3597,7 +3597,11 @@ clear how these observations can be interpreted, in particular given the
 fact, that the L2 norm of gradients,
 \(||\nabla_{\w} L\!L(\v^*, \w)||_2\), converges to the identical offset
 for all settings regardless of alignment size (see Appendix Figure
-\ref{fig:cd-gibbssteps-single-proteins-gradient}).
+\ref{fig:cd-gibbssteps-single-proteins-gradient}). Optimizing
+\protect\hyperlink{abbrev}{CD} with 10 Gibbs steps and using a smaller
+initial learning rate, \(\alpha0 = \frac{2e-2}{\sqrt{N_{\text{eff}}}}\),
+does not have an overal impact on mean precision as can be seen in
+Figure \ref{fig:precision-cd-gibbs-steps}.
 
 
 
@@ -7933,7 +7937,7 @@ Sizes}\label{monitoring-optimization-for-different-sample-sizes}
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes} \includegraphics[width=0.5\linewidth]{img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes} \includegraphics[width=0.48\linewidth]{img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes} 
 
 }
 
@@ -7971,16 +7975,16 @@ Steps}\label{monitoring-norm-of-gradients-for-different-number-of-gibbs-steps}
 
 }
 
-\caption{Monitoring gradient
-norm, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein 1aho\_A\_00 and
-1c75\_A\_00 during \protect\hyperlink{abbrev}{SGD} optimization using
-different number of Gibbs steps and initial learning rates,
-\(\alpha_0\). Number of Gibbs steps is given in the legend, as well as
-particular choices for the initial learning rate, when not using the
-default \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\). \textbf{Left}
-Protein 1aho\_A\_00 has length L=64 and 378 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=229) \textbf{Right} Protein
-1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
+\caption{Monitoring L2 norm
+of the gradient, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein
+1aho\_A\_00 and 1c75\_A\_00 during \protect\hyperlink{abbrev}{SGD}
+optimization using different number of Gibbs steps and initial learning
+rates, \(\alpha_0\). Number of Gibbs steps is given in the legend, as
+well as particular choices for the initial learning rate, when not using
+the default \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\).
+\textbf{Left} Protein 1aho\_A\_00 has length L=64 and 378 sequences in
+the alignment (\protect\hyperlink{abbrev}{Neff}=229) \textbf{Right}
+Protein 1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
 (\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:cd-gibbssteps-single-proteins-gradient}
 \end{figure}
 
