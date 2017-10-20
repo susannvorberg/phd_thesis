@@ -317,15 +317,21 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html"
 ```
 
 
-## Monitoring Optimization for different Sample Sizes
+## Monitoring Optimization for Different Sample Sizes
 
-(ref:caption-cd-samplesize-protein1ahoa00) Monitoring parameter norm and gradient norm for protein 1aho_A_00 during [SGD](#abbrev) using different sample sizes. Protein 1c75_A1aho_A_00_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Left** L2-norm of the gradients for coupling parameters $||\w||_2$ (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. **Right** L2-norm of the coupling parameters $||\w||_2$. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. 
+(ref:caption-cd-samplesize-protein1ahoa00) Monitoring parameter norm and gradient norm for protein 1aho_A_00 during [SGD](#abbrev) using different sample sizes. Protein 1aho_A_00_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Left** L2-norm of the gradients for coupling parameters, $||\nabla_{\w} L\!L(\v^*, \w)||_2$ (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. **Right** L2-norm of the coupling parameters $||\w||_2$. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. 
 
 ```{r cd-samplesize-protein1ahoa00, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-samplesize-protein1ahoa00)'}
 knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes.png", "img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes.png"))
 ```
 
+## Monitoring Norm of Gradients for Different Number of Gibbs Steps
 
+(ref:caption-cd-gibbssteps-single-proteins-gradient) Monitoring gradient norm, $||\nabla_{\w} L\!L(\v^*, \w)||_2$, for protein 1aho_A_00 and 1c75_A_00 during [SGD](#abbrev) optimization using different number of Gibbs steps and initial learning rates, $\alpha_0$. Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. **Left** Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
+
+```{r cd-gibbssteps-single-proteins-gradient, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-gibbssteps-single-proteins-gradient)'}
+knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/gradient_norm_1ahoa00.png", "img/full_likelihood/gibbs_sampling/gradient_norm_1c75a00.png"))
+```
 
 ## Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence 
 
@@ -355,14 +361,14 @@ L|Neff|kendalltau_stat|kendalltau_pvalue|spearman_rho_stat|spearman_rho_pvalue|k
 
 (ref:caption-feature-importance-rf-with-pll-score) Top ten features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
 
-```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature.html", height = "600px")
+```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_top_pLLfeature.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_top_pLLfeature.html", height = "600px")
 ```
 
 (ref:caption-feature-selection-rf-with-pll-score) Mean precision for top ranked contacts over 200 proteins for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). 
 
-```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
-knitr::include_url("img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
 ```
 
 ## Evaluating window size with 5-fold Cross-validation {#rf-window-size}

@@ -1,4 +1,4 @@
-# Contact Prior {#contact-prior}
+# Random Forest Contact Prior {#contact-prior}
 
 The wealth of successful meta-predictors presented in section \@ref(meta-predictors) highlights the importance to exploit other sources of information apart from coevolution statistics.
 Much information about residue interactions is typically contained in single position features that can be predicted from local sequence profiles, such as secondary structure, solvent accessibility or contact number, and in pairwise features such as the contact prediction scores for residue pairs $(i,j)$ from a simple local statistical methods as presented in section \@ref(local-methods). 
@@ -156,37 +156,54 @@ Both methods comprise important features of the random forest model as can be se
 
 When analysing performance with respect to alignment size it can be found that the random forest model outperforms the pseudo-likelihood score for small alignments (see Figure \@ref(fig:performance-neff-rf)).  
 Both, local statistial models *OMES* and [MI](#abbrev) also perform weak on small alignments, leading to the conclusion that the remaining sequence derived features are highly relevant when the alignment contains only few sequences.
-This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size [@Stahl2017, @Skwark2016]. 
+This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size [@Stahl2017; @Skwark2016]. 
 
 
-(ref:caption-performance-rf) Mean precision for top ranked contacts on a test set of 774 proteins. **random forest (pLL)** = random forest model using sequence derived features and pseudo-likelihood contact score ([APC](#abbrev) corrected Frobenius norm of couplings). **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
+(ref:caption-performance-rf) Mean precision for top ranked contacts on a test set of 1000 proteins. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
 
 ```{r performance-rf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-rf)'}
 knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_notitle.html", height = "500px")
 ```
 
 
-(ref:caption-performance-neff-rf) Mean precision for top ranked contacts on a test set of 774 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **random forest (pLL)** = random forest model using sequence derived features and pseudo-likelihood contact score ([APC](#abbrev) corrected Frobenius norm of couplings). **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
+(ref:caption-performance-neff-rf) Mean precision for top ranked contacts on a test set of 1000 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
 
 ```{r performance-neff-rf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf)'}
 knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
 ```
 
 
+## Using Contact Scores as Additional Features
 
-Figure \@ref(fig:performance-neff-rf) showed that the random forest predictor improves over the pseudo-likelihood coevolution method when the alignment consists of only few sequences. 
+Figure \@ref(fig:performance-neff-rf) shows that the random forest predictor improves over the pseudo-likelihood coevolution method when the alignment consists of only few sequences. 
 In order to assess this improvement in a more direct manner, it is possible to build a combined random forest predictor that is not only trained on the sequence derived features but also on the pseudo-likelihood contact score as an additional feature. 
 As expected, the pseudo-likelihood score comprises the most important feature in the model (see Appendix Figure \@ref(fig:feature-importance-rf-with-pll-score)) followed by the same sequence features that were found in the previous analysis in Figure \@ref(fig:rf-feature-importance).
 Models trained on subsets of features as described in method section \@ref(rf-feature-selection) perform equally well as the model trained on the complete set of features (see Appendix Figure \@ref(fig:feature-selection-rf-with-pll-score)).
 Only the model trained on the 26 most important features has slighlty decreased precision for the top L/10 ranked contacts. 
-The model trained on 76 features was selected as the final model.
+The model trained on 76 features was selected as the final model and its performance can be examined in Figure \@ref(fig:performance-rf-additional-features). 
+The combination of simple sequence features with the coevolution pseudo-likelihood contact score indeed improves predictive power for the random forest model over both single approaches.
+Especially for small alignments, the improvement is substantial as can be seen in in the left upper plot in Figure \@ref(fig:performance-neff-rf-additional-features).
+In contrast, the improvement on large alignments (right lower plot in Figure \@ref(fig:performance-neff-rf-additional-features)) is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable. 
 
-Finally, comparing the random forest model trained on sequence features and pseudo-likelihood contact score to the pseudo-likelihood score in Figure \@ref(fig:performance-rf) reveals that combining both types of information indeed improves predictive power over both single approaches.
-Especially for small alignments, the improvement is substantial as can be seen in in the left upper plot in Figure \@ref(fig:performance-neff-rf).
-In contrast, the improvement on large alignments (right lower plot in Figure \@ref(fig:performance-neff-rf)) is small, as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable. 
+Similarly, the contact score derived from couplings computed with [CD](#abbrev) in chapter \@ref(optimizing-full-likelihood) can be added as a feature instead of the pseudo-likelihood score or besides the pseudo-likelihood contact score. 
+All three models perform comparably, as can be seen in the benchmark in Figure \@ref(fig:performance-rf-additional-features). 
+The random forest model using both contact scores as features improves only slightly in precision over the random forest model that uses solely one of both contact scores.
+Since it has been shown in section \@ref(comparing-pll-cd) that pseudo-likelihood and contrastive divergence contact scores are highly correlated, resulting in very similar rankings for residue pairs, this result is not surprising.
+Apparantly, there is minor information gain by adding both contact scores.
 
 
+(ref:caption-performance-rf-additional-features) Mean precision for top ranked contacts on a test set of 1000 proteins. **random forest pLL** random forest model trained on 75 sequence derived features and the pseudo-likelihood contact score (see method *pseudo-likelihood*).  **random forest CD** random forest model trained on 75 sequence derived features and the contrastive divergence contact score (see method *contrastive divergence*). **random forest pLL CD** random forest model trained on 75 sequence derived features and the pseudo-likelihood contact score (see method *pseudo-likelihood*) and the contrastive divergence contact score (see method *contrastive divergence*). **contrastive divergence** [APC](#abbrev) corrected Frobenius norm of couplings computed with contrastive divergence. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.
 
+```{r performance-rf-additional-features, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_rf_pll_cd.png", out.width = '100%', fig.cap = '(ref:caption-performance-rf-additional-features)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_rf_pll_cd.html", height = "500px")
+```
+
+
+(ref:caption-performance-neff-rf-additional-features) Mean precision for top ranked contacts on a test set of 1000 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-rf-additional-features)
+
+```{r performance-neff-rf-additional-features, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf-additional-features)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd.html", height = "600px")
+```
 
 
 

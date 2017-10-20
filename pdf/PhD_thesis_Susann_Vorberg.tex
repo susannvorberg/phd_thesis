@@ -2633,18 +2633,18 @@ Unfortunately, we cannot compute the full likelihood function due to its
 complexity and need to define a different convergence criterion.
 
 One possibility is to stop learning when the L2 norm of the gradient for
-the coupling parameters \(||\nabla \w||_2\) is close to zero
-{[}\protect\hyperlink{ref-Carreira-Perpinan2005}{199}{]}. However, when
-using a finite number of sequences for sampling, the norm of the
+the coupling parameters \(||\nabla_{\w} L\!L(\v^*, \w)||_2\) is close to
+zero {[}\protect\hyperlink{ref-Carreira-Perpinan2005}{199}{]}. However,
+when using a finite number of sequences for sampling, the norm of the
 gradient does not converge to zero but saturates at a certain offset as
 it is described in section \ref{cd-sampling-optimization}. Convergence
 can also be monitored as the relative change of the norm of gradients
 within a certain number of iterations and optimization can be stopped
-when the norm of gradients has reached a certain plateau. As gradient
+when the norm of gradient has reached a certain plateau. As gradient
 estimates are very noisy with stochastic gradient descent, gradient
 fluctuations complicate the proper assessment of this criterion.
 
-Instead of the gradients, it is also possible to observe the relative
+Instead of the gradient, it is also possible to observe the relative
 change of the norm of parameter estimates \(||\w||_2\) over several
 iterations and stop learning when it falls below a small threshold
 \(\epsilon\),
@@ -2732,11 +2732,11 @@ likelihood is given by \(\sum_{a,b=1}^{20} \wijab = 0\). This
 requirement is derived in section \ref{prior-v}. When using plain
 stochastic gradient descent without momentum and without adaptive
 learning rates, this criterion is never violated when parameters are
-initialized uniformly. This is due to the fact that the 400 gradients
-\(\wijab\) for \(a,b \in \{1, \ldots, 20\}\) are not independent because
-the sum over the 400 pairwise amino acid counts at positions \(i\) and
-\(j\) is identical for the observed and the sampled alignment and
-amounts to,
+initialized uniformly. This is due to the fact that the 400 partial
+derivatives for \(\wijab\) given a pair \((i,j)\) and for
+\(a,b \in \{1, \ldots, 20\}\) are not independent because the sum over
+the 400 pairwise amino acid counts at positions \(i\) and \(j\) is
+identical for the observed and the sampled alignment and amounts to,
 
 \begin{equation}
   \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
@@ -2775,18 +2775,18 @@ processs. It is therefore interesting to monitor
 
 }
 
-\caption{The 400 gradients
-\(\nabla_{\wijab}\LLreg(\v,\w)\) at position \((i,j)\) for
-\(a,b \in \{1, \ldots, 20 \}\) are not independent. Red bars represent
-pairwise amino acid counts at position \((i,j)\) for the sampled
-alignment. Blue bars represent pairwise amino acid counts at position
-\((i,j)\) for the input alignment. The sum over pairwise amino acid
-counts at position \((i,j)\) for both alignments is \(N_{ij}\), which is
-the number of ungapped sequences. The gradient
-\(\nabla_{\wijab}\LLreg(\v,\w)\) is computed as the difference of
-pairwise amino acid counts for amino acids a and b at position
-\((i,j)\). The sum over gradients \(\nabla_{\wijab}\LLreg(\v,\w)\) at
-position \((i,j)\) for all \(a,b \in \{1, \ldots, 20 \}\) is zero.}\label{fig:visualisation-wijab-constraint}
+\caption{The 400 partial derivatives
+\(\frac{\partial \LLreg(\v,\w)}{\partial \wijab}\) at position \((i,j)\)
+for \(a,b \in \{1, \ldots, 20 \}\) are not independent. Red bars
+represent pairwise amino acid counts at position \((i,j)\) for the
+sampled alignment. Blue bars represent pairwise amino acid counts at
+position \((i,j)\) for the input alignment. The sum over pairwise amino
+acid counts at position \((i,j)\) for both alignments is \(N_{ij}\),
+which is the number of ungapped sequences. The partial derivative for
+\(\wijab\) is computed as the difference of pairwise amino acid counts
+for amino acids \(a\) and \(b\) at position \((i,j)\). The sum over the
+partial derivatives \(\frac{\partial \LLreg(\v,\w)}{\partial \wijab}\)
+at position \((i,j)\) for all \(a,b \in \{1, \ldots, 20 \}\) is zero.}\label{fig:visualisation-wijab-constraint}
 \end{figure}
 
 \subsection{Tuning Hyperparameters of Stochastic Gradient Descent
@@ -3448,18 +3448,18 @@ sequences \protect\hyperlink{abbrev}{Neff}.}\label{fig:cd-precision-sampling-siz
 To understand the effect of different choices of sample size it is
 necessary to look at single proteins. The left plot in Figure
 \ref{fig:cd-samplesize-protein1c75a00} shows the development of the L2
-norm of the gradient for couplings \(||\nabla_{\w}||_2\) for protein
-chain 1c75\_A\_00 that is of length 71 and has
-\protect\hyperlink{abbrev}{Neff} = 16808. The norm of the gradient
-decreases during optimization and saturates at decreasing levels for
-increasing choices of sample size. Increasing the sample size by a
-factor 100 (from \(L\) to \(100L\)) leads to an approximately 10-fold
-reduction of the norm of gradient (\(\mathrm{1.4e}{+5}\) compared to
-\(\mathrm{1.45e}{+4}\)) at convergence, which corresponds to a typical
-reduction of statistical noise as the square root of the number of
-samples. It is not feasible to sample the number of sequences at each
-iteration that would be necessary to reduce the norm of the gradient to
-near zero.
+norm of the gradient for couplings,
+\(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein chain 1c75\_A\_00 that
+is of length 71 and has \protect\hyperlink{abbrev}{Neff} = 16808. The
+norm of the gradient decreases during optimization and saturates at
+decreasing levels for increasing choices of sample size. Increasing the
+sample size by a factor 100 (from \(L\) to \(100L\)) leads to an
+approximately 10-fold reduction of the norm of gradient
+(\(\mathrm{1.4e}{+5}\) compared to \(\mathrm{1.45e}{+4}\)) at
+convergence, which corresponds to a typical reduction of statistical
+noise as the square root of the number of samples. It is not feasible to
+sample the number of sequences at each iteration that would be necessary
+to reduce the norm of the gradient to near zero.
 
 In any case, precision of the top ranked contacts does not improve to
 the same amount as the norm of the gradient decreases when using larger
@@ -3487,8 +3487,8 @@ the top \(0.1L\) - \(L\) contacts of 0.44, whereas using only
 The left plot in Appendix Figure \ref{fig:cd-samplesize-protein1ahoa00}
 shows the development of the norm of the gradient and the norm of
 coupling parameters for this protein. As before, the gradient estimate
-improves and the norm of the gradient saturates at smaller values when
-more sequences are used in the Gibbs sampling process and therefore
+improves and the norm of the gradient converges towards smaller values
+when more sequences are used in the Gibbs sampling process and therefore
 should lead to a better approximation of the likelihood. One explanation
 could be that this is some effect of overfitting, eventhough a
 regularizer is used and the norm of coupling parameters actually is
@@ -3545,8 +3545,7 @@ the number of Gibbs steps does result in a slight drop of performance.
 When evaluating precision with respect to
 \protect\hyperlink{abbrev}{Neff} it can be found that using more Gibbs
 sampling steps is especially disadvantageous for large alignments (see
-Appendix Figure \ref{fig:cd-precision-gibbssteps-neff}). By checking
-single proteins it becomes obvious
+Appendix Figure \ref{fig:cd-precision-gibbssteps-neff}).
 
 
 
@@ -3571,6 +3570,64 @@ from pseudo-likelihood. \textbf{CD \#Gibbs steps = X}: contact scores
 computed from \protect\hyperlink{abbrev}{CD} optimized with
 \protect\hyperlink{abbrev}{SGD} and evolving each Markov chain using the
 number of Gibbs steps specified in the legend.}\label{fig:precision-cd-gibbs-steps}
+\end{figure}
+
+When evaluating single proteins, it can be observed that for proteins
+with small alignments the L2 norm of the parameters, \(||\w||_2\),
+converges towards a different offset when using more than one Gibbs
+steps (see left plot in Figure \ref{fig:cd-gibbssteps-single-proteins}).
+Naturally, the Markov chains can wander further away from their
+initialization when they are evolved over a longer time which results in
+a stronger gradient at the beginning of the optimization. Therefore and
+because the initial learning rate has been optimized for one Gibbs step,
+the parameter norm overshoots the optimum at the beginning. Even when
+lowering the initial learning rate from
+\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\) to
+\(\alpha_0 \in \left \{ \frac{3e-2}{\sqrt{N_{\text{eff}}}}, \frac{2e-2}{\sqrt{N_{\text{eff}}}} , \frac{1e-2}{\sqrt{N_{\text{eff}}}} \right \}\),
+the \protect\hyperlink{abbrev}{SGD} optimizer evidently approaches a
+different optimum. Surprisingly, the different optimum that is found for
+proteins with small alignments has no substantial impact on precision,
+as becomes evident from Figure \ref{fig:cd-precision-gibbssteps-neff}.
+For proteins with large alignments it can be observed that there is not
+one alternative solution to the parameters, but depending on the number
+of Gibbs steps and on the initial learning rate, \(\alpha_0\), the L2
+norm over parameters converges towards various different offsets (see
+right plot in Figure \ref{fig:cd-gibbssteps-single-proteins}). It is not
+clear how these observations can be interpreted, in particular given the
+fact, that the L2 norm of gradients,
+\(||\nabla_{\w} L\!L(\v^*, \w)||_2\), converges to the identical offset
+for all settings regardless of alignment size (see Appendix Figure
+\ref{fig:cd-gibbssteps-single-proteins-gradient}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/parameter_norm_1ahoa00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/parameter_norm_1c75a00} 
+
+}
+
+\caption{Monitoring parameter norm,
+\(||\w||_2\), for protein 1aho\_A\_00 and 1c75\_A\_00 during
+\protect\hyperlink{abbrev}{SGD} optimization using different number of
+Gibbs steps and initial learning rates, \(\alpha_0\). Number of Gibbs
+steps is given in the legend, as well as particular choices for the
+initial learning rate, when not using the default
+\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\). \textbf{Left} Protein
+1aho\_A\_00 has length L=64 and 378 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=229) \textbf{Right} Protein
+1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:cd-gibbssteps-single-proteins}
 \end{figure}
 
 \subsection{Persistent Contrastive Divergence}\label{cd-gibbs-steps}
@@ -3648,7 +3705,7 @@ A problem when using \emph{ADAM} is that the necessarty condidtion
 \ref{convergence-criteria-sgd}).
 
 \section{Comparing CD couplings to pLL
-couplings}\label{comparing-cd-couplings-to-pll-couplings}
+couplings}\label{comparing-pll-cd}
 
 Scatter Plots for couplings wijab: nice correlation - pearson
 correlation? gibt 3 outlier und das sind auch noch die staerksten
@@ -3820,6 +3877,611 @@ Showing precision:
   convergence criterion: mention paper
   {[}\protect\hyperlink{ref-Mahsereci2017}{198}{]}
 \end{itemize}
+
+\chapter{Random Forest Contact Prior}\label{contact-prior}
+
+The wealth of successful meta-predictors presented in section
+\ref{meta-predictors} highlights the importance to exploit other sources
+of information apart from coevolution statistics. Much information about
+residue interactions is typically contained in single position features
+that can be predicted from local sequence profiles, such as secondary
+structure, solvent accessibility or contact number, and in pairwise
+features such as the contact prediction scores for residue pairs
+\((i,j)\) from a simple local statistical methods as presented in
+section \ref{local-methods}.
+
+For example, predictions of secondary structure elements and solvent
+accessibility are used by almost all modern machine learning predictors,
+such as MetaPsicov {[}\protect\hyperlink{ref-Jones2015a}{84}{]}, NeBCon
+{[}\protect\hyperlink{ref-He2017}{87}{]}, EPSILON-CP
+{[}\protect\hyperlink{ref-Stahl2017}{86}{]}, PconsC3
+{[}\protect\hyperlink{ref-Skwark2016}{82}{]}. Other frequently used
+sequence derived features include pairwise contact potentials, sequence
+separation and conservation measures such as column entropy
+{[}\protect\hyperlink{ref-Jones2015a}{84},\protect\hyperlink{ref-He2017}{87},\protect\hyperlink{ref-Ma2015a}{206}{]}.
+
+In the following sections I present a random forest classifier that uses
+sequence derived features to distinguish contacts from non-contacts.
+Methods section \ref{seq-features} lists all features used to train the
+classifier including the aforementioned standard features as well as
+some novel features.
+
+The probabilistic predictions of the random forest model can be
+introduced directly as prior information into the Bayesian statistical
+model presented in the last section \ref{bayesian-approach} to improve
+the overall prediction accuracy in terms of posterior probabilities.
+Furthermore, contact scores from coevolution methods can be added as
+additional feature to the random forest model in order to elucidate how
+much the combined information improves prediction accuracy over the
+single methods.
+
+\section{Random Forest Classifiers}\label{random-forest-classifiers}
+
+Random Forests are supervised machine learning methods that belong to
+the class of ensemble methods
+{[}\protect\hyperlink{ref-Ho1998}{207}--\protect\hyperlink{ref-Breiman2001}{209}{]}.
+They are easy to implement, fast to train and can handle large numbers
+of features due to implicit feature selection
+{[}\protect\hyperlink{ref-Menze2009}{210}{]}.
+
+Ensemble methods combine the predictions of several independent base
+estimators with the goal to improve generalizability over a single
+estimator. Random forests are ensembles of decision trees where
+randomness is introduced in two ways:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  every tree is build on a random sample that is drawn with replacement
+  from the training set and has the same size as the training set (i.e.,
+  a bootstrap sample)
+\item
+  every split of a node is evaluated on a random subset of features
+\end{enumerate}
+
+A single decision tree, especially when it is grown very deep is highly
+susceptible to noise in the training set and therefore prone to
+overfitting which results in poor generalization ability. As a
+consequence of randomness and averaging over many decision trees, the
+variance of a random forest predictor decreases and therefore the risk
+of overfitting {[}\protect\hyperlink{ref-Louppe2014}{211}{]}. It is
+still advisable to restrict the depth of single trees in a random
+forest, not only to counteract overfitting but also to reduce model
+complexity and to speedup the algorithm.
+
+Random forests are capable of regression and classification tasks. For
+classification, predictions for new data are obtained by running each
+data sample down every tree in the forest and then either apply majority
+voting over single class votes or averaging the probabilistic class
+predictions. Probabilistic class predictions of single trees are
+computed as the fraction of training set samples of the same class in a
+leaf whereas the single class vote refers to the majority class in a
+leaf. Figure \ref{fig:rf-intro} visualizes the procedure of classifying
+a new data sample.
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{img/random_forest_contact_prior/intro_random_forest} 
+
+}
+
+\caption{Classifying new data with random forests. A new
+data sample is run down every tree in the forest until it ends up in a
+leaf node. Every leaf node has associated class probabilities \(p(c)\)
+reflecting the fraction of training samples at this leaf node belonging
+to every class \(c\). The color of the leaf nodes reflects the class
+with highest probability. The predictions from all trees in form of the
+class probabilties are averaged and yield the final prediction.}\label{fig:rf-intro}
+\end{figure}
+
+Typically, \emph{Gini impurity}, which is a computationally efficient
+approximation to the entropy, is used as a split criterion to evaluate
+the quality of a split. It measures the degree of purity in a data set
+regarding class labels as \(GI = (1 - \sum_{k=1}^K p_k^2)\), where
+\(p_k\) is the proportion of class \(k\) in the data set. For every
+feature \(f\) in the random subset that is considered for splitting a
+particular node \(N\), the \emph{decrease in Gini impurity}
+\(\Delta GI_f\) will be computed as,
+
+\[
+\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI_f(N_{\textrm{left}}) - p_{\textrm{right}} GI_f(N_{\textrm{left}})
+\]
+
+where \(p_{\textrm{left}}\) and \(p_{\textrm{right}}\) refers to the
+fraction of samples ending up in the left and right child node
+respectively {[}\protect\hyperlink{ref-Menze2009}{210}{]}. The feature
+\(f\) with highest \(\Delta GI_f\) over the two resulting child node
+subsets will be used to split the data set at the given node \(N\).
+
+Summing the \emph{decrease in Gini impurity} for a feature \(f\) over
+all trees whenever \(f\) was used for a split yields the \emph{Gini
+importance} measure, which can be used as an estimate of general feature
+relevance. Random forests therefore are popular methods for feature
+selection and it is common practice to remove the least important
+features from a data set to reduce the complexity of the model. However,
+feature importance measured with respect to \emph{Gini importance} needs
+to be interpreted with care. The random forest model cannot distinguish
+between correlated features and it will choose any of the correlated
+features for a split, thereby reducing the importance of the other
+features and introducing bias. Furthermore, it has been found that
+feature selection based on \emph{Gini importance} is biased towards
+selecting features with more categories as they will be chosen more
+often for splits and therefore tend to obtain higher scores
+{[}\protect\hyperlink{ref-Strobl2007}{212}{]}.
+
+\section{Hyperparameter Optimization for Random
+Forest}\label{hyperparameter-optimization-for-random-forest}
+
+There are several hyperparameters in a random forest model that need to
+be tuned to achieve best balance between predictive power and runtime.
+While more trees in the random forest generally improve performance of
+the model, they will slow down training and prediction. A crucial
+hyperparamter is the number of features that is randomly selected for a
+split at each node in a tree
+{[}\protect\hyperlink{ref-Bernard2009}{213}{]}. Stochasticity introduced
+by the random selection of features is a key characteristic of random
+forests as it reduces correlation between the trees and thus the
+variance of the predictor. Selecting many features typically increases
+performance as more options can be considered for each split, but at the
+same time increases risk of overfitting and decreases speed of the
+algorithm. In general, random forests are robust to overfitting, as long
+as there are enough trees in the ensemble and the selection of features
+for splitting a node introduces sufficient stochasticity. Overfitting
+can furthermore be prevented by restricting the depth of the trees,
+which is known as pruning or by enforcing a minimal leaf node size
+regarding the minimal number of data samples ending in a leaf node.
+Again, a positive side-effect of pruning and requiring minimal leaf node
+size is a speedup of the algorithm.
+{[}\protect\hyperlink{ref-Louppe2014}{211}{]}
+
+In the following, I use 5-fold cross-validation to identify the optimal
+architecture of the random forest. Details about the training set and he
+cross-validation procedure can be found in method section
+\ref{rf-training}. First I assessed performance of models for
+combinations of the parameter \emph{n\_estimators}, defining the number
+of trees in the forest and the parameter \emph{max\_depth} defining the
+maximum depth of the trees:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{n\_estimators} \(\in \{100,500,1000\}\)
+\item
+  \emph{max\_depth} \(\in \{10, 100, 1000, None\}\)
+\end{itemize}
+
+Figure \ref{fig:rf-gridsearch-nestimators-maxfeatures} shows that the
+top five parameter combinations perform nearly identical. Random forests
+with 1000 trees perform slightly better than models constituting 500
+trees, irrespective of the depth of the trees. In order to keep model
+complexity small, I chose \texttt{n\_estimators=1000} and
+\texttt{max\_depth=100} for further analysis.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle} 
+
+}
+
+\caption{Mean precision over
+200 proteins against highest scoring contact predictions from random
+forest models for different settings of \emph{n\_estimators} and
+\emph{max\_depth}. Dashed lines show the performance of models that have
+been learned on the five different subsets of training data. Solid lines
+give the mean precision over the five models. Only those models are
+shown that yielded the five highest mean precision values (given in
+parantheses in the legend). Random forest models with 1000 trees and
+maximum depth of trees of either 100, 1000 or unrestricted tree depth
+perform nearly identical (lines overlap). Random forest models with 500
+trees and \emph{max\_depth}=10 or \emph{max\_depth}=100 perform slightly
+worse.}\label{fig:rf-gridsearch-nestimators-maxfeatures}
+\end{figure}
+
+Next, I optimized the parameters \emph{min\_samples\_leaf}, defining the
+minimum number of samples required at a leaf node and
+\emph{max\_features}, defining the number of randomly selected features
+considered for each split using the following settings:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{min\_samples\_leaf} \(\in \{1, 10, 100\}\)
+\item
+  \emph{max\_features} \(\in \{8, 16, 38, 75 \}\) representing
+  \(\sqrt{N}\), \(\log2{N}\), \(0.15N\) and \(0.3N\) respectively with
+  \(N=250\) being the number of features listed in method section
+  \ref{seq-features}.
+\end{itemize}
+
+Randomly selecting 30\% of features (=75 features) and requiring at
+least 10 samples per leaf gives highest mean precision as can be seen in
+Figure \ref{fig:rf-gridsearch-maxdepth-minsampleleaf}. I chose
+\texttt{max\_features=0.30} and \texttt{min\_samples\_leaf=10} for
+further analysis. Tuning the hyperparameters in a different order or on
+a larger dataset gives similar results.
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle} 
+
+}
+
+\caption{Mean precision over 200
+proteins against highest scoring contact predictions from random forest
+models with different settings of \emph{min\_samples\_leaf} and
+\emph{max\_features}. Dashed lines show the performance of models that
+have been learned on the five different subsets of training data. Solid
+lines give the mean precision over the five models. Only those models
+are shown that yielded the five best mean precision values (given in
+parantheses in the legend).}\label{fig:rf-gridsearch-maxdepth-minsampleleaf}
+\end{figure}
+
+In a next step I assessed dataset specific settings, such as the window
+size over which single positions features will be computed, the distance
+threshold to define non-contacts and the optimal proportions of contacts
+and non-contacts in the training set. I used the previously identified
+settings of random forest hyperparameters
+(\texttt{n\_estimators=1000,\ min\_samples\_leaf=10,\ max\_depth=100,\ max\_features=0.30}).
+
+\begin{itemize}
+\tightlist
+\item
+  proportion of contacts/non-contacts
+  \(\in \{1\!:\!2, 1\!:\!5, 1\!:\!10, 1\!:\!20 \}\) while keeping total
+  dataset size fixed at 300,000 residue pairs
+\item
+  window size: \(\in \{5, 7, 9, 11\}\)
+\item
+  non-contact threshold \(\in \{8, 15, 20\}\)
+\end{itemize}
+
+As can be seen in appendix \ref{rf-window-size} and
+\ref{rf-noncontact-threshold}, the default choice of using a window size
+of five positions and the non-contact threshold of \(8 \angstrom\)
+proves to be the optimal setting. Furthermore, using five-times as many
+non-contacts as contacts in the training set results in highest mean
+precision as can be seen in appendix \ref{rf-ratio-noncontacts}. These
+estimates might be biased in a way since the random forest
+hyperparameters have been optimized on a dataset using exactly these
+optimal settings.
+
+\section{Evaluating Random Forest Model as Contact
+Predictor}\label{evaluating-random-forest-model-as-contact-predictor}
+
+I trained a random forest classifier on the feature set described in
+methods section \ref{seq-features} and using the optimal hyperparameters
+identified with 5-fold cross-validation as described in the last
+section.
+
+Figure \ref{fig:rf-feature-importance} shows the ranking of the ten most
+important features according to \emph{Gini importance}. Both local
+statistical contact scores, \emph{OMES}
+{[}\protect\hyperlink{ref-Fodor2004a}{214}{]} and
+\protect\hyperlink{abbrev}{MI} (mutual information between amino acid
+counts), constitute the most important features besides the mean pair
+potentials acording to Miyazawa \& Jernigan
+{[}\protect\hyperlink{ref-Miyazawa1999a}{215}{]} and
+Li\&Fang{[}\protect\hyperlink{ref-Li2011}{69}{]}. Further important
+features include the relative solvent accessibility at both pair
+positions, the total percentage of gaps at both positions, the
+correlation between mean isoelectric point property at both positions,
+sequence separation and the beta-sheet propensity in a window of size
+five around position i.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures} \caption{Top ten features ranked according to
+\emph{Gini importance}. \textbf{OMES+APC}:
+\protect\hyperlink{abbrev}{APC} corrected OMES score according to
+Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{214}{]}.
+\textbf{mean pair potential (Miyasawa \& Jernigan)}: average
+quasi-chemical energy of transfer of amino acids from water to the
+protein environment {[}\protect\hyperlink{ref-Miyazawa1999a}{215}{]}.
+\textbf{MI+APC}: \protect\hyperlink{abbrev}{APC} corrected mutual
+information between amino acid counts (using pseudo-counts).
+\textbf{mean pair potential (Li\&Fang)}: average general contact
+potential by Li \& Fang {[}\protect\hyperlink{ref-Li2011}{69}{]}.
+\textbf{rel. solvent accessibilty i(j)}: RSA score computed with
+Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{216}{]} for
+position i(j). \textbf{pairwise gap\%}: percentage of gapped sequences
+at either position i and j. \textbf{correlation mean isoelectric
+feature}: Pearson correlation between the mean isoelectric point feature
+(according to Zimmermann et al., 1968) for positions i and j.
+\textbf{sequence separation}: \textbar{}j-i\textbar{}. \textbf{beta
+sheet propensity window(i)}: beta-sheet propensity according to Psipred
+{[}\protect\hyperlink{ref-Jones1999}{217}{]} computed within a window of
+five positions around i. eatures are described in detail in methods
+section \ref{seq-features}.}\label{fig:rf-feature-importance}
+\end{figure}
+
+Many features have low \emph{Gini importance} scores which means they
+are rarely considered for splitting a node and can most likely be
+removed from the dataset. Removing irrelevant features from the dataset
+is a convenient procedure to reduce model complexity. It has been found,
+that prediction performance might even increase after removing the most
+irrelevant features {[}\protect\hyperlink{ref-Menze2009}{210}{]}. For
+example, during the development of \emph{EPSILON-CP}, a deep neural
+network method for contact prediction, the authors performed feature
+selection using boosted trees. By removing 75\% of the most
+non-informative features (mostly features related to amino acid
+composition), the performance of their predictor increased slightly
+{[}\protect\hyperlink{ref-Stahl2017}{86}{]}. Other studies have also
+emphasized the importance of feature selection to improve performance
+and reduce model complexity
+{[}\protect\hyperlink{ref-Cheng2007}{67},\protect\hyperlink{ref-Li2011}{69}{]}.
+
+As described in methods section \ref{rf-feature-selection}, I performed
+feature selection by evaluating model performance on subsets of features
+of decreasing importance. Most models trained on subsets of the total
+feature space perform nearly identical compared to the model trained on
+all features, as can be seen in Figure
+\ref{fig:rf-feature-selection-performance}. Performance of the random
+forest models drops noticeably when using only the 25 most important
+features. For the further analysis I am using the random forest model
+trained on the 75 most important features as this model constitutes the
+smallest set of features while performing nearly identical compared to
+the model trained on the complete feature set.
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_featureselection_random_forest_optimized_hyperparameters} \caption{Mean precision of top
+ranked predictions over 200 proteins for random forest models trained on
+subsets of features of decreasing importance. Subsets of features have
+been selected as described in methods section
+\ref{rf-feature-selection}.}\label{fig:rf-feature-selection-performance}
+\end{figure}
+
+Figure \ref{fig:performance-rf} shows the mean precision for the random
+forest model trained on the 75 most important features. The random
+forest model has a mean precision of 0.33 for the top \(0.5\cdot L\)
+contacts compared to a precision of 0.47 for pseudo-likelihood.
+Furthermore, the random forest model improves approximately ten
+percentage points in precision over the local statistical contact
+scores, \emph{OMES} and mutual information (MI). Both methods comprise
+important features of the random forest model as can be seen in Figure
+\ref{fig:rf-feature-importance}.
+
+When analysing performance with respect to alignment size it can be
+found that the random forest model outperforms the pseudo-likelihood
+score for small alignments (see Figure \ref{fig:performance-neff-rf}).\\
+Both, local statistial models \emph{OMES} and
+\protect\hyperlink{abbrev}{MI} also perform weak on small alignments,
+leading to the conclusion that the remaining sequence derived features
+are highly relevant when the alignment contains only few sequences. This
+finding is expected, as it is well known that models trained on simple
+sequence features perform almost independent of alignment size
+{[}\protect\hyperlink{ref-Skwark2016}{82},\protect\hyperlink{ref-Stahl2017}{86}{]}.
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_notitle} \caption{Mean precision for top ranked contacts on a
+test set of 1000 proteins. \textbf{pseudo-likelihood} =
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of couplings
+computed with pseudo-likelihood. \textbf{random forest} = random forest
+model trained on 75 sequence derived features. \textbf{OMES} =
+\protect\hyperlink{abbrev}{APC} corrected \emph{OMES} contact score
+according to Fodor\&Aldrich
+{[}\protect\hyperlink{ref-Fodor2004a}{214}{]}. \textbf{mutual
+information} = \protect\hyperlink{abbrev}{APC} corrected mutual
+information between amino acid counts (using pseudo-counts).}\label{fig:performance-rf}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle} \caption{Mean precision for top ranked contacts
+on a test set of 1000 proteins splitted into four equally sized subsets
+with respect to \protect\hyperlink{abbrev}{Neff}. Subsets are defined
+according to quantiles of \protect\hyperlink{abbrev}{Neff} values. Upper
+left: Subset of proteins with \protect\hyperlink{abbrev}{Neff}
+\textless{} Q1. Upper right: Subset of proteins with Q1 \textless{}=
+\protect\hyperlink{abbrev}{Neff} \textless{} Q2. Lower left: Subset of
+proteins with Q2 \textless{}= \protect\hyperlink{abbrev}{Neff}
+\textless{} Q3. Lower right: Subset of proteins with Q3 \textless{}=
+\protect\hyperlink{abbrev}{Neff} \textless{} Q4.
+\textbf{pseudo-likelihood} = \protect\hyperlink{abbrev}{APC} corrected
+Frobenius norm of couplings computed with pseudo-likelihood.
+\textbf{random forest} = random forest model trained on 75 sequence
+derived features. \textbf{OMES} = \protect\hyperlink{abbrev}{APC}
+corrected \emph{OMES} contact score according to Fodor\&Aldrich
+{[}\protect\hyperlink{ref-Fodor2004a}{214}{]}. \textbf{mutual
+information} = \protect\hyperlink{abbrev}{APC} corrected mutual
+information between amino acid counts (using pseudo-counts).}\label{fig:performance-neff-rf}
+\end{figure}
+
+\section{Using Contact Scores as Additional
+Features}\label{using-contact-scores-as-additional-features}
+
+Figure \ref{fig:performance-neff-rf} shows that the random forest
+predictor improves over the pseudo-likelihood coevolution method when
+the alignment consists of only few sequences. In order to assess this
+improvement in a more direct manner, it is possible to build a combined
+random forest predictor that is not only trained on the sequence derived
+features but also on the pseudo-likelihood contact score as an
+additional feature. As expected, the pseudo-likelihood score comprises
+the most important feature in the model (see Appendix Figure
+\ref{fig:feature-importance-rf-with-pll-score}) followed by the same
+sequence features that were found in the previous analysis in Figure
+\ref{fig:rf-feature-importance}. Models trained on subsets of features
+as described in method section \ref{rf-feature-selection} perform
+equally well as the model trained on the complete set of features (see
+Appendix Figure \ref{fig:feature-selection-rf-with-pll-score}). Only the
+model trained on the 26 most important features has slighlty decreased
+precision for the top L/10 ranked contacts. The model trained on 76
+features was selected as the final model and its performance can be
+examined in Figure \ref{fig:performance-rf-additional-features}. The
+combination of simple sequence features with the coevolution
+pseudo-likelihood contact score indeed improves predictive power for the
+random forest model over both single approaches. Especially for small
+alignments, the improvement is substantial as can be seen in in the left
+upper plot in Figure \ref{fig:performance-neff-rf-additional-features}.
+In contrast, the improvement on large alignments (right lower plot in
+Figure \ref{fig:performance-neff-rf-additional-features}) is small, as
+the gain from simple sequence features compared to the much more
+powerful coevolution signals is neglectable.
+
+Similarly, the contact score derived from couplings computed with
+\protect\hyperlink{abbrev}{CD} in chapter
+\ref{optimizing-full-likelihood} can be added as a feature instead of
+the pseudo-likelihood score or besides the pseudo-likelihood contact
+score. All three models perform comparably, as can be seen in the
+benchmark in Figure \ref{fig:performance-rf-additional-features}. The
+random forest model using both contact scores as features improves only
+slightly in precision over the random forest model that uses solely one
+of both contact scores. Since it has been shown in section
+\ref{comparing-pll-cd} that pseudo-likelihood and contrastive divergence
+contact scores are highly correlated, resulting in very similar rankings
+for residue pairs, this result is not surprising. Apparantly, there is
+minor information gain by adding both contact scores.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_rf_pll_cd} \caption{Mean precision for top
+ranked contacts on a test set of 1000 proteins. \textbf{random forest
+pLL} random forest model trained on 75 sequence derived features and the
+pseudo-likelihood contact score (see method \emph{pseudo-likelihood}).
+\textbf{random forest CD} random forest model trained on 75 sequence
+derived features and the contrastive divergence contact score (see
+method \emph{contrastive divergence}). \textbf{random forest pLL CD}
+random forest model trained on 75 sequence derived features and the
+pseudo-likelihood contact score (see method \emph{pseudo-likelihood})
+and the contrastive divergence contact score (see method
+\emph{contrastive divergence}). \textbf{contrastive divergence}
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of couplings
+computed with contrastive divergence. \textbf{pseudo-likelihood} =
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of couplings
+computed with pseudo-likelihood. \textbf{random forest} = random forest
+model trained on 75 sequence derived features.}\label{fig:performance-rf-additional-features}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd} \caption{Mean precision for
+top ranked contacts on a test set of 1000 proteins splitted into four
+equally sized subsets with respect to \protect\hyperlink{abbrev}{Neff}.
+Subsets are defined according to quantiles of
+\protect\hyperlink{abbrev}{Neff} values. Upper left: Subset of proteins
+with \protect\hyperlink{abbrev}{Neff} \textless{} Q1. Upper right:
+Subset of proteins with Q1 \textless{}= \protect\hyperlink{abbrev}{Neff}
+\textless{} Q2. Lower left: Subset of proteins with Q2 \textless{}=
+\protect\hyperlink{abbrev}{Neff} \textless{} Q3. Lower right: Subset of
+proteins with Q3 \textless{}= \protect\hyperlink{abbrev}{Neff}
+\textless{} Q4. Methods are the same as in Figure
+\ref{fig:performance-rf-additional-features}}\label{fig:performance-neff-rf-additional-features}
+\end{figure}
 
 \chapter{A Bayesian Statistical Model for Residue-Residue Contact
 Prediction}\label{a-bayesian-statistical-model-for-residue-residue-contact-prediction}
@@ -4277,541 +4939,6 @@ constant with respect to \(\cij\), we find
     p(\cij | \X, \phi) \propto  p(\cij |\phi_{ij}) \,  \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \, .
 \label{eq:posterior-marginal-rij}
 \end{equation}
-
-\chapter{Contact Prior}\label{contact-prior}
-
-The wealth of successful meta-predictors presented in section
-\ref{meta-predictors} highlights the importance to exploit other sources
-of information apart from coevolution statistics. Much information about
-residue interactions is typically contained in single position features
-that can be predicted from local sequence profiles, such as secondary
-structure, solvent accessibility or contact number, and in pairwise
-features such as the contact prediction scores for residue pairs
-\((i,j)\) from a simple local statistical methods as presented in
-section \ref{local-methods}.
-
-For example, predictions of secondary structure elements and solvent
-accessibility are used by almost all modern machine learning predictors,
-such as MetaPsicov {[}\protect\hyperlink{ref-Jones2015a}{84}{]}, NeBCon
-{[}\protect\hyperlink{ref-He2017}{87}{]}, EPSILON-CP
-{[}\protect\hyperlink{ref-Stahl2017}{86}{]}, PconsC3
-{[}\protect\hyperlink{ref-Skwark2016}{82}{]}. Other frequently used
-sequence derived features include pairwise contact potentials, sequence
-separation and conservation measures such as column entropy
-{[}\protect\hyperlink{ref-Jones2015a}{84},\protect\hyperlink{ref-He2017}{87},\protect\hyperlink{ref-Ma2015a}{206}{]}.
-
-In the following sections I present a random forest classifier that uses
-sequence derived features to distinguish contacts from non-contacts.
-Methods section \ref{seq-features} lists all features used to train the
-classifier including the aforementioned standard features as well as
-some novel features.
-
-The probabilistic predictions of the random forest model can be
-introduced directly as prior information into the Bayesian statistical
-model presented in the last section \ref{bayesian-approach} to improve
-the overall prediction accuracy in terms of posterior probabilities.
-Furthermore, contact scores from coevolution methods can be added as
-additional feature to the random forest model in order to elucidate how
-much the combined information improves prediction accuracy over the
-single methods.
-
-\section{Random Forest Classifiers}\label{random-forest-classifiers}
-
-Random Forests are supervised machine learning methods that belong to
-the class of ensemble methods
-{[}\protect\hyperlink{ref-Ho1998}{207}--\protect\hyperlink{ref-Breiman2001}{209}{]}.
-They are easy to implement, fast to train and can handle large numbers
-of features due to implicit feature selection
-{[}\protect\hyperlink{ref-Menze2009}{210}{]}.
-
-Ensemble methods combine the predictions of several independent base
-estimators with the goal to improve generalizability over a single
-estimator. Random forests are ensembles of decision trees where
-randomness is introduced in two ways:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  every tree is build on a random sample that is drawn with replacement
-  from the training set and has the same size as the training set (i.e.,
-  a bootstrap sample)
-\item
-  every split of a node is evaluated on a random subset of features
-\end{enumerate}
-
-A single decision tree, especially when it is grown very deep is highly
-susceptible to noise in the training set and therefore prone to
-overfitting which results in poor generalization ability. As a
-consequence of randomness and averaging over many decision trees, the
-variance of a random forest predictor decreases and therefore the risk
-of overfitting {[}\protect\hyperlink{ref-Louppe2014}{211}{]}. It is
-still advisable to restrict the depth of single trees in a random
-forest, not only to counteract overfitting but also to reduce model
-complexity and to speedup the algorithm.
-
-Random forests are capable of regression and classification tasks. For
-classification, predictions for new data are obtained by running each
-data sample down every tree in the forest and then either apply majority
-voting over single class votes or averaging the probabilistic class
-predictions. Probabilistic class predictions of single trees are
-computed as the fraction of training set samples of the same class in a
-leaf whereas the single class vote refers to the majority class in a
-leaf. Figure \ref{fig:rf-intro} visualizes the procedure of classifying
-a new data sample.
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{img/random_forest_contact_prior/intro_random_forest} 
-
-}
-
-\caption{Classifying new data with random forests. A new
-data sample is run down every tree in the forest until it ends up in a
-leaf node. Every leaf node has associated class probabilities \(p(c)\)
-reflecting the fraction of training samples at this leaf node belonging
-to every class \(c\). The color of the leaf nodes reflects the class
-with highest probability. The predictions from all trees in form of the
-class probabilties are averaged and yield the final prediction.}\label{fig:rf-intro}
-\end{figure}
-
-Typically, \emph{Gini impurity}, which is a computationally efficient
-approximation to the entropy, is used as a split criterion to evaluate
-the quality of a split. It measures the degree of purity in a data set
-regarding class labels as \(GI = (1 - \sum_{k=1}^K p_k^2)\), where
-\(p_k\) is the proportion of class \(k\) in the data set. For every
-feature \(f\) in the random subset that is considered for splitting a
-particular node \(N\), the \emph{decrease in Gini impurity}
-\(\Delta GI_f\) will be computed as,
-
-\[
-\Delta GI_f(N_{\textrm{parent}}) = GI_f(N_{\textrm{parent}}) - p_{\textrm{left}} GI_f(N_{\textrm{left}}) - p_{\textrm{right}} GI_f(N_{\textrm{left}})
-\]
-
-where \(p_{\textrm{left}}\) and \(p_{\textrm{right}}\) refers to the
-fraction of samples ending up in the left and right child node
-respectively {[}\protect\hyperlink{ref-Menze2009}{210}{]}. The feature
-\(f\) with highest \(\Delta GI_f\) over the two resulting child node
-subsets will be used to split the data set at the given node \(N\).
-
-Summing the \emph{decrease in Gini impurity} for a feature \(f\) over
-all trees whenever \(f\) was used for a split yields the \emph{Gini
-importance} measure, which can be used as an estimate of general feature
-relevance. Random forests therefore are popular methods for feature
-selection and it is common practice to remove the least important
-features from a data set to reduce the complexity of the model. However,
-feature importance measured with respect to \emph{Gini importance} needs
-to be interpreted with care. The random forest model cannot distinguish
-between correlated features and it will choose any of the correlated
-features for a split, thereby reducing the importance of the other
-features and introducing bias. Furthermore, it has been found that
-feature selection based on \emph{Gini importance} is biased towards
-selecting features with more categories as they will be chosen more
-often for splits and therefore tend to obtain higher scores
-{[}\protect\hyperlink{ref-Strobl2007}{212}{]}.
-
-\section{Hyperparameter Optimization for Random
-Forest}\label{hyperparameter-optimization-for-random-forest}
-
-There are several hyperparameters in a random forest model that need to
-be tuned to achieve best balance between predictive power and runtime.
-While more trees in the random forest generally improve performance of
-the model, they will slow down training and prediction. A crucial
-hyperparamter is the number of features that is randomly selected for a
-split at each node in a tree
-{[}\protect\hyperlink{ref-Bernard2009}{213}{]}. Stochasticity introduced
-by the random selection of features is a key characteristic of random
-forests as it reduces correlation between the trees and thus the
-variance of the predictor. Selecting many features typically increases
-performance as more options can be considered for each split, but at the
-same time increases risk of overfitting and decreases speed of the
-algorithm. In general, random forests are robust to overfitting, as long
-as there are enough trees in the ensemble and the selection of features
-for splitting a node introduces sufficient stochasticity. Overfitting
-can furthermore be prevented by restricting the depth of the trees,
-which is known as pruning or by enforcing a minimal leaf node size
-regarding the minimal number of data samples ending in a leaf node.
-Again, a positive side-effect of pruning and requiring minimal leaf node
-size is a speedup of the algorithm.
-{[}\protect\hyperlink{ref-Louppe2014}{211}{]}
-
-In the following, I use 5-fold cross-validation to identify the optimal
-architecture of the random forest. Details about the training set and he
-cross-validation procedure can be found in method section
-\ref{rf-training}. First I assessed performance of models for
-combinations of the parameter \emph{n\_estimators}, defining the number
-of trees in the forest and the parameter \emph{max\_depth} defining the
-maximum depth of the trees:
-
-\begin{itemize}
-\tightlist
-\item
-  \emph{n\_estimators} \(\in \{100,500,1000\}\)
-\item
-  \emph{max\_depth} \(\in \{10, 100, 1000, None\}\)
-\end{itemize}
-
-Figure \ref{fig:rf-gridsearch-nestimators-maxfeatures} shows that the
-top five parameter combinations perform nearly identical. Random forests
-with 1000 trees perform slightly better than models constituting 500
-trees, irrespective of the depth of the trees. In order to keep model
-complexity small, I chose \texttt{n\_estimators=1000} and
-\texttt{max\_depth=100} for further analysis.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle} 
-
-}
-
-\caption{Mean precision over
-200 proteins against highest scoring contact predictions from random
-forest models for different settings of \emph{n\_estimators} and
-\emph{max\_depth}. Dashed lines show the performance of models that have
-been learned on the five different subsets of training data. Solid lines
-give the mean precision over the five models. Only those models are
-shown that yielded the five highest mean precision values (given in
-parantheses in the legend). Random forest models with 1000 trees and
-maximum depth of trees of either 100, 1000 or unrestricted tree depth
-perform nearly identical (lines overlap). Random forest models with 500
-trees and \emph{max\_depth}=10 or \emph{max\_depth}=100 perform slightly
-worse.}\label{fig:rf-gridsearch-nestimators-maxfeatures}
-\end{figure}
-
-Next, I optimized the parameters \emph{min\_samples\_leaf}, defining the
-minimum number of samples required at a leaf node and
-\emph{max\_features}, defining the number of randomly selected features
-considered for each split using the following settings:
-
-\begin{itemize}
-\tightlist
-\item
-  \emph{min\_samples\_leaf} \(\in \{1, 10, 100\}\)
-\item
-  \emph{max\_features} \(\in \{8, 16, 38, 75 \}\) representing
-  \(\sqrt{N}\), \(\log2{N}\), \(0.15N\) and \(0.3N\) respectively with
-  \(N=250\) being the number of features listed in method section
-  \ref{seq-features}.
-\end{itemize}
-
-Randomly selecting 30\% of features (=75 features) and requiring at
-least 10 samples per leaf gives highest mean precision as can be seen in
-Figure \ref{fig:rf-gridsearch-maxdepth-minsampleleaf}. I chose
-\texttt{max\_features=0.30} and \texttt{min\_samples\_leaf=10} for
-further analysis. Tuning the hyperparameters in a different order or on
-a larger dataset gives similar results.
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle} 
-
-}
-
-\caption{Mean precision over 200
-proteins against highest scoring contact predictions from random forest
-models with different settings of \emph{min\_samples\_leaf} and
-\emph{max\_features}. Dashed lines show the performance of models that
-have been learned on the five different subsets of training data. Solid
-lines give the mean precision over the five models. Only those models
-are shown that yielded the five best mean precision values (given in
-parantheses in the legend).}\label{fig:rf-gridsearch-maxdepth-minsampleleaf}
-\end{figure}
-
-In a next step I assessed dataset specific settings, such as the window
-size over which single positions features will be computed, the distance
-threshold to define non-contacts and the optimal proportions of contacts
-and non-contacts in the training set. I used the previously identified
-settings of random forest hyperparameters
-(\texttt{n\_estimators=1000,\ min\_samples\_leaf=10,\ max\_depth=100,\ max\_features=0.30}).
-
-\begin{itemize}
-\tightlist
-\item
-  proportion of contacts/non-contacts
-  \(\in \{1\!:\!2, 1\!:\!5, 1\!:\!10, 1\!:\!20 \}\) while keeping total
-  dataset size fixed at 300,000 residue pairs
-\item
-  window size: \(\in \{5, 7, 9, 11\}\)
-\item
-  non-contact threshold \(\in \{8, 15, 20\}\)
-\end{itemize}
-
-As can be seen in appendix \ref{rf-window-size} and
-\ref{rf-noncontact-threshold}, the default choice of using a window size
-of five positions and the non-contact threshold of \(8 \angstrom\)
-proves to be the optimal setting. Furthermore, using five-times as many
-non-contacts as contacts in the training set results in highest mean
-precision as can be seen in appendix \ref{rf-ratio-noncontacts}. These
-estimates might be biased in a way since the random forest
-hyperparameters have been optimized on a dataset using exactly these
-optimal settings.
-
-\section{Evaluating Random Forest Model as Contact
-Predictor}\label{evaluating-random-forest-model-as-contact-predictor}
-
-I trained a random forest classifier on the feature set described in
-methods section \ref{seq-features} and using the optimal hyperparameters
-identified with 5-fold cross-validation as described in the last
-section.
-
-Figure \ref{fig:rf-feature-importance} shows the ranking of the ten most
-important features according to \emph{Gini importance}. Both local
-statistical contact scores, \emph{OMES}
-{[}\protect\hyperlink{ref-Fodor2004a}{214}{]} and
-\protect\hyperlink{abbrev}{MI} (mutual information between amino acid
-counts), constitute the most important features besides the mean pair
-potentials acording to Miyazawa \& Jernigan
-{[}\protect\hyperlink{ref-Miyazawa1999a}{215}{]} and
-Li\&Fang{[}\protect\hyperlink{ref-Li2011}{69}{]}. Further important
-features include the relative solvent accessibility at both pair
-positions, the total percentage of gaps at both positions, the
-correlation between mean isoelectric point property at both positions,
-sequence separation and the beta-sheet propensity in a window of size
-five around position i.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures} \caption{Top ten features ranked according to
-\emph{Gini importance}. \textbf{OMES+APC}:
-\protect\hyperlink{abbrev}{APC} corrected OMES score according to
-Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{214}{]}.
-\textbf{mean pair potential (Miyasawa \& Jernigan)}: average
-quasi-chemical energy of transfer of amino acids from water to the
-protein environment {[}\protect\hyperlink{ref-Miyazawa1999a}{215}{]}.
-\textbf{MI+APC}: \protect\hyperlink{abbrev}{APC} corrected mutual
-information between amino acid counts (using pseudo-counts).
-\textbf{mean pair potential (Li\&Fang)}: average general contact
-potential by Li \& Fang {[}\protect\hyperlink{ref-Li2011}{69}{]}.
-\textbf{rel. solvent accessibilty i(j)}: RSA score computed with
-Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{216}{]} for
-position i(j). \textbf{pairwise gap\%}: percentage of gapped sequences
-at either position i and j. \textbf{correlation mean isoelectric
-feature}: Pearson correlation between the mean isoelectric point feature
-(according to Zimmermann et al., 1968) for positions i and j.
-\textbf{sequence separation}: \textbar{}j-i\textbar{}. \textbf{beta
-sheet propensity window(i)}: beta-sheet propensity according to Psipred
-{[}\protect\hyperlink{ref-Jones1999}{217}{]} computed within a window of
-five positions around i. eatures are described in detail in methods
-section \ref{seq-features}.}\label{fig:rf-feature-importance}
-\end{figure}
-
-Many features have low \emph{Gini importance} scores which means they
-are rarely considered for splitting a node and can most likely be
-removed from the dataset. Removing irrelevant features from the dataset
-is a convenient procedure to reduce model complexity. It has been found,
-that prediction performance might even increase after removing the most
-irrelevant features {[}\protect\hyperlink{ref-Menze2009}{210}{]}. For
-example, during the development of \emph{EPSILON-CP}, a deep neural
-network method for contact prediction, the authors performed feature
-selection using boosted trees. By removing 75\% of the most
-non-informative features (mostly features related to amino acid
-composition), the performance of their predictor increased slightly
-{[}\protect\hyperlink{ref-Stahl2017}{86}{]}. Other studies have also
-emphasized the importance of feature selection to improve performance
-and reduce model complexity
-{[}\protect\hyperlink{ref-Cheng2007}{67},\protect\hyperlink{ref-Li2011}{69}{]}.
-
-As described in methods section \ref{rf-feature-selection}, I performed
-feature selection by evaluating model performance on subsets of features
-of decreasing importance. Most models trained on subsets of the total
-feature space perform nearly identical compared to the model trained on
-all features, as can be seen in Figure
-\ref{fig:rf-feature-selection-performance}. Performance of the random
-forest models drops noticeably when using only the 25 most important
-features. For the further analysis I am using the random forest model
-trained on the 75 most important features as this model constitutes the
-smallest set of features while performing nearly identical compared to
-the model trained on the complete feature set.
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_featureselection_random_forest_optimized_hyperparameters} \caption{Mean precision of top
-ranked predictions over 200 proteins for random forest models trained on
-subsets of features of decreasing importance. Subsets of features have
-been selected as described in methods section
-\ref{rf-feature-selection}.}\label{fig:rf-feature-selection-performance}
-\end{figure}
-
-Figure \ref{fig:performance-rf} shows the mean precision for the random
-forest model trained on the 75 most important features. The random
-forest model has a mean precision of 0.33 for the top \(0.5\cdot L\)
-contacts compared to a precision of 0.47 for pseudo-likelihood.
-Furthermore, the random forest model improves approximately ten
-percentage points in precision over the local statistical contact
-scores, \emph{OMES} and mutual information (MI). Both methods comprise
-important features of the random forest model as can be seen in Figure
-\ref{fig:rf-feature-importance}.
-
-When analysing performance with respect to alignment size it can be
-found that the random forest model outperforms the pseudo-likelihood
-score for small alignments (see Figure \ref{fig:performance-neff-rf}).\\
-Both, local statistial models \emph{OMES} and
-\protect\hyperlink{abbrev}{MI} also perform weak on small alignments,
-leading to the conclusion that the remaining sequence derived features
-are highly relevant when the alignment contains only few sequences. This
-finding is expected, as it is well known that models trained on simple
-sequence features perform almost independent of alignment size
-{[}\protect\hyperlink{ref-Stahl2017}{86}{]}.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_notitle} \caption{Mean precision for top ranked contacts on a
-test set of 774 proteins. \textbf{random forest (pLL)} = random forest
-model using sequence derived features and pseudo-likelihood contact
-score (\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of
-couplings). \textbf{pseudo-likelihood} = \protect\hyperlink{abbrev}{APC}
-corrected Frobenius norm of couplings computed with pseudo-likelihood.
-\textbf{random forest} = random forest model trained on 75 sequence
-derived features. \textbf{OMES} = \protect\hyperlink{abbrev}{APC}
-corrected \emph{OMES} contact score according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{214}{]}. \textbf{mutual
-information} = \protect\hyperlink{abbrev}{APC} corrected mutual
-information between amino acid counts (using pseudo-counts).}\label{fig:performance-rf}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle} \caption{Mean precision for top ranked contacts
-on a test set of 774 proteins splitted into four equally sized subsets
-with respect to \protect\hyperlink{abbrev}{Neff}. Subsets are defined
-according to quantiles of \protect\hyperlink{abbrev}{Neff} values. Upper
-left: Subset of proteins with \protect\hyperlink{abbrev}{Neff}
-\textless{} Q1. Upper right: Subset of proteins with Q1 \textless{}=
-\protect\hyperlink{abbrev}{Neff} \textless{} Q2. Lower left: Subset of
-proteins with Q2 \textless{}= \protect\hyperlink{abbrev}{Neff}
-\textless{} Q3. Lower right: Subset of proteins with Q3 \textless{}=
-\protect\hyperlink{abbrev}{Neff} \textless{} Q4. \textbf{random forest
-(pLL)} = random forest model using sequence derived features and
-pseudo-likelihood contact score (\protect\hyperlink{abbrev}{APC}
-corrected Frobenius norm of couplings). \textbf{pseudo-likelihood} =
-\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of couplings
-computed with pseudo-likelihood. \textbf{random forest} = random forest
-model trained on 75 sequence derived features. \textbf{OMES} =
-\protect\hyperlink{abbrev}{APC} corrected \emph{OMES} contact score
-according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{214}{]}. \textbf{mutual
-information} = \protect\hyperlink{abbrev}{APC} corrected mutual
-information between amino acid counts (using pseudo-counts).}\label{fig:performance-neff-rf}
-\end{figure}
-
-Figure \ref{fig:performance-neff-rf} showed that the random forest
-predictor improves over the pseudo-likelihood coevolution method when
-the alignment consists of only few sequences. In order to assess this
-improvement in a more direct manner, it is possible to build a combined
-random forest predictor that is not only trained on the sequence derived
-features but also on the pseudo-likelihood contact score as an
-additional feature. As expected, the pseudo-likelihood score comprises
-the most important feature in the model (see Appendix Figure
-\ref{fig:feature-importance-rf-with-pll-score}) followed by the same
-sequence features that were found in the previous analysis in Figure
-\ref{fig:rf-feature-importance}. Models trained on subsets of features
-as described in method section \ref{rf-feature-selection} perform
-equally well as the model trained on the complete set of features (see
-Appendix Figure \ref{fig:feature-selection-rf-with-pll-score}). Only the
-model trained on the 26 most important features has slighlty decreased
-precision for the top L/10 ranked contacts. The model trained on 76
-features was selected as the final model.
-
-Finally, comparing the random forest model trained on sequence features
-and pseudo-likelihood contact score to the pseudo-likelihood score in
-Figure \ref{fig:performance-rf} reveals that combining both types of
-information indeed improves predictive power over both single
-approaches. Especially for small alignments, the improvement is
-substantial as can be seen in in the left upper plot in Figure
-\ref{fig:performance-neff-rf}. In contrast, the improvement on large
-alignments (right lower plot in Figure \ref{fig:performance-neff-rf}) is
-small, as the gain from simple sequence features compared to the much
-more powerful coevolution signals is neglectable.
 
 \chapter{Methods}\label{methods}
 
@@ -7789,7 +7916,7 @@ scores computed from \protect\hyperlink{abbrev}{CD} with
 to optimization using L2-reglarization with \(\lambda_v \eq 10\).}\label{fig:full-likelihood-opt-fixv}
 \end{figure}
 
-\section{Monitoring Optimization for different Sample
+\section{Monitoring Optimization for Different Sample
 Sizes}\label{monitoring-optimization-for-different-sample-sizes}
 
 
@@ -7813,14 +7940,48 @@ Sizes}\label{monitoring-optimization-for-different-sample-sizes}
 \caption{Monitoring parameter norm and
 gradient norm for protein 1aho\_A\_00 during
 \protect\hyperlink{abbrev}{SGD} using different sample sizes. Protein
-1c75\_A1aho\_A\_00\_00 has length L=64 and 378 sequences in the
-alignment (\protect\hyperlink{abbrev}{Neff}=229) \textbf{Left} L2-norm
-of the gradients for coupling parameters \(||\w||_2\) (without
-contribution of regularizer). The number of sequences, that is used for
-Gibbs sampling to approximate the gradient, is given in the legend.
-\textbf{Right} L2-norm of the coupling parameters \(||\w||_2\). The
-number of sequences, that is used for Gibbs sampling to approximate the
-gradient, is given in the legend.}\label{fig:cd-samplesize-protein1ahoa00}
+1aho\_A\_00\_00 has length L=64 and 378 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=229) \textbf{Left} L2-norm of the
+gradients for coupling parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\)
+(without contribution of regularizer). The number of sequences, that is
+used for Gibbs sampling to approximate the gradient, is given in the
+legend. \textbf{Right} L2-norm of the coupling parameters \(||\w||_2\).
+The number of sequences, that is used for Gibbs sampling to approximate
+the gradient, is given in the legend.}\label{fig:cd-samplesize-protein1ahoa00}
+\end{figure}
+
+\section{Monitoring Norm of Gradients for Different Number of Gibbs
+Steps}\label{monitoring-norm-of-gradients-for-different-number-of-gibbs-steps}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/gradient_norm_1ahoa00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/gradient_norm_1c75a00} 
+
+}
+
+\caption{Monitoring gradient
+norm, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein 1aho\_A\_00 and
+1c75\_A\_00 during \protect\hyperlink{abbrev}{SGD} optimization using
+different number of Gibbs steps and initial learning rates,
+\(\alpha_0\). Number of Gibbs steps is given in the legend, as well as
+particular choices for the initial learning rate, when not using the
+default \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\). \textbf{Left}
+Protein 1aho\_A\_00 has length L=64 and 378 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=229) \textbf{Right} Protein
+1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:cd-gibbssteps-single-proteins-gradient}
 \end{figure}
 
 \section{Statistics for Comparing Couplings computed with
@@ -8132,7 +8293,7 @@ Feature}\label{training-random-forest-model-with-pseudo-likelihood-feature}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/pll_feature/feature_random_forest_top_pLLfeature} 
+{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_top_pLLfeature} 
 
 }
 
@@ -8168,7 +8329,7 @@ section \ref{seq-features}.}\label{fig:feature-importance-rf-with-pll-score}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/pll_feature/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature} 
+{\centering \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature} 
 
 }
 

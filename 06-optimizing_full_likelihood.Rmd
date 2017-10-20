@@ -98,12 +98,12 @@ Typically, the objective function (or a related loss function) is periodically e
 This technique is called early stopping and additionally prevents overfitting [@Bengio2012; @Mahsereci2017].
 Unfortunately, we cannot compute the full likelihood function due to its complexity and need to define a different convergence criterion.
 
-One possibility is to stop learning when the L2 norm of the gradient for the coupling parameters $||\nabla \w||_2$ is close to zero [@Carreira-Perpinan2005].
+One possibility is to stop learning when the L2 norm of the gradient for the coupling parameters $||\nabla_{\w} L\!L(\v^*, \w)||_2$ is close to zero [@Carreira-Perpinan2005].
 However, when using a finite number of sequences for sampling, the norm of the gradient does not converge to zero but saturates at a certain offset as it is described in section \@ref(cd-sampling-optimization).
-Convergence can also be monitored as the relative change of the norm of gradients within a certain number of iterations and optimization can be stopped when the norm of gradients has reached a certain plateau.
+Convergence can also be monitored as the relative change of the norm of gradients within a certain number of iterations and optimization can be stopped when the norm of gradient has reached a certain plateau.
 As gradient estimates are very noisy with stochastic gradient descent, gradient fluctuations complicate the proper assessment of this criterion.
 
-Instead of the gradients, it is also possible to observe the relative change of the norm of parameter estimates $||\w||_2$ over several iterations and stop learning when it falls below a small threshold $\epsilon$,
+Instead of the gradient, it is also possible to observe the relative change of the norm of parameter estimates $||\w||_2$ over several iterations and stop learning when it falls below a small threshold $\epsilon$,
 \begin{equation}
   \frac{||\w_{t-x}||_2 - ||\w_t||_2}{||\w_{t-x}||_2} < \epsilon \; .
   (\#eq:parameter-convergence-criterion)
@@ -131,7 +131,7 @@ Of course, the simplest strategy to assume convergence is to specify a maximum n
 A necessary but not sufficient criterion for convergence for the full likelihood is given by $\sum_{a,b=1}^{20} \wijab = 0$.
 This requirement is derived in section \@ref(prior-v).
 When using plain stochastic gradient descent without momentum and without adaptive learning rates, this criterion is never violated when parameters are initialized uniformly.
-This is due to the fact that the 400 gradients $\wijab$ for $a,b \in \{1, \ldots, 20\}$ are not independent because the sum over the 400 pairwise amino acid counts at positions $i$ and $j$ is identical for the observed and the sampled alignment and amounts to,
+This is due to the fact that the 400 partial derivatives for $\wijab$ given a pair $(i,j)$ and for $a,b \in \{1, \ldots, 20\}$ are not independent because the sum over the 400 pairwise amino acid counts at positions $i$ and $j$ is identical for the observed and the sampled alignment and amounts to,
 
 \begin{equation}
   \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
@@ -143,7 +143,7 @@ This symmetry is translated into parameter updates as long as the same learning 
 However, when using adaptive learning rates, this symmetry is broken and the condition $\sum_{a,b=1}^{20} \wijab = 0$ can be violated during the optimization processs.
 It is therefore interesting to monitor $\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab$.
 
-(ref:caption-visualisation-wijab-constraint) The 400 gradients $\nabla_{\wijab}\LLreg(\v,\w)$ at position $(i,j)$ for $a,b \in \{1, \ldots, 20 \}$ are not independent. Red bars represent pairwise amino acid counts at position $(i,j)$ for the sampled alignment. Blue bars represent pairwise amino acid counts at position $(i,j)$ for the input alignment. The sum over pairwise amino acid counts at position $(i,j)$ for both alignments is $N_{ij}$, which is the number of ungapped sequences. The gradient $\nabla_{\wijab}\LLreg(\v,\w)$ is computed as the difference of pairwise amino acid counts for amino acids a and b at position $(i,j)$. The sum over gradients $\nabla_{\wijab}\LLreg(\v,\w)$ at position $(i,j)$ for all $a,b \in \{1, \ldots, 20 \}$ is zero.
+(ref:caption-visualisation-wijab-constraint) The 400 partial derivatives $\frac{\partial \LLreg(\v,\w)}{\partial \wijab}$ at position $(i,j)$ for $a,b \in \{1, \ldots, 20 \}$ are not independent. Red bars represent pairwise amino acid counts at position $(i,j)$ for the sampled alignment. Blue bars represent pairwise amino acid counts at position $(i,j)$ for the input alignment. The sum over pairwise amino acid counts at position $(i,j)$ for both alignments is $N_{ij}$, which is the number of ungapped sequences. The partial derivative for $\wijab$ is computed as the difference of pairwise amino acid counts for amino acids $a$ and $b$ at position $(i,j)$. The sum over the partial derivatives $\frac{\partial \LLreg(\v,\w)}{\partial \wijab}$ at position $(i,j)$ for all $a,b \in \{1, \ldots, 20 \}$ is zero.
 
 ```{r visualisation-wijab-constraint, echo = FALSE, out.width = '60%', fig.align='center', fig.cap = '(ref:caption-visualisation-wijab-constraint)'}
 knitr::include_graphics("img/full_likelihood/constraint_wijab.png")
@@ -346,7 +346,7 @@ knitr::include_url("img/full_likelihood/gibbs_sampling/precision_vs_rank_facette
 ```
 
 To understand the effect of different choices of sample size it is necessary to look at single proteins. 
-The left plot in Figure \@ref(fig:cd-samplesize-protein1c75a00) shows the development of the L2 norm of the gradient for couplings $||\nabla_{\w}||_2$ for protein chain 1c75_A_00 that is of length 71 and has [Neff](#abbrev) = 16808.
+The left plot in Figure \@ref(fig:cd-samplesize-protein1c75a00) shows the development of the L2 norm of the gradient for couplings, $||\nabla_{\w} L\!L(\v^*, \w)||_2$, for protein chain 1c75_A_00 that is of length 71 and has [Neff](#abbrev) = 16808.
 The norm of the gradient decreases during optimization and saturates at decreasing levels for increasing choices of sample size.
 Increasing the sample size by a factor 100 (from $L$ to $100L$) leads to an approximately 10-fold reduction of the norm of gradient ($\mathrm{1.4e}{+5}$ compared to $\mathrm{1.45e}{+4}$) at convergence, which corresponds to a typical reduction of statistical noise as the square root of the number of samples.
 It is not feasible to sample the number of sequences at each iteration that would be necessary to reduce the norm of the gradient to near zero. 
@@ -363,7 +363,7 @@ The norm of the coupling parameters is almost indistinguishable after optimizati
 It is not clear, why an improved gradient estimate due to sampling more sequences results in weaker performance for proteins with small alignments as could be seen in the previous benchmark in Figure \@ref(fig:cd-precision-sampling-size-neff). 
 For protein chain 1aho_A_00 of length 64 and with 378 sequences ([Neff](#abbrev)=229), setting $S=10L$ or $S=50L$ which corresponds to using all $N \eq 378$ sequences for the sampling procedure to approximate the gradient, results in a mean precision over the top $0.1L$ - $L$ contacts of 0.44, whereas using only $0.3N_{\textrm{eff}} \eq 69$ sequences gives a mean precision of 0.62.
 The left plot in Appendix Figure \@ref(fig:cd-samplesize-protein1ahoa00) shows the development of the norm of the gradient and the norm of coupling parameters for this protein. 
-As before, the gradient estimate improves and the norm of the gradient saturates at smaller values when more sequences are used in the Gibbs sampling process and therefore should lead to a better approximation of the likelihood.
+As before, the gradient estimate improves and the norm of the gradient converges towards smaller values when more sequences are used in the Gibbs sampling process and therefore should lead to a better approximation of the likelihood.
 One explanation could be that this is some effect of overfitting, eventhough a regularizer is used and the norm of coupling parameters actually is smaller when using higher sampling sizes (see the right plot in Appendix Figure \@ref(fig:cd-samplesize-protein1ahoa00)). 
 
 (ref:caption-cd-samplesize-protein1c75a00) Monitoring parameter norm and gradient norm for protein 1c75_A_00 during [SGD](#abbrev) using different sample sizes. Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808) **Left** L2-norm of the gradients for coupling parameters $||\w||_2$ (without contrbution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. **Right** L2-norm of the coupling parameters $||\w||_2$. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. 
@@ -384,7 +384,7 @@ I analysed the impact on performance when the number of Gibbs steps is increased
 
 As can be seen in Figure \@ref(fig:precision-cd-gibbs-steps), increasing the number of Gibbs steps does result in a slight drop of performance.
 When evaluating precision with respect to [Neff](#abbrev) it can be found that using more Gibbs sampling steps is especially disadvantageous for large alignments (see Appendix Figure \@ref(fig:cd-precision-gibbssteps-neff)). 
-By checking single proteins it becomes obvious 
+
 
 (ref:caption-precision-cd-gibbs-steps) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD #Gibbs steps = X**: contact scores computed from [CD](#abbrev) optimized with [SGD](#abbrev) and evolving each Markov chain using the number of Gibbs steps specified in the legend. 
 
@@ -392,7 +392,21 @@ By checking single proteins it becomes obvious
 knitr::include_url("img/full_likelihood/gibbs_sampling/precision_vs_rank_gibbssteps.html", height = "500px")
 ```
 
+When evaluating single proteins, it can be observed that for proteins with small alignments the L2 norm of the parameters, $||\w||_2$, converges towards a different offset when using more than one Gibbs steps (see left plot in Figure \@ref(fig:cd-gibbssteps-single-proteins)). 
+Naturally, the Markov chains can wander further away from their initialization when they are evolved over a longer time which results in a stronger gradient at the beginning of the optimization. 
+Therefore and because the initial learning rate has been optimized for one Gibbs step, the parameter norm overshoots the optimum at the beginning.
+Even when lowering the initial learning rate from $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$ to $\alpha_0 \in \left \{ \frac{3e-2}{\sqrt{N_{\text{eff}}}}, \frac{2e-2}{\sqrt{N_{\text{eff}}}} , \frac{1e-2}{\sqrt{N_{\text{eff}}}}  \right \}$, the [SGD](#abbrev) optimizer evidently approaches a different optimum.
+Surprisingly, the different optimum that is found for proteins with small alignments has no substantial impact on precision, as becomes evident from Figure \@ref(fig:cd-precision-gibbssteps-neff).
+For proteins with large alignments it can be observed that there is not one alternative solution to the parameters, but depending on the number of Gibbs steps and on the initial learning rate, $\alpha_0$, the L2 norm over parameters converges towards various different offsets (see right plot in Figure \@ref(fig:cd-gibbssteps-single-proteins)).
+It is not clear how these observations can be interpreted, in particular given the fact, that the L2 norm of gradients, $||\nabla_{\w} L\!L(\v^*, \w)||_2$, converges to the identical offset for all settings regardless of alignment size (see Appendix Figure \@ref(fig:cd-gibbssteps-single-proteins-gradient)).
 
+
+(ref:caption-cd-gibbssteps-single-proteins) Monitoring parameter norm, $||\w||_2$, for protein 1aho_A_00 and 1c75_A_00 during [SGD](#abbrev) optimization using different number of Gibbs steps and initial learning rates, $\alpha_0$. Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. **Left** Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
+
+
+```{r cd-gibbssteps-single-proteins, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-gibbssteps-single-proteins)'}
+knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/parameter_norm_1ahoa00.png", "img/full_likelihood/gibbs_sampling/parameter_norm_1c75a00.png"))
+```
 
 ### Persistent Contrastive Divergence  {#cd-gibbs-steps} 
 
@@ -437,7 +451,7 @@ I used *ADAM* to find out whether its automatic adjusting of learning rates can 
 A problem when using *ADAM* is that the necessarty condidtion $\sum_{a,b=1}^{20} \wijab = 0$ is violated (see section \@ref(convergence-criteria-sgd)). 
 
 
-## Comparing CD couplings to pLL couplings
+## Comparing CD couplings to pLL couplings {#comparing-pll-cd}
 
 
 

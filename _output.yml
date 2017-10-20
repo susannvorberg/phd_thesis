@@ -13,7 +13,7 @@ bookdown::gitbook:
   split_bib: True
   config:
     toc:
-      collapse: subsection
+      collapse: section
       scroll_highlight: yes
       before: |
         <li><a href="./">PhD Thesis Susann Vorberg</a></li>
