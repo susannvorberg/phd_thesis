@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -297,7 +297,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>The couplings <span class="math inline">\(\wijab\)</span> are initialized at 0 and single potentials <span class="math inline">\(\vi\)</span> will not be optimized but rather kept fixed at their maximum-likleihood estimate <span class="math inline">\(\vi^*\)</span> as described in methods section <a href="potts-full-likelihood.html#prior-v">7.6.3</a>. The optimization is stopped when the maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates <span class="math inline">\(||\w||_2\)</span> over the last five iterations falls below the threshold of <span class="math inline">\(\epsilon = 1e-8\)</span>. The gradient of the full likelihood is approximated with <a href="abbrev.html#abbrev">CD</a> which involves Gibbs sampling of protein sequences according to the current model parametrization and is described in detail in methods section <a href="cd-sampling-optimization.html#cd-sampling-optimization">4.4</a>. Zero centered L2-regularization is used to constrain the coupling parameters <span class="math inline">\(\w\)</span> using the regularization coefficient <span class="math inline">\(\lambda_w = 0.2L\)</span> which is the default setting for optimizing the pseudo-likelihood with <em>CCMpredPy</em>. Performance will be evaluated by the mean precision of top ranked contact predictions over a benchmark set of 300 proteins, that is a subset of the data set described in methods section <a href="dataset.html#dataset">7.1</a>. Contact scores for couplings are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm as explained in section <a href="maxent.html#post-processing-heuristics">2.4.4</a>. Pseudo-likelihood couplings are computed with the tool <em>CCMpredPy</em> that is introduced in methods section <a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy">7.2.1</a> and the pseudo-likelihood contact score will serve as general reference method for tuning the hyperparameters.</p>
 <div id="methods-full-likelihood-adam" class="section level3">
 <h3><span class="header-section-number">7.8.1</span> Tuning Hyperparameters of <em>ADAM</em> Optimizer</h3>
-<p><em>ADAM</em> <span class="citation">[<a href="#ref-Kingma2014">205</a>]</span> stores an exponentially decaying average of past gradients and squared gradients,</p>
+<p><em>ADAM</em> <span class="citation">[<a href="#ref-Kingma2014">203</a>]</span> stores an exponentially decaying average of past gradients and squared gradients,</p>
 <span class="math display">\[\begin{align}
   m_t &amp;= \beta_1 m_{t−1} + (1 − \beta_1) g \\
   v_t &amp;= \beta_2 v_{t−1} + (1 − \beta_2) g^2 \; ,
@@ -325,7 +325,7 @@ Parameters are then updated using step size <span class="math inline">\(\alpha\)
 Figure 7.5: L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> during optimization with <em>ADAM</em> and different learning rates without annealing. The learning rate <span class="math inline">\(\alpha\)</span> is specified in the legend. <strong>Left</strong> Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=96). <strong>Right</strong> Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=16808).
 </p>
 </div>
-<p>It is interesting to note in Figure <a href="methods-sgd.html#fig:adam-learning-rate">7.5</a>, that the norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges towards different values depending on the choice of the learning rate <span class="math inline">\(\alpha\)</span>. This inidicates that it is necessary to decrease the learning rate over time. By default, <em>ADAM</em> uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature. However, popular implementations of <em>ADAM</em> in the <a href="https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385">Keras</a> <span class="citation">[<a href="#ref-Chollet2015">219</a>]</span> and <a href="https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629">Lasagne</a> <span class="citation">[<a href="#ref-Dieleman2015">220</a>]</span> packages allow the use of an annealing schedule. I therefore tested different learning rate annealing schedules for <em>ADAM</em> assuming that with decreasing learning rates the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> will converge towards a consistent value. Indeed, as can be seen in Figure <a href="methods-sgd.html#fig:adam-learning-rate-annealing">7.6</a>, when using a linear or sigmoidal learning rate annealing schedule with <em>ADAM</em>, the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges roughly towards the same value that has been obtained with plain <a href="abbrev.html#abbrev">SGD</a> shown in Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">4.8</a>.</p>
+<p>It is interesting to note in Figure <a href="methods-sgd.html#fig:adam-learning-rate">7.5</a>, that the norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges towards different values depending on the choice of the learning rate <span class="math inline">\(\alpha\)</span>. This inidicates that it is necessary to decrease the learning rate over time. By default, <em>ADAM</em> uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature. However, popular implementations of <em>ADAM</em> in the <a href="https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385">Keras</a> <span class="citation">[<a href="#ref-Chollet2015">217</a>]</span> and <a href="https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629">Lasagne</a> <span class="citation">[<a href="#ref-Dieleman2015">218</a>]</span> packages allow the use of an annealing schedule. I therefore tested different learning rate annealing schedules for <em>ADAM</em> assuming that with decreasing learning rates the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> will converge towards a consistent value. Indeed, as can be seen in Figure <a href="methods-sgd.html#fig:adam-learning-rate-annealing">7.6</a>, when using a linear or sigmoidal learning rate annealing schedule with <em>ADAM</em>, the L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> converges roughly towards the same value that has been obtained with plain <a href="abbrev.html#abbrev">SGD</a> shown in Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">4.8</a>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:adam-learning-rate-annealing"></span>
 <img src="img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during optimization with ADAM and different learning rate annealing schedules. The learning rate \(\alpha\) is specified with respect to Neff as \(\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})\). The learning rate annealing schedule is specified in the legend. Left Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (Neff=96). Right Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (Neff=16808)." width="50%" /><img src="img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during optimization with ADAM and different learning rate annealing schedules. The learning rate \(\alpha\) is specified with respect to Neff as \(\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})\). The learning rate annealing schedule is specified in the legend. Left Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment (Neff=96). Right Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment (Neff=16808)." width="50%" />
@@ -338,13 +338,13 @@ Figure 7.6: L2-norm of the coupling parameters <span class="math inline">\(||\w|
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Kingma2014">
-<p>205. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+<p>203. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
 </div>
 <div id="ref-Chollet2015">
-<p>219. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
+<p>217. Chollet, F. and others (2015). Keras. Available at: <a href="https://github.com/fchollet/keras" class="uri">https://github.com/fchollet/keras</a>.</p>
 </div>
 <div id="ref-Dieleman2015">
-<p>220. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
+<p>218. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K., Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J. <em>et al.</em> (2015). Lasagne: First release. Available at: <a href="https://zenodo.org/record/27878" class="uri">https://zenodo.org/record/27878</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -422,7 +422,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

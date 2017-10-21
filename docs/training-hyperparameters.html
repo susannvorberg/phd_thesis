@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -304,7 +304,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 \tag{7.23}
 \end{align}\]</span>
 <p>Reasonable values are <span class="math inline">\(\sigma_{\mu}=0.1\)</span>, <span class="math inline">\(\sigma_\text{diag} = 100\)</span>.</p>
-<p>The log likelihood can be optimized using L-BFGS-B <span class="citation">[<a href="#ref-Byrd1995">221</a>]</span>, which requires the computation of the gradient of the log likelihood. For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index <span class="math inline">\(m\)</span> in <span class="math inline">\(\cij^m\)</span>, <span class="math inline">\((\wij^m)^*\)</span> and <span class="math inline">\(\Hij^m\)</span>. From eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a> the log likelihood for a single protein is</p>
+<p>The log likelihood can be optimized using L-BFGS-B <span class="citation">[<a href="#ref-Byrd1995">219</a>]</span>, which requires the computation of the gradient of the log likelihood. For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index <span class="math inline">\(m\)</span> in <span class="math inline">\(\cij^m\)</span>, <span class="math inline">\((\wij^m)^*\)</span> and <span class="math inline">\(\Hij^m\)</span>. From eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a> the log likelihood for a single protein is</p>
 <span class="math display" id="eq:ll-coupling-prior">\[\begin{equation}
     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i &lt; j \le L}  \log \sum_{k=0}^K g_{k}(\cij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
 \tag{7.24}
@@ -465,7 +465,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Byrd1995">
-<p>221. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited Memory Algorithm for Bound Constrained Optimization. SIAM J. Sci. Comput. <em>16</em>, 1190–1208. Available at: <a href="http://epubs.siam.org/doi/10.1137/0916069" class="uri">http://epubs.siam.org/doi/10.1137/0916069</a>.</p>
+<p>219. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited Memory Algorithm for Bound Constrained Optimization. SIAM J. Sci. Comput. <em>16</em>, 1190–1208. Available at: <a href="http://epubs.siam.org/doi/10.1137/0916069" class="uri">http://epubs.siam.org/doi/10.1137/0916069</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -543,7 +543,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

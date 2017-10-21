@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -293,23 +293,23 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="global-methods" class="section level2">
 <h2><span class="header-section-number">2.2</span> Global Statistical Models</h2>
-<p>A huge leap forward was the development of sophisticated statistical models that make predictions for a single residue pair while considering all other pairs in the protein. These global models allow for the distinction between transitive and causal interactions which has been referred to in the literature as <a href="abbrev.html#abbrev">DCA</a> <span class="citation">[<a href="#ref-Lapedes1999">61</a>,<a href="#ref-Weigt2009">63</a>]</span>.</p>
-<p>In 1999 Lapedes et al. were the first to propose a global statistical approach for the prediction of residue-residue contacts in order to disentangle transitive effects <span class="citation">[<a href="#ref-Lapedes1999">61</a>]</span>. They consider a Pott’s model that can be derived under a maximum entropy assumption and use the model specific coupling parameters to infer interactions. At that time the wider implications of this advancement went unnoted, but meanwhile the Pott’s Model has become the most prominent statistical model for contact prediction. Section <a href="maxent.html#maxent">2.4</a> deals extensively with the derivation and properties of the Pott’s model, its application to contact prediction and its numerous realizations.</p>
-<p>A global statistical model not motivated by the maximum entropy approach was proposed by Burger and Nijmwegen in 2010 <span class="citation">[<a href="#ref-Burger2010">62</a>,<a href="#ref-Burger2008">66</a>]</span>. Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via <a href="abbrev.html#abbrev">APC</a> but cannot compete with the pseudo-likelihood approaches presented in section <a href="maxent.html#pseudo-likelihood">2.4.3.1</a>.</p>
+<p>A huge leap forward was the development of sophisticated statistical models that make predictions for a single residue pair while considering all other pairs in the protein. These global models allow for the distinction between transitive and causal interactions which has been referred to in the literature as <a href="abbrev.html#abbrev">DCA</a> <span class="citation">[<a href="#ref-Lapedes1999">59</a>,<a href="#ref-Weigt2009">61</a>]</span>.</p>
+<p>In 1999 Lapedes et al. were the first to propose a global statistical approach for the prediction of residue-residue contacts in order to disentangle transitive effects <span class="citation">[<a href="#ref-Lapedes1999">59</a>]</span>. They consider a Pott’s model that can be derived under a maximum entropy assumption and use the model specific coupling parameters to infer interactions. At that time the wider implications of this advancement went unnoted, but meanwhile the Pott’s Model has become the most prominent statistical model for contact prediction. Section <a href="maxent.html#maxent">2.4</a> deals extensively with the derivation and properties of the Pott’s model, its application to contact prediction and its numerous realizations.</p>
+<p>A global statistical model not motivated by the maximum entropy approach was proposed by Burger and Nijmwegen in 2010 <span class="citation">[<a href="#ref-Burger2010">60</a>,<a href="#ref-Burger2008">64</a>]</span>. Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via <a href="abbrev.html#abbrev">APC</a> but cannot compete with the pseudo-likelihood approaches presented in section <a href="maxent.html#pseudo-likelihood">2.4.3.1</a>.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Lapedes1999">
-<p>61. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
+<p>59. Lapedes, A., Giraud, B., Liu, L., and Stormo, G. (1999). Correlated mutations in models of protein sequences: phylogenetic and structural effects. <em>33</em>, 236–256. Available at: <a href="http://www.citeulike.org/user/qluo/article/5092214" class="uri">http://www.citeulike.org/user/qluo/article/5092214</a>.</p>
 </div>
 <div id="ref-Weigt2009">
-<p>63. Weigt, M., White, R.A., Szurmant, H., Hoch, J.A., and Hwa, T. (2009). Identification of direct residue contacts in protein-protein interaction by message passing. Proc. Natl. Acad. Sci. U. S. A. <em>106</em>, 67–72. Available at: <a href="http://www.pnas.org/content/106/1/67.abstract" class="uri">http://www.pnas.org/content/106/1/67.abstract</a>.</p>
+<p>61. Weigt, M., White, R.A., Szurmant, H., Hoch, J.A., and Hwa, T. (2009). Identification of direct residue contacts in protein-protein interaction by message passing. Proc. Natl. Acad. Sci. U. S. A. <em>106</em>, 67–72. Available at: <a href="http://www.pnas.org/content/106/1/67.abstract" class="uri">http://www.pnas.org/content/106/1/67.abstract</a>.</p>
 </div>
 <div id="ref-Burger2010">
-<p>62. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
+<p>60. Burger, L., and Nimwegen, E. van (2010). Disentangling direct from indirect co-evolution of residues in protein alignments. PLoS Comput. Biol. <em>6</em>, e1000633. Available at: <a href="http://dx.plos.org/10.1371/journal.pcbi.1000633" class="uri">http://dx.plos.org/10.1371/journal.pcbi.1000633</a>.</p>
 </div>
 <div id="ref-Burger2008">
-<p>66. Burger, L., and Nimwegen, E. van (2008). Accurate prediction of protein-protein interactions from sequence alignments using a Bayesian method. Mol. Syst. Biol. <em>4</em>, 165. Available at: <a href="http://msb.embopress.org/content/4/1/165.abstract" class="uri">http://msb.embopress.org/content/4/1/165.abstract</a>.</p>
+<p>64. Burger, L., and Nimwegen, E. van (2008). Accurate prediction of protein-protein interactions from sequence alignments using a Bayesian method. Mol. Syst. Biol. <em>4</em>, 165. Available at: <a href="http://msb.embopress.org/content/4/1/165.abstract" class="uri">http://msb.embopress.org/content/4/1/165.abstract</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -387,7 +387,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

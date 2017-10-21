@@ -1,5 +1,9 @@
 \documentclass[11pt,a4paper,twoside]{book}
+
+%encoding
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amstext}
@@ -11,8 +15,6 @@
 \usepackage[bookmarks=true,colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue,unicode=true]{hyperref}
 \usepackage[top=2.5cm, bottom=2.5cm, bindingoffset=0.5cm, margin=2.5cm]{geometry}
 \usepackage{siunitx}
-\usepackage{lscape}
-\usepackage{pdfpages}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -22,6 +24,8 @@
 
 % pandoc does not parse latex environment
 % for landscape tables
+\usepackage{lscape}
+\usepackage{pdfpages}
 \newcommand{\blandscape}{\begin{landscape}}
 \newcommand{\elandscape}{\end{landscape}}
 
