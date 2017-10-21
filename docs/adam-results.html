@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,16 +294,16 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="adam-results" class="section level2">
 <h2><span class="header-section-number">4.5</span> Using ADAM to optimize Contrastive Divergence</h2>
 <p>It is possible that the learning rate schedule and decay rate need to be tuned with respect to the number of Gibbs steps used for sampling because different choices of Gibbs steps influence the size of the gradient. The same might apply to usign persistent contrasticve divergence.</p>
-<p>Hyperparameter optimization with stochastic gradient descent is a time-consuming task requiring manual intervention for each of the different settings. There exist many variants of stochastic gradient descent algorithms that deal with the aforementioned challenges e.g. speeding up convergence rates using momentum or defining adaptive learning rates for each parameter <span class="citation">[<a href="#ref-Ruder2017">192</a>]</span>. One of these <a href="abbrev.html#abbrev">SGD</a> variants is Adaptive Moment Estimation (<em>ADAM</em>) <span class="citation">[<a href="#ref-Kingma2014">205</a>]</span>, an algorithm that computes per-parameter learning rates including momentum (see methods section <a href="methods-sgd.html#methods-full-likelihood-adam">7.8.1</a> for details). A major advantage of <em>ADAM</em> over pure <a href="abbrev.html#abbrev">SGD</a> is that it does not require tuning many hyperparameters as the default values have been found to work quite well. <em>ADAM</em> will be compared to the manually tuned <a href="abbrev.html#abbrev">SGD</a> optimizer in section <a href="adam-results.html#adam-results">4.5</a>. I used <em>ADAM</em> to find out whether its automatic adjusting of learning rates can find better parameter estimates than [sgd] for using different gibbs steps and pcd.</p>
+<p>Hyperparameter optimization with stochastic gradient descent is a time-consuming task requiring manual intervention for each of the different settings. There exist many variants of stochastic gradient descent algorithms that deal with the aforementioned challenges e.g. speeding up convergence rates using momentum or defining adaptive learning rates for each parameter <span class="citation">[<a href="#ref-Ruder2017">190</a>]</span>. One of these <a href="abbrev.html#abbrev">SGD</a> variants is Adaptive Moment Estimation (<em>ADAM</em>) <span class="citation">[<a href="#ref-Kingma2014">203</a>]</span>, an algorithm that computes per-parameter learning rates including momentum (see methods section <a href="methods-sgd.html#methods-full-likelihood-adam">7.8.1</a> for details). A major advantage of <em>ADAM</em> over pure <a href="abbrev.html#abbrev">SGD</a> is that it does not require tuning many hyperparameters as the default values have been found to work quite well. <em>ADAM</em> will be compared to the manually tuned <a href="abbrev.html#abbrev">SGD</a> optimizer in section <a href="adam-results.html#adam-results">4.5</a>. I used <em>ADAM</em> to find out whether its automatic adjusting of learning rates can find better parameter estimates than [sgd] for using different gibbs steps and pcd.</p>
 <p>A problem when using <em>ADAM</em> is that the necessarty condidtion <span class="math inline">\(\sum_{a,b=1}^{20} \wijab = 0\)</span> is violated (see section <a href="full-likelihood-optimization.html#convergence-criteria-sgd">4.2.1</a>).</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Ruder2017">
-<p>192. Ruder, S. (2017). An overview of gradient descent optimization algorithms. arXiv. Available at: <a href="http://arxiv.org/abs/1609.04747" class="uri">http://arxiv.org/abs/1609.04747</a>.</p>
+<p>190. Ruder, S. (2017). An overview of gradient descent optimization algorithms. arXiv. Available at: <a href="http://arxiv.org/abs/1609.04747" class="uri">http://arxiv.org/abs/1609.04747</a>.</p>
 </div>
 <div id="ref-Kingma2014">
-<p>205. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+<p>203. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -381,7 +381,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

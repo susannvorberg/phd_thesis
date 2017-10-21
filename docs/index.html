@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,11 +294,15 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="header">
 <h1 class="title">PhD thesis: residue-residue contact prediction</h1>
 <h4 class="author"><em>Susann Vorberg</em></h4>
-<h4 class="date"><em>2017-10-20</em></h4>
+<h4 class="date"><em>2017-10-21</em></h4>
 </div>
 <div id="summary" class="section level1 unnumbered">
 <h1>Summary</h1>
-<p>Awesome contact prediction project abstract</p>
+<p>Despite tremendous efforts in automating experimental structure prediction and systematical target selection in structural genomics projects, the gap between the number of protein sequences and solved protein structures is constantly widening. While high-throughput DNA sequencing technologies are advancing at an extraordinary pace, thereby not only decreasing the amount of time needed to sequence whole genomes but also drastically reducing costs, experimental techniques for structure determination are still labour intensive, time-consuming and very expensive. This trend illustrates the essential importance of computational approaches that can complement experimental structural biology efforts in order to bridge the sequence-structure gap.</p>
+<p>About half of the known protein families are annotated with experimental structural data and most likely are eligible for template-based structure prediction by which the protein structure is inferred from experimentally solved structures of homologous proteins. The other half can theoratically be addressed by <em>de novo</em> structure prediction methods that minimize physical or knowledge based energy functions to identify the lowest-energy conformation that generally corresponds to the native protein conformation. However, in practice these approaches are limited by the immense computational costs to search the space of possible conformations.</p>
+<p>Recent advancements in residue-residue contact prediction have enabled the <em>de novo</em> prediction of protein structures by constraining the overall protein fold and thereby reducing the conformational search space sufficiently. Residue-residue contact prediction is based on the old idea that spatially proximate amino acid residues tend to coevolve, leaving an echo of correlations in the evolutionary record. The predicted contacts can not only be used to guide <em>de novo</em> structure prediction but they have also been successfully applied in diverse biological fields, such as predicting residue interactions in protein interfaces, studying protein flexibility and alternative conformations, quantifying the effects of mutations and ranking and validation of structural models.</p>
+<p>Despite the immense success of the new generation of contact prediction methods, several open challeges need to be addresed to broaden their applicability. The most evident limitation lies in the requirement of deep alignments that amplify the coevolutionary signal. Unfortunately, the most interesting targets for contact prediction, being protein families without any associated structural information, comprise low numbers of homologous sequences. Furthermore, the current methods apply heuristics that leave certain aspects of the available coevolutionary information unexploited but have so far resisted efforts to replace them.</p>
+<p>This work aims to improve the sensitivity of residue-residue contact prediction methods by exploiting the full coevolutionary information in a principled Bayesian framework. The statistical model underlying the current contact prediction approaches is embedded into the Bayesian framework which allows to deliver posterior estimates of contact probabilities instead of heuristic contact scores. The explicit modelling of amino acid preferences concealed in the coevolutionary coupling signal reflects the nature of residue-residue interactions. Furthermore,the Bayesian framework can naturally be extended to derive estimates of the probability distributions of the distances between residue pairs, which will be the focus of future work.</p>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -375,7 +379,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

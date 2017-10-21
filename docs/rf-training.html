@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -310,27 +310,27 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">Wu et al. (2008) <span class="citation">[<a href="#ref-Wu2008">68</a>]</span></td>
+<td align="right">Wu et al. (2008) <span class="citation">[<a href="#ref-Wu2008">66</a>]</span></td>
 <td align="center">SVM</td>
 <td align="center">1:4</td>
 </tr>
 <tr class="even">
-<td align="right">Li et al. (2011) <span class="citation">[<a href="#ref-Li2011">69</a>]</span></td>
+<td align="right">Li et al. (2011) <span class="citation">[<a href="#ref-Li2011">67</a>]</span></td>
 <td align="center">Random Forest</td>
 <td align="center">1:1, 1:2</td>
 </tr>
 <tr class="odd">
-<td align="right">Wang et al. (2011) <span class="citation">[<a href="#ref-Wang2011">70</a>]</span></td>
+<td align="right">Wang et al. (2011) <span class="citation">[<a href="#ref-Wang2011">68</a>]</span></td>
 <td align="center">Random Forest</td>
 <td align="center">1:4</td>
 </tr>
 <tr class="even">
-<td align="right">DiLena et al. (2012) <span class="citation">[<a href="#ref-DiLena2012a">78</a>]</span></td>
+<td align="right">DiLena et al. (2012) <span class="citation">[<a href="#ref-DiLena2012a">76</a>]</span></td>
 <td align="center">deep neural network</td>
 <td align="center">1:<span class="math inline">\(\approx \!4\)</span> (sampling 20% of non-contacts)</td>
 </tr>
 <tr class="odd">
-<td align="right">Wang et al. (2013) <span class="citation">[<a href="#ref-Wang2013">71</a>]</span></td>
+<td align="right">Wang et al. (2013) <span class="citation">[<a href="#ref-Wang2013">69</a>]</span></td>
 <td align="center">Random Forest</td>
 <td align="center">1:<span class="math inline">\(\approx 4\)</span> (sampling 20% of non-contacts)</td>
 </tr>
@@ -345,7 +345,7 @@ Figure 7.11: Fraction of contacts among all possible contacts in a protein again
 </p>
 </div>
 <p>The total training set is comprised of 50,000 residue pairs <span class="math inline">\(&lt;8 \angstrom\)</span> (“contacts”) and 250,000 residue pairs <span class="math inline">\(&gt;8 \angstrom\)</span> (“non-contacts”). I filtered residue pairs using a sequence separation of 12 positions and selected at maximum 100 contacts and 500 non-contacts per protein. The data is collected in equal parts from data subsets 1-5 (see methods section <a href="methods.html#methods">7</a>), so that the training set consists of five subsets that are non-redundand at the fold level. Each of the five models for cross-validation will be trained on 40,000 contacts and 200,000 non-contacts originating from four of the five subsets. As the training set has been undersampled for non-contacts, it is not representative of real world proteins and the models need to be validated on a more realistic validation set. Therefore, each of the five trained models is not validated on the hold-out set but on separate validation sets containing 40 proteins at a time. The proteins of the validation sets are randomly selected from the respective fifth data subset and consequently are non-redundant at the fold level with training data. Performance is assessed by means of the standard contact prediction benchmark (mean precision against top ranked contacts).</p>
-<p>I used the module <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> in the Python package <code>sklearn (v. 0.19)</code> <span class="citation">[<a href="#ref-Pedregosa2011">232</a>]</span> and trained the models on features extracted from <a href="abbrev.html#abbrev">MSAs</a> which are listed in methods section <a href="seq-features.html#seq-features">7.15</a>.</p>
+<p>I used the module <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> in the Python package <code>sklearn (v. 0.19)</code> <span class="citation">[<a href="#ref-Pedregosa2011">230</a>]</span> and trained the models on features extracted from <a href="abbrev.html#abbrev">MSAs</a> which are listed in methods section <a href="seq-features.html#seq-features">7.15</a>.</p>
 <div id="rf-feature-selection" class="section level3">
 <h3><span class="header-section-number">7.16.1</span> Feature Selection</h3>
 <p>A random forest model is trained on the total set of features. Given the distribution of <em>Gini importance</em> values of features from the model, subsets of features are defined by features having <em>Gini importance</em> values larger than the <span class="math inline">\(\{10, 30, 50, 70, 90\}\)</span>-percentile of the distribution. Performance of the models trained on these subsets of features is evaluated on the same validation set.</p>
@@ -359,22 +359,22 @@ Figure 7.11: Fraction of contacts among all possible contacts in a protein again
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Wu2008">
-<p>68. Wu, S., and Zhang, Y. (2008). A comprehensive assessment of sequence-based and template-based methods for protein contact prediction. Bioinformatics <em>24</em>, 924–31. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2648832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2648832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>66. Wu, S., and Zhang, Y. (2008). A comprehensive assessment of sequence-based and template-based methods for protein contact prediction. Bioinformatics <em>24</em>, 924–31. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2648832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2648832{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Li2011">
-<p>69. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>, 3379–84. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/27/24/3379.long" class="uri">http://bioinformatics.oxfordjournals.org/content/27/24/3379.long</a>.</p>
+<p>67. Li, Y., Fang, Y., and Fang, J. (2011). Predicting residue-residue contacts using random forest models. Bioinformatics <em>27</em>. Available at: <a href="http://dx.doi.org/10.1093/bioinformatics/btr579" class="uri">http://dx.doi.org/10.1093/bioinformatics/btr579</a>.</p>
 </div>
 <div id="ref-Wang2011">
-<p>70. Wang, X.-F., Chen, Z., Wang, C., Yan, R.-X., Zhang, Z., and Song, J. (2011). Predicting residue-residue contacts and helix-helix interactions in transmembrane proteins using an integrative feature-based random forest approach. PLoS One <em>6</em>, e26767. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3203928{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3203928{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>68. Wang, X.-F., Chen, Z., Wang, C., Yan, R.-X., Zhang, Z., and Song, J. (2011). Predicting residue-residue contacts and helix-helix interactions in transmembrane proteins using an integrative feature-based random forest approach. PLoS One <em>6</em>, e26767. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3203928{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3203928{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-DiLena2012a">
-<p>78. Di Lena, P., Nagata, K., and Baldi, P. (2012). Deep architectures for protein contact map prediction. Bioinformatics <em>28</em>, 2449–57. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/19/2449.full{\#}sec-14" class="uri">http://bioinformatics.oxfordjournals.org/content/28/19/2449.full{\#}sec-14</a>.</p>
+<p>76. Di Lena, P., Nagata, K., and Baldi, P. (2012). Deep architectures for protein contact map prediction. Bioinformatics <em>28</em>, 2449–57. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/28/19/2449.full{\#}sec-14" class="uri">http://bioinformatics.oxfordjournals.org/content/28/19/2449.full{\#}sec-14</a>.</p>
 </div>
 <div id="ref-Wang2013">
-<p>71. Wang, Z., and Xu, J. (2013). Predicting protein contact map using evolutionary and physical constraints by integer programming. Bioinformatics <em>29</em>, i266–73. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+<p>69. Wang, Z., and Xu, J. (2013). Predicting protein contact map using evolutionary and physical constraints by integer programming. Bioinformatics <em>29</em>, i266–73. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
 </div>
 <div id="ref-Pedregosa2011">
-<p>232. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg, V. <em>et al.</em> (2011). Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. <em>12</em>, 2825–2830. Available at: <a href="http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html" class="uri">http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html</a>.</p>
+<p>230. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg, V. <em>et al.</em> (2011). Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. <em>12</em>, 2825–2830. Available at: <a href="http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html" class="uri">http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -452,7 +452,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

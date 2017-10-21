@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-20">
+<meta name="date" content="2017-10-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,26 +294,26 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <div id="contact-prior" class="section level1">
 <h1><span class="header-section-number">5</span> Random Forest Contact Prior</h1>
 <p>The wealth of successful meta-predictors presented in section <a href="meta-predictors.html#meta-predictors">2.3</a> highlights the importance to exploit other sources of information apart from coevolution statistics. Much information about residue interactions is typically contained in single position features that can be predicted from local sequence profiles, such as secondary structure, solvent accessibility or contact number, and in pairwise features such as the contact prediction scores for residue pairs <span class="math inline">\((i,j)\)</span> from a simple local statistical methods as presented in section <a href="local-methods.html#local-methods">2.1</a>.</p>
-<p>For example, predictions of secondary structure elements and solvent accessibility are used by almost all modern machine learning predictors, such as MetaPsicov <span class="citation">[<a href="#ref-Jones2015a">84</a>]</span>, NeBCon <span class="citation">[<a href="#ref-He2017">87</a>]</span>, EPSILON-CP <span class="citation">[<a href="#ref-Stahl2017">86</a>]</span>, PconsC3 <span class="citation">[<a href="#ref-Skwark2016">82</a>]</span>. Other frequently used sequence derived features include pairwise contact potentials, sequence separation and conservation measures such as column entropy <span class="citation">[<a href="#ref-Jones2015a">84</a>,<a href="#ref-He2017">87</a>,<a href="#ref-Ma2015a">206</a>]</span>.</p>
+<p>For example, predictions of secondary structure elements and solvent accessibility are used by almost all modern machine learning predictors, such as MetaPsicov <span class="citation">[<a href="#ref-Jones2015a">82</a>]</span>, NeBCon <span class="citation">[<a href="#ref-He2017">85</a>]</span>, EPSILON-CP <span class="citation">[<a href="#ref-Stahl2017">84</a>]</span>, PconsC3 <span class="citation">[<a href="#ref-Skwark2016">80</a>]</span>. Other frequently used sequence derived features include pairwise contact potentials, sequence separation and conservation measures such as column entropy <span class="citation">[<a href="#ref-Jones2015a">82</a>,<a href="#ref-He2017">85</a>,<a href="#ref-Ma2015a">204</a>]</span>.</p>
 <p>In the following sections I present a random forest classifier that uses sequence derived features to distinguish contacts from non-contacts. Methods section <a href="seq-features.html#seq-features">7.15</a> lists all features used to train the classifier including the aforementioned standard features as well as some novel features.</p>
 <p>The probabilistic predictions of the random forest model can be introduced directly as prior information into the Bayesian statistical model presented in the last section <a href="#bayesian-approach"><strong>??</strong></a> to improve the overall prediction accuracy in terms of posterior probabilities. Furthermore, contact scores from coevolution methods can be added as additional feature to the random forest model in order to elucidate how much the combined information improves prediction accuracy over the single methods.</p> 
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Jones2015a">
-<p>84. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
+<p>82. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
 </div>
 <div id="ref-He2017">
-<p>87. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017). NeBcon: Protein contact map prediction using neural network training coupled with naïve Bayes classifiers. Bioinformatics. Available at: <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164" class="uri">https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164</a>.</p>
+<p>85. He, B., Mortuza, S.M., Wang, Y., Shen, H.-B., and Zhang, Y. (2017). NeBcon: Protein contact map prediction using neural network training coupled with naïve Bayes classifiers. Bioinformatics. Available at: <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164" class="uri">https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btx164</a>.</p>
 </div>
 <div id="ref-Stahl2017">
-<p>86. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
+<p>84. Stahl, K., Schneider, M., and Brock, O. (2017). EPSILON-CP: using deep learning to combine information from multiple sources for protein contact prediction. BMC Bioinformatics <em>18</em>, 303. Available at: <a href="http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x" class="uri">http://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1713-x</a>.</p>
 </div>
 <div id="ref-Skwark2016">
-<p>82. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and Elofsson, A. (2016). Accurate contact predictions for thousands of protein families using PconsC3. bioRxiv.</p>
+<p>80. Skwark, M.J., Michel, M., Menendez Hurtado, D., Ekeberg, M., and Elofsson, A. (2016). Accurate contact predictions for thousands of protein families using PconsC3. bioRxiv.</p>
 </div>
 <div id="ref-Ma2015a">
-<p>206. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
+<p>204. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact prediction by integrating joint evolutionary coupling analysis and supervised learning. Bioinformatics, btv472. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472" class="uri">http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -391,7 +391,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

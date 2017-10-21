@@ -4,7 +4,7 @@ In 1972, Anfinsen and his collegues received the Nobel Prize for their research 
 With certain exceptions (e.g. intrinsically disordered proteins [@Wright1999], prions[@Fraser2014]), this dogma has proven to hold true at least for globular proteins.
 
 Ever since, it is regarded as the biggest challenge in structural bioinformatics to realiably predict a protein's structure given only its amino acid sequence [@Samish2015; @Schwede2013]. 
-*De&#160;novo* protein structure prediction methods use physical or knowledge based energy potentials to find a protein conformation that minimizes the protein's energy landscape. 
+*De&#160;novo* protein structure prediction methods minimize physical or knowledge based energy functions to identify the lowest-energy conformation that generally corresponds to the native protein conformation.
 However, due to the high degree of conformational flexibility, the search space of possible conformations cannot be explored exhaustively for proteins of typical length.
 Given a protein with 101 residues that has 100 peptide bonds with two torsion angles each and assuming three stable conformations for each of the bond angles, there will be $3^200 \approx  10^{95}$ configurations.
 This number of conformations cannot be sampled sequentially in a lifetime, even when sampling at high rates.
@@ -48,7 +48,7 @@ About 90 million sequences (October 2017) have been translated into protein amin
 
 
 The resultant gap between the number of protein structures and protein sequences is constantly widening (see right plot in Figure \@ref(fig:seq-str-gap)) despite tremendous efforts in automating experimental structure determination and new developments such as electron crystallography[@Schwede2013; @Clabbers2017].
-This trend illustrates the need of computational approaches that can complement experimental structural biology efforts in order to close this gap.
+This trend illustrates the essential importance of computational approaches that can complement experimental structural biology efforts in order to bridge this gap.
 Over the last decades, template-based methods have matured to a point where they are able to generate high-resolution structural models that are routinley and conveniently used in life-science research and by the biological community [@Schwede2013; @BKC2016].
 *De novo* methods aiming at predicting protein structures from sequence alone are required in case no homologue template structure can be identified or the protein sequence represents a novel fold.
 Albeit purely *de novo* approaches are hampered by the combinatorial explosion of possible conformations for larger proteins, combining them with structural information from heterogenous sources can help to reduce the degrees of freedom in the conformational search space [@Schwede2013].
