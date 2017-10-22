@@ -206,9 +206,18 @@ knitr::include_graphics("img/coupling_matrix_analysis/aromatic_residues_short_di
 
 # Optimizing Full Likelihood with Gradient Descent
 
+## Defining the initial learning rate as a function of Neff
+
+(ref:caption-performance-cd-alphaopt-0)  Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD alpha0 = 5e-4**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate, $\alpha_0 \eq 5e-4$. **CD alpha0 = 1e-3**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate, $\alpha_0 \eq 1e-3$. **CD alpha0 = 5e-2Neff^-0.5**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate defined as a function of [Neff](#abbrev), $\alpha_0 \eq \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. 
+
+```{r performance-cd-alphaopt-0, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_learningrates_comparealpha0.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-0)'}
+knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_learningrates_comparealpha0.html", height = "500px")
+```
+
+
 ## Visualisation of learning rate schedules
 
-(ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the **exponential** learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$. Blue legend group represents the **linear** learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Green legend group represents the **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$ with $\gamma$. Purple legend group represents the **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The iteration number is given by $t$. Initial learning rate $\alpha_0$ is set to 1e-4 and $\gamma$ is the decay rate and its value is given in brackets in the legend.
+(ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the **exponential** learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$. Blue legend group represents the **linear** learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Green legend group represents the **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$. Purple legend group represents the **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The initial learning rate $\alpha_0$ is set to 1e-4, the iteration number is given by $t$ and $\gamma$ is the decay rate and its value is given in brackets in the legend.
 
 ```{r learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-learning-rate-schedules)'}
 knitr::include_url("img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.html", height = "500px")
@@ -216,85 +225,93 @@ knitr::include_url("img/full_likelihood/appendix/learning_rate_schedules_alpha0_
 
 ## Benchmarking learning rate schedules {#benchmark-learning-rate-annealing-schedules}
 
-### Linear learning rate schedule
+The following figures show the mean precision over the validation set for contacts computed from [CD](#abbrev) with stochastic gradient descent and using different learning rate annealing schedules
 
-(ref:caption-performance-cd-linschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *linear* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with decay rate $\gamma$ as specified in the legend.
+(ref:caption-performance-cd-linschedule) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *linear* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with decay rate $\gamma$ as specified in the legend.
 
-```{r performance-cd-linschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-linschedule)'}
+```{r performance-cd-linschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-linschedule)'}
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate.html", height = "500px")
 ```
 
-### Sigmoidal learning rate schedule
+(ref:caption-performance-cd-sigschedule) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *sigmoidal* learning rate annealing schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma t}$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
 
-(ref:caption-performance-cd-sigschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *sigmoidal* learning rate annealing schedule $\alpha_{t+1}  = \frac{\alpha_{t}}{1 + \gamma t}$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
-
-```{r performance-cd-sigschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-sigschedule)'}
+```{r performance-cd-sigschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-sigschedule)'}
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate.html", height = "500px")
 ```
 
-### Square root learning rate schedule
+(ref:caption-performance-cd-sqrtschedule) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *square root* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma t}}$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
 
-(ref:caption-performance-cd-sqrtschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *square root* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{\sqrt{1 + \gamma t}}$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
-
-```{r performance-cd-sqrtschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-sqrtschedule)'}
+```{r performance-cd-sqrtschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-sqrtschedule)'}
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate.html", height = "500px")
 ```
 
 
-### Exponential learning rate schedule
+(ref:caption-performance-cd-expschedule) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *exponential* learning rate annealing schedule $\alpha  = \alpha_0 \cdot\exp(- \gamma t)$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
 
-
-(ref:caption-performance-cd-expschedule) Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood:  Contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *exponential* learning rate annealing schedule $\alpha  = \alpha_0 \cdot\exp(- \gamma t)$ with t being the iteration number and decay rate $\gamma$ as specified in the legend.
-
-```{r performance-cd-expschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-performance-cd-expschedule)'}
+```{r performance-cd-expschedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-expschedule)'}
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate.html", height = "500px")
 ```
 
 
 ## Number of iterations until convergence for different learning rate schedules {#learning-rate-schedules-distribution-iterations}
 
-### Linear learning rate schedule
+The following Figures show the distribution of the number of iterations until convergence over the validation dataset for stochastic gradient descent optimization of [CD](#abbev) for different learning rate annealing schedules.
 
-(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a **linear** learning rate schedule $\alpha = \alpha_0 / (1 + \gamma \cdot t)$ with $t$ being the iteration number and the decay rate $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+(ref:caption-cd-numit-lin-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **linear** learning rate schedule $\alpha = \alpha_0 / (1 + \gamma  t)$ with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
-```{r full-likelihood-opt-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.html", height = "600px")
+```{r cd-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-lin-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.html", height = "500px")
 ```
 
-### Sigmoidal learning rate schedule
 
-(ref:caption-numit-convergence-sig-learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$  with t being the iteration number and the decay rate $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+(ref:caption-cd-numit-sig-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma  t)$  with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
-```{r numit-convergence-sig-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-numit-convergence-sig-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.html", height = "600px")
+```{r cd-numit-sig-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-sig-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.html", height = "500px")
 ```
 
-### Square root learning rate schedule
 
-(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with a **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma t}$ with t being the iteration number and the decay rate  $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+(ref:caption-cd-numit-sqrt-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma t}$ with $t$ being the iteration number and the decay rate  $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
-```{r full-likelihood-opt-numit-sqrt-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.html", height = "600px")
+```{r cd-numit-sqrt-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-sqrt-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.html", height = "500px")
 ```
 
-### Exponential learning rate schedule
 
-(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different decay rates with an **exponential** learning rate schedule $\alpha  = \alpha_0 \cdot\exp(- \gamma t)$ with t being the iteration number and the decay rate  $\gamma$ as specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
+(ref:caption-cd-numit-exp-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with an **exponential** learning rate schedule $\alpha  = \alpha_0 \cdot\exp(- \gamma t)$ with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
-```{r full-likelihood-opt-numit-exp-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_exponential_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_exponential_learningrate_schedule.html", height = "600px")
+```{r cd-numit-exp-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_exponential_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-exp-learning-rate-schedule)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_exponential_learningrate_schedule.html", height = "500px")
 ```
 
 
 ## Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated  
 
+(ref:caption-numit-convergence-convergence-prev) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood. The relative change of the L2 norm over coupling parameters, $||\w||_2$, is evaluated over a defined number of previous iterations and is specified in the legend. Convergence is assumed when the relative change falls below a small value $\epsilon \eq 1e-8$. The optimal hyperparameters settings for [SGD](#abbrev) as described in section \@ref(sgd-hyperparameter-tuning) have been used. 
 
-(ref:caption-numit-convergence-convergence-prev) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood using different values for the number of previous iterations over which the relative change of the L2 norm of coupling parameters $||\w||_2$ will be measured. Convergence criteria is given in eq. \@ref(eq:parameter-convergence-criterion). The number of previous iterations is given on the x-axis in the plot. The optimal hyperparameters settings for [SGD](#abbrev) as described in section \@ref(sgd-hyperparameter-tuning) have been used. 
 
-
-```{r numit-convergence-convergence-prev, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-numit-convergence-convergence-prev)'}
-knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.html", height = "600px")
+```{r numit-convergence-convergence-prev, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.png", out.width='85%', fig.align='center', fig.cap = '(ref:caption-numit-convergence-convergence-prev)'}
+knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.html", height = "500px")
 ```
+
+## Fix single potentials at maximum-likelihood estimate v*
+
+(ref:caption-full-likelihood-opt-fixv) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [SGD](#abbrev) settings for [CD](#abbrev) optimization are as follows: sigmoidal learning rate schedule with decay rate $\gamma = \mathrm{5e-6}$ and initial learning rate $\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD fixed v at v* **: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are not optimized but fixed at $\v^*$ as given in eq. \@ref(eq:prior-v). **CD lambda_v = 10**: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are subject to optimization using L2-reglarization with $\lambda_v \eq 10$.
+
+
+```{r full-likelihood-opt-fixv, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_fixed_v.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-fixv)'}
+knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html", height = "500px")
+```
+
+## Monitoring Optimization for Protein 1aho for Different Sample Sizes
+
+(ref:caption-cd-samplesize-protein1ahoa00) Monitoring parameter norm and gradient norm for protein 1ahoA00 during [SGD](#abbrev) optimization of [CD](#abbrev) using different sample sizes. Protein 1ahoA00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 64 sequences, 5L = 320 sequences, 10L = min(10L, N) = 378 sequences, 0.2Neff = 46 sequences, 0.3Neff = 69 sequences, 0.4Neff = 92 sequences.  **Left** L2-norm of the gradients for coupling parameters, $||\nabla_{\w} L\!L(\v^*, \w)||_2$ (without contribution of regularizer).  **Right** L2-norm of the coupling parameters $||\w||_2$.
+
+```{r cd-samplesize-protein1ahoa00, echo = FALSE, out.width = '100%', fig.align='center', fig.cap = '(ref:caption-cd-samplesize-protein1ahoa00)'}
+knitr::include_graphics("img/full_likelihood/appendix/1ahoa00_parameter_gradient_norm_for_samplesizes.png")
+```
+
+
 
 
 ## Number of Gibbs steps with respect to Neff
@@ -306,24 +323,8 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_facetted_by_n
 ```
 
 
-## Fix single potentials at maximum-likelihood estimate v*
 
 
-(ref:caption-full-likelihood-opt-fixv) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [SGD](#abbrev) settings for [CD](#abbrev) optimization are as follows: sigmoidal learning rate schedule with decay rate $\gamma = \mathrm{5e-6}$ and initial learning rate $\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD fixed v at v**: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are not optimized but fixed at $\v^*$ as given in eq. \@ref(eq:prior-v). **CD lambda_v = 10**: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are subject to optimization using L2-reglarization with $\lambda_v \eq 10$.
-
-
-```{r full-likelihood-opt-fixv, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_fixed_v.png", out.width='100%', fig.align='center', fig.cap = '(ref:caption-full-likelihood-opt-fixv)'}
-knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html", height = "600px")
-```
-
-
-## Monitoring Optimization for Different Sample Sizes
-
-(ref:caption-cd-samplesize-protein1ahoa00) Monitoring parameter norm and gradient norm for protein 1aho_A_00 during [SGD](#abbrev) using different sample sizes. Protein 1aho_A_00_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Left** L2-norm of the gradients for coupling parameters, $||\nabla_{\w} L\!L(\v^*, \w)||_2$ (without contribution of regularizer). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. **Right** L2-norm of the coupling parameters $||\w||_2$. The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend. 
-
-```{r cd-samplesize-protein1ahoa00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-samplesize-protein1ahoa00)'}
-knitr::include_graphics(c("img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes.png", "img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes.png"))
-```
 
 ## Monitoring Norm of Gradients for Different Number of Gibbs Steps
 

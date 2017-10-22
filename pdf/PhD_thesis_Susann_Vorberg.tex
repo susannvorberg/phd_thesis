@@ -2487,14 +2487,13 @@ of the partition function that normalizes the probability distribution.
 Several approximate inference techniques for the full likelihood have
 been developed trying to sidestep the exact computation of the partition
 function. At this point in time, pseudo-likelihood is the most
-successful approximate solution with regard to the specific problem of
-predicting residue-residue contacts (see section
-\ref{pseudo-likelihood}). It has been shown that the pseudo-likelihood
-is a consistent estimator to the full likelihood in the limit of large
-amounts of data. However, it is unclear whether it represents a good
-approximation when there is only little data, in other words for small
-protein families that are the most interesting targets for contact
-prediction (see Figure \ref{fig:pfam}).
+successful approximate solution with regard to predicting
+residue-residue contacts (see section \ref{pseudo-likelihood}). It has
+been shown that the pseudo-likelihood is a consistent estimator to the
+full likelihood in the limit of large amounts of data. However, it is
+unclear whether it represents a good approximation when there is only
+little data, in other words for small protein families that are the most
+interesting targets for contact prediction (see Figure \ref{fig:pfam}).
 
 While the partition function of the full likelihood cannot be
 efficiently computed, it is possible to approximate the gradient of the
@@ -2550,12 +2549,12 @@ feasible only for small proteins and points out the limits of applying
 many sampling steps to obtain unbiased estimates from the stationary
 distribution which comes at high computational costs.
 
-In 2002, Hinton invented \protect\hyperlink{abbrev}{CD} as an
+In 2002, Hinton invented \emph{Contrastive Divergence} as an
 approximation to \protect\hyperlink{abbrev}{MCMC} methods
 {[}\protect\hyperlink{ref-Hinton2002}{186}{]}. It was originally
 developed for training products of experts models but it can generally
-be applied to maximizing log likelihoods and has become overly popular
-for training restricted Boltzmann machines
+be applied to maximizing log likelihoods and has become popular for
+training restricted Boltzmann machines
 {[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Fischer2012}{188},\protect\hyperlink{ref-Bengio2009}{189}{]}.
 The idea is simple: instead of starting a Markov chain from a random
 point and running it until it has reached the stationary distribution,
@@ -2563,9 +2562,9 @@ it is initialized with a data sample and evolved for only a small number
 of steps. Obviously the chain has not yet converged to its stationary
 distribution and the data sample obtained from the current configuration
 of the chain presents a biased estimate. The intuition behind
-\protect\hyperlink{abbrev}{CD} is that eventhough the gradient estimate
-is very noisy and biased, it points roughly into a similar direction as
-the true gradient of the full likelihood. Therefore the approximate
+\protect\hyperlink{abbrev}{CD} is, that eventhough the gradient estimate
+is noisy and biased, it points roughly into a similar direction as the
+true gradient of the full likelihood. Therefore the approximate
 \protect\hyperlink{abbrev}{CD} gradient should become zero approximately
 where the true gradient of the likelihood becomes zero. Once the
 parameters are close to the optimum, starting a Gibbs chain from a data
@@ -2583,10 +2582,10 @@ from each of the \(N\) sequences. One full step of Gibbs sampling
 updates every sequence position \(i \in \{1, \ldots, L\}\) subsequently
 by randomly selecting an amino acid based on the conditional
 probabilities for observing an amino acid \(a\) at position \(i\) given
-the model parameters and all other (arady updated) sequence positions:
+the model parameters and all other (already updated) sequence positions:
 
 \begin{equation}
-  p(\seq_i = a | (x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_L), \v, \w) \propto \exp \left( \vi(a) + \sum_{j=1; i \ne j}^L \wij(a, x_j)  \right)
+  p(\seq_i = a | (x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_L), \v, \w) \propto \exp \left( \vi(a) + \sum_{\substack{j=1 \\ i \ne j}}^L \wij(a, x_j)  \right)
 \label{eq:conditional-prob-full-likelihood}
 \end{equation}
 
@@ -2645,14 +2644,14 @@ be minimized using a gradient descent optimization algorithm. Gradient
 descent algorithms are used to find the minimum of an objective function
 with respect to its parametrization by iteratively updating the
 parameters values in the opposite direction of the gradient of the
-objective function with respect to these parameters.
-\protect\hyperlink{abbrev}{SGD} is a variant thereof that uses an
-stochastic estimate of the gradient whose average over many updates
-approaches the true gradient. The stochasticity is commonly obtained by
-evaluating a random subsample of the data at each iteration. For
-\protect\hyperlink{abbrev}{CD} stochasticity additionally arises from
-the Gibbs sampling process in order to obtain a gradient estimate in the
-first place.
+objective function with respect to these parameters. \emph{Stochastic}
+gradient descent (\protect\hyperlink{abbrev}{SGD}) is a variant thereof
+that uses a stochastic estimate of the gradient whose average over many
+updates approaches the true gradient. The stochasticity is commonly
+obtained by evaluating a random subsample of the data at each iteration.
+For \protect\hyperlink{abbrev}{CD} stochasticity additionally arises
+from the Gibbs sampling process in order to obtain a gradient estimate
+in the first place.
 
 As a consequence of stochasticity, the gradient estimates are noisy,
 resulting in parameter updates with high variance and strong
@@ -2706,11 +2705,11 @@ minimum and can cause the system to diverge.}\label{fig:gd-learning-rate-intro}
 
 Unfortunately, it is neither possible to use second order optimization
 algorithms nor sophisticated first order algorithms like conjugate
-gradients to optimize the full likelihood. While the former class of
-algorithms requires (approximate) computation of the second partial
-derivatives, the latter requires evaluating the objective function in
-order to identify the optimal step size via linesearch, both being
-computationally too demanding.
+gradients to optimize the full likelihood of the \emph{Potts} model.
+While the former class of algorithms requires (approximate) computation
+of the second partial derivatives, the latter requires evaluating the
+objective function in order to identify the optimal step size via
+linesearch, both being computationally too demanding.
 
 The next subsections describe the hyperparameter tuning for stochastic
 gradient descent, covering the choice of the convergence criterion and
@@ -2739,13 +2738,14 @@ One possibility is to stop learning when the L2 norm of the gradient for
 the coupling parameters \(||\nabla_{\w} L\!L(\v^*, \w)||_2\) is close to
 zero {[}\protect\hyperlink{ref-Carreira-Perpinan2005}{197}{]}. However,
 when using a finite number of sequences for sampling, the norm of the
-gradient does not converge to zero but saturates at a certain offset as
-it is described in section \ref{cd-sampling-optimization}. Convergence
-can also be monitored as the relative change of the norm of gradients
-within a certain number of iterations and optimization can be stopped
-when the norm of gradient has reached a certain plateau. As gradient
-estimates are very noisy with stochastic gradient descent, gradient
-fluctuations complicate the proper assessment of this criterion.
+gradient does not converge to zero but towards a certain offset as it is
+described in section \ref{cd-sampling-size}. Convergence could also be
+monitored as the relative change of the norm of gradients within a
+certain number of iterations. Optimization will be stopped when the
+relative change becomes negligibly small, that is when the gradient norm
+has reached a plateau. As gradient estimates are very noisy with
+stochastic gradient descent, gradient fluctuations complicate the proper
+assessment of this criterion.
 
 Instead of the gradient, it is also possible to observe the relative
 change of the norm of parameter estimates \(||\w||_2\) over several
@@ -2760,9 +2760,9 @@ iterations and stop learning when it falls below a small threshold
 This measure is less noisy than subsequent gradient estimates because
 the magnitude of parameter updates is bounded by the learning rate.
 
-Another idea is to monitor the direction of the partial derivatives
-since for stochastic gradient descent the optimum is a moving target and
-the gradient will start oscillating when approaching the optimum.
+For stochastic gradient descent the optimum is a moving target and the
+gradient will start oscillating when approaching the optimum. Therefore,
+another idea is to monitor the direction of the partial derivatives.
 However, this theoretical assumption is complicated by the fact that
 gradient oscillations are also typically observed when the parameter
 surface contains narrow valleys or generally when the learning rate is
@@ -2773,17 +2773,16 @@ that parameters converge at different speeds
 {[}\protect\hyperlink{ref-Ruder2017}{190}{]} leading to oscillations
 that could either originate from convergence or yet too large learning
 rates. As can be seen in Figure \ref{fig:gradient-directions}, the
-percentage of dimensions for which the derivate changes direction within
-the last iterations is usually high and varies for different proteins.
-Therefore it is not a good indicator of convergence. When using the
-adaptive learning rate optimizer \emph{ADAM}, the momentum term is an
-interfering factor for assessing the direction of partial derivatives.
-Parameters will be updated into the direction of a smoothed historical
-gradient and oscillations, regardless of which origin, will be dampened.
-It is therefore hard to define a general convergence criteria based on
-the direction of derivatives that can distinguish these different
-scenarios.
-
+percentage of parameters for which the derivate changes direction within
+the last \(x\) iterations is usually high and varies for different
+proteins. Therefore it is not a good indicator of convergence. When
+using the adaptive learning rate optimizer \emph{ADAM}, the momentum
+term is an interfering factor for assessing the direction of partial
+derivatives. Parameters will be updated into the direction of a smoothed
+historical gradient and oscillations, regardless of which origin, will
+be dampened. It is therefore hard to define a general convergence
+criteria based on the direction of derivatives that can distinguish
+these different scenarios.
 
 
 
@@ -2803,26 +2802,25 @@ scenarios.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1c75A00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1ahoA00} 
+{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1c75A00_1ahoA00} 
 
 }
 
-\caption{Development of the percentage of
-dimensions for which the derivate has changed its direction over the
-last iterations. Change in the direction (i.e.~the sign) of the partial
-derivates has been evaluated over varying number of previous iterations
-as it is specified by \emph{previous it.} in the legend. Optimization is
+\caption{Percentage of parameters for which the
+derivate has changed its direction (i.e.~the sign) during the previous
+\(x\) iterations (\(x\) is specified in the legend). Optimization is
 performed with \protect\hyperlink{abbrev}{SGD} using the optimal
-hyperparameters described in section \ref{sgd-hyperparameter-tuning}
-using regularization ocefficient \(\lambda_w \eq 0.1L\) (see section
+hyperparameters defined in section \ref{sgd-hyperparameter-tuning} and
+using a regularization coefficient \(\lambda_w \eq 0.1L\) (see section
 \ref{regularization-for-cd-with-sgd}) and using one step of Gibbs
 sampling. Optimization is stopped when the relative change over the
-L2-norm of parameter estimates \(||\w||_2\) over the last iterations, as
-specified in the legend, falls below the threshold of
-\(\epsilon = 1e-8\). Development has been monitored for two different
-proteins, \textbf{Left} 1c75A00 (protein length = 71,
+L2-norm of parameter estimates \(||\w||_2\) over the last \(x\)
+iterations falls below the threshold of \(\epsilon \eq 1e-8\).
+Development has been monitored for two different proteins, \textbf{Left}
+1c75A00 (protein length = 71, number sequences = 28078,
 \protect\hyperlink{abbrev}{Neff} = 16808) \textbf{Right} 1ahoA00
-(protein length = 64, \protect\hyperlink{abbrev}{Neff} = 229).}\label{fig:gradient-directions}
+(protein length = 64, number sequences = 378,
+\protect\hyperlink{abbrev}{Neff} = 229).}\label{fig:gradient-directions}
 \end{figure}
 
 Of course, the simplest strategy to assume convergence is to specify a
@@ -2830,34 +2828,34 @@ maximum number of iterations for the optimization procedure, which also
 ensures that the algorithm will stop eventually if none of the other
 convergence criteria is met.
 
-A necessary but not sufficient criterion for convergence for the full
-likelihood is given by \(\sum_{a,b=1}^{20} \wijab = 0\). This
-requirement is derived in section \ref{prior-v}. When using plain
-stochastic gradient descent without momentum and without adaptive
-learning rates, this criterion is never violated when parameters are
-initialized uniformly. This is due to the fact that the 400 partial
-derivatives for \(\wijab\) given a pair \((i,j)\) and for
-\(a,b \in \{1, \ldots, 20\}\) are not independent because the sum over
-the 400 pairwise amino acid counts at positions \(i\) and \(j\) is
-identical for the observed and the sampled alignment and amounts to,
+A necessary but not sufficient condition that is satisfied at the
+optimum when the gradient is zero, is given by
+\(\sum_{a,b=1}^{20} \wijab = 0\) (see section \ref{prior-v}). This
+condition is never violated, as long as parameters satisfy this
+criterion at initialization and the same step size is used to update all
+parameters. To understand why, note that the 400 partial derivatives
+\(\frac{\partial L\!L(\v^*, \w)}{\partial \wijab}\) for a residue pair
+\((i,j)\) and for \(a,b \in \{1, \ldots, 20\}\) are not independent. The
+sum over the 400 pairwise amino acid counts at positions \(i\) and \(j\)
+is identical for the observed and the sampled alignment and amounts to,
 
 \begin{equation}
   \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
 \end{equation}
 
-Considering a residue pair (i,j) and assuming amino acid pair (a,b) has
-higher counts in the sampled alignment than in the observed input
-alignment, then this difference in counts must be compensated by other
-amino acid pairs (c,d) having less counts in the sampled alignment
-compared to the true alignment (see Figure
-\ref{fig:visualisation-wijab-constraint}). Therefore it holds,
-\(\sum_{a,b=1}^{20} \nabla_{\wijab}\LLreg(\v,\w) = 0\). This symmetry is
-translated into parameter updates as long as the same learning rate is
-used to update all parameters. However, when using adaptive learning
-rates, this symmetry is broken and the condition
-\(\sum_{a,b=1}^{20} \wijab = 0\) can be violated during the optimization
-processs. It is therefore interesting to monitor
-\(\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab\).
+Considering a residue pair \((i,j)\) and assuming amino acid pair
+\((a,b)\) has higher counts in the sampled alignment than in the
+observed input alignment, then this difference in counts must be
+compensated by other amino acid pairs \((c,d)\) having less counts in
+the sampled alignment compared to the true alignment (see Figure
+\ref{fig:visualisation-wijab-constraint}). Therefore, it holds
+\(\sum_{a,b=1}^{20} \frac{\partial L\!L(\v^*, \w)}{\partial \wijab} = 0\).
+This symmetry is translated into parameter updates as long as the same
+step size is used to update all parameters. However, when using adaptive
+learning rates (e.g.~with the \emph{ADAM} optimizer), this symmetry is
+broken and the condition \(\sum_{a,b=1}^{20} \wijab = 0\) can be
+violated during the optimization processs. It is therefore interesting
+to monitor \(\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab\).
 
 
 
@@ -2879,16 +2877,16 @@ processs. It is therefore interesting to monitor
 }
 
 \caption{The 400 partial derivatives
-\(\frac{\partial \LLreg(\v,\w)}{\partial \wijab}\) at position \((i,j)\)
-for \(a,b \in \{1, \ldots, 20 \}\) are not independent. Red bars
-represent pairwise amino acid counts at position \((i,j)\) for the
+\(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\) at position
+\((i,j)\) for \(a,b \in \{1, \ldots, 20 \}\) are not independent. Red
+bars represent pairwise amino acid counts at position \((i,j)\) for the
 sampled alignment. Blue bars represent pairwise amino acid counts at
 position \((i,j)\) for the input alignment. The sum over pairwise amino
 acid counts at position \((i,j)\) for both alignments is \(N_{ij}\),
 which is the number of ungapped sequences. The partial derivative for
 \(\wijab\) is computed as the difference of pairwise amino acid counts
 for amino acids \(a\) and \(b\) at position \((i,j)\). The sum over the
-partial derivatives \(\frac{\partial \LLreg(\v,\w)}{\partial \wijab}\)
+partial derivatives \(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\)
 at position \((i,j)\) for all \(a,b \in \{1, \ldots, 20 \}\) is zero.}\label{fig:visualisation-wijab-constraint}
 \end{figure}
 
@@ -2898,11 +2896,11 @@ Optimizer}\label{sgd-hyperparameter-tuning}
 The coupling parameters \(\w\) will be updated at each time step \(t\)
 by taking a step of size \(\alpha\) along the direction of the negative
 gradient of the regularized full log likelihood,
-\(- \nabla_w \LLreg(\v,\w)\), that has been approximated with
+\(- \nabla_w \LLreg(\v^*,\w)\), that has been approximated with
 \protect\hyperlink{abbrev}{CD},
 
 \begin{equation}
-  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v,\w) \; .
+  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v^*,\w) \; .
 \end{equation}
 
 In order to get a first intuition of the optimization problem, I tested
@@ -2919,7 +2917,7 @@ top ranked contacts computed from pseudo-likelihood couplings and from
 gradient descent using the four different learning rates. Overall, mean
 precision for \protect\hyperlink{abbrev}{CD} contacts is lower than for
 pseudo-likelihood contacts, especially when using the smallest
-(\(\alpha_0 \eq 1\mathrm{e}{-4}\)) and biggest
+(\(\alpha_0 \eq 1\mathrm{e}{-4}\)) and largest
 (\(\alpha_0 \eq 5\mathrm{e-}{3}\)) learning rate.
 
 
@@ -2930,41 +2928,42 @@ pseudo-likelihood contacts, especially when using the smallest
 
 
 
-
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/sgd/precision_vs_rank_learning_rates} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/sgd/precision_vs_rank_learning_rates} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 286 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
 couplings \(\wij\). \textbf{pseudo-likelihood}: couplings computed with
-pseudo-likelihood. \textbf{CD}: couplings computed with
+pseudo-likelihood. \textbf{CD alpha0 = X}: couplings computed with
 \protect\hyperlink{abbrev}{CD} using stochastic gradient descent with
-different initial learning rates \(\alpha_0\) as specified in the
-legend.}\label{fig:performance-cd-alphaopt}
+different initial learning rates \(\alpha_0\) (see legend).}\label{fig:performance-cd-alphaopt}
 \end{figure}
 
-Looking at individual proteins it turns out that the optimal learning
-rate depends on alignment size. The left plot in Figure
-\ref{fig:sgd-single-proteins-initial-learning-rate} shows a convergence
-plot of \protect\hyperlink{abbrev}{SGD} optimization using different
-learning rates for a protein with a small alignment. With a small
-initial learning rate \(\alpha_0 \eq \mathrm{1e-4}\) the optimization
-runs very slowly and does not reach convergence within 5000 iterations.
-Using a large initial learning rate \(\alpha_0 \eq \mathrm{5e-3}\) will
-result in slighly overshooting the optimum at the beginning of the
-optimization but with the learning rate decaying over time the parameter
-estimates converge. In contrast, for a protein with a big alignment
-(right plot in Figure
-\ref{fig:sgd-single-proteins-initial-learning-rate}) the choice of
-learning rate has a more pronounced effect. With a small initial
-learning rate \(\alpha_0 \eq \mathrm{1e-4}\) the optimization runs
-slowly but almost converges within 5000 iterations. A large initial
-learning rate \(\alpha_0 \eq \mathrm{5e-3}\) lets the parameters diverge
-quickly and the optimum cannot be revovered. With learning rates
+By looking at individual proteins it becomes evident that the optimal
+learning rate depends on alignment size. Figure
+\ref{fig:sgd-single-proteins-initial-learning-rate} displays the
+development of the L2 norm of the coupling parameters, \(||\w||_2\),
+during optimization using different learning rates for two proteins with
+different alignment sizes. The left plot shows protein 1c75A00 that has
+a large alignment with 28078 sequences (\protect\hyperlink{abbrev}{Neff}
+= 16808) while the right plot shows protein 1ahoA00 that has a small
+alignment with 378 sequences (\protect\hyperlink{abbrev}{Neff} = 229).
+For protein 1ahoA00 and using a small initial learning rate
+\(\alpha_0 \eq \mathrm{1e-4}\), the optimization runs very slowly and
+does not converge within tha maximum number of 5000 iterations. Using a
+large initial learning rate \(\alpha_0 \eq \mathrm{5e-3}\) results in
+slighly overshooting the optimum at the beginning of the optimization
+but with the learning rate decaying over time the parameter estimates
+converge. In contrast, for protein 1c75A00, the choice of learning rate
+has a more pronounced effect. With a small initial learning rate
+\(\alpha_0 \eq \mathrm{1e-4}\) the optimization runs slowly but almost
+converges within 5000 iterations. A large initial learning rate
+\(\alpha_0 \eq \mathrm{5e-3}\) lets the parameters diverge quickly and
+the optimum cannot be recovered. With learning rates
 \(\alpha_0 \eq \mathrm{5e-4}\) and \(\alpha_0 \eq \mathrm{1e-3}\), the
 optimum is well overshot at the beginning of the optimization but the
 parameter estimates eventually converge as the learning rate decreases
@@ -2972,32 +2971,32 @@ over time.
 
 These observations can be explained by the fact that the magnitude of
 the gradient scales with the number of sequences in the alignment. The
-gradient is computed from amino acid counts as explained in section
-\ref{full-likelihood-gradient}. Therefore, alignments with many
-sequences will generally produce larger gradients than alignments with
-few sequences, especially at the beginning of the optimization procedure
-when the difference in amino acid counts between sampled and observed
-sequences is largest. Following these observations, I defined the
-initial learning rate \(\alpha_0\) as a function of
-\protect\hyperlink{abbrev}{Neff}, aiming at values for \(\alpha_0\)
-around 5e-3 for small \protect\hyperlink{abbrev}{Neff} and values for
-\(\alpha_0\) around 1e-4 for large \protect\hyperlink{abbrev}{Neff},
+gradient is computed from amino acid counts as explained before.
+Therefore, alignments with many sequences will generally produce larger
+gradients than alignments with few sequences, especially at the
+beginning of the optimization procedure when the difference in amino
+acid counts between sampled and observed sequences is largest. Following
+these observations, I defined the initial learning rate \(\alpha_0\) as
+a function of \protect\hyperlink{abbrev}{Neff},
 
 \begin{equation}
   \alpha_0 = \frac{5\mathrm{e}{-2}}{\sqrt{N_{\text{eff}}}} \; .
   \label{eq:learning-rate-wrt-neff}
 \end{equation}
 
-For small \protect\hyperlink{abbrev}{Neff} \(\approx 50\) this
-definition of the learning rate yields
-\(\alpha_0 \approx 7\mathrm{e}{-3}\) and for big
-\protect\hyperlink{abbrev}{Neff} \(\approx 20000\) this yields
-\(\alpha_0 \approx 3.5\mathrm{e}{-4}\). Using this learning rate defined
-as a function of \protect\hyperlink{bbrev}{Neff}, precision improves
-over the previous fixed learning rates (see Figure
-\ref{fig:performance-cd-alphaopt}). All following analyses are conducted
-using the \protect\hyperlink{abbrev}{Neff}-dependent learning rate.
-
+For small \protect\hyperlink{abbrev}{Neff}, e.g.~5th percentile of the
+distribution in the dataset \(\approx 50\), this definition of the
+learning rate yields \(\alpha_0 \approx 7\mathrm{e}{-3}\) and for large
+\protect\hyperlink{abbrev}{Neff}, e.g.~95th percentile
+\(\approx 15000\), this yields \(\alpha_0 \approx 4\mathrm{e}{-4}\).
+These values for \(\alpha_0\) lie in the optimal range that has been
+observed for the two representative proteins in Figure
+\ref{fig:performance-cd-alphaopt}. With the initial learning rate
+defined as a function of \protect\hyperlink{bbrev}{Neff}, precision
+slightly improves over the previous fixed learning rates (see Appendix
+Figure \ref{fig:performance-cd-alphaopt-0}). All following analyses are
+conducted using the \protect\hyperlink{abbrev}{Neff}-dependent initial
+learning rate.
 
 
 
@@ -3014,23 +3013,22 @@ using the \protect\hyperlink{abbrev}{Neff}-dependent learning rate.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1ahoa00_alphas_lindecay001} \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001} \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1ahoa00_alphas_lindecay001} 
 
 }
 
 \caption{Convergence
 plots for two proteins during \protect\hyperlink{abbrev}{SGD}
 optimization with different learning rates and convergence measured as
-L2-norm of the coupling parameters \(||\w||_2\) . Linear learning rate
+L2-norm of the coupling parameters \(||\w||_2\). Linear learning rate
 annealing schedule has been used with decay rate \(\gamma=0.01\) and
 initial learning rates \(\alpha_0\) have been set as specified in the
-legend. \textbf{Left} Convergence plot for protein 1aho\_A\_00 having
-protein length L=64 and 378 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=229). \textbf{Right} Convergence plot
-for protein 1c75\_A\_00 having protein length L=71 and 28078 sequences
-in the alignment (\protect\hyperlink{abbrev}{Neff}=16808). Figure is cut
-at the yaxis at \(||\w||_2=1000\), but learning rate of
-\(5\mathrm{e}{-3}\) reaches \(||\w||_2 \approx 9000\).}\label{fig:sgd-single-proteins-initial-learning-rate}
+legend. \textbf{Left} 1c75A00 (protein length = 71, number sequences =
+28078, \protect\hyperlink{abbrev}{Neff} = 16808). Figure is cut at the
+yaxis at \(||\w||_2=1000\), but learning rate of \(5\mathrm{e}{-3}\)
+reaches \(||\w||_2 \approx 9000\). \textbf{Right} 1ahoA00 (protein
+length = 64, number sequences = 378, \protect\hyperlink{abbrev}{Neff} =
+229)}\label{fig:sgd-single-proteins-initial-learning-rate}
 \end{figure}
 
 In a next step, I evaluated the following learning rate annealing
@@ -3059,24 +3057,23 @@ in eq. \eqref{eq:learning-rate-wrt-neff}:
 \end{itemize}
 
 The learning rate annealing schedules are visualized for different decay
-rates in Appendix Figure \ref{fig:learning-rate-schedules} and the
-respective benchmark plots can be found in Appendix
-\ref{benchmark-learning-rate-annealing-schedules}. Optimizing
+rates in Appendix Figure \ref{fig:learning-rate-schedules}. Optimizing
 \protect\hyperlink{abbrev}{CD} with \protect\hyperlink{abbrev}{SGD}
 using any of the learning rate schedules listed above yields on average
 lower precision for the top ranked contacts than the pseudo-likelihood
 contact score. Several learning rate schedules perform almost equally
-well as can be seen in Figure
-\ref{fig:performance-cd-learnignrate-schedules}. The highest precision,
-being one to two percentage points below the mean precision for the
-pseudo-likelihood contact score, is obtained with a linear learning rate
-schedule and decay rate \(\gamma \eq 1\mathrm{e}{-2}\), with a sigmoidal
-learning rate schedule and decay rates \(\gamma \eq 1\mathrm{e}{-5}\)
-and \(\gamma \eq 1\mathrm{e}{-6}\) and with an exponential learning rate
-schedule and decay rate \(\gamma \eq 1\mathrm{e}{-3}\) and
+and yield a mean precision that is about one to two percentage below the
+mean precision for the pseudo-likelihood contact score (see Figure
+\ref{fig:performance-cd-learnignrate-schedules}): a linear learning rate
+schedule with decay rate \(\gamma \eq 1\mathrm{e}{-2}\), a sigmoidal
+learning rate schedule with decay rates \(\gamma \eq 1\mathrm{e}{-5}\)
+or \(\gamma \eq 1\mathrm{e}{-6}\) and an exponential learning rate
+schedule with decay rates \(\gamma \eq 1\mathrm{e}{-3}\) or
 \(\gamma \eq 1\mathrm{e}{-5}\). The square root learning rate schedule
-gives ovarally bad results and does not lead to convergence because the
-learning rate decays slowly at later time steps.
+gives ovarall bad results and does not lead to convergence because the
+learning rate decays slowly at later time steps. The benchmark plots for
+all learning rate schedules are shown in Appendix section
+\ref{benchmark-learning-rate-annealing-schedules}.
 
 
 
@@ -3090,42 +3087,46 @@ learning rate decays slowly at later time steps.
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/sgd/precision_vs_rank_schedules} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/sgd/precision_vs_rank_schedules} 
 
 }
 
 \caption{Mean precision for
-top ranked contact predictions over 288 proteins. Contact scores are
+top ranked contact predictions over 300 proteins. Contact scores are
 computed as the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm
 of the couplings \(\wij\). \textbf{pseudo-likelihood}: couplings
 computed with pseudo-likelihood. \textbf{CD}: couplings computed with
 \protect\hyperlink{abbrev}{CD} using stochastic gradient descent with an
 initial learning rate defined with respect to
 \protect\hyperlink{abbrev}{Neff}. Learning rate annealing schedules and
-decay rates as specified in the legend.}\label{fig:performance-cd-learnignrate-schedules}
+decay rates are specified in the legend.}\label{fig:performance-cd-learnignrate-schedules}
 \end{figure}
 
 In contrast to the findings regarding the initial learning rate earlier,
 an optimal decay rate can be defined independent of the alignment size.
-Figure \ref{fig:sgd-single-proteins-learning-rate-schedule} shows
-convergence plots for the same two exemplary proteins as before.
-Proteins with low \protect\hyperlink{abbrev}{Neff} are robust against
-the particular choice of learning rate schedule and decay rate (see left
-plot in Figure \ref{fig:sgd-single-proteins-learning-rate-schedule}).
-The presumed optimum at \(||w||_2 \approx 13.2\) is almost always
-reached. Proteins with high \protect\hyperlink{abbrev}{Neff} are
-stronger adversely affected by quickly decaying learning rates. For
-example, the learning rate decays quickly and then converges when using
-a linear learning rate, which effectively prevents further optimization
-progress and the presumed optimum at \(||w||_2 \approx 90\) is not
-reached within 5000 iterations. Less quickly decaying learning rates,
-such as \(\gamma \eq 1\mathrm{e}{-3}\) with an exponential schedule or
-\(\gamma \eq 1\mathrm{e}{-6}\) with a sigmoidal schedule, guide the
-parameter estimates close to the expected optimum and can be used with
-proteins having low \protect\hyperlink{abbrev}{Neffs} as well as having
-high \protect\hyperlink{abbrev}{Neffs}.
-
-
+Figure \ref{fig:sgd-single-proteins-learning-rate-schedule} shows the
+development of the L2 norm of the coupling parameters, \(||\w||_2\),
+during optimization for the same two representative proteins with small
+and large alignments as before. Convergence for protein 1ahoA00, having
+small \protect\hyperlink{abbrev}{Neff}=229, is robust against the
+particular choice of learning rate schedule and decay rate and the
+presumed optimum at \(||w||_2 \approx 13.2\) is reached regardless of
+the learning rate annealing schedule (see right plot in Figure
+\ref{fig:sgd-single-proteins-learning-rate-schedule}). For protein
+1c75A00, with high \protect\hyperlink{abbrev}{Neff}=16808, the choice of
+the learning rate schedule has a notable impact on the rate of
+convergence. Using a linear schedule, the learning rate decays quickly
+but then converges to a certain offset, which effectively prevents
+further optimization progress and the presumed optimum at
+\(||w||_2 \approx 90\) is not reached within 5000 iterations. Learning
+rate schedules that decay slower but decay continously for 5000
+iterations, such as an exponential schedule with
+\(\gamma \eq 1\mathrm{e}{-3}\) or a sigmoidal schedule with
+\(\gamma \eq 1\mathrm{e}{-6}\), guide the parameter estimates close to
+the expected optimum. Therefore, learning rate schedules with an
+exponential or sigmoidal decay can be used with proteins having low
+\protect\hyperlink{abbrev}{Neffs} as well as high
+\protect\hyperlink{abbrev}{Neffs}.
 
 
 
@@ -3140,7 +3141,7 @@ high \protect\hyperlink{abbrev}{Neffs}.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1ahoa00_alpha0_different_schedules} \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules} \includegraphics[width=0.48\linewidth]{img/full_likelihood/sgd/parameter_norm_1ahoa00_alpha0_different_schedules} 
 
 }
 
@@ -3150,20 +3151,16 @@ optimization with different learning rates schedules. The initial
 learning rate \(\alpha_0\) is defined with respect to
 \protect\hyperlink{abbrev}{Neff} as given in eq.
 \eqref{eq:learning-rate-wrt-neff}. Learning rate schedules and decay rates
-are used according to the legend. \textbf{Left} Convergence plot for
-protein 1aho\_A\_00 having protein length L=64 and 378 sequences in the
-alignment (\protect\hyperlink{abbrev}{Neff}=229). \textbf{Right}
-Convergence plot for protein 1c75\_A\_00 having protein length L=71 and
-28078 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:sgd-single-proteins-learning-rate-schedule}
+are used according to the legend. \textbf{Left} 1c75A00 (protein length
+= 71, number sequences = 28078, \protect\hyperlink{abbrev}{Neff} =
+16808). \textbf{Right} 1ahoA00 (protein length = 64, number sequences =
+378, \protect\hyperlink{abbrev}{Neff} = 229)}\label{fig:sgd-single-proteins-learning-rate-schedule}
 \end{figure}
 
-Several different learning rate annealing schedules yield almost
-identical mean precision for top ranked contacts, as was shown earlier
-(see Figure \ref{fig:performance-cd-learnignrate-schedules}). But it can
-be found that they differ in convergence speed. Figure
-\ref{fig:distribution-num-iterations} shows the distribution over the
-number of iterations until convergence for
+Another aspect worth considering is runtime and it can be observed that
+the different learning rate annealing schedules differ in convergence
+speed. Figure \ref{fig:distribution-num-iterations} shows the
+distribution over the number of iterations until convergence for
 \protect\hyperlink{abbrev}{SGD} optimizations with five different
 learning rate schedules that yield similar performance. The optimization
 converges on average within less than 2000 iterations only when using
@@ -3196,28 +3193,32 @@ for all further analysis.
 
 \caption{Distribution of the number of
 iterations until convergence for \protect\hyperlink{abbrev}{SGD}
-optimizations of the full likelihood for different learning rate
-schedules. Convergence is reached when the relative difference of
-parameter norms \(||\w||_2\) falls below \(\epsilon \eq 1e-8\). Initial
-learning rate \(\alpha_0\) is defined with respect to
-\protect\hyperlink{abbrev}{Neff} as given in eq.
+optimizations of \protect\hyperlink{abbrev}{CD} for different learning
+rate schedules. Convergence is reached when the relative difference of
+parameter norms, \(||\w||_2\), over the last five iterations falls below
+\(\epsilon \eq 1e-8\). Initial learning rate \(\alpha_0\) is defined
+with respect to \protect\hyperlink{abbrev}{Neff} as given in eq.
 \eqref{eq:learning-rate-wrt-neff} and maximum number of iterations is set
-to 5000. Learning rate schedules and decay rates are used as specified
-in the legend.}\label{fig:distribution-num-iterations}
+to 5000. Learning rate schedules and decay rates are specified in the
+legend.}\label{fig:distribution-num-iterations}
 \end{figure}
 
 Finally, I checked whether altering the convergence criteria has notable
 impact on performance. Per default, optimization is stopped whenever the
-relative change of the L2 norm over coupling parameters \(||\w||_2\)
-falls below a small value \(\epsilon < 1e-8\) within the last \(t\eq5\)
-iterations as given in eq. \eqref{eq:parameter-convergence-criterion}. As
-can be seen in Figure \ref{fig:performance-cd-convergence-prev} the mean
-precision over proteins is robust to different settings of the number of
-iterations \(t\) over which the relative change of the norm of couplings
-is measured. The mean number of iterations until convergence increases
-slighty when increasing \(t\), from 1697 iterations for \(t\eq2\), to
-1782 iterations for \(t\eq5\), to 1917 iterations for \(t\eq10\) as can
-be sees in Appendix Figure \ref{fig:numit-convergence-convergence-prev}.
+relative change of the L2 norm over coupling parameters, \(||\w||_2\),
+over the last 5 iterations falls below a small value \(\epsilon < 1e-8\)
+as denoted in eq. \eqref{eq:parameter-convergence-criterion}. Figure
+\ref{fig:performance-cd-convergence-prev} shows that the mean precision
+over proteins is robust to different settings of the number of
+iterations over which the relative change is computed. The convergence
+rate is mildly affected by the different settings. Optimization
+converges on average within 1697, 1782 and 1917 iterations, when
+computing the relative change of the parameter norm over the previous
+2,5 and 10 iterations, respectively (see Appendix Figure
+\ref{fig:numit-convergence-convergence-prev}). For all following
+analysis, I chose 10 to be the number of iterations over which the
+convergence criterion is computed.
+
 
 
 
@@ -3234,25 +3235,106 @@ be sees in Appendix Figure \ref{fig:numit-convergence-convergence-prev}.
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/sgd/precision_vs_rank_convergence_prev} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/sgd/precision_vs_rank_convergence_prev} 
 
 }
 
 \caption{Mean precision for top
-ranked contact predictions over 288 proteins. Contact scores are
+ranked contact predictions over 300 proteins. Contact scores are
 computed as the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm
 of the couplings \(\wij\). \textbf{pseudo-likelihood}: couplings
 computed with pseudo-likelihood. \textbf{\#previous iterations = X}:
 couplings computed with \protect\hyperlink{abbrev}{CD} using stochastic
 gradient descent with an initial learning rate defined with respect to
 \protect\hyperlink{abbrev}{Neff} and the sigmoidal learning rate
-schedule with \(\gamma \eq 5\mathrm{e}{-6}\). Different values for the
-number of previous iterations (as specified in the legend) have been
-evaluated over which the relative change of the norm of coupling
-parameter is evaluated, which defines the exact convergence criterion.}\label{fig:performance-cd-convergence-prev}
+schedule with \(\gamma \eq 5\mathrm{e}{-6}\). The relative change of the
+L2 norm over coupling parameters, \(||\w||_2\), is evaluated over the
+previous X iterations (specified in the legend) and convergence is
+assumed when the relative change falls below a small value
+\(\epsilon \eq 1e-8\).}\label{fig:performance-cd-convergence-prev}
 \end{figure}
 
-\section{Tuning Regularization Coefficients for Contrastive
+\section{Tuning the Gibbs Sampling Scheme for Contrastive
+Divergence}\label{cd-sampling-optimization}
+
+The original \protect\hyperlink{abbrev}{CD}-k algorithm described by
+Hinton in 2002 evolves the Markov chains by k=1 Gibbs steps
+{[}\protect\hyperlink{ref-Hinton2002}{186}{]}. As described earlier,
+\protect\hyperlink{abbrev}{CD}-1 provides a biased estimate of the true
+gradient because the Markov chains have not reached the stationary
+distribution {[}\protect\hyperlink{ref-Fischer2012}{188}{]}. Bengio and
+Delalleau show that the bias for \protect\hyperlink{abbrev}{CD}-k kan be
+understood as a residual term when expressing the log likelihood
+gradient as an expansion that involves the k-th sample of the Gibbs
+chain {[}\protect\hyperlink{ref-Bengio2009}{189}{]}. As the number of
+Gibbs steps, k, goes to infinity the residual term and hence the bias
+converges to zero and the \protect\hyperlink{abbrev}{CD} gradient
+estimate converges to a stochastic estimation of the true likelihood
+gradient. Indeed, eventhough surprising results have been obtained by
+evolving the Markov chains for only one Gibbs step, typically
+\protect\hyperlink{abbrev}{CD}-k for k\textgreater{}\textgreater{}1
+gives more precise results
+{[}\protect\hyperlink{ref-Bengio2009}{189}{]}. Furthermore it has been
+shown, that bias also depends on the mixing rate (rate of convergence)
+of the chains whereby the mixing rate decreases when model parameters
+increase {[}\protect\hyperlink{ref-Tieleman2008}{198}{]}. This can lead
+to divergence of the \protect\hyperlink{abbrev}{CD}-k solution from
+optimal solution in a sense that the model systematically gets worse as
+optimization progresses {[}\protect\hyperlink{ref-Fischer2010}{199}{]}.
+Regularization of the parameters offers a solution to this problem,
+constraining the magnitude of the parameters. A different solution
+suggested by Bengio and Delalleau is to dynamically increase k when the
+model parameters increase {[}\protect\hyperlink{ref-Bengio2009}{189}{]}.
+These studies analysing the convergence properties and the expected
+approximation error for \protect\hyperlink{abbrev}{CD}-k have mainly
+been conducted for Restricted Boltzmann Machines. It is therefore not
+clear, whether and to what extent these findings apply to the
+\emph{Potts} model.
+
+Several connections of \protect\hyperlink{abbrev}{CD} to other well
+known approximation algorithms have been drawn. For example, it can be
+shown that \protect\hyperlink{abbrev}{CD} using one Gibbs update step on
+a randomly selected variable is exactly equivalent to a stochastic
+maximum pseudo-likelihood estimation
+{[}\protect\hyperlink{ref-Hyvarinen2006}{200},\protect\hyperlink{ref-Hyvarinen2007}{201}{]}.
+Asuncion and colleagues showed further that an arbitrary good
+approximation to the full likelihood can be reached by applying
+blocked-Gibbs sampling {[}\protect\hyperlink{ref-Asuncion2010}{202}{]}.
+\protect\hyperlink{abbrev}{CD} based on sampling an arbitraty number of
+variables, has an equivalent stochastic composite likelihood, which is a
+higher-order generalization of the pseudo-likelihood.
+
+Another variant of \protect\hyperlink{abbrev}{CD} is
+\protect\hyperlink{abbrev}{PCD}, such that the Markov chain is not
+reinitialized at a data sample every time a new gradient is computed
+{[}\protect\hyperlink{ref-Tieleman2008}{198}{]}. Instead, the Markov
+chains are kept \emph{persistent} that is, they are evolved between
+successive gradient computations. The fundamental idea behind
+\protect\hyperlink{abbrev}{PCD} is that the model changes only slowly
+between parameter updates given a sufficiently small learning rate.
+Consequently, the Markov chains will not be pushed too far from
+equilibrium after each update but rather stay close to the stationary
+distribution
+{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Fischer2012}{188},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
+Tieleman and others observed that \protect\hyperlink{abbrev}{PCD}
+performs better than \protect\hyperlink{abbrev}{CD} in all practical
+cases tested, eventhough \protect\hyperlink{abbrev}{CD} can be faster in
+the early stages of learning and thus should be preferred when runtime
+is the limiting factor
+{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
+
+The next sections discuss various modifications of the
+\protect\hyperlink{abbrev}{CD} algorithm, such as varying the
+regularization strength \(\lambda_w\) for constraining the coupling
+parameters \(\w\), increasing the number of Gibbs sampling steps and
+varying the number of Markov chains used for sampling. Persistent
+contrastive divergence is analysed for various combinations of the above
+mentioned settings and eventually combined with
+\protect\hyperlink{abbrev}{CD}-k. Unless noted otherwise, all
+optimizations will be performed using stochastic gradient descent with
+the tuned hyperparameters described in the last sections.
+
+\subsection{Tuning Regularization Coefficients for Contrastive
 Divergence}\label{regularization-for-cd-with-sgd}
 
 For tuning the hyperparameters of the stochastic gradient descent
@@ -3264,33 +3346,25 @@ pseudo-likelihood regularization coefficient
 \ref{methods-regularization}. It is conceivable that
 \protect\hyperlink{abbrev}{CD} achieves optimal performance using
 stronger or weaker regularization than used for pseudo-likelihood
-optimization. Therefore, I evaluated performance of
-\protect\hyperlink{abbrev}{CD} using the previously identified
-hyperparamters for \protect\hyperlink{abbrev}{SGD} and different
+optimization. Therefore, I evaluated performance for different
 regularization coefficients
-\(\lambda_w \in \{ 1\mathrm{e}{-2}L, 5\mathrm{e}{-2}L, 1\mathrm{e}{-1}L, 1\mathrm{e}{-2}L, L\}\).
-The single potentials \(\v\) are not subject to optimization and are
-kept fixed at their maximum-likelihood estimate \(v^*\) given in eq.
-\eqref{eq:prior-v}.
+\(\lambda_w \in \{ 5\mathrm{e}{-2}L, 1\mathrm{e}{-1}L, 1\mathrm{e}{-2}L, L\}\)
+using the previously identified hyperparamters for
+\protect\hyperlink{abbrev}{SGD}. The single potentials \(\v\) are not
+subject to optimization and are kept fixed at their maximum-likelihood
+estimate \(v^*\) that is derived in eq. \eqref{eq:prior-v}.
 
 As can be seen in Figure \ref{fig:precison-cd-regularization}, using
-strong regularization for the couplings, \(\lambda_w \eq L\), results in
-a drastic drop of mean precision. Using weaker regularization such as
-\(\lambda_w \eq 1\mathrm{e}{-2}L\) or \(\lambda_w \eq \mathrm{5e}{-2}L\)
-improves precision for the top \(L/10\) and \(L/5\) predicted contacts
-but decreases precision when including lower ranked predictions. As a
-matter of fact, a slightly weaker regularization
+strong regularization for the couplings, with \(\lambda_w \eq L\),
+results in a drastic drop of mean precision. Using weaker
+regularization, with \(\lambda_w \eq \mathrm{5e}{-2}L\), improves
+precision for the top \(L/10\) and \(L/5\) predicted contacts but
+decreases precision when including lower ranked predictions. As a matter
+of fact, a slightly weaker regularization
 \(\lambda_w \eq \mathrm{1e}{-1}L\) than the default
 \(\lambda_w \eq \mathrm{1e}{-2}L\) improves mean precision especially
 for the top \(L/2\) contacts in such a way, that it is comparable to the
 pseudo-likelihood performance.
-
-
-
-
-
-
-
 
 
 
@@ -3310,129 +3384,38 @@ pseudo-likelihood performance.
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). Subsets are defined according to quantiles of
-\protect\hyperlink{abbrev}{Neff} values. Upper left: Subset of proteins
-with \protect\hyperlink{abbrev}{Neff} \textless{} Q1. Upper right:
-Subset of proteins with Q1 \textless{}= \protect\hyperlink{abbrev}{Neff}
-\textless{} Q2. Lower left: Subset of proteins with Q2 \textless{}=
-\protect\hyperlink{abbrev}{Neff} \textless{} Q3. Lower right: Subset of
-proteins with Q3 \textless{}= \protect\hyperlink{abbrev}{Neff}
-\textless{} Q4. \textbf{pseudo-likelihood}: couplings computed with
+couplings \(\wij\). \textbf{pseudo-likelihood}: couplings computed with
 pseudo-likelihood. \textbf{CD lambda\_w = X}: couplings computed with
 \protect\hyperlink{abbrev}{CD} using L2-regularization on the couplings
-\(\w\) with regularization coefficient \(\lambda_w\) chosen as specified
-in the legend and keeping the single potentials \(\vi\) fixed at their
-\protect\hyperlink{abbrev}{MLE} optimum \(\vi^*\) given in eq.
+\(\w\) with regularization coefficient \(\lambda_w\) specified in the
+legend and keeping the single potentials \(\vi\) fixed at their
+\protect\hyperlink{abbrev}{MLE} optimum \(\vi^*\) denoted in eq.
 \eqref{eq:prior-v}.}\label{fig:precison-cd-regularization}
 \end{figure}
 
-As mentioned before, a difference compared to pseudo-likelihood
-optimization is that the single potentials \(\v\) are not optimized with
+As mentioned before, in contrast to pseudo-likelihood optimization the
+single potentials \(\v\) are not optimized with
 \protect\hyperlink{abbrev}{CD} but rather set to their
 maximum-likelihood estimate as it is obtained in a single position model
 that is discussed in methods section \eqref{eq:prior-v}. When the single
-potentials \(\v\) are optimized with \href{abbrev}{CD} using the same
-regularization coefficient \(\lambda_v \eq 10\) as it is used when
-optimizing the pseudo-likelihood, performance is almost
-indistinguishable compared to keeping the single potentials \(\v\) fixed
-as can be seen in appendix Figure \ref{fig:full-likelihood-opt-fixv}.
-
-\section{Tuning the Gibbs Sampling Scheme for Contrastive
-Divergence}\label{cd-sampling-optimization}
-
-The original \protect\hyperlink{abbrev}{CD}-k algorithm described by
-Hinton in 2002 evolves the Markov chains by k=1 Gibbs steps
-{[}\protect\hyperlink{ref-Hinton2002}{186}{]}. As described earlier,
-\protect\hyperlink{abbrev}{CD}-1 provides a biased estimate of the true
-gradient because the Markov chains have not reached the stationary
-distribution {[}\protect\hyperlink{ref-Fischer2012}{188}{]}. Bengio and
-Delalleau show that the bias for \protect\hyperlink{abbrev}{CD}-k kan be
-understood as a residual term when expressing the log likelihood
-gradient as an expansion that involves the k-th sample of the Gibbs
-chain {[}\protect\hyperlink{ref-Bengio2009}{189}{]}. As k goes to
-infinity the residual term and hence the bias converges to zero and the
-\protect\hyperlink{abbrev}{CD} gradient estimate converges to a
-stochastic estimation of the true likelihood gradient. Indeed,
-eventhough surprising results have been obtained by evolving the Markov
-chains for only one Gibbs step, typically
-\protect\hyperlink{abbrev}{CD}-k for k\textgreater{}\textgreater{}1
-gives more precise results
-{[}\protect\hyperlink{ref-Bengio2009}{189}{]}. Furthermore it has been
-shown, that bias also depends on the mixing rate or the rate of
-convergence of the chains whereby the mixing rate decreases when model
-parameters increase {[}\protect\hyperlink{ref-Tieleman2008}{198}{]}.
-This can lead to divergence of the \protect\hyperlink{abbrev}{CD}-k
-solution from the maximum-likelihood solution in a sense the model
-systematically gets worse as optimization progresses
-{[}\protect\hyperlink{ref-Fischer2010}{199}{]}. Regularization of the
-parameters offers a solution to this problem, constraining the magnitude
-of the parameters. A different solution suggested by Bengio and
-Delalleau is to dynamically increase k when the model parameters
-increase {[}\protect\hyperlink{ref-Bengio2009}{189}{]}. These studies
-analysing the convergence properties and the expected approximation
-error for \protect\hyperlink{abbrev}{CD}-k have mainly been conducted
-for Restricted Boltzmann Machines. It is therefore not clear, whether
-and to what extent these findings apply to the \emph{Potts} model.
-
-Several connections of \protect\hyperlink{abbrev}{CD} to other well
-known approximation algorithms have been drawn. For example, it can be
-shown that \protect\hyperlink{abbrev}{CD} by sampling only one random
-variable according to the conditional probability is exactly equivalent
-to optimising the pseudo-likelihood
-{[}\protect\hyperlink{ref-Hyvarinen2006}{200},\protect\hyperlink{ref-Hyvarinen2007}{201}{]}.
-Asuncion and colleagues showed further that an arbitrary good
-approximation to the full likelihood can be reached by applying
-blocked-Gibbs sampling {[}\protect\hyperlink{ref-Asuncion2010}{202}{]}.
-Thereby, \protect\hyperlink{abbrev}{CD} by varying the number variables
-that is randomly samples, has an equivalent composite likelihoods, which
-is a higher-order generalization of the pseudo-likelihood.
-
-\protect\hyperlink{abbrev}{PCD} is a variation of
-\protect\hyperlink{abbrev}{CD} such that the Markov chain is not
-reinitialized at a data sample every time a new gradient is computed
-{[}\protect\hyperlink{ref-Tieleman2008}{198}{]}. Instead, the Markov
-chains are kept \emph{persistent} that is, they are evolved between
-successive gradient computations. The fundamental idea behind
-\protect\hyperlink{abbrev}{PCD} is that the model changes only slowly
-between parameter updates given a sufficiently small learning rate and
-the Markov chains will not be pushed too far from equilibrium after each
-update but rather stay close to the stationary distribution
-{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Fischer2012}{188},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
-Tieleman and others observed that \protect\hyperlink{abbrev}{PCD} often
-works better than \protect\hyperlink{abbrev}{CD}, eventhough
-\protect\hyperlink{abbrev}{CD} can be faster in the early stages of
-learning and thus should be preferred when runtime is the limiting
-factor
-{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
-
-persistent CD performs better than CD in all practical cases testet and
-it performs similarly to CD10, a version of contrastive divergence using
-10 Gibbs sampling steps instead of just one {[}johannes{]}
-
-The next sections discuss various modifications of the
-\protect\hyperlink{abbrev}{CD} algorithm, such as varying the
-regularizatio strength \(\lambda_w\) for constraining the coupling
-parameters \(\w\), increasing the number of Gibbs sampling steps and
-varying the number of Markov chains used for sampling. Persistent
-contrastive divergence is analysed for various combinations of the above
-mentioned settings and eventully combined with
-\protect\hyperlink{abbrev}{CD}-k. Unless noted otherwise, all
-optimizations will be performed using stochastic gradient descent with
-the tuned hyperparameters described in the last sections.
+potentials \(\v\) are optimized with \protect\hyperlink{abbrev}{CD}
+using the same regularization coefficient \(\lambda_v \eq 10\) as for
+pseudo-likelihood optimization, performance is almost indistinguishable
+compared to keeping the single potentials \(\v\) fixed (see Appendix
+Figure \ref{fig:full-likelihood-opt-fixv}).
 
 \subsection{Varying the Sample Size}\label{cd-sampling-size}
 
-The default Gibbs sampling scheme explained in method section
+The default Gibbs sampling scheme outlined in method section
 \ref{methods-cd-sampling} involves the random selection of \(10L\)
 sequences from the input alignment, with \(L\) being protein length, at
-every iteration of the optimization procedure. These sequences are used
-to initialize the Markov chains for Gibbs sampling new sequences to
-estimate the gradient with \protect\hyperlink{abbrev}{CD}. The
-particular choice of \(10L\) sequences was motivated by the fact that
-there is a relationship between the precision of contacts predicted from
-pseudo-likelihood and protein length as long as the alignment has less
+every iteration of the optimization procedure. These selected sequences
+are used to initialize the same number of Markov chains. The particular
+choice of \(10L\) sequences was motivated by the fact that there is a
+relationship between the precision of contacts predicted from
+pseudo-likelihood and protein length, at least for alignments with less
 than \(10^3\) diverse sequences
 {[}\protect\hyperlink{ref-Anishchenko2017}{172}{]}. It has been argued
 that roughly \(5L\) nonredundant sequences are required to obtain
@@ -3447,30 +3430,29 @@ descent idea of a minibatch and introduces additional stochasticity over
 the \protect\hyperlink{abbrev}{CD} Gibbs sampling process. Using
 \(S < N\) sequences for Gibbs sampling has the further advantage of
 decreasing the runtime at each iteration. I evaluated different schemes
-for randomly selecting sequences for Gibbs sampling at every iteration
-of the optimization:
+for the random selection of sequences:
 
 \begin{itemize}
 \tightlist
 \item
-  sampling \(x \cdot L\) sequences with \(x \in \{ 1, 5, 10, 50 \}\)
-  without replacement enforcing \(S \eq \min(N, xL)\)
+  sampling \(x\)L sequences with \(x \in \{ 1, 5, 10, 50 \}\) without
+  replacement enforcing \(S \eq \min(N, xL)\)
 \item
-  sampling \(x \cdot N_{\textrm{eff}}\) sequences with
+  sampling \(x\)\protect\hyperlink{abbrev}{Neff} sequences with
   \(x \in \{ 0.2, 0.3, 0.4 \}\) without replacement
 \end{itemize}
 
-As can be seen in Figure \ref{fig:cd-performance-samplesize}, randomly
-selecting \(L\) sequences for sampling, results in a visible drop in
-performance. Using \(5L\) sequences for sampling results in slighlty
-decreased performance over using \(10L\) or \(50L\) sequences. There is
-no benefit in using more than \(10L\) sequences, especially as sampling
-more sequences increases runtime per iteration. Specifying the number of
-sequences for sampling as fractions of \protect\hyperlink{abbrev}{Neff}
-generally improves precision slightly over selecting \(10L\) or \(50L\)
-sequences for sampling. And by sampling \(0.3N_{\textrm{eff}}\) and
-\(0.4N_{\textrm{eff}}\) sequences, \protect\hyperlink{abbrev}{CD} does
-even slighty improve over pseudo-likelihood.
+Figure \ref{fig:cd-performance-samplesize} illustrates performance for
+several of the choices. Randomly selecting \(L\) sequences for sampling
+results in a visible drop in performance. There is no benefit in using
+more than \(10L\) sequences, especially as sampling more sequences
+increases runtime per iteration. Specifying the number of sequences for
+sampling as fractions of \protect\hyperlink{abbrev}{Neff} generally
+improves precision slightly over selecting \(10L\) or \(50L\) sequences
+for sampling. By sampling \(0.3\)\protect\hyperlink{abbrev}{Neff}
+sequences, \protect\hyperlink{abbrev}{CD} does slighty improve over
+pseudo-likelihood.
+
 
 
 
@@ -3486,36 +3468,41 @@ even slighty improve over pseudo-likelihood.
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/gibbs_sampling/precision_vs_rank_samplesize} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/gibbs_sampling/precision_vs_rank_samplesize} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
 couplings \(\wij\). \textbf{pseudo-likelihood}: couplings computed with
 pseudo-likelihood. \textbf{CD sample size = X }: contact scores computed
-from \protect\hyperlink{abbrev}{CD} with \protect\hyperlink{abbrev}{SGD}
-and varying number of sample size as specified in the legend. Sample
-size refers to the number of randomly selected sequences for Gibbs
-sampling. It is defined either as multiples of protein length \(L\) or
-as fraction of the effective number of sequences
-\protect\hyperlink{abbrev}{Neff}.}\label{fig:cd-performance-samplesize}
+from \protect\hyperlink{abbrev}{CD} with
+\protect\hyperlink{abbrev}{SGD}. At every iteration, a particular number
+of sequences is randomly selected from the input alignmet to initialize
+the Markoc chains for Gibbs sampling. The number of randomly selected
+sequences is specified in the legend. It is defined either as multiples
+of protein length \(L\) or as fraction of the effective number of
+sequences \protect\hyperlink{abbrev}{Neff}.}\label{fig:cd-performance-samplesize}
 \end{figure}
 
 When evaluating performance with respect to the number of effective
 sequences \protect\hyperlink{abbrev}{Neff}, it can clearly be noted that
-the optimal samplings size must depend on
-\protect\hyperlink{abbrev}{Neff}. Selecting too many sequences, e.g.
-\(50L\) for small alignments (upper left plot in Figure
+the optimal number of randomly selected sequences should be defined as a
+fraction of \protect\hyperlink{abbrev}{Neff}. Selecting too many
+sequences, e.g. \(50L\) for small alignments (left plot in Figure
 \ref{fig:cd-precision-sampling-size-neff}), or selecting too few
-sequences, e.g \(1L\) for big alignments (lower right plot in Figure
+sequences, e.g \(1L\) for large alignments (right plot in Figure
 \ref{fig:cd-precision-sampling-size-neff}), results in a decrease in
-precision compared to defining sampling size as fractions of
+precision compared to defining the number of sequences as fractions of
 \protect\hyperlink{abbrev}{Neff}. Especially small alignments benefit
 from sample sizes defined as a fraction of
 \protect\hyperlink{abbrev}{Neff} with improvements of about three
 percentage points in precision over pseudo-likelihood.
+
+
+
+
 
 
 
@@ -3536,67 +3523,72 @@ percentage points in precision over pseudo-likelihood.
 }
 
 \caption{Mean precision for top
-ranked contact predictions over 300 proteins. Contact scores are
-computed as the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm
-of the couplings \(\wij\). \textbf{pseudo-likelihood}: contact scores
-computed from pseudo-likelihood. \textbf{CD sample size = X}: contact
-scores computed from \protect\hyperlink{abbrev}{CD} optimized with
-\protect\hyperlink{abbrev}{SGD} and varying number of sample size as
-specified in the legend. Sample size refers to the number of randomly
-selected sequences for Gibbs sampling. It is defined either as multiples
-of protein length \(L\) or as fraction of the effective number of
-sequences \protect\hyperlink{abbrev}{Neff}.}\label{fig:cd-precision-sampling-size-neff}
+ranked contact predictions over subsets of 75 proteins, defined
+according to \protect\hyperlink{abbrev}{Neff} quartiles. Contact scores
+are computed as the \protect\hyperlink{abbrev}{APC} corrected Frobenius
+norm of the couplings \(\wij\). \textbf{pseudo-likelihood}: contact
+scores computed from pseudo-likelihood. \textbf{CD sample size = X }:
+contact scores computed from \protect\hyperlink{abbrev}{CD} with
+\protect\hyperlink{abbrev}{SGD}. The number of randomly selected
+sequences for the Gibbs sampling process is specified in the legend. It
+is defined either as multiples of protein length \(L\) or as fraction of
+the effective number of sequences \protect\hyperlink{abbrev}{Neff}.
+\textbf{Left} Subset of 75 proteins with
+\protect\hyperlink{abbrev}{Neff} \textless{} Q1. \textbf{Right} Subset
+of 75 proteins with Q3 \textless{}= \protect\hyperlink{abbrev}{Neff}
+\textless{} Q4.}\label{fig:cd-precision-sampling-size-neff}
 \end{figure}
 
 To understand the effect of different choices of sample size it is
 necessary to look at single proteins. The left plot in Figure
 \ref{fig:cd-samplesize-protein1c75a00} shows the development of the L2
 norm of the gradient for couplings,
-\(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein chain 1c75\_A\_00 that
-is of length 71 and has \protect\hyperlink{abbrev}{Neff} = 16808. The
-norm of the gradient decreases during optimization and saturates at
-decreasing levels for increasing choices of sample size. Increasing the
-sample size by a factor 100 (from \(L\) to \(100L\)) leads to an
-approximately 10-fold reduction of the norm of gradient
-(\(\mathrm{1.4e}{+5}\) compared to \(\mathrm{1.45e}{+4}\)) at
-convergence, which corresponds to a typical reduction of statistical
-noise as the square root of the number of samples. It is not feasible to
-sample the number of sequences at each iteration that would be necessary
-to reduce the norm of the gradient to near zero.
+\(||\nabla_{\w} L\!L(\v^*, \w)||_2\), for protein chain 1c75A00 that is
+of length 71 and has \protect\hyperlink{abbrev}{Neff} = 16808. The norm
+of the gradient decreases during optimization and for increasing choices
+of the sample size it saturates at decreasing levels. For example,
+increasing the sample size by a factor 100 (from \(L\) to \(100L\))
+leads to an approximately 10-fold reduction of the norm of the gradient
+at convergence (\(\mathrm{1e}{+5}\) compared to \(\mathrm{1e}{+4}\)),
+which corresponds to a typical reduction of statistical noise as the
+square root of the number of samples. It is not feasible to sample the
+number of sequences at each iteration that would be necessary to reduce
+the norm of the gradient to near zero!
 
-In any case, precision of the top ranked contacts does not improve to
-the same amount as the norm of the gradient decreases when using larger
-sample sizes as could be seen in the previous benchmark. Probably, the
-improved gradient when using a larger sample size helps to finetune the
+The previous benchmark showed, that precision of the top ranked contacts
+does not improve to the same amount as the norm of the gradient
+decreases when the sample size is increased. Probably, the improved
+gradient when using a larger sample size helps to finetune the
 parameters, which only has a negligible effect on the contact score
 computed as \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of
-the couplings \(\wij\). This hypothesis is confirmed when assessing the
-development of the L2 norm of coupling parameters \(||\w||_2\) over
-optimization shown in right plot in Figure
-\ref{fig:cd-samplesize-protein1c75a00}. The norm of the coupling
-parameters is almost indistinguishable after optimization when using a
-sample size of \(50L\), \(100L\) or \(0.2 - 0.4\)Neff.
+the couplings \(\wij\). For example, the difference between the
+parameter norm at convergence for sampling \(10L = 710\) sequences or
+\(50L = 3550\) sequences is only marginal (see right plot in Figure
+\ref{fig:cd-samplesize-protein1c75a00}), despite a larger difference of
+the norm of gradients.
 
-It is not clear, why an improved gradient estimate due to sampling more
+It is not clear why an improved gradient estimate due to sampling more
 sequences results in weaker performance for proteins with small
 alignments as could be seen in the previous benchmark in Figure
-\ref{fig:cd-precision-sampling-size-neff}. For protein chain 1aho\_A\_00
-of length 64 and with 378 sequences
-(\protect\hyperlink{abbrev}{Neff}=229), setting \(S=10L\) or \(S=50L\)
-which corresponds to using all \(N \eq 378\) sequences for the sampling
-procedure to approximate the gradient, results in a mean precision over
-the top \(0.1L\) - \(L\) contacts of 0.44, whereas using only
-\(0.3N_{\textrm{eff}} \eq 69\) sequences gives a mean precision of 0.62.
-The left plot in Appendix Figure \ref{fig:cd-samplesize-protein1ahoa00}
-shows the development of the norm of the gradient and the norm of
-coupling parameters for this protein. As before, the gradient estimate
-improves and the norm of the gradient converges towards smaller values
-when more sequences are used in the Gibbs sampling process and therefore
-should lead to a better approximation of the likelihood. One explanation
-could be that this is some effect of overfitting, eventhough a
-regularizer is used and the norm of coupling parameters actually is
-smaller when using higher sampling sizes (see the right plot in Appendix
-Figure \ref{fig:cd-samplesize-protein1ahoa00}).
+\ref{fig:cd-precision-sampling-size-neff}. Protein 1ahoA00, that has
+length 64 and an alignment of 378 sequences
+(\protect\hyperlink{abbrev}{Neff}=229), achieves a mean precision of
+0.44 over the top \(0.1L\) - \(L\) contacts when using all \(N \eq 378\)
+sequences for sampling. When only \(0.3N_{\textrm{eff}} \eq 69\)
+sequences are used in the sampling procedure, 1ahoA00 achieves a mean
+precision of 0.62. Appendix Figure
+\ref{fig:cd-samplesize-protein1ahoa00} shows the course of the norm of
+the gradient and the norm of coupling parameters during optimization for
+this protein. Similarly as it has been observed for protein 1c75A00, the
+norm of the gradient converges towards smaller values when more
+sequences are used in the Gibbs sampling process and the improved
+gradient is supposed to lead to a better approximation of the
+likelihood. One explanation for this obvious discrepancy could be some
+effect of overfitting. Eventhough a regularizer is used for optimization
+and the norm of coupling parameters actually is smaller when using a
+larger sample size (see the right plot in Appendix Figure
+\ref{fig:cd-samplesize-protein1ahoa00}).
+
 
 
 
@@ -3612,43 +3604,37 @@ Figure \ref{fig:cd-samplesize-protein1ahoa00}).
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/1c75A00_gradient_norm_for_samplesizes} \includegraphics[width=0.48\linewidth]{img/full_likelihood/gibbs_sampling/1c75A00_parameter_norm_for_samplesizes} 
+{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/gibbs_sampling/1c75A00_gradient_and_parameter_norm_for_samplesizes} 
 
 }
 
 \caption{Monitoring parameter norm and
-gradient norm for protein 1c75\_A\_00 during
-\protect\hyperlink{abbrev}{SGD} using different sample sizes. Protein
-1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=16808) \textbf{Left} L2-norm of the
-gradients for coupling parameters \(||\w||_2\) (without contrbution of
-regularizer). The number of sequences, that is used for Gibbs sampling
-to approximate the gradient, is given in the legend. \textbf{Right}
-L2-norm of the coupling parameters \(||\w||_2\). The number of
-sequences, that is used for Gibbs sampling to approximate the gradient,
-is given in the legend.}\label{fig:cd-samplesize-protein1c75a00}
+gradient norm for protein 1c75A00 during \protect\hyperlink{abbrev}{SGD}
+using different sample sizes. Protein 1c75A00 has length L=71 and 28078
+sequences in the alignment (\protect\hyperlink{abbrev}{Neff}=16808). The
+number of sequences, that is used for Gibbs sampling to approximate the
+gradient, is given in the legend with 1L = 71 sequences, 5L = 355
+sequences, 10L = 710 sequences, 50L = 3550 sequences, 100L = 7100
+sequences, 0.2Neff = 3362 sequences, 0.3Neff = 5042 sequences, 0.4Neff =
+6723 sequences. \textbf{Left} L2-norm of the gradients for coupling
+parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\) (without contribution
+of regularizer). \textbf{Right} L2-norm of the coupling parameters
+\(||\w||_2\).}\label{fig:cd-samplesize-protein1c75a00}
 \end{figure}
 
 \subsection{Varying the number of Gibbs Steps}\label{cd-gibbs-steps}
 
-The default \protect\hyperlink{abbrev}{CD}-k algorithm as described by
-Hinton in 2002 evolves the gibbs chain by only \(k \eq 1\) full step
-{[}\protect\hyperlink{ref-Hinton2002}{186}{]}. As it has been pointed
-out in the literature, the CD-1 sampler represents a biased estimator
-because samples are not obtained from the stationary distribution of the
-Markov chain. Furthermore, it was found that sampling \(k>1\) steps
-gives more precise results at the cost of longer runtimes per gradient
-evaluation
+As discussed earlier, it has been pointed out in the literature that
+using \(k>1\) Gibbs steps for sampling sequences gives more precise
+results at the cost of longer runtimes per gradient evaluation
 {[}\protect\hyperlink{ref-Bengio2009}{189},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
 I analysed the impact on performance when the number of Gibbs steps is
-increased to 5 and 10.
-
-As can be seen in Figure \ref{fig:precision-cd-gibbs-steps}, increasing
-the number of Gibbs steps does result in a slight drop of performance.
-When evaluating precision with respect to
-\protect\hyperlink{abbrev}{Neff} it can be found that using more Gibbs
-sampling steps is especially disadvantageous for large alignments (see
-Appendix Figure \ref{fig:cd-precision-gibbssteps-neff}).
+increased to 5 and 10. As can be seen in Figure
+\ref{fig:precision-cd-gibbs-steps}, increasing the number of Gibbs steps
+does result in a slight drop of performance. When evaluating precision
+with respect to \protect\hyperlink{abbrev}{Neff} it can be found that
+using more Gibbs sampling steps is especially disadvantageous for large
+alignments (see Appendix Figure \ref{fig:cd-precision-gibbssteps-neff}).
 
 
 
@@ -3682,9 +3668,9 @@ steps (see left plot in Figure \ref{fig:cd-gibbssteps-single-proteins}).
 Naturally, the Markov chains can wander further away from their
 initialization when they are evolved over a longer time which results in
 a stronger gradient at the beginning of the optimization. Therefore and
-because the initial learning rate has been optimized for one Gibbs step,
-the parameter norm overshoots the optimum at the beginning. Even when
-lowering the initial learning rate from
+because the initial learning rate has been optimized for sampling with
+one Gibbs step, the parameter norm overshoots the optimum at the
+beginning. Even when lowering the initial learning rate from
 \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\) to
 \(\alpha_0 \in \left \{ \frac{3e-2}{\sqrt{N_{\text{eff}}}}, \frac{2e-2}{\sqrt{N_{\text{eff}}}} , \frac{1e-2}{\sqrt{N_{\text{eff}}}} \right \}\),
 the \protect\hyperlink{abbrev}{SGD} optimizer evidently approaches a
@@ -7630,6 +7616,46 @@ steric hindrance.}\label{fig:aromatic-residues-at-short-distances}
 \chapter{Optimizing Full Likelihood with Gradient
 Descent}\label{optimizing-full-likelihood-with-gradient-descent}
 
+\section{Defining the initial learning rate as a function of
+Neff}\label{defining-the-initial-learning-rate-as-a-function-of-neff}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/precision_vs_rank_learningrates_comparealpha0} 
+
+}
+
+\caption{Mean precision for top ranked
+contact predictions over 300 proteins. Contact scores are computed as
+the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings \(\wij\). \textbf{pseudo-likelihood}: couplings computed with
+pseudo-likelihood. \textbf{CD alpha0 = 5e-4}: couplings computed with
+\protect\hyperlink{abbrev}{CD} using stochastic gradient descent with
+initial learning rate, \(\alpha_0 \eq 5e-4\). \textbf{CD alpha0 = 1e-3}:
+couplings computed with \protect\hyperlink{abbrev}{CD} using stochastic
+gradient descent with initial learning rate, \(\alpha_0 \eq 1e-3\).
+\textbf{CD alpha0 = 5e-2Neff\^{}-0.5}: couplings computed with
+\protect\hyperlink{abbrev}{CD} using stochastic gradient descent with
+initial learning rate defined as a function of
+\protect\hyperlink{abbrev}{Neff},
+\(\alpha_0 \eq \frac{5e-2}{\sqrt{N_{\text{eff}}}}\).}\label{fig:performance-cd-alphaopt-0}
+\end{figure}
+
 \section{Visualisation of learning rate
 schedules}\label{visualisation-of-learning-rate-schedules}
 
@@ -7660,19 +7686,21 @@ group represents the \textbf{exponential} learning rate schedule
 represents the \textbf{linear} learning rate schedule
 \(\alpha = \alpha_0 / (1 + \gamma \cdot t)\). Green legend group
 represents the \textbf{sigmoidal} learning rate schedule
-\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma \cdot t)\) with \(\gamma\).
-Purple legend group represents the \textbf{square root} learning rate
-schedule \(\alpha = \alpha_0 / \sqrt{1 + \gamma \cdot t}\). The
-iteration number is given by \(t\). Initial learning rate \(\alpha_0\)
-is set to 1e-4 and \(\gamma\) is the decay rate and its value is given
-in brackets in the legend.}\label{fig:learning-rate-schedules}
+\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma \cdot t)\). Purple legend
+group represents the \textbf{square root} learning rate schedule
+\(\alpha = \alpha_0 / \sqrt{1 + \gamma \cdot t}\). The initial learning
+rate \(\alpha_0\) is set to 1e-4, the iteration number is given by \(t\)
+and \(\gamma\) is the decay rate and its value is given in brackets in
+the legend.}\label{fig:learning-rate-schedules}
 \end{figure}
 
 \section{Benchmarking learning rate
 schedules}\label{benchmark-learning-rate-annealing-schedules}
 
-\subsection{Linear learning rate
-schedule}\label{linear-learning-rate-schedule}
+The following figures show the mean precision over the validation set
+for contacts computed from \protect\hyperlink{abbrev}{CD} with
+stochastic gradient descent and using different learning rate annealing
+schedules
 
 
 
@@ -7687,14 +7715,14 @@ schedule}\label{linear-learning-rate-schedule}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_lin_decayrate} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
+couplings \(\wij\). pseudo-likelihood: contact scores computed from
 pseudo-likelihood. The other methods derive contact scores from
 couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
 gradient descent with an initial learning rate defined with respect to
@@ -7703,9 +7731,6 @@ annealing schedule \(\alpha = \frac{\alpha_0}{1 + \gamma t}\) with decay
 rate \(\gamma\) as specified in the legend.}\label{fig:performance-cd-linschedule}
 \end{figure}
 
-\subsection{Sigmoidal learning rate
-schedule}\label{sigmoidal-learning-rate-schedule}
-
 
 
 
@@ -7720,14 +7745,14 @@ schedule}\label{sigmoidal-learning-rate-schedule}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sig_decayrate} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
+couplings \(\wij\). pseudo-likelihood: contact scores computed from
 pseudo-likelihood. The other methods derive contact scores from
 couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
 gradient descent with an initial learning rate defined with respect to
@@ -7737,9 +7762,6 @@ with t being the iteration number and decay rate \(\gamma\) as specified
 in the legend.}\label{fig:performance-cd-sigschedule}
 \end{figure}
 
-\subsection{Square root learning rate
-schedule}\label{square-root-learning-rate-schedule}
-
 
 
 
@@ -7754,14 +7776,14 @@ schedule}\label{square-root-learning-rate-schedule}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt_decayrate} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
+couplings \(\wij\). pseudo-likelihood: contact scores computed from
 pseudo-likelihood. The other methods derive contact scores from
 couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
 gradient descent with an initial learning rate defined with respect to
@@ -7771,9 +7793,6 @@ with t being the iteration number and decay rate \(\gamma\) as specified
 in the legend.}\label{fig:performance-cd-sqrtschedule}
 \end{figure}
 
-\subsection{Exponential learning rate
-schedule}\label{exponential-learning-rate-schedule}
-
 
 
 
@@ -7788,14 +7807,14 @@ schedule}\label{exponential-learning-rate-schedule}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate} 
 
 }
 
 \caption{Mean precision for top ranked
-contact predictions over 288 proteins. Contact scores are computed as
+contact predictions over 300 proteins. Contact scores are computed as
 the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). pseudo-likelihood: Contact scores computed from
+couplings \(\wij\). pseudo-likelihood: contact scores computed from
 pseudo-likelihood. The other methods derive contact scores from
 couplings computed from \protect\hyperlink{abbrev}{CD} using stochastic
 gradient descent with an initial learning rate defined with respect to
@@ -7808,18 +7827,20 @@ legend.}\label{fig:performance-cd-expschedule}
 \section{Number of iterations until convergence for different learning
 rate schedules}\label{learning-rate-schedules-distribution-iterations}
 
-\subsection{Linear learning rate
-schedule}\label{linear-learning-rate-schedule-1}
+The following Figures show the distribution of the number of iterations
+until convergence over the validation dataset for stochastic gradient
+descent optimization of \protect\hyperlink{abbev}{CD} for different
+learning rate annealing schedules.
 
-(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with a \textbf{linear} learning rate schedule
-\(\alpha = \alpha_0 / (1 + \gamma \cdot t)\) with \(t\) being the
-iteration number and the decay rate \(\gamma\) as specified in the
-legend. Initial learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
+
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
@@ -7827,11 +7848,16 @@ to 5000.
 
 }
 
-\caption{(ref:caption-full-likelihood-opt-numit-lin-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-lin-learning-rate-schedule}
+\caption{Distribution of the
+number of iterations until convergence for stochastic gradient descent
+optimizations of the full likelihood using different decay rates with a
+\textbf{linear} learning rate schedule
+\(\alpha = \alpha_0 / (1 + \gamma t)\) with \(t\) being the iteration
+number and the decay rate \(\gamma\) is specified in the legend. Initial
+learning rate \(\alpha_0\) defined with respect to
+\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
+to 5000.}\label{fig:cd-numit-lin-learning-rate-schedule}
 \end{figure}
-
-\subsection{Sigmoidal learning rate
-schedule}\label{sigmoidal-learning-rate-schedule-1}
 
 
 
@@ -7845,33 +7871,30 @@ schedule}\label{sigmoidal-learning-rate-schedule-1}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule} 
 
 }
 
-\caption{Distribution
-of the number of iterations until convergence for gradient descent
+\caption{Distribution of the
+number of iterations until convergence for stochastic gradient descent
 optimizations of the full likelihood using different decay rates with a
 \textbf{sigmoidal} learning rate schedule
-\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma \cdot t)\) with t being the
-iteration number and the decay rate \(\gamma\) as specified in the
+\(\alpha_{t+1} = \alpha_{t} / (1 + \gamma t)\) with \(t\) being the
+iteration number and the decay rate \(\gamma\) is specified in the
 legend. Initial learning rate \(\alpha_0\) defined with respect to
 \protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.}\label{fig:numit-convergence-sig-learning-rate-schedule}
+to 5000.}\label{fig:cd-numit-sig-learning-rate-schedule}
 \end{figure}
 
-\subsection{Square root learning rate
-schedule}\label{square-root-learning-rate-schedule-1}
 
-(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with a \textbf{square root} learning rate schedule
-\(\alpha = \alpha_0 / \sqrt{1 + \gamma t}\) with t being the iteration
-number and the decay rate \(\gamma\) as specified in the legend. Initial
-learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
@@ -7879,21 +7902,26 @@ to 5000.
 
 }
 
-\caption{(ref:caption-full-likelihood-opt-numit-sqrt-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-sqrt-learning-rate-schedule}
+\caption{Distribution of the
+number of iterations until convergence for stochastic gradient descent
+optimizations of the full likelihood using different decay rates with a
+\textbf{square root} learning rate schedule
+\(\alpha = \alpha_0 / \sqrt{1 + \gamma t}\) with \(t\) being the
+iteration number and the decay rate \(\gamma\) is specified in the
+legend. Initial learning rate \(\alpha_0\) defined with respect to
+\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
+to 5000.}\label{fig:cd-numit-sqrt-learning-rate-schedule}
 \end{figure}
 
-\subsection{Exponential learning rate
-schedule}\label{exponential-learning-rate-schedule-1}
 
-(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule)
-Distribution of the number of iterations until convergence for gradient
-descent optimizations of the full likelihood using different decay rates
-with an \textbf{exponential} learning rate schedule
-\(\alpha = \alpha_0 \cdot\exp(- \gamma t)\) with t being the iteration
-number and the decay rate \(\gamma\) as specified in the legend. Initial
-learning rate \(\alpha_0\) defined with respect to
-\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
-to 5000.
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
@@ -7901,7 +7929,15 @@ to 5000.
 
 }
 
-\caption{(ref:caption-full-likelihood-opt-numit-exp-learning-rate-schedule)}\label{fig:full-likelihood-opt-numit-exp-learning-rate-schedule}
+\caption{Distribution of the
+number of iterations until convergence for stochastic gradient descent
+optimizations of the full likelihood using different decay rates with an
+\textbf{exponential} learning rate schedule
+\(\alpha = \alpha_0 \cdot\exp(- \gamma t)\) with \(t\) being the
+iteration number and the decay rate \(\gamma\) is specified in the
+legend. Initial learning rate \(\alpha_0\) defined with respect to
+\protect\hyperlink{abbrev}{Neff} and maximum number of iterations is set
+to 5000.}\label{fig:cd-numit-exp-learning-rate-schedule}
 \end{figure}
 
 \section{Modifying Number of Iterations over which Relative Change of
@@ -7920,19 +7956,97 @@ Evaluated}\label{modifying-number-of-iterations-over-which-relative-change-of-co
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev} 
+{\centering \includegraphics[width=0.85\linewidth]{img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev} 
 
 }
 
 \caption{Distribution of the
 number of iterations until convergence for gradient descent
-optimizations of the full likelihood using different values for the
-number of previous iterations over which the relative change of the L2
-norm of coupling parameters \(||\w||_2\) will be measured. Convergence
-criteria is given in eq. \eqref{eq:parameter-convergence-criterion}. The
-number of previous iterations is given on the x-axis in the plot. The
-optimal hyperparameters settings for \protect\hyperlink{abbrev}{SGD} as
-described in section \ref{sgd-hyperparameter-tuning} have been used.}\label{fig:numit-convergence-convergence-prev}
+optimizations of the full likelihood. The relative change of the L2 norm
+over coupling parameters, \(||\w||_2\), is evaluated over a defined
+number of previous iterations and is specified in the legend.
+Convergence is assumed when the relative change falls below a small
+value \(\epsilon \eq 1e-8\). The optimal hyperparameters settings for
+\protect\hyperlink{abbrev}{SGD} as described in section
+\ref{sgd-hyperparameter-tuning} have been used.}\label{fig:numit-convergence-convergence-prev}
+\end{figure}
+
+\section{Fix single potentials at maximum-likelihood estimate
+v*}\label{fix-single-potentials-at-maximum-likelihood-estimate-v}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/appendix/precision_vs_rank_fixed_v} 
+
+}
+
+\caption{Mean precision for top ranked
+contact predictions over 300 proteins. Contact scores are computed as
+the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings \(\wij\). \protect\hyperlink{abbrev}{SGD} settings for
+\protect\hyperlink{abbrev}{CD} optimization are as follows: sigmoidal
+learning rate schedule with decay rate \(\gamma = \mathrm{5e-6}\) and
+initial learning rate \(\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}\).
+\textbf{pseudo-likelihood}: contact scores computed from
+pseudo-likelihood. \textbf{CD fixed v at v* }: contact scores computed
+from \protect\hyperlink{abbrev}{CD} with \protect\hyperlink{abbrev}{SGD}
+and single potentials \(\v\) are not optimized but fixed at \(\v^*\) as
+given in eq. \eqref{eq:prior-v}. \textbf{CD lambda\_v = 10}: contact
+scores computed from \protect\hyperlink{abbrev}{CD} with
+\protect\hyperlink{abbrev}{SGD} and single potentials \(\v\) are subject
+to optimization using L2-reglarization with \(\lambda_v \eq 10\).}\label{fig:full-likelihood-opt-fixv}
+\end{figure}
+
+\section{Monitoring Optimization for Protein 1aho for Different Sample
+Sizes}\label{monitoring-optimization-for-protein-1aho-for-different-sample-sizes}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/1ahoa00_parameter_gradient_norm_for_samplesizes} 
+
+}
+
+\caption{Monitoring parameter norm and
+gradient norm for protein 1ahoA00 during \protect\hyperlink{abbrev}{SGD}
+optimization of \protect\hyperlink{abbrev}{CD} using different sample
+sizes. Protein 1ahoA00 has length L=64 and 378 sequences in the
+alignment (\protect\hyperlink{abbrev}{Neff}=229). The number of
+sequences, that is used for Gibbs sampling to approximate the gradient,
+is given in the legend with 1L = 64 sequences, 5L = 320 sequences, 10L =
+min(10L, N) = 378 sequences, 0.2Neff = 46 sequences, 0.3Neff = 69
+sequences, 0.4Neff = 92 sequences. \textbf{Left} L2-norm of the
+gradients for coupling parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\)
+(without contribution of regularizer). \textbf{Right} L2-norm of the
+coupling parameters \(||\w||_2\).}\label{fig:cd-samplesize-protein1ahoa00}
 \end{figure}
 
 \section{Number of Gibbs steps with respect to
@@ -7979,82 +8093,6 @@ pseudo-likelihood. \textbf{CD \#Gibbs steps = X}: contact scores
 computed from \protect\hyperlink{abbrev}{CD} optimized with
 \protect\hyperlink{abbrev}{SGD} and evolving each Markov chain using the
 number of Gibbs steps specified in the legend.}\label{fig:cd-precision-gibbssteps-neff}
-\end{figure}
-
-\section{Fix single potentials at maximum-likelihood estimate
-v*}\label{fix-single-potentials-at-maximum-likelihood-estimate-v}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/appendix/precision_vs_rank_fixed_v} 
-
-}
-
-\caption{Mean precision for top ranked
-contact predictions over 300 proteins. Contact scores are computed as
-the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
-couplings \(\wij\). \protect\hyperlink{abbrev}{SGD} settings for
-\protect\hyperlink{abbrev}{CD} optimization are as follows: sigmoidal
-learning rate schedule with decay rate \(\gamma = \mathrm{5e-6}\) and
-initial learning rate \(\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}\).
-\textbf{pseudo-likelihood}: contact scores computed from
-pseudo-likelihood. \textbf{CD fixed v at v}: contact scores computed
-from \protect\hyperlink{abbrev}{CD} with \protect\hyperlink{abbrev}{SGD}
-and single potentials \(\v\) are not optimized but fixed at \(\v^*\) as
-given in eq. \eqref{eq:prior-v}. \textbf{CD lambda\_v = 10}: contact
-scores computed from \protect\hyperlink{abbrev}{CD} with
-\protect\hyperlink{abbrev}{SGD} and single potentials \(\v\) are subject
-to optimization using L2-reglarization with \(\lambda_v \eq 10\).}\label{fig:full-likelihood-opt-fixv}
-\end{figure}
-
-\section{Monitoring Optimization for Different Sample
-Sizes}\label{monitoring-optimization-for-different-sample-sizes}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/appendix/1ahoa00_gradient_norm_for_samplesizes} \includegraphics[width=0.48\linewidth]{img/full_likelihood/appendix/1ahoa00_parameter_norm_for_samplesizes} 
-
-}
-
-\caption{Monitoring parameter norm and
-gradient norm for protein 1aho\_A\_00 during
-\protect\hyperlink{abbrev}{SGD} using different sample sizes. Protein
-1aho\_A\_00\_00 has length L=64 and 378 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=229) \textbf{Left} L2-norm of the
-gradients for coupling parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\)
-(without contribution of regularizer). The number of sequences, that is
-used for Gibbs sampling to approximate the gradient, is given in the
-legend. \textbf{Right} L2-norm of the coupling parameters \(||\w||_2\).
-The number of sequences, that is used for Gibbs sampling to approximate
-the gradient, is given in the legend.}\label{fig:cd-samplesize-protein1ahoa00}
 \end{figure}
 
 \section{Monitoring Norm of Gradients for Different Number of Gibbs

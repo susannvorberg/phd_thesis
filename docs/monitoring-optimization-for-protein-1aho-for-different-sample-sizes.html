@@ -25,15 +25,15 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-21">
+<meta name="date" content="2017-10-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="full-likelihood-optimization.html">
-<link rel="next" href="cd-sampling-optimization.html">
+<link rel="prev" href="fix-single-potentials-at-maximum-likelihood-estimate-v.html">
+<link rel="next" href="number-of-gibbs-steps-with-respect-to-neff.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -162,14 +162,14 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>4.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
 <li class="chapter" data-level="4.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>4.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="regularization-for-cd-with-sgd.html"><a href="regularization-for-cd-with-sgd.html"><i class="fa fa-check"></i><b>4.3</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
-<li class="chapter" data-level="4.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>4.4</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>4.4.1</b> Varying the Sample Size</a></li>
-<li class="chapter" data-level="4.4.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.2</b> Varying the number of Gibbs Steps</a></li>
-<li class="chapter" data-level="4.4.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Contrastive Divergence</a></li>
+<li class="chapter" data-level="4.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>4.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>4.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="4.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>4.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="4.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="4.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.3.4</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.5</b> Using ADAM to optimize Contrastive Divergence</a></li>
-<li class="chapter" data-level="4.6" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.6</b> Comparing CD couplings to pLL couplings</a></li>
+<li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
@@ -244,25 +244,16 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="E.5" data-path="aromatic-small-distances.html"><a href="aromatic-small-distances.html"><i class="fa fa-check"></i><b>E.5</b> Aromatic Sidechains at small <span class="math inline">\(Cb\)</span>-<span class="math inline">\(\Cb\)</span> distances</a></li>
 </ul></li>
 <li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="F.1" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>F.1</b> Visualisation of learning rate schedules</a></li>
-<li class="chapter" data-level="F.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>F.2</b> Benchmarking learning rate schedules</a><ul>
-<li class="chapter" data-level="F.2.1" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#linear-learning-rate-schedule"><i class="fa fa-check"></i><b>F.2.1</b> Linear learning rate schedule</a></li>
-<li class="chapter" data-level="F.2.2" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#sigmoidal-learning-rate-schedule"><i class="fa fa-check"></i><b>F.2.2</b> Sigmoidal learning rate schedule</a></li>
-<li class="chapter" data-level="F.2.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#square-root-learning-rate-schedule"><i class="fa fa-check"></i><b>F.2.3</b> Square root learning rate schedule</a></li>
-<li class="chapter" data-level="F.2.4" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html#exponential-learning-rate-schedule"><i class="fa fa-check"></i><b>F.2.4</b> Exponential learning rate schedule</a></li>
-</ul></li>
-<li class="chapter" data-level="F.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>F.3</b> Number of iterations until convergence for different learning rate schedules</a><ul>
-<li class="chapter" data-level="F.3.1" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#linear-learning-rate-schedule-1"><i class="fa fa-check"></i><b>F.3.1</b> Linear learning rate schedule</a></li>
-<li class="chapter" data-level="F.3.2" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#sigmoidal-learning-rate-schedule-1"><i class="fa fa-check"></i><b>F.3.2</b> Sigmoidal learning rate schedule</a></li>
-<li class="chapter" data-level="F.3.3" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#square-root-learning-rate-schedule-1"><i class="fa fa-check"></i><b>F.3.3</b> Square root learning rate schedule</a></li>
-<li class="chapter" data-level="F.3.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html#exponential-learning-rate-schedule-1"><i class="fa fa-check"></i><b>F.3.4</b> Exponential learning rate schedule</a></li>
-</ul></li>
-<li class="chapter" data-level="F.4" data-path="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><a href="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><i class="fa fa-check"></i><b>F.4</b> Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated</a></li>
-<li class="chapter" data-level="F.5" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.5</b> Number of Gibbs steps with respect to Neff</a></li>
+<li class="chapter" data-level="F.1" data-path="defining-the-initial-learning-rate-as-a-function-of-neff.html"><a href="defining-the-initial-learning-rate-as-a-function-of-neff.html"><i class="fa fa-check"></i><b>F.1</b> Defining the initial learning rate as a function of Neff</a></li>
+<li class="chapter" data-level="F.2" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>F.2</b> Visualisation of learning rate schedules</a></li>
+<li class="chapter" data-level="F.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>F.3</b> Benchmarking learning rate schedules</a></li>
+<li class="chapter" data-level="F.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>F.4</b> Number of iterations until convergence for different learning rate schedules</a></li>
+<li class="chapter" data-level="F.5" data-path="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><a href="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><i class="fa fa-check"></i><b>F.5</b> Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated</a></li>
 <li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
-<li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-different-sample-sizes.html"><a href="monitoring-optimization-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Different Sample Sizes</a></li>
-<li class="chapter" data-level="F.8" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.8</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.9" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.9</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
+<li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
+<li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
+<li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
+<li class="chapter" data-level="F.10" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.10</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -291,19 +282,15 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regularization-for-cd-with-sgd" class="section level2">
-<h2><span class="header-section-number">4.3</span> Tuning Regularization Coefficients for Contrastive Divergence</h2>
-<p>For tuning the hyperparameters of the stochastic gradient descent optimizer in the last section <a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning">4.2.2</a>, the coupling parameters <span class="math inline">\(\w\)</span> were constrained by a Gaussian prior <span class="math inline">\(\mathcal{N}(\w | 0, \lambda_w^{-1} I)\)</span> using the default pseudo-likelihood regularization coefficient <span class="math inline">\(\lambda_w \eq 1\mathrm{e}{-2}L\)</span> as decscribed in methods section <a href="methods-regularization.html#methods-regularization">7.5</a>. It is conceivable that <a href="abbrev.html#abbrev">CD</a> achieves optimal performance using stronger or weaker regularization than used for pseudo-likelihood optimization. Therefore, I evaluated performance of <a href="abbrev.html#abbrev">CD</a> using the previously identified hyperparamters for <a href="abbrev.html#abbrev">SGD</a> and different regularization coefficients <span class="math inline">\(\lambda_w \in \{ 1\mathrm{e}{-2}L, 5\mathrm{e}{-2}L, 1\mathrm{e}{-1}L, 1\mathrm{e}{-2}L, L\}\)</span>. The single potentials <span class="math inline">\(\v\)</span> are not subject to optimization and are kept fixed at their maximum-likelihood estimate <span class="math inline">\(v^*\)</span> given in eq. <a href="potts-full-likelihood.html#eq:prior-v">(7.16)</a>.</p>
-<p>As can be seen in Figure <a href="regularization-for-cd-with-sgd.html#fig:precison-cd-regularization">4.11</a>, using strong regularization for the couplings, <span class="math inline">\(\lambda_w \eq L\)</span>, results in a drastic drop of mean precision. Using weaker regularization such as <span class="math inline">\(\lambda_w \eq 1\mathrm{e}{-2}L\)</span> or <span class="math inline">\(\lambda_w \eq \mathrm{5e}{-2}L\)</span> improves precision for the top <span class="math inline">\(L/10\)</span> and <span class="math inline">\(L/5\)</span> predicted contacts but decreases precision when including lower ranked predictions. As a matter of fact, a slightly weaker regularization <span class="math inline">\(\lambda_w \eq \mathrm{1e}{-1}L\)</span> than the default <span class="math inline">\(\lambda_w \eq \mathrm{1e}{-2}L\)</span> improves mean precision especially for the top <span class="math inline">\(L/2\)</span> contacts in such a way, that it is comparable to the pseudo-likelihood performance.</p>
+<div id="monitoring-optimization-for-protein-1aho-for-different-sample-sizes" class="section level2">
+<h2><span class="header-section-number">F.7</span> Monitoring Optimization for Protein 1aho for Different Sample Sizes</h2>
 
-<div class="figure" style="text-align: center"><span id="fig:precison-cd-regularization"></span>
-<iframe src="img/full_likelihood/sgd/precision_vs_rank_regularizer.html" width="90%" height="500px">
-</iframe>
+<div class="figure" style="text-align: center"><span id="fig:cd-samplesize-protein1ahoa00"></span>
+<img src="img/full_likelihood/appendix/1ahoa00_parameter_gradient_norm_for_samplesizes.png" alt="Monitoring parameter norm and gradient norm for protein 1ahoA00 during SGD optimization of CD using different sample sizes. Protein 1ahoA00 has length L=64 and 378 sequences in the alignment (Neff=229). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 64 sequences, 5L = 320 sequences, 10L = min(10L, N) = 378 sequences, 0.2Neff = 46 sequences, 0.3Neff = 69 sequences, 0.4Neff = 92 sequences. Left L2-norm of the gradients for coupling parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\) (without contribution of regularizer). Right L2-norm of the coupling parameters \(||\w||_2\)." width="100%" />
 <p class="caption">
-Figure 4.11: Mean precision for top ranked contact predictions over 288 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. Subsets are defined according to quantiles of <a href="abbrev.html#abbrev">Neff</a> values. Upper left: Subset of proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. Upper right: Subset of proteins with Q1 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q2. Lower left: Subset of proteins with Q2 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q3. Lower right: Subset of proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>CD lambda_w = X</strong>: couplings computed with <a href="abbrev.html#abbrev">CD</a> using L2-regularization on the couplings <span class="math inline">\(\w\)</span> with regularization coefficient <span class="math inline">\(\lambda_w\)</span> chosen as specified in the legend and keeping the single potentials <span class="math inline">\(\vi\)</span> fixed at their <a href="abbrev.html#abbrev">MLE</a> optimum <span class="math inline">\(\vi^*\)</span> given in eq. <a href="potts-full-likelihood.html#eq:prior-v">(7.16)</a>.
+Figure F.13: Monitoring parameter norm and gradient norm for protein 1ahoA00 during <a href="abbrev.html#abbrev">SGD</a> optimization of <a href="abbrev.html#abbrev">CD</a> using different sample sizes. Protein 1ahoA00 has length L=64 and 378 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=229). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 64 sequences, 5L = 320 sequences, 10L = min(10L, N) = 378 sequences, 0.2Neff = 46 sequences, 0.3Neff = 69 sequences, 0.4Neff = 92 sequences. <strong>Left</strong> L2-norm of the gradients for coupling parameters, <span class="math inline">\(||\nabla_{\w} L\!L(\v^*, \w)||_2\)</span> (without contribution of regularizer). <strong>Right</strong> L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span>.
 </p>
 </div>
-<p>As mentioned before, a difference compared to pseudo-likelihood optimization is that the single potentials <span class="math inline">\(\v\)</span> are not optimized with <a href="abbrev.html#abbrev">CD</a> but rather set to their maximum-likelihood estimate as it is obtained in a single position model that is discussed in methods section <a href="potts-full-likelihood.html#eq:prior-v">(7.16)</a>. When the single potentials <span class="math inline">\(\v\)</span> are optimized with <a href="abbrev">CD</a> using the same regularization coefficient <span class="math inline">\(\lambda_v \eq 10\)</span> as it is used when optimizing the pseudo-likelihood, performance is almost indistinguishable compared to keeping the single potentials <span class="math inline">\(\v\)</span> fixed as can be seen in appendix Figure <a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html#fig:full-likelihood-opt-fixv">F.12</a>.</p>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -329,8 +316,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="full-likelihood-optimization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cd-sampling-optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="number-of-gibbs-steps-with-respect-to-neff.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -359,7 +346,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/susannvorberg/phd_thesis/edit/master/06-optimizing_full_likelihood.Rmd",
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/10-appendix.Rmd",
 "text": "Edit"
 },
 "download": ["PhD_thesis_Susann_Vorberg.pdf"],
