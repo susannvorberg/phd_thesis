@@ -169,7 +169,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.3.4</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
-<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ahla01"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ahlA01</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
@@ -253,7 +256,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
 <li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.10" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.10</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
+<li class="chapter" data-level="F.10" data-path="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><a href="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><i class="fa fa-check"></i><b>F.10</b> Using ADAM with different learning rates and anneaing schedules</a></li>
+<li class="chapter" data-level="F.11" data-path="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><i class="fa fa-check"></i><b>F.11</b> Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00</a></li>
+<li class="chapter" data-level="F.12" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.12</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -284,12 +289,12 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="inv-lambda-ij-k" class="section level2">
 <h2><span class="header-section-number">7.12</span> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></h2>
-<p>It is possible to efficiently invert the matrix <span class="math inline">\(\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k\)</span>, that is introduced in section <a href="likelihood-fct-distances.html#likelihood-fct-distances">6.4</a> where <span class="math inline">\(\H_{ij}\)</span> is the <span class="math inline">\(400 \times 400\)</span> diagonal block submatrix <span class="math inline">\((\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}\)</span> and <span class="math inline">\(\Lambda_k\)</span> is an invertible diagonal precision matrix. Equation <a href="neg-Hessian-computation.html#eq:mat-Hij">(7.20)</a> can be used to write <span class="math inline">\(\Lijk\)</span> in matrix form as</p>
+<p>It is possible to efficiently invert the matrix <span class="math inline">\(\Lijk = \H_{ij} - \lambda_w \I + \Lambda_k\)</span>, that is introduced in section <a href="likelihood-fct-distances.html#likelihood-fct-distances">6.4</a> where <span class="math inline">\(\H_{ij}\)</span> is the <span class="math inline">\(400 \times 400\)</span> diagonal block submatrix <span class="math inline">\((\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}\)</span> and <span class="math inline">\(\Lambda_k\)</span> is an invertible diagonal precision matrix. Equation <a href="neg-Hessian-computation.html#eq:mat-Hij">(7.19)</a> can be used to write <span class="math inline">\(\Lijk\)</span> in matrix form as</p>
 <span class="math display" id="eq:mat-Lijk">\[\begin{equation}
      \Lijk = \H_{ij} - \lambda_w \I + \Lk = N_{ij} \Qij- N_{ij} \qij \qij^{\mathrm{T}} + \Lk \,.
-\tag{7.21}
+\tag{7.20}
 \end{equation}\]</span>
-<p>Owing to eqs. <a href="potts-full-likelihood.html#eq:normalized-emp-freq">(7.7)</a> and <a href="potts-full-likelihood.html#eq:zero-sum-wij">(7.13)</a>, <span class="math inline">\(\sum_{a,b=1}^{20} q&#39;_{ijab} = 1\)</span>. The previous equation <a href="inv-lambda-ij-k.html#eq:mat-Lijk">(7.21)</a> facilitates the calculation of the inverse of this matrix using the <em>Woodbury identity</em> for matrices</p>
+<p>Owing to eqs. <a href="potts-full-likelihood.html#eq:normalized-emp-freq">(7.7)</a> and <a href="potts-full-likelihood.html#eq:zero-sum-wij">(7.13)</a>, <span class="math inline">\(\sum_{a,b=1}^{20} q&#39;_{ijab} = 1\)</span>. The previous equation <a href="inv-lambda-ij-k.html#eq:mat-Lijk">(7.20)</a> facilitates the calculation of the inverse of this matrix using the <em>Woodbury identity</em> for matrices</p>
 <span class="math display">\[\begin{equation}
     (\mathbf{A} + \mathbf{B} \mathbf{D}^{-1} \mathbf{C})^{-1} = \mathbf{A}^{-1} - \mathbf{A}^{-1} \mathbf{B} (\mathbf{D} + \mathbf{C} \mathbf{A}^{-1} \mathbf{B}) ^{-1} \mathbf{C} \mathbf{A}^{-1} \;. 
 \end{equation}\]</span>
@@ -304,13 +309,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display" id="eq:fast-inverse-mat-Lijk">\[\begin{align}
       \left( \H_{ij} - \lambda_w \I + \Lk \right)^{-1} &amp; = \mathbf{A}^{-1} - \mathbf{A}^{-1} \qij  \left( -N_{ij}^{-1}  + \qij^\mathrm{T} \mathbf{A}^{-1} \qij \right)^{-1}  \qij^\mathrm{T} \mathbf{A}^{-1} \nonumber\\
      &amp; = \mathbf{A}^{-1} + \frac{ (\mathbf{A}^{-1} \qij) (\mathbf{A}^{-1} \qij)^{\mathrm{T}} }{ N_{ij}^{-1} - \qij^\mathrm{T} \mathbf{A}^{-1} \qij} \,.
-\tag{7.22}
+\tag{7.21}
 \end{align}\]</span>
 <p>Note that <span class="math inline">\(\mathbf{A}\)</span> is diagonal as <span class="math inline">\(\Qij\)</span> and <span class="math inline">\(\Lk\)</span> are diagonal matrices: <span class="math inline">\(\mathbf{A} = \text{diag}(N_{ij} q&#39;_{ijab} + (\Lk)_{ab,ab})\)</span>. Moreover, <span class="math inline">\(\mathbf{A}\)</span> has only positive diagonal elements, because <span class="math inline">\(\Lk\)</span> is invertible and has only positive diagonal elements and because <span class="math inline">\(q&#39;_{ijab} = p(x_i \eq a, x_j \eq b | \v^*,\w^*) \ge 0\)</span>. Therefore <span class="math inline">\(\mathbf{A}\)</span> is invertible: <span class="math inline">\(\mathbf{A}^{-1} = \text{diag}(N_{ij} q&#39;_{ijab} + (\Lk)_{ab,ab} )^{-1}\)</span>. Because <span class="math inline">\(\sum_{a,b=1}^{20} q&#39;_{ijab} = 1\)</span>, the denominator of the second term is</p>
 <span class="math display">\[\begin{equation}
     N_{ij}^{-1} - \sum_{a,b=1}^{20}  \frac{{q&#39;}_{ijab}^2}{N_{ij} q&#39;_{ijab} + {(\Lk)}_{ab,ab} } &gt; N_{ij}^{-1} - \sum_{a,b=1}^{20} \frac{{q&#39;}^2_{ijab}}{N_{ij} q&#39;_{ijab}} = 0
 \end{equation}\]</span>
-<p>and therefore the inverse of <span class="math inline">\(\Lijk\)</span> in eq. <a href="inv-lambda-ij-k.html#eq:fast-inverse-mat-Lijk">(7.22)</a> is well defined. The log determinant of <span class="math inline">\(\Lijk\)</span> is necessary to compute the ratio of Gaussians (see equation <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a>) and can be computed using the matrix determinant lemma:</p>
+<p>and therefore the inverse of <span class="math inline">\(\Lijk\)</span> in eq. <a href="inv-lambda-ij-k.html#eq:fast-inverse-mat-Lijk">(7.21)</a> is well defined. The log determinant of <span class="math inline">\(\Lijk\)</span> is necessary to compute the ratio of Gaussians (see equation <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a>) and can be computed using the matrix determinant lemma:</p>
 <span class="math display">\[\begin{equation}
   \det(\mathbf{A} + \mathbf{uv}^\mathrm{T}) = (1+\mathbf{v}^\mathrm{T} \mathbf{A}^{-1} \mathbf{u}) \det(\mathbf{A})
 \end{equation}\]</span>

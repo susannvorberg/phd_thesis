@@ -169,7 +169,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.3.4</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
-<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ahla01"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ahlA01</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
@@ -253,7 +256,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
 <li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.10" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.10</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
+<li class="chapter" data-level="F.10" data-path="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><a href="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><i class="fa fa-check"></i><b>F.10</b> Using ADAM with different learning rates and anneaing schedules</a></li>
+<li class="chapter" data-level="F.11" data-path="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><i class="fa fa-check"></i><b>F.11</b> Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00</a></li>
+<li class="chapter" data-level="F.12" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.12</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -284,112 +289,63 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="comparing-pll-cd" class="section level2">
 <h2><span class="header-section-number">4.5</span> Comparing CD couplings to pLL couplings</h2>
-<p>Scatter Plots for couplings wijab: nice correlation - pearson correlation? gibt 3 outlier und das sind auch noch die staerksten couplings hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)</p>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-scatter1"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.17: dideldum
-</p>
-</div>
-<p>Boxplots for couplings wijab: sieht ma nicht viel</p>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot1"></span>
-<iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.18: dideldum
-</p>
-</div>
-<hr />
-<p>Scatter for l2norm over couplings ||wij||_2: hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL und man sieht die drei outlier</p>
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter2"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.19: dideldum
-</p>
-</div>
-<p>Boxplots for l2norm over couplings ||wij||_2: contrastive divergence hat kleineren scores signifikant?</p>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot2"></span>
-<iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcFalse.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.20: dideldum
-</p>
-</div>
-<hr />
-<p>Scatter for l2norm-apc over couplings ||wij||_2 - apc: das gleiche mit apc: systematisch kleinere scores (absolut)</p>
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-scatter3"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.21: dideldum
-</p>
-</div>
-<div class="figure" style="text-align: center"><span id="fig:comapring-cd-pll-boxplot3"></span>
-<iframe src="img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.22: dideldum
-</p>
-</div>
-<p>Boxplots for l2norm-apc over couplings ||wij||_2 - apc: auch mit apc: es gibt weniger starke scores mit CD signifikant?</p>
-<p>scipy.stats.wilcoxon(l2norm_apc_pll, l2norm_apc_cd) #WilcoxonResult(statistic=187035.0, pvalue=0.029710790280912919)</p>
-<p>scipy.stats.ranksums(l2norm_apc_pll, l2norm_apc_cd) #RanksumsResult(statistic=0.38719674947266086, pvalue=0.69861055638055758)</p>
-<p>scipy.stats.kendalltau(l2norm_apc_pll, l2norm_apc_cd) #KendalltauResult(correlation=0.76655297812416368, pvalue=1.3239009316846667e-260)</p>
-<p>scipy.stats.spearmanr(l2norm_apc_pll, l2norm_apc_cd) #SpearmanrResult(correlation=0.92532449605319178, pvalue=0.0)</p>
-<p>scipy.stats.ks_2samp(l2norm_apc_pll, l2norm_apc_cd) Ks_2sampResult(statistic=0.067552602436323439, pvalue=0.030922873101286375)</p>
-<p>The two score distributions are significantly different (kolmogorov smirnov test, two-sided p-value of 0.03).</p>
-<hr />
-<p>Comparing the ranking: geiler plot ranking ist sehr aehnlich, besonders fuer top contacts nur diese drei outlier sind bei CD sehr viel hoeher gerankt als bei pLL</p>
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-ranking"></span>
-<iframe src="img/full_likelihood/comparing_couplings/comparative_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive divergence.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.23: dideldum
-</p>
-</div>
-Comparing the ranking with q-q plot:
-<div class="figure" style="text-align: center"><span id="fig:comparing-cd-pll-ranking-qq"></span>
-<iframe src="img/full_likelihood/comparing_couplings/couplings_for_1mkcA00_method1_pLL_apc_rank_method2_CD_apc_rank_score.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.24: dideldum
-</p>
-</div>
-<hr />
-<p>Showing the contact maps: pLL</p>
-<div class="figure" style="text-align: center"><span id="fig:contact-map-1c75a00-pll"></span>
-<iframe src="img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_pll.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.25: dideldum
-</p>
-</div>
-CD
-<div class="figure" style="text-align: center"><span id="fig:contact-map-1c75a00-cd"></span>
-<iframe src="img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_cd.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.26: dideldum
-</p>
-</div>
-<p>Showing precision:</p>
-<div class="figure" style="text-align: center"><span id="fig:precision-vs-rank-1c75a00"></span>
-<iframe src="img/full_likelihood/comparing_couplings/1c75A00_precision_vs_rank_8seqsep_8contacthr.html" width="100%" height="600px">
-</iframe>
-<p class="caption">
-Figure 4.27: dideldum
-</p>
-</div>
-<ul>
-<li>convergence criterion: mention paper <span class="citation">[<a href="#ref-Mahsereci2017">196</a>]</span></li>
-</ul>
+<p>The previous sections dealed intensively with the hyperparameter optimization for the stochastic gradient decent optimizer and hyperparameters of the <a href="abbrev.html#abbrev">CD</a> model itself. Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the <em>contrastive divergence</em> algorithm, <a href="abbrev.html#abbrev">CD</a>-1. <a href="abbrev.html#abbrev">CD</a>-1 generates sequence samples according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for one full step. Eventhough, the <em>ADAM</em> optimizer did not improve perfomance, it is still likely that appropriate modifications of the optimization procedure might lead to improvments, e.g. averaging <span class="citation">[<a href="#ref-Ma2016">198</a>]</span>. As dicussed in section <a href="full-likelihood-optimization.html#convergence-criteria-sgd">4.2.1</a>, the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting. It might be worth to assess convergence with more sophisticated metrics than the L2 norm of the coupling parameters, <span class="math inline">\(||\w||_2\)</span>, liek the EB-criterion proposed by Mahsereci et al. <span class="citation">[<a href="#ref-Mahsereci2017">196</a>]</span>. Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section <a href="cd-sampling-optimization.html#cd-sampling-size">4.3.2</a>), did not carry over to better predictive performance. It can be speculated that the heuristic contact score, computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings, that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with <a href="abbrev.html#abbrev">CD</a>. Furthermore, it is possible that the improved gradient, obtained by generating more samples, helps to finetune the parameters which has no effect on the contact score and the ovaral ranking of residue pairs.</p>
 
+<div class="figure" style="text-align: center"><span id="fig:precision-cd-final"></span>
+<iframe src="img/full_likelihood/final/precision_vs_rank_notitle.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 4.18: Mean precision for top ranked contact predictions over 2000 proteins. <strong>pseudo-likelihood (APC)</strong> Contact score is computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings computed from pseudo-likelihood. <strong>pseudo-likelihood</strong> same as “pseudo-likelihood (APC)” but without <a href="abbrev.html#abbrev">APC</a> <strong>contrastive divergence (APC)</strong> Contact score is computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings computed from contrastive-divergence. <strong>contrastive divergence</strong> same as “contrastive divergence (APC)” but without <a href="abbrev.html#abbrev">APC</a>.
+</p>
+</div>
+<p>A final benchmark over a larger set of proteins (2000 proteins from subsets 9 and 10 from dataset described in method section <a href="dataset.html#dataset">7.1</a>) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure <a href="comparing-pll-cd.html#fig:precision-cd-final">4.18</a>). At any rate it is interesting to not only compare pseudo-likelihood and contrastive divergence based on ovaral performance, but to also have a look at single predictions. In the following, I will examine and compare the predicitons made by both methods for two representative proteins, one with a small alignment and low corresponding <a href="abbrev.html#abbrev">Neff</a> value and one with a large alignment and high corresponding <a href="abbrev.html#abbrev">Neff</a> value.</p>
+<div id="protein-1c75a00" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Protein 1c75A00</h3>
+<p>Protein 1c75A00 has length L=71 and 28078 sequences in the alignment and is among the proteins with the highest number of effective sequences (<a href="abbrev.html#abbrev">Neff</a>=16808 &gt; 95th percentile). The contact score (<a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>) computed from pseudo-likelihood and contrastive divergence couplings performs equally well (see Appendix Figure <a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html#fig:precision-pll-cd-1c75a00">F.18</a>). The 14 (=L/5) highest scoring contacts predicted with <a href="abbrev.html#abbrev">CD</a> are true positive contacts according to an <span class="math inline">\(8 \angstrom \Cb\)</span> distance cutoff compared to 13 true positive contacts predicted with pseudo-likelihood. Both methods predict very similar contact maps (see Figure <a href="comparing-pll-cd.html#fig:contact-maps-1c75a00">4.19</a>). The highest scoring predictions (top L/5 contacts marked with croses) are identical except for one contact, which is the false positive contact predicted by the pseudo-likelihood.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:contact-maps-1c75a00"></span>
+<img src="img/full_likelihood/comparing_couplings/1c75A00/contact_map_pseudo-likelihood_apc_1c75A00.png" alt="Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a \(8 \angstrom \Cb\) distance cutoff. Contact scores have been computed as APC corrected Frobenius norm of the couplings. Left Couplings computed from pseudo-likelihood. Right Couplings computed from CD." width="48%" /><img src="img/full_likelihood/comparing_couplings/1c75A00/contact_map_contrastive_divergence_apc_1c75A00.png" alt="Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a \(8 \angstrom \Cb\) distance cutoff. Contact scores have been computed as APC corrected Frobenius norm of the couplings. Left Couplings computed from pseudo-likelihood. Right Couplings computed from CD." width="48%" />
+<p class="caption">
+Figure 4.19: Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a <span class="math inline">\(8 \angstrom \Cb\)</span> distance cutoff. Contact scores have been computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings. <strong>Left</strong> Couplings computed from pseudo-likelihood. <strong>Right</strong> Couplings computed from <a href="abbrev.html#abbrev">CD</a>.
+</p>
+</div>
+<p>The contact maps suggest that both scores are very similar. Indeed, the correlation between both scores is very high (Pearson’s correlation coefficient = 0.98) as can bee seen in the right plot in Figure <a href="comparing-pll-cd.html#fig:scatter-plots-1c75a00">4.20</a>. Of course, by applying the average product correction (APC), the scores are normalized with respect to the raw contact scores (=Frobenius norm of couplings <span class="math inline">\(\wij\)</span>). The left plot in Figure <a href="comparing-pll-cd.html#fig:scatter-plots-1c75a00">4.20</a> shows the contact scores before applying the average product correction. The raw contact scores computed from contrastive divergence couplings are systematically stronger than for pseudo-likelihood. Most likely this effect arises from the weaker regularization that is used with contrastive divergence (<span class="math inline">\(\lambda_w = 0.1L\)</span>) than compared to pseudo-likelihood optimization (<span class="math inline">\(\lambda_w = 0.2L\)</span>) (see section <a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd">4.3.1</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:scatter-plots-1c75a00"></span>
+<img src="img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_1c75A00.png" alt="Contact scores computed from pseudo-likelihood and CD couplings for protein 1c75A00. Left Frobenius norm of couplings. Right Frobenius norm + APC of couplings." width="48%" /><img src="img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00.png" alt="Contact scores computed from pseudo-likelihood and CD couplings for protein 1c75A00. Left Frobenius norm of couplings. Right Frobenius norm + APC of couplings." width="48%" />
+<p class="caption">
+Figure 4.20: Contact scores computed from pseudo-likelihood and <a href="abbrev.html#abbrev">CD</a> couplings for protein 1c75A00. <strong>Left</strong> Frobenius norm of couplings. <strong>Right</strong> Frobenius norm + <a href="abbrev.html#abbrev">APC</a> of couplings.
+</p>
+</div>
+<p>However, the contact scores have no meaning by themselfs but merely reflect the confidence of the prediction.<br />
+It is more meaningful to compare the ranking of the residue pairs imposed by the scores. The left plot in Figure <a href="comparing-pll-cd.html#fig:ranking-pll-cd-1c75a00">4.21</a> compares the ordered scores of both methods that lie very close to the diagonal which indicates that both distribution are very similar. A detailed view of the top ranked predictions is given in the right plot in Figure <a href="comparing-pll-cd.html#fig:ranking-pll-cd-1c75a00">4.21</a>. The three most confident predictions are identical for both methods. Yet, the ranks of subsequent predictions are swapped by only a few positions which was already evident from the contact maps.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:ranking-pll-cd-1c75a00"></span>
+<img src="img/full_likelihood/comparing_couplings/1c75A00/qq_plot_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00.png" alt="Comparing the ranking of highest scoring contacts predicted with pseudo-likelihood and contrastive divergence for protein 1c75A00. Contact scores are computed as APC corrected Frobenius norm of the couplings. Left Q-Q plot. Right Contact scores for the top 71 (=L) predictions from either method. Identical residue pairs are connected with a line. Green indicates identical ranking of the residue pair for both methods. Blue indicates higher ranking of the residue pair for contrastive divergence. Red indicates higher ranking of the residue pair for pseudo-likelihood." width="48%" /><img src="img/full_likelihood/comparing_couplings/1c75A00/comparative_value_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive_divergence_seqsep8.png" alt="Comparing the ranking of highest scoring contacts predicted with pseudo-likelihood and contrastive divergence for protein 1c75A00. Contact scores are computed as APC corrected Frobenius norm of the couplings. Left Q-Q plot. Right Contact scores for the top 71 (=L) predictions from either method. Identical residue pairs are connected with a line. Green indicates identical ranking of the residue pair for both methods. Blue indicates higher ranking of the residue pair for contrastive divergence. Red indicates higher ranking of the residue pair for pseudo-likelihood." width="48%" />
+<p class="caption">
+Figure 4.21: Comparing the ranking of highest scoring contacts predicted with pseudo-likelihood and contrastive divergence for protein 1c75A00. Contact scores are computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings. <strong>Left</strong> Q-Q plot. <strong>Right</strong> Contact scores for the top 71 (=L) predictions from either method. Identical residue pairs are connected with a line. Green indicates identical ranking of the residue pair for both methods. Blue indicates higher ranking of the residue pair for contrastive divergence. Red indicates higher ranking of the residue pair for pseudo-likelihood.
+</p>
+</div>
+</div>
+<div id="protein-1ahla01" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Protein 1ahlA01</h3>
+<p>Proteins with very low Neff often have higher precision with CD.</p>
+<div class="figure" style="text-align: center"><span id="fig:precision-cd-final-neff"></span>
+<iframe src="img/full_likelihood/final/meanprecision_by_neff.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 4.22: better for small N
+</p>
+</div>
+
+</div>
 </div>
 <!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-Ma2016">
+<p>198. Ma, X., and Wang, X. (2016). Average Contrastive Divergence for Training Restricted Boltzmann Machines. Entropy <em>18</em>, 35. Available at: <a href="http://www.mdpi.com/1099-4300/18/1/35" class="uri">http://www.mdpi.com/1099-4300/18/1/35</a>.</p>
+</div>
 <div id="ref-Mahsereci2017">
 <p>196. Mahsereci, M., Balles, L., Lassner, C., and Hennig, P. (2017). Early Stopping without a Validation Set. arXiv. Available at: <a href="http://arxiv.org/abs/1703.09580" class="uri">http://arxiv.org/abs/1703.09580</a>.</p>
 </div>

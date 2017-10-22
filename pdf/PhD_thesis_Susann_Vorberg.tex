@@ -3266,21 +3266,22 @@ distribution {[}\protect\hyperlink{ref-Fischer2012}{188}{]}. Bengio and
 Delalleau show that the bias for \protect\hyperlink{abbrev}{CD}-k kan be
 understood as a residual term when expressing the log likelihood
 gradient as an expansion that involves the k-th sample of the Gibbs
-chain {[}\protect\hyperlink{ref-Bengio2009}{189}{]}. As the number of
-Gibbs steps, k, goes to infinity the residual term and hence the bias
-converges to zero and the \protect\hyperlink{abbrev}{CD} gradient
-estimate converges to a stochastic estimation of the true likelihood
-gradient. Indeed, eventhough surprising results have been obtained by
-evolving the Markov chains for only one Gibbs step, typically
-\protect\hyperlink{abbrev}{CD}-k for k\textgreater{}\textgreater{}1
-gives more precise results
+chain
+{[}\protect\hyperlink{ref-Bengio2009}{189},\protect\hyperlink{ref-Ma2016}{198}{]}.
+As the number of Gibbs steps, k, goes to infinity the residual term and
+hence the bias converges to zero and the \protect\hyperlink{abbrev}{CD}
+gradient estimate converges to a stochastic estimation of the true
+likelihood gradient. Indeed, eventhough surprising results have been
+obtained by evolving the Markov chains for only one Gibbs step,
+typically \protect\hyperlink{abbrev}{CD}-k for
+k\textgreater{}\textgreater{}1 gives more precise results
 {[}\protect\hyperlink{ref-Bengio2009}{189}{]}. Furthermore it has been
 shown, that bias also depends on the mixing rate (rate of convergence)
 of the chains whereby the mixing rate decreases when model parameters
-increase {[}\protect\hyperlink{ref-Tieleman2008}{198}{]}. This can lead
+increase {[}\protect\hyperlink{ref-Tieleman2008}{199}{]}. This can lead
 to divergence of the \protect\hyperlink{abbrev}{CD}-k solution from
 optimal solution in a sense that the model systematically gets worse as
-optimization progresses {[}\protect\hyperlink{ref-Fischer2010}{199}{]}.
+optimization progresses {[}\protect\hyperlink{ref-Fischer2010}{200}{]}.
 Regularization of the parameters offers a solution to this problem,
 constraining the magnitude of the parameters. A different solution
 suggested by Bengio and Delalleau is to dynamically increase k when the
@@ -3296,10 +3297,10 @@ known approximation algorithms have been drawn. For example, it can be
 shown that \protect\hyperlink{abbrev}{CD} using one Gibbs update step on
 a randomly selected variable is exactly equivalent to a stochastic
 maximum pseudo-likelihood estimation
-{[}\protect\hyperlink{ref-Hyvarinen2006}{200},\protect\hyperlink{ref-Hyvarinen2007}{201}{]}.
+{[}\protect\hyperlink{ref-Hyvarinen2006}{201},\protect\hyperlink{ref-Hyvarinen2007}{202}{]}.
 Asuncion and colleagues showed further that an arbitrary good
 approximation to the full likelihood can be reached by applying
-blocked-Gibbs sampling {[}\protect\hyperlink{ref-Asuncion2010}{202}{]}.
+blocked-Gibbs sampling {[}\protect\hyperlink{ref-Asuncion2010}{203}{]}.
 \protect\hyperlink{abbrev}{CD} based on sampling an arbitraty number of
 variables, has an equivalent stochastic composite likelihood, which is a
 higher-order generalization of the pseudo-likelihood.
@@ -3307,7 +3308,7 @@ higher-order generalization of the pseudo-likelihood.
 Another variant of \protect\hyperlink{abbrev}{CD} is
 \protect\hyperlink{abbrev}{PCD}, such that the Markov chain is not
 reinitialized at a data sample every time a new gradient is computed
-{[}\protect\hyperlink{ref-Tieleman2008}{198}{]}. Instead, the Markov
+{[}\protect\hyperlink{ref-Tieleman2008}{199}{]}. Instead, the Markov
 chains are kept \emph{persistent} that is, they are evolved between
 successive gradient computations. The fundamental idea behind
 \protect\hyperlink{abbrev}{PCD} is that the model changes only slowly
@@ -3315,13 +3316,13 @@ between parameter updates given a sufficiently small learning rate.
 Consequently, the Markov chains will not be pushed too far from
 equilibrium after each update but rather stay close to the stationary
 distribution
-{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Fischer2012}{188},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
+{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Fischer2012}{188},\protect\hyperlink{ref-Tieleman2008}{199}{]}.
 Tieleman and others observed that \protect\hyperlink{abbrev}{PCD}
 performs better than \protect\hyperlink{abbrev}{CD} in all practical
 cases tested, eventhough \protect\hyperlink{abbrev}{CD} can be faster in
 the early stages of learning and thus should be preferred when runtime
 is the limiting factor
-{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
+{[}\protect\hyperlink{ref-Murphy2012}{92},\protect\hyperlink{ref-Tieleman2008}{199},\protect\hyperlink{ref-Swersky2010}{204}{]}.
 
 The next sections discuss various modifications of the
 \protect\hyperlink{abbrev}{CD} algorithm, such as varying the
@@ -3627,7 +3628,7 @@ of regularizer). \textbf{Right} L2-norm of the coupling parameters
 As discussed earlier, it has been pointed out in the literature that
 using \(k>1\) Gibbs steps for sampling sequences gives more precise
 results at the cost of longer runtimes per gradient evaluation
-{[}\protect\hyperlink{ref-Bengio2009}{189},\protect\hyperlink{ref-Tieleman2008}{198}{]}.
+{[}\protect\hyperlink{ref-Bengio2009}{189},\protect\hyperlink{ref-Tieleman2008}{199}{]}.
 I analysed the impact on performance when the number of Gibbs steps is
 increased to 5 and 10. As can be seen in Figure
 \ref{fig:precision-cd-gibbs-steps}, increasing the number of Gibbs steps
@@ -3725,73 +3726,165 @@ initial learning rate, when not using the default
 
 \subsection{Persistent Contrastive Divergence}\label{cd-gibbs-steps}
 
-Finally I analysed \protect\hyperlink{abbrev}{PCD} since it has often
-been found to be a better estimator of the likelihood gradient than
-\protect\hyperlink{abbrev}{CD}. It has been suggested to use
-\protect\hyperlink{abbrev}{PCD} with small learning rates and larger
-mini-batches because the fundamental assumption is that the model does
-not change to quickly over iterations and therefore the Markov chains
-will stay close to the equilibrium distribition. However, using smaller
-learning rates and larger minibatches not only increases runtime but
-also requires tuning of the learning rate and learning rate schedule.
-Since it has been found, that CD is faster in learning at the beginning
-of the optimization, I tested a compromise, that uses CD-1 at the
-beginning of the optimization and when learning slows down, measured as
-the relative change of the norm of coupling parameters, I start PCD.
-This also has the advantage that the model has already approached the
-optimum and the parameters \(\w\) will almost be constant over many
-updates.
+Finally I analysed, whether evolving the Markov chains over successive
+iterations, which is known as \protect\hyperlink{abbrev}{PCD}, does
+improve performance {[}\protect\hyperlink{ref-Tieleman2008}{199}{]}.
+Several empirical studies have shown that
+\protect\hyperlink{abbrev}{PCD} performs superior compared to
+\protect\hyperlink{abbrev}{CD}-1 and also to
+\protect\hyperlink{abbrev}{CD}-10
+{[}\protect\hyperlink{ref-Tieleman2008}{199},\protect\hyperlink{ref-Swersky2010}{204}{]}.
+In the literatur is has been pointed out that
+\protect\hyperlink{abbrev}{PCD} needs to use small learning rates
+because in order to sample from a distribution close to the stationary
+distribution the parameters cannot change too rapidly. However, using
+smaller learning rates not only increases runtime but also requires
+tuning of the learning rate and learning rate schedule once again. Since
+it has been found, that \protect\hyperlink{abbrev}{CD} is faster in
+learning at the beginning of the optimization, I tested a compromise,
+that uses \protect\hyperlink{abbrev}{CD}-1 at the beginning of the
+optimization and when learning slows down,
+\protect\hyperlink{abbrev}{PCD} is switched on. Concretely,
+\protect\hyperlink{abbrev}{PCD} is switched on, when the relative change
+of the norm of coupling parameters, \(||\w||_2\), falls below
+\(\epsilon \in \{\mathrm{1e}{-3}, \mathrm{1e}{-5}\}\) while the
+convergence criterion is not altered and convergence is assumed when the
+relative change falls below \(\epsilon \eq \mathrm{1e}{-8}\). This also
+has the advantage that the model has already approached the optimum and
+the parameters \(\w\) will almost be constant over many updates.
 
-As PCD might require samller update steps and larger minibatches, I
-analysed the performance of PCD for the default settings of CD and
-additionally for smaller learning and decay rates and larger
-minibatches. Note that one Markov chain is kept for every sequence of
-the input alignment. At each iteration a subset \(N^{\prime} < N\) of
-the Markov chains is randomly selected (without replacement) and used to
-for another round of Gibss sampling at the current iteration.
+Figure \ref{fig:precision-pcd} shows the mean precision of top ranked
+contacts on the validation set computed with several
+\protect\hyperlink{abbrev}{PCD} variants that perform almost equally
+well. Evolving the Gibbs chains for more than k=1 steps results in a
+slight drop in performance, just as it has been observed for
+\protect\hyperlink{abbrev}{CD} (Figure \ref{fig:precision-pcd} shows
+performance for k=10 steps). Optimizing the full likelihoood with
+\protect\hyperlink{abbrev}{CD} and switiching to
+\protect\hyperlink{abbrev}{PCD} at a later stage of optimization does
+also not have a notable impact on performance.
 
-PLOT PCD for different LEARNIGN RATEWS and SAMPLE SIZES
 
-Discussion: - as could be seen: improved gradients and different
-solutions do not translate into improved precision of top ranked
-contacts - APC corrected l2norm might not be an appropriate measure for
-CD couplings: look at correlation plot of couplings (pll vs cd) and
-l2norm (pll vs cd) and apc l2norm (pll vs cd) -\textgreater{}
-differences vanish - ranking of residues might not be influenced by
-subtle changes in parameters when crude l2norm is computed
--\textgreater{} rank plot: merged list of top ranked contacts from both
-methods what can we see: - generally pll has stronger scores (see also
-boxplot over all proteins? statistic?) - ranking is very similar,
-especially for top ranked contacts (thats why benchmark plots so
-similar)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/pcd/precision_vs_rank_notitle} 
+
+}
+
+\caption{Mean precision for top ranked contact
+predictions over 300 proteins. Contact scores are computed as the
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings \(\wij\). \textbf{pseudo-likelihood}: contact scores computed
+from pseudo-likelihood. \textbf{pCD}: contact scores computed from
+\protect\hyperlink{abbrev}{PCD} optimized with
+\protect\hyperlink{abbrev}{SGD} using the hyperparameters that have been
+found to work optimal with \protect\hyperlink{abbrev}{CD} as described
+throughout the last sections. \textbf{pCD \#Gibbs steps = 10}: same as
+pCD, but evolving the Gibbs chain for 10 steps. \textbf{pCD start =
+1e-3}: \protect\hyperlink{abbrev}{SGD} optimization starts by optimizing
+the full likelihood using the \protect\hyperlink{abbrev}{CD} gradient
+approximation and switches to the \protect\hyperlink{abbrev}{PCD}
+gradient approximation once the relative change of L2 norm of parameters
+has fallen below \(\epsilon \eq \mathrm{1e}{-3}\) evaluated over the
+last 10 iterations. \textbf{pCD start = 1e-5}: same as `pCD start =
+1e-3', but with \(\epsilon \eq \mathrm{1e}{-5}\).}\label{fig:precision-pcd}
+\end{figure}
+
+In contrast to the findings in literature, neither
+\protect\hyperlink{abbrev}{CD}-k with k\textgreater{}1 Gibbs steps nor
+\protect\hyperlink{abbrev}{PCD} does improve performance with respect to
+precision of the top ranked contact predictions. Swersky and colleagues
+ellaborated on various choices of hyperparameters (e.g momentum,
+averaging, regularization, etc.) for training Restricted Boltzmann
+Machines as classifiers with \protect\hyperlink{abbrev}{CD}-k and
+\protect\hyperlink{abbrev}{PCD}
+{[}\protect\hyperlink{ref-Swersky2010}{204}{]}. They found many
+subtleties that need to be explored and can play a crucial role for
+successfull training. In section \ref{sgd-hyperparameter-tuning} I
+manually tuned the learning rate and annealing schedule for stoachstic
+gradient descent to be used with \protect\hyperlink{abbrev}{CD}-1. It is
+plausible, that these settings are not optimal for
+\protect\hyperlink{abbrev}{CD}-k with k\textgreater{}1 Gibbs steps and
+\protect\hyperlink{abbrev}{PCD} and require tuning once again. Because
+hyperparameter optimization with stochastic gradient descent is a
+time-consuming task, in the following, I applied the popular \emph{ADAM}
+stochastic gradient descent optimizer that does in theory not require
+tuning many hyperparameters
+{[}\protect\hyperlink{ref-Kingma2014}{205}{]}.
 
 \section{Using ADAM to optimize Contrastive
 Divergence}\label{adam-results}
 
-It is possible that the learning rate schedule and decay rate need to be
-tuned with respect to the number of Gibbs steps used for sampling
-because different choices of Gibbs steps influence the size of the
-gradient. The same might apply to usign persistent contrasticve
-divergence.
+\emph{ADAM} computes per-parameter adaptive learning rates and includes
+momentum and the default values have been found to work quite well (see
+methods section \ref{methods-full-likelihood-adam} for details)
+{[}\protect\hyperlink{ref-Ruder2017}{190},\protect\hyperlink{ref-Kingma2014}{205}{]}.
+However, I tested different learning rates for \emph{ADAM} to optimize
+the full likelihood with \protect\hyperlink{abbrev}{CD}-1 for protein
+1mkcA00 (number of sequences = 142) and 1c75A00 (number of sequences =
+28078) and found that both proteins require a differnt optimal learning
+rate. In contrast to plain stochastic gradient descent, with \emph{ADAM}
+it is possible to use larger learning rates for proteins having large
+alignments, because the learning rate will be adapted to the magnitude
+of the gradient for every parameter individually. For protein 1mkcA00,
+with \protect\hyperlink{abbrev}{Neff}=96, a learning rate of 5e-3
+quickly leads to convergence whereas for protein 1c75A00, having
+\protect\hyperlink{abbrev}{Neff}=16808, an even larger learning rate can
+be chosen to obtain quick convergence (see Appendix Figure
+\ref{fig:adam-learning-rate}). Therefore, I again specified the learning
+rate as a function of \protect\hyperlink{abbrev}{Neff},
 
-Hyperparameter optimization with stochastic gradient descent is a
-time-consuming task requiring manual intervention for each of the
-different settings. There exist many variants of stochastic gradient
-descent algorithms that deal with the aforementioned challenges
-e.g.~speeding up convergence rates using momentum or defining adaptive
-learning rates for each parameter
-{[}\protect\hyperlink{ref-Ruder2017}{190}{]}. One of these
-\protect\hyperlink{abbrev}{SGD} variants is Adaptive Moment Estimation
-(\emph{ADAM}) {[}\protect\hyperlink{ref-Kingma2014}{203}{]}, an
-algorithm that computes per-parameter learning rates including momentum
-(see methods section \ref{methods-full-likelihood-adam} for details). A
-major advantage of \emph{ADAM} over pure \protect\hyperlink{abbrev}{SGD}
-is that it does not require tuning many hyperparameters as the default
-values have been found to work quite well. \emph{ADAM} will be compared
-to the manually tuned \protect\hyperlink{abbrev}{SGD} optimizer in
-section \ref{adam-results}. I used \emph{ADAM} to find out whether its
-automatic adjusting of learning rates can find better parameter
-estimates than {[}sgd{]} for using different gibbs steps and pcd.
+\begin{equation}
+  \alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}}) \; ,
+  \label{eq:learning-rate-wrt-neff-adam}
+\end{equation}
+
+such that or small \protect\hyperlink{abbrev}{Neff}, e.g.~5th percentile
+of the distribution in the dataset \(\approx 50\), this definition of
+the learning rate yields \(\alpha_0 \approx 8\mathrm{e}{-3}\) and for
+large \protect\hyperlink{abbrev}{Neff}, e.g.~95th percentile
+\(\approx 15000\), this yields \(\alpha_0 \approx 2\mathrm{e}{-2}\).
+
+It is interesting to note, that the norm of the coupling parameters,
+\(||\w||_2\), converges towards different values depending on the choice
+of the learning rate \(\alpha\) ((see Appendix Figure
+\ref{fig:adam-learning-rate}). By default, \emph{ADAM} uses a constant
+learning rate, because the algorithm performs a kind of step size
+annealing by nature. However, popular implementations of \emph{ADAM} in
+the
+\href{https://github.com/fchollet/keras/blob/master/keras/optimizers.py\#L385}{Keras}
+{[}\protect\hyperlink{ref-Chollet2015}{206}{]} and
+\href{https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py\#L565-L629}{Lasagne}
+{[}\protect\hyperlink{ref-Dieleman2015}{207}{]} packages allow the use
+of an annealing schedule. I therefore tested \emph{ADAM} with a
+sigmoidal learning rate annealing schedule which already gave good
+results for \protect\hyperlink{abbrev}{SGD} (see section
+\ref{sgd-hyperparameter-tuning}). Indeed, as can be seen in Appendix
+Figure \ref{fig:adam-learning-rate-annealing}, when \emph{ADAM} is used
+with a sigmoidal decay of the learning rate, the L2-norm of the coupling
+parameters \(||\w||_2\) converges roughly towards the same value. For
+the following analysis I used \emph{ADAM} with a learning rate defined
+as a function of \protect\hyperlink{abbrev}{Neff} and a sigmoidal
+learning rate annealing schedule with decay rate \(\gamma \eq 5e-6\).
+
+TODO
 
 A problem when using \emph{ADAM} is that the necessarty condidtion
 \(\sum_{a,b=1}^{20} \wijab = 0\) is violated (see section
@@ -3800,176 +3893,208 @@ A problem when using \emph{ADAM} is that the necessarty condidtion
 \section{Comparing CD couplings to pLL
 couplings}\label{comparing-pll-cd}
 
-Scatter Plots for couplings wijab: nice correlation - pearson
-correlation? gibt 3 outlier und das sind auch noch die staerksten
-couplings hier sieht man besser als beim boxplot, das CD kleinere
-couplings hat (absolut)
+The previous sections dealed intensively with the hyperparameter
+optimization for the stochastic gradient decent optimizer and
+hyperparameters of the \protect\hyperlink{abbrev}{CD} model itself.
+Against expectations, the best performance with respect to the precision
+of the top ranked contacts, was obtained by using the most simple
+variant of the \emph{contrastive divergence} algorithm,
+\protect\hyperlink{abbrev}{CD}-1. \protect\hyperlink{abbrev}{CD}-1
+generates sequence samples according to the current state of the model
+by evolving Gibbs chains, that have been initialized at data samples,
+for one full step. Eventhough, the \emph{ADAM} optimizer did not improve
+perfomance, it is still likely that appropriate modifications of the
+optimization procedure might lead to improvments, e.g.~averaging
+{[}\protect\hyperlink{ref-Ma2016}{198}{]}. As dicussed in section
+\ref{convergence-criteria-sgd}, the convergence criterion is a crucial
+aspect for optimization, not only affecting runtime but also preventing
+overfitting. It might be worth to assess convergence with more
+sophisticated metrics than the L2 norm of the coupling parameters,
+\(||\w||_2\), liek the EB-criterion proposed by Mahsereci et al.
+{[}\protect\hyperlink{ref-Mahsereci2017}{196}{]}. Interestingly, better
+gradient estimates that were obtained by running more Gibbs chains in
+parallel (see section \ref{cd-sampling-size}), did not carry over to
+better predictive performance. It can be speculated that the heuristic
+contact score, computed as the \protect\hyperlink{abbrev}{APC} corrected
+Frobenius norm of the couplings, that has empirically been found to work
+very well for pseudo-likelihood couplings, might not be an appropriate
+choice for couplings computed with \protect\hyperlink{abbrev}{CD}.
+Furthermore, it is possible that the improved gradient, obtained by
+generating more samples, helps to finetune the parameters which has no
+effect on the contact score and the ovaral ranking of residue pairs.
+
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/final/precision_vs_rank_notitle} 
 
 }
 
-\caption{dideldum}\label{fig:comapring-cd-pll-scatter1}
+\caption{Mean precision for top ranked contact
+predictions over 2000 proteins. \textbf{pseudo-likelihood (APC)} Contact
+score is computed as \protect\hyperlink{abbrev}{APC} corrected Frobenius
+norm of the couplings computed from pseudo-likelihood.
+\textbf{pseudo-likelihood} same as ``pseudo-likelihood (APC)'' but
+without \protect\hyperlink{abbrev}{APC} \textbf{contrastive divergence
+(APC)} Contact score is computed as \protect\hyperlink{abbrev}{APC}
+corrected Frobenius norm of the couplings computed from
+contrastive-divergence. \textbf{contrastive divergence} same as
+``contrastive divergence (APC)'' but without
+\protect\hyperlink{abbrev}{APC}.}\label{fig:precision-cd-final}
 \end{figure}
 
-Boxplots for couplings wijab: sieht ma nicht viel
+A final benchmark over a larger set of proteins (2000 proteins from
+subsets 9 and 10 from dataset described in method section \ref{dataset})
+reveals that contact predictions obtained by maximizing the
+pseudo-likelihood and by optimizing the full likelihood with contrastive
+divergence perform similar (see Figure \ref{fig:precision-cd-final}). At
+any rate it is interesting to not only compare pseudo-likelihood and
+contrastive divergence based on ovaral performance, but to also have a
+look at single predictions. In the following, I will examine and compare
+the predicitons made by both methods for two representative proteins,
+one with a small alignment and low corresponding
+\protect\hyperlink{abbrev}{Neff} value and one with a large alignment
+and high corresponding \protect\hyperlink{abbrev}{Neff} value.
+
+\subsection{Protein 1c75A00}\label{protein-1c75a00}
+
+Protein 1c75A00 has length L=71 and 28078 sequences in the alignment and
+is among the proteins with the highest number of effective sequences
+(\protect\hyperlink{abbrev}{Neff}=16808 \textgreater{} 95th percentile).
+The contact score (\protect\hyperlink{abbrev}{APC} corrected Frobenius
+norm of the couplings \(\wij\)) computed from pseudo-likelihood and
+contrastive divergence couplings performs equally well (see Appendix
+Figure \ref{fig:precision-pll-cd-1c75a00}). The 14 (=L/5) highest
+scoring contacts predicted with \protect\hyperlink{abbrev}{CD} are true
+positive contacts according to an \(8 \angstrom \Cb\) distance cutoff
+compared to 13 true positive contacts predicted with pseudo-likelihood.
+Both methods predict very similar contact maps (see Figure
+\ref{fig:contact-maps-1c75a00}). The highest scoring predictions (top
+L/5 contacts marked with croses) are identical except for one contact,
+which is the false positive contact predicted by the pseudo-likelihood.
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/contact_map_pseudo-likelihood_apc_1c75A00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/contact_map_contrastive_divergence_apc_1c75A00} 
 
 }
 
-\caption{dideldum}\label{fig:comapring-cd-pll-boxplot1}
+\caption{Contact maps computed for protein
+1c75A00. Upper left shows computed contact map and lower right shows the
+native distance map. Contacts are defined according to a
+\(8 \angstrom \Cb\) distance cutoff. Contact scores have been computed
+as \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings. \textbf{Left} Couplings computed from pseudo-likelihood.
+\textbf{Right} Couplings computed from \protect\hyperlink{abbrev}{CD}.}\label{fig:contact-maps-1c75a00}
 \end{figure}
 
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+The contact maps suggest that both scores are very similar. Indeed, the
+correlation between both scores is very high (Pearson's correlation
+coefficient = 0.98) as can bee seen in the right plot in Figure
+\ref{fig:scatter-plots-1c75a00}. Of course, by applying the average
+product correction (APC), the scores are normalized with respect to the
+raw contact scores (=Frobenius norm of couplings \(\wij\)). The left
+plot in Figure \ref{fig:scatter-plots-1c75a00} shows the contact scores
+before applying the average product correction. The raw contact scores
+computed from contrastive divergence couplings are systematically
+stronger than for pseudo-likelihood. Most likely this effect arises from
+the weaker regularization that is used with contrastive divergence
+(\(\lambda_w = 0.1L\)) than compared to pseudo-likelihood optimization
+(\(\lambda_w = 0.2L\)) (see section
+\ref{regularization-for-cd-with-sgd}).
 
-Scatter for l2norm over couplings
-\textbar{}\textbar{}wij\textbar{}\textbar{}\_2: hier sieht man sehr
-schoen, dass CD systematisch kleinere scores hat als pLL und man sieht
-die drei outlier
+
+
+
+
+
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_1c75A00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00} 
 
 }
 
-\caption{dideldum}\label{fig:comparing-cd-pll-scatter2}
+\caption{Contact scores computed from
+pseudo-likelihood and \protect\hyperlink{abbrev}{CD} couplings for
+protein 1c75A00. \textbf{Left} Frobenius norm of couplings.
+\textbf{Right} Frobenius norm + \protect\hyperlink{abbrev}{APC} of
+couplings.}\label{fig:scatter-plots-1c75a00}
 \end{figure}
 
-Boxplots for l2norm over couplings
-\textbar{}\textbar{}wij\textbar{}\textbar{}\_2: contrastive divergence
-hat kleineren scores signifikant?
+However, the contact scores have no meaning by themselfs but merely
+reflect the confidence of the prediction.\\
+It is more meaningful to compare the ranking of the residue pairs
+imposed by the scores. The left plot in Figure
+\ref{fig:ranking-pll-cd-1c75a00} compares the ordered scores of both
+methods that lie very close to the diagonal which indicates that both
+distribution are very similar. A detailed view of the top ranked
+predictions is given in the right plot in Figure
+\ref{fig:ranking-pll-cd-1c75a00}. The three most confident predictions
+are identical for both methods. Yet, the ranks of subsequent predictions
+are swapped by only a few positions which was already evident from the
+contact maps.
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/qq_plot_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00} \includegraphics[width=0.48\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/comparative_value_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive_divergence_seqsep8} 
 
 }
 
-\caption{dideldum}\label{fig:comapring-cd-pll-boxplot2}
+\caption{Comparing the ranking of highest
+scoring contacts predicted with pseudo-likelihood and contrastive
+divergence for protein 1c75A00. Contact scores are computed as
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings. \textbf{Left} Q-Q plot. \textbf{Right} Contact scores for the
+top 71 (=L) predictions from either method. Identical residue pairs are
+connected with a line. Green indicates identical ranking of the residue
+pair for both methods. Blue indicates higher ranking of the residue pair
+for contrastive divergence. Red indicates higher ranking of the residue
+pair for pseudo-likelihood.}\label{fig:ranking-pll-cd-1c75a00}
 \end{figure}
 
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+\subsection{Protein 1ahlA01}\label{protein-1ahla01}
 
-Scatter for l2norm-apc over couplings
-\textbar{}\textbar{}wij\textbar{}\textbar{}\_2 - apc: das gleiche mit
-apc: systematisch kleinere scores (absolut)
+Proteins with very low Neff often have higher precision with CD.
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/final/meanprecision_by_neff} 
 
 }
 
-\caption{dideldum}\label{fig:comparing-cd-pll-scatter3}
+\caption{better for small N}\label{fig:precision-cd-final-neff}
 \end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:comapring-cd-pll-boxplot3}
-\end{figure}
-
-Boxplots for l2norm-apc over couplings
-\textbar{}\textbar{}wij\textbar{}\textbar{}\_2 - apc: auch mit apc: es
-gibt weniger starke scores mit CD signifikant?
-
-scipy.stats.wilcoxon(l2norm\_apc\_pll, l2norm\_apc\_cd)
-\#WilcoxonResult(statistic=187035.0, pvalue=0.029710790280912919)
-
-scipy.stats.ranksums(l2norm\_apc\_pll, l2norm\_apc\_cd)
-\#RanksumsResult(statistic=0.38719674947266086,
-pvalue=0.69861055638055758)
-
-scipy.stats.kendalltau(l2norm\_apc\_pll, l2norm\_apc\_cd)
-\#KendalltauResult(correlation=0.76655297812416368,
-pvalue=1.3239009316846667e-260)
-
-scipy.stats.spearmanr(l2norm\_apc\_pll, l2norm\_apc\_cd)
-\#SpearmanrResult(correlation=0.92532449605319178, pvalue=0.0)
-
-scipy.stats.ks\_2samp(l2norm\_apc\_pll, l2norm\_apc\_cd)
-Ks\_2sampResult(statistic=0.067552602436323439,
-pvalue=0.030922873101286375)
-
-The two score distributions are significantly different (kolmogorov
-smirnov test, two-sided p-value of 0.03).
-
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
-
-Comparing the ranking: geiler plot ranking ist sehr aehnlich, besonders
-fuer top contacts nur diese drei outlier sind bei CD sehr viel hoeher
-gerankt als bei pLL
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:comparing-cd-pll-ranking}
-\end{figure}
-
-Comparing the ranking with q-q plot:
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:comparing-cd-pll-ranking-qq}
-\end{figure}
-
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
-
-Showing the contact maps: pLL
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:contact-map-1c75a00-pll}
-\end{figure}
-
-CD
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:contact-map-1c75a00-cd}
-\end{figure}
-
-Showing precision:
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{img/aa_venn_diagram} 
-
-}
-
-\caption{dideldum}\label{fig:precision-vs-rank-1c75a00}
-\end{figure}
-
-\begin{itemize}
-\tightlist
-\item
-  convergence criterion: mention paper
-  {[}\protect\hyperlink{ref-Mahsereci2017}{196}{]}
-\end{itemize}
 
 \chapter{Random Forest Contact Prior}\label{contact-prior}
 
@@ -3991,7 +4116,7 @@ such as MetaPsicov {[}\protect\hyperlink{ref-Jones2015a}{82}{]}, NeBCon
 {[}\protect\hyperlink{ref-Skwark2016}{80}{]}. Other frequently used
 sequence derived features include pairwise contact potentials, sequence
 separation and conservation measures such as column entropy
-{[}\protect\hyperlink{ref-Jones2015a}{82},\protect\hyperlink{ref-He2017}{85},\protect\hyperlink{ref-Ma2015a}{204}{]}.
+{[}\protect\hyperlink{ref-Jones2015a}{82},\protect\hyperlink{ref-He2017}{85},\protect\hyperlink{ref-Ma2015a}{208}{]}.
 
 In the following sections I present a random forest classifier that uses
 sequence derived features to distinguish contacts from non-contacts.
@@ -4012,10 +4137,10 @@ single methods.
 
 Random Forests are supervised machine learning methods that belong to
 the class of ensemble methods
-{[}\protect\hyperlink{ref-Ho1998}{205}--\protect\hyperlink{ref-Breiman2001}{207}{]}.
+{[}\protect\hyperlink{ref-Ho1998}{209}--\protect\hyperlink{ref-Breiman2001}{211}{]}.
 They are easy to implement, fast to train and can handle large numbers
 of features due to implicit feature selection
-{[}\protect\hyperlink{ref-Menze2009}{208}{]}.
+{[}\protect\hyperlink{ref-Menze2009}{212}{]}.
 
 Ensemble methods combine the predictions of several independent base
 estimators with the goal to improve generalizability over a single
@@ -4038,7 +4163,7 @@ susceptible to noise in the training set and therefore prone to
 overfitting which results in poor generalization ability. As a
 consequence of randomness and averaging over many decision trees, the
 variance of a random forest predictor decreases and therefore the risk
-of overfitting {[}\protect\hyperlink{ref-Louppe2014}{209}{]}. It is
+of overfitting {[}\protect\hyperlink{ref-Louppe2014}{213}{]}. It is
 still advisable to restrict the depth of single trees in a random
 forest, not only to counteract overfitting but also to reduce model
 complexity and to speedup the algorithm.
@@ -4091,7 +4216,7 @@ particular node \(N\), the \emph{decrease in Gini impurity}
 
 where \(p_{\textrm{left}}\) and \(p_{\textrm{right}}\) refers to the
 fraction of samples ending up in the left and right child node
-respectively {[}\protect\hyperlink{ref-Menze2009}{208}{]}. The feature
+respectively {[}\protect\hyperlink{ref-Menze2009}{212}{]}. The feature
 \(f\) with highest \(\Delta GI_f\) over the two resulting child node
 subsets will be used to split the data set at the given node \(N\).
 
@@ -4109,7 +4234,7 @@ features and introducing bias. Furthermore, it has been found that
 feature selection based on \emph{Gini importance} is biased towards
 selecting features with more categories as they will be chosen more
 often for splits and therefore tend to obtain higher scores
-{[}\protect\hyperlink{ref-Strobl2007}{210}{]}.
+{[}\protect\hyperlink{ref-Strobl2007}{214}{]}.
 
 \section{Hyperparameter Optimization for Random
 Forest}\label{hyperparameter-optimization-for-random-forest}
@@ -4120,7 +4245,7 @@ While more trees in the random forest generally improve performance of
 the model, they will slow down training and prediction. A crucial
 hyperparamter is the number of features that is randomly selected for a
 split at each node in a tree
-{[}\protect\hyperlink{ref-Bernard2009}{211}{]}. Stochasticity introduced
+{[}\protect\hyperlink{ref-Bernard2009}{215}{]}. Stochasticity introduced
 by the random selection of features is a key characteristic of random
 forests as it reduces correlation between the trees and thus the
 variance of the predictor. Selecting many features typically increases
@@ -4134,7 +4259,7 @@ which is known as pruning or by enforcing a minimal leaf node size
 regarding the minimal number of data samples ending in a leaf node.
 Again, a positive side-effect of pruning and requiring minimal leaf node
 size is a speedup of the algorithm.
-{[}\protect\hyperlink{ref-Louppe2014}{209}{]}
+{[}\protect\hyperlink{ref-Louppe2014}{213}{]}
 
 In the following, I use 5-fold cross-validation to identify the optimal
 architecture of the random forest. Details about the training set and he
@@ -4280,11 +4405,11 @@ section.
 Figure \ref{fig:rf-feature-importance} shows the ranking of the ten most
 important features according to \emph{Gini importance}. Both local
 statistical contact scores, \emph{OMES}
-{[}\protect\hyperlink{ref-Fodor2004a}{212}{]} and
+{[}\protect\hyperlink{ref-Fodor2004a}{216}{]} and
 \protect\hyperlink{abbrev}{MI} (mutual information between amino acid
 counts), constitute the most important features besides the mean pair
 potentials acording to Miyazawa \& Jernigan
-{[}\protect\hyperlink{ref-Miyazawa1999a}{213}{]} and
+{[}\protect\hyperlink{ref-Miyazawa1999a}{217}{]} and
 Li\&Fang{[}\protect\hyperlink{ref-Li2011}{67}{]}. Further important
 features include the relative solvent accessibility at both pair
 positions, the total percentage of gaps at both positions, the
@@ -4319,23 +4444,23 @@ five around position i.
 \includegraphics[width=1\linewidth]{img/random_forest_contact_prior/feature_random_forest_optimalhyperparameters_topfeatures} \caption{Top ten features ranked according to
 \emph{Gini importance}. \textbf{OMES+APC}:
 \protect\hyperlink{abbrev}{APC} corrected OMES score according to
-Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{212}{]}.
+Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{216}{]}.
 \textbf{mean pair potential (Miyasawa \& Jernigan)}: average
 quasi-chemical energy of transfer of amino acids from water to the
-protein environment {[}\protect\hyperlink{ref-Miyazawa1999a}{213}{]}.
+protein environment {[}\protect\hyperlink{ref-Miyazawa1999a}{217}{]}.
 \textbf{MI+APC}: \protect\hyperlink{abbrev}{APC} corrected mutual
 information between amino acid counts (using pseudo-counts).
 \textbf{mean pair potential (Li\&Fang)}: average general contact
 potential by Li \& Fang {[}\protect\hyperlink{ref-Li2011}{67}{]}.
 \textbf{rel. solvent accessibilty i(j)}: RSA score computed with
-Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{214}{]} for
+Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{218}{]} for
 position i(j). \textbf{pairwise gap\%}: percentage of gapped sequences
 at either position i and j. \textbf{correlation mean isoelectric
 feature}: Pearson correlation between the mean isoelectric point feature
 (according to Zimmermann et al., 1968) for positions i and j.
 \textbf{sequence separation}: \textbar{}j-i\textbar{}. \textbf{beta
 sheet propensity window(i)}: beta-sheet propensity according to Psipred
-{[}\protect\hyperlink{ref-Jones1999}{215}{]} computed within a window of
+{[}\protect\hyperlink{ref-Jones1999}{219}{]} computed within a window of
 five positions around i. eatures are described in detail in methods
 section \ref{seq-features}.}\label{fig:rf-feature-importance}
 \end{figure}
@@ -4345,7 +4470,7 @@ are rarely considered for splitting a node and can most likely be
 removed from the dataset. Removing irrelevant features from the dataset
 is a convenient procedure to reduce model complexity. It has been found,
 that prediction performance might even increase after removing the most
-irrelevant features {[}\protect\hyperlink{ref-Menze2009}{208}{]}. For
+irrelevant features {[}\protect\hyperlink{ref-Menze2009}{212}{]}. For
 example, during the development of \emph{EPSILON-CP}, a deep neural
 network method for contact prediction, the authors performed feature
 selection using boosted trees. By removing 75\% of the most
@@ -4422,7 +4547,7 @@ computed with pseudo-likelihood. \textbf{random forest} = random forest
 model trained on 75 sequence derived features. \textbf{OMES} =
 \protect\hyperlink{abbrev}{APC} corrected \emph{OMES} contact score
 according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{212}{]}. \textbf{mutual
+{[}\protect\hyperlink{ref-Fodor2004a}{216}{]}. \textbf{mutual
 information} = \protect\hyperlink{abbrev}{APC} corrected mutual
 information between amino acid counts (using pseudo-counts).}\label{fig:performance-rf}
 \end{figure}
@@ -4462,7 +4587,7 @@ Frobenius norm of couplings computed with pseudo-likelihood.
 \textbf{random forest} = random forest model trained on 75 sequence
 derived features. \textbf{OMES} = \protect\hyperlink{abbrev}{APC}
 corrected \emph{OMES} contact score according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{212}{]}. \textbf{mutual
+{[}\protect\hyperlink{ref-Fodor2004a}{216}{]}. \textbf{mutual
 information} = \protect\hyperlink{abbrev}{APC} corrected mutual
 information between amino acid counts (using pseudo-counts).}\label{fig:performance-neff-rf}
 \end{figure}
@@ -5038,7 +5163,7 @@ constant with respect to \(\cij\), we find
 \section{Dataset}\label{dataset}
 
 A protein dataset has been constructed from the CATH (v4.1)
-{[}\protect\hyperlink{ref-Sillitoe2015}{216}{]} database for
+{[}\protect\hyperlink{ref-Sillitoe2015}{220}{]} database for
 classification of protein domains. All CATH domains from classes
 1(mainly \(\alpha\)), 2(mainly \(\beta\)), 3(\(\alpha+\beta\)) have been
 selected and filtered for internal redundancy at the sequence level
@@ -5722,7 +5847,7 @@ for tuning the hyperparameters.
 \subsection{\texorpdfstring{Tuning Hyperparameters of \emph{ADAM}
 Optimizer}{Tuning Hyperparameters of ADAM Optimizer}}\label{methods-full-likelihood-adam}
 
-\emph{ADAM} {[}\protect\hyperlink{ref-Kingma2014}{203}{]} stores an
+\emph{ADAM} {[}\protect\hyperlink{ref-Kingma2014}{205}{]} stores an
 exponentially decaying average of past gradients and squared gradients,
 
 \begin{align}
@@ -5754,108 +5879,6 @@ term \(\epsilon\) and the corrected moment estimates \(\hat{m_t}\),
 Kingma et al. proposed the default values \(\beta_1=0.9\),
 \(\beta_2=0.999\) and \(\epsilon=1e−8\) and a constant learning rate
 \(\alpha=1e-3\).
-
-For the two protein chains 1mkc\_A\_00 and 1c75\_A\_00, having 142
-(\protect\hyperlink{abbrev}{Neff}=96) and 28078
-(\protect\hyperlink{abbrev}{Neff}=16808) aligned sequences respectively,
-I analysed the convergence for \protect\hyperlink{abbrev}{SGD} with
-different learning rates \(\alpha\) (see Figure
-\ref{fig:adam-learning-rate}). In contrast to plain stochastic gradient
-descent, with \emph{ADAM} it is possible to use larger learning rates
-for proteins having big alignments, because the learning rate will be
-adapted to the magnitude of the gradient for every parameter
-individually. For protein 1mkc\_A\_00 having a small alignment, a
-learning rate of 5e-3 quickly leads to convergence whereas for protein
-1c75\_A\_00 a larger learning rate can be chosen to obtain quick
-convergence. As a consequence, I defined the learning rate \(\alpha\) as
-a function of \protect\hyperlink{abbrev}{Neff},
-
-\begin{equation}
-  \alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}}) \; ,
-  \label{eq:learning-rate-wrt-neff-adam}
-\end{equation}
-
-such that it will take values \textasciitilde{}5e-3 for proteins with
-small alignments and values \textasciitilde{}1e-2 for proteins with
-large alignments.
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/full_likelihood/adam/1mkcA00_learningrates_parameternorm} \includegraphics[width=0.5\linewidth]{img/full_likelihood/adam/1c75A00_learningrates_parameternorm} 
-
-}
-
-\caption{L2-norm of the coupling parameters
-\(||\w||_2\) during optimization with \emph{ADAM} and different learning
-rates without annealing. The learning rate \(\alpha\) is specified in
-the legend. \textbf{Left} Convergence plot for protein 1mkc\_A\_00
-having protein length L=43 and 142 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=96). \textbf{Right} Convergence plot
-for protein 1c75\_A\_00 having protein length L=71 and 28078 sequences
-in the alignment (\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:adam-learning-rate}
-\end{figure}
-
-It is interesting to note in Figure \ref{fig:adam-learning-rate}, that
-the norm of the coupling parameters \(||\w||_2\) converges towards
-different values depending on the choice of the learning rate
-\(\alpha\). This inidicates that it is necessary to decrease the
-learning rate over time. By default, \emph{ADAM} uses a constant
-learning rate, because the algorithm performs a kind of step size
-annealing by nature. However, popular implementations of \emph{ADAM} in
-the
-\href{https://github.com/fchollet/keras/blob/master/keras/optimizers.py\#L385}{Keras}
-{[}\protect\hyperlink{ref-Chollet2015}{217}{]} and
-\href{https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py\#L565-L629}{Lasagne}
-{[}\protect\hyperlink{ref-Dieleman2015}{218}{]} packages allow the use
-of an annealing schedule. I therefore tested different learning rate
-annealing schedules for \emph{ADAM} assuming that with decreasing
-learning rates the L2-norm of the coupling parameters \(||\w||_2\) will
-converge towards a consistent value. Indeed, as can be seen in Figure
-\ref{fig:adam-learning-rate-annealing}, when using a linear or sigmoidal
-learning rate annealing schedule with \emph{ADAM}, the L2-norm of the
-coupling parameters \(||\w||_2\) converges roughly towards the same
-value that has been obtained with plain \protect\hyperlink{abbrev}{SGD}
-shown in Figure \ref{fig:sgd-single-proteins-learning-rate-schedule}.
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.5\linewidth]{img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm} \includegraphics[width=0.5\linewidth]{img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm} 
-
-}
-
-\caption{L2-norm of the coupling
-parameters \(||\w||_2\) during optimization with \emph{ADAM} and
-different learning rate annealing schedules. The learning rate
-\(\alpha\) is specified with respect to \protect\hyperlink{abrbev}{Neff}
-as \(\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})\). The learning rate
-annealing schedule is specified in the legend. \textbf{Left} Convergence
-plot for protein 1mkc\_A\_00 having protein length L=43 and 142
-sequences in the alignment (\protect\hyperlink{abbrev}{Neff}=96).
-\textbf{Right} Convergence plot for protein 1c75\_A\_00 having protein
-length L=71 and 28078 sequences in the alignment
-(\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:adam-learning-rate-annealing}
-\end{figure}
 
 \section{Computing the Gradient with Contrastive
 Divergence}\label{methods-cd-sampling}
@@ -6235,7 +6258,7 @@ Reasonable values are \(\sigma_{\mu}=0.1\),
 \(\sigma_\text{diag} = 100\).
 
 The log likelihood can be optimized using L-BFGS-B
-{[}\protect\hyperlink{ref-Byrd1995}{219}{]}, which requires the
+{[}\protect\hyperlink{ref-Byrd1995}{221}{]}, which requires the
 computation of the gradient of the log likelihood. For simplicity of
 notation, the following calculations consider the contribution of the
 log likelihood for just one protein, which allows to drop the index
@@ -6741,7 +6764,7 @@ weighted amino acid frequencies in alignment\strut
 Psipred\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 secondary structure prediction by PSIPRED
-(v4.0){[}\protect\hyperlink{ref-Jones1999}{215}{]} given as average
+(v4.0){[}\protect\hyperlink{ref-Jones1999}{219}{]} given as average
 three state propensities\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
@@ -6750,7 +6773,7 @@ three state propensities\strut
 NetsurfP\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 secomdary structure prediction by Netsurfp
-(v1.0){[}\protect\hyperlink{ref-Petersen2009a}{214}{]} given as average
+(v1.0){[}\protect\hyperlink{ref-Petersen2009a}{218}{]} given as average
 three state propensities\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 3\strut
@@ -6891,7 +6914,7 @@ shannon entropy (including gaps)\strut
 kullback leibler divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{220}{]}\strut
+{[}\protect\hyperlink{ref-Robinson1991}{222}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -6899,7 +6922,7 @@ between weighted observed and background amino acid frequencies
 jennson shannon divergence\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 between weighted observed and background amino acid frequencies
-{[}\protect\hyperlink{ref-Robinson1991}{220}{]}\strut
+{[}\protect\hyperlink{ref-Robinson1991}{222}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -6907,7 +6930,7 @@ between weighted observed and background amino acid frequencies
 PSSM\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 log odds ratio of weighted observed and background amino acid
-frequencies {[}\protect\hyperlink{ref-Robinson1991}{220}{]}\strut
+frequencies {[}\protect\hyperlink{ref-Robinson1991}{222}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 40\strut
 \end{minipage}\tabularnewline
@@ -6915,7 +6938,7 @@ frequencies {[}\protect\hyperlink{ref-Robinson1991}{220}{]}\strut
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 three state propensities PSIPRED (v4.0)
-{[}\protect\hyperlink{ref-Jones1999}{215}{]}\strut
+{[}\protect\hyperlink{ref-Jones1999}{219}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
@@ -6923,7 +6946,7 @@ three state propensities PSIPRED (v4.0)
 secondary structure prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 three state propensities Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{214}{]}\strut
+{[}\protect\hyperlink{ref-Petersen2009a}{218}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 6\strut
 \end{minipage}\tabularnewline
@@ -6931,7 +6954,7 @@ three state propensities Netsurfp (v1.0)
 solvent accessibility prediction\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 RSA and RSA Z-score Netsurfp (v1.0)
-{[}\protect\hyperlink{ref-Petersen2009a}{214}{]}\strut
+{[}\protect\hyperlink{ref-Petersen2009a}{218}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 4\strut
 \end{minipage}\tabularnewline
@@ -6961,7 +6984,7 @@ percentage of gaps\strut
 \begin{minipage}[t]{0.23\columnwidth}\raggedleft\strut
 Average Atchley Factor\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
-Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{221}{]}\strut
+Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{223}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 10\strut
 \end{minipage}\tabularnewline
@@ -6969,9 +6992,9 @@ Atchley Factors 1-5 {[}\protect\hyperlink{ref-Atchley2005}{221}{]}\strut
 Average polarity (Grantham)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity according to Grantham
-{[}\protect\hyperlink{ref-Grantham1974}{222}{]}. Data taken from
+{[}\protect\hyperlink{ref-Grantham1974}{224}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -6979,9 +7002,9 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
 Average polarity (Zimmermann)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Polarity according to Zimmermann et al.
-{[}\protect\hyperlink{ref-Zimmerman1968}{224}{]}. Data taken from
+{[}\protect\hyperlink{ref-Zimmerman1968}{226}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -6989,9 +7012,9 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
 Average isoelectricity\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Isoelectric point according to Zimmermann et al.
-{[}\protect\hyperlink{ref-Zimmerman1968}{224}{]}. Data taken from
+{[}\protect\hyperlink{ref-Zimmerman1968}{226}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -6999,9 +7022,9 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
 Average hydrophobicity (Wimley\&White)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity scale according to Wimley \& White
-{[}\protect\hyperlink{ref-Wimley1996}{225}{]}. Data taken from
+{[}\protect\hyperlink{ref-Wimley1996}{227}{]}. Data taken from
 \href{https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt}{UCSF
-Chimera} {[}\protect\hyperlink{ref-Wimley1996}{225}{]}.\strut
+Chimera} {[}\protect\hyperlink{ref-Wimley1996}{227}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -7009,9 +7032,9 @@ Chimera} {[}\protect\hyperlink{ref-Wimley1996}{225}{]}.\strut
 Average hydrophobicity (Kyte\&Dolittle)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity index according to Kyte \& Doolittle
-{[}\protect\hyperlink{ref-Kyte1982}{226}{]}. Data taken from
+{[}\protect\hyperlink{ref-Kyte1982}{228}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -7019,7 +7042,7 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
 Average hydrophobicity (Cornette)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Hydrophobicity according to Cornette
-{[}\protect\hyperlink{ref-Cornette1987}{227}{]}.\strut
+{[}\protect\hyperlink{ref-Cornette1987}{229}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -7027,9 +7050,9 @@ Hydrophobicity according to Cornette
 Average bulkiness\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Bulkiness according to Zimmerman et al.
-{[}\protect\hyperlink{ref-Zimmerman1968}{224}{]}. Data taken from
+{[}\protect\hyperlink{ref-Zimmerman1968}{226}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -7037,9 +7060,9 @@ Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
 Average volume\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average volumes of residues according to Pontius et al.
-{[}\protect\hyperlink{ref-Pontius1996}{228}{]}. Data taken from
+{[}\protect\hyperlink{ref-Pontius1996}{230}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
 \end{minipage}\tabularnewline
@@ -7120,9 +7143,9 @@ pairwise potential (buried)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average quasi-chemical energy of interactions in an average buried
 environment according to Miyazawa\&Jernigan
-{[}\protect\hyperlink{ref-Miyazawa1999a}{213}{]}. Data taken from
+{[}\protect\hyperlink{ref-Miyazawa1999a}{217}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -7131,9 +7154,9 @@ pairwise potential (water)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average quasi-chemical energy of transfer of amino acids from water to
 the protein environment according to Miyazawa\&Jernigan
-{[}\protect\hyperlink{ref-Miyazawa1999a}{213}{]}. Data taken from
+{[}\protect\hyperlink{ref-Miyazawa1999a}{217}{]}. Data taken from
 \href{http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106}{AAindex
-Database} {[}\protect\hyperlink{ref-Kawashima2008}{223}{]}.\strut
+Database} {[}\protect\hyperlink{ref-Kawashima2008}{225}{]}.\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -7149,7 +7172,7 @@ Average general contact potential by Li\&Fang
 pairwise potential (Zhu\&Braun)\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 Average statistical potential from residue pairs in beta-sheets by
-Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{229}{]}\strut
+Zhu\&Braun {[}\protect\hyperlink{ref-Zhu1999}{231}{]}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 1\strut
 \end{minipage}\tabularnewline
@@ -7196,7 +7219,7 @@ pseudo-counts and average product correction\strut
 OMES coeevolution score\strut
 \end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
 according to Fodor\&Aldrich
-{[}\protect\hyperlink{ref-Fodor2004a}{212}{]} with and without
+{[}\protect\hyperlink{ref-Fodor2004a}{216}{]} with and without
 \protect\hyperlink{abbrev}{APC}\strut
 \end{minipage} & \begin{minipage}[t]{0.18\columnwidth}\centering\strut
 2\strut
@@ -7329,7 +7352,7 @@ contacts).
 I used the module
 \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html\#sklearn.ensemble.RandomForestClassifier}{RandomForestClassifier}
 in the Python package \texttt{sklearn\ (v.\ 0.19)}
-{[}\protect\hyperlink{ref-Pedregosa2011}{230}{]} and trained the models
+{[}\protect\hyperlink{ref-Pedregosa2011}{232}{]} and trained the models
 on features extracted from \protect\hyperlink{abbrev}{MSAs} which are
 listed in methods section \ref{seq-features}.
 
@@ -7390,7 +7413,7 @@ of features is evaluated on the same validation set.
 \begin{longtable}[]{@{}ccrl@{}}
 \caption{\label{tab:amino-acid-prop} Amino acid abbreviations and
 physico-chemical properties according to Livingstone et al., 1993
-{[}\protect\hyperlink{ref-Livingstone1993}{231}{]}}\tabularnewline
+{[}\protect\hyperlink{ref-Livingstone1993}{233}{]}}\tabularnewline
 \toprule
 One letter Code & Three letter Code & Amino Acid & Physico-chemical
 properties\tabularnewline
@@ -8129,279 +8152,804 @@ Protein 1c75\_A\_00 has length L=71 and 28078 sequences in the alignment
 (\protect\hyperlink{abbrev}{Neff}=16808).}\label{fig:cd-gibbssteps-single-proteins-gradient}
 \end{figure}
 
+\section{Using ADAM with different learning rates and anneaing
+schedules}\label{using-adam-with-different-learning-rates-and-anneaing-schedules}
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/full_likelihood/adam/parameter_norms_1c75A00_1mkcA00_learningrates} 
+
+}
+
+\caption{L2-norm of the coupling parameters,
+\(||\w||_2\), during \protect\hyperlink{abbrev}{CD} optimization with
+\emph{ADAM} with different fixed learning rates (no decay). The learning
+rate \(\alpha_0\) is specified in the legend. \textbf{Left} Protein
+1c75A00 has length L=71 and 28078 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=16808) \textbf{Right} Protein 1mkcA00
+has length L=43 and 142 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=96).}\label{fig:adam-learning-rate}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.48\linewidth]{img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm} \includegraphics[width=0.48\linewidth]{img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm} 
+
+}
+
+\caption{L2-norm of the coupling
+parameters, \(||\w||_2\), during \protect\hyperlink{abbrev}{CD}
+optimization with \emph{ADAM} and different learning rate annealing
+schedules. The learning rate \(\alpha\) is specified with respect to
+\protect\hyperlink{abbrev}{Neff} as
+\(\alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}})\). The learning
+rate annealing schedule is specified in the legend. \textbf{Left}
+Convergence plot for protein 1mkc\_A\_00 having protein length L=43 and
+142 sequences in the alignment (\protect\hyperlink{abbrev}{Neff}=96).
+\textbf{Left} Protein 1c75A00 has length L=71 and 28078 sequences in the
+alignment (\protect\hyperlink{abbrev}{Neff}=16808) \textbf{Right}
+Protein 1mkcA00 has length L=43 and 142 sequences in the alignment
+(\protect\hyperlink{abbrev}{Neff}=96).}\label{fig:adam-learning-rate-annealing}
+\end{figure}
+
+\section{Comparing Pseudo-Likelihood and Contrastive Divergence for
+1c75A00}\label{comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00}
+
+
+
+
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/full_likelihood/comparing_couplings/1c75A00/1c75A00_precision_vs_rank_8seqsep_8contacthr} 
+
+}
+
+\caption{Precision of top ranked contact
+predictions for protein 1c75A00. Contact scores are computed as the
+\protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings \(\wij\). \textbf{pseudo-likelihood}: contact scores computed
+from pseudo-likelihood. \textbf{contrastive divergence}: contact scores
+computed from \protect\hyperlink{abbrev}{CD} optimized with
+\protect\hyperlink{abbrev}{SGD}.}\label{fig:precision-pll-cd-1c75a00}
+\end{figure}
+
 \section{Statistics for Comparing Couplings computed with
 Pseudo-likelihood and Contrastive
 Divergence}\label{statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence}
 
-\begin{longtable}[]{@{}lllllllll@{}}
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Proteins with the 20th largest \protect\hyperlink{abbrev}{Neff}
+values from the dataset of 300 proteins used to evaluate
+\protect\hyperlink{abbrev}{CD}. Statistics have been computed for the
+contact scores computed from pseudo-likelihood couplings and
+\protect\hyperlink{abbrev}{CD} couplings. Contact scores are computed as
+the \protect\hyperlink{abbrev}{APC} corrected Frobenius norm of the
+couplings \(\wij\). \protect\hyperlink{abbrev}{CD} coupling parameters
+have been optimized with \protect\hyperlink{abbrev}{SGD} using the
+following hyperparameter settings: simgoidal learning rate schedule with
+initial learning rate \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\)
+and decay rate \(\gamma = 5e-6\). Regularization coefficient
+\(\lambda_w = 0.1L\). In order to approximate the gradient with
+\protect\hyperlink{abbrev}{CD}, 0.3Neff sequences are randomly selected
+and evolved with a Gibbs chain for 1 step.}\tabularnewline
 \toprule
-\begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-L\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-Neff\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-kendalltau\_stat\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-kendalltau\_pvalue\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-spearman\_rho\_stat\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-spearman\_rho\_pvalue\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-kolmogorov\_smirnov\_stat\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
-kolmogorov\_smirnov\_pvalue\strut
-\end{minipage} & \begin{minipage}[b]{0.04\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
 protein\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+L\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+Neff\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman rho\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman pvalue\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov pvalue\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
+protein\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+L\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+Neff\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman rho\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman pvalue\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov pvalue\strut
 \end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-321\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-20.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.725774203912045\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9000083044142316\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.11090342679127727\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-3.477372115932017e-275\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-16vpA00\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1amuA01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+170\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+23508\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.883827\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.186982\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-213\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-205.36000000000001\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9224263047933574\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9885593328016179\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.06997962618478165\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1.4879066279873833e-48\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1914A00\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-155\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1266.6400000000001\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.7933824977468241\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9211216387520368\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0928361960620025\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-3.075139656462757e-45\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-19hcA01\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-83\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1987.3599999999999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9024528448892571\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9858030831106591\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.02585953570379078\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.20248526329852393\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a0iA01\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-156\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-2750.04\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8786065656827933\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9783949785979221\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.04822167080231596\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1.1309541604170778e-12\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a0iA03\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-98\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-21369.389999999999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8501364723750585\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.966501783731736\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.027140753208499957\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.059271965588411975\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
 1a0pA01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+98\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+21369\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.966502\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.027141\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.059272\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-182\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-19856.619999999999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.784846380661977\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9284100191783831\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0666019063809119\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-3.0595670875616747e-32\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
 1a0pA02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+182\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+19856\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.928410\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.066602\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-91\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-536.75999999999999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8520890890294837\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9660805242316326\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.052258852258852295\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-2.6171308176230558e-05\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a1wA00\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1d06A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+130\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+19073\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.977675\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.036255\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000031\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-108\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-74.870000000000005\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.681232190793956\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8522871673526148\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.11059190031152648\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-2.9558010734402517e-31\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a1xA00\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1ae9A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+179\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+18927\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.956188\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.052539\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-150\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-702.65999999999997\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8631797929757838\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9732092647811911\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.05762863534675615\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1.3511408095658639e-16\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a31A03\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bazA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+53\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+17286\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.982963\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.031930\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.477401\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-80\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-164.80000000000001\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.7108302178625667\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8729907614639386\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.07626582278481013\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1.859028226567486e-08\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a31A04\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1c75A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+71\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+16808\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.947536\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.047082\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.007797\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-148\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-6326.6599999999999\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8731304662036612\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9766734114339887\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.04081632653061226\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-2.53862259574713e-08\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a3aA00\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bboA02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+31\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+15883\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.971095\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.062366\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.316705\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-40\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-3451.2800000000002\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.8933543991310359\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-3.515664264337214e-305\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.9829574392412267\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.0\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.03589743589743588\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-0.6887857058762982\strut
-\end{minipage} & \begin{minipage}[t]{0.04\columnwidth}\raggedright\strut
-1a5tA02\strut
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1ecsA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+126\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+15824\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.968401\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.035810\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000079\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1e3oC01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+71\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+15252\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.971069\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.047485\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.007088\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1cc5A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+83\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+14881\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.963036\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.040846\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.006616\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bquA01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+104\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+14778\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.960453\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.035288\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.002460\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1dw9A01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+88\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+14559\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.977450\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.040491\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.003631\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bl0A02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+65\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+14511\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.911355\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.080288\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000003\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1a8lA01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+117\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+13387\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.971515\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.039935\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000038\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1djxB01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+52\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+13052\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.965467\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.044495\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.141169\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1al3A01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+101\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+12992\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.976814\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.026931\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.050425\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1ek6A01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+128\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+12707\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.989052\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.033711\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000188\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1atgA02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+109\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+12596\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.982236\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.040095\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000149\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1daqA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+71\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+12537\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.977804\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.040241\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.034764\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Proteins with the 20th smallest
+\protect\hyperlink{abbrev}{Neff} values from the dataset of 300 proteins
+used to evaluate \protect\hyperlink{abbrev}{CD}. Statistics have been
+computed for the contact scores computed from pseudo-likelihood
+couplings and \protect\hyperlink{abbrev}{CD} couplings. Contact scores
+are computed as the \protect\hyperlink{abbrev}{APC} corrected Frobenius
+norm of the couplings \(\wij\). \protect\hyperlink{abbrev}{CD} coupling
+parameters have been optimized with \protect\hyperlink{abbrev}{SGD}
+using the following hyperparameter settings: simgoidal learning rate
+schedule with initial learning rate
+\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\) and decay rate
+\(\gamma = 5e-6\). Regularization coefficient \(\lambda_w = 0.1L\). In
+order to approximate the gradient with \protect\hyperlink{abbrev}{CD},
+0.3Neff sequences are randomly selected and evolved with a Gibbs chain
+for 1 step.}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
+protein\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+L\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+Neff\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman rho\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman pvalue\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov pvalue\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.08\columnwidth}\raggedright\strut
+protein\strut
+\end{minipage} & \begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+L\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+Neff\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman rho\strut
+\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+spearman pvalue\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov\strut
+\end{minipage} & \begin{minipage}[b]{0.11\columnwidth}\raggedright\strut
+kolmogorov-smirnov pvalue\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1ehsA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+48\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.933381\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.100177\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000022\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1e0fI01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+33\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+8\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.972043\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.043561\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.688999\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1d02A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+202\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+11\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.979033\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.058667\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1cfrA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+285\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+15\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.970660\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.059501\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1dmlA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+291\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+19\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.939673\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.068752\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+16vpA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+321\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.900008\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.110903\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1c01A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+76\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.887544\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.077895\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1cq3A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+233\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.861049\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.047765\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1dc1A02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+88\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.871925\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.103187\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1cmbA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+104\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.712424\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.127147\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1d4vA02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+31\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+24\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.840701\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.079570\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.100219\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bvp101\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+120\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+25\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.884899\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.088936\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1dc1A01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+235\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+25\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.805065\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.176978\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1ahlA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+49\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+25\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.794887\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.147959\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bvp103\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+96\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+28\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.905518\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.093640\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1e5rA02\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+87\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+28\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.964278\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.068431\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bcpB01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+86\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+33\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.842349\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.068947\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1cl8A00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+276\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+34\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.666682\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.146271\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1c1kA01\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+102\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+34\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.787192\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.067171\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.08\columnwidth}\raggedright\strut
+1bdsA00\strut
+\end{minipage} & \begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+43\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+35\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.744768\strut
+\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.000000\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.173865\strut
+\end{minipage} & \begin{minipage}[t]{0.11\columnwidth}\raggedright\strut
+0.000000\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -8448,13 +8996,13 @@ ranked according to \emph{Gini importance}. \textbf{pseudo-likelihood}:
 computed with pseudo-likelihood. \textbf{mean pair potential (Miyasawa
 \& Jernigan)}: average quasi-chemical energy of transfer of amino acids
 from water to the protein environment
-{[}\protect\hyperlink{ref-Miyazawa1999a}{213}{]}. \textbf{OMES+APC}:
+{[}\protect\hyperlink{ref-Miyazawa1999a}{217}{]}. \textbf{OMES+APC}:
 \protect\hyperlink{abbrev}{APC} corrected OMES score according to
-Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{212}{]}.
+Fodor\&Aldrich {[}\protect\hyperlink{ref-Fodor2004a}{216}{]}.
 \textbf{mean pair potential (Li\&Fang)}: average general contact
 potential by Li \& Fang {[}\protect\hyperlink{ref-Li2011}{67}{]}.
 \textbf{rel. solvent accessibilty i(j)}: RSA score computed with
-Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{214}{]} for
+Netsurfp (v1.0) {[}\protect\hyperlink{ref-Petersen2009a}{218}{]} for
 position i(j). \textbf{MI+APC}: \protect\hyperlink{abbrev}{APC}
 corrected mutual information between amino acid counts (using
 pseudo-counts). \textbf{contact prior wrt L}: simple contact prior based
@@ -8462,7 +9010,7 @@ on expected number of contacts wrt protein length (see methods section
 \ref{contact-prior-protein-length}). \textbf{log protein length}:
 logarithm of protein length. \textbf{beta sheet propensity window(i)}:
 beta-sheet propensity according to Psipred
-{[}\protect\hyperlink{ref-Jones1999}{215}{]} computed within a window of
+{[}\protect\hyperlink{ref-Jones1999}{219}{]} computed within a window of
 five positions around i. Features are described in detail in methods
 section \ref{seq-features}.}\label{fig:feature-importance-rf-with-pll-score}
 \end{figure}
@@ -9765,62 +10313,84 @@ Early Stopping without a Validation Set. arXiv. Available at:
 Divergence Learning. Artif. Intell. Stat. \emph{0}, 17. Available at:
 \href{http://learning.cs.toronto.edu/\%7B~\%7Dhinton/absps/cdmiguel.pdf}{http://learning.cs.toronto.edu/\{\textasciitilde{}\}hinton/absps/cdmiguel.pdf}.
 
+\hypertarget{ref-Ma2016}{}
+198. Ma, X., and Wang, X. (2016). Average Contrastive Divergence for
+Training Restricted Boltzmann Machines. Entropy \emph{18}, 35. Available
+at: \url{http://www.mdpi.com/1099-4300/18/1/35}.
+
 \hypertarget{ref-Tieleman2008}{}
-198. Tieleman, T. (2008). Training Restricted Boltzmann Machines using
+199. Tieleman, T. (2008). Training Restricted Boltzmann Machines using
 Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach.
 Learn. \emph{307}, 7.
 
 \hypertarget{ref-Fischer2010}{}
-199. Fischer, A., and Igel, C. (2010). Empirical Analysis of the
+200. Fischer, A., and Igel, C. (2010). Empirical Analysis of the
 Divergence of Gibbs Sampling Based Learning Algorithms for Restricted
 Boltzmann Machines. In Artif. neural networks -- icann 2010 (Springer,
 Berlin, Heidelberg), pp. 208--217. Available at:
 \href{http://link.springer.com/10.1007/978-3-642-15825-4\%7B/_\%7D26}{http://link.springer.com/10.1007/978-3-642-15825-4\{\textbackslash{}\_\}26}.
 
 \hypertarget{ref-Hyvarinen2006}{}
-200. Hyvärinen, A. (2006). Consistency of pseudolikelihood estimation of
+201. Hyvärinen, A. (2006). Consistency of pseudolikelihood estimation of
 fully visible Boltzmann machines. Available at:
 \url{https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf}.
 
 \hypertarget{ref-Hyvarinen2007}{}
-201. Hyvarinen, A. (2007). Connections Between Score Matching,
+202. Hyvarinen, A. (2007). Connections Between Score Matching,
 Contrastive Divergence, and Pseudolikelihood for Continuous-Valued
 Variables. IEEE Trans. Neural Networks \emph{18}, 1529--1531. Available
 at: \url{http://ieeexplore.ieee.org/document/4298117/}.
 
 \hypertarget{ref-Asuncion2010}{}
-202. Asuncion, A.U., Liu, Q., Ihler, A.T., and Smyth, P. (2010).
+203. Asuncion, A.U., Liu, Q., Ihler, A.T., and Smyth, P. (2010).
 Learning with Blocks: Composite Likelihood and Contrastive Divergence.
 Proc. Mach. Learn. Res. \emph{9}, 33--40. Available at:
 \href{http://www.ics.uci.edu/\%7B~\%7Dasuncion/pubs/AISTATS\%7B/_\%7D10.pdf}{http://www.ics.uci.edu/\{\textasciitilde{}\}asuncion/pubs/AISTATS\{\textbackslash{}\_\}10.pdf}.
 
+\hypertarget{ref-Swersky2010}{}
+204. Swersky, K., Chen, B., Marlin, B., and Freitas, N. de (2010). A
+tutorial on stochastic approximation algorithms for training Restricted
+Boltzmann Machines and Deep Belief Nets. In 2010 inf. theory appl. work.
+(IEEE), pp. 1--10. Available at:
+\url{http://ieeexplore.ieee.org/document/5454138/}.
+
 \hypertarget{ref-Kingma2014}{}
-203. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic
+205. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic
 Optimization. Available at: \url{http://arxiv.org/abs/1412.6980}.
 
+\hypertarget{ref-Chollet2015}{}
+206. Chollet, F. and others (2015). Keras. Available at:
+\url{https://github.com/fchollet/keras}.
+
+\hypertarget{ref-Dieleman2015}{}
+207. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K.,
+Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J.
+\emph{et al.} (2015). Lasagne: First release. Available at:
+\url{https://zenodo.org/record/27878}.
+
 \hypertarget{ref-Ma2015a}{}
-204. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
+208. Ma, J., Wang, S., Wang, Z., and Xu, J. (2015). Protein contact
 prediction by integrating joint evolutionary coupling analysis and
 supervised learning. Bioinformatics, btv472. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/early/2015/09/04/bioinformatics.btv472}.
 
 \hypertarget{ref-Ho1998}{}
-205. Ho, T.K. (1998). The random subspace method for constructing
+209. Ho, T.K. (1998). The random subspace method for constructing
 decision forests. IEEE Trans. Pattern Anal. Mach. Intell. \emph{20},
 832--844. Available at:
 \url{http://ieeexplore.ieee.org/document/709601/}.
 
 \hypertarget{ref-TinKamHo}{}
-206. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf.
+210. Tin Kam Ho (1995). Random decision forests. In Proc. 3rd int. conf.
 doc. anal. recognit. (IEEE Comput. Soc. Press), pp. 278--282. Available
 at: \url{http://ieeexplore.ieee.org/document/598994/}.
 
 \hypertarget{ref-Breiman2001}{}
-207. Breiman, L. (2001). Random Forests. Mach. Learn. \emph{45}, 5--32.
+211. Breiman, L. (2001). Random Forests. Mach. Learn. \emph{45}, 5--32.
 Available at: \url{http://link.springer.com/10.1023/A:1010933404324}.
 
 \hypertarget{ref-Menze2009}{}
-208. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P.,
+212. Menze, B.H., Kelm, B.M., Masuch, R., Himmelreich, U., Bachert, P.,
 Petrich, W., and Hamprecht, F.A. (2009). A comparison of random forest
 and its Gini importance with standard chemometric methods for the
 feature selection and classification of spectral data. BMC
@@ -9828,142 +10398,132 @@ Bioinformatics \emph{10}, 213. Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/19591666\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}{http://www.ncbi.nlm.nih.gov/pubmed/19591666 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2724423}.
 
 \hypertarget{ref-Louppe2014}{}
-209. Louppe, G. (2014). Understanding Random Forests: From Theory to
+213. Louppe, G. (2014). Understanding Random Forests: From Theory to
 Practice. Available at: \url{http://arxiv.org/abs/1407.7502}.
 
 \hypertarget{ref-Strobl2007}{}
-210. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007).
+214. Strobl, C., Boulesteix, A.-L., Zeileis, A., and Hothorn, T. (2007).
 Bias in random forest variable importance measures: Illustrations,
 sources and a solution. BMC Bioinformatics \emph{8}, 25. Available at:
 \url{http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25}.
 
 \hypertarget{ref-Bernard2009}{}
-211. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of
+215. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of
 Hyperparameters on Random Forest Accuracy. In (Springer, Berlin,
 Heidelberg), pp. 171--180. Available at:
 \href{http://link.springer.com/10.1007/978-3-642-02326-2\%7B/_\%7D18}{http://link.springer.com/10.1007/978-3-642-02326-2\{\textbackslash{}\_\}18}.
 
 \hypertarget{ref-Fodor2004a}{}
-212. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
+216. Fodor, A.A., and Aldrich, R.W. (2004). Influence of conservation on
 calculations of amino acid covariance in multiple sequence alignments.
 Proteins \emph{56}, 211--21. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/15211506}.
 
 \hypertarget{ref-Miyazawa1999a}{}
-213. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation
+217. Miyazawa, S., and Jernigan, R.L. (1999). Self-consistent estimation
 of inter-residue protein contact energies based on an equilibrium
 mixture approximation of residues. Proteins \emph{34}, 49--68. Available
 at: \url{http://www.ncbi.nlm.nih.gov/pubmed/10336383}.
 
 \hypertarget{ref-Petersen2009a}{}
-214. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and
+218. Petersen, B., Petersen, T.N., Andersen, P., Nielsen, M., and
 Lundegaard, C. (2009). BMC Structural Biology A generic method for
 assignment of reliability scores applied to solvent accessibility
 predictions. BMC Struct. Biol. \emph{9}. Available at:
 \url{http://www.biomedcentral.com/1472-6807/9/51}.
 
 \hypertarget{ref-Jones1999}{}
-215. Jones, D.T. (1999). Protein secondary structure prediction based on
+219. Jones, D.T. (1999). Protein secondary structure prediction based on
 position-specific scoring matrices 1 1Edited by G. Von Heijne. J. Mol.
 Biol. \emph{292}, 195--202. Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/10493868\%20http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}{http://www.ncbi.nlm.nih.gov/pubmed/10493868 http://linkinghub.elsevier.com/retrieve/pii/S0022283699930917}.
 
 \hypertarget{ref-Sillitoe2015}{}
-216. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
+220. Sillitoe, I., Lewis, T.E., Cuff, A., Das, S., Ashford, P., Dawson,
 N.L., Furnham, N., Laskowski, R.A., Lee, D., and Lees, J.G. \emph{et
 al.} (2015). CATH: comprehensive structural and functional annotations
 for genome sequences. Nucleic Acids Res. \emph{43}, D376--D381.
 Available at:
 \url{https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gku947}.
 
-\hypertarget{ref-Chollet2015}{}
-217. Chollet, F. and others (2015). Keras. Available at:
-\url{https://github.com/fchollet/keras}.
-
-\hypertarget{ref-Dieleman2015}{}
-218. Dieleman, S., Schlüter, J., Raffel, C., Olson, E., Sønderby, S.K.,
-Nouri, D., Maturana, D., Thoma, M., Battenberg, E., and Kelly, J.
-\emph{et al.} (2015). Lasagne: First release. Available at:
-\url{https://zenodo.org/record/27878}.
-
 \hypertarget{ref-Byrd1995}{}
-219. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited
+221. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited
 Memory Algorithm for Bound Constrained Optimization. SIAM J. Sci.
 Comput. \emph{16}, 1190--1208. Available at:
 \url{http://epubs.siam.org/doi/10.1137/0916069}.
 
 \hypertarget{ref-Robinson1991}{}
-220. Robinson, A.B., and Robinson, L.R. (1991). Distribution of
+222. Robinson, A.B., and Robinson, L.R. (1991). Distribution of
 glutamine and asparagine residues and their near neighbors in peptides
 and proteins. Proc. Natl. Acad. Sci. U. S. A. \emph{88}, 8880--4.
 Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/1924347\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}{http://www.ncbi.nlm.nih.gov/pubmed/1924347 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC52614}.
 
 \hypertarget{ref-Atchley2005}{}
-221. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
+223. Atchley, W.R., Zhao, J., Fernandes, A.D., and Drüke, T. (2005).
 Solving the protein sequence metric problem. Proc. Natl. Acad. Sci. U.
 S. A. \emph{102}, 6395--400. Available at:
 \url{http://www.pnas.org/content/102/18/6395.abstract}.
 
 \hypertarget{ref-Grantham1974}{}
-222. Grantham, R. (1974). Amino acid difference formula to help explain
+224. Grantham, R. (1974). Amino acid difference formula to help explain
 protein evolution. Science \emph{185}, 862--4. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/4843792}.
 
 \hypertarget{ref-Kawashima2008}{}
-223. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A.,
+225. Kawashima, S., Pokarowski, P., Pokarowska, M., Kolinski, A.,
 Katayama, T., and Kanehisa, M. (2008). AAindex: amino acid index
 database, progress report 2008. Nucleic Acids Res. \emph{36}, D202--5.
 Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/17998252\%20http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}{http://www.ncbi.nlm.nih.gov/pubmed/17998252 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2238890}.
 
 \hypertarget{ref-Zimmerman1968}{}
-224. Zimmerman, J.M., Eliezer, N., and Simha, R. (1968). The
+226. Zimmerman, J.M., Eliezer, N., and Simha, R. (1968). The
 characterization of amino acid sequences in proteins by statistical
 methods. J. Theor. Biol. \emph{21}, 170--201. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/5700434}.
 
 \hypertarget{ref-Wimley1996}{}
-225. Wimley, W.C., and White, S.H. (1996). Experimentally determined
+227. Wimley, W.C., and White, S.H. (1996). Experimentally determined
 hydrophobicity scale for proteins at membrane interfaces. Nat. Struct.
 Biol. \emph{3}, 842--8. Available at:
 \url{http://www.ncbi.nlm.nih.gov/pubmed/8836100}.
 
 \hypertarget{ref-Kyte1982}{}
-226. Kyte, J., and Doolittle, R.F. (1982). A simple method for
+228. Kyte, J., and Doolittle, R.F. (1982). A simple method for
 displaying the hydropathic character of a protein. J. Mol. Biol.
 \emph{157}, 105--132. Available at:
 \url{http://www.sciencedirect.com/science/article/pii/0022283682905150}.
 
 \hypertarget{ref-Cornette1987}{}
-227. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky,
+229. Cornette, J.L., Cease, K.B., Margalit, H., Spouge, J.L., Berzofsky,
 J.A., and DeLisi, C. (1987). Hydrophobicity scales and computational
 techniques for detecting amphipathic structures in proteins. J. Mol.
 Biol. \emph{195}, 659--685. Available at:
 \url{http://linkinghub.elsevier.com/retrieve/pii/0022283687901896}.
 
 \hypertarget{ref-Pontius1996}{}
-228. Pontius, J., Richelle, J., and Wodak, S.J. (1996). Deviations from
+230. Pontius, J., Richelle, J., and Wodak, S.J. (1996). Deviations from
 Standard Atomic Volumes as a Quality Measure for Protein Crystal
 Structures. J. Mol. Biol. \emph{264}, 121--136. Available at:
 \href{http://www.ncbi.nlm.nih.gov/pubmed/8950272\%20http://linkinghub.elsevier.com/retrieve/pii/S0022283696906282}{http://www.ncbi.nlm.nih.gov/pubmed/8950272 http://linkinghub.elsevier.com/retrieve/pii/S0022283696906282}.
 
 \hypertarget{ref-Zhu1999}{}
-229. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
+231. Zhu, H., and Braun, W. (1999). Sequence specificity, statistical
 potentials, and three-dimensional structure prediction with
 self-correcting distance geometry calculations of beta-sheet formation
 in proteins. Protein Sci. \emph{8}, 326--42. Available at:
 \href{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\%7B/\&\%7Dtool=pmcentrez\%7B/\&\%7Drendertype=abstract}{http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2144259\{\textbackslash{}\&\}tool=pmcentrez\{\textbackslash{}\&\}rendertype=abstract}.
 
 \hypertarget{ref-Pedregosa2011}{}
-230. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion,
+232. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion,
 B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., and Dubourg,
 V. \emph{et al.} (2011). Scikit-learn: Machine Learning in Python. J.
 Mach. Learn. Res. \emph{12}, 2825--2830. Available at:
 \url{http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html}.
 
 \hypertarget{ref-Livingstone1993}{}
-231. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence
+233. Livingstone, C.D., and Barton, G.J. (1993). Protein sequence
 alignments: a strategy for the hierarchical analysis of residue
 conservation. Bioinformatics \emph{9}, 745--756. Available at:
 \url{http://bioinformatics.oxfordjournals.org/content/9/6/745}.

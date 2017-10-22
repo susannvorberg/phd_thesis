@@ -323,9 +323,6 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_facetted_by_n
 ```
 
 
-
-
-
 ## Monitoring Norm of Gradients for Different Number of Gibbs Steps
 
 (ref:caption-cd-gibbssteps-single-proteins-gradient) Monitoring L2 norm of the gradient, $||\nabla_{\w} L\!L(\v^*, \w)||_2$, for protein 1aho_A_00 and 1c75_A_00 during [SGD](#abbrev) optimization using different number of Gibbs steps and initial learning rates, $\alpha_0$. Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. **Left** Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
@@ -334,8 +331,32 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_facetted_by_n
 knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/gradient_norm_1ahoa00.png", "img/full_likelihood/gibbs_sampling/gradient_norm_1c75a00.png"))
 ```
 
-## Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence 
+## Using ADAM with different learning rates and anneaing schedules
 
+(ref:caption-adam-learning-rate) L2-norm of the coupling parameters, $||\w||_2$, during [CD](#abbrev) optimization with *ADAM* with different fixed learning rates (no decay). The learning rate $\alpha_0$ is specified in the legend. **Left** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808) **Right** Protein 1mkcA00 has length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). 
+
+```{r adam-learning-rate, echo = FALSE, out.width = '100%', fig.align='center', fig.cap = '(ref:caption-adam-learning-rate)'}
+knitr::include_graphics("img/full_likelihood/adam/parameter_norms_1c75A00_1mkcA00_learningrates.png")
+```
+
+
+(ref:caption-adam-learning-rate-annealing) L2-norm of the coupling parameters, $||\w||_2$, during [CD](#abbrev) optimization with *ADAM* and different learning rate annealing schedules. The learning rate $\alpha$ is specified with respect to [Neff](#abbrev) as $\alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}})$. The learning rate annealing schedule is specified in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Left** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808) **Right** Protein 1mkcA00 has length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). 
+
+```{r adam-learning-rate-annealing, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-adam-learning-rate-annealing)'}
+knitr::include_graphics(c("img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm.png", "img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm.png"))
+```
+
+## Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00
+
+
+(ref:caption-precision-pll-cd-1c75a00) Precision of top ranked contact predictions for protein 1c75A00. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **contrastive divergence**: contact scores computed from [CD](#abbrev) optimized with [SGD](#abbrev).
+
+```{r precision-pll-cd-1c75a00, echo = FALSE, screenshot.alt="img/full_likelihood/comparing_couplings/1c75A00/1c75A00_precision_vs_rank_8seqsep_8contacthr.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-precision-pll-cd-1c75a00)'}
+knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00/1c75A00_precision_vs_rank_8seqsep_8contacthr.html", height = "600px")
+```
+
+
+## Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence 
 
 protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirnov pvalue
 ------|----|-------|-------|-------|---------|---------
@@ -359,8 +380,7 @@ protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirno
 1ek6A01|128|12707|0.989052|0.000000|0.033711|0.000188
 1atgA02|109|12596|0.982236|0.000000|0.040095|0.000149
 1daqA00|71|12537|0.977804|0.000000|0.040241|0.034764
-
-: large Neff
+: Proteins with the 20th largest [Neff](#abbrev) values from the dataset of 300 proteins used to evaluate [CD](#abbrev). Statistics have been computed for the contact scores computed from pseudo-likelihood couplings and [CD](#abbrev) couplings. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [CD](#abbrev) coupling parameters have been optimized with [SGD](#abbrev) using the following hyperparameter settings: simgoidal learning rate schedule with initial learning rate $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$ and decay rate $\gamma = 5e-6$. Regularization coefficient $\lambda_w = 0.1L$. In order to approximate the gradient with [CD](#abbrev), 0.3Neff sequences are randomly selected and evolved with a Gibbs chain for 1 step.
 
 protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirnov pvalue
 ------|----|-------|-------|-------|---------|---------
@@ -384,7 +404,7 @@ protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirno
 1cl8A00|276|34|0.666682|0.000000|0.146271|0.000000
 1c1kA01|102|34|0.787192|0.000000|0.067171|0.000000
 1bdsA00|43|35|0.744768|0.000000|0.173865|0.000000
-:small Neff
+: Proteins with the 20th smallest [Neff](#abbrev) values from the dataset of 300 proteins used to evaluate [CD](#abbrev). Statistics have been computed for the contact scores computed from pseudo-likelihood couplings and [CD](#abbrev) couplings. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [CD](#abbrev) coupling parameters have been optimized with [SGD](#abbrev) using the following hyperparameter settings: simgoidal learning rate schedule with initial learning rate $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$ and decay rate $\gamma = 5e-6$. Regularization coefficient $\lambda_w = 0.1L$. In order to approximate the gradient with [CD](#abbrev), 0.3Neff sequences are randomly selected and evolved with a Gibbs chain for 1 step.
 
 
 # Training of the Random Forest Contact Prior

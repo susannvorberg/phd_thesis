@@ -472,37 +472,6 @@ Parameters are then updated using step size $\alpha$, a small noise term $\epsil
 
 Kingma et al. proposed the default values $\beta_1=0.9$, $\beta_2=0.999$ and $\epsilon=1e−8$ and a constant learning rate $\alpha=1e-3$.
 
-For the two protein chains 1mkc_A_00 and 1c75_A_00, having 142 ([Neff](#abbrev)=96) and 28078 ([Neff](#abbrev)=16808) aligned sequences respectively, I analysed the convergence for [SGD](#abbrev) with different learning rates $\alpha$ (see Figure \@ref(fig:adam-learning-rate)).
-In contrast to plain stochastic gradient descent, with *ADAM* it is possible to use larger learning rates for proteins having big alignments, because the learning rate will be adapted to the magnitude of the gradient for every parameter individually. 
-For protein 1mkc_A_00 having a small alignment, a learning rate of 5e-3 quickly leads to convergence whereas for protein 1c75_A_00 a larger learning rate can be chosen to obtain quick convergence. 
-As a consequence, I defined the learning rate $\alpha$ as a function of [Neff](#abbrev), 
-
-\begin{equation}
-  \alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}}) \; ,
-  (\#eq:learning-rate-wrt-neff-adam)
-\end{equation}
-
-such that it will take values ~5e-3 for proteins with small alignments and values ~1e-2 for proteins with large alignments.
-
-(ref:caption-adam-learning-rate) L2-norm of the coupling parameters $||\w||_2$ during optimization with *ADAM* and different learning rates without annealing. The learning rate $\alpha$ is specified in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
-
-```{r adam-learning-rate, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-adam-learning-rate)'}
-knitr::include_graphics(c("img/full_likelihood/adam/1mkcA00_learningrates_parameternorm.png", "img/full_likelihood/adam/1c75A00_learningrates_parameternorm.png"))
-```
-
-It is interesting to note in Figure \@ref(fig:adam-learning-rate), that the norm of the coupling parameters $||\w||_2$ converges towards different values depending on the choice of the learning rate $\alpha$.
-This inidicates that it is necessary to decrease the learning rate over time.
-By default, *ADAM* uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature.
-However, popular implementations of *ADAM* in the [Keras](https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385) [@Chollet2015] and [Lasagne](https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629) [@Dieleman2015] packages allow the use of an annealing schedule.
-I therefore tested different learning rate annealing schedules for *ADAM* assuming that with decreasing learning rates the L2-norm of the coupling parameters $||\w||_2$ will converge towards a consistent value.
-Indeed, as can be seen in Figure \@ref(fig:adam-learning-rate-annealing), when using a linear or sigmoidal learning rate annealing schedule with *ADAM*, the L2-norm of the coupling parameters $||\w||_2$  converges roughly towards the same value that has been obtained with plain [SGD](#abbrev) shown in Figure \@ref(fig:sgd-single-proteins-learning-rate-schedule).
-
-
-(ref:caption-adam-learning-rate-annealing) L2-norm of the coupling parameters $||\w||_2$ during optimization with *ADAM* and different learning rate annealing schedules. The learning rate $\alpha$ is specified with respect to [Neff](#abrbev) as $\alpha = 2\mathrm{e}{-3}\log(N_{\text{eff}})$. The learning rate annealing schedule is specified in the legend. **Left** Convergence plot for protein 1mkc_A_00 having protein length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). **Right** Convergence plot for protein 1c75_A_00 having protein length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
-
-```{r adam-learning-rate-annealing, echo = FALSE, out.width = '50%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-adam-learning-rate-annealing)'}
-knitr::include_graphics(c("img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm.png", "img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm.png"))
-```
 
 
 

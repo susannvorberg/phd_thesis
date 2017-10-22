@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html">
+<link rel="prev" href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html">
 <link rel="next" href="training-of-the-random-forest-contact-prior.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,7 +169,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>4.3.4</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
-<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ahla01"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ahlA01</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
@@ -253,7 +256,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
 <li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
 <li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.10" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.10</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
+<li class="chapter" data-level="F.10" data-path="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><a href="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><i class="fa fa-check"></i><b>F.10</b> Using ADAM with different learning rates and anneaing schedules</a></li>
+<li class="chapter" data-level="F.11" data-path="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><i class="fa fa-check"></i><b>F.11</b> Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00</a></li>
+<li class="chapter" data-level="F.12" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.12</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
@@ -283,175 +288,414 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence" class="section level2">
-<h2><span class="header-section-number">F.10</span> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</h2>
-<table style="width:50%;">
+<h2><span class="header-section-number">F.12</span> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</h2>
+<table style="width:78%;">
+<caption>Proteins with the 20th largest <a href="abbrev.html#abbrev">Neff</a> values from the dataset of 300 proteins used to evaluate <a href="abbrev.html#abbrev">CD</a>. Statistics have been computed for the contact scores computed from pseudo-likelihood couplings and <a href="abbrev.html#abbrev">CD</a> couplings. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <a href="abbrev.html#abbrev">CD</a> coupling parameters have been optimized with <a href="abbrev.html#abbrev">SGD</a> using the following hyperparameter settings: simgoidal learning rate schedule with initial learning rate <span class="math inline">\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\)</span> and decay rate <span class="math inline">\(\gamma = 5e-6\)</span>. Regularization coefficient <span class="math inline">\(\lambda_w = 0.1L\)</span>. In order to approximate the gradient with <a href="abbrev.html#abbrev">CD</a>, 0.3Neff sequences are randomly selected and evolved with a Gibbs chain for 1 step.</caption>
 <colgroup>
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
+<col width="9%" />
+<col width="6%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
+<th>protein</th>
 <th>L</th>
 <th>Neff</th>
-<th>kendalltau_stat</th>
-<th>kendalltau_pvalue</th>
-<th>spearman_rho_stat</th>
-<th>spearman_rho_pvalue</th>
-<th>kolmogorov_smirnov_stat</th>
-<th>kolmogorov_smirnov_pvalue</th>
-<th>protein</th>
+<th>spearman rho</th>
+<th>spearman pvalue</th>
+<th>kolmogorov-smirnov</th>
+<th>kolmogorov-smirnov pvalue</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>321</td>
-<td>20.0</td>
-<td>0.725774203912045</td>
-<td>0.0</td>
-<td>0.9000083044142316</td>
-<td>0.0</td>
-<td>0.11090342679127727</td>
-<td>3.477372115932017e-275</td>
-<td>16vpA00</td>
+<td>1amuA01</td>
+<td>170</td>
+<td>23508</td>
+<td>0.883827</td>
+<td>0.000000</td>
+<td>0.186982</td>
+<td>0.000000</td>
 </tr>
 <tr class="even">
-<td>213</td>
-<td>205.36000000000001</td>
-<td>0.9224263047933574</td>
-<td>0.0</td>
-<td>0.9885593328016179</td>
-<td>0.0</td>
-<td>0.06997962618478165</td>
-<td>1.4879066279873833e-48</td>
-<td>1914A00</td>
-</tr>
-<tr class="odd">
-<td>155</td>
-<td>1266.6400000000001</td>
-<td>0.7933824977468241</td>
-<td>0.0</td>
-<td>0.9211216387520368</td>
-<td>0.0</td>
-<td>0.0928361960620025</td>
-<td>3.075139656462757e-45</td>
-<td>19hcA01</td>
-</tr>
-<tr class="even">
-<td>83</td>
-<td>1987.3599999999999</td>
-<td>0.9024528448892571</td>
-<td>0.0</td>
-<td>0.9858030831106591</td>
-<td>0.0</td>
-<td>0.02585953570379078</td>
-<td>0.20248526329852393</td>
-<td>1a0iA01</td>
-</tr>
-<tr class="odd">
-<td>156</td>
-<td>2750.04</td>
-<td>0.8786065656827933</td>
-<td>0.0</td>
-<td>0.9783949785979221</td>
-<td>0.0</td>
-<td>0.04822167080231596</td>
-<td>1.1309541604170778e-12</td>
-<td>1a0iA03</td>
-</tr>
-<tr class="even">
-<td>98</td>
-<td>21369.389999999999</td>
-<td>0.8501364723750585</td>
-<td>0.0</td>
-<td>0.966501783731736</td>
-<td>0.0</td>
-<td>0.027140753208499957</td>
-<td>0.059271965588411975</td>
 <td>1a0pA01</td>
+<td>98</td>
+<td>21369</td>
+<td>0.966502</td>
+<td>0.000000</td>
+<td>0.027141</td>
+<td>0.059272</td>
 </tr>
 <tr class="odd">
-<td>182</td>
-<td>19856.619999999999</td>
-<td>0.784846380661977</td>
-<td>0.0</td>
-<td>0.9284100191783831</td>
-<td>0.0</td>
-<td>0.0666019063809119</td>
-<td>3.0595670875616747e-32</td>
 <td>1a0pA02</td>
+<td>182</td>
+<td>19856</td>
+<td>0.928410</td>
+<td>0.000000</td>
+<td>0.066602</td>
+<td>0.000000</td>
 </tr>
 <tr class="even">
-<td>91</td>
-<td>536.75999999999999</td>
-<td>0.8520890890294837</td>
-<td>0.0</td>
-<td>0.9660805242316326</td>
-<td>0.0</td>
-<td>0.052258852258852295</td>
-<td>2.6171308176230558e-05</td>
-<td>1a1wA00</td>
+<td>1d06A00</td>
+<td>130</td>
+<td>19073</td>
+<td>0.977675</td>
+<td>0.000000</td>
+<td>0.036255</td>
+<td>0.000031</td>
 </tr>
 <tr class="odd">
-<td>108</td>
-<td>74.870000000000005</td>
-<td>0.681232190793956</td>
-<td>0.0</td>
-<td>0.8522871673526148</td>
-<td>0.0</td>
-<td>0.11059190031152648</td>
-<td>2.9558010734402517e-31</td>
-<td>1a1xA00</td>
+<td>1ae9A00</td>
+<td>179</td>
+<td>18927</td>
+<td>0.956188</td>
+<td>0.000000</td>
+<td>0.052539</td>
+<td>0.000000</td>
 </tr>
 <tr class="even">
-<td>150</td>
-<td>702.65999999999997</td>
-<td>0.8631797929757838</td>
-<td>0.0</td>
-<td>0.9732092647811911</td>
-<td>0.0</td>
-<td>0.05762863534675615</td>
-<td>1.3511408095658639e-16</td>
-<td>1a31A03</td>
+<td>1bazA00</td>
+<td>53</td>
+<td>17286</td>
+<td>0.982963</td>
+<td>0.000000</td>
+<td>0.031930</td>
+<td>0.477401</td>
 </tr>
 <tr class="odd">
-<td>80</td>
-<td>164.80000000000001</td>
-<td>0.7108302178625667</td>
-<td>0.0</td>
-<td>0.8729907614639386</td>
-<td>0.0</td>
-<td>0.07626582278481013</td>
-<td>1.859028226567486e-08</td>
-<td>1a31A04</td>
+<td>1c75A00</td>
+<td>71</td>
+<td>16808</td>
+<td>0.947536</td>
+<td>0.000000</td>
+<td>0.047082</td>
+<td>0.007797</td>
 </tr>
 <tr class="even">
-<td>148</td>
-<td>6326.6599999999999</td>
-<td>0.8731304662036612</td>
-<td>0.0</td>
-<td>0.9766734114339887</td>
-<td>0.0</td>
-<td>0.04081632653061226</td>
-<td>2.53862259574713e-08</td>
-<td>1a3aA00</td>
+<td>1bboA02</td>
+<td>31</td>
+<td>15883</td>
+<td>0.971095</td>
+<td>0.000000</td>
+<td>0.062366</td>
+<td>0.316705</td>
 </tr>
 <tr class="odd">
-<td>40</td>
-<td>3451.2800000000002</td>
-<td>0.8933543991310359</td>
-<td>3.515664264337214e-305</td>
-<td>0.9829574392412267</td>
-<td>0.0</td>
-<td>0.03589743589743588</td>
-<td>0.6887857058762982</td>
-<td>1a5tA02</td>
+<td>1ecsA00</td>
+<td>126</td>
+<td>15824</td>
+<td>0.968401</td>
+<td>0.000000</td>
+<td>0.035810</td>
+<td>0.000079</td>
+</tr>
+<tr class="even">
+<td>1e3oC01</td>
+<td>71</td>
+<td>15252</td>
+<td>0.971069</td>
+<td>0.000000</td>
+<td>0.047485</td>
+<td>0.007088</td>
+</tr>
+<tr class="odd">
+<td>1cc5A00</td>
+<td>83</td>
+<td>14881</td>
+<td>0.963036</td>
+<td>0.000000</td>
+<td>0.040846</td>
+<td>0.006616</td>
+</tr>
+<tr class="even">
+<td>1bquA01</td>
+<td>104</td>
+<td>14778</td>
+<td>0.960453</td>
+<td>0.000000</td>
+<td>0.035288</td>
+<td>0.002460</td>
+</tr>
+<tr class="odd">
+<td>1dw9A01</td>
+<td>88</td>
+<td>14559</td>
+<td>0.977450</td>
+<td>0.000000</td>
+<td>0.040491</td>
+<td>0.003631</td>
+</tr>
+<tr class="even">
+<td>1bl0A02</td>
+<td>65</td>
+<td>14511</td>
+<td>0.911355</td>
+<td>0.000000</td>
+<td>0.080288</td>
+<td>0.000003</td>
+</tr>
+<tr class="odd">
+<td>1a8lA01</td>
+<td>117</td>
+<td>13387</td>
+<td>0.971515</td>
+<td>0.000000</td>
+<td>0.039935</td>
+<td>0.000038</td>
+</tr>
+<tr class="even">
+<td>1djxB01</td>
+<td>52</td>
+<td>13052</td>
+<td>0.965467</td>
+<td>0.000000</td>
+<td>0.044495</td>
+<td>0.141169</td>
+</tr>
+<tr class="odd">
+<td>1al3A01</td>
+<td>101</td>
+<td>12992</td>
+<td>0.976814</td>
+<td>0.000000</td>
+<td>0.026931</td>
+<td>0.050425</td>
+</tr>
+<tr class="even">
+<td>1ek6A01</td>
+<td>128</td>
+<td>12707</td>
+<td>0.989052</td>
+<td>0.000000</td>
+<td>0.033711</td>
+<td>0.000188</td>
+</tr>
+<tr class="odd">
+<td>1atgA02</td>
+<td>109</td>
+<td>12596</td>
+<td>0.982236</td>
+<td>0.000000</td>
+<td>0.040095</td>
+<td>0.000149</td>
+</tr>
+<tr class="even">
+<td>1daqA00</td>
+<td>71</td>
+<td>12537</td>
+<td>0.977804</td>
+<td>0.000000</td>
+<td>0.040241</td>
+<td>0.034764</td>
+</tr>
+</tbody>
+</table>
+<table style="width:78%;">
+<caption>Proteins with the 20th smallest <a href="abbrev.html#abbrev">Neff</a> values from the dataset of 300 proteins used to evaluate <a href="abbrev.html#abbrev">CD</a>. Statistics have been computed for the contact scores computed from pseudo-likelihood couplings and <a href="abbrev.html#abbrev">CD</a> couplings. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <a href="abbrev.html#abbrev">CD</a> coupling parameters have been optimized with <a href="abbrev.html#abbrev">SGD</a> using the following hyperparameter settings: simgoidal learning rate schedule with initial learning rate <span class="math inline">\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\)</span> and decay rate <span class="math inline">\(\gamma = 5e-6\)</span>. Regularization coefficient <span class="math inline">\(\lambda_w = 0.1L\)</span>. In order to approximate the gradient with <a href="abbrev.html#abbrev">CD</a>, 0.3Neff sequences are randomly selected and evolved with a Gibbs chain for 1 step.</caption>
+<colgroup>
+<col width="9%" />
+<col width="6%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>protein</th>
+<th>L</th>
+<th>Neff</th>
+<th>spearman rho</th>
+<th>spearman pvalue</th>
+<th>kolmogorov-smirnov</th>
+<th>kolmogorov-smirnov pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1ehsA00</td>
+<td>48</td>
+<td>3</td>
+<td>0.933381</td>
+<td>0.000000</td>
+<td>0.100177</td>
+<td>0.000022</td>
+</tr>
+<tr class="even">
+<td>1e0fI01</td>
+<td>33</td>
+<td>8</td>
+<td>0.972043</td>
+<td>0.000000</td>
+<td>0.043561</td>
+<td>0.688999</td>
+</tr>
+<tr class="odd">
+<td>1d02A00</td>
+<td>202</td>
+<td>11</td>
+<td>0.979033</td>
+<td>0.000000</td>
+<td>0.058667</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1cfrA00</td>
+<td>285</td>
+<td>15</td>
+<td>0.970660</td>
+<td>0.000000</td>
+<td>0.059501</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1dmlA00</td>
+<td>291</td>
+<td>19</td>
+<td>0.939673</td>
+<td>0.000000</td>
+<td>0.068752</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>16vpA00</td>
+<td>321</td>
+<td>20</td>
+<td>0.900008</td>
+<td>0.000000</td>
+<td>0.110903</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1c01A00</td>
+<td>76</td>
+<td>20</td>
+<td>0.887544</td>
+<td>0.000000</td>
+<td>0.077895</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1cq3A00</td>
+<td>233</td>
+<td>20</td>
+<td>0.861049</td>
+<td>0.000000</td>
+<td>0.047765</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1dc1A02</td>
+<td>88</td>
+<td>20</td>
+<td>0.871925</td>
+<td>0.000000</td>
+<td>0.103187</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1cmbA00</td>
+<td>104</td>
+<td>20</td>
+<td>0.712424</td>
+<td>0.000000</td>
+<td>0.127147</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1d4vA02</td>
+<td>31</td>
+<td>24</td>
+<td>0.840701</td>
+<td>0.000000</td>
+<td>0.079570</td>
+<td>0.100219</td>
+</tr>
+<tr class="even">
+<td>1bvp101</td>
+<td>120</td>
+<td>25</td>
+<td>0.884899</td>
+<td>0.000000</td>
+<td>0.088936</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1dc1A01</td>
+<td>235</td>
+<td>25</td>
+<td>0.805065</td>
+<td>0.000000</td>
+<td>0.176978</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1ahlA00</td>
+<td>49</td>
+<td>25</td>
+<td>0.794887</td>
+<td>0.000000</td>
+<td>0.147959</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1bvp103</td>
+<td>96</td>
+<td>28</td>
+<td>0.905518</td>
+<td>0.000000</td>
+<td>0.093640</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1e5rA02</td>
+<td>87</td>
+<td>28</td>
+<td>0.964278</td>
+<td>0.000000</td>
+<td>0.068431</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1bcpB01</td>
+<td>86</td>
+<td>33</td>
+<td>0.842349</td>
+<td>0.000000</td>
+<td>0.068947</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1cl8A00</td>
+<td>276</td>
+<td>34</td>
+<td>0.666682</td>
+<td>0.000000</td>
+<td>0.146271</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td>1c1kA01</td>
+<td>102</td>
+<td>34</td>
+<td>0.787192</td>
+<td>0.000000</td>
+<td>0.067171</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td>1bdsA00</td>
+<td>43</td>
+<td>35</td>
+<td>0.744768</td>
+<td>0.000000</td>
+<td>0.173865</td>
+<td>0.000000</td>
 </tr>
 </tbody>
 </table>
@@ -481,7 +725,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="training-of-the-random-forest-contact-prior.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

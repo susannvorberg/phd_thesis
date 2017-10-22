@@ -269,7 +269,7 @@ knitr::include_url("img/full_likelihood/sgd/precision_vs_rank_convergence_prev.h
 
 The original [CD](#abbrev)-k algorithm described by Hinton in 2002 evolves the Markov chains by k=1 Gibbs steps [@Hinton2002]. 
 As described earlier, [CD](#abbrev)-1 provides a biased estimate of the true gradient because the Markov chains have not reached the stationary distribution [@Fischer2012]. 
-Bengio and Delalleau show that the bias for [CD](#abbrev)-k kan be understood as a residual term when expressing the log likelihood gradient as an expansion that involves the k-th sample of the Gibbs chain [@Bengio2009].
+Bengio and Delalleau show that the bias for [CD](#abbrev)-k kan be understood as a residual term when expressing the log likelihood gradient as an expansion that involves the k-th sample of the Gibbs chain [@Ma2016; @Bengio2009].
 As the number of Gibbs steps, k, goes to infinity the residual term and hence the bias converges to zero and the [CD](#abbrev) gradient estimate converges to a stochastic estimation of the true likelihood gradient.
 Indeed, eventhough surprising results have been obtained by evolving the Markov chains for only one Gibbs step, typically [CD](#abbrev)-k for k>>1 gives more precise results [@Bengio2009].
 Furthermore it has been shown, that bias also depends on the mixing rate (rate of convergence) of the chains whereby the mixing rate decreases when model parameters increase [@Tieleman2008].
@@ -288,7 +288,7 @@ Another variant of [CD](#abbrev) is [PCD](#abbrev), such that the Markov chain i
 Instead, the Markov chains are kept *persistent* that is, they are evolved between successive gradient computations.
 The fundamental idea behind [PCD](#abbrev) is that the model changes only slowly between parameter updates given a sufficiently small learning rate.
 Consequently, the Markov chains will not be pushed too far from equilibrium after each update but rather stay close to the stationary distribution [@Tieleman2008; @Murphy2012; @Fischer2012].
-Tieleman and others observed that [PCD](#abbrev) performs better than [CD](#abbrev) in all practical cases tested, eventhough [CD](#abbrev) can be faster in the early stages of learning and thus should be preferred when runtime is the limiting factor [@Tieleman2008; @Murphy2012].
+Tieleman and others observed that [PCD](#abbrev) performs better than [CD](#abbrev) in all practical cases tested, eventhough [CD](#abbrev) can be faster in the early stages of learning and thus should be preferred when runtime is the limiting factor [@Tieleman2008; @Murphy2012; @Swersky2010].
 
 The next sections discuss various modifications of the [CD](#abbrev) algorithm, such as varying the regularization strength $\lambda_w$ for constraining the coupling parameters $\w$, increasing the number of Gibbs sampling steps and varying the number of Markov chains used for sampling.
 Persistent contrastive divergence is analysed for various combinations of the above mentioned settings and eventually combined with [CD](#abbrev)-k. 
@@ -407,168 +407,130 @@ knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/parameter_norm_1ah
 
 ### Persistent Contrastive Divergence  {#cd-gibbs-steps} 
 
-Finally I analysed [PCD](#abbrev) since it has often been found to be a better estimator of the likelihood gradient than [CD](#abbrev).
-It has been suggested to use [PCD](#abbrev) with small learning rates and larger mini-batches because the fundamental assumption is that the model does not change to quickly over iterations and therefore the Markov chains will stay close to the equilibrium distribition. 
-However, using smaller learning rates and larger minibatches not only increases runtime but also requires tuning of the learning rate and learning rate schedule. 
-Since it has been found, that CD is faster in learning at the beginning of the optimization, I tested a compromise, that uses CD-1 at the beginning of the optimization and when learning slows down, measured as the relative change of the norm of coupling parameters, I start PCD. 
+Finally I analysed, whether evolving the Markov chains over successive iterations, which is known as [PCD](#abbrev), does improve performance [@Tieleman2008].
+Several empirical studies have shown that [PCD](#abbrev) performs superior compared to [CD](#abbrev)-1 and also to [CD](#abbrev)-10 [@Tieleman2008; @Swersky2010].
+In the literatur is has been pointed out that [PCD](#abbrev) needs to use small learning rates because in order to sample from a distribution close to the stationary distribution the parameters cannot change too rapidly. 
+However, using smaller learning rates not only increases runtime but also requires tuning of the learning rate and learning rate schedule once again. 
+Since it has been found, that [CD](#abbrev) is faster in learning at the beginning of the optimization, I tested a compromise, that uses [CD](#abbrev)-1 at the beginning of the optimization and when learning slows down, [PCD](#abbrev) is switched on. 
+Concretely, [PCD](#abbrev) is switched on, when the relative change of the norm of coupling parameters, $||\w||_2$, falls below $\epsilon \in \{\mathrm{1e}{-3}, \mathrm{1e}{-5}\}$ while the convergence criterion is not altered and convergence is assumed when the relative change falls below $\epsilon \eq \mathrm{1e}{-8}$.
 This also has the advantage that the model has already approached the optimum and the parameters $\w$ will almost be constant over many updates. 
 
+Figure \@ref(fig:precision-pcd) shows the mean precision of top ranked contacts on the validation set computed with several [PCD](#abbrev) variants that perform almost equally well.
+Evolving the Gibbs chains for more than k=1 steps results in a slight drop in performance, just as it has been observed for [CD](#abbrev) (Figure \@ref(fig:precision-pcd) shows performance for k=10 steps).
+Optimizing the full likelihoood with [CD](#abbrev) and switiching to [PCD](#abbrev) at a later stage of optimization does also not have a notable impact on performance.
+
+(ref:caption-precision-pcd) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **pCD**: contact scores computed from [PCD](#abbrev) optimized with [SGD](#abbrev) using the hyperparameters that have been found to work optimal with [CD](#abbrev) as described throughout the last sections. **pCD #Gibbs steps = 10**: same as pCD, but evolving the Gibbs chain for 10 steps. **pCD start = 1e-3**: [SGD](#abbrev) optimization starts by optimizing the full likelihood using the [CD](#abbrev) gradient approximation and switches to the [PCD](#abbrev) gradient approximation once the relative change of L2 norm of parameters has fallen below $\epsilon \eq \mathrm{1e}{-3}$ evaluated over the last 10 iterations. **pCD start = 1e-5**: same as 'pCD start = 1e-3', but with $\epsilon \eq \mathrm{1e}{-5}$.
+
+```{r precision-pcd, echo = FALSE, screenshot.alt="img/full_likelihood/pcd/precision_vs_rank_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-pcd)'}
+knitr::include_url("img/full_likelihood/pcd/precision_vs_rank_notitle.html", height = "500px")
+```
 
 
-
-As PCD might require samller update steps and larger minibatches, I analysed the performance of PCD for the default settings of CD and additionally for smaller learning and decay rates and larger minibatches.
-Note that one Markov chain is kept for every sequence of the input alignment. At each iteration a subset $N^{\prime} < N$ of the Markov chains is randomly selected (without replacement) and used to for another round of Gibss sampling at the current iteration.
-
-PLOT PCD for different LEARNIGN  RATEWS and SAMPLE SIZES
-
-
-Discussion:
-- as could be seen: improved gradients and different solutions do not translate into improved precision of top ranked contacts
-- APC corrected l2norm might not be an appropriate measure for CD couplings:
-  look at correlation plot of couplings (pll vs cd) and l2norm (pll vs cd) and apc l2norm  (pll vs cd) -> differences vanish
-- ranking of residues might not be influenced by subtle changes in parameters when crude l2norm is computed -> rank plot: merged list of top ranked contacts from both methods
-  what can we see: 
-    - generally pll has stronger scores (see also boxplot over all proteins? statistic?)
-    - ranking is very similar, especially for top ranked contacts (thats why benchmark plots so similar)
-
+In contrast to the findings in literature, neither [CD](#abbrev)-k with k>1 Gibbs steps nor [PCD](#abbrev) does improve performance with respect to precision of the top ranked contact predictions. 
+Swersky and colleagues ellaborated on various choices of hyperparameters (e.g momentum, averaging, regularization, etc.) for training Restricted Boltzmann Machines as classifiers with [CD](#abbrev)-k and [PCD](#abbrev) [@Swersky2010].
+They found many subtleties that need to be explored and can play a crucial role for successfull training.
+In section \@ref(sgd-hyperparameter-tuning) I manually tuned the learning rate and annealing schedule for stoachstic gradient descent to be used with [CD](#abbrev)-1.
+It is plausible, that these settings are not optimal for [CD](#abbrev)-k with k>1 Gibbs steps and [PCD](#abbrev) and require tuning once again.
+Because hyperparameter optimization with stochastic gradient descent is a time-consuming task, in the following, I applied the popular *ADAM* stochastic gradient descent optimizer that does in theory not require tuning many hyperparameters [@Kingma2014].
 
 ## Using ADAM to optimize Contrastive Divergence {#adam-results}
 
-It is possible that the learning rate schedule and decay rate need to be tuned with respect to the number of Gibbs steps used for sampling because different choices of Gibbs steps influence the size of the gradient. 
-The same might apply to usign persistent contrasticve divergence.
+*ADAM* computes per-parameter adaptive learning rates and includes momentum and the default values have been found to work quite well (see methods section \@ref(methods-full-likelihood-adam) for details) [@Ruder2017; @Kingma2014]. 
+However, I tested different learning rates for *ADAM* to optimize the full likelihood with [CD](#abbrev)-1 for protein 1mkcA00 (number of sequences = 142) and 1c75A00 (number of sequences = 28078) and found that both proteins require a differnt optimal learning rate.
+In contrast to plain stochastic gradient descent, with *ADAM* it is possible to use larger learning rates for proteins having large alignments, because the learning rate will be adapted to the magnitude of the gradient for every parameter individually. 
+For protein 1mkcA00, with [Neff](#abbrev)=96, a learning rate of 5e-3 quickly leads to convergence whereas for protein 1c75A00, having [Neff](#abbrev)=16808, an even larger learning rate can be chosen to obtain quick convergence (see Appendix Figure \@ref(fig:adam-learning-rate)). 
+Therefore, I again specified the learning rate as a function of [Neff](#abbrev), 
 
-Hyperparameter optimization with stochastic gradient descent is a time-consuming task requiring manual intervention for each of the different settings. 
-There exist many variants of stochastic gradient descent algorithms that deal with the aforementioned challenges e.g. speeding up convergence rates using momentum or defining adaptive learning rates for each parameter [@Ruder2017]. 
-One of these [SGD](#abbrev) variants is Adaptive Moment Estimation (*ADAM*) [@Kingma2014], an algorithm that computes per-parameter learning rates including momentum (see methods section \@ref(methods-full-likelihood-adam) for details). 
-A major advantage of *ADAM* over pure [SGD](#abbrev) is that it does not require tuning many hyperparameters as the default values have been found to work quite well. 
-*ADAM* will be compared to the manually tuned [SGD](#abbrev) optimizer in section \@ref(adam-results).
-I used *ADAM* to find out whether its automatic adjusting of learning rates can find better parameter estimates than [sgd] for using different gibbs steps and pcd.
+\begin{equation}
+  \alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}}) \; ,
+  (\#eq:learning-rate-wrt-neff-adam)
+\end{equation}
 
+such that or small [Neff](#abbrev), e.g. 5th percentile of the distribution in the dataset $\approx 50$, this definition of the learning rate yields $\alpha_0 \approx 8\mathrm{e}{-3}$ and for large [Neff](#abbrev), e.g. 95th percentile $\approx 15000$, this yields $\alpha_0 \approx 2\mathrm{e}{-2}$. 
+
+It is interesting to note, that the norm of the coupling parameters, $||\w||_2$, converges towards different values depending on the choice of the learning rate $\alpha$ ((see Appendix Figure \@ref(fig:adam-learning-rate)).
+By default, *ADAM* uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature.
+However, popular implementations of *ADAM* in the [Keras](https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385) [@Chollet2015] and [Lasagne](https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629) [@Dieleman2015] packages allow the use of an annealing schedule.
+I therefore tested *ADAM* with a sigmoidal learning rate annealing schedule which already gave good results for [SGD](#abbrev) (see section \@ref(sgd-hyperparameter-tuning)). 
+Indeed, as can be seen in Appendix Figure \@ref(fig:adam-learning-rate-annealing), when *ADAM* is used with a sigmoidal decay of the learning rate, the L2-norm of the coupling parameters $||\w||_2$ converges roughly towards the same value.
+For the following analysis I used *ADAM* with a learning rate defined as a function of [Neff](#abbrev) and a sigmoidal learning rate annealing schedule with decay rate $\gamma \eq 5e-6$.
+
+TODO
 
 A problem when using *ADAM* is that the necessarty condidtion $\sum_{a,b=1}^{20} \wijab = 0$ is violated (see section \@ref(convergence-criteria-sgd)). 
 
 
 ## Comparing CD couplings to pLL couplings {#comparing-pll-cd}
 
+The previous sections dealed intensively with the hyperparameter optimization for the stochastic gradient decent optimizer and hyperparameters of the [CD](#abbrev) model itself. 
+Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
+[CD](#abbrev)-1 generates sequence samples according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for one full step.
+Eventhough, the *ADAM* optimizer did not improve perfomance, it is still likely that appropriate modifications of the optimization procedure might lead to improvments, e.g. averaging [@Ma2016]. 
+As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting.
+It might be worth to assess convergence with more sophisticated metrics than the L2 norm of the coupling parameters, $||\w||_2$, liek the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017].
+Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
+It can be speculated that the heuristic contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
+Furthermore, it is possible that the improved gradient, obtained by generating more samples, helps to finetune the parameters which has no effect on the contact score and the ovaral ranking of residue pairs. 
 
 
-Scatter Plots for couplings wijab:
-nice correlation - pearson correlation?
-gibt 3 outlier und das sind auch noch die staerksten couplings
-hier sieht man besser als beim boxplot, das CD kleinere couplings hat (absolut)
+(ref:caption-precision-cd-final) Mean precision for top ranked contact predictions over 2000 proteins. **pseudo-likelihood (APC)** Contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood. **pseudo-likelihood** same as "pseudo-likelihood (APC)" but without [APC](#abbrev) **contrastive divergence (APC)** Contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from contrastive-divergence. **contrastive divergence** same as "contrastive divergence (APC)" but without [APC](#abbrev).
 
-```{r comapring-cd-pll-scatter1, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence.html", height = "600px")
+```{r precision-cd-final, echo = FALSE, screenshot.alt="img/full_likelihood/final/precision_vs_rank_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-cd-final)'}
+knitr::include_url("img/full_likelihood/final/precision_vs_rank_notitle.html", height = "500px")
+```
+
+A final benchmark over a larger set of proteins (2000 proteins from subsets 9 and 10 from dataset described in method section \@ref(dataset)) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure \@ref(fig:precision-cd-final)). 
+At any rate it is interesting to not only compare pseudo-likelihood and contrastive divergence based on ovaral performance, but to also have a look at single predictions.
+In the following, I will examine and compare the predicitons made by both methods for two representative proteins, one with a small alignment and low corresponding [Neff](#abbrev) value and one with a large alignment and high corresponding [Neff](#abbrev) value. 
+
+### Protein 1c75A00
+
+Protein 1c75A00 has length L=71 and 28078 sequences in the alignment and is among the proteins with the highest number of effective sequences ([Neff](#abbrev)=16808 > 95th percentile).
+The contact score ([APC](#abbrev) corrected Frobenius norm of the couplings $\wij$) computed from pseudo-likelihood and contrastive divergence couplings performs equally well (see Appendix Figure \@ref(fig:precision-pll-cd-1c75a00)). 
+The 14 (=L/5) highest scoring contacts predicted with [CD](#abbrev) are true positive contacts according to an $8 \angstrom \Cb$ distance cutoff compared to 13 true positive contacts predicted with pseudo-likelihood. 
+Both methods predict very similar contact maps (see Figure \@ref(fig:contact-maps-1c75a00)).
+The highest scoring predictions (top L/5 contacts marked with croses) are identical except for one contact, which is the false positive contact predicted by the pseudo-likelihood.
+
+(ref:caption-contact-maps-1c75a00)  Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. Contact scores have been computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Couplings computed from pseudo-likelihood. **Right** Couplings computed from [CD](#abbrev).
+
+```{r contact-maps-1c75a00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-contact-maps-1c75a00)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/contact_map_pseudo-likelihood_apc_1c75A00.png", "img/full_likelihood/comparing_couplings/1c75A00/contact_map_contrastive_divergence_apc_1c75A00.png"))
+```
+
+The contact maps suggest that both scores are very similar.
+Indeed, the correlation between both scores is very high (Pearson’s correlation coefficient = 0.98) as can bee seen in the right plot in Figure \@ref(fig:scatter-plots-1c75a00).
+Of course, by applying the average product correction (APC), the scores are normalized with respect to the raw contact scores (=Frobenius norm of couplings $\wij$).
+The left plot in Figure \@ref(fig:scatter-plots-1c75a00) shows the contact scores before applying the average product correction.
+The raw contact scores computed from contrastive divergence couplings are systematically stronger than for pseudo-likelihood.
+Most likely this effect arises from the weaker regularization that is used with contrastive divergence ($\lambda_w = 0.1L$) than compared to pseudo-likelihood optimization ($\lambda_w = 0.2L$) (see section \@ref(regularization-for-cd-with-sgd)). 
+
+(ref:caption-scatter-plots-1c75a00)  Contact scores computed from pseudo-likelihood and [CD](#abbrev) couplings for protein 1c75A00. **Left** Frobenius norm of couplings. **Right** Frobenius norm + [APC](#abbrev) of couplings.
+
+```{r scatter-plots-1c75a00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-scatter-plots-1c75a00)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_1c75A00.png", "img/full_likelihood/comparing_couplings/1c75A00/scatter_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00.png"))
+```
+
+However, the contact scores have no meaning by themselfs but merely reflect the confidence of the prediction.  
+It is more meaningful to compare the ranking of the residue pairs imposed by the scores.
+The left plot in Figure \@ref(fig:ranking-pll-cd-1c75a00) compares the ordered scores of both methods that lie very close to the diagonal which indicates that both distribution are very similar. 
+A detailed view of the top ranked predictions is given in the right plot in Figure \@ref(fig:ranking-pll-cd-1c75a00).
+The three most confident predictions are identical for both methods. 
+Yet, the ranks of subsequent predictions are swapped by only a few positions which was already evident from the contact maps.
+
+(ref:caption-ranking-pll-cd-1c75a00)  Comparing the ranking of highest scoring contacts predicted with pseudo-likelihood and contrastive divergence for protein 1c75A00. Contact scores are computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Q-Q plot. **Right** Contact scores for the top 71 (=L) predictions from either method. Identical residue pairs are connected with a line. Green indicates identical ranking of the residue pair for both methods. Blue indicates higher ranking of the residue pair for contrastive divergence. Red indicates higher ranking of the residue pair for pseudo-likelihood. 
+
+```{r ranking-pll-cd-1c75a00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-ranking-pll-cd-1c75a00)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/qq_plot_for_pseudo-likelihoodvs_contrastive_divergence_apc_1c75A00.png", "img/full_likelihood/comparing_couplings/1c75A00/comparative_value_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive_divergence_seqsep8.png"))
 ```
 
 
-Boxplots for couplings wijab: 
-sieht ma nicht viel
+### Protein 1ahlA01
 
-```{r comapring-cd-pll-boxplot1, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score.html", height = "600px")
+Proteins with very low Neff often have higher precision with CD.
+
+```{r precision-cd-final-neff, echo = FALSE, screenshot.alt="img/full_likelihood/final/meanprecision_by_neff.png", out.width = '90%', fig.align='center', fig.cap = 'better for small N'}
+knitr::include_url("img/full_likelihood/final/meanprecision_by_neff.html", height = "500px")
 ```
 
-
----
-
-
-Scatter for l2norm over couplings ||wij||_2: 
-hier sieht man sehr schoen, dass CD systematisch kleinere scores hat als pLL
-und man sieht die drei outlier
-
-```{r comparing-cd-pll-scatter2, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcFalse.html", height = "600px")
-```
-
-
-Boxplots for l2norm over couplings ||wij||_2: 
-contrastive divergence hat kleineren scores
-signifikant?
-
-
-```{r comapring-cd-pll-boxplot2, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcFalse.html", height = "600px")
-```
-
-
----
-
-Scatter for l2norm-apc over couplings ||wij||_2 - apc: 
-das gleiche mit apc:
-systematisch kleinere scores (absolut)
-
-```{r comparing-cd-pll-scatter3, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_l2norm_apcTrue.html", height = "600px")
-```
-
-
-```{r comapring-cd-pll-boxplot3, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/boxplot_for_1c75A00_method1_pseudo-likelihood_method2_contrastivedivergence_score_l2norm_apcTrue.html", height = "600px")
-```
-
-Boxplots for l2norm-apc over couplings ||wij||_2 - apc: 
-auch mit apc: es gibt weniger starke scores mit CD
-signifikant?
-
-scipy.stats.wilcoxon(l2norm_apc_pll, l2norm_apc_cd)
-#WilcoxonResult(statistic=187035.0, pvalue=0.029710790280912919)
-
-scipy.stats.ranksums(l2norm_apc_pll, l2norm_apc_cd)
-#RanksumsResult(statistic=0.38719674947266086, pvalue=0.69861055638055758)
-
-scipy.stats.kendalltau(l2norm_apc_pll, l2norm_apc_cd)
-#KendalltauResult(correlation=0.76655297812416368, pvalue=1.3239009316846667e-260)
-
-scipy.stats.spearmanr(l2norm_apc_pll, l2norm_apc_cd)
-#SpearmanrResult(correlation=0.92532449605319178, pvalue=0.0)
-
-scipy.stats.ks_2samp(l2norm_apc_pll, l2norm_apc_cd)
-Ks_2sampResult(statistic=0.067552602436323439, pvalue=0.030922873101286375)
-
-The two score distributions are significantly different (kolmogorov smirnov test,  two-sided p-value of 0.03).
-
----
-
-Comparing the ranking:
-geiler plot
-ranking ist sehr aehnlich, besonders fuer top contacts
-nur diese drei outlier sind bei CD sehr viel hoeher gerankt als bei pLL
-
-```{r comparing-cd-pll-ranking, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/comparative_top_ranked_contacts_for_1c75A00_method1_pseudo-likelihood_method2_contrastive divergence.html", height = "600px")
-```
-
-
-Comparing the ranking with q-q plot:
-```{r comparing-cd-pll-ranking-qq, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/couplings_for_1mkcA00_method1_pLL_apc_rank_method2_CD_apc_rank_score.html", height = "600px")
-```
-
-
----
-
-Showing the contact maps:
-pLL
-
-```{r contact-map-1c75a00-pll, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_pll.html", height = "600px")
-```
-
-CD
-```{r contact-map-1c75a00-cd, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00.filt.braw_seqsep8_contacthr8_apcTrue_cd.html", height = "600px")
-```
-
-
-Showing precision:
-
-```{r precision-vs-rank-1c75a00, echo = FALSE, screenshot.alt="img/aa_venn_diagram.png", out.width='100%', fig.align='center', fig.cap = 'dideldum'}
-knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00_precision_vs_rank_8seqsep_8contacthr.html", height = "600px")
-```
-
-
-
-- convergence criterion: mention paper [@Mahsereci2017]
 
 
