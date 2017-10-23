@@ -5,18 +5,18 @@ Apart from the heuristic transformation that omits meaningful information compri
 
 The next sections present the derivation of a principled Bayesian statistical approach for contact prediction eradicating these deficiencies. 
 The model provides estimates of the posterior probability distributions of contact states $\cij$ for all residues pairs $i$ and $j$, given the [MSA](#abbrev) $\X$.
-A true contact, having contact state $c\eq1$, is defined as two residues whose $\Cb$-$\Cb$ distance $\le 8 \angstrom$, whereas a residue pair with $\Cb$-$\Cb$ distance $>8 \angstrom$ is considered not to be in physical contact and is assigned the contact state $\c\eq0$. 
+A true contact (contact state $\cij\eq1$) is defined as two residues whose $\Cb$-$\Cb$ distance $\le 8 \angstrom$, whereas a residue pair with $\Cb$-$\Cb$ distance $>8 \angstrom$ is considered not to be in physical contact (contact state $\cij\eq0$). 
 <!--
 The model provides estimates of the probability distributions of the distances $\rij$ between $\Cb$ atoms of all residues pairs $i$ and $j$, given the [MSA](#abbrev) $\X$. 
 -->
 The parameters $(\v, \w)$ of the [MRF](#abbrev) model describing the probability distribution of the sequences in the [MSA](#abbrev) are treated as hidden parameters that can be integrated out using an approximation to the posterior distribution of couplings $\w$.
-This approach also allows to explictely model the distance-dependence of coupling coeffcients $\wij$ as a mixture of Gaussians with
-distance-dependent mixture weights and thus can even learn correlations between couplings.
+This approach also allows to explictely model the dependence of coupling coeffcients $\wij$ on contacts/non-contacts as a mixture of Gaussians with
+contact state dependent mixture weights and thus can even learn correlations between couplings.
 
 <!--
 ## Computing the Posterior Distribution of Distances $p(\r | \X)$ {#overview-posterior-distances}
 -->
-## Computing the Posterior Probabiilty of a Contact $p(\c \eq 1 | \X)$ {#overview-posterior-distances}
+## Computing the Posterior Probabiilty of a Contact {#overview-posterior-distances}
 
 The joint probability of contact states $\c$ and [MRF](#abbrev) model parameters $(\v, \w)$ given the [MSA](#abbrev) $\X$ and a set of sequence derived features $\phi$ (such as listed in method section \@ref(seq-features)), can be written as a hierarchical Bayesian model of the form:
 
@@ -38,285 +38,53 @@ This allows the replacement of the intergral over $\v$ with the value of the int
 
 Computing the integral over $\w$ can be achieved by factorizing the integrand into factors over $(i,j)$ and performing each integration over the coupling coefficients $\wij$ for $(i,j)$ separately. 
 
-For that account, the prior over $\w$ will be modelled as a product over independent contributions over $\wij$ with $\wij$ depending only on the contact state $\cij$, which is described in detail in the next section \@ref(coupling-prior).
-The prior over [MRF](#abbrev) model parameters then yields,
+For that account, the prior over $\w$ will be modelled as a product over independent contributions over $\wij$ with $\wij$ depending only on the contact state $\cij$, which is described in detail in method section \@ref(coupling-prior).
+The prior over the *Potts* model parameters then yields,
 
 \begin{equation}
   p(\v,\w|\c) = \Gauss(\v|\v^*,\lambda_v^{-1} \I) \, \prod_{1\le i<j\le L} p(\wij|\cij) \; .
 (\#eq:definition-parameter-prior)
 \end{equation}
 
-Furthermore, section \@ref(laplace-approx) proposes an approximation to the regularised likelihood, $p(\X | \v,\w) \, p(\v, \w)$, with a Gaussian distribution that facilitates the analytical solution of the integral in eq. \@ref(eq:integrate-out-vw) and is covered in section \@ref(likelihood-fct-distances).
+Furthermore, method section \@ref(laplace-approx) proposes an approximation to the regularised likelihood, $p(\X | \v,\w) \, p(\v, \w)$, with a Gaussian distribution that facilitates the analytical solution of the integral in eq. \@ref(eq:integrate-out-vw).
+The detailed derivation of the solution to the integral is covered in method section \@ref(likelihood-fct-distances).
 
-Finally, the marginals $p(\cij | \X, \phi) = \int  p(\c | \X, \phi) d \c_{\backslash ij}$, where $\c_{\backslash ij}$ is the vector containing all coordinates of $\c$ except $\cij$ will be computed in \@ref(posterior-of-rij). 
-
-
-
-## Gaussian approximation to the posterior of couplings {#laplace-approx}
-
-
-From sampling experiments done by Markus Gruber we know that the regularized pseudo-log-likelihood for realistic examples of protein MSAs obeys the equipartition theorem. 
-The equipartition theorem states that in a harmonic potential (where third and higher order derivatives around the energy minimum vanish) the mean potential energy per degree of freedom (i.e. per eigendirection of the Hessian of the potential) is equal to $k_B T/2$, which is of course equal to the mean kinetic energy per degree of freedom. 
-Hence we have a strong indication that in realistic examples the pseudo log likelihood is well approximated by a harmonic potential. 
-We assume here that this will also be true for the regularized log likelihood. 
-
-
-The posterior distribution of couplings $\w$ is given by
-
-\begin{equation}
-p(\w | \X , \v^*) = p(\X | \v^*, \w) \Gauss (\w | \mathbf{0}, \lambda_w^{-1} \I)
-\end{equation}
-
-where the single potentials $\v$ are set to the target vector $\v^*$ as discussed in section \@ref(overview-posterior-distances).
-
-The posterior distribution can be approximated with a so called "Laplace Approximation"[@Murphy2012] as follows.
-By performing a second order Taylor expansion around the mode $\w^*$ of the log posterior it can be written as
-
-\begin{align}
-    \log p(\w | \X , \v^*) \overset{!}{\approx} &  \;  \log p(\w^* | \X , \v^*) \nonumber\\
-                & + \nabla_\w \log p(\w | \X , \v^*)|_{\w^*}(\w-\w^*) \nonumber\\ 
-  			    & - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \H (\w-\w^*)  \; .
-\end{align}
-
-where $\H$ signifies the *negative* Hessian matrix with respect to the components of $\w$,
-
-\begin{equation}
-    (\H)_{klcd, ijab} = - \left. \frac{\partial^2  \log p(\w | \X , \v^{*})}{\partial \w_{klcd} \, \partial \wijab  } \right|_{(\w^{*})} \; .
-\end{equation}
-
-The mode $\w^*$ will be determined with the [CD](#abbrev) approach described in detail in section \@ref(optimizing-full-likelihood). 
-Since the gradient vanishes at the mode maximum,  $\nabla_\w \log p(\w | \X , \v^*)|_{\w^*} = 0$, the second order approximation can be written as
-
-\begin{equation}
-    \log p(\w | \X , \v^*) {\approx}  \log p(\w^* | \X , \v^*)  - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \, \H \, (\w-\w^*)  \;.
-\end{equation}
-
-
-Hence, the posterior of couplings can be approximated with a Gaussian
-
-\begin{align}
-   p(\w | \X , \v^*) &\approx p(\w^* | \X , \v^*) \exp \left( - \frac{1}{2} (\w-\w^*)^{\mathrm{T}} \H  (\w -\w^*) \right) \nonumber \\
-              &= p(\w^* | \X , \v^*) \frac{(2 \pi)^\frac{D}{2}} { |\H|^\frac{D}{2}} \times \Gauss (\w | \w^*, \H^{-1} ) \nonumber \\
-              &\propto  \Gauss (\w | \w^*, \H^{-1}) \,,
-(\#eq:reg-lik-gauss-approx)
-\end{align}
-
-with proportionality constant that depends only on the data and with a precision matrix equal to the negative Hessian matrix.
-The surprisingly easy computation of the Hessian can be found in Methods section \@ref(neg-Hessian-computation). 
-
-
-### Iterative improvement of Laplace approximation {#laplace-approx-improvement}
-
-The quality of the Gaussian approximation to the posterior distribution of couplings $p(\w | \X , \v^*)$ depends on two points,
-
-1. how well is the posterior distribution of couplings approximated by a Gaussian 
-2. how closely does the mode of the  posterior distribution of couplings lie near the mode of the integrand in equation \@ref(eq:). 
-
-The second point can be addressed quite effectively in the following way. 
-
-(see Murphy page 658 eq. 18.137 and eq 18.138)
-
-
-Supppose the optimal prior parameters $(\tilde{\muk}, \tilde{\Lk})$ have been trained as described in Methods section \@ref(training-hyperparameters), using the standard isotropic regularisation prior $\Gauss(\w_{ij} | \mathbf{0}, \lambda_w^{-1} \I)$. 
-An improved regularisation prior $\Gauss( \wij | \mu(r_{ij}), \mathbf{\Sigma}(r_{ij}))$ can then be selected using the knowledge of the true, optimised prior, by matching the mean and variance of the improved regularisation with those of the true prior from the first optimisation:
-
-\begin{align} 
-	\mathbf{\mu}(r_{ij}) &= \operatorname{E}_{p( \wij | \rij, \tilde{\mathbf{\mu}}, \tilde{\Lambda})} \left[  \wij \right]  \\
-	&= \int \wij \, p( \wij | \rij, \tilde{\mathbf{\mu}}, \tilde{\Lambda}) d \w  \\
-	&= \int \wij \sum_{k=0}^K g_k(\rij) \, \Gauss(\wij | \tilde{\muk}, \tilde{\Lambda}_k^{-1})  d \w \\
-	&= \sum_{k=0}^K g_k(\rij) \int \wij  \, \Gauss(\wij | \tilde{\muk}, \tilde{\Lambda}_k^{-1})  d \w  \\
-	\mathbf{\mu}(r_{ij}) &= \sum_{k=0}^K g_k(\rij) \, \tilde{\muk}
-\end{align}
-
-and similarly,  
-
-\begin{align}
-	\mathbf{\Sigma}(r_{ij}) &= \operatorname{var}_{ p(\wij | \rij, \tilde{\mathbf{\mu}}, \tilde{\Lambda} )}  \left[ \wij \right] \\
-	&= \int (\wij - \mathbf{\mu}(r_{ij})) (\wij - \mathbf{\mu}(r_{ij}))^\mathrm{T} \, p( \wij | \rij, \tilde{\mathbf{\mu}}, \tilde{\Lambda}) d \w \\
-	&= \sum_{k=0}^K g_k(\rij) \int  (\wij - \mathbf{\mu}(r_{ij})) (\wij - \mathbf{\mu}(r_{ij}))^\mathrm{T} \, \Gauss(\wij | \tilde{\muk}, \tilde{\Lk}^{-1}) d \w \\
-	&= \sum_{k=0}^K g_k(\rij) \int  (\wij - \mathbf{\mu}(r_{ij}) + \tilde{\muk}) (\wij - \mathbf{\mu}(r_{ij}) + \tilde{\muk})^\mathrm{T} \, \Gauss(\wij | \mathbf{0} , \tilde{\Lk}^{-1}) d \w \\
-	\mathbf{\Sigma}(r_{ij}) &= \sum_{k=0}^K g_k(\rij) \left( \tilde{\Lk}^{-1} + (\mathbf{\mu}(r_{ij}) - \tilde{\muk}) (\mathbf{\mu}(r_{ij}) - \tilde{\muk})^\mathrm{T}\right) \,. 
-\end{align}
-
-We can now run a second optimisation with better regularisation prior, in which the $\tilde{\mathbf{\mu}}$ and $\tilde{\Lambda}$ are fixed and will not be optimised. Instead we optimise the marginal likelihood as a function of $\muk$ and $\Lk$. Since the new regularisation prior will be very close to the mode of the integrand in the marginal likelihood, our approximation for the second iteration has improved in comparison to the first iteration. In principle, a third iteration can be done in which our regularisation prior derived from the prior that was found by optimisation in the second iteration. However this is unlikely to further improve the predictions. 
-
-
-
-
-
-## Modelling the prior over couplings with dependence on $\cij$ {#coupling-prior}
-
-The prior over couplings $p(\wij|\cij)$ will be modelled as a mixture of $K\!+\!1$ 400-dimensional Gaussians, with means $\muk \in \mathbb{R}^{400}$, precision matrices $\Lk \in \mathbb{R}^{400\times 400}$, and  normalised weights $g_k(\cij)$ that depend on the contact state, 
-
-\begin{align}	
-	  p(\wij | \cij) = \sum_{k=0}^K g_k(\cij) \, \Gauss(\wij | \muk, \Lk^{-1}) \,.
-(\#eq:definition-mixture-coupling-prior)
-\end{align}
-
-The mixture weights $g_k(\cij)$  in eq. \@ref(eq:definition-mixture-coupling-prior) are modelled as softmax: 
-
-\begin{equation}
-	g_k(\cij) = \frac{\exp \gamma_k(\cij)}{\sum_{k'=0}^K \exp \gamma_{k'}(\cij)} 
-(\#eq:def-g-k-binary)
-\end{equation}
-
-The functions $g_k(\cij)$ remain invariant when adding an offset to all $\gamma_k(\cij)$. 
-This degeneracy can be removed by setting $\gamma_0(\cij)=1$.
-
-The assumption that the prior over couplings $p(\wij|\cij)$ can be modelled as a multivariate Gaussian is justified by the analysis of single and 2-dimensional coupling distributions presented in section \@ref(coupling-profiles) and in section \@ref(higher-order-coupling-profiles).
-The couplings $\wijab$ for this analysis have been filtered such that they have sufficient evidence in the alignment (see method section \@ref(method-coupling-correlation) for details). 
-Therefore, the presented distributions should resemble the posterior distribution of couplings $p(\w | \X , \v^*) \propto  \Gauss (\w | \w^*, \H^{-1})$ in the case that the diagonal elements $(\H)_{ijab, ijab}$ have non-negligible values.
-
-
-
-
-
-
-
-
-
-## Computing the likelihood function of contact states $p(\X | \c)$ {#likelihood-fct-distances}
-
-In order to compute the likelihood function of the contact states, one needs to solve the integral over $(\v, \w)$,
-
-\begin{equation}
-    p(\X | \c) = \int \int p(\X | \v,\w) \, p(\v, \w | \c) \,d\v\,d\w \; .
-(\#eq:likelihood-distances)
-\end{equation}
-
-
-Inserting the prior over parameters $p(\v, \w | \c)$ from eq. \@ref(eq:definition-parameter-prior) into the previous equation and performing the integral over $\v$, as discussed earlier in section \@ref(overview-posterior-distances), yields
-
-\begin{eqnarray}
-    p(\X | \c) &=& \int \left( \int  p(\X | \v,\w) \, \Gauss(\v|\v^*,\lambda_v^{-1} \I) \,d\v \right) \, \prod_{1\le i<j\le L} p(\wij|\cij) \, d\w  \\
-    p(\X | \c) &=& \int  p(\X | \v^*,\w) \, \prod_{1\le i<j\le L} p(\wij|\cij) \, d\w  
-\label{eq:in_over_w_1}
-\end{eqnarray}
-
-Next, the likelihood of sequences, $p(\X | \v^*,\w)$, will be multiplied with the regularisation prior $\Gauss(\w|\mathbf{0}, \lambda_w^{-1} \I)$ and at the same time the coupling prior, which depends on the contact states, will be divided by the regularisation prior again:
-
-\begin{eqnarray}
-	  p(\X | \c) &=& \int p(\X | \v^*,\w) \, \Gauss(\w|\mathbf{0}, \lambda_w^{-1} \I) \, \prod_{1\le i<j\le L} \frac{p(\wij|\cij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} \,d\w \, .
-\end{eqnarray}
-
-Now the crucial advantage of the likelihood regularisation is borne out: the strength of the regularisation prior, $\lambda_w$, can be chosen such that the mode $\w^*$ of the regularised likelihood is near to the mode of the integrand in the last integral. 
-The regularisation prior $\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)$ is then a simpler, approximate version of the real coupling prior $\prod_{1\le i<j\le L} p(\wij|\cij)$ that depends on the contact state. 
-This allows to approximate the regularised likelihood with a Gaussian distribution (eq. \@ref(eq:reg-lik-gauss-approx)), because this approximation will be fairly accurate in the region around its mode, which is near the region around the mode of the integrand and this again is in the region that contributes most to the integral:
-
-\begin{eqnarray}
-	  p(\X | \c) &\propto& \int \Gauss (\w | \w^*, \H^{-1} ) \, \prod_{1 \le i<j \le L} \frac{p(\wij | \cij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w \,.
-(\#eq:int-over-w)
-\end{eqnarray}
-
-The matrix $\H$ has dimensions $(L^2 \times 20^2) \times (L^2 \times 20^2)$. 
-Computing it is obviously infeasible, even if there was a way to compute $p(x_i \eq a, x_j \eq b| \v^*,\w^*)$ efficiently. 
-In Methods section \@ref(Hessian-offdiagonal) is shown that in practice, the off-diagonal block matrices with $(i,j) \ne (k,l)$ are negligible in comparison to the diagonal block matrices.
-For the purpose of computing the integral in eq. \@ref(eq:int-over-w), it is therefore a good approximation to simply set the off-diagonal block matrices (case 3 in eq. \@ref(eq:Hw-offdiag)) to zero! 
-The first term in the integrand of eq. \@ref(eq:int-over-w) now factorizes over $(i,j)$, 
-
-\begin{equation}
-  \Gauss (\w | \w^{*}, \H^{-1}) \approx \prod_{1 \le i < j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) ,
-\end{equation}
-
-with the diagonal block matrices $(\H_{ij})_{ab,cd} := (\H)_{ijab,ijcd}$. 
-Now the product over all residue indices can be moved in front of the integral and each integral can be performed over $\wij$ separately, 
-
-\begin{eqnarray}
-  p(\X | \c) &\propto& \int \prod_{1 \le i < j \le L} \Gauss (\wij | \wij^{*}, \H_{ij}^{-1}) \prod_{1 \le i<j \le L} \frac{p(\wij | \cij)}{\Gauss(\wij|\mathbf{0}, \lambda_w^{-1} \I)} d\w  \\
-  p(\X | \c) &\propto& \int \prod_{1\le i<j\le L} \left(  \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \, \frac{p(\wij | \cij)}{\Gauss(\wij | \mathbf{0}, \lambda_w^{-1} \I)} \right) d\w \\
-  p(\X | \c) &\propto& \prod_{1\le i<j\le L}  \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{p(\wij | \cij)}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij 
-(\#eq:int-over-w-2)
-\end{eqnarray}
-
-Inserting the coupling prior defined in eq. \@ref(eq:definition-mixture-coupling-prior) yields
-
-\begin{eqnarray}
-   p(\X | \c) &\propto& \prod_{1\le i<j\le L} \int \Gauss (\wij | \wij^*, \H_{ij}^{-1}) \frac{\sum_{k=0}^K g_{k}(\cij) \Gauss(\wij | \muk, \Lk^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} d \wij \\
-   p(\X | \c) &\propto& \prod_{1\le i<j\le L} \sum_{k=0}^K g_{k}(\cij) \int \frac{\Gauss (\wij | \wij^*, \H_{ij}^{-1})}{\Gauss (\wij | \mathbf{0}, \lambda_w^{-1} \I)} \Gauss(\wij | \muk, \Lk^{-1}) d\wij \; .
-(\#eq:int-over-w-3)
-\end{eqnarray}
-
-
-The integral can be carried out using the following formula:
-\begin{equation}
-    \int d\seq \, \frac{ \Gauss( \seq | \mathbf{\mu}_1, \mathbf{\Lambda}_1^{-1}) }{\Gauss(\seq|\mathbf{0},\mathbf{\Lambda}3^{-1})} \, \Gauss(\seq|\mathbf{\mu}_2,\mathbf{\Lambda}_2^{-1}) = \\
-    \frac{\Gauss(\mathbf{0}| \mathbf{\mu}_1, \mathbf{\Lambda}_{1}^{-1}) \Gauss(\mathbf{0}| \mathbf{\mu}_2, \mathbf{\Lambda}_{2}^{-1})}{\Gauss(\mathbf{0}|\mathbf{0}, \mathbf{\Lambda}_{3}^{-1}) \Gauss(\mathbf{0}| \mathbf{\mu}_{12}, \mathbf{\Lambda}_{123}^{-1})} 
-\end{equation}
-
-with 
-\begin{eqnarray}
-  	\mathbf{\Lambda}_{123} &:=& \mathbf{\Lambda}_1 - \mathbf{\Lambda}_3 + \mathbf{\Lambda}_2 \\
-  	\mathbf{\mu}_{12}  &:=& \mathbf{\Lambda}_{123}^{-1}(\mathbf{\Lambda}_1 \mathbf{\mu}_1 + \mathbf{\Lambda}_2 \mathbf{\mu}_2).
-\end{eqnarray}
-
-We define 
-\begin{align}
-  	\Lijk   &:= \H_{ij} - \lambda_w \I + \Lk \\ 
-  	\muijk  &:= \Lijk^{-1}(\H_{ij} \wij^* + \Lk \muk) \,.
-(\#eq:def-Jkij)
-\end{align}
-
-and obtain
-
-\begin{align}
-p(\X | \c) \propto \prod_{1 \le i < j \le L}  \sum_{k=0}^K g_{k}(\cij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \,.
-(\#eq:pXr-final)
-\end{align}
-
-$\Gauss( \mathbf{0} | \mathbf{0}, \lambda_w^{-1} \I)$ and $\Gauss( \mathbf{0} | \wij^*, \H_{ij}^{-1})$ are constants that depend only on $\X$ and $\lambda_w$ and can be omitted. 
+Finally, the marginals $p(\cij | \X, \phi) = \int  p(\c | \X, \phi) d \c_{\backslash ij}$, where $\c_{\backslash ij}$ is the vector containing all coordinates of $\c$ except $\cij$ can be computed to obtain the posterior probability distribution of the contact states (see method section \@ref(posterior-of-rij)). 
 
 
 ## Training the Hyperparameters in the Likelihood Function of Contact States  {#bayesian-model-training-hyperparameters}
 
-The likelihood function of contact states given in eq. \@ref(eq:pXr-final) contains the hyperparameters $\gamma_k(\cij)$, $\muk$ and $\Lk$ representing the weights, mean vectors and precision matrices of the $K$ Gaussian components of the contact state dependent coupling prior, respectively.
-The hyperparameters will be trained by maximizing the logarithm of the likelihood over a set of training [MSAs](#abbrev) $\X^1,\ldots,\X^M$ and associated structures with contact state vectors $\c^1,\ldots,\c^M$ plus a regularizer $R(\mathbf{\mu}, \mathbf{\Lambda})$ as described in detail in method section \@ref(training-hyperparameters).
+The likelihood function of contact states,  given in eq. \@ref(eq:pXr-final), is obtained by solving the integral in eq. \@ref(eq:integrate-out-vw).
+It contains the hyperparameters $\gamma_k(\cij)$, $\muk$ and $\Lk$ representing the weights, mean vectors and precision matrices of the $K$ Gaussian components of the contact state dependent coupling prior, respectively.
+The hyperparameters are trained by maximizing the logarithm of the likelihood over a set of training [MSAs](#abbrev) as described in detail in method section \@ref(training-hyperparameters).
+
+The [MAP](#abbrev) estimates of the coupling parameters $\wij^*$ is are needed to compute the Hessian of the regularized *Potts* model likelihood, which again is needed for the Gaussian approximation to the likelihood.
+For that purpose, I tested couplings $\wij^*$ obtained from pseudo-likelihood maximization as well as the couplings $\wij^*$ obtained by maximizing the full likelihood with [CD](#abbrev).
+
+## Training on couplings from pseudo-likelihood maximization
+
+I trained models with $K \in \{3,5,10\}$ Gaussian mixture components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$.
+Convergence has only been observed for Gaussian mixture with $K \eq 3$ components and for the smallest datasets with 10000 and 100,000 residue pairs per contact class.
+However, the resultant mixtures are consistent regardless of the dataset size and independent repeated trainings.
+
+Figure \@ref(fig:stats-pll-3comp-100k) shows the statistics of the hyperparameters for a three component Gaussian mixture trained on 100,000 residue pairs per contact class. 
+The zeroth component, with $\mu_0=0$ has a weight for 0.88 for the non-contact class whereas it has only weight 0.5 in the contact class, which is expected given that the couplings $\wijab$ for non-contacts have a much tighter distribution around zero than contacts. Component 2 has the highest standard deviations and the broadest spread. It is not surprising that it has low ($g_2(0) \eq 0.0026$) component weight for non-contacts but a higher  weight ($g_2(1) \eq 0.14$) for contacts. 
+
+(ref:caption-stats-pll-3comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 371 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. 
+
+```{r stats-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-100k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-100k.png")
+```
+
+(ref:caption-vis1d-aa-pll-3comp-300k) Visualisation of 1diemnsion projection for AA. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2. Color code is identical to Figure \@ref(fig:stats-pll-3comp-100k) 
+
+```{r vis1d-aa-pll-3comp-300k, echo = FALSE, out.width = '49%', fig.show='hold', fig.cap = '(ref:caption-vis1d-aa-pll-3comp-300k)'}
+knitr::include_graphics(c("img/bayesian_model/pll/3/aa_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/ww_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/er_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/ee_pll-3comp-300k-nolegend.png"))
+```
 
 
-I training models with $K \in \{1,3,5\}$ Gaussian mixture components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$.
-The number of model parameters assembles as follows:
-
-- $(K-1) \times 400$ parameters for $\muk$ with $k \in \{1, \ldots, K \}$ ($\mu_0 = 0$)
-- $K \times 400$ parameters for the diagonal $(\Lk)_{ab, ab}$ with $k \in \{0, \ldots, K\}$ 
-- $2 \times (K\!-\!1)$ parameters for $\gamma_k(\cij)$ for $k \in \{1,2\}$ and $\cij \in \{0,1\}$ ($\gamma_0(\cij)\eq1$).
-
-This yields 2004 parameters for $K\eq3$, 3608 parameters for $K\eq5$ and 7618 parameters for $K\eq10$ components. 
-The models have been trained on datasets of varying sizes, consisting of 10000, 100000, 300000 and 500000 residue pairs for contacts and non-contacts respectively.
 
 
-Convergence according to the criterion, .... has only been observed for the smallest datasets with 10000 and 100000 residue pairs per contact class.
-CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH
-
-
-
-
-
-
-
-## The posterior probability distribution for contact states $\cij$ {#posterior-of-rij}
-
-The posterior distribution for $c_{ij}$ can be computed by marginalizing over all other contact states, which are summarized in the vector $\c_{\backslash ij}$: 
-
-\begin{eqnarray}
-    p(\cij | \X, \phi) &=& \int d \c_{\backslash ij} \, p(\c |\X, \mathbf{\phi}) \nonumber\\
-                &\propto & \int d \c_{\backslash ij} \, p(\X|\c) \, p(\c | \phi) \nonumber\\
-                &\propto & \int d \c_{\backslash ij} \prod_{i'<j'} \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}
- \, \prod_{i'<j'} p(c_{i'j'} |\phi_{i'j'})  \,,
- \end{eqnarray}
- 
- and, by pulling out of the integral over $\c_{\backslash ij}$ the term depending only on $\cij$, 
- 
- \begin{eqnarray}
-    p(\cij | \X, \phi) & \propto & 
-            p(\cij |\phi_{ij}) \, \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} \nonumber\\
-            & \times  & \prod_{i'<j', (i',j') \ne (i,j)} \int d c_{i'j'} \, p(c_{i'j'} |\phi_{i'j'}) \, \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}
-\end{eqnarray}
-
-Since the second factor involving the integrals over $c_{i'j'}$ is a constant with respect to $\cij$, we find
-
-\begin{equation}
-    p(\cij | \X, \phi) \propto  p(\cij |\phi_{ij}) \,  \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \, .
-(\#eq:posterior-marginal-rij)
-\end{equation}
 
 
 

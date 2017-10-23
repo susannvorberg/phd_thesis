@@ -409,15 +409,12 @@ knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/parameter_norm_1ah
 
 Finally I analysed, whether evolving the Markov chains over successive iterations, which is known as [PCD](#abbrev), does improve performance [@Tieleman2008].
 Several empirical studies have shown that [PCD](#abbrev) performs superior compared to [CD](#abbrev)-1 and also to [CD](#abbrev)-10 [@Tieleman2008; @Swersky2010].
-In the literatur is has been pointed out that [PCD](#abbrev) needs to use small learning rates because in order to sample from a distribution close to the stationary distribution the parameters cannot change too rapidly. 
+In the literatur is has been pointed out that [PCD](#abbrev) needs to use small learning rates because in order to sample from a distribution close to the stationary distribution, the parameters cannot change too rapidly. 
 However, using smaller learning rates not only increases runtime but also requires tuning of the learning rate and learning rate schedule once again. 
 Since it has been found, that [CD](#abbrev) is faster in learning at the beginning of the optimization, I tested a compromise, that uses [CD](#abbrev)-1 at the beginning of the optimization and when learning slows down, [PCD](#abbrev) is switched on. 
 Concretely, [PCD](#abbrev) is switched on, when the relative change of the norm of coupling parameters, $||\w||_2$, falls below $\epsilon \in \{\mathrm{1e}{-3}, \mathrm{1e}{-5}\}$ while the convergence criterion is not altered and convergence is assumed when the relative change falls below $\epsilon \eq \mathrm{1e}{-8}$.
-This also has the advantage that the model has already approached the optimum and the parameters $\w$ will almost be constant over many updates. 
+As a result, the model will already have approached the optimum when [PCD](#abbrev) is switched on so that the coupling parameters $\w$ will mot change to quickly over many updates. 
 
-Figure \@ref(fig:precision-pcd) shows the mean precision of top ranked contacts on the validation set computed with several [PCD](#abbrev) variants that perform almost equally well.
-Evolving the Gibbs chains for more than k=1 steps results in a slight drop in performance, just as it has been observed for [CD](#abbrev) (Figure \@ref(fig:precision-pcd) shows performance for k=10 steps).
-Optimizing the full likelihoood with [CD](#abbrev) and switiching to [PCD](#abbrev) at a later stage of optimization does also not have a notable impact on performance.
 
 (ref:caption-precision-pcd) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **pCD**: contact scores computed from [PCD](#abbrev) optimized with [SGD](#abbrev) using the hyperparameters that have been found to work optimal with [CD](#abbrev) as described throughout the last sections. **pCD #Gibbs steps = 10**: same as pCD, but evolving the Gibbs chain for 10 steps. **pCD start = 1e-3**: [SGD](#abbrev) optimization starts by optimizing the full likelihood using the [CD](#abbrev) gradient approximation and switches to the [PCD](#abbrev) gradient approximation once the relative change of L2 norm of parameters has fallen below $\epsilon \eq \mathrm{1e}{-3}$ evaluated over the last 10 iterations. **pCD start = 1e-5**: same as 'pCD start = 1e-3', but with $\epsilon \eq \mathrm{1e}{-5}$.
 
@@ -426,7 +423,28 @@ knitr::include_url("img/full_likelihood/pcd/precision_vs_rank_notitle.html", hei
 ```
 
 
-In contrast to the findings in literature, neither [CD](#abbrev)-k with k>1 Gibbs steps nor [PCD](#abbrev) does improve performance with respect to precision of the top ranked contact predictions. 
+Figure \@ref(fig:precision-pcd) shows the mean precision of top ranked contacts on the validation set computed with several [PCD](#abbrev) variants that perform almost equally well.
+Evolving the Gibbs chains for k=10 steps results in a slight drop in performance, just as it has been observed for [CD](#abbrev).
+Optimizing the full likelihoood with [CD](#abbrev) and switiching to [PCD](#abbrev) at a later stage of optimization does also not have a notable impact on performance.
+
+Again it is insightful to observe the optimization progresss for single proteins. 
+For protein 1ahoA00, with low [Neff](#abbrev)=229, the [PCD](#abbrev) model converges to the same coupling norm offset ($||\w||_2 \approx 24$) as the [CD](#abbrev) model using 5 and 10 Gibbs steps (see left plot in Figure \@ref(fig:pcd-single-proteins) compared to left plot in \@ref(fig:cd-gibbssteps-single-proteins)). 
+It can also be seen that when [PCD](#abbrev) is switched on at a later stage of optimization the coupling norm jumps from the [CD](#abbrev)-1 level to the [PCD](#abbrev) level.
+The different optimum that is found for proteins with small alignments does not seem to affect predictive performance.
+Interestingly, convergence behaves differently for protein 1c75A00, that has high [Neff](#abbrev)=16808 (see right plot in Figure \@ref(fig:pcd-single-proteins)).
+[PCD](#abbrev) using one Gibbs step converges to a different coupling norm offset than [CD](#abbrev)-1 and [PCD](#abbrev) using ten Gibbs steps.
+However, when [PCD](#abbrev) is switched on later during optimization the model either ends up in the [CD](#abbrev)-1 (switch at $\epsilon \eq 1e-5$ or $\epsilon \eq 1e-6$) or in the [PCD](#abbrev) optimum (switch at $\epsilon \eq 1e-3$).
+The cause for this behaviour is unclear, yet it has no noticable impact on overal performance.
+
+(ref:caption-pcd-single-proteins) Monitoring parameter norm, $||\w||_2$, for protein 1ahoA00 and 1c75A00 during [SGD](#abbrev) optimization of different objectives.  **Left** Protein 1ahoA00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). **CD** contrastive divergence using 1 Gibbs step. **pCD** persistent contrastive divergence using 1 Gibbs step. **pCD #Gibbs steps = 10** persistent contrastive divergence using 10 Gibbs steps. **pCD start = 1e-3**, **pCD start = 1e-5**: same as in Figure \@ref(fig:precision-pcd) **pCD start = 1e-6**: same as 'pCD start = 1e-3', but with $\epsilon \eq \mathrm{1e}{-6}$.
+
+
+```{r pcd-single-proteins, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-pcd-single-proteins)'}
+knitr::include_graphics(c("img/full_likelihood/pcd/1ahoA00_parameter_norm.png", "img/full_likelihood/pcd/1c75A00_parameter_norm.png"))
+```
+
+
+Against expectations from the findings in literature, neither [CD](#abbrev)-k with k>1 Gibbs steps nor [PCD](#abbrev) does improve performance with respect to precision of the top ranked contact predictions. 
 Swersky and colleagues ellaborated on various choices of hyperparameters (e.g momentum, averaging, regularization, etc.) for training Restricted Boltzmann Machines as classifiers with [CD](#abbrev)-k and [PCD](#abbrev) [@Swersky2010].
 They found many subtleties that need to be explored and can play a crucial role for successfull training.
 In section \@ref(sgd-hyperparameter-tuning) I manually tuned the learning rate and annealing schedule for stoachstic gradient descent to be used with [CD](#abbrev)-1.
@@ -462,16 +480,16 @@ A problem when using *ADAM* is that the necessarty condidtion $\sum_{a,b=1}^{20}
 
 ## Comparing CD couplings to pLL couplings {#comparing-pll-cd}
 
-The previous sections dealed intensively with the hyperparameter optimization for the stochastic gradient decent optimizer and hyperparameters of the [CD](#abbrev) model itself. 
-Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
-[CD](#abbrev)-1 generates sequence samples according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for one full step.
-Eventhough, the *ADAM* optimizer did not improve perfomance, it is still likely that appropriate modifications of the optimization procedure might lead to improvments, e.g. averaging [@Ma2016]. 
+The previous sections dealed intensively with the hyperparameter optimization for the stochastic gradient descent optimizer and the [CD](#abbrev) model itself. 
+Eventhough the adaptive learning rate optimizer *ADAM* did not improve performance over plain stochastic gradient descent, it is still likely that appropriate modifications to the optimization procedure, e.g. averaging [@Ma2016], might be beneficial for particular variants of [CD](#abbrev).
 As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting.
-It might be worth to assess convergence with more sophisticated metrics than the L2 norm of the coupling parameters, $||\w||_2$, liek the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017].
-Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
-It can be speculated that the heuristic contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
-Furthermore, it is possible that the improved gradient, obtained by generating more samples, helps to finetune the parameters which has no effect on the contact score and the ovaral ranking of residue pairs. 
+It might be worth to assess the convergence properties with more sophisticated convergence metrics, like the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017], instead of using the L2 norm of the coupling parameters, $||\w||_2$.
 
+Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
+With [CD](#abbrev)-1,  sequence samples are generated according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for only one full step.
+Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
+It is possible that the improved gradient helps to finetune the parameters which has no effect on the contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, and the ovaral ranking of residue pairs. 
+Furthermore, it can be speculated that the heuristic contact score that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
 
 (ref:caption-precision-cd-final) Mean precision for top ranked contact predictions over 2000 proteins. **pseudo-likelihood (APC)** Contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood. **pseudo-likelihood** same as "pseudo-likelihood (APC)" but without [APC](#abbrev) **contrastive divergence (APC)** Contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from contrastive-divergence. **contrastive divergence** same as "contrastive divergence (APC)" but without [APC](#abbrev).
 
@@ -479,7 +497,7 @@ Furthermore, it is possible that the improved gradient, obtained by generating m
 knitr::include_url("img/full_likelihood/final/precision_vs_rank_notitle.html", height = "500px")
 ```
 
-A final benchmark over a larger set of proteins (2000 proteins from subsets 9 and 10 from dataset described in method section \@ref(dataset)) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure \@ref(fig:precision-cd-final)). 
+A final benchmark over a larger set of proteins (2000 proteins randomly selected from subsets 5 to 10 described in method section \@ref(dataset)) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure \@ref(fig:precision-cd-final)). 
 At any rate it is interesting to not only compare pseudo-likelihood and contrastive divergence based on ovaral performance, but to also have a look at single predictions.
 In the following, I will examine and compare the predicitons made by both methods for two representative proteins, one with a small alignment and low corresponding [Neff](#abbrev) value and one with a large alignment and high corresponding [Neff](#abbrev) value. 
 
@@ -493,7 +511,7 @@ The highest scoring predictions (top L/5 contacts marked with croses) are identi
 
 (ref:caption-contact-maps-1c75a00)  Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. Contact scores have been computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Couplings computed from pseudo-likelihood. **Right** Couplings computed from [CD](#abbrev).
 
-```{r contact-maps-1c75a00, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-contact-maps-1c75a00)'}
+```{r contact-maps-1c75a00, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-contact-maps-1c75a00)'}
 knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/contact_map_pseudo-likelihood_apc_1c75A00.png", "img/full_likelihood/comparing_couplings/1c75A00/contact_map_contrastive_divergence_apc_1c75A00.png"))
 ```
 
@@ -512,10 +530,11 @@ knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/scatt
 
 However, the contact scores have no meaning by themselfs but merely reflect the confidence of the prediction.  
 It is more meaningful to compare the ranking of the residue pairs imposed by the scores.
-The left plot in Figure \@ref(fig:ranking-pll-cd-1c75a00) compares the ordered scores of both methods that lie very close to the diagonal which indicates that both distribution are very similar. 
+The left plot in Figure \@ref(fig:ranking-pll-cd-1c75a00) compares the ordered scores of both methods that lie very close to the diagonal which indicates that both distribution are very similar (Kolmogorov-Smirnov pvalue = 0.0078, Spearman rho = 0.947536). 
 A detailed view of the top ranked predictions is given in the right plot in Figure \@ref(fig:ranking-pll-cd-1c75a00).
 The three most confident predictions are identical for both methods. 
 Yet, the ranks of subsequent predictions are swapped by only a few positions which was already evident from the contact maps.
+
 
 (ref:caption-ranking-pll-cd-1c75a00)  Comparing the ranking of highest scoring contacts predicted with pseudo-likelihood and contrastive divergence for protein 1c75A00. Contact scores are computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Q-Q plot. **Right** Contact scores for the top 71 (=L) predictions from either method. Identical residue pairs are connected with a line. Green indicates identical ranking of the residue pair for both methods. Blue indicates higher ranking of the residue pair for contrastive divergence. Red indicates higher ranking of the residue pair for pseudo-likelihood. 
 
@@ -524,13 +543,28 @@ knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/qq_pl
 ```
 
 
-### Protein 1ahlA01
+### Protein 1ss3A00 and 1c55A00
 
-Proteins with very low Neff often have higher precision with CD.
+When analysing sample size it was shown that by randomly selecting 0.3[Neff](#abbrev) sequences for Gibbs sampling improves performance especially for proteins with small [Neff](#abbrev) (see Figure \@ref(fig:cd-precision-sampling-size-neff)) on a small dataset used for benchmarking (75 proteins per Neff quantile bin).
+This trend is still visible on the larger test dataset but to a lesser extent (see Figure \@ref(fig:precision-cd-final-neff)).
 
-```{r precision-cd-final-neff, echo = FALSE, screenshot.alt="img/full_likelihood/final/meanprecision_by_neff.png", out.width = '90%', fig.align='center', fig.cap = 'better for small N'}
-knitr::include_url("img/full_likelihood/final/meanprecision_by_neff.html", height = "500px")
+By looking at some of these proteins with small [Neff](#abbrev) for which the contact score computed from [CD](#abbrev) couplings performs better than the score computed from pseudo-likelihood couplings, it is striking that [CD](#abbrev) mainly predicts strongly conserved positions that have high entropy.
+
+For example, for protein 1ss3A00 (protein length=50, [Neff](#abbrev)=36), [CD](#abbrev) makes strong predictions for all pairing of the residues (8, 12, 16, 26, 30, 34) (see Figure \@ref(fig:cd-predictions-small-neff-proteins)).
+Five of the predicted contacts are actually true contacts. 
+Taking a loot at the structure it is revealed that these positions are disulfid bonds which are strongly conserved.
+Another example protein 1c55A00 (protein length = 40, Neff = 88) for which [CD](#abbrev) makes strong predictions for pairings beetween residues (10, 16, 20, 31, 36, 38).
+Again, it turns out that the five true positive predictions are disulfid bonds (see right plot in Figure \@ref(fig:cd-predictions-small-neff-proteins)).
+
+Interestingly, pseudo-likelihood does not predict the strongly conserved residues pairs and therefore misses some true contacts (see Appendix Figure \@ref(fig:pll-predictions-small-neff-proteins)).
+However, the predictions made by [CD](#abbrev) are rather atypical in a sense that coevolution methods cannot detect signals from fully conserved columns without variation. 
+It was unclear from the analysis of the gradients for different samples sizes in section \@ref(cd-sampling-size) why sampling less sequences and consequently a worse gradient estimate results in improved performance for proteins with small [Neff](#abbrev). 
+The results shown here might be represent an explanation, such that an unperfectly trained model tends to learn high couplings for strongly conserved residues, which simply gives higher precision when there are many disulfide bonds. 
+
+(ref:caption-cd-predictions-small-neff-proteins)  Contact maps and structures for protein 1ss3A00 and 1c55A00. Contact scores have been computed as [APC](#abbrev) corrected Frobenius norm of the [CD](#abbrev) couplings.  Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. **Upper left**: predicted contact map and native distance map for protein 1ss3A00 (protein length=50, N=42, [Neff](#abbrev)=36). **Upper Right**: native protein structure of 1ss3A00 with disulfide bonds between residues pairs (8, 34), (12, 30), (16, 26).  **Lower Left** predicted contact map and native distance map for protein 1c55A00 (protein length = 40, N=115,  Neff = 88) **Lower Right** native protein structure of 1c55A00 with disulfide bonds between residues pairs (10, 31), (16, 36), (20, 38).
+
+```{r cd-predictions-small-neff-proteins, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-predictions-small-neff-proteins)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1ss3A00/contact_map_contrastive_divergence_apc_1ss3A00.png", "img/full_likelihood/comparing_couplings/1ss3A00/1ss3A00_structure.png", "img/full_likelihood/comparing_couplings/1c55A00/contact_map_contrastive_divergence_apc_1c55A00.png", "img/full_likelihood/comparing_couplings/1c55A00/1c55A00_structure.png"))
 ```
-
 
 

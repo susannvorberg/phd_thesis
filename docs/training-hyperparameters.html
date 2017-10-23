@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-22">
+<meta name="date" content="2017-10-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="inv-lambda-ij-k.html">
+<link rel="prev" href="posterior-of-rij.html">
 <link rel="next" href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -171,7 +171,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
 <li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
-<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ahla01"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ahlA01</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
@@ -181,14 +181,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="5.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>5.4</b> Using Contact Scores as Additional Features</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
-<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Probabiilty of a Contact <span class="math inline">\(p(\c \eq 1 | \X)\)</span></a></li>
-<li class="chapter" data-level="6.2" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>6.2</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>6.2.1</b> Iterative improvement of Laplace approximation</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>6.3</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
-<li class="chapter" data-level="6.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>6.4</b> Computing the likelihood function of contact states <span class="math inline">\(p(\X | \c)\)</span></a></li>
-<li class="chapter" data-level="6.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.5</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
-<li class="chapter" data-level="6.6" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>6.6</b> The posterior probability distribution for contact states <span class="math inline">\(\cij\)</span></a></li>
+<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.2</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="6.3" data-path="training-on-couplings-from-pseudo-likelihood-maximization.html"><a href="training-on-couplings-from-pseudo-likelihood-maximization.html"><i class="fa fa-check"></i><b>6.3</b> Training on couplings from pseudo-likelihood maximization</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a><ul>
 <li class="chapter" data-level="7.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>7.1</b> Dataset</a></li>
@@ -214,24 +209,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
 <li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
 <li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.13" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.13</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
-<li class="chapter" data-level="7.13.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.1</b> Dataset Specifications</a></li>
-<li class="chapter" data-level="7.13.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.2</b> Model Specifications</a></li>
-<li class="chapter" data-level="7.13.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.13.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.13.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.13.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.13.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.13.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="7.13" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>7.13</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="7.14" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>7.14</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="7.15" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>7.15</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="7.16" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>7.16</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="7.17" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.17</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
+<li class="chapter" data-level="7.17.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.1</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="7.17.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.2</b> Model Specifications</a></li>
+<li class="chapter" data-level="7.17.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.17.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="7.17.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.17.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="7.17.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.17.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.14" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.14</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.14.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.14.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.14.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.14.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
+<li class="chapter" data-level="7.18" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.18</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="7.18.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.18.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
+<li class="chapter" data-level="7.18.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.18.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.15" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.15</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.15.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.15.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.15.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.15.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.15.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.15.3</b> Pairwise Features</a></li>
+<li class="chapter" data-level="7.19" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.19</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="7.19.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.19.1</b> Global Features</a></li>
+<li class="chapter" data-level="7.19.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.19.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="7.19.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.19.3</b> Pairwise Features</a></li>
 </ul></li>
-<li class="chapter" data-level="7.16" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.16</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.16.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.16.1</b> Feature Selection</a></li>
+<li class="chapter" data-level="7.20" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.20</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="7.20.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.20.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -246,26 +245,16 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="E.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>E.4</b> Network-like structure of aromatic residues</a></li>
 <li class="chapter" data-level="E.5" data-path="aromatic-small-distances.html"><a href="aromatic-small-distances.html"><i class="fa fa-check"></i><b>E.5</b> Aromatic Sidechains at small <span class="math inline">\(Cb\)</span>-<span class="math inline">\(\Cb\)</span> distances</a></li>
 </ul></li>
-<li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="F.1" data-path="defining-the-initial-learning-rate-as-a-function-of-neff.html"><a href="defining-the-initial-learning-rate-as-a-function-of-neff.html"><i class="fa fa-check"></i><b>F.1</b> Defining the initial learning rate as a function of Neff</a></li>
-<li class="chapter" data-level="F.2" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>F.2</b> Visualisation of learning rate schedules</a></li>
-<li class="chapter" data-level="F.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>F.3</b> Benchmarking learning rate schedules</a></li>
-<li class="chapter" data-level="F.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>F.4</b> Number of iterations until convergence for different learning rate schedules</a></li>
-<li class="chapter" data-level="F.5" data-path="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><a href="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><i class="fa fa-check"></i><b>F.5</b> Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated</a></li>
-<li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
-<li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
-<li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
-<li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.10" data-path="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><a href="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><i class="fa fa-check"></i><b>F.10</b> Using ADAM with different learning rates and anneaing schedules</a></li>
-<li class="chapter" data-level="F.11" data-path="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><i class="fa fa-check"></i><b>F.11</b> Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00</a></li>
-<li class="chapter" data-level="F.12" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.12</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
-</ul></li>
+<li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
-<li class="chapter" data-level="G.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>G.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>G.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>G.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.1" data-path="evaluating-random-forest-prior-with-respect-to-neff.html"><a href="evaluating-random-forest-prior-with-respect-to-neff.html"><i class="fa fa-check"></i><b>G.1</b> Evaluating Random Forest Prior with respect to Neff</a></li>
+<li class="chapter" data-level="G.2" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.2</b> Training Random Forest Model with Pseudo-Likelihood Feature</a></li>
+<li class="chapter" data-level="G.3" data-path="training-random-forest-model-with-contrastive-divergence-feature.html"><a href="training-random-forest-model-with-contrastive-divergence-feature.html"><i class="fa fa-check"></i><b>G.3</b> Training Random Forest Model with Contrastive Divergence Feature</a></li>
+<li class="chapter" data-level="G.4" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>G.4</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.5" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>G.5</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.6" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>G.6</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
+<li class="chapter" data-level="H" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>H</b> Bayesian statistical model for contact prediction</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -288,7 +277,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="training-hyperparameters" class="section level2">
-<h2><span class="header-section-number">7.13</span> Training the Hyperparameters in the Likelihood Function of Contact States</h2>
+<h2><span class="header-section-number">7.17</span> Training the Hyperparameters in the Likelihood Function of Contact States</h2>
 <p>The model parameters <span class="math inline">\(\mathbf{\mu} = (\mathbf{\mu}_{1},\ldots,\mathbf{\mu}_K)\)</span>, <span class="math inline">\(\mathbf{\Lambda} = (\mathbf{\Lambda}_1,\ldots,\mathbf{\Lambda}_K)\)</span> and <span class="math inline">\(\mathbf{\gamma} = (\mathbf{\gamma}_1,\ldots,\mathbf{\gamma}_K)\)</span> will be trained by maximizing the logarithm of the full likelihood over a set of training <a href="abbrev.html#abbrev">MSAs</a> <span class="math inline">\(\X^1,\ldots,\X^N\)</span> and associated structures with <span class="math inline">\(\c^1,\ldots,\c^M\)</span> plus a regularizer <span class="math inline">\(R(\mathbf{\mu}, \mathbf{\Lambda})\)</span>:</p>
 <span class="math display">\[\begin{equation}
     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma}) + R(\mathbf{\mu}, \mathbf{\Lambda}) = \sum_{n=1}^M  \log p(\X^m | \c^m, \mathbf{\mu}, \mathbf{\Lambda}, \mathbf{\gamma} ) + R(\mathbf{\mu}, \mathbf{\Lambda})  \rightarrow \max \, .
@@ -297,17 +286,17 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <span class="math display" id="eq:reg">\[\begin{align}
     R(\mathbf{\mu}, \mathbf{\Lambda}) = -\frac{1}{2 \sigma_{\mu}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \mu_{k,ab}^2 
                         -\frac{1}{2 \sigma_\text{diag}^2} \sum_{k=1}^K \sum_{ab=1}^{400} \Lambda_{k,ab,ab}^2
-\tag{7.22}
+\tag{7.32}
 \end{align}\]</span>
 <p>Reasonable values are <span class="math inline">\(\sigma_{\mu}=0.1\)</span>, <span class="math inline">\(\sigma_\text{diag} = 100\)</span>.</p>
-<p>The log likelihood can be optimized using L-BFGS-B <span class="citation">[<a href="#ref-Byrd1995">221</a>]</span>, which requires the computation of the gradient of the log likelihood. For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index <span class="math inline">\(m\)</span> in <span class="math inline">\(\cij^m\)</span>, <span class="math inline">\((\wij^m)^*\)</span> and <span class="math inline">\(\Hij^m\)</span>. From eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(6.12)</a> the log likelihood for a single protein is</p>
+<p>The log likelihood can be optimized using L-BFGS-B <span class="citation">[<a href="#ref-Byrd1995">223</a>]</span>, which requires the computation of the gradient of the log likelihood. For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index <span class="math inline">\(m\)</span> in <span class="math inline">\(\cij^m\)</span>, <span class="math inline">\((\wij^m)^*\)</span> and <span class="math inline">\(\Hij^m\)</span>. From eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(7.30)</a> the log likelihood for a single protein is</p>
 <span class="math display" id="eq:ll-coupling-prior">\[\begin{equation}
     L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1 \le i &lt; j \le L}  \log \sum_{k=0}^K g_{k}(\cij) \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  + R(\mathbf{\mu}, \mathbf{\Lambda}) + \text{const.}\,.
-\tag{7.23}
+\tag{7.33}
 \end{equation}\]</span>
 <p>For the optimization, I used the module <code>optimize.minimize</code> from the Python package <code>SciPy (v 0.19.1)</code> and the flag <code>method=&quot;L-BFGS-B&quot;</code>. According to the default setting, optimization will converge when <code>(f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} &lt;= ftol</code> with <code>ftol=2.220446049250313e-09</code>.</p>
 <div id="dataset-training-hyperparmeters" class="section level3">
-<h3><span class="header-section-number">7.13.1</span> Dataset Specifications</h3>
+<h3><span class="header-section-number">7.17.1</span> Dataset Specifications</h3>
 <p>An equal number of residue pairs that are in physical contact <span class="math inline">\(\Delta\Cb &lt;8 \angstrom\)</span> and are not in contact <span class="math inline">\(\Delta\Cb &gt;8 \angstrom\)</span> is selected according to the following criteria:</p>
 <ul>
 <li>contact: <span class="math inline">\(\Delta\Cb &lt;8 \angstrom\)</span></li>
@@ -317,19 +306,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li>number of non-gapped sequences at position <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(N_{ij} &gt; 1\)</span></li>
 <li>maximum number of contacts selected per protein = 500</li>
 <li>maximum number of non-contacts selected per protein = 1000</li>
-<li>number residue pairs for contacts (<span class="math inline">\(\cij \eq 1\)</span>) and non-contacts (<span class="math inline">\(\cij \eq 0\)</span>) <span class="math inline">\(\in \{10000, 100000, 30000, 500000 \}\)</span></li>
+<li>number residue pairs for contacts (<span class="math inline">\(\cij \eq 1\)</span>) and<br />
+non-contacts (<span class="math inline">\(\cij \eq 0\)</span>) <span class="math inline">\(\in \{10000, 100000, 30000, 500000 \}\)</span></li>
 </ul>
-<p>Before residue pairs are selected from a protein, they are shuffled to avoid position bias. Proteins from subsets 1-5 of the dataset described in method section <a href="dataset.html#dataset">7.1</a> have been used for training. Training</p>
+<p>Before residue pairs are selected from a protein, they are shuffled to avoid position bias. Proteins from subsets 1-5 of the dataset described in method section <a href="dataset.html#dataset">7.1</a> have been used for training.</p>
+<p>The <a href="abbrev.html#abbrev">MAP</a> estimates of the coupling parameters <span class="math inline">\(\wij^*\)</span> that are needed to compute the Hessian <span class="math inline">\(\Hij\)</span> as descibed in method section <a href="neg-Hessian-computation.html#neg-Hessian-computation">7.11</a> are computed by maximizing the pseudo-likelihodd and by maximizing the full likelihood with contrastive divergence.</p>
 </div>
 <div id="model-specifications-training-hyperparmeters" class="section level3">
-<h3><span class="header-section-number">7.13.2</span> Model Specifications</h3>
-<p>The mixture weights <span class="math inline">\(g_k(\cij)\)</span> are randomly sampled from a uniform distribution over the half-open interval [0, 1) and normalized so that <span class="math inline">\(\sum_k^K g_k(\cij) = 1\)</span> for <span class="math inline">\(\cij=0\)</span> and <span class="math inline">\(\cij=1\)</span>, respectively. Subsequently, the <span class="math inline">\(g_k(\cij)\)</span> are reparameterized as softmax functions as given in eq. <a href="coupling-prior.html#eq:def-g-k-binary">(6.6)</a> and fixing <span class="math inline">\(\gamma_0(\cij)=0\)</span> to avoid overparametrization.</p>
+<h3><span class="header-section-number">7.17.2</span> Model Specifications</h3>
+<p>The mixture weights <span class="math inline">\(g_k(\cij)\)</span> are randomly sampled from a uniform distribution over the half-open interval [0, 1) and normalized so that <span class="math inline">\(\sum_k^K g_k(\cij) = 1\)</span> for <span class="math inline">\(\cij=0\)</span> and <span class="math inline">\(\cij=1\)</span>, respectively. Subsequently, the <span class="math inline">\(g_k(\cij)\)</span> are reparameterized as softmax functions as given in eq. <a href="coupling-prior.html#eq:def-g-k-binary">(7.24)</a> and fixing <span class="math inline">\(\gamma_0(\cij)=0\)</span> to avoid overparametrization.</p>
 <p>The 400 dimensional <span class="math inline">\(\muk\)</span> vectors for <span class="math inline">\(k \in \{1, \ldots, K\}\)</span> are initialized from 400 random draws from a normal distribution with zero mean and standard deviation <span class="math inline">\(\sigma \eq 0.05\)</span>. The zeroth component is kept fixed at zero (<span class="math inline">\(\mathbf{\mu_0} \eq 0\)</span>) and will not be optimized.</p>
 <p>The precision matrices <span class="math inline">\(\Lk\)</span> will be modelled as diagonal matrices, setting all off-diagonal elements to zero. The 400 diagonal elements <span class="math inline">\((\Lk)_{ab, ab}\)</span> for <span class="math inline">\(k \in \{1, \ldots, K\}\)</span> are initialized from 400 random draws from a normal distribution with zero mean and standard deviation <span class="math inline">\(\sigma \eq 0.005\)</span>. The 400 diagonal elements of the precision matrix for the zeroth component <span class="math inline">\(\mathbf{\Lambda_0}\)</span> are initialized as 400 random draws from a normal distribution with zero mean and standard deviation <span class="math inline">\(\sigma \eq 0.0005\)</span>. Therefore, the zeroth component is sharply centered at zero. Furthermore, the diagonals of the precision matrices are reparameterized as <span class="math inline">\((\Lk)_{ab, ab} = \exp((\Lk)_{ab, ab}^{\prime})\)</span> in order to ensure that the values stay positive. Gradients for <span class="math inline">\(\Lk\)</span> derived in next sections have been adapted according to this reparametrization.</p>
+<p>The number of model parameters assembles as follows:</p>
+<ul>
+<li><span class="math inline">\((K-1) \times 400\)</span> parameters for <span class="math inline">\(\muk\)</span> with <span class="math inline">\(k \in \{1, \ldots, K \}\)</span> (<span class="math inline">\(\mu_0 = 0\)</span>)</li>
+<li><span class="math inline">\(K \times 400\)</span> parameters for the diagonal <span class="math inline">\((\Lk)_{ab, ab}\)</span> with <span class="math inline">\(k \in \{0, \ldots, K\}\)</span></li>
+<li><span class="math inline">\(2 \times (K\!-\!1)\)</span> parameters for <span class="math inline">\(\gamma_k(\cij)\)</span> for <span class="math inline">\(k \in \{1,2\}\)</span> and <span class="math inline">\(\cij \in \{0,1\}\)</span> (<span class="math inline">\(\gamma_0(\cij)\eq1\)</span>).</li>
+</ul>
+<p>This yields 2004 parameters for <span class="math inline">\(K\eq3\)</span> Gaussian components, 3608 parameters for <span class="math inline">\(K\eq5\)</span> and 7618 parameters for <span class="math inline">\(K\eq10\)</span> components.</p>
 </div>
 <div id="gradient-muk" class="section level3">
-<h3><span class="header-section-number">7.13.3</span> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></h3>
-<p>By applying the formula <span class="math inline">\(d f(x) / dx = f(x) \, d \log f(x) / dx\)</span> to compute the gradient of eq. <a href="training-hyperparameters.html#eq:ll-coupling-prior">(7.23)</a> (neglecting the regularization term) with respect to <span class="math inline">\(\mu_{k,ab}\)</span>, one obtains</p>
+<h3><span class="header-section-number">7.17.3</span> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></h3>
+<p>By applying the formula <span class="math inline">\(d f(x) / dx = f(x) \, d \log f(x) / dx\)</span> to compute the gradient of eq. <a href="training-hyperparameters.html#eq:ll-coupling-prior">(7.33)</a> (neglecting the regularization term) with respect to <span class="math inline">\(\mu_{k,ab}\)</span>, one obtains</p>
 <span class="math display" id="eq:gradient-mukab">\[\begin{equation}
  \frac{\partial}{\partial \mu_{k,ab}} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     = \sum_{1\le i&lt;j\le L}  
@@ -337,20 +335,20 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
         g_{k}(\cij) \frac{  \Gauss ( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
              \frac{\partial}{\partial \mu_{k,ab}}  \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right)  
      } { \sum_{k&#39;=0}^K g_{k&#39;}(\cij) \, \frac{ \Gauss(\mathbf{0} | \muk&#39;, \Lk&#39;^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})}  } .
-\tag{7.24}
+\tag{7.34}
 \end{equation}\]</span>
 <p>To simplify this expression, we define the responsibility of component <span class="math inline">\(k\)</span> for the posterior distribution of <span class="math inline">\(\wij\)</span>, the probability that <span class="math inline">\(\wij\)</span> has been generated by component <span class="math inline">\(k\)</span>:</p>
 <span class="math display" id="eq:responsibilities">\[\begin{align}
       p(k|ij)  = 
       \frac{ g_{k}(\cij) \frac{ \Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} } 
     {\sum_{k&#39;=0}^K g_{k&#39;}(\cij) \frac{ \Gauss(\mathbf{0} | \muk&#39;, \Lk&#39;^{-1})}{\Gauss( \mathbf{0} | \muijk&#39;, \Lijk&#39;^{-1})} }  \,.
-\tag{7.25}
+\tag{7.35}
 \end{align}\]</span>
-<p>By substituting the definition for responsibility, <a href="training-hyperparameters.html#eq:gradient-mukab">(7.24)</a> simplifies</p>
+<p>By substituting the definition for responsibility, <a href="training-hyperparameters.html#eq:gradient-mukab">(7.34)</a> simplifies</p>
 <span class="math display" id="eq:gradient-LL-mukab">\[\begin{equation}
   \frac{\partial}{\partial \mu_{k,ab}}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     = \sum_{1\le i&lt;j\le L}  p(k | ij)  \frac{\partial}{\partial \mu_{k,ab}} \log \left( \frac{ \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \right) ,
-\tag{7.26}
+\tag{7.36}
 \end{equation}\]</span>
 <p>and analogously for partial derivatives with respect to <span class="math inline">\(\Lambda_{k,ab,cd}\)</span>. The partial derivative inside the sum can be written</p>
 <span class="math display">\[\begin{equation}
@@ -360,7 +358,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>Using the following formula for a matrix <span class="math inline">\(\mathbf{A}\)</span>, a real variable <span class="math inline">\(x\)</span> and a vector <span class="math inline">\(\mathbf{y}\)</span> that depends on <span class="math inline">\(x\)</span>,</p>
 <span class="math display" id="eq:matrix-gradient">\[\begin{equation}
     \frac{\partial}{\partial x} \left( \mathbf{y}^\mathrm{T} \mathbf{A} \mathbf{y} \right) = \frac{\partial \mathbf{y}^\mathrm{T}}{\partial x}  \mathbf{A} \mathbf{y} + \mathbf{y}^\mathrm{T} \mathbf{A} \frac{\partial \mathbf{y}}{\partial x}  =  \mathbf{y}^\mathrm{T} (\mathbf{A} + \mathbf{A}^\mathrm{T}) \frac{\partial \mathbf{y}}{\partial x} 
-\tag{7.27}
+\tag{7.37}
 \end{equation}\]</span>
 <p>the partial derivative therefore becomes</p>
 <span class="math display">\[\begin{align}
@@ -371,19 +369,19 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>Finally, the gradient of the log likelihood with respect to <span class="math inline">\(\mathbf{\mu}\)</span> becomes</p>
 <span class="math display" id="eq:gradient-muk-final">\[\begin{align}
     \nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k) =  \sum_{1\le i&lt;j\le L}  p(k|ij)  \,  \Lk \left(  \muijk  - \muk \right) \; .
-\tag{7.28}
+\tag{7.38}
 \end{align}\]</span>
 <p>The correct computation of the gradient <span class="math inline">\(\nabla_{\muk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)\)</span> has been verified using finite differences.</p>
 </div>
 <div id="gradient-lambdak" class="section level3">
-<h3><span class="header-section-number">7.13.4</span> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></h3>
-<p>Analogously to eq. <a href="training-hyperparameters.html#eq:gradient-LL-mukab">(7.26)</a> one first needs to solve</p>
+<h3><span class="header-section-number">7.17.4</span> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></h3>
+<p>Analogously to eq. <a href="training-hyperparameters.html#eq:gradient-LL-mukab">(7.36)</a> one first needs to solve</p>
 <span class="math display" id="eq:grad-log-N-N-lambdakabcd">\[\begin{align}
      &amp; \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} \nonumber\\
      &amp;= \frac{1}{2}  \frac{\partial}{\partial \Lambda_{k,ab,cd}}  \left( \log |\Lk| - \muk^\mathrm{T} \Lk \muk - \log |\Lijk| + \muijk^\mathrm{T} \Lijk \muijk \right) \,,
-\tag{7.29}
+\tag{7.39}
 \end{align}\]</span>
-<p>by applying eq. <a href="training-hyperparameters.html#eq:matrix-gradient">(7.27)</a> as before as well as the formulas</p>
+<p>by applying eq. <a href="training-hyperparameters.html#eq:matrix-gradient">(7.37)</a> as before as well as the formulas</p>
 <span class="math display">\[\begin{align}
     \frac{\partial}{\partial x} \log |\mathbf{A} | &amp;= \text{Tr}\left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x}  \right) , \nonumber\\
     \frac{\partial \mathbf{A}^{-1}}{\partial x} &amp;= - \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \,.
@@ -410,23 +408,23 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
     - 2 \muijk^\mathrm{T}  \frac{\partial \Lijk}{\partial \Lambda_{k,ab,cd}} \muijk \nonumber\\
     =&amp; (- \muijk \muijk^\mathrm{T} + 2 \muijk \muk^\mathrm{T})_{ab,cd} \,.
 \end{align}\]</span>
-<p>Inserting these results into eq. <a href="training-hyperparameters.html#eq:grad-log-N-N-lambdakabcd">(7.29)</a> yields</p>
+<p>Inserting these results into eq. <a href="training-hyperparameters.html#eq:grad-log-N-N-lambdakabcd">(7.39)</a> yields</p>
 <span class="math display">\[\begin{align}
      \frac{\partial}{\partial \Lambda_{k,ab,cd}} \log \frac{  \Gauss(\mathbf{0} | \muk, \Lk^{-1})}{\Gauss( \mathbf{0} | \muijk, \Lijk^{-1})} 
     = \frac{1}{2} \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right)_{ab,cd}\,.
 \end{align}\]</span>
-<p>Substituting this expression into the equation <a href="training-hyperparameters.html#eq:gradient-LL-mukab">(7.26)</a> analogous to the derivation of gradient for <span class="math inline">\(\mu_{k,ab}\)</span> yields the equation</p>
+<p>Substituting this expression into the equation <a href="training-hyperparameters.html#eq:gradient-LL-mukab">(7.36)</a> analogous to the derivation of gradient for <span class="math inline">\(\mu_{k,ab}\)</span> yields the equation</p>
 <span class="math display" id="eq:gradient-lambdak-final">\[\begin{align}
     \nabla_{\Lk}  L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)
     =  \frac{1}{2} \sum_{1\le i&lt;j\le L}  p(k|ij)  \, 
         \left( \Lk^{-1} - \Lijk^{-1} - (\muijk - \muk) (\muijk - \muk)^\mathrm{T} \right). 
-\tag{7.30}
+\tag{7.40}
 \end{align}\]</span>
 <p>The correct computation of the gradient <span class="math inline">\(\nabla_{\Lk} L\!L(\mathbf{\mu}, \mathbf{\Lambda}, \gamma_k)\)</span> has been verified using finite differences.</p>
 </div>
 <div id="the-gradient-of-the-log-likelihood-with-respect-to-gamma_k" class="section level3">
-<h3><span class="header-section-number">7.13.5</span> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></h3>
-<p>With <span class="math inline">\(\cij \in \{0,1\}\)</span> defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. <a href="coupling-prior.html#eq:def-g-k-binary">(6.6)</a>. The derivative of the mixing weights <span class="math inline">\(g_k(\cij)\)</span> is:</p>
+<h3><span class="header-section-number">7.17.5</span> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></h3>
+<p>With <span class="math inline">\(\cij \in \{0,1\}\)</span> defining a residue pair in physical contact or not in contact, the mixing weights can be modelled as a softmax function according to eq. <a href="coupling-prior.html#eq:def-g-k-binary">(7.24)</a>. The derivative of the mixing weights <span class="math inline">\(g_k(\cij)\)</span> is:</p>
 <span class="math display">\[\begin{eqnarray}
 \frac{\partial g_{k&#39;}(\cij)} {\partial \gamma_k} = \left\{
   \begin{array}{lr}
@@ -461,7 +459,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Byrd1995">
-<p>221. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited Memory Algorithm for Bound Constrained Optimization. SIAM J. Sci. Comput. <em>16</em>, 1190–1208. Available at: <a href="http://epubs.siam.org/doi/10.1137/0916069" class="uri">http://epubs.siam.org/doi/10.1137/0916069</a>.</p>
+<p>223. Byrd, R.H., Lu, P., Nocedal, J., and Zhu, C. (1995). A Limited Memory Algorithm for Bound Constrained Optimization. SIAM J. Sci. Comput. <em>16</em>, 1190–1208. Available at: <a href="http://epubs.siam.org/doi/10.1137/0916069" class="uri">http://epubs.siam.org/doi/10.1137/0916069</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -488,7 +486,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="inv-lambda-ij-k.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="posterior-of-rij.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -539,7 +537,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

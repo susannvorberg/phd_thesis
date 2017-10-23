@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PhD thesis: residue-residue contact prediction</title>
   <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-22">
+<meta name="date" content="2017-10-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -171,7 +171,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>4.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
 <li class="chapter" data-level="4.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>4.5</b> Comparing CD couplings to pLL couplings</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
-<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ahla01"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ahlA01</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
@@ -181,14 +181,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="5.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>5.4</b> Using Contact Scores as Additional Features</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
-<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Probabiilty of a Contact <span class="math inline">\(p(\c \eq 1 | \X)\)</span></a></li>
-<li class="chapter" data-level="6.2" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>6.2</b> Gaussian approximation to the posterior of couplings</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="laplace-approx.html"><a href="laplace-approx.html#laplace-approx-improvement"><i class="fa fa-check"></i><b>6.2.1</b> Iterative improvement of Laplace approximation</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>6.3</b> Modelling the prior over couplings with dependence on <span class="math inline">\(\cij\)</span></a></li>
-<li class="chapter" data-level="6.4" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>6.4</b> Computing the likelihood function of contact states <span class="math inline">\(p(\X | \c)\)</span></a></li>
-<li class="chapter" data-level="6.5" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.5</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
-<li class="chapter" data-level="6.6" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>6.6</b> The posterior probability distribution for contact states <span class="math inline">\(\cij\)</span></a></li>
+<li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="6.2" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.2</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="6.3" data-path="training-on-couplings-from-pseudo-likelihood-maximization.html"><a href="training-on-couplings-from-pseudo-likelihood-maximization.html"><i class="fa fa-check"></i><b>6.3</b> Training on couplings from pseudo-likelihood maximization</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a><ul>
 <li class="chapter" data-level="7.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>7.1</b> Dataset</a></li>
@@ -214,24 +209,28 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
 <li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
 <li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.13" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.13</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
-<li class="chapter" data-level="7.13.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.1</b> Dataset Specifications</a></li>
-<li class="chapter" data-level="7.13.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.13.2</b> Model Specifications</a></li>
-<li class="chapter" data-level="7.13.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.13.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.13.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.13.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.13.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.13.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="7.13" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>7.13</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="7.14" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>7.14</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="7.15" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>7.15</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="7.16" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>7.16</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="7.17" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.17</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
+<li class="chapter" data-level="7.17.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.1</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="7.17.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.2</b> Model Specifications</a></li>
+<li class="chapter" data-level="7.17.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.17.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="7.17.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.17.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="7.17.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.17.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.14" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.14</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.14.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.14.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.14.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.14.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
+<li class="chapter" data-level="7.18" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.18</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
+<li class="chapter" data-level="7.18.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.18.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
+<li class="chapter" data-level="7.18.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.18.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.15" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.15</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.15.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.15.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.15.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.15.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.15.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.15.3</b> Pairwise Features</a></li>
+<li class="chapter" data-level="7.19" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.19</b> Features used to train Random Forest Model</a><ul>
+<li class="chapter" data-level="7.19.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.19.1</b> Global Features</a></li>
+<li class="chapter" data-level="7.19.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.19.2</b> Single Position Features</a></li>
+<li class="chapter" data-level="7.19.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.19.3</b> Pairwise Features</a></li>
 </ul></li>
-<li class="chapter" data-level="7.16" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.16</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.16.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.16.1</b> Feature Selection</a></li>
+<li class="chapter" data-level="7.20" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.20</b> Training Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="7.20.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.20.1</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -246,26 +245,16 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="E.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>E.4</b> Network-like structure of aromatic residues</a></li>
 <li class="chapter" data-level="E.5" data-path="aromatic-small-distances.html"><a href="aromatic-small-distances.html"><i class="fa fa-check"></i><b>E.5</b> Aromatic Sidechains at small <span class="math inline">\(Cb\)</span>-<span class="math inline">\(\Cb\)</span> distances</a></li>
 </ul></li>
-<li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a><ul>
-<li class="chapter" data-level="F.1" data-path="defining-the-initial-learning-rate-as-a-function-of-neff.html"><a href="defining-the-initial-learning-rate-as-a-function-of-neff.html"><i class="fa fa-check"></i><b>F.1</b> Defining the initial learning rate as a function of Neff</a></li>
-<li class="chapter" data-level="F.2" data-path="visualisation-of-learning-rate-schedules.html"><a href="visualisation-of-learning-rate-schedules.html"><i class="fa fa-check"></i><b>F.2</b> Visualisation of learning rate schedules</a></li>
-<li class="chapter" data-level="F.3" data-path="benchmark-learning-rate-annealing-schedules.html"><a href="benchmark-learning-rate-annealing-schedules.html"><i class="fa fa-check"></i><b>F.3</b> Benchmarking learning rate schedules</a></li>
-<li class="chapter" data-level="F.4" data-path="learning-rate-schedules-distribution-iterations.html"><a href="learning-rate-schedules-distribution-iterations.html"><i class="fa fa-check"></i><b>F.4</b> Number of iterations until convergence for different learning rate schedules</a></li>
-<li class="chapter" data-level="F.5" data-path="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><a href="modifying-number-of-iterations-over-which-relative-change-of-coupling-norm-is-evaluated.html"><i class="fa fa-check"></i><b>F.5</b> Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated</a></li>
-<li class="chapter" data-level="F.6" data-path="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><a href="fix-single-potentials-at-maximum-likelihood-estimate-v.html"><i class="fa fa-check"></i><b>F.6</b> Fix single potentials at maximum-likelihood estimate v*</a></li>
-<li class="chapter" data-level="F.7" data-path="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><a href="monitoring-optimization-for-protein-1aho-for-different-sample-sizes.html"><i class="fa fa-check"></i><b>F.7</b> Monitoring Optimization for Protein 1aho for Different Sample Sizes</a></li>
-<li class="chapter" data-level="F.8" data-path="number-of-gibbs-steps-with-respect-to-neff.html"><a href="number-of-gibbs-steps-with-respect-to-neff.html"><i class="fa fa-check"></i><b>F.8</b> Number of Gibbs steps with respect to Neff</a></li>
-<li class="chapter" data-level="F.9" data-path="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><a href="monitoring-norm-of-gradients-for-different-number-of-gibbs-steps.html"><i class="fa fa-check"></i><b>F.9</b> Monitoring Norm of Gradients for Different Number of Gibbs Steps</a></li>
-<li class="chapter" data-level="F.10" data-path="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><a href="using-adam-with-different-learning-rates-and-anneaing-schedules.html"><i class="fa fa-check"></i><b>F.10</b> Using ADAM with different learning rates and anneaing schedules</a></li>
-<li class="chapter" data-level="F.11" data-path="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><a href="comparing-pseudo-likelihood-and-contrastive-divergence-for-1c75a00.html"><i class="fa fa-check"></i><b>F.11</b> Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00</a></li>
-<li class="chapter" data-level="F.12" data-path="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><a href="statistics-for-comparing-couplings-computed-with-pseudo-likelihood-and-contrastive-divergence.html"><i class="fa fa-check"></i><b>F.12</b> Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence</a></li>
-</ul></li>
+<li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a></li>
 <li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="G.1" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.1</b> Training Random Forest Model with pseudo-likelihood Feature</a></li>
-<li class="chapter" data-level="G.2" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>G.2</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.3" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>G.3</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.4" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>G.4</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.1" data-path="evaluating-random-forest-prior-with-respect-to-neff.html"><a href="evaluating-random-forest-prior-with-respect-to-neff.html"><i class="fa fa-check"></i><b>G.1</b> Evaluating Random Forest Prior with respect to Neff</a></li>
+<li class="chapter" data-level="G.2" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.2</b> Training Random Forest Model with Pseudo-Likelihood Feature</a></li>
+<li class="chapter" data-level="G.3" data-path="training-random-forest-model-with-contrastive-divergence-feature.html"><a href="training-random-forest-model-with-contrastive-divergence-feature.html"><i class="fa fa-check"></i><b>G.3</b> Training Random Forest Model with Contrastive Divergence Feature</a></li>
+<li class="chapter" data-level="G.4" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>G.4</b> Evaluating window size with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.5" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>G.5</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
+<li class="chapter" data-level="G.6" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>G.6</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
 </ul></li>
+<li class="chapter" data-level="H" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>H</b> Bayesian statistical model for contact prediction</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -289,8 +278,8 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
             <section class="normal" id="section-">
 <div id="hyperparameter-optimization-for-random-forest" class="section level2">
 <h2><span class="header-section-number">5.2</span> Hyperparameter Optimization for Random Forest</h2>
-<p>There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime. While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree <span class="citation">[<a href="#ref-Bernard2009">215</a>]</span>. Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal leaf node size regarding the minimal number of data samples ending in a leaf node. Again, a positive side-effect of pruning and requiring minimal leaf node size is a speedup of the algorithm. <span class="citation">[<a href="#ref-Louppe2014">213</a>]</span></p>
-<p>In the following, I use 5-fold cross-validation to identify the optimal architecture of the random forest. Details about the training set and he cross-validation procedure can be found in method section <a href="rf-training.html#rf-training">7.16</a>. First I assessed performance of models for combinations of the parameter <em>n_estimators</em>, defining the number of trees in the forest and the parameter <em>max_depth</em> defining the maximum depth of the trees:</p>
+<p>There are several hyperparameters in a random forest model that need to be tuned to achieve best balance between predictive power and runtime. While more trees in the random forest generally improve performance of the model, they will slow down training and prediction. A crucial hyperparamter is the number of features that is randomly selected for a split at each node in a tree <span class="citation">[<a href="#ref-Bernard2009">217</a>]</span>. Stochasticity introduced by the random selection of features is a key characteristic of random forests as it reduces correlation between the trees and thus the variance of the predictor. Selecting many features typically increases performance as more options can be considered for each split, but at the same time increases risk of overfitting and decreases speed of the algorithm. In general, random forests are robust to overfitting, as long as there are enough trees in the ensemble and the selection of features for splitting a node introduces sufficient stochasticity. Overfitting can furthermore be prevented by restricting the depth of the trees, which is known as pruning or by enforcing a minimal leaf node size regarding the minimal number of data samples ending in a leaf node. Again, a positive side-effect of pruning and requiring minimal leaf node size is a speedup of the algorithm. <span class="citation">[<a href="#ref-Louppe2014">215</a>]</span></p>
+<p>In the following, I use 5-fold cross-validation to identify the optimal architecture of the random forest. Details about the training set and he cross-validation procedure can be found in method section <a href="rf-training.html#rf-training">7.20</a>. First I assessed performance of models for combinations of the parameter <em>n_estimators</em>, defining the number of trees in the forest and the parameter <em>max_depth</em> defining the maximum depth of the trees:</p>
 <ul>
 <li><em>n_estimators</em> <span class="math inline">\(\in \{100,500,1000\}\)</span></li>
 <li><em>max_depth</em> <span class="math inline">\(\in \{10, 100, 1000, None\}\)</span></li>
@@ -298,7 +287,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>Figure <a href="hyperparameter-optimization-for-random-forest.html#fig:rf-gridsearch-nestimators-maxfeatures">5.2</a> shows that the top five parameter combinations perform nearly identical. Random forests with 1000 trees perform slightly better than models constituting 500 trees, irrespective of the depth of the trees. In order to keep model complexity small, I chose <code>n_estimators=1000</code> and <code>max_depth=100</code> for further analysis.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:rf-gridsearch-nestimators-maxfeatures"></span>
-<iframe src="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html" width="100%" height="600px">
+<iframe src="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_nestimators_maxdepth_top5_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
 Figure 5.2: Mean precision over 200 proteins against highest scoring contact predictions from random forest models for different settings of <em>n_estimators</em> and <em>max_depth</em>. Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five highest mean precision values (given in parantheses in the legend). Random forest models with 1000 trees and maximum depth of trees of either 100, 1000 or unrestricted tree depth perform nearly identical (lines overlap). Random forest models with 500 trees and <em>max_depth</em>=10 or <em>max_depth</em>=100 perform slightly worse.
@@ -307,12 +296,12 @@ Figure 5.2: Mean precision over 200 proteins against highest scoring contact pre
 <p>Next, I optimized the parameters <em>min_samples_leaf</em>, defining the minimum number of samples required at a leaf node and <em>max_features</em>, defining the number of randomly selected features considered for each split using the following settings:</p>
 <ul>
 <li><em>min_samples_leaf</em> <span class="math inline">\(\in \{1, 10, 100\}\)</span></li>
-<li><em>max_features</em> <span class="math inline">\(\in \{8, 16, 38, 75 \}\)</span> representing <span class="math inline">\(\sqrt{N}\)</span>, <span class="math inline">\(\log2{N}\)</span>, <span class="math inline">\(0.15N\)</span> and <span class="math inline">\(0.3N\)</span> respectively with <span class="math inline">\(N=250\)</span> being the number of features listed in method section <a href="seq-features.html#seq-features">7.15</a>.</li>
+<li><em>max_features</em> <span class="math inline">\(\in \{8, 16, 38, 75 \}\)</span> representing <span class="math inline">\(\sqrt{N}\)</span>, <span class="math inline">\(\log2{N}\)</span>, <span class="math inline">\(0.15N\)</span> and <span class="math inline">\(0.3N\)</span> respectively with <span class="math inline">\(N=250\)</span> being the number of features listed in method section <a href="seq-features.html#seq-features">7.19</a>.</li>
 </ul>
 <p>Randomly selecting 30% of features (=75 features) and requiring at least 10 samples per leaf gives highest mean precision as can be seen in Figure <a href="hyperparameter-optimization-for-random-forest.html#fig:rf-gridsearch-maxdepth-minsampleleaf">5.3</a>. I chose <code>max_features=0.30</code> and <code>min_samples_leaf=10</code> for further analysis. Tuning the hyperparameters in a different order or on a larger dataset gives similar results.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:rf-gridsearch-maxdepth-minsampleleaf"></span>
-<iframe src="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.html" width="100%" height="600px">
+<iframe src="img/random_forest_contact_prior/new_gridsearch/precision_vs_rank_cv_on_test_random_forest_maxfeatures_minsampleleaf_top5_notitle.html" width="90%" height="600px">
 </iframe>
 <p class="caption">
 Figure 5.3: Mean precision over 200 proteins against highest scoring contact predictions from random forest models with different settings of <em>min_samples_leaf</em> and <em>max_features</em>. Dashed lines show the performance of models that have been learned on the five different subsets of training data. Solid lines give the mean precision over the five models. Only those models are shown that yielded the five best mean precision values (given in parantheses in the legend).
@@ -324,15 +313,15 @@ Figure 5.3: Mean precision over 200 proteins against highest scoring contact pre
 <li>window size: <span class="math inline">\(\in \{5, 7, 9, 11\}\)</span></li>
 <li>non-contact threshold <span class="math inline">\(\in \{8, 15, 20\}\)</span></li>
 </ul>
-<p>As can be seen in appendix <a href="rf-window-size.html#rf-window-size">G.2</a> and <a href="rf-noncontact-threshold.html#rf-noncontact-threshold">G.3</a>, the default choice of using a window size of five positions and the non-contact threshold of <span class="math inline">\(8 \angstrom\)</span> proves to be the optimal setting. Furthermore, using five-times as many non-contacts as contacts in the training set results in highest mean precision as can be seen in appendix <a href="rf-ratio-noncontacts.html#rf-ratio-noncontacts">G.4</a>. These estimates might be biased in a way since the random forest hyperparameters have been optimized on a dataset using exactly these optimal settings.</p>
+<p>As can be seen in appendix <a href="rf-window-size.html#rf-window-size">G.4</a> and <a href="rf-noncontact-threshold.html#rf-noncontact-threshold">G.5</a>, the default choice of using a window size of five positions and the non-contact threshold of <span class="math inline">\(8 \angstrom\)</span> proves to be the optimal setting. Furthermore, using five-times as many non-contacts as contacts in the training set results in highest mean precision as can be seen in appendix <a href="rf-ratio-noncontacts.html#rf-ratio-noncontacts">G.6</a>. These estimates might be biased in a way since the random forest hyperparameters have been optimized on a dataset using exactly these optimal settings.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Bernard2009">
-<p>215. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
+<p>217. Bernard, S., Heutte, L., and Adam, S. (2009). Influence of Hyperparameters on Random Forest Accuracy. In (Springer, Berlin, Heidelberg), pp. 171–180. Available at: <a href="http://link.springer.com/10.1007/978-3-642-02326-2{\_}18" class="uri">http://link.springer.com/10.1007/978-3-642-02326-2{\_}18</a>.</p>
 </div>
 <div id="ref-Louppe2014">
-<p>213. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
+<p>215. Louppe, G. (2014). Understanding Random Forests: From Theory to Practice. Available at: <a href="http://arxiv.org/abs/1407.7502" class="uri">http://arxiv.org/abs/1407.7502</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -410,7 +399,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

@@ -39,6 +39,9 @@ Furthermore,the Bayesian framework can naturally be extended to derive estimates
 
 # Acknowledgements {-}
 
+I thank the world. 
+
+<!--
 
 I am very grateful to Johannes Söding, for giving me the opportunity to work in his lab, for his supervision and guidance on this fascinating project.
 I learned a lot from you, not only analytical and statistical skills, but also about being a scientist and what holds the scientific world together at its core.
@@ -68,6 +71,7 @@ I want to thank my family for raising me curious and sceptical and therefore hav
 
 Daniel you are the love of my life.
 
+-->
 
 \tableofcontents
 \addcontentsline{toc}{chapter}{Table of Contents}

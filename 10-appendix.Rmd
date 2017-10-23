@@ -206,26 +206,17 @@ knitr::include_graphics("img/coupling_matrix_analysis/aromatic_residues_short_di
 
 # Optimizing Full Likelihood with Gradient Descent
 
-## Defining the initial learning rate as a function of Neff
-
 (ref:caption-performance-cd-alphaopt-0)  Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD alpha0 = 5e-4**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate, $\alpha_0 \eq 5e-4$. **CD alpha0 = 1e-3**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate, $\alpha_0 \eq 1e-3$. **CD alpha0 = 5e-2Neff^-0.5**: couplings computed with [CD](#abbrev) using stochastic gradient descent with initial learning rate defined as a function of [Neff](#abbrev), $\alpha_0 \eq \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. 
 
 ```{r performance-cd-alphaopt-0, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/precision_vs_rank_learningrates_comparealpha0.png", out.width = '85%', fig.align='center', fig.cap = '(ref:caption-performance-cd-alphaopt-0)'}
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_learningrates_comparealpha0.html", height = "500px")
 ```
 
-
-## Visualisation of learning rate schedules
-
 (ref:caption-learning-rate-schedules) Value of learning rate against the number of iterations for different learning rate schedules. Red legend group represents the **exponential** learning rate schedule $\alpha_{t+1}  = \alpha_0 \cdot\exp(- \gamma t)$. Blue legend group represents the **linear** learning rate schedule $\alpha  = \alpha_0 / (1 + \gamma \cdot t)$. Green legend group represents the **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma \cdot t)$. Purple legend group represents the **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma \cdot t}$. The initial learning rate $\alpha_0$ is set to 1e-4, the iteration number is given by $t$ and $\gamma$ is the decay rate and its value is given in brackets in the legend.
 
 ```{r learning-rate-schedules, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-learning-rate-schedules)'}
 knitr::include_url("img/full_likelihood/appendix/learning_rate_schedules_alpha0_1e-4_notitle.html", height = "500px")
 ```
-
-## Benchmarking learning rate schedules {#benchmark-learning-rate-annealing-schedules}
-
-The following figures show the mean precision over the validation set for contacts computed from [CD](#abbrev) with stochastic gradient descent and using different learning rate annealing schedules
 
 (ref:caption-performance-cd-linschedule) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. pseudo-likelihood: contact scores computed from pseudo-likelihood. The other methods derive contact scores from couplings computed from [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev) and a *linear* learning rate annealing schedule $\alpha  = \frac{\alpha_0}{1 + \gamma t}$ with decay rate $\gamma$ as specified in the legend.
 
@@ -252,17 +243,11 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_sqrt
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_alpha0_0_exp_decayrate.html", height = "500px")
 ```
 
-
-## Number of iterations until convergence for different learning rate schedules {#learning-rate-schedules-distribution-iterations}
-
-The following Figures show the distribution of the number of iterations until convergence over the validation dataset for stochastic gradient descent optimization of [CD](#abbev) for different learning rate annealing schedules.
-
 (ref:caption-cd-numit-lin-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **linear** learning rate schedule $\alpha = \alpha_0 / (1 + \gamma  t)$ with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
 ```{r cd-numit-lin-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-lin-learning-rate-schedule)'}
 knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_linear_learningrate_schedule.html", height = "500px")
 ```
-
 
 (ref:caption-cd-numit-sig-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **sigmoidal** learning rate schedule $\alpha_{t+1}  = \alpha_{t} / (1 + \gamma  t)$  with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
@@ -270,13 +255,11 @@ knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_agai
 knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sigmoidal_learningrate_schedule.html", height = "500px")
 ```
 
-
 (ref:caption-cd-numit-sqrt-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with a **square root** learning rate schedule $\alpha  = \alpha_0 / \sqrt{1 + \gamma t}$ with $t$ being the iteration number and the decay rate  $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
 ```{r cd-numit-sqrt-learning-rate-schedule, echo = FALSE, screenshot.alt="img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-cd-numit-sqrt-learning-rate-schedule)'}
 knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_sqrt_learningrate_schedule.html", height = "500px")
 ```
-
 
 (ref:caption-cd-numit-exp-learning-rate-schedule) Distribution of the number of iterations until convergence for stochastic gradient descent optimizations of the full likelihood using different decay rates with an **exponential** learning rate schedule $\alpha  = \alpha_0 \cdot\exp(- \gamma t)$ with $t$ being the iteration number and the decay rate $\gamma$ is specified in the legend. Initial learning rate $\alpha_0$ defined with respect to [Neff](#abbrev) and maximum number of iterations is set to 5000. 
 
@@ -285,8 +268,6 @@ knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_agai
 ```
 
 
-## Modifying Number of Iterations over which Relative Change of Coupling Norm is Evaluated  
-
 (ref:caption-numit-convergence-convergence-prev) Distribution of the number of iterations until convergence for gradient descent optimizations of the full likelihood. The relative change of the L2 norm over coupling parameters, $||\w||_2$, is evaluated over a defined number of previous iterations and is specified in the legend. Convergence is assumed when the relative change falls below a small value $\epsilon \eq 1e-8$. The optimal hyperparameters settings for [SGD](#abbrev) as described in section \@ref(sgd-hyperparameter-tuning) have been used. 
 
 
@@ -294,7 +275,6 @@ knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_agai
 knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_against_convergence_prev.html", height = "500px")
 ```
 
-## Fix single potentials at maximum-likelihood estimate v*
 
 (ref:caption-full-likelihood-opt-fixv) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [SGD](#abbrev) settings for [CD](#abbrev) optimization are as follows: sigmoidal learning rate schedule with decay rate $\gamma = \mathrm{5e-6}$ and initial learning rate $\alpha_0 \eq \mathrm{5e-2}/N_{\textrm{eff}}$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD fixed v at v* **: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are not optimized but fixed at $\v^*$ as given in eq. \@ref(eq:prior-v). **CD lambda_v = 10**: contact scores computed from [CD](#abbrev) with [SGD](#abbrev) and single potentials $\v$ are subject to optimization using L2-reglarization with $\lambda_v \eq 10$.
 
@@ -303,18 +283,12 @@ knitr::include_url("img/full_likelihood/appendix/distribution_numiterations_agai
 knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_fixed_v.html", height = "500px")
 ```
 
-## Monitoring Optimization for Protein 1aho for Different Sample Sizes
 
 (ref:caption-cd-samplesize-protein1ahoa00) Monitoring parameter norm and gradient norm for protein 1ahoA00 during [SGD](#abbrev) optimization of [CD](#abbrev) using different sample sizes. Protein 1ahoA00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 64 sequences, 5L = 320 sequences, 10L = min(10L, N) = 378 sequences, 0.2Neff = 46 sequences, 0.3Neff = 69 sequences, 0.4Neff = 92 sequences.  **Left** L2-norm of the gradients for coupling parameters, $||\nabla_{\w} L\!L(\v^*, \w)||_2$ (without contribution of regularizer).  **Right** L2-norm of the coupling parameters $||\w||_2$.
 
 ```{r cd-samplesize-protein1ahoa00, echo = FALSE, out.width = '100%', fig.align='center', fig.cap = '(ref:caption-cd-samplesize-protein1ahoa00)'}
 knitr::include_graphics("img/full_likelihood/appendix/1ahoa00_parameter_gradient_norm_for_samplesizes.png")
 ```
-
-
-
-
-## Number of Gibbs steps with respect to Neff
 
 (ref:caption-cd-precision-gibbssteps-neff) Mean precision for top ranked contact predictions over 300 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **CD #Gibbs steps = X**: contact scores computed from [CD](#abbrev) optimized with [SGD](#abbrev) and evolving each Markov chain using the number of Gibbs steps specified in the legend. 
 
@@ -323,15 +297,12 @@ knitr::include_url("img/full_likelihood/appendix/precision_vs_rank_facetted_by_n
 ```
 
 
-## Monitoring Norm of Gradients for Different Number of Gibbs Steps
-
 (ref:caption-cd-gibbssteps-single-proteins-gradient) Monitoring L2 norm of the gradient, $||\nabla_{\w} L\!L(\v^*, \w)||_2$, for protein 1aho_A_00 and 1c75_A_00 during [SGD](#abbrev) optimization using different number of Gibbs steps and initial learning rates, $\alpha_0$. Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$. **Left** Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808).
 
 ```{r cd-gibbssteps-single-proteins-gradient, echo = FALSE, out.width = '48%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-cd-gibbssteps-single-proteins-gradient)'}
 knitr::include_graphics(c("img/full_likelihood/gibbs_sampling/gradient_norm_1ahoa00.png", "img/full_likelihood/gibbs_sampling/gradient_norm_1c75a00.png"))
 ```
 
-## Using ADAM with different learning rates and anneaing schedules
 
 (ref:caption-adam-learning-rate) L2-norm of the coupling parameters, $||\w||_2$, during [CD](#abbrev) optimization with *ADAM* with different fixed learning rates (no decay). The learning rate $\alpha_0$ is specified in the legend. **Left** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808) **Right** Protein 1mkcA00 has length L=43 and 142 sequences in the alignment ([Neff](#abbrev)=96). 
 
@@ -346,9 +317,6 @@ knitr::include_graphics("img/full_likelihood/adam/parameter_norms_1c75A00_1mkcA0
 knitr::include_graphics(c("img/full_likelihood/adam/1c75A00_decaying_learningrates_parameternorm.png", "img/full_likelihood/adam/1mkcA00_decaying_learningrates_parameternorm.png"))
 ```
 
-## Comparing Pseudo-Likelihood and Contrastive Divergence for 1c75A00
-
-
 (ref:caption-precision-pll-cd-1c75a00) Precision of top ranked contact predictions for protein 1c75A00. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **contrastive divergence**: contact scores computed from [CD](#abbrev) optimized with [SGD](#abbrev).
 
 ```{r precision-pll-cd-1c75a00, echo = FALSE, screenshot.alt="img/full_likelihood/comparing_couplings/1c75A00/1c75A00_precision_vs_rank_8seqsep_8contacthr.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-precision-pll-cd-1c75a00)'}
@@ -356,6 +324,19 @@ knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00/1c75A00_prec
 ```
 
 
+(ref:caption-precision-cd-final-neff) Rolling mean over the mean precision of the L/10 to L top ranked predictions per protein for testset with 2300 proteins. Contact scores computed as [APC](#abbrev) corrected Frobenius norm over pseudo-likelihood and contrastive divergence couplings. The rolling mean has been computed for the central protein within a window of 20 proteins. Window is shrunk for the proteins at the borders of Neff distribution.
+
+```{r precision-cd-final-neff, echo = FALSE, screenshot.alt="img/full_likelihood/final/meanprecision_by_neff.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-cd-final-neff)'}
+knitr::include_url("img/full_likelihood/final/meanprecision_by_neff.html", height = "500px")
+```
+
+(ref:caption-pll-predictions-small-neff-proteins)  Contact maps for protein 1ss3A00 and 1c55A00 computed as [APC](#abbrev) corrected Frobenius norm of the pseudo-likelihood couplings.  Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. **Left**: predicted contact map and native distance map for protein 1ss3A00 (protein length=50, N=42, [Neff](#abbrev)=36).  **Right** predicted contact map and native distance map for protein 1c55A00 (protein length = 40, N=115,  Neff = 88).
+
+```{r pll-predictions-small-neff-proteins, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-pll-predictions-small-neff-proteins)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1ss3A00/contact_map_pseudo-likelihood_apc_1ss3A00.png", "img/full_likelihood/comparing_couplings/1c55A00/contact_map_pseudo-likelihood_apc_1c55A00.png"))
+```
+
+<!--
 ## Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence 
 
 protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirnov pvalue
@@ -406,12 +387,22 @@ protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirno
 1bdsA00|43|35|0.744768|0.000000|0.173865|0.000000
 : Proteins with the 20th smallest [Neff](#abbrev) values from the dataset of 300 proteins used to evaluate [CD](#abbrev). Statistics have been computed for the contact scores computed from pseudo-likelihood couplings and [CD](#abbrev) couplings. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. [CD](#abbrev) coupling parameters have been optimized with [SGD](#abbrev) using the following hyperparameter settings: simgoidal learning rate schedule with initial learning rate $\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}$ and decay rate $\gamma = 5e-6$. Regularization coefficient $\lambda_w = 0.1L$. In order to approximate the gradient with [CD](#abbrev), 0.3Neff sequences are randomly selected and evolved with a Gibbs chain for 1 step.
 
+-->
 
 # Training of the Random Forest Contact Prior
 
-## Training Random Forest Model with pseudo-likelihood Feature
+##Evaluating Random Forest Prior with respect to Neff
 
-(ref:caption-feature-importance-rf-with-pll-score) Top ten features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
+(ref:caption-performance-neff-rf) Mean precision for top ranked contacts predicted with random forest on a test set of 1000 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
+
+```{r performance-neff-rf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf)'}
+knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
+```
+
+
+## Training Random Forest Model with Pseudo-Likelihood Feature
+
+(ref:caption-feature-importance-rf-with-pll-score) Top ten features for Random Forest trained with additional pseudo-likelihood contact score feature. Features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
 
 ```{r feature-importance-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_top_pLLfeature.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-score)'}
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_top_pLLfeature.html", height = "600px")
@@ -421,6 +412,15 @@ knitr::include_url("img/random_forest_contact_prior/additional_contat_score_feat
 
 ```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
+```
+
+
+## Training Random Forest Model with Contrastive Divergence Feature
+
+(ref:caption-feature-importance-rf-with-cd-score) Top ten features for Random Forest trained with additional contrastive divergence contact score feature. Features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j).   **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts). **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
+
+```{r feature-importance-rf-with-cd-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-cd-score)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd.html", height = "600px")
 ```
 
 ## Evaluating window size with 5-fold Cross-validation {#rf-window-size}
@@ -447,4 +447,17 @@ knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_v
 knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_ratio.html", height = "600px")
 ```
 
+# Bayesian statistical model for contact prediction
+
+(ref:caption-stats-pll-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 371 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. 
+
+```{r stats-pll-3comp-10k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-10k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-10k.png")
+```
+
+(ref:caption-stats-pll-3comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 331 iterations. Trained on 300,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. 
+
+```{r stats-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-300k.png")
+```
 
