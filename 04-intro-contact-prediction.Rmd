@@ -430,25 +430,28 @@ A different challenge lies in the correct distinction between the physical conta
 With the availability of monomeric structural data the idea is to filter out those high scoring contacts that form contacts in the monomeric structure or are located in the protein core. 
 The remaining high scoring false positive contacts at the surface of the protein are potential contacts at the interface that can be incorporated into a docking protocol to drive complex formation [@Uguzzoni2017; @DosSantos2015a].
 
-Contacts are also used to analyse potential alternative conformations of proteins [@Parisi2015a; @Sfriso2016; @Sutto2015; @Jana2014; @Morcos2013a; @Jeon2011a].
+Predicted contacts have also been appplied in the analysis of potential alternative conformations of proteins [@Parisi2015a; @Sfriso2016; @Sutto2015; @Jana2014; @Morcos2013a; @Jeon2011a].
 Coevolutionary analysis detects all evolutionarily significant residue–residue correlations, regardless of whether the interaction is formed in a transient state of the protein or its stable form.
 Therefore, predicted contact maps might capture multiple states of a protein, since they are of functional importance and thus under evolutionary pressure.
 Sfriso and colleagues developed an automated pipiline that introduces filtered predicted contacts as ensemble restraints into a molecular dynamics simulations and is able to detect alternative relevant conformational states [@Sfriso2016].
-
-Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology.
-Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts [@Wozniak2017; @Tress2010].
-Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model [@Cao2016; @Terashi2014a].
-
-As mentioned before, methods for protein fold reconstruction from experimental distance constraints have been successfully applied for many years. 
-Several integrative approaches have been developed that combine complementary sources of sparse structural constraints, including predicted contacts, to accurately determine protein structure [@Tang2015; @Ward2013].
-
-Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
 
 Eventhough the coevolutionary methods have been developed for proteins, they have been successfully applied to analyse nucleotide coevolution and to predict RNA tertiary structures with the help of predicted nucleotide-nucleotide contacts  [@Nawy2016; @Weinreb2015; @DeLeonardis2015a]. 
 Much less RNA sequences are required compared to protein sequences in order to extract statistically significant signals because of the reduced number of model parameters when working with a four letter alphabet (compared to a 20 letter alphabet with proteins).
 On the downside, alignment errors resulting from the complicated determination of RNA multiple sequence alignments limits the accuracy of coevolution analysis [@DeLeonardis2015a]. 
 Despite the diminished accuracy, predicted nucleotide contacts have been demonstrated to improve RNA structure prediction over conventional methods [@Weinreb2015]. 
 
+Predicted residue-residue contacts have been used to tackle various other problems in the area of structural biology.
+Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
+Contact maps display patterns that reflect secondary structure elements, which can be parsed to detect alpha helices and beta-sheets [@Andreani2015a; @SuvarnaVani2018].
+Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology.
+Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts [@Wozniak2017; @Tress2010].
+Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model [@Cao2016; @Terashi2014a].
+
+
+The mathematical framework of the coevolution models used to predict residue-residue proteins has been found to be useful in other fields of biology beyond structure prediction.
+Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017; @Gao2017].
+They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
+In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
 
 The stastistical models used for coevolution analysis provide information about which residue pairs are important in evolution for folding or functional constraints.
 They can be used to assign probabilities to sequences that reflect the overal compliance of a sequence with the protein family under study and thereby provide quantitative predictions of mutational effects [@Hopf2017; @Wu2016; @Figliuzzi2015].
@@ -458,11 +461,7 @@ Antibody affinity maturation can be viewed as a Darwinian process with the affin
 Therefore, given the model representing the antibody sequence family, the probability for a sequence reflects the binding affinity to the target antigen.
 Quantifying the effect of mutations is also helpful for protein design.
 Coevolving positions might be of particular interest as hotspots for engineering protein stability or functional specificity because they determine positions relevant to protein structure and function [@Franceus2016].
-
-
-Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017].
-They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
-In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
+The interpretation of the model parameters as energies has hlped to analyse the sequence capacity of protein folds, that is how many sequences can fold into a specific structure [@Tian2017].
 
 Fox and colleagues turn the idea of [DCA](#abbrev) upside down.
 They developed a benchmark for testing the accuracy of large [MSAs](#abbrev) by evaluating the agreeement between the predicted and the native contacts [@Fox2016].

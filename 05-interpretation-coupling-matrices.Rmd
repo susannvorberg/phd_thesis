@@ -87,12 +87,40 @@ knitr::include_graphics(c("img/coupling_matrix_analysis/1a9xA05_6_82.png", "img/
 ```
 
 
-Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Appendix \@ref(pi-cation)), aromatic-proline interactions (see Appendix \@ref(aromatic-proline)), sulfur-aromatic interactions or disulphide bonds (see Appendix \@ref(disulfide)). 
+Many more biological interpretable signals can be identified from coupling matrices, including pi-cation interactions (see Figure \@ref(fig:coupling-matrix-pication-pymol)), aromatic-proline interactions (see Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol)), or disulphide bonds (see Figure \@ref(fig:coupling-matrix-disulfide-pymol)). 
 
 Coucke and collegues performed a thorough quantitative analysis of coupling matrices selected from confidently predicted residue pairs [@Coucke2016].
 They showed that eigenmodes obtained from a spectral analysis of averaged coupling matrices are closely related to physico-chemical properties of amino acid interactions, like electrostaticity, hydrophobicity, steric interactions or disulphide bonds. 
 By looking at specific populations of residues, like buried and exposed residues or residues from specific protein classes (small, mainly $\alpha$, etc), the eigenmodes of corresponding coupling matrices are found to capture very characteristic interactions for each class, e.g. rare disulfide contacts within small proteins and hydrophilic contacts between exposed residues. 
 Their study confirms the qualitative observations presented above that amino acid interactions can leave characteristic physico-chemical fingerprints in coupling matrices. 
+
+Figure \@ref(fig:coupling-matrix-pication-pymol) shows a Tyrosine and a Lysine residue forming a cation-$\pi$ interaction in protein 2ayd.
+The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-pication-interaction) reflects the strong interaction preference. 
+
+(ref:caption-coupling-matrix-pication-pymol) Tyrosine (residue 37) and Lysine (residue 48) forming a cation-$\pi$ interaction in protein 2ayd. Coupling Matrix for residue pair i=37 and j=48 of PDB 2ayd chain A domain 1. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=37 and bars at the y-axis represent single potentials for residue j=48. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+
+```{r coupling-matrix-pication-pymol, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-coupling-matrix-pication-pymol)'}
+knitr::include_graphics("img/coupling_matrix_analysis/pi_cation_interaction_combined.png")
+```
+
+Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol) shows a proline and a tryptophan residue forming such a CH/$\pi$ interaction in protein 1aol.
+The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-aromatic-proline) reflects this interaction with strong positive coupling between proline and tryptophan. 
+
+(ref:caption-coupling-matrix-aromatic-proline-pymol) Proline and tryptophan (residues 17 and 34) stacked on top of each otherengaging in a CH/$\pi$ interaction in protein chain 1aol_A_00. Coupling Matrix for residue pair i=17 and j=34 of PDB 1aol chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=17 and bars at the y-axis represent single potentials for residue j=34. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+
+```{r coupling-matrix-aromatic-proline-pymol, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-coupling-matrix-aromatic-proline-pymol)'}
+knitr::include_graphics("img/coupling_matrix_analysis/proline_aromatic_interaction_combined.png")
+```
+
+Figure \@ref(fig:coupling-matrix-disulfide-pymol) shows two cysteine residues forming a covalent disulfide bond in protein 1alu.
+The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-disulfide-interaction) reflects the strong interaction preference of cysteines. 
+
+(ref:caption-coupling-matrix-disulfide-pymol) Two cystein residues (residues 54 and 64) forming a covalent disulfide bond in protein 1alu. Coupling Matrix for residue pair i=54 and j=64 of PDB 1alu chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=54 and bars at the y-axis represent single potentials for residue j=64. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
+
+```{r coupling-matrix-disulfide-pymol, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-coupling-matrix-disulfide-pymol)'}
+knitr::include_graphics("img/coupling_matrix_analysis/disulfide_interaction_combined.png")
+```
+
 
 
 ## Coupling Profiles Vary with Distance {#coupling-profiles}
@@ -179,7 +207,31 @@ knitr::include_graphics(c("img/coupling_matrix_analysis/pairwise_couplings_R-E_E
 ```
 
 
+## Methods
 
+### Correlation of Couplings with Contact Class {#method-coupling-correlation}
+
+Approximately 100000 residue pairs have been filtered for contacts and non-contacts respectively according to the following criteria:
+
+- sequence separation of residue pairs $\ge 10$
+- diversity ($=\frac{\sqrt{N}}{L}$) of alignment $\ge 0.3$
+- number of non-gapped sequences $\ge 1000$
+- $\Cb$ distance threshold for contact: $<8\angstrom$
+- $\Cb$ distance threshold for noncontact: $>25\angstrom$
+
+### Coupling Distribution Plots {#method-coupling-profile}
+
+For one-dimensional coupling distribution plots the residue pairs and respective pseudo-log-likelihood coupling values $\wijab$ have been selected as follows:
+
+- sequence separation of residue pairs $\ge 10$
+- percentage of gaps per column $\le 30\%$
+- evidence for a coupling $\wijab$ estimated from the alignment, $N_{ij} \cdot q_i(a)  \cdot q_j(b) \ge 100$ with:
+    - $N_{ij}$: number of sequences with no gaps at positions $i$ or $j$
+    - $q_i(a)$, $q_j(b)$: frequencies of amino acids $a$ and $b$ at positions $i$ and $j$, respectively (computed as described in section \@ref(amino-acid-frequencies)) 
+    
+These criteria ensure that uninformative couplings are neglected, e.g. sequence neighbors albeit being contacts according to the $\Cb$ contact definition cannot be assumed to express biological meaningful coupling patterns, or couplings for amino acid pairings that do not have enough statistical power due to insufficient counts in the alignment.
+
+The same criteria have been applied for selecting couplings for the two-dimensional distribution plots with the difference that evidence for a single coupling term has to be $N_{ij} \cdot q_i(a) \cdot q_j(b) > 80.$
 
 
 

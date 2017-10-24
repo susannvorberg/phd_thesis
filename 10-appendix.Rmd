@@ -72,10 +72,6 @@
 
 # Dataset Properties
 
-The following figures display various statistics about the dataset used throughout this thesis. 
-See section \@ref(dataset) for information on how this dataset has been generated. 
-
-
 (ref:caption-dataset-diversity) Distribution of alignment diversity ($=\sqrt(\frac{N}{L})$) in the dataset and its ten subsets.
 
 ```{r dataset-diversity, echo = FALSE, screenshot.alt="img/dataset_statistics/diversity_dataset_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-dataset-diversity)'}
@@ -87,7 +83,6 @@ knitr::include_url("img/dataset_statistics/diversity_dataset_boxplot_notitle.htm
 ```{r dataset-gaps, echo = FALSE, screenshot.alt="img/dataset_statistics/gap_percentage_boxplot_notitle.png", out.width = '100%', fig.align='center', fig.cap = '(ref:caption-gaps)'}
 knitr::include_url("img/dataset_statistics/gap_percentage_boxplot_notitle.html")
 ```
-
 
 (ref:caption-alignment-size) Distribution of alignment size (number of sequences N) in the dataset and its ten subsets.
 
@@ -102,99 +97,19 @@ knitr::include_url("img/dataset_statistics/protein_length_dataset_boxplot_notitl
 ```
 
 
-# Standard Deviation of Couplings for Noncontacts
+# Interpretation of Coupling Matrices
 
+(ref:caption-stdev-squared-couplings-noncontacts) Standard deviation of squared coupling values ${\wijab}^2$ and of coupling values $\wijab$ for residue pairs not in physical contact ($\Delta \Cb > 25 \angstrom$). Dataset contains 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids) **Left** Standard deviation of squared coupling values ${\wijab}^2$ . **Right** Standard deviation of coupling values $\wijab$.
 
-(ref:caption-stdev-squared-couplings-noncontacts) Standard deviation of squared coupling values ${\wijab}^2$ for residue pairs not in physical contact ($\Delta \Cb > 25 \angstrom$). Dataset contains 100.000 residue pairs per class (for details see methods section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids)
-
-```{r stdev-squared-couplings-noncontacts, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle.png", out.width = '100%', fig.cap = '(ref:caption-stdev-squared-couplings-noncontacts)'}
-knitr::include_url("img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle.html", height="500px")
+```{r stdev-squared-couplings-noncontacts, echo = FALSE, out.width = '49%', fig.show='hold', fig.cap = '(ref:caption-stdev-squared-couplings-noncontacts)'}
+knitr::include_graphics(c("img/coupling_matrix_analysis/stdev_squared_couplings_noncontacts_heatmap_notitle.png", "img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle.png"))
 ```
-
-
-(ref:caption-stdev-raw-couplings-noncontacts) Standard deviation of coupling values $\wijab$ for residue pairs not in physical contact ($\Delta \Cb > 25 \angstrom$). Dataset contains 100.000 residue pairs per class (for details see section \@ref(method-coupling-correlation)). Amino acids are abbreviated with one-letter code and they are broadly grouped with respect to physico-chemical properties listed in Appendix \@ref(amino-acids).
-
-```{r stdev-raw-couplings-noncontacts, echo = FALSE, screenshot.alt="img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle.png", out.width = '100%', fig.cap = '(ref:caption-stdev-raw-couplings-noncontacts)'}
-knitr::include_url("img/coupling_matrix_analysis/stdev_couplings_noncontacts_heatmap_notitle.html", height="500px")
-```
-
-
-# Amino Acid Interaction Preferences Reflected in Coupling Matrices
-
-## Pi-Cation interactions {#pi-cation}
-
-Figure \@ref(fig:coupling-matrix-pication-pymol) shows a Tyrosine and a Lysine residue forming a cation-$\pi$ interaction in protein 2ayd.
-The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-pication-interaction) reflects the strong interaction preference. 
-
-(ref:caption-coupling-matrix-pication-pymol) Tyrosine (residue 37) and Lysine (residue 48) forming a cation-$\pi$ interaction in protein 2ayd.
-
-```{r coupling-matrix-pication-pymol, echo = FALSE, out.width = '50%', fig.show = 'hold', fig.cap = '(ref:caption-coupling-matrix-pication-pymol)'}
-knitr::include_graphics("img/coupling_matrix_analysis/2ayda01_37_48.png")
-```
-
-<!--
-
-(ref:caption-coupling-matrix-pication-interaction) Coupling Matrix for residue pair i=37 and j=48 of PDB 2ayd chain A domain 1. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=37 and bars at the y-axis represent single potentials for residue j=48. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
-
-```{r coupling-matrix-pication-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-pication-interaction)'}
-knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_2aydA01_37_48_notitle.html", height = "750px")
-```
-
--->
-
-## Disulfide Bonds {#disulfide}
-
-Figure \@ref(fig:coupling-matrix-disulfide-pymol) shows two cysteine residues forming a covalent disulfide bond in protein 1alu.
-The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-disulfide-interaction) reflects the strong interaction preference of cysteines. 
-
-(ref:caption-coupling-matrix-disulfide-pymol) Two cystein residues (residues 54 and 64) forming a covalent disulfide bond in protein 1alu.
-
-```{r coupling-matrix-disulfide-pymol, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-coupling-matrix-disulfide-pymol)'}
-knitr::include_graphics("img/coupling_matrix_analysis/1aluA00_54_64.png")
-```
-
-<!--
-
-(ref:caption-coupling-matrix-disulfide-interaction) Coupling Matrix for residue pair i=54 and j=64 of PDB 1alu chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=54 and bars at the y-axis represent single potentials for residue j=64. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
-
-```{r coupling-matrix-disulfide-interaction, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-disulfide-interaction)'}
-knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aluA00_54_64_notitle.html", height = "750px")
-```
-
--->
-
-## Aromatic-Proline Interactions {#aromatic-proline}
-
-Figure \@ref(fig:coupling-matrix-aromatic-proline-pymol) shows a proline and a tryptophan residue forming such a CH/$\pi$ interaction in protein 1aol.
-The corresponding coupling matrix in figure \@ref(fig:coupling-matrix-aromatic-proline) reflects this interaction with strong positive coupling between proline and tryptophan. 
-
-
-(ref:caption-coupling-matrix-aromatic-proline-pymol) Proline and tryptophan (residues 17 and 34) stacked on top of each otherengaging in a CH/$\pi$ interaction in protein chain 1aol_A_00.
-
-```{r coupling-matrix-aromatic-proline-pymol, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-coupling-matrix-aromatic-proline-pymol)'}
-knitr::include_graphics("img/coupling_matrix_analysis/1aolA00_17_34.png")
-```
-
-
-<!--
-
-(ref:caption-coupling-matrix-aromatic-proline) Coupling Matrix for residue pair i=17 and j=34 of PDB 1aol chain A. Size of the bubbles represents coupling strength and color represents the direction of coupling: red = positive coupling, blue = negative coupling. Bars at the x-axis represent single potentials for residue i=17 and bars at the y-axis represent single potentials for residue j=34. Height of the bars represents potential strength and color represents positive (red) and negative (blue) values.
-
-```{r coupling-matrix-aromatic-proline, echo = FALSE, screenshot.alt="img/amino_acid_physico_chemical_properties_venn_diagramm.png", out.width='100%', fig.cap = '(ref:caption-coupling-matrix-aromatic-proline)'}
-knitr::include_url("img/coupling_matrix_analysis/coupling_matrix_1aolA00_17_34_notitle.html", height = "750px")
-```
-
---> 
-
-## Network-like structure of aromatic residues {#aromatic-network}
 
 (ref:caption-aromatic-network) Network-like structure of aromatic residues in the protein core. 80% of aromatic residues are involved in such networks that are important for protein stability [@Burley1985].
 
 ```{r aromatic-network, echo = FALSE, out.width = '50%', fig.cap = '(ref:caption-aromatic-network)'}
 knitr::include_graphics("img/coupling_matrix_analysis/aromatic_bundle.png")
 ```
-
-## Aromatic Sidechains at small $Cb$-$\Cb$ distances {#aromatic-small-distances}
 
 (ref:caption-aromatic-residues-at-short-distances) The planar ring system of aromatic sidechains at short $\Cb$-$\Cb$ distances (e.g. $\Delta \Cb < 5 \angstrom$) often points away from each other to avoid steric hindrance.
 
@@ -330,11 +245,18 @@ knitr::include_url("img/full_likelihood/comparing_couplings/1c75A00/1c75A00_prec
 knitr::include_url("img/full_likelihood/final/meanprecision_by_neff.html", height = "500px")
 ```
 
-(ref:caption-pll-predictions-small-neff-proteins)  Contact maps for protein 1ss3A00 and 1c55A00 computed as [APC](#abbrev) corrected Frobenius norm of the pseudo-likelihood couplings.  Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. **Left**: predicted contact map and native distance map for protein 1ss3A00 (protein length=50, N=42, [Neff](#abbrev)=36).  **Right** predicted contact map and native distance map for protein 1c55A00 (protein length = 40, N=115,  Neff = 88).
+(ref:caption-pll-predictions-small-neff-proteins)  Contact maps for protein 1ss3A00 and 1c55A00 computed as [APC](#abbrev) corrected Frobenius norm of the pseudo-likelihood couplings.  Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. **Left**: predicted contact map and native distance map for protein 1ss3A00 (protein length=50, N=42, [Neff](#abbrev)=36).  **Right** predicted contact map and native distance map for protein 1c55A00 (protein length = 40, N=115,  Neff = 78).
 
 ```{r pll-predictions-small-neff-proteins, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-pll-predictions-small-neff-proteins)'}
 knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1ss3A00/contact_map_pseudo-likelihood_apc_1ss3A00.png", "img/full_likelihood/comparing_couplings/1c55A00/contact_map_pseudo-likelihood_apc_1c55A00.png"))
 ```
+
+(ref:caption-contactmaps-1c55a00-different-samplesize)  Contact maps for protein 1c55A00 (protein length = 40, N=115,  Neff = 88) computed as [APC](#abbrev) corrected Frobenius norm of the contrastive-divergence couplings computed with different sample size choices.  Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. **Top Left**: sample size=0.3neff $\approx$ 23 sequences.  **Top Right** sample size=0.5neff $\approx$ 39 sequences. **Bottom Left**: sample size=0.8neff $\approx$ 62 sequences.  **Bottom Right** sample size=max(10L,N)=>115 sequences.
+
+```{r contactmaps-1c55a00-different-samplesize, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-contactmaps-1c55a00-different-samplesize)'}
+knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c55A00/1c55A00_seqsep8_contacthr8_apcTrue_samplesize03neff.png", "img/full_likelihood/comparing_couplings/1c55A00/1c55A00_seqsep8_contacthr8_apcTrue_samplesize05neff.png", "img/full_likelihood/comparing_couplings/1c55A00/1c55A00_seqsep8_contacthr8_apcTrue_samplesize08neff.png", "img/full_likelihood/comparing_couplings/1c55A00/1c55A00_seqsep8_contacthr8_apcTrue_samplesize10L.png"))
+```
+
 
 <!--
 ## Statistics for Comparing Couplings computed with Pseudo-likelihood and Contrastive Divergence 
@@ -391,16 +313,11 @@ protein|L|Neff|spearman rho|spearman pvalue|kolmogorov-smirnov|kolmogorov-smirno
 
 # Training of the Random Forest Contact Prior
 
-##Evaluating Random Forest Prior with respect to Neff
-
 (ref:caption-performance-neff-rf) Mean precision for top ranked contacts predicted with random forest on a test set of 1000 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. Upper left: Subset of proteins with [Neff](#abbrev) < Q1. Upper right: Subset of proteins with Q1 <= [Neff](#abbrev) < Q2. Lower left: Subset of proteins with Q2 <= [Neff](#abbrev) < Q3. Lower right: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.  **OMES** = [APC](#abbrev) corrected *OMES* contact score according to Fodor&Aldrich [@Fodor2004a]. **mutual information** = [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).   
 
 ```{r performance-neff-rf, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf)'}
 knitr::include_url("img/random_forest_contact_prior/precision_vs_rank_facetted_by_neff_notitle.html", height = "600px")
 ```
-
-
-## Training Random Forest Model with Pseudo-Likelihood Feature
 
 (ref:caption-feature-importance-rf-with-pll-score) Top ten features for Random Forest trained with additional pseudo-likelihood contact score feature. Features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j). **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts).  **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
 
@@ -410,20 +327,21 @@ knitr::include_url("img/random_forest_contact_prior/additional_contat_score_feat
 
 (ref:caption-feature-selection-rf-with-pll-score) Mean precision for top ranked contacts over 200 proteins for variaous random forest models trained on subsets of features. Subsets of features have been selected as described in section \@ref(rf-feature-selection). 
 
-```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '100%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
+```{r feature-selection-rf-with-pll-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.png",out.width = '90%',fig.align='center', fig.cap = '(ref:caption-feature-selection-rf-with-pll-score)'}
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_featureselection_random_forest_nestimators1000_maxfeatures03_maxdepth100_minsamplesleaf10_pLLfeature.html", height = "500px")
 ```
 
-
-## Training Random Forest Model with Contrastive Divergence Feature
-
-(ref:caption-feature-importance-rf-with-cd-score) Top ten features for Random Forest trained with additional contrastive divergence contact score feature. Features ranked according to *Gini importance*. **pseudo-likelihood**: [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood.  **mean pair potential (Miyasawa & Jernigan)**: average quasi-chemical energy of transfer of amino acids from water to the protein environment [@Miyazawa1999a]. **OMES+APC**:  [APC](#abbrev) corrected OMES score according to Fodor&Aldrich [@Fodor2004a].  **mean pair potential (Li&Fang)**: average general contact potential by Li & Fang [@Li2011]. **rel. solvent accessibilty i(j)**: RSA score computed with Netsurfp (v1.0) [@Petersen2009a] for position i(j).   **contact prior wrt L**: simple contact prior based on expected number of contacts wrt protein length (see methods section \@ref(contact-prior-protein-length)). **log protein length**: logarithm of protein length. **MI+APC**: [APC](#abbrev) corrected mutual information between amino acid counts (using pseudo-counts). **beta sheet propensity window(i)**: beta-sheet propensity according to Psipred [@Jones1999] computed within a window of five positions around i.  Features are described in detail in methods section \@ref(seq-features).
+(ref:caption-feature-importance-rf-with-cd-score) Top ten features for Random Forest trained with additional contrastive divergence contact score feature. Features ranked according to *Gini importance*. Features are the same as in Figure \@ref(fig:feature-importance-rf-with-pll-score) plus the following additional features: **contrastive divergence**: [APC](#abbrev) corrected Frobenius norm of couplings computed with contrastive divergence. Features are described in detail in methods section \@ref(seq-features).
 
 ```{r feature-importance-rf-with-cd-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-cd-score)'}
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd.html", height = "600px")
 ```
 
-## Evaluating window size with 5-fold Cross-validation {#rf-window-size}
+(ref:caption-feature-importance-rf-with-pll-cd-score) Top ten features for Random Forest trained with additional pseudo-likleihood and contrastive divergence contact score feature. Features ranked according to *Gini importance*. Features are the same as in Figure \@ref(fig:feature-importance-rf-with-pll-score) plus the following additional features:  **contrastive divergence**: [APC](#abbrev) corrected Frobenius norm of couplings computed with contrastive divergence. **Diversity (sqrt(N)/L)**: diversity of the alignment. Features are described in detail in methods section \@ref(seq-features).
+
+```{r feature-importance-rf-with-pll-cd-score, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd_pll.png",out.width = '100%', fig.align='center', fig.cap = '(ref:caption-feature-importance-rf-with-pll-cd-score)'}
+knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/feature_random_forest_nestimators1000_maxfeatures030_cd_pll.html", height = "600px")
+```
 
 (ref:caption-random-forest-window-size-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of window size for single position features. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
 
@@ -431,15 +349,11 @@ knitr::include_url("img/random_forest_contact_prior/additional_contat_score_feat
 knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_windowsize.html", height = "600px")
 ```
 
-## Evaluating non-contact threshold with 5-fold Cross-validation {#rf-noncontact-threshold}
-
 (ref:caption-random-forest-noncontactthr-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of the non-contact threshold to define non-contacts. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
 
 ```{r random-forest-noncontactthr-cv, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_noncontactthr.png", out.width='90%', fig.align='center', fig.cap = '(ref:caption-random-forest-noncontactthr-cv)'}
 knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_noncontactthr.html", height = "600px")
 ```
-
-## Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation {#rf-ratio-noncontacts}
 
 (ref:caption-random-forest-rationoncontactthr-cv) Mean precision over validation set of 200 proteins for top ranked contact predictions for different choices of dataset composition with respect to the ratio of contacts and non-contacts. Dashed lines represent the models trained on four subsets of the training data according to the 5-fold cross-validation scheme. Solid lines represent the mean over the five cross-validation models.
 
@@ -447,17 +361,31 @@ knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_v
 knitr::include_url("img/random_forest_contact_prior/cross_validation/precision_vs_rank_cv_on_test_random_forest_nestimators1000_maxfeatureslog2_maxdepth10_minsamplesleaf100_ratio.html", height = "600px")
 ```
 
+
+
+
 # Bayesian statistical model for contact prediction
 
-(ref:caption-stats-pll-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 371 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. 
+(ref:caption-stats-pll-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 388 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-pll-3comp-10k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-10k)'}
 knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-10k.png")
 ```
 
-(ref:caption-stats-pll-3comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 331 iterations. Trained on 300,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. 
+(ref:caption-stats-pll-3comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 331 iterations. Trained on 300,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-300k)'}
 knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-300k.png")
 ```
 
+(ref:caption-stats-pll-3comp-500k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 250 iterations. Trained on 500,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+
+```{r stats-pll-3comp-500k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-500k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-500k.png")
+```
+
+(ref:caption-vis1d-aa-pll-3comp-300k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2.
+
+```{r vis1d-aa-pll-3comp-300k, echo = FALSE, out.width = '49%', fig.show='hold', fig.cap = '(ref:caption-vis1d-aa-pll-3comp-300k)'}
+knitr::include_graphics(c("img/bayesian_model/pll/3/vi_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/fw_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/er_pll-3comp-300k-nolegend.png","img/bayesian_model/pll/3/ee_pll-3comp-300k-nolegend.png"))
+```

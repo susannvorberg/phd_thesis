@@ -1,0 +1,22 @@
+# Conclusion
+
+This is the end
+
+
+- alternative approach as good as pLL
+  - very similar ranking --> no gain by combining both scores 
+  - why no improvement for small alignments: apparantly conservation more important than coevolution
+  
+- much info in coupling information than is unused (shown in chapter 3)
+- heuristics that migh be reason why CD doesn not improve over pLL
+
+- bayesian model:
+  - explicit modelling of coupling information
+  - no need of heuristics (byebye APC) and estimates of probabilities --> enables cutoffs for contact prediction!
+  - why no improvement:
+    - diagonal matrices require more components
+    - more data
+    - assumption that hessian diagonal block matrices are zero
+  
+outlook:
+  - extension to residue-residue distances

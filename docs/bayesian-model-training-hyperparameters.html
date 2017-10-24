@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-10-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="overview-posterior-distances.html">
+<link rel="prev" href="coupling-prior.html">
 <link rel="next" href="training-on-couplings-from-pseudo-likelihood-maximization.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -155,6 +155,10 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3.2" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>3.2</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
 <li class="chapter" data-level="3.3" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>3.3</b> Coupling Profiles Vary with Distance</a></li>
 <li class="chapter" data-level="3.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>3.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="3.5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3.5</b> Methods</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>3.5.1</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="3.5.2" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>3.5.2</b> Coupling Distribution Plots</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>4</b> Optimizing the Full Likelihood</a><ul>
 <li class="chapter" data-level="4.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>4.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
@@ -173,88 +177,72 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>4.5.1</b> Protein 1c75A00</a></li>
 <li class="chapter" data-level="4.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>4.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
 </ul></li>
+<li class="chapter" data-level="4.6" data-path="theoretical-methods.html"><a href="theoretical-methods.html"><i class="fa fa-check"></i><b>4.6</b> Theoretical Methods</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="theoretical-methods.html"><a href="theoretical-methods.html#potts-full-likelihood"><i class="fa fa-check"></i><b>4.6.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="4.6.2" data-path="theoretical-methods.html"><a href="theoretical-methods.html#gap-treatment"><i class="fa fa-check"></i><b>4.6.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="4.6.3" data-path="theoretical-methods.html"><a href="theoretical-methods.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>4.6.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="4.6.4" data-path="theoretical-methods.html"><a href="theoretical-methods.html#prior-v"><i class="fa fa-check"></i><b>4.6.4</b> The prior on <span class="math inline">\(\v\)</span></a></li>
+<li class="chapter" data-level="4.6.5" data-path="theoretical-methods.html"><a href="theoretical-methods.html#methods-sgd"><i class="fa fa-check"></i><b>4.6.5</b> Practical Methods</a></li>
+<li class="chapter" data-level="4.6.6" data-path="theoretical-methods.html"><a href="theoretical-methods.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>4.6.6</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>4.7</b> Computing the Gradient with Contrastive Divergence</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>5</b> Random Forest Contact Prior</a><ul>
 <li class="chapter" data-level="5.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>5.1</b> Random Forest Classifiers</a></li>
 <li class="chapter" data-level="5.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>5.2</b> Hyperparameter Optimization for Random Forest</a></li>
 <li class="chapter" data-level="5.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>5.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 <li class="chapter" data-level="5.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>5.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="5.5" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>5.5</b> Methods</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="methods-1.html"><a href="methods-1.html#seq-features"><i class="fa fa-check"></i><b>5.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="5.5.2" data-path="methods-1.html"><a href="methods-1.html#seq-features-global"><i class="fa fa-check"></i><b>5.5.2</b> Global Features</a></li>
+<li class="chapter" data-level="5.5.3" data-path="methods-1.html"><a href="methods-1.html#seq-features-single"><i class="fa fa-check"></i><b>5.5.3</b> Single Position Features</a></li>
+<li class="chapter" data-level="5.5.4" data-path="methods-1.html"><a href="methods-1.html#seq-features-pairwise"><i class="fa fa-check"></i><b>5.5.4</b> Pairwise Features</a></li>
+<li class="chapter" data-level="5.5.5" data-path="methods-1.html"><a href="methods-1.html#rf-training"><i class="fa fa-check"></i><b>5.5.5</b> Training Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="5.5.6" data-path="methods-1.html"><a href="methods-1.html#rf-feature-selection"><i class="fa fa-check"></i><b>5.5.6</b> Feature Selection</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><a href="a-bayesian-statistical-model-for-residue-residue-contact-prediction.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>6</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
 <li class="chapter" data-level="6.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>6.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
-<li class="chapter" data-level="6.2" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.2</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
-<li class="chapter" data-level="6.3" data-path="training-on-couplings-from-pseudo-likelihood-maximization.html"><a href="training-on-couplings-from-pseudo-likelihood-maximization.html"><i class="fa fa-check"></i><b>6.3</b> Training on couplings from pseudo-likelihood maximization</a></li>
+<li class="chapter" data-level="6.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>6.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="6.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>6.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="6.4" data-path="training-on-couplings-from-pseudo-likelihood-maximization.html"><a href="training-on-couplings-from-pseudo-likelihood-maximization.html"><i class="fa fa-check"></i><b>6.4</b> Training on couplings from pseudo-likelihood maximization</a></li>
+<li class="chapter" data-level="6.5" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html"><i class="fa fa-check"></i><b>6.5</b> Theoretical Methods</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#methods-coupling-prior"><i class="fa fa-check"></i><b>6.5.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="6.5.2" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#laplace-approx"><i class="fa fa-check"></i><b>6.5.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="6.5.3" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>6.5.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="6.5.4" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#posterior-of-rij"><i class="fa fa-check"></i><b>6.5.4</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="6.5.5" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>6.5.5</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="6.5.6" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>6.5.6</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="6.5.7" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>6.5.7</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="6.5.8" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#gradient-muk"><i class="fa fa-check"></i><b>6.5.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="6.5.9" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#gradient-lambdak"><i class="fa fa-check"></i><b>6.5.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="6.5.10" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>6.5.10</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="6.5.11" data-path="theoretical-methods-1.html"><a href="theoretical-methods-1.html#extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances"><i class="fa fa-check"></i><b>6.5.11</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a><ul>
-<li class="chapter" data-level="7.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>7.1</b> Dataset</a></li>
-<li class="chapter" data-level="7.2" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html"><i class="fa fa-check"></i><b>7.2</b> Computing Pseudo-Likelihood Couplings</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>7.2.1</b> Differences between CCMpred and CCMpredpy</a></li>
+<li class="chapter" data-level="6.6" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>6.6</b> Practical Methods</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters"><i class="fa fa-check"></i><b>6.6.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="6.6.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>6.6.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="6.6.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>6.6.3</b> Model Specifications</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="seq-reweighting.html"><a href="seq-reweighting.html"><i class="fa fa-check"></i><b>7.3</b> Sequence Reweighting</a></li>
-<li class="chapter" data-level="7.4" data-path="amino-acid-frequencies.html"><a href="amino-acid-frequencies.html"><i class="fa fa-check"></i><b>7.4</b> Computing Amino Acid Frequencies</a></li>
-<li class="chapter" data-level="7.5" data-path="methods-regularization.html"><a href="methods-regularization.html"><i class="fa fa-check"></i><b>7.5</b> Regularization</a></li>
-<li class="chapter" data-level="7.6" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html"><i class="fa fa-check"></i><b>7.6</b> The Potts Model</a><ul>
-<li class="chapter" data-level="7.6.1" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#gap-treatment"><i class="fa fa-check"></i><b>7.6.1</b> Treating Gaps as Missing Information</a></li>
-<li class="chapter" data-level="7.6.2" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>7.6.2</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
-<li class="chapter" data-level="7.6.3" data-path="potts-full-likelihood.html"><a href="potts-full-likelihood.html#prior-v"><i class="fa fa-check"></i><b>7.6.3</b> The prior on <span class="math inline">\(\v\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html"><i class="fa fa-check"></i><b>7.7</b> Analysis of Coupling Matrices</a><ul>
-<li class="chapter" data-level="7.7.1" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-correlation"><i class="fa fa-check"></i><b>7.7.1</b> Correlation of Couplings with Contact Class</a></li>
-<li class="chapter" data-level="7.7.2" data-path="analysis-of-coupling-matrices.html"><a href="analysis-of-coupling-matrices.html#method-coupling-profile"><i class="fa fa-check"></i><b>7.7.2</b> Coupling Distribution Plots</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
+<li class="chapter" data-level="8" data-path="general-methods.html"><a href="general-methods.html"><i class="fa fa-check"></i><b>8</b> General Methods</a><ul>
+<li class="chapter" data-level="8.1" data-path="dataset.html"><a href="dataset.html"><i class="fa fa-check"></i><b>8.1</b> Dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html"><i class="fa fa-check"></i><b>8.2</b> Computing Pseudo-Likelihood Couplings</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="computing-pseudo-likelihood-couplings.html"><a href="computing-pseudo-likelihood-couplings.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>8.2.1</b> Differences between CCMpred and CCMpredpy</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="methods-sgd.html"><a href="methods-sgd.html"><i class="fa fa-check"></i><b>7.8</b> Optimizing Contrastive Divergence with Stochastic Gradient Descent</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="methods-sgd.html"><a href="methods-sgd.html#methods-full-likelihood-adam"><i class="fa fa-check"></i><b>7.8.1</b> Tuning Hyperparameters of <em>ADAM</em> Optimizer</a></li>
-</ul></li>
-<li class="chapter" data-level="7.9" data-path="methods-cd-sampling.html"><a href="methods-cd-sampling.html"><i class="fa fa-check"></i><b>7.9</b> Computing the Gradient with Contrastive Divergence</a></li>
-<li class="chapter" data-level="7.10" data-path="Hessian-offdiagonal.html"><a href="Hessian-offdiagonal.html"><i class="fa fa-check"></i><b>7.10</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
-<li class="chapter" data-level="7.11" data-path="neg-Hessian-computation.html"><a href="neg-Hessian-computation.html"><i class="fa fa-check"></i><b>7.11</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
-<li class="chapter" data-level="7.12" data-path="inv-lambda-ij-k.html"><a href="inv-lambda-ij-k.html"><i class="fa fa-check"></i><b>7.12</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
-<li class="chapter" data-level="7.13" data-path="laplace-approx.html"><a href="laplace-approx.html"><i class="fa fa-check"></i><b>7.13</b> Gaussian Approximation to the Posterior of Couplings</a></li>
-<li class="chapter" data-level="7.14" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>7.14</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
-<li class="chapter" data-level="7.15" data-path="likelihood-fct-distances.html"><a href="likelihood-fct-distances.html"><i class="fa fa-check"></i><b>7.15</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
-<li class="chapter" data-level="7.16" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>7.16</b> Computing The Posterior Probability of Contacts</a></li>
-<li class="chapter" data-level="7.17" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html"><i class="fa fa-check"></i><b>7.17</b> Training the Hyperparameters in the Likelihood Function of Contact States</a><ul>
-<li class="chapter" data-level="7.17.1" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#dataset-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.1</b> Dataset Specifications</a></li>
-<li class="chapter" data-level="7.17.2" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#model-specifications-training-hyperparmeters"><i class="fa fa-check"></i><b>7.17.2</b> Model Specifications</a></li>
-<li class="chapter" data-level="7.17.3" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-muk"><i class="fa fa-check"></i><b>7.17.3</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
-<li class="chapter" data-level="7.17.4" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#gradient-lambdak"><i class="fa fa-check"></i><b>7.17.4</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
-<li class="chapter" data-level="7.17.5" data-path="training-hyperparameters.html"><a href="training-hyperparameters.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>7.17.5</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
-</ul></li>
-<li class="chapter" data-level="7.18" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><i class="fa fa-check"></i><b>7.18</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a><ul>
-<li class="chapter" data-level="7.18.1" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-rho_k"><i class="fa fa-check"></i><b>7.18.1</b> The derivative of the log likelihood with respect to <span class="math inline">\(\rho_k\)</span></a></li>
-<li class="chapter" data-level="7.18.2" data-path="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html"><a href="extending-the-bayesian-statistical-model-for-the-prediction-of-protein-residue-residue-distances.html#the-derivative-of-the-log-likelihood-with-respect-to-alpha_k"><i class="fa fa-check"></i><b>7.18.2</b> The derivative of the log likelihood with respect to <span class="math inline">\(\alpha_k\)</span></a></li>
-</ul></li>
-<li class="chapter" data-level="7.19" data-path="seq-features.html"><a href="seq-features.html"><i class="fa fa-check"></i><b>7.19</b> Features used to train Random Forest Model</a><ul>
-<li class="chapter" data-level="7.19.1" data-path="seq-features.html"><a href="seq-features.html#seq-features-global"><i class="fa fa-check"></i><b>7.19.1</b> Global Features</a></li>
-<li class="chapter" data-level="7.19.2" data-path="seq-features.html"><a href="seq-features.html#seq-features-single"><i class="fa fa-check"></i><b>7.19.2</b> Single Position Features</a></li>
-<li class="chapter" data-level="7.19.3" data-path="seq-features.html"><a href="seq-features.html#seq-features-pairwise"><i class="fa fa-check"></i><b>7.19.3</b> Pairwise Features</a></li>
-</ul></li>
-<li class="chapter" data-level="7.20" data-path="rf-training.html"><a href="rf-training.html"><i class="fa fa-check"></i><b>7.20</b> Training Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="7.20.1" data-path="rf-training.html"><a href="rf-training.html#rf-feature-selection"><i class="fa fa-check"></i><b>7.20.1</b> Feature Selection</a></li>
-</ul></li>
+<li class="chapter" data-level="8.3" data-path="seq-reweighting.html"><a href="seq-reweighting.html"><i class="fa fa-check"></i><b>8.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="8.4" data-path="amino-acid-frequencies.html"><a href="amino-acid-frequencies.html"><i class="fa fa-check"></i><b>8.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="8.5" data-path="methods-regularization.html"><a href="methods-regularization.html"><i class="fa fa-check"></i><b>8.5</b> Regularization</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
 <li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
 <li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
-<li class="chapter" data-level="D" data-path="standard-deviation-of-couplings-for-noncontacts.html"><a href="standard-deviation-of-couplings-for-noncontacts.html"><i class="fa fa-check"></i><b>D</b> Standard Deviation of Couplings for Noncontacts</a></li>
-<li class="chapter" data-level="E" data-path="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><a href="amino-acid-interaction-preferences-reflected-in-coupling-matrices.html"><i class="fa fa-check"></i><b>E</b> Amino Acid Interaction Preferences Reflected in Coupling Matrices</a><ul>
-<li class="chapter" data-level="E.1" data-path="pi-cation.html"><a href="pi-cation.html"><i class="fa fa-check"></i><b>E.1</b> Pi-Cation interactions</a></li>
-<li class="chapter" data-level="E.2" data-path="disulfide.html"><a href="disulfide.html"><i class="fa fa-check"></i><b>E.2</b> Disulfide Bonds</a></li>
-<li class="chapter" data-level="E.3" data-path="aromatic-proline.html"><a href="aromatic-proline.html"><i class="fa fa-check"></i><b>E.3</b> Aromatic-Proline Interactions</a></li>
-<li class="chapter" data-level="E.4" data-path="aromatic-network.html"><a href="aromatic-network.html"><i class="fa fa-check"></i><b>E.4</b> Network-like structure of aromatic residues</a></li>
-<li class="chapter" data-level="E.5" data-path="aromatic-small-distances.html"><a href="aromatic-small-distances.html"><i class="fa fa-check"></i><b>E.5</b> Aromatic Sidechains at small <span class="math inline">\(Cb\)</span>-<span class="math inline">\(\Cb\)</span> distances</a></li>
-</ul></li>
-<li class="chapter" data-level="F" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>F</b> Optimizing Full Likelihood with Gradient Descent</a></li>
-<li class="chapter" data-level="G" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>G</b> Training of the Random Forest Contact Prior</a><ul>
-<li class="chapter" data-level="G.1" data-path="evaluating-random-forest-prior-with-respect-to-neff.html"><a href="evaluating-random-forest-prior-with-respect-to-neff.html"><i class="fa fa-check"></i><b>G.1</b> Evaluating Random Forest Prior with respect to Neff</a></li>
-<li class="chapter" data-level="G.2" data-path="training-random-forest-model-with-pseudo-likelihood-feature.html"><a href="training-random-forest-model-with-pseudo-likelihood-feature.html"><i class="fa fa-check"></i><b>G.2</b> Training Random Forest Model with Pseudo-Likelihood Feature</a></li>
-<li class="chapter" data-level="G.3" data-path="training-random-forest-model-with-contrastive-divergence-feature.html"><a href="training-random-forest-model-with-contrastive-divergence-feature.html"><i class="fa fa-check"></i><b>G.3</b> Training Random Forest Model with Contrastive Divergence Feature</a></li>
-<li class="chapter" data-level="G.4" data-path="rf-window-size.html"><a href="rf-window-size.html"><i class="fa fa-check"></i><b>G.4</b> Evaluating window size with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.5" data-path="rf-noncontact-threshold.html"><a href="rf-noncontact-threshold.html"><i class="fa fa-check"></i><b>G.5</b> Evaluating non-contact threshold with 5-fold Cross-validation</a></li>
-<li class="chapter" data-level="G.6" data-path="rf-ratio-noncontacts.html"><a href="rf-ratio-noncontacts.html"><i class="fa fa-check"></i><b>G.6</b> Evaluating ratio of non-contacts and contacts in the training set with 5-fold Cross-validation</a></li>
-</ul></li>
-<li class="chapter" data-level="H" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>H</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -277,9 +265,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="bayesian-model-training-hyperparameters" class="section level2">
-<h2><span class="header-section-number">6.2</span> Training the Hyperparameters in the Likelihood Function of Contact States</h2>
-<p>The likelihood function of contact states, given in eq. <a href="likelihood-fct-distances.html#eq:pXr-final">(7.30)</a>, is obtained by solving the integral in eq. <a href="overview-posterior-distances.html#eq:integrate-out-vw">(6.2)</a>. It contains the hyperparameters <span class="math inline">\(\gamma_k(\cij)\)</span>, <span class="math inline">\(\muk\)</span> and <span class="math inline">\(\Lk\)</span> representing the weights, mean vectors and precision matrices of the <span class="math inline">\(K\)</span> Gaussian components of the contact state dependent coupling prior, respectively. The hyperparameters are trained by maximizing the logarithm of the likelihood over a set of training <a href="abbrev.html#abbrev">MSAs</a> as described in detail in method section <a href="training-hyperparameters.html#training-hyperparameters">7.17</a>.</p>
-<p>The <a href="abbrev.html#abbrev">MAP</a> estimates of the coupling parameters <span class="math inline">\(\wij^*\)</span> is are needed to compute the Hessian of the regularized <em>Potts</em> model likelihood, which again is needed for the Gaussian approximation to the likelihood. For that purpose, I tested couplings <span class="math inline">\(\wij^*\)</span> obtained from pseudo-likelihood maximization as well as the couplings <span class="math inline">\(\wij^*\)</span> obtained by maximizing the full likelihood with <a href="abbrev.html#abbrev">CD</a>.</p>
+<h2><span class="header-section-number">6.3</span> Training the Hyperparameters in the Likelihood Function of Contact States</h2>
+<p>Solving the integral in eq. <a href="overview-posterior-distances.html#eq:integrate-out-vw">(6.2)</a> as described in in detail in method section <a href="theoretical-methods-1.html#likelihood-fct-distances">6.5.3</a>, yields the likelihood function of contact states, <span class="math inline">\(p(\X | \c)\)</span>. It contains the hyperparameters of the prior over couplings, <span class="math inline">\(p(\wij|\cij)\)</span>, which is modelled as a mixture of <span class="math inline">\(K\)</span> 400-dimensional Gaussians with component weights that depend on the contact state.</p>
+<p>The hyperparameters are trained by maximizing the logarithm of the likelihood over a set of training <a href="abbrev.html#abbrev">MSAs</a> as described in detail in method section <a href="practical-methods.html#training-hyperparameters">6.6.1</a>. The <a href="abbrev.html#abbrev">MAP</a> estimates of the coupling parameters <span class="math inline">\(\wij^*\)</span> are needed to compute the Hessian of the regularized <em>Potts</em> model likelihood, which again is needed for the Gaussian approximation to the regularized likelihood. For that purpose, I trained the hyperparameters by utilizing couplings <span class="math inline">\(\wij^*\)</span> obtained from pseudo-likelihood maximization as well as couplings <span class="math inline">\(\wij^*\)</span> obtained by maximizing the full likelihood with <a href="abbrev.html#abbrev">CD</a>.</p>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -305,7 +293,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="overview-posterior-distances.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="coupling-prior.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="training-on-couplings-from-pseudo-likelihood-maximization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
