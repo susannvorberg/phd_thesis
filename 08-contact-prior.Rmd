@@ -1,3 +1,4 @@
+
 # Random Forest Contact Prior {#contact-prior}
 
 The wealth of successful meta-predictors presented in section \@ref(meta-predictors) highlights the importance to exploit other sources of information apart from coevolution statistics.
@@ -203,7 +204,7 @@ Given a multiple sequence alignment of a protein family, various sequence featur
 In total there are 250 features that can be divided into global, single position and pairwise features and are described in the following sections. 
 If not stated otherwise, *weighted* features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section \@ref(seq-reweighting).
 
-### Global Features {#seq-features-global}
+#### Global Features {#seq-features-global}
 
 These features describe alignment characteristics.
 Every pair of residues $(i,j)$ from the same protein will be attributed the same feature.
@@ -224,39 +225,10 @@ Every pair of residues $(i,j)$ from the same protein will be attributed the same
 
 There are in total 32 global alignment features per reside pair. 
 
-The last feature listed in table \@ref(tab:global-features) ("contact prior protein length") stands for a simple contact predictor based on expected number of contacts per protein with respect to protein length.
-The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length $L$ as can be seen in Figure \@ref(fig:avg-nr-contacts-per-residue-vs-protein-length).
-
-(ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation |j-i|.
-
-```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
-knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
-```
-
-In log space, the average number of contats per residue can be fitted with a linear regression (see Figure \@ref(fig:simple-contact-prior-linfit)) and yields the following functions:
-
-- $f(L) = 1.556 + 0.596 \log (L)$ for sequence separation of 0 positions
-- $f(L) = -1.273 + 0.59 \log (L)$ for sequence separation of 8 positions
-- $f(L) = -1.567 + 0.615 \log (L)$ for sequence separation of 12 positions
-- $f(L) = -2.0 + 0.624 \log (L)$ for sequence separation of 24 positions
-
-A simple contact predictor can be formulated as the ratio of the expected number of contacts per residue, given by $f(L)$, and the possible number of contacts per residue which is $L-1$,
-
-$$
-p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
-$$
-
-with $r_{ij}=1$ representing a contact between residue $i$ and $j$. 
-
-(ref:caption-simple-contact-prior-linfit) Distribution of average number of contacts per residue against protein length and corresponding linear regression fits. Protein length is on logarithmic scale.  Distribution and linear regression fits are shown for different sequence separation thresholds |j-i|. 
-
-```{r simple-contact-prior-linfit, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-simple-contact-prior-linfit)'}
-knitr::include_url("img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.html", height = "650px")
-```
 
 
 
-### Single Position Features {#seq-features-single}
+#### Single Position Features {#seq-features-single}
 
 These features describe characteristics of a single alignment column.
 Every residue pair $(i,j)$ will be described by two features, once for each position.
@@ -293,7 +265,7 @@ Whenever the window extends the range of the sequence (for $i\!<\!2$ and $i\!>\!
 This results in additional 96 window features per residue pair.
 
 
-### Pairwise Features {#seq-features-pairwise}
+#### Pairwise Features {#seq-features-pairwise}
 
 These features are computed for every pair of columns $(i, j)$ in the alignment with $i<j$.
 
@@ -317,10 +289,41 @@ These features are computed for every pair of columns $(i, j)$ in the alignment 
 
 There are in total 26 pairwise sequence features. 
 
+### Simple Contact Prior with Respect to Protein Length
 
+The last feature listed in table \@ref(tab:global-features) ("contact prior protein length") stands for a simple contact predictor based on expected number of contacts per protein with respect to protein length.
+The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length $L$ as can be seen in Figure \@ref(fig:avg-nr-contacts-per-residue-vs-protein-length).
 
+(ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation |j-i|.
 
-### Training Random Forest Contact Prior {#rf-training}
+```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
+knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
+```
+
+In log space, the average number of contats per residue can be fitted with a linear regression and yields the following functions:
+
+- $f(L) = 1.556 + 0.596 \log (L)$ for sequence separation of 0 positions
+- $f(L) = -1.273 + 0.59 \log (L)$ for sequence separation of 8 positions
+- $f(L) = -1.567 + 0.615 \log (L)$ for sequence separation of 12 positions
+- $f(L) = -2.0 + 0.624 \log (L)$ for sequence separation of 24 positions
+
+A simple contact predictor can be formulated as the ratio of the expected number of contacts per residue, given by $f(L)$, and the possible number of contacts per residue which is $L-1$,
+
+$$
+p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
+$$
+
+with $r_{ij}=1$ representing a contact between residue $i$ and $j$. 
+
+<!--
+(ref:caption-simple-contact-prior-linfit) Distribution of average number of contacts per residue against protein length and corresponding linear regression fits. Protein length is on logarithmic scale.  Distribution and linear regression fits are shown for different sequence separation thresholds |j-i|. 
+
+```{r simple-contact-prior-linfit, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-simple-contact-prior-linfit)'}
+knitr::include_url("img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.html", height = "650px")
+```
+-->
+
+### Cross-validation for Random Forest Training {#rf-training}
 
 Proteins constitute highly imbalanced datasets with respect to the number of residue pairs that form and do not form physical contacts. 
 As can be seen in Figure \@ref(fig:fraction-contacts-vs-protein-length), depending on the enforced sequence separation threshold and protein length the percentage of contacts per protein varies between 25% and 0%.

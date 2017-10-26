@@ -1,4 +1,6 @@
-# Biological Background {#general-intro}
+# Background
+
+## Biological Background {#general-intro}
 
 In 1972, Anfinsen and his collegues received the Nobel Prize for their research on protein folding which lead to the postulation of one of the basic principles in molecular biology, which is known as *Anfinsen's dogma*: a protein's native structure is uniquely determined by its amino acid sequence [@Anfinsen1973]. 
 With certain exceptions (e.g. intrinsically disordered proteins [@Wright1999], prions[@Fraser2014]), this dogma has proven to hold true at least for globular proteins.
@@ -44,7 +46,7 @@ The price for sequencing a single genome has dropped from the US\$3 billion spen
 At the beginning of 2017, Illumina announced the launch of their latest high-throughput sequencing technology, NovaSeq, which is capable of sequencing $\sim \! 48$ human genomes in parallel at 30x coverage within ~45hours [@NovaSeqSystemSpecifications].
 Advances in sequencing technologies have led to the emergence of new fields of studies, like metagenomics and single-cell genomics, that enable sequencing of microorganisms that cannot be cultured in a lab [@Tringe2005; @Hugenholtz2008; @Wooley2010]. 
 With these approaches the genomic coverage of the microbial world is expanding which is directly reflected in a substantial increase in novel protein families [@Rinke2013; @Mukherjee2017; @Forster2017]. 
-About 90 million sequences (October 2017) have been translated into protein amino acid sequences and are stored in the UniprotKB/TrEMBL database, the leading resource for protein sequences [@TheUniProtConsortium2017].
+More than 70 000 genomes have been completely sequenced and about 90 million sequences (October 2017) have been translated into protein amino acid sequences and are stored in the UniprotKB/TrEMBL database, the leading resource for protein sequences [@Zerihun2017; @TheUniProtConsortium2017].
 
 
 The resultant gap between the number of protein structures and protein sequences is constantly widening (see right plot in Figure \@ref(fig:seq-str-gap)) despite tremendous efforts in automating experimental structure determination and new developments such as electron crystallography[@Schwede2013; @Clabbers2017].

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="application-contact-prediction.html">
+<link rel="next" href="challenges.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      c: "\\mathbf{c}",
+      cij: "c_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>1</b> Background</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1.1</b> Biological Background</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.2.4</b> Modelling Protein Families with Potts Model</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Applications</a></li>
+<li class="chapter" data-level="1.4" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.4</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.4.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>1.4.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.5</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-noise"><i class="fa fa-check"></i><b>1.5.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>1.5.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>1.5.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="1.5.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>1.5.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="1.5.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>1.5.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>2.2</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.3" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.3</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="2.5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>2.5</b> Discussion</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2.6</b> Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="methods.html"><a href="methods.html#dataset"><i class="fa fa-check"></i><b>2.6.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.6.2" data-path="methods.html"><a href="methods.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>2.6.2</b> Computing Pseudo-Likelihood Couplings</a></li>
+<li class="chapter" data-level="2.6.3" data-path="methods.html"><a href="methods.html#seq-reweighting"><i class="fa fa-check"></i><b>2.6.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.6.4" data-path="methods.html"><a href="methods.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>2.6.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.6.5" data-path="methods.html"><a href="methods.html#methods-regularization"><i class="fa fa-check"></i><b>2.6.5</b> Regularization</a></li>
+<li class="chapter" data-level="2.6.6" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>2.6.6</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="2.6.7" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>2.6.7</b> Coupling Distribution Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>3.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="3.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>3.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>3.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>3.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>3.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="discussion-1.html"><a href="discussion-1.html"><i class="fa fa-check"></i><b>3.6</b> Discussion</a></li>
+<li class="chapter" data-level="3.7" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>3.7</b> Methods</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="methods-1.html"><a href="methods-1.html#potts-full-likelihood"><i class="fa fa-check"></i><b>3.7.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="3.7.2" data-path="methods-1.html"><a href="methods-1.html#gap-treatment"><i class="fa fa-check"></i><b>3.7.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.7.3" data-path="methods-1.html"><a href="methods-1.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>3.7.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="3.7.4" data-path="methods-1.html"><a href="methods-1.html#prior-v"><i class="fa fa-check"></i><b>3.7.4</b> The prior on single potentials</a></li>
+<li class="chapter" data-level="3.7.5" data-path="methods-1.html"><a href="methods-1.html#methods-sgd"><i class="fa fa-check"></i><b>3.7.5</b> Stochastic Gradien Descent</a></li>
+<li class="chapter" data-level="3.7.6" data-path="methods-1.html"><a href="methods-1.html#methods-cd-sampling"><i class="fa fa-check"></i><b>3.7.6</b> Computing the Gradient with Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>4</b> Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>4.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.4" data-path="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><i class="fa fa-check"></i><b>5.4</b> Training Hyperparameters for a Gaussian Mixture with Three Components</a></li>
+<li class="chapter" data-level="5.5" data-path="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><i class="fa fa-check"></i><b>5.5</b> Training Hyperparameters for a Gaussian Mixture with Five Components</a></li>
+<li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
+<li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="5.10.3" data-path="methods-3.html"><a href="methods-3.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>5.10.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="5.10.4" data-path="methods-3.html"><a href="methods-3.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>5.10.4</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="5.10.5" data-path="methods-3.html"><a href="methods-3.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>5.10.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.10.6" data-path="methods-3.html"><a href="methods-3.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>5.10.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.10.7" data-path="methods-3.html"><a href="methods-3.html#gradient-muk"><i class="fa fa-check"></i><b>5.10.7</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
+<li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro-cp-evaluation" class="section level2">
+<h2><span class="header-section-number">1.4</span> Evaluating Contact Prediction Methods</h2>
+<p>Choosing an appropriate benchmark for contact prediction is determined by the further utilization of the predictions. Most prominently, predicted contacts are used to assist structure prediction as outlined in the last section <a href="application-contact-prediction.html#application-contact-prediction">1.3</a>. Therefore, one could assess the quality of structural models computed with the help of predicted contacts. However, predicting structural models adds not only another layer of computational complexity but also raises questions about implementation details of the folding protocol.</p>
+<p>It has been found that in general a small number of accurate contacts is sufficient to constrain the overal protein fold as already discussed. From these considerations emerged various standard benchmarks that have been established by the <a href="abbrev.html#abbrev">CASP</a> community over many years <span class="citation">[<a href="#ref-Monastyrskyy2015">91</a>,<a href="#ref-Monastyrskyy2011">173</a>,<a href="#ref-Monastyrskyy2014a">174</a>]</span>. <a href="abbrev.html#abbrev">CASP</a>, the well-respected and independent competition for the structural bioinformatic’s community introduced the contact prediction category in 1996. Taking place every two years, the progress in the field is assessed in a blind competition and the community discusses the outcome in a subsequent meeting. According to the <a href="abbrev.html#abbrev">CASP</a> regulations, a pair of residues is defined to be in physical contact when the distance between their <span class="math inline">\(\Cb\)</span> atoms (<span class="math inline">\(C_{\alpha}\)</span> in case of glycine) is less than <span class="math inline">\(8 \angstrom\)</span> in the reference protein structure.</p>
+<p>The overall performance of a contact predictor is evaluated by the mean precision over a testset of proteins with known high quality 3D structures against the top scoring predictions from every protein. The number of top scoring predictions per protein is typically normalized with respect to protein length <span class="math inline">\(L\)</span> and precision is defined as the number of true contacts among the top scoring predicted contacts,</p>
+<span class="math display">\[\begin{equation}
+    \textrm{precision}  = \frac{TP}{TP + FP} \; ,
+\end{equation}\]</span>
+<p>where <span class="math inline">\(TP\)</span> is a true positive contact and <span class="math inline">\(FP\)</span> is false positive contact. A popular variant of this benchmark plot shows the mean precision of a certain fraction of top ranked predictions (e.g. L/5 top ranked predictions) against specific properties of the test proteins such as protein length or alignment depth <span class="citation">[<a href="#ref-Ashkenazy2009">175</a>]</span>. Another informative metric is mean error defined as:</p>
+<span class="math display">\[\begin{equation}
+    \textrm{mean error}  = \frac{\textrm{error}}{TP + FP} 
+        \begin{cases}
+            error = \Delta\Cb - T &amp; \text{if } \Delta\Cb &gt; T\\
+            error = 0, &amp;\text{otherwise }
+        \end{cases}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\Delta\Cb\)</span> is the actual distance of a residue pair in the native structure, and <span class="math inline">\(T\)</span> is the distance threshold defining a true contact. The mean error helps to asses how wrong false positive predictions are. During CASP11 further evaluation metrics have been introduced, such as Matthews correlation coefficient, area under the precision-recall curve or F1 measure but they are rarely used in studies <span class="citation">[<a href="#ref-Monastyrskyy2015">91</a>]</span>.</p>
+<p>Currently best methods perform in the range XXX. Sequence feature based methods: Their performance is less dependent on the number of available sequence homologs compared to coevolution methods and therefore they can outperform pure coevolution methods in low data ranges <span class="citation">[<a href="#ref-Wang2013">72</a>,<a href="#ref-Kosciolek2015a">176</a>]</span>. TODOOOPLOT</p>
+<div id="seq-sep" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Sequence Separation</h3>
+<p>Local residue pairs separated by only some positions in sequence (e.g <span class="math inline">\(|i-j| &lt; 6\)</span>) are usually filtered out for evaluating contact prediction methods. They are trivial to predict as they typically correspond to contacts within secondary structure elements and reflect the local geometrical constraints. Figure <a href="intro-cp-evaluation.html#fig:Cb-distribution">1.8</a> shows the distribution of <span class="math inline">\(\Cb\)</span> distances for various minimal sequence separation thresholds. Without filtering local residue pairs (sequence separation 1), there are several additional peaks in the distribution around <span class="math inline">\(5.5\angstrom\)</span>, <span class="math inline">\(7.4\angstrom\)</span> and <span class="math inline">\(10.6\angstrom\)</span> that can be attributed to local interactions in e.g. helices (see Figure <a href="intro-cp-evaluation.html#fig:peaks-Cb-distribution">1.9</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:Cb-distribution"></span>
+<iframe src="img/dataset_statistics/Cb_distribution_all_data43579541_log.html" width="100%" height="500px">
+</iframe>
+<p class="caption">
+Figure 1.8: Distribution of residue pair <span class="math inline">\(\Cb\)</span> distances over 6741 proteins in the dataset (see Methods <a href="methods.html#dataset">2.6.1</a>) at different minimal sequence separation thresholds.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:peaks-Cb-distribution"></span>
+<img src="img/dataset_statistics/cb_distribution_peak_5-6.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\angstrom\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\angstrom\) and \(7.5\angstrom\)." width="40%" /><img src="img/dataset_statistics/cb_distribution_peak_7.png" alt="\(\Cb\) distances between neighboring residues in \(\alpha\)-helices. Left: Direct neighbors in \(\alpha\)-helices have \(\Cb\) distances around \(5.4\angstrom\) due to the geometrical constraints from \(\alpha\)-helical architecture. Right: Residues separated by two positions (\(|i-j| = 2\)) are less geometrically restricted to \(\Cb\) distances between \(7\angstrom\) and \(7.5\angstrom\)." width="40%" />
+<p class="caption">
+Figure 1.9: <span class="math inline">\(\Cb\)</span> distances between neighboring residues in <span class="math inline">\(\alpha\)</span>-helices. Left: Direct neighbors in <span class="math inline">\(\alpha\)</span>-helices have <span class="math inline">\(\Cb\)</span> distances around <span class="math inline">\(5.4\angstrom\)</span> due to the geometrical constraints from <span class="math inline">\(\alpha\)</span>-helical architecture. Right: Residues separated by two positions (<span class="math inline">\(|i-j| = 2\)</span>) are less geometrically restricted to <span class="math inline">\(\Cb\)</span> distances between <span class="math inline">\(7\angstrom\)</span> and <span class="math inline">\(7.5\angstrom\)</span>.
+</p>
+</div>
+<p>Commonly, sequence separation bins are applied to distuinguish short (<span class="math inline">\(6 &lt; |i-j| \le 12\)</span>), medium (<span class="math inline">\(12 &lt; |i-j| \le 24\)</span>) and long range (<span class="math inline">\(|i-j| &gt; 24\)</span>) contacts <span class="citation">[<a href="#ref-Monastyrskyy2015">91</a>,<a href="#ref-Monastyrskyy2014a">174</a>]</span>. Especially long range contacts are of importance for structure prediction as they are the most informative and able to constrain the overal fold of a protein <span class="citation">[<a href="#ref-Monastyrskyy2011">173</a>]</span>.</p>
+</div>
+<div id="interpretation-of-evaluation-results" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Interpretation of Evaluation Results</h3>
+<p>There are certain subtleties to be considered when interpreting contact prediction evaluation results.</p>
+<p>The rigid <span class="math inline">\(\Cb\)</span> distance definition of a contact is a very rough measure of true physical interactions between amino acid sidechains. <!--Whether two residues truly interact in a protein structure depends only marginally on the distance between their $\Cb$ atoms.--> More importantly, interactions between sidechains depend on their physico-chemical properties, on their orientation and different environments within proteins (see section <a href="#amino-acid-interactions"><strong>??</strong></a>) <span class="citation">[<a href="#ref-Bettsa">177</a>]</span>. A simple <span class="math inline">\(\Cb\)</span> distance threshold not only misses to reflect biological interaction preferences of amino acids but also provides a questionable gold-standard for benchmarking. Other distance thresholds and definitions for physical contacts (e.g minimal atomic distances or distance between functional groups) have been studied as well. In fact, Duarte and colleagues found that using a <span class="math inline">\(\Cb\)</span> distance threshold between 9<span class="math inline">\(\angstrom\)</span> and 11<span class="math inline">\(\angstrom\)</span> yields optimal results when predicting the 3D structure from the respective contacts <span class="citation">[<a href="#ref-Duarte2010">42</a>]</span>. Anishchenko and colleagues analysed false positive predictions with respect to a minimal atom distance threshold <span class="math inline">\(&lt; 5 \angstrom\)</span>, as they found that this cutoff optimally defines direct physical interactions of residue pairs <span class="citation">[<a href="#ref-Anishchenko2017">178</a>]</span>.</p>
+<p>Another issue concerns structural variation within a protein family. Evolutionary couplings are inferred from all family members in the <a href="abbrev.html#abbrev">MSA</a> and therefore predicted contacts might be physical contacts in one family member but not in another. Anishchenko et al. could show that more than <span class="math inline">\(80\%\)</span> of false positives at intermediate distances (minimal heavy atom distance 5-15<span class="math inline">\(\angstrom\)</span>) are true contacts in at least one homolog structure <span class="citation">[<a href="#ref-Anishchenko2017">178</a>]</span>. Therefore, choosing the right trade-off between sensitivity and specificity when generating alignments is a crucial step as well as choosing the target protein structure for evaluation.</p>
+<p>Finally, an important aspect not considered in the standard benchmarks is the spread of predicted contacts. It is perfectly possible to improve precison of predicted contacts without translating this improvement to better structural models. The reason being that structurally redundant contacts, that is contacts in the immediate sequence neighborhood of other contacts, do not give additional information to constrain the fold <span class="citation">[<a href="#ref-Marks2011">39</a>,<a href="#ref-Kim2014">41</a>,<a href="#ref-Jones2015">81</a>]</span>. For example, given a contact between residues <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, there is hardly an added value knowing that there is a contact between residues <span class="math inline">\(i\!+\!1\)</span> and <span class="math inline">\(j\!+\!1\)</span> when it comes to predicting the overal topology. This observation is highly relevant for deep learning methods due to their unique ability to abstract higher order interactions and recognize contact patterns. Several measures of the contact spread have been developed, like the mean euclidian distance between true and predicted contacts, but are not commonly evaluated yet <span class="citation">[<a href="#ref-Marks2011">39</a>,<a href="#ref-DeOliveira2016">145</a>]</span>.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Monastyrskyy2015">
+<p>91. Monastyrskyy, B., D’Andrea, D., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2015). New encouraging developments in contact prediction: Assessment of the CASP11 results. Proteins. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26474083" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26474083</a>.</p>
+</div>
+<div id="ref-Monastyrskyy2011">
+<p>173. Monastyrskyy, B., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2011). Evaluation of residue-residue contact predictions in CASP9. Proteins <em>79 Suppl 1</em>, 119–25. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21928322 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3226919</a>.</p>
+</div>
+<div id="ref-Monastyrskyy2014a">
+<p>174. Monastyrskyy, B., D’Andrea, D., Fidelis, K., Tramontano, A., and Kryshtafovych, A. (2014). Evaluation of residue-residue contact prediction in CASP10. Proteins <em>82 Suppl 2</em>, 138–53. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3823628{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Ashkenazy2009">
+<p>175. Ashkenazy, H., Unger, R., and Kliger, Y. (2009). Optimal data collection for correlated mutation analysis. Proteins <em>74</em>, 545–55. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18655065" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18655065</a>.</p>
+</div>
+<div id="ref-Wang2013">
+<p>72. Wang, Z., and Xu, J. (2013). Predicting protein contact map using evolutionary and physical constraints by integer programming. Bioinformatics <em>29</em>, i266–73. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3694661{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Kosciolek2015a">
+<p>176. Kosciolek, T., and Jones, D.T. (2015). Accurate contact predictions using coevolution techniques and machine learning. Proteins Struct. Funct. Bioinforma., n/a–n/a. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26205532" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26205532</a>.</p>
+</div>
+<div id="ref-Bettsa">
+<p>177. Betts, M.J., and Russell, R.B. Amino Acid Properties and Consequences of Substitutions. In Bioinforma. genet. (Chichester, UK: John Wiley &amp; Sons, Ltd), pp. 289–316. Available at: <a href="http://doi.wiley.com/10.1002/0470867302.ch14" class="uri">http://doi.wiley.com/10.1002/0470867302.ch14</a>.</p>
+</div>
+<div id="ref-Duarte2010">
+<p>42. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe, M. (2010). Optimal contact definition for reconstruction of contact maps. BMC Bioinformatics <em>11</em>, 283. Available at: <a href="http://www.biomedcentral.com/1471-2105/11/283" class="uri">http://www.biomedcentral.com/1471-2105/11/283</a>.</p>
+</div>
+<div id="ref-Anishchenko2017">
+<p>178. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D. (2017). Origins of coevolution between residues distant in protein 3D structures. Proc. Natl. Acad. Sci., 201702664. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114</a>.</p>
+</div>
+<div id="ref-Marks2011">
+<p>39. Marks, D.S., Colwell, L.J., Sheridan, R., Hopf, T.A., Pagnani, A., Zecchina, R., and Sander, C. (2011). Protein 3D structure computed from evolutionary sequence variation. PLoS One <em>6</em>, e28766. Available at: <a href="http://dx.plos.org/10.1371/journal.pone.0028766" class="uri">http://dx.plos.org/10.1371/journal.pone.0028766</a>.</p>
+</div>
+<div id="ref-Kim2014">
+<p>41. Kim, D.E., Dimaio, F., Yu-Ruei Wang, R., Song, Y., and Baker, D. (2014). One contact for every twelve residues allows robust and accurate topology-level protein structure modeling. Proteins <em>82 Suppl 2</em>, 208–18. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23900763" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23900763</a>.</p>
+</div>
+<div id="ref-Jones2015">
+<p>81. Jones, D.T., Singh, T., Kosciolek, T., and Tetchner, S. (2015). MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics <em>31</em>, 999–1006. Available at: <a href="http://bioinformatics.oxfordjournals.org/content/31/7/999.short" class="uri">http://bioinformatics.oxfordjournals.org/content/31/7/999.short</a>.</p>
+</div>
+<div id="ref-DeOliveira2016">
+<p>145. Oliveira, S.H.P. de, Shi, J., and Deane, C.M. (2016). Comparing co-evolution methods and their application to template-free protein structure prediction. Bioinformatics, btw618. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27682254" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27682254</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="application-contact-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="challenges.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/04-intro-contact-prediction.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

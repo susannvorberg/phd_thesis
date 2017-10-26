@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="background.html">
+<link rel="next" href="introduction-to-contact-prediction.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      c: "\\mathbf{c}",
+      cij: "c_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>1</b> Background</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1.1</b> Biological Background</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.2.4</b> Modelling Protein Families with Potts Model</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Applications</a></li>
+<li class="chapter" data-level="1.4" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.4</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.4.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>1.4.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.5</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-noise"><i class="fa fa-check"></i><b>1.5.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>1.5.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>1.5.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="1.5.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>1.5.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="1.5.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>1.5.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>2.2</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.3" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.3</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="2.5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>2.5</b> Discussion</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2.6</b> Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="methods.html"><a href="methods.html#dataset"><i class="fa fa-check"></i><b>2.6.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.6.2" data-path="methods.html"><a href="methods.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>2.6.2</b> Computing Pseudo-Likelihood Couplings</a></li>
+<li class="chapter" data-level="2.6.3" data-path="methods.html"><a href="methods.html#seq-reweighting"><i class="fa fa-check"></i><b>2.6.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.6.4" data-path="methods.html"><a href="methods.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>2.6.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.6.5" data-path="methods.html"><a href="methods.html#methods-regularization"><i class="fa fa-check"></i><b>2.6.5</b> Regularization</a></li>
+<li class="chapter" data-level="2.6.6" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>2.6.6</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="2.6.7" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>2.6.7</b> Coupling Distribution Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>3.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="3.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>3.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>3.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>3.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>3.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="discussion-1.html"><a href="discussion-1.html"><i class="fa fa-check"></i><b>3.6</b> Discussion</a></li>
+<li class="chapter" data-level="3.7" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>3.7</b> Methods</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="methods-1.html"><a href="methods-1.html#potts-full-likelihood"><i class="fa fa-check"></i><b>3.7.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="3.7.2" data-path="methods-1.html"><a href="methods-1.html#gap-treatment"><i class="fa fa-check"></i><b>3.7.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.7.3" data-path="methods-1.html"><a href="methods-1.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>3.7.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="3.7.4" data-path="methods-1.html"><a href="methods-1.html#prior-v"><i class="fa fa-check"></i><b>3.7.4</b> The prior on single potentials</a></li>
+<li class="chapter" data-level="3.7.5" data-path="methods-1.html"><a href="methods-1.html#methods-sgd"><i class="fa fa-check"></i><b>3.7.5</b> Stochastic Gradien Descent</a></li>
+<li class="chapter" data-level="3.7.6" data-path="methods-1.html"><a href="methods-1.html#methods-cd-sampling"><i class="fa fa-check"></i><b>3.7.6</b> Computing the Gradient with Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>4</b> Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>4.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.4" data-path="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><i class="fa fa-check"></i><b>5.4</b> Training Hyperparameters for a Gaussian Mixture with Three Components</a></li>
+<li class="chapter" data-level="5.5" data-path="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><i class="fa fa-check"></i><b>5.5</b> Training Hyperparameters for a Gaussian Mixture with Five Components</a></li>
+<li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
+<li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="5.10.3" data-path="methods-3.html"><a href="methods-3.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>5.10.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="5.10.4" data-path="methods-3.html"><a href="methods-3.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>5.10.4</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="5.10.5" data-path="methods-3.html"><a href="methods-3.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>5.10.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.10.6" data-path="methods-3.html"><a href="methods-3.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>5.10.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.10.7" data-path="methods-3.html"><a href="methods-3.html#gradient-muk"><i class="fa fa-check"></i><b>5.10.7</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
+<li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="general-intro" class="section level2">
+<h2><span class="header-section-number">1.1</span> Biological Background</h2>
+<p>In 1972, Anfinsen and his collegues received the Nobel Prize for their research on protein folding which lead to the postulation of one of the basic principles in molecular biology, which is known as <em>Anfinsen’s dogma</em>: a protein’s native structure is uniquely determined by its amino acid sequence <span class="citation">[<a href="#ref-Anfinsen1973">1</a>]</span>. With certain exceptions (e.g. intrinsically disordered proteins <span class="citation">[<a href="#ref-Wright1999">2</a>]</span>, prions<span class="citation">[<a href="#ref-Fraser2014">3</a>]</span>), this dogma has proven to hold true at least for globular proteins.</p>
+<p>Ever since, it is regarded as the biggest challenge in structural bioinformatics to realiably predict a protein’s structure given only its amino acid sequence <span class="citation">[<a href="#ref-Samish2015">4</a>,<a href="#ref-Schwede2013">5</a>]</span>. <em>De novo</em> protein structure prediction methods minimize physical or knowledge based energy functions to identify the lowest-energy conformation that generally corresponds to the native protein conformation. However, due to the high degree of conformational flexibility, the search space of possible conformations cannot be explored exhaustively for proteins of typical length. Given a protein with 101 residues that has 100 peptide bonds with two torsion angles each and assuming three stable conformations for each of the bond angles, there will be <span class="math inline">\(3^200 \approx 10^{95}\)</span> configurations. This number of conformations cannot be sampled sequentially in a lifetime, even when sampling at high rates. Yet, proteins fold almost instantaneously within milliseconds. This discrepancy is known as Levinthal’s paradox <span class="citation">[<a href="#ref-Levinthal1969">6</a>]</span> and limits purely <em>de novo</em> based protein structure prediction to small proteins.</p>
+<p>Far more successfull are template-based modelling approaches. Given the observation that structure is more conserved than sequence in a protein family <span class="citation">[<a href="#ref-Lesk1980">7</a>]</span>, the structure of a target protein can be inferred from a homologue protein <span class="citation">[<a href="#ref-Sander1991">8</a>]</span>. The degree of structural conservation is linked to the level of pairwise sequence identity <span class="citation">[<a href="#ref-Chothia1986">9</a>]</span>. Therefore, the accuracy of a model crucially depends on the sequence identity between target and template and determines the applicability of the model <span class="citation">[<a href="#ref-Marti-Renom2000">10</a>]</span>. By definition, homology derived models are unable to capture new folds and their main limitation lies in the availability and identification of suitable templates <span class="citation">[<a href="#ref-Dorn2014">11</a>]</span>.</p>
+<p>The number of solved protein structures increases steadily but only slowly, as experimental methods are both time consuming and expensive <span class="citation">[<a href="#ref-Dorn2014">11</a>]</span>. The <a href="abbrev.html#abbrev">PDB</a><span class="citation">[<a href="#ref-Berman2000">12</a>]</span> is the main repository for marcomolecular structures and currently (October 2017) holds about 135,000 atomic models of proteins. The primary technique for determining protein structures is X-ray crystallography, accounting for roughly 90% of entries in the <a href="abbrev.html#abbrev">PDB</a>. About 9% of protein structures have been solved using <a href="abbrev.html#abbrev">NMR</a> and less than 1% using <a href="abbrev.html#abbrev">EM</a> (see left plot in Figure <a href="general-intro.html#fig:seq-str-gap">1.1</a>).</p>
+
+<div class="figure"><span id="fig:seq-str-gap"></span>
+<iframe src="img/intro/pdb_uniprot_stats.html" width="100%" height="500px">
+</iframe>
+<p class="caption">
+Figure 1.1: Yearly growth of number of solved structures in the <a href="abbrev.html#abbrev">PDB</a> <span class="citation">[<a href="#ref-Berman2000">12</a>]</span> and protein sequences in the Uniprot <span class="citation">[<a href="#ref-TheUniProtConsortium2017">13</a>]</span>. <strong>Left</strong> Yearly growth of structures in PDB by structure determination method. <strong>Right</strong> Yearly growth of protein sequences in the UniprotKB/TrEMBL, containing automatically annotated sequences, and in the UniprotKB/SwissProt, which is curated by experts who critically review experimental and predicted, and protein structures in the <a href="abbrev.html#abbrev">PDB</a>.
+</p>
+</div>
+<p>All three experimental techniques have advantages and limitations with respect to certain modelling aspects. X-ray crystallography involves protein overexpression, purification and crystallization and finding the the correct experimental conditions to arrive at a pure and regular crystal is a challenging and sometimes impossible task. Especially membrane proteins are difficult to study owing to their overall flexibility and hydrophobic surfaces which requires suitable detergents to extract the proteins from their membrane environment which in turn makes crystallization even more challenging <span class="citation">[<a href="#ref-Carpenter2008">14</a>,<a href="#ref-Moraes2014">15</a>]</span>. Furthermore, the unnatural crystal environment can result in crystal-induced artifacts, like altererd sidechain conformations due to crystal packing interactions <span class="citation">[<a href="#ref-Jacobson2002">16</a>]</span>. In contrast, Nuclear magnetic resonance (NMR) spectroscopy studies the protein in solution under physiological conditions and enables the observation of intramolecular dynamics, reaction kinetics or protein folding as ensembles of protein structures can be observed <span class="citation">[<a href="#ref-Bieri2011">17</a>]</span>. On the downside, validation of NMR-derived structure ensembles is complicated and there is an upper size limit of about 25 kDa for efficient use of the technique <span class="citation">[<a href="#ref-Billeter2008">18</a>]</span>. Recently, cryo-EM has undergone a “resolution revolution” and macromolecules have been solved to near-atomic resolutions <span class="citation">[<a href="#ref-Egelman2016">19</a>,<a href="#ref-Fernandez-Leiro2016">20</a>]</span>. Technological developments, such as better electron detectors as well as advanced image processing software has enabled high resolution structure determination and led to an exponential growth in number of structures deposited in the PDB. Cryo-EM is particularly suited to study large macromolecular complexes without the need to make crystals and therefore complements the other two structure determination techniques.</p>
+<p>In contrast to the tedious task of determining the tertiary structure of a protein to atomic resolution, it has become very easy to decipher the primary sequence of proteins. Since the completion of the human genome in 2003, high-throughput sequencing technologies have been developed at an extraordinary pace, thereby not only decreasing the amount of time needed to sequence whole genomes but also drastically reducing costs <span class="citation">[<a href="#ref-Reuter2015">21</a>]</span>. The price for sequencing a single genome has dropped from the US$3 billion spent by the Human Genome Project to as little as US$1,000<span class="citation">[<a href="#ref-Goodwin2016">22</a>]</span>. At the beginning of 2017, Illumina announced the launch of their latest high-throughput sequencing technology, NovaSeq, which is capable of sequencing <span class="math inline">\(\sim \! 48\)</span> human genomes in parallel at 30x coverage within ~45hours <span class="citation">[<a href="#ref-NovaSeqSystemSpecifications">23</a>]</span>. Advances in sequencing technologies have led to the emergence of new fields of studies, like metagenomics and single-cell genomics, that enable sequencing of microorganisms that cannot be cultured in a lab <span class="citation">[<a href="#ref-Tringe2005">24</a>–<a href="#ref-Wooley2010">26</a>]</span>. With these approaches the genomic coverage of the microbial world is expanding which is directly reflected in a substantial increase in novel protein families <span class="citation">[<a href="#ref-Rinke2013">27</a>–<a href="#ref-Forster2017">29</a>]</span>. More than 70 000 genomes have been completely sequenced and about 90 million sequences (October 2017) have been translated into protein amino acid sequences and are stored in the UniprotKB/TrEMBL database, the leading resource for protein sequences <span class="citation">[<a href="#ref-TheUniProtConsortium2017">13</a>,<a href="#ref-Zerihun2017">30</a>]</span>.</p>
+<p>The resultant gap between the number of protein structures and protein sequences is constantly widening (see right plot in Figure <a href="general-intro.html#fig:seq-str-gap">1.1</a>) despite tremendous efforts in automating experimental structure determination and new developments such as electron crystallography<span class="citation">[<a href="#ref-Schwede2013">5</a>,<a href="#ref-Clabbers2017">31</a>]</span>. This trend illustrates the essential importance of computational approaches that can complement experimental structural biology efforts in order to bridge this gap. Over the last decades, template-based methods have matured to a point where they are able to generate high-resolution structural models that are routinley and conveniently used in life-science research and by the biological community <span class="citation">[<a href="#ref-Schwede2013">5</a>,<a href="#ref-BKC2016">32</a>]</span>. <em>De novo</em> methods aiming at predicting protein structures from sequence alone are required in case no homologue template structure can be identified or the protein sequence represents a novel fold. Albeit purely <em>de novo</em> approaches are hampered by the combinatorial explosion of possible conformations for larger proteins, combining them with structural information from heterogenous sources can help to reduce the degrees of freedom in the conformational search space <span class="citation">[<a href="#ref-Schwede2013">5</a>]</span>. For example, sparse low-resolution experimental data from chemical cross-linking/mass spectroscopy or nuclear Overhauser enhancement (NOE) distance data generated from <a href="abbrev.html#abbrev">NMR</a> experiments, provide distance restraints to guide folding to a correct structure <span class="citation">[<a href="#ref-Li2004">33</a>–<a href="#ref-Rappsilber2011">35</a>]</span>. Sophisticated integrative approaches, exploiting structural information from different types of experiments have proven to be a powerful approach <span class="citation">[<a href="#ref-Ornes2016">36</a>–<a href="#ref-Tang2015">38</a>]</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:contact-map"></span>
+<img src="img/intro/contat_map_and_structure_1avgi00.png" alt="2D and 3D representations of triabin, a thombin inhibitor from triatoma pallidipennis (PDB identifier 1avg chain I). Left The upper left matrix illustrates a contact map using an \(10 \angstrom \Cb\) cutoff. A black square is drawn at position \((i, j)\) if the \(\Cb\) atoms of residues \(i\) and \(j\) are closer than \(8 \angstrom\) in the structure. The lower right matrix illustrates a distance map. Color reflects \(\Cb\) distances between residue pairs with red colors representing \(\Delta \Cb \le 10 \angstrom\) and blue colors representing \(\Delta \Cb &gt; 10 \angstrom\). Right 3D Structure showing an eight-stranded beta-barrel." width="100%" />
+<p class="caption">
+Figure 1.2: 2D and 3D representations of triabin, a thombin inhibitor from triatoma pallidipennis (PDB identifier 1avg chain I). <strong>Left</strong> The upper left matrix illustrates a contact map using an <span class="math inline">\(10 \angstrom \Cb\)</span> cutoff. A black square is drawn at position <span class="math inline">\((i, j)\)</span> if the <span class="math inline">\(\Cb\)</span> atoms of residues <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are closer than <span class="math inline">\(8 \angstrom\)</span> in the structure. The lower right matrix illustrates a distance map. Color reflects <span class="math inline">\(\Cb\)</span> distances between residue pairs with red colors representing <span class="math inline">\(\Delta \Cb \le 10 \angstrom\)</span> and blue colors representing <span class="math inline">\(\Delta \Cb &gt; 10 \angstrom\)</span>. <strong>Right</strong> 3D Structure showing an eight-stranded beta-barrel.
+</p>
+</div>
+<p>Recently, computational methods have been developed using co-evolution information from deep multiple sequence alignments to predict contacts between pairs of amino acid residues. More surprisingly, the modern contact prediction approaches produce predictions that are sufficiently accurate to successfully deduce the native fold of the protein <span class="citation">[<a href="#ref-Marks2011">39</a>]</span>. It has long been known that native contacts can be used to reliably reconstruct native protein 3D structure <span class="citation">[<a href="#ref-Vendruscolo1997">40</a>]</span>. Residue-residue contacts can be visualized in a contact map which is a binary <span class="math inline">\(L \times L\)</span> matrix, with <span class="math inline">\(L\)</span> being protein length. For two residues, <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, the binary element in the matrix <span class="math inline">\(C(i,j)\)</span> is</p>
+<span class="math display">\[\begin{equation}
+    C(i,j) =    
+    \begin{cases}
+        1, &amp; \text{if } \Delta \Cb &lt; T \\
+        0, &amp; \text{otherwise}
+    \end{cases}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\Delta \Cb\)</span> is the euclidean distance between <span class="math inline">\(\Cb\)</span> atoms (<span class="math inline">\(C_\alpha\)</span> for glycine) of residues <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> and <span class="math inline">\(T\)</span> is a distance threshhold (typically 8 <span class="math inline">\(\angstrom\)</span>). Figure <a href="general-intro.html#fig:contact-map">1.2</a> shows an example of a residue-residue contact map generated from a small protein domain.</p>
+<p>Eventhough a contact map provides only a 2D represenation of the protein structure, it retains the full 3D structural information of a protein. While it has been shown that only a small subset of native contacts is sufficient to allow accurate modelling of the protein structure, the quality of predicted residue-residue contacts crucially controls the quality of the final structural model <span class="citation">[<a href="#ref-Kim2014">41</a>,<a href="#ref-Duarte2010">42</a>]</span>. The last years have seen an enourmous wealth of studies applying predicted residue-residue contacts not only as distance constraints for <em>de novo</em> modelling of protein structures, but also in many different fields in structural biology, such as domain prediction <span class="citation">[<a href="#ref-Sadowski2013">43</a>]</span>, studying alternative conformations <span class="citation">[<a href="#ref-Parisi2015a">44</a>]</span> or mutational landscapes <span class="citation">[<a href="#ref-Hopf2017">45</a>]</span>. The next chapter gives an introduction to state-of-the-art contact prediction approaches, how the predicted residue-residue contacts are applied and which challenges the current methods have to face. The aim of this thesis is therefore to improve the models for residue-residue contact prediction by developing a Bayesian framework that addresses some of these challenges.</p>
+<!--
+
+### Amino Acid Interactions {#amino-acid-interactions}
+
+The Venn diagram in figure \@ref(fig:amino-acid-physico-chemical-properties) displays a typical classification of amino acids with respect to their physico-chemical properties. 
+
+
+The aromatic amino acids tryptophan (W), tyrosine (Y), phenylalanine (F), and histidine (H) contain an aromatic ring system. 
+Generally, aromatic ring systems are planar, and electons are shared over the whole ring structure.
+Interactions between aromatic residues have very constrained geometries regarding the angle between the centroid of their rings. 
+The $\pi$-electron systems favour T-shaped or offset stacked conformations [@Waters2002].
+Preferred distances between aromatic residues have been observed between 4.5$\angstrom$ and 7$\angstrom$ of their ring centroids [@Burley1985].
+
+Cysteine (C) residues can form disulphide bonds, which are the only covalent bonds between two amino acid side chains.
+They comprise the strongest side chain interactions in protein structures and their length varies between 3.5$\angstrom$ to 4$\angstrom$.
+Disulphide bonds also have a well defined geometry: there are five dihedral angles in a disulphide bond resulting in 20 different possible configurations. 
+Only one configuration is favoured so that the dihedral angle between the carbon and sulfur atoms is close to 90 degrees [@Thornton1981].
+They play a very important role in stabilizing protein structures. 
+The number of disulfide bonds is negatively correlated with protein length: smaller proteins have more disulfide bonds helping to stabilize the structure in absence of strong hydrophobic packing in the core.
+It has also been found that disulfide bonds are more frequently observed in proteins of hyperthermophilic bacteria, being positively selected for increased stability [@Bastolla2005].
+
+Salt bridges are based on electrostatic interactions between positively charged residues (arginine (R) and lysine (K)) and negatively charged residues (aspartic acid (D) and glutamic acid (E)). 
+The strength of electrostatic interactions, as described by Coulomb's law, decreases with distance between the point charges at the functional groups. 
+It has been found to be maximal at 4$\angstrom$ with respect to the functional groups of the both residues [@Donald2011].
+
+Hydrogen bonds can be formed between a donor residue which possesses an hydrogen atom attached to a strongly electronegative atom and an acceptor residue which possesses an electronegative atom with a lone electron pair. 
+They are electrostatic interactions as well and thus their strength depends on distance as well. 
+Hydrogen bonds are formed at distances of 2.4$\angstrom$ to 3.5$\angstrom$ between the non-hydrogen atoms (Berg JM, Tymoczko JL, 2002).
+
+Salt bridges as well as hydrogen bonds have strong geometric preferences (Kumar and Nussinov, 1999). 
+The geometry of a hydrogen bond depends on the angle between the HB donor, the hydrogen atom and the HB acceptor (Torshin et al., 2002).
+
+Cation–$\pi$ interactions are formed between positively charged or partially charged amino acids with amino groups (K,R,Q,E) and aromatic residues (W,Y,F,H). 
+The preferential distance of the amino group to the $\pi$-electron system has been determined between 3.4$\angstrom$ and 6$\angstrom$ [@Burley1986] [@Crowley2005]
+Their role in stabilizing protein structures is still under debate [@Slutsky2004].
+
+Proline residues are conformationally restricted, with the alpha-amino group of the backbone directly attached to the side chain. 
+The sterical rigidity of the proline side chain restricts the backbone angle and thus affects secondary structure formation.
+Proline is known as a helix-breaker. 
+Whereas other aromatic side chains are defined by their negatively charged $\pi$ faces, the face of proline side chains is partially positively charged.
+Thus, aromatic and proline residues can interact favorably with each other.
+Once due to the hydrophobic nature of the residues and also due to the interaction between the negatively charged aroamtic $\pi$ face and the polarized C-H bonds in proline, called a CH/$\pi$  interaction.
+
+Petersen et al. (2012) found clear secondary structure elements preferences for each amino acid pair. 
+For example, residue pairs containing Alanine and Leucine are predominantly found in buried $\alpha$-helices, whereas pairs containing Isoleucine and Valine preferentially are located in $\beta$-sheet environments. 
+Of course, solvent accessibility represents an important criterion for residue interactions. 
+Hydrophobic residues are rather buried in the structure, whereas polar and charged residues are found more frequently on the protein surface and interact with water molecules.
+
+<div class="figure">
+<img src="img/amino_acid_physico_chemical_properties_venn_diagramm.png" alt="Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in [@Livingstone1993]." width="50%" />
+<p class="caption">(\#fig:amino-acid-physico-chemical-properties)Physico-chemical properties of amino acids. The 20 naturally occuring amino acids are grouped with respect to ten physico-chemical properties. Adapted from Figure 1a in [@Livingstone1993].</p>
+</div>
+
+-->
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Anfinsen1973">
+<p>1. Anfinsen, C.B. (1973). Principles that Govern the Folding of Protein Chains. Science (80-. ). <em>181</em>, 223–230. Available at: <a href="http://www.sciencemag.org/content/181/4096/223" class="uri">http://www.sciencemag.org/content/181/4096/223</a>.</p>
+</div>
+<div id="ref-Wright1999">
+<p>2. Wright, P.E., and Dyson, H. (1999). Intrinsically unstructured proteins: re-assessing the protein structure-function paradigm. J. Mol. Biol. <em>293</em>, 321–331. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/10550212 http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/10550212 http://linkinghub.elsevier.com/retrieve/pii/S0022283699931108</a>.</p>
+</div>
+<div id="ref-Fraser2014">
+<p>3. Fraser, P.E. (2014). Prions and prion-like proteins. J. Biol. Chem. <em>289</em>, 19839–40. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/24860092 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4106303" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/24860092 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4106303</a>.</p>
+</div>
+<div id="ref-Samish2015">
+<p>4. Samish, I., Bourne, P.E., and Najmanovich, R.J. (2015). Achievements and challenges in structural bioinformatics and computational biophysics. Bioinformatics <em>31</em>, 146–150. Available at: <a href="https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-" class="uri">https://oup.silverchair-cdn.com/oup/backfile/Content{\_}public/Journal/bioinformatics/31/1/10.1093{\_}bioinformatics{\_}btu769/2/btu769.pdf?Expires=1500051331{\&amp;}Signature=WYTe4F7OxZkkcnJmsjt-r8gIyHaHX5ANqUoy6w0PUuete2b{~}5ZU{~}{~}D6KOB1vq5A8MgCnrq3pDHUn0OSgz0QFmtU2RYf907-</a>.</p>
+</div>
+<div id="ref-Schwede2013">
+<p>5. Schwede, T. (2013). Protein modeling: what happened to the “protein structure gap”? Structure <em>21</em>, 1531–40. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/24010712 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3816506" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/24010712 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3816506</a>.</p>
+</div>
+<div id="ref-Levinthal1969">
+<p>6. Levinthal, C. (1969). How to Fold Graciously. 22–24. Available at: <a href="http://www.citeulike.org/user/FBerkemeier/article/380320" class="uri">http://www.citeulike.org/user/FBerkemeier/article/380320</a>.</p>
+</div>
+<div id="ref-Lesk1980">
+<p>7. Lesk, A.M., and Chothia, C. (1980). How different amino acid sequences determine similar protein structures: The structure and evolutionary dynamics of the globins. J. Mol. Biol. <em>136</em>, 225–270. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/0022283680903733" class="uri">http://linkinghub.elsevier.com/retrieve/pii/0022283680903733</a>.</p>
+</div>
+<div id="ref-Sander1991">
+<p>8. Sander, C., and Schneider, R. (1991). Database of homology-derived protein structures and the structural meaning of sequence alignment. Proteins <em>9</em>, 56–68. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/2017436" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/2017436</a>.</p>
+</div>
+<div id="ref-Chothia1986">
+<p>9. Chothia, C., and Lesk, A.M. (1986). The relation between the divergence of sequence and structure in proteins. EMBO J. <em>5</em>, 823–6. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/3709526 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1166865" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/3709526 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1166865</a>.</p>
+</div>
+<div id="ref-Marti-Renom2000">
+<p>10. Martí-Renom, M.A., Stuart, A.C., Fiser, A., Sánchez, R., Melo, F., and Šali, A. (2000). Comparative Protein Structure Modeling of Genes and Genomes. Annu. Rev. Biophys. Biomol. Struct. <em>29</em>, 291–325. Available at: <a href="http://www.annualreviews.org/doi/10.1146/annurev.biophys.29.1.291" class="uri">http://www.annualreviews.org/doi/10.1146/annurev.biophys.29.1.291</a>.</p>
+</div>
+<div id="ref-Dorn2014">
+<p>11. Dorn, M., Silva, M.B. e, Buriol, L.S., and Lamb, L.C. (2014). Three-dimensional protein structure prediction: Methods and computational strategies. Comput. Biol. Chem. <em>53</em>, 251–276. Available at: <a href="http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248" class="uri">http://linkinghub.elsevier.com/retrieve/pii/S1476927114001248</a>.</p>
+</div>
+<div id="ref-Berman2000">
+<p>12. Berman, H.M. (2000). The Protein Data Bank. Nucleic Acids Res. <em>28</em>, 235–242. Available at: <a href="http://nar.oxfordjournals.org/content/28/1/235.abstract" class="uri">http://nar.oxfordjournals.org/content/28/1/235.abstract</a>.</p>
+</div>
+<div id="ref-TheUniProtConsortium2017">
+<p>13. The UniProt Consortium (2017). UniProt: the universal protein knowledgebase. Nucleic Acids Res. <em>45</em>, D158–D169. Available at: <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkw1099" class="uri">https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkw1099</a>.</p>
+</div>
+<div id="ref-Carpenter2008">
+<p>14. Carpenter, E.P., Beis, K., Cameron, A.D., and Iwata, S. (2008). Overcoming the challenges of membrane protein crystallography. Curr. Opin. Struct. Biol. <em>18</em>, 581–6. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18674618 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2580798" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18674618 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2580798</a>.</p>
+</div>
+<div id="ref-Moraes2014">
+<p>15. Moraes, I., Evans, G., Sanchez-Weatherby, J., Newstead, S., and Stewart, P.D.S. (2014). Membrane protein structure determination - the next generation. Biochim. Biophys. Acta <em>1838</em>, 78–87. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23860256 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3898769" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23860256 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3898769</a>.</p>
+</div>
+<div id="ref-Jacobson2002">
+<p>16. Jacobson, M.P., Friesner, R.A., Xiang, Z., and Honig, B. (2002). On the Role of the Crystal Environment in Determining Protein Side-chain Conformations. J. Mol. Biol. <em>320</em>, 597–608. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S0022283602004709?via{\%}3Dihub" class="uri">http://www.sciencedirect.com/science/article/pii/S0022283602004709?via{\%}3Dihub</a>.</p>
+</div>
+<div id="ref-Bieri2011">
+<p>17. Bieri, M., Kwan, A.H., Mobli, M., King, G.F., Mackay, J.P., and Gooley, P.R. (2011). Macromolecular NMR spectroscopy for the non-spectroscopist: beyond macromolecular solution structure determination. FEBS J. <em>278</em>, 704–715. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21214861 http://doi.wiley.com/10.1111/j.1742-4658.2011.08005.x" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21214861 http://doi.wiley.com/10.1111/j.1742-4658.2011.08005.x</a>.</p>
+</div>
+<div id="ref-Billeter2008">
+<p>18. Billeter, M., Wagner, G., and Wüthrich, K. (2008). Solution NMR structure determination of proteins revisited. J. Biomol. NMR <em>42</em>, 155–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18827972 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2748914" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/18827972 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2748914</a>.</p>
+</div>
+<div id="ref-Egelman2016">
+<p>19. Egelman, E.H. (2016). The Current Revolution in Cryo-EM. Biophysj <em>110</em>, 1008–1012. Available at: <a href="http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf" class="uri">http://www.cell.com/biophysj/pdf/S0006-3495(16)00142-9.pdf</a>.</p>
+</div>
+<div id="ref-Fernandez-Leiro2016">
+<p>20. Fernandez-Leiro, R., and Scheres, S.H.W. (2016). Unravelling biological macromolecules with cryo-electron microscopy. Nature <em>537</em>, 339–46. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/27629640 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5074357" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/27629640 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5074357</a>.</p>
+</div>
+<div id="ref-Reuter2015">
+<p>21. Reuter, J.A., Spacek, D.V., and Snyder, M.P. (2015). High-throughput sequencing technologies. Mol. Cell <em>58</em>, 586–97. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/26000844 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4494749" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/26000844 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC4494749</a>.</p>
+</div>
+<div id="ref-Goodwin2016">
+<p>22. Goodwin, S., McPherson, J.D., and McCombie, W.R. (2016). Coming of age: ten years of next-generation sequencing technologies. Nat. Rev. Genet. <em>17</em>, 333–351. Available at: <a href="http://www.nature.com/doifinder/10.1038/nrg.2016.49" class="uri">http://www.nature.com/doifinder/10.1038/nrg.2016.49</a>.</p>
+</div>
+<div id="ref-NovaSeqSystemSpecifications">
+<p>23. NovaSeq System Specifications | The next era of sequencing starts now Available at: <a href="https://www.illumina.com/systems/sequencing-platforms/novaseq/specifications.html" class="uri">https://www.illumina.com/systems/sequencing-platforms/novaseq/specifications.html</a> [Accessed October 18, 2017].</p>
+</div>
+<div id="ref-Tringe2005">
+<p>24. Tringe, S.G., and Rubin, E.M. (2005). Metagenomics: DNA sequencing of environmental samples. Nat. Rev. Genet. <em>6</em>, 805–814. Available at: <a href="http://www.nature.com/doifinder/10.1038/nrg1709" class="uri">http://www.nature.com/doifinder/10.1038/nrg1709</a>.</p>
+</div>
+<div id="ref-Wooley2010">
+<p>26. Wooley, J.C., Godzik, A., and Friedberg, I. (2010). A primer on metagenomics. PLoS Comput. Biol. <em>6</em>, e1000667. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/20195499 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2829047" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/20195499 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC2829047</a>.</p>
+</div>
+<div id="ref-Rinke2013">
+<p>27. Rinke, C., Schwientek, P., Sczyrba, A., Ivanova, N.N., Anderson, I.J., Cheng, J.-F., Darling, A., Malfatti, S., Swan, B.K., and Gies, E.A. <em>et al.</em> (2013). Insights into the phylogeny and coding potential of microbial dark matter. Nature <em>499</em>, 431–437. Available at: <a href="http://www.nature.com/doifinder/10.1038/nature12352" class="uri">http://www.nature.com/doifinder/10.1038/nature12352</a>.</p>
+</div>
+<div id="ref-Forster2017">
+<p>29. Forster, S.C. (2017). Illuminating microbial diversity. Nat. Rev. Microbiol. <em>15</em>, 578–578. Available at: <a href="http://www.nature.com/doifinder/10.1038/nrmicro.2017.106" class="uri">http://www.nature.com/doifinder/10.1038/nrmicro.2017.106</a>.</p>
+</div>
+<div id="ref-Zerihun2017">
+<p>30. Zerihun, M.B., and Schug, A. (2017). Biomolecular coevolution and its applications: Going from structure prediction toward signaling, epistasis, and function. Biochem. Soc. Trans., BST20170063. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/29054926" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/29054926</a>.</p>
+</div>
+<div id="ref-Clabbers2017">
+<p>31. Clabbers, M.T.B., Genderen, E. van, Wan, W., Wiegers, E.L., Gruene, T., and Abrahams, J.P. (2017). Protein structure determination by electron diffraction using a single three-dimensional nanocrystal. Acta Crystallogr. Sect. D, Struct. Biol. <em>73</em>, 738–748. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28876237 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5586247" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28876237 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5586247</a>.</p>
+</div>
+<div id="ref-BKC2016">
+<p>32. Dukka, B.K. (2016). Recent advances in sequence-based protein structure prediction. Brief. Bioinform. <em>31</em>, 1–12. Available at: <a href="https://academic.oup.com/bib/article-lookup/doi/10.1093/bib/bbw070" class="uri">https://academic.oup.com/bib/article-lookup/doi/10.1093/bib/bbw070</a>.</p>
+</div>
+<div id="ref-Li2004">
+<p>33. Li, W., Zhang, Y., and Skolnick, J. (2004). Application of sparse NMR restraints to large-scale protein structure prediction. Biophys. J. <em>87</em>, 1241–8. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/15298926 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1304462" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/15298926 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC1304462</a>.</p>
+</div>
+<div id="ref-Rappsilber2011">
+<p>35. Rappsilber, J. (2011). The beginning of a beautiful friendship: cross-linking/mass spectrometry and modelling of proteins and multi-protein complexes. J. Struct. Biol. <em>173</em>, 530–40. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/21029779 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3043253" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/21029779 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3043253</a>.</p>
+</div>
+<div id="ref-Ornes2016">
+<p>36. Ornes, S. (2016). Let the structural symphony begin. Nature <em>536</em>, 361–363. Available at: <a href="http://www.nature.com/doifinder/10.1038/536361a" class="uri">http://www.nature.com/doifinder/10.1038/536361a</a>.</p>
+</div>
+<div id="ref-Tang2015">
+<p>38. Tang, Y., Huang, Y.J., Hopf, T.A., Sander, C., Marks, D.S., and Montelione, G.T. (2015). Protein structure determination by combining sparse NMR data with evolutionary couplings. Nat. Methods <em>advance on</em>. Available at: <a href="http://dx.doi.org/10.1038/nmeth.3455" class="uri">http://dx.doi.org/10.1038/nmeth.3455</a>.</p>
+</div>
+<div id="ref-Marks2011">
+<p>39. Marks, D.S., Colwell, L.J., Sheridan, R., Hopf, T.A., Pagnani, A., Zecchina, R., and Sander, C. (2011). Protein 3D structure computed from evolutionary sequence variation. PLoS One <em>6</em>, e28766. Available at: <a href="http://dx.plos.org/10.1371/journal.pone.0028766" class="uri">http://dx.plos.org/10.1371/journal.pone.0028766</a>.</p>
+</div>
+<div id="ref-Vendruscolo1997">
+<p>40. Vendruscolo, M., Kussell, E., and Domany, E. (1997). Recovery of protein structure from contact maps. Fold. Des. <em>2</em>, 295–306. Available at: <a href="http://dx.doi.org/10.1016/S1359-0278(97)00041-2" class="uri">http://dx.doi.org/10.1016/S1359-0278(97)00041-2</a>.</p>
+</div>
+<div id="ref-Kim2014">
+<p>41. Kim, D.E., Dimaio, F., Yu-Ruei Wang, R., Song, Y., and Baker, D. (2014). One contact for every twelve residues allows robust and accurate topology-level protein structure modeling. Proteins <em>82 Suppl 2</em>, 208–18. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/23900763" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/23900763</a>.</p>
+</div>
+<div id="ref-Duarte2010">
+<p>42. Duarte, J.M., Sathyapriya, R., Stehr, H., Filippis, I., and Lappe, M. (2010). Optimal contact definition for reconstruction of contact maps. BMC Bioinformatics <em>11</em>, 283. Available at: <a href="http://www.biomedcentral.com/1471-2105/11/283" class="uri">http://www.biomedcentral.com/1471-2105/11/283</a>.</p>
+</div>
+<div id="ref-Sadowski2013">
+<p>43. Sadowski, M.I. (2013). Prediction of protein domain boundaries from inverse covariances. Proteins <em>81</em>, 253–60. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/22987736 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3563215" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/22987736 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3563215</a>.</p>
+</div>
+<div id="ref-Parisi2015a">
+<p>44. Parisi, G., Zea, D.J., Monzon, A.M., and Marino-Buslje, C. (2015). Conformational diversity and the emergence of sequence signatures during evolution. Curr. Opin. Struct. Biol. <em>32C</em>, 58–65. Available at: <a href="http://www.sciencedirect.com/science/article/pii/S0959440X15000147" class="uri">http://www.sciencedirect.com/science/article/pii/S0959440X15000147</a>.</p>
+</div>
+<div id="ref-Hopf2017">
+<p>45. Hopf, T.A., Ingraham, J.B., Poelwijk, F.J., Schärfe, C.P.I., Springer, M., Sander, C., and Marks, D.S. (2017). Mutation effects predicted from sequence co-variation. Nat. Biotechnol. <em>35</em>, 128–135. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28092658 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5383098 http://www.nature.com/doifinder/10.1038/nbt.3769" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28092658 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC5383098 http://www.nature.com/doifinder/10.1038/nbt.3769</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-contact-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/03-intro.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

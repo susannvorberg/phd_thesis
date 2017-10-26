@@ -1,22 +1,45 @@
-# Conclusion
+# Conclusion and Outlook
 
-This is the end
+Direct coupling analysis (DCA) was developed in 2009 to infer spatially close residue pairs from coevolutionary signals in the evolutionary record of protein families [@Weigt2009].
+Since then, the field of contact prediction has experienced rapid progress.
+Not only are the methods continuously improving but also the areas of application have extended beyond guiding *de novo* structure prediction, for example to inferring evolutionary fitness landscapes and genomic interactions. 
+While currently published [DCA](#abbrev) methods are very successful at predicting contacts for large protein families, they all apply the same heuristics on top of the underlying statistical model thereby ignoring a wealth of information.
+It is a reasonable assumption that by making full use of the available information, the predictive performance of the models should improve and as a consequence extend the applicability of [DCA](#abbrev) methods to smaller protein families. 
+This is the motivation of my thesis. 
+
+In chapter \@ref(interpreting-coupling-matrices),  I presented a thorough analysis of coupling matrices, that contain the information about residue-residue couplings and are inferred as part of the *Potts* model, the statistical model underlying [DCA](#abbrev).
+I showed that coupling matrices contain valuable information with a meaningful biological interpretation.
+For example, the distributions of coupling values reflect biophysical interaction preferences between amino acids and the signal weakens with increasing residue-residue distances. 
+Furthermore, interdependencies between different couplings are coherent and induce characteristic patterns in coupling matrices, often indicating the structural constraint for the residue pair.
+The majority of this information is lost by the the way current methods apply heuristics to compute a prediction for a residue-residue contact.
+
+Chapter \@ref(optimizing-full-likelihood) presented an alternative approach to infer the *Potts* model parameters.
+Due to the complexity of the normalization constant it is infeasible to infer the model parameters via maximum-likelihood estimation. 
+The most popular [DCA](#abbrev) approaches optimize the pseudo-likelihood instead but it is unknown how well it approximates the full likelihood in case protein families have only few members.
+In my work, I optimized the full likelihood by using an approximate gradient provided by an approach called *contrastive divergence*, that has not yet been applied to contact prediction.
+I systematically tuned the stochastic gradient descent optimization algorithm for the use with *contrastive divergence* and also examined various modifications to the estimation of the gradient.
+Yet, I found that my approach achieved only minor improvements over pseudo-likelihood maximization for small protein families, that could be traced back to amplified signals between strongly conserved residue pairs.
 
 
-- alternative approach as good as pLL
-  - very similar ranking --> no gain by combining both scores 
-  - why no improvement for small alignments: apparantly conservation more important than coevolution
+In chapter \@ref(contact-prior) I developed a random forest classifier for contact prediction that is trained on simple sequence features.
+As expected, this model yields a robust estimator that outperforms coevolution methods for small protein families where they suffer from the low signal-to-noise ratio.
+In line with the most successful contact predictors which exploit information from various sources and multiple [DCA](#abbrev) methods, I integrated the predictions of the pseudo-likelihood and the constrastive divergence method as additional features for training.
+Eventhough the individual methods greatly contribute and improve the predictive performance of the random forest classifier, they do not seem to represent complementary information that would help to boost performance even further.
+
+The Bayesian framework proposed in chapter \@ref(bayesian-approach) represents a principled approach that eradicates the use of heuristics by explicitely modelling the full information contained in the coupling parameters in form of a Gaussian mixture coupling prior while at the same time accounting for the uncertainty of the data.
+The hyperparameters of the coupling prior were learned on couplings and structures of many proteins and the Gaussian mixture convincingly reproduced empirical coupling distributions.
+However, the posterior probabilties obtained by combining the likelihood with prior information in form of the random forest contact class probabilities, does not improve contact predictions.
+It can only be hypothesized why the Bayesian approach falls short of expectations. 
+A possible explanation is that the coupling prior, eventhough reproducing the empirical distributions well enough, needs to become more complex, e.g. by using more Gaussian components or full instead of diagonal covariance matrices.
+Another reason could be that certain inherent modelling assumptions are not met or are too inaccurate but unfortunately it is not easy to verify these assumptions. 
+
+Finally, it must be noted that this work represents the first attempt to formulate [DCA](#abbrev) as a principled statistical framework, providing true probability estimates, promoting transparancy of modelling aspects and a simple way to extend the model with further prior information or to embed the model into even more complex Bayesian hierarchical frameworks.
+For example, an extension of the Bayesian model could be the estimation of posterior probabilities of residue-residue distances instead of contacts. 
+The analysis in chapter \@ref(interpreting-coupling-matrices) has demonstrated that the coupling signal weakens with increasing inter-residue distances.
+It is therefore reasonable and also easy to adapt the Bayesian model to the prediction of residue-residue distances and the necessary modification of the coupling prior is denoted in section \@ref(bayesian-model-distances).
+
+
+
   
-- much info in coupling information than is unused (shown in chapter 3)
-- heuristics that migh be reason why CD doesn not improve over pLL
-
-- bayesian model:
-  - explicit modelling of coupling information
-  - no need of heuristics (byebye APC) and estimates of probabilities --> enables cutoffs for contact prediction!
-  - why no improvement:
-    - diagonal matrices require more components
-    - more data
-    - assumption that hessian diagonal block matrices are zero
   
-outlook:
-  - extension to residue-residue distances
+  

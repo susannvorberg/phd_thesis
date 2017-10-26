@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="discussion-1.html">
+<link rel="next" href="contact-prior.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      c: "\\mathbf{c}",
+      cij: "c_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>1</b> Background</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1.1</b> Biological Background</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.2.4</b> Modelling Protein Families with Potts Model</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Applications</a></li>
+<li class="chapter" data-level="1.4" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.4</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.4.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>1.4.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.5</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-noise"><i class="fa fa-check"></i><b>1.5.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>1.5.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>1.5.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="1.5.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>1.5.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="1.5.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>1.5.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>2.2</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.3" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.3</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="2.5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>2.5</b> Discussion</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2.6</b> Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="methods.html"><a href="methods.html#dataset"><i class="fa fa-check"></i><b>2.6.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.6.2" data-path="methods.html"><a href="methods.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>2.6.2</b> Computing Pseudo-Likelihood Couplings</a></li>
+<li class="chapter" data-level="2.6.3" data-path="methods.html"><a href="methods.html#seq-reweighting"><i class="fa fa-check"></i><b>2.6.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.6.4" data-path="methods.html"><a href="methods.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>2.6.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.6.5" data-path="methods.html"><a href="methods.html#methods-regularization"><i class="fa fa-check"></i><b>2.6.5</b> Regularization</a></li>
+<li class="chapter" data-level="2.6.6" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>2.6.6</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="2.6.7" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>2.6.7</b> Coupling Distribution Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>3.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="3.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>3.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>3.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>3.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>3.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="discussion-1.html"><a href="discussion-1.html"><i class="fa fa-check"></i><b>3.6</b> Discussion</a></li>
+<li class="chapter" data-level="3.7" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>3.7</b> Methods</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="methods-1.html"><a href="methods-1.html#potts-full-likelihood"><i class="fa fa-check"></i><b>3.7.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="3.7.2" data-path="methods-1.html"><a href="methods-1.html#gap-treatment"><i class="fa fa-check"></i><b>3.7.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.7.3" data-path="methods-1.html"><a href="methods-1.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>3.7.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="3.7.4" data-path="methods-1.html"><a href="methods-1.html#prior-v"><i class="fa fa-check"></i><b>3.7.4</b> The prior on single potentials</a></li>
+<li class="chapter" data-level="3.7.5" data-path="methods-1.html"><a href="methods-1.html#methods-sgd"><i class="fa fa-check"></i><b>3.7.5</b> Stochastic Gradien Descent</a></li>
+<li class="chapter" data-level="3.7.6" data-path="methods-1.html"><a href="methods-1.html#methods-cd-sampling"><i class="fa fa-check"></i><b>3.7.6</b> Computing the Gradient with Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>4</b> Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>4.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.4" data-path="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><i class="fa fa-check"></i><b>5.4</b> Training Hyperparameters for a Gaussian Mixture with Three Components</a></li>
+<li class="chapter" data-level="5.5" data-path="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><i class="fa fa-check"></i><b>5.5</b> Training Hyperparameters for a Gaussian Mixture with Five Components</a></li>
+<li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
+<li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="5.10.3" data-path="methods-3.html"><a href="methods-3.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>5.10.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="5.10.4" data-path="methods-3.html"><a href="methods-3.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>5.10.4</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="5.10.5" data-path="methods-3.html"><a href="methods-3.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>5.10.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.10.6" data-path="methods-3.html"><a href="methods-3.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>5.10.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.10.7" data-path="methods-3.html"><a href="methods-3.html#gradient-muk"><i class="fa fa-check"></i><b>5.10.7</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
+<li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methods-1" class="section level2">
+<h2><span class="header-section-number">3.7</span> Methods</h2>
+<div id="potts-full-likelihood" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> The Potts Model</h3>
+<p>The <span class="math inline">\(N\)</span> sequences of the <a href="abbrev.html#abbrev">MSA</a> <span class="math inline">\(\X\)</span> of a protein family are denoted as <span class="math inline">\({\seq_1, ..., \seq_N}\)</span>. Each sequence <span class="math inline">\(\seq_n = (\seq_{n1}, ..., \seq_{nL})\)</span> is a string of <span class="math inline">\(L\)</span> letters from an alphabet indexed by <span class="math inline">\(\{0, ..., 20\}\)</span>, where 0 stands for a gap and <span class="math inline">\(\{1, ... , 20\}\)</span> stand for the 20 types of amino acids. The likelihood of the sequences in the <a href="abbrev.html#abbrev">MSA</a> of the protein family is modelled with a <em>Potts Model</em>, as described in detail in section <a href="introduction-to-contact-prediction.html#maxent">1.2.4</a>:</p>
+<span class="math display">\[\begin{align}
+    p(\X | \v, \w) &amp;= \prod_{n=1}^N p(\seq_n | \v, \w) \nonumber \\
+                   &amp;= \prod_{n=1}^N \frac{1}{Z(\v, \w)} \exp \left( \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i &lt; j \leq L} w_{ij}(x_{ni}, x_{nj}) \right)
+\end{align}\]</span>
+<p>The coefficients <span class="math inline">\(\via\)</span> and <span class="math inline">\(\wijab\)</span> are referred to as single potentials and couplings, respectively that describe the tendency of an amino acid a (and b) to (co-)occur at the respective positions in the <a href="abbrev.html#abbrev">MSA</a>. <span class="math inline">\(Z(\v, \w)\)</span> is the partition function that normalizes the probability distribution <span class="math inline">\(p(\seq_n |\v, \w)\)</span>:</p>
+<span class="math display">\[\begin{equation}
+  Z(\v, \w) = \sum_{y_1, ..., y_L = 1}^{20} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i &lt; j \leq L} w_{ij}(y_i, y_j)  \right)
+\end{equation}\]</span>
+The log likelihood is
+<span class="math display">\[\begin{align}
+    \LL &amp;= \log p(\X | \v, \w) \nonumber \\
+        &amp;= \sum_{n=1}^N \left [  \sum_{i=1}^L v_i(x_{ni}) \sum_{1 \leq i &lt; j \leq L} w_{ij}(x_{ni}, x_{nj})   \right ] - N \log Z(\v, \w) .
+\end{align}\]</span>
+The gradient of the log likelihood has single components
+<span class="math display" id="eq:gradient-LL-single">\[\begin{align}
+    \frac{\partial \LL}{\partial \via} &amp;= \sum_{n=1}^N I(x_{ni} \eq a)  - N \frac{\partial}{\partial \via} \log Z(\v,\w) \nonumber\\
+                                        &amp;= \sum_{n=1}^N I(x_{ni} \eq a) - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i &lt; j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a) \nonumber\\
+                                        &amp;=  N q(x_{i} \eq a) - N p(x_i \eq a | \v,\w) 
+\tag{3.6}
+\end{align}\]</span>
+<p>and pair components</p>
+<span class="math display" id="eq:gradient-LL-pair">\[\begin{align}
+    \frac{\partial \LL}{\partial \wijab} =&amp; \sum_{n=1}^N I(x_{ni}=a, x_{nj}=b)  - N \frac{\partial}{\partial \wijab} \log Z(\v,\w) \nonumber\\
+                                        =&amp; \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) \nonumber\\
+                                        &amp; - N \sum_{y_1,\ldots,y_L=1}^{20} \!\! \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i &lt; j \le L} w_{ij}(y_i,y_j) \right)}{Z(\v,\w)}  I(y_i \eq a, y_j \eq b) \nonumber\\
+                                        =&amp;  N q(x_{i} \eq a, x_{j} \eq b) - N \sum_{y_1,\ldots,y_L=1}^{20} p(y_1, \ldots, y_L | \v,\w) \, I(y_i \eq a, y_j \eq b) \nonumber\\
+                                        =&amp;  N q(x_{i} \eq a, x_{j} \eq b) - N p(x_i \eq a, x_j \eq b | \v,\w) 
+\tag{3.7}
+\end{align}\]</span>
+</div>
+<div id="gap-treatment" class="section level3">
+<h3><span class="header-section-number">3.7.2</span> Treating Gaps as Missing Information</h3>
+<p>Treating gaps explicitly as 0’th letter of the alphabet will lead to couplings between columns that are not in physical contact. To see why, imagine a hypothetical alignment consisting of two sets of sequences as it is illustrated in Figure <a href="methods-1.html#fig:gap-treatment">3.24</a>. The first set has sequences covering only the left half of columns in the MSA, while the second set has sequences covering only the right half of columns. The two blocks could correspond to protein domains that were aligned to a single query sequence. Now consider couplings between a pair of columns <span class="math inline">\(i, j\)</span> with <span class="math inline">\(i\)</span> from the left half and <span class="math inline">\(j\)</span> from the right half. Since no sequence (except the single query sequence) overlaps both domains, the empirical amino acid pair frequencies <span class="math inline">\(q(x_i = a, x_j = b)\)</span> will vanish for all <span class="math inline">\(a, b \in \{1,... , L\}\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:gap-treatment"></span>
+<img src="img/gap_treatment.png" alt="Hypothetical MSA consisting of two sets of sequences: the first set has sequences covering only the left half of columns, while the second set has sequences covering only the right half of columns. The two blocks could correspond to protein domains that were aligned to a single query sequence. Empirical amino acid pair frequencies \(q(x_i \eq a, x_j \eq b)\) will vanish for positions \(i\) from the left half and \(j\) from the right half of the alignment." width="100%" />
+<p class="caption">
+Figure 3.24: Hypothetical <a href="abbrev.html#abbrev">MSA</a> consisting of two sets of sequences: the first set has sequences covering only the left half of columns, while the second set has sequences covering only the right half of columns. The two blocks could correspond to protein domains that were aligned to a single query sequence. Empirical amino acid pair frequencies <span class="math inline">\(q(x_i \eq a, x_j \eq b)\)</span> will vanish for positions <span class="math inline">\(i\)</span> from the left half and <span class="math inline">\(j\)</span> from the right half of the alignment.
+</p>
+</div>
+<p>According to the gradient of the log likelihood for couplings <span class="math inline">\(\wijab\)</span> given in eq <a href="methods-1.html#eq:gradient-LL-pair">(3.7)</a>, the empirical frequencies <span class="math inline">\(q(x_{i} \eq a, x_{j} \eq b)\)</span> are equal to the model probabilities <span class="math inline">\(p(x_i \eq a, x_j \eq b | \v,\w)\)</span> at the maximum of the likelihood when the gradient vanishes. Therefore, <span class="math inline">\(p(x_i \eq a, x_j \eq b | \v, \w)\)</span> would have to be zero at the optimum when the empirical amino acid frequencies <span class="math inline">\(q(x_i \eq a, x_j \eq b)\)</span> vanish for pairs of columns as described above. However, <span class="math inline">\(p(x_i \eq a, x_j \eq b | \v, \w)\)</span> can only become zero, when the exponential term is zero, which would only be possible if <span class="math inline">\(\wijab\)</span> goes to <span class="math inline">\(−\infty\)</span>. This is clearly undesirable, as physical contacts will be deduced from the size of the couplings.</p>
+<p>The solution is to treat gaps as missing information. This means that the normalisation of <span class="math inline">\(p(\seq_n | \v, \w)\)</span> should not run over all positions <span class="math inline">\(i \in \{1,... , L\}\)</span> but only over those <span class="math inline">\(i\)</span> that are not gaps in <span class="math inline">\(\seq_n\)</span>. Therefore, the set of sequences <span class="math inline">\(\Sn\)</span> used for normalization of <span class="math inline">\(p(\seq_n | \v, \w)\)</span> in the partition function will be defined as:</p>
+<span class="math display">\[\begin{equation}
+\Sn := \{(y_1,... , y_L): 0 \leq y_i \leq 20 \land (y_i \eq 0 \textrm{ iff } x_{ni} \eq 0) \}
+\end{equation}\]</span>
+<p>and the partition function becomes:</p>
+<span class="math display">\[\begin{equation}
+  Z_n(\v, \w) = \sum_{\mathbf{y} \in \Sn} \exp \left( \sum_{i=1}^L v_i(y_i) \sum_{1 \leq i &lt; j \leq L} w_{ij}(y_i, y_j)  \right)
+\end{equation}\]</span>
+<p>To ensure that the gaps in <span class="math inline">\(y \in \Sn\)</span> do not contribute anything to the sums, the parameters associated with a gap will be fixed to 0 <span class="math display">\[
+\vi(0) = \wij(0, b) = \wij(a, 0) = 0 \; ,
+\]</span> for all <span class="math inline">\(i, j \in \{1, ..., L\}\)</span> and <span class="math inline">\(a, b \in \{0, ..., 20\}\)</span>.</p>
+<p>Furthermore, the empirical amino acid frequencies <span class="math inline">\(q_{ia}\)</span> and <span class="math inline">\(q_{ijab}\)</span> need to be redefined such that they are normalised over <span class="math inline">\(\{1, ..., 20\}\)</span>,</p>
+<span class="math display">\[\begin{align}
+   N_i :=&amp; \sum_{n=1}^N  w_n I(x_{ni} \!\ne\! 0) &amp;  q_{ia} = q(x_i \eq a) :=&amp; \frac{1}{N_i} \sum_{n=1}^N w_n I(x_{ni} \eq a)   \\
+   N_{ij} :=&amp; \sum_{n=1}^N  w_n I(x_{ni} \!\ne\! 0, x_{nj} \!\ne\! 0)  &amp;  q_{ijab} = q(x_i \eq a, x_j \eq b) :=&amp; \frac{1}{N_{ij}} \sum_{n=1}^N w_n I(x_{ni} \eq a, x_{nj} \eq b)
+\end{align}\]</span>
+<p>with <span class="math inline">\(w_n\)</span> being sequence weights calculated as described in methods section <a href="methods.html#seq-reweighting">2.6.3</a>. With this definition, empirical amino acid frequencies are normalized without gaps, so that</p>
+<span class="math display" id="eq:normalized-emp-freq">\[\begin{equation}
+    \sum_{a=1}^{20} q_{ia} = 1      \; , \;     \sum_{a,b=1}^{20} q_{ijab} = 1.
+\tag{3.8}
+\end{equation}\]</span>
+</div>
+<div id="the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment" class="section level3">
+<h3><span class="header-section-number">3.7.3</span> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</h3>
+<p>In pseudo-likelihood based methods, a regularisation is commonly used that can be interpreted to arise from a prior probability. The same treatment will be applied to the full likelihood. Gaussian priors <span class="math inline">\(\mathcal{N}( \v | \v^*, \lambda_v^{-1} \I)\)</span> and <span class="math inline">\(\mathcal{N}( \w |\boldsymbol 0, \lambda_w^{-1} \I)\)</span> will be used to constrain the parameters <span class="math inline">\(\v\)</span> and <span class="math inline">\(\w\)</span> and to fix the gauge. The choice of <span class="math inline">\(v^*\)</span> is discussed in section <a href="methods-1.html#prior-v">3.7.4</a>. By including the logarithm of this prior into the log likelihood the regularised log likelihood is obtained,</p>
+<span class="math display">\[\begin{equation}
+    \LLreg(\v,\w)  = \log \left[ p(\X | \v,\w) \;  \Gauss (\v | \v^*, \lambda_v^{-1} \I)  \; \Gauss( \w | \boldsymbol 0, \lambda_w^{-1} \I) \right] 
+\end{equation}\]</span>
+<p>or explicitely,</p>
+<span class="math display">\[\begin{align}
+    \LLreg(\v,\w) =&amp; \sum_{n=1}^N  \left[ \sum_{i=1}^L v_i(x_{ni}) + \sum_{1\le i&lt;j\le L} w_{ij}(x_{ni},x_{nj}) - \log Z_n(\v,\w) \right] \nonumber\\
+                    &amp; - \frac{\lambda_v}{2} \!\! \sum_{i=1}^L \sum_{a=1}^{20} (\via - \via^*)^2  - \frac{\lambda_w}{2}  \sum_{1 \le i &lt; j \le L} \sum_{a,b=1}^{20} \wijab^2 .
+\end{align}\]</span>
+<p>The gradient of the regularized log likelihood has single components</p>
+<span class="math display" id="eq:gradient-LLreg-single">\[\begin{align}
+    \frac{\partial \LLreg}{\partial \via} =&amp; \sum_{n=1}^N I(x_{ni}=a) - \sum_{n=1}^N \frac{\partial}{\partial \via} \, \log Z_n(\v,\w) - \lambda_v (\via - \via^*) \nonumber\\
+                                          =&amp; \; N_i q(x_i \eq a) \nonumber\\
+                                          &amp; - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{  \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i&lt;j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)}  I(y_i=a) \nonumber\\
+                                          &amp; - \lambda_v (\via - \via^*) 
+\tag{3.9}
+\end{align}\]</span>
+<p>and pair components</p>
+<span class="math display" id="eq:gradient-LLreg-pair">\[\begin{align}
+    \frac{\partial \LLreg}{\partial \wijab} =&amp; \sum_{n=1}^N I(x_{ni} \eq a, x_{nj} \eq b) - \sum_{n=1}^N \frac{\partial}{\partial \wijab} \log Z_n(\v,\w)  - \lambda_w \wijab \nonumber\\
+                                            =&amp; \; N_{ij} q(x_i \eq a, x_j=b) \nonumber\\
+                                            &amp; - \sum_{n=1}^N \sum_{\mathbf{y} \in \Sn} \frac{ \exp \left( \sum_{i=1}^L v_i(y_i) + \sum_{1 \le i&lt;j \le L}^L w_{ij}(y_i,y_j) \right) }{Z_n(\v,\w)} I(y_i \eq a, y_j \eq b) \nonumber\\
+                                            &amp; - \lambda_w \wijab  
+\tag{3.10}
+\end{align}\]</span>
+<p>Note that (without regulariation <span class="math inline">\(\lambda_v = \lambda_w = 0\)</span>) the empirical frequencies <span class="math inline">\(q(x_i \eq a)\)</span> and <span class="math inline">\(q(x_i \eq a, x_j=b)\)</span> are equal to the model probabilities at the maximum of the likelihood when the gradient becomes zero.</p>
+<p>If the proportion of gap positions in <span class="math inline">\(\X\)</span> is small (e.g. <span class="math inline">\(&lt;5\%\)</span>, also compare percentage of gaps in dataset in Appendix Figure <a href="dataset-properties.html#fig:dataset-gaps">C.2</a>), the sums over <span class="math inline">\(\mathbf{y} \in \Sn\)</span> in eqs. <a href="methods-1.html#eq:gradient-LLreg-single">(3.9)</a> and <a href="methods-1.html#eq:gradient-LLreg-pair">(3.10)</a> can be approximated by <span class="math inline">\(p(x_i=a | \v,\w) I(x_{ni} \ne 0)\)</span> and <span class="math inline">\(p(x_i=a, x_j=b | \v,\w) I(x_{ni} \ne 0, x_{nj} \ne 0)\)</span>, respectively, and the partial derivatives become</p>
+<span class="math display" id="eq:gradient-LLreg-single-approx">\[\begin{equation}
+  \frac{\partial \LLreg}{\partial \via}   = \; N_i q(x_i \eq a) -  N_i \; p(x_i \eq a  | \v,\w)  - \lambda_v (\via - \via^*)
+\tag{3.11}
+\end{equation}\]</span>
+<span class="math display" id="eq:gradient-LLreg-pair-approx">\[\begin{equation}
+  \frac{\partial \LLreg}{\partial \wijab} = \; N_{ij} q(x_i \eq a, x_j=b) - N_{ij} \; p(x_i \eq a, x_j \eq b | \v,\w) - \lambda_w \wijab
+\tag{3.12}
+\end{equation}\]</span>
+<p>Note that the couplings between columns <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> in the hypothetical MSA presented in the last section <a href="methods-1.html#gap-treatment">3.7.2</a> will now vanish since <span class="math inline">\(N_{ij} \eq 0\)</span> and the gradient with respect to <span class="math inline">\(\wijab\)</span> is equal to <span class="math inline">\(-\lambda_w \wijab\)</span>.</p>
+</div>
+<div id="prior-v" class="section level3">
+<h3><span class="header-section-number">3.7.4</span> The prior on single potentials</h3>
+<p>Most previous approaches chose a prior around the origin, <span class="math inline">\(p(\v) = \Gauss ( \v| \mathbf{0}, \lambda_v^{-1} \I)\)</span>, i.e., <span class="math inline">\(\via^* \eq 0\)</span>. It can be shown that the choice <span class="math inline">\(\via^* \eq 0\)</span> leads to undesirable results. Taking the sum over <span class="math inline">\(b=1,\ldots, 20\)</span> at the optimum of the gradient of couplings in eq. <a href="methods-1.html#eq:gradient-LLreg-pair-approx">(3.12)</a>, yields</p>
+<span class="math display" id="eq:sum-over-b-at-optimum">\[\begin{equation}
+    0 =   N_{ij}\, q(x_i \eq a, x_j \ne 0)   - N_{ij}\, p(x_i \eq a | \v, \w)  - \lambda_w \sum_{b=1}^{20} \wijab \; ,
+    \tag{3.13}
+\end{equation}\]</span>
+<p>for all <span class="math inline">\(i,j \in \{1,\ldots,L\}\)</span> and all <span class="math inline">\(a \in \{1,\ldots,20\}\)</span>.</p>
+Note, that by taking the sum over <span class="math inline">\(a=1,\ldots, 20\)</span> it follows that,
+<span class="math display" id="eq:zero-sum-wij">\[\begin{equation}
+    \sum_{a,b=1}^{20} \wijab  = 0.
+\tag{3.14}
+\end{equation}\]</span>
+<p>At the optimum the gradient with respect to <span class="math inline">\(\via\)</span> vanishes and according to eq. <a href="methods-1.html#eq:gradient-LLreg-single-approx">(3.11)</a>, <span class="math inline">\(p(x_i=a|\v,\w) = q(x_i=a) - \lambda_v (\via - \via^*) / N_i\)</span>. This term can be substituted into equation <a href="methods-1.html#eq:sum-over-b-at-optimum">(3.13)</a>, yielding</p>
+<span class="math display" id="eq:gauge-opt-1">\[\begin{equation}
+    0 =  N_{ij} \, q(x_i \eq a, x_j \ne 0)  - N_{ij} \, q(x_i=a) + \frac{N_{ij}}{N_i}\lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab \; .
+\tag{3.15}
+\end{equation}\]</span>
+<p>Considering a <a href="abbrev.html#abbrev">MSA</a> without gaps, the terms <span class="math inline">\(N_{ij} \, q(x_i \eq a, x_j \ne 0) - N_{ij} \, q(x_i=a)\)</span> cancel out, leaving</p>
+<span class="math display" id="eq:gauge-opt-2">\[\begin{equation}
+    0 =  \lambda_v (\via - \via^*)  - \lambda_w \sum_{b=1}^{20} \wijab .
+\tag{3.16}
+\end{equation}\]</span>
+Now, consider a column <span class="math inline">\(i\)</span> that is not coupled to any other and assume that amino acid <span class="math inline">\(a\)</span> was frequent in column <span class="math inline">\(i\)</span> and therefore <span class="math inline">\(\via\)</span> would be large and positive. Then according to eq. <a href="methods-1.html#eq:gauge-opt-2">(3.16)</a>, for any other column <span class="math inline">\(j\)</span> the 20 coefficients <span class="math inline">\(\wijab\)</span> for <span class="math inline">\(b \in \{1,\ldots,20\}\)</span> would have to take up the bill and deviate from zero! This unwanted behaviour can be corrected by instead choosing a Gaussian prior centered around <span class="math inline">\(\v^*\)</span> obeying
+<span class="math display">\[\begin{equation}
+  \frac{\exp(\via^*)}{\sum_{a^{\prime}=1}^{20} \exp(v_{ia^{\prime}}^*)} = q(x_i=a) .
+\end{equation}\]</span>
+<p>This choice ensures that if no columns are coupled, i.e. <span class="math inline">\(p(\seq | \v,\w) = \prod_{i=1}^L p(x_i)\)</span>, <span class="math inline">\(\v=\v^*\)</span> and <span class="math inline">\(\w= \mathbf{0}\)</span> gives the correct probability model for the sequences in the <a href="abbrev.html#abbrev">MSA</a>. Furthermore imposing the restraint <span class="math inline">\(\sum_{a=1}^{20} \via \eq 0\)</span> to fix the gauge of the <span class="math inline">\(\via\)</span> (i.e. to remove the indeterminacy), yields</p>
+<span class="math display" id="eq:prior-v">\[\begin{align}
+\via^* = \log q(x_i \eq a) - \frac{1}{20} \sum_{a^{\prime}=1}^{20} \log q(x_i \eq a^{\prime}) .
+\tag{3.17}
+\end{align}\]</span>
+<p>For this choice, <span class="math inline">\(\via - \via^*\)</span> will be approximately zero and will certainly be much smaller than <span class="math inline">\(\via\)</span>, hence the sum over coupling coefficients in eq. <a href="methods-1.html#eq:gauge-opt-2">(3.16)</a> will be close to zero, as it should be.</p>
+</div>
+<div id="methods-sgd" class="section level3">
+<h3><span class="header-section-number">3.7.5</span> Stochastic Gradien Descent</h3>
+<p>The couplings <span class="math inline">\(\wijab\)</span> are initialized at 0 and single potentials <span class="math inline">\(\vi\)</span> will not be optimized but rather kept fixed at their maximum-likleihood estimate <span class="math inline">\(\vi^*\)</span> as described in methods section <a href="methods-1.html#prior-v">3.7.4</a>. The optimization is stopped when a maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates, <span class="math inline">\(||\w||_2\)</span>, over the last five iterations falls below the threshold of <span class="math inline">\(\epsilon = 1e-8\)</span>. The gradient of the full likelihood is approximated with <a href="abbrev.html#abbrev">CD</a> which involves Gibbs sampling of protein sequences according to the current model parametrization and is described in detail in methods section <a href="methods-1.html#methods-cd-sampling">3.7.6</a>. Zero centered L2-regularization is used to constrain the coupling parameters <span class="math inline">\(\w\)</span> using the regularization coefficient <span class="math inline">\(\lambda_w = 0.2L\)</span> which is the default setting for optimizing the pseudo-likelihood with <em>CCMpredPy</em>. Performance will be evaluated by the mean precision of top ranked contact predictions over a validation set of 300 proteins, that is a subset of the data set described in methods section <a href="methods.html#dataset">2.6.1</a>. Contact scores for couplings are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm as explained in section <a href="introduction-to-contact-prediction.html#post-processing-heuristics">1.2.4.6</a>. Pseudo-likelihood couplings are computed with the tool <em>CCMpredPy</em> that is introduced in methods section <a href="methods.html#diff-ccmpred-ccmpredpy">2.6.2</a> and the pseudo-likelihood contact score will serve as general reference method for tuning the hyperparameters.</p>
+<div id="methods-full-likelihood-adam" class="section level4">
+<h4><span class="header-section-number">3.7.5.1</span> The adaptive moment estimation optimizer <em>ADAM</em> Optimizer</h4>
+<p><em>ADAM</em> <span class="citation">[<a href="#ref-Kingma2014">212</a>]</span> stores an exponentially decaying average of past gradients and squared gradients,</p>
+<span class="math display">\[\begin{align}
+  m_t &amp;= \beta_1 m_{t−1} + (1 − \beta_1) g \\
+  v_t &amp;= \beta_2 v_{t−1} + (1 − \beta_2) g^2 \; ,
+\end{align}\]</span>
+<p>with <span class="math inline">\(g = \nabla_w \LLreg(\v^*,\w)\)</span> and the rate of decay being determined by hyperparameters <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span>. Both terms <span class="math inline">\(m_t\)</span> and <span class="math inline">\(v_t\)</span> represent estimates of the first and second moments of the gradient, respectively. The following bias correction terms compensates for the fact that the vectors <span class="math inline">\(m_t\)</span> and <span class="math inline">\(v_t\)</span> are both initialized at zero and therefore are biased towards zero especially at the beginning of optimization,</p>
+<span class="math display">\[\begin{align}
+  \hat{m_t} &amp;= \frac{m_t}{1-\beta_1^t} \\
+  \hat{v_t} &amp;= \frac{v_t}{1-\beta_2^t} \; .
+\end{align}\]</span>
+Parameters are then updated using step size <span class="math inline">\(\alpha\)</span>, a small noise term <span class="math inline">\(\epsilon\)</span> and the corrected moment estimates <span class="math inline">\(\hat{m_t}\)</span>, <span class="math inline">\(\hat{v_t}\)</span>, according to
+<span class="math display">\[\begin{equation}
+  x_{t+1} = x_t - \alpha \cdot \frac{\hat{m_t}}{\sqrt{\hat{v_t}} + \epsilon}
+\end{equation}\]</span>
+<p>Kingma et al. proposed the default values <span class="math inline">\(\beta_1=0.9\)</span>, <span class="math inline">\(\beta_2=0.999\)</span> and <span class="math inline">\(\epsilon=1e−8\)</span> and a constant learning rate <span class="math inline">\(\alpha=1e-3\)</span> <span class="citation">[<a href="#ref-Kingma2014">212</a>]</span>.</p>
+</div>
+</div>
+<div id="methods-cd-sampling" class="section level3">
+<h3><span class="header-section-number">3.7.6</span> Computing the Gradient with Contrastive Divergence</h3>
+<p>This section describes the implementation details for approximating the gradient of the full likelihood with <a href="abbrev.html#abbrev">CD</a>.</p>
+<p>The gradient of the full log likelihood with respect to the couplings <span class="math inline">\(\w\)</span> is computed as the difference of paiwise amino acid counts between the input alignment and a sampled alignment plus an additional regularization term as given in eq. <a href="full-likelihood-gradient.html#eq:gradient-wijab-full-likelihood-approx">(3.1)</a>. Pairwise amino acid counts are computed from the input alignment accounting for sequence weights (described in methods section <a href="methods.html#seq-reweighting">2.6.3</a>) and including pseudo counts (described in methods section <a href="methods.html#amino-acid-frequencies">2.6.4</a>). Pairwise amino acid counts for the sampled alignment are computed in the same way using the same sequence weights that have been computed for the input alignment. A subset of sequences of size <span class="math inline">\(S \eq \min(10L, N)\)</span>, with <span class="math inline">\(L\)</span> being the length of sequences and <span class="math inline">\(N\)</span> the number of sequences in the input alignment, is randomly selected from the input alignment and used to initialize the Markov chains for the Gibbs sampling procedure. Consequently, the input <a href="abbrev.html#abbrev">MSA</a> is bigger than the sampled <a href="abbrev.html#abbrev">MSA</a> whenever there are more than <span class="math inline">\(10L\)</span> sequences in the input alignment. In that case, the weighted pairwise amino acid counts of the sampled alignment need to be rescaled such that the total sample counts match the total counts from the input alignment.</p>
+<p>During the Gibbs sampling process, every position in every sequence will be sampled <span class="math inline">\(K\)</span> times (default <span class="math inline">\(K\eq1\)</span>), according to the conditional probabilties given in eq. <a href="full-likelihood-gradient.html#eq:conditional-prob-full-likelihood">(3.2)</a>. The sequence positions will be sampled in a random order to prevent position bias. Gap positions will not be sampled, because Dr. Stefan Seemayer showed that sampling gap positions leads to artefacts in the contat maps (not published). For <a href="abbrev.html#abbrev">PCD</a> a copy of the input alignment is generated at the beginning of optimization that will keep the persistent Markov chains and that will be updated after the Gibbs sampling procedure. The default Gibbs sampling procedure is outlined in the following pseudo-code:</p>
+<pre><code># Input: multiple sequence alignment X  with N sequences of length L
+# Input: model parameters v and w
+
+N = dim(X)[0]     # number of sequences in alignment
+L = dim(X)[1]     # length of sequences in alignment
+S = min(10L, N)   # number of sequences that will be sampled
+K = 1             # number of Gibbs steps
+
+# randomly select S sequences from the input alignment X without replacement
+sequences = random.select.rows(X, size=S, replace=False)
+
+for seq in sequences:
+    # perform K steps of Gibbs sampling
+    for step in range(K):
+        # iterate over permuted sequence positions i in {1, ..., L}
+        for i in shuffle(range(L)):
+            # ignore gap positions
+            if seq[i] == gap:
+              continue
+            # compute conditional probabilities for every 
+            # amino acid a in {1, ..., 20}
+            for a in range(20):
+              p_cond[a] = p(seq[i]=a | seq/i, v, w)
+            # randomly select a new amino acid 
+            # a in {1, ..., 20} for position i 
+            # according to conditional probabilities
+            seq[i] = random.integer({1, ...,20}, p_cond)
+
+# sequences will now contain S newly sampled sequences
+return sequences</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Kingma2014">
+<p>212. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="discussion-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="contact-prior.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/06-optimizing_full_likelihood.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

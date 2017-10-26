@@ -1,0 +1,26 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+.book .book-body.fixed .body-inner .page-wrapper .page-inner{
+  max-width: 80%;
+}
+
+
+.iframe_container iframe {
+	width: 40%;
+	height: 40%;
+	border: none;
+}

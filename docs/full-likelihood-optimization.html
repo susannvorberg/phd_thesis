@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="full-likelihood-gradient.html">
+<link rel="next" href="cd-sampling-optimization.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      c: "\\mathbf{c}",
+      cij: "c_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>1</b> Background</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1.1</b> Biological Background</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.2.4</b> Modelling Protein Families with Potts Model</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Applications</a></li>
+<li class="chapter" data-level="1.4" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.4</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.4.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>1.4.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.5</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-noise"><i class="fa fa-check"></i><b>1.5.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>1.5.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>1.5.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="1.5.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>1.5.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="1.5.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>1.5.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>2.2</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.3" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.3</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="2.5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>2.5</b> Discussion</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2.6</b> Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="methods.html"><a href="methods.html#dataset"><i class="fa fa-check"></i><b>2.6.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.6.2" data-path="methods.html"><a href="methods.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>2.6.2</b> Computing Pseudo-Likelihood Couplings</a></li>
+<li class="chapter" data-level="2.6.3" data-path="methods.html"><a href="methods.html#seq-reweighting"><i class="fa fa-check"></i><b>2.6.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.6.4" data-path="methods.html"><a href="methods.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>2.6.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.6.5" data-path="methods.html"><a href="methods.html#methods-regularization"><i class="fa fa-check"></i><b>2.6.5</b> Regularization</a></li>
+<li class="chapter" data-level="2.6.6" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>2.6.6</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="2.6.7" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>2.6.7</b> Coupling Distribution Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>3.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="3.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>3.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>3.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>3.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>3.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="discussion-1.html"><a href="discussion-1.html"><i class="fa fa-check"></i><b>3.6</b> Discussion</a></li>
+<li class="chapter" data-level="3.7" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>3.7</b> Methods</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="methods-1.html"><a href="methods-1.html#potts-full-likelihood"><i class="fa fa-check"></i><b>3.7.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="3.7.2" data-path="methods-1.html"><a href="methods-1.html#gap-treatment"><i class="fa fa-check"></i><b>3.7.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.7.3" data-path="methods-1.html"><a href="methods-1.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>3.7.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="3.7.4" data-path="methods-1.html"><a href="methods-1.html#prior-v"><i class="fa fa-check"></i><b>3.7.4</b> The prior on single potentials</a></li>
+<li class="chapter" data-level="3.7.5" data-path="methods-1.html"><a href="methods-1.html#methods-sgd"><i class="fa fa-check"></i><b>3.7.5</b> Stochastic Gradien Descent</a></li>
+<li class="chapter" data-level="3.7.6" data-path="methods-1.html"><a href="methods-1.html#methods-cd-sampling"><i class="fa fa-check"></i><b>3.7.6</b> Computing the Gradient with Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>4</b> Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>4.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.4" data-path="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><i class="fa fa-check"></i><b>5.4</b> Training Hyperparameters for a Gaussian Mixture with Three Components</a></li>
+<li class="chapter" data-level="5.5" data-path="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><i class="fa fa-check"></i><b>5.5</b> Training Hyperparameters for a Gaussian Mixture with Five Components</a></li>
+<li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
+<li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="5.10.3" data-path="methods-3.html"><a href="methods-3.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>5.10.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="5.10.4" data-path="methods-3.html"><a href="methods-3.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>5.10.4</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="5.10.5" data-path="methods-3.html"><a href="methods-3.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>5.10.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.10.6" data-path="methods-3.html"><a href="methods-3.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>5.10.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.10.7" data-path="methods-3.html"><a href="methods-3.html#gradient-muk"><i class="fa fa-check"></i><b>5.10.7</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
+<li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="full-likelihood-optimization" class="section level2">
+<h2><span class="header-section-number">3.2</span> Optimizing the Full Likelihood</h2>
+<p>Given the likelihood gradient estimates obtained with <a href="abbrev.html#abbrev">CD</a>, the full negative log likelihood can now be minimized using a gradient descent optimization algorithm. Gradient descent algorithms are used to find the minimum of an objective function with respect to its parametrization by iteratively updating the parameters values in the opposite direction of the gradient of the objective function with respect to these parameters. <em>Stochastic</em> gradient descent (<a href="abbrev.html#abbrev">SGD</a>) is a variant thereof that uses a stochastic estimate of the gradient whose average over many updates approaches the true gradient. The stochasticity is commonly obtained by evaluating a random subsample of the data at each iteration. For <a href="abbrev.html#abbrev">CD</a> stochasticity additionally arises from the Gibbs sampling process in order to obtain a gradient estimate in the first place.</p>
+<p>As a consequence of stochasticity, the gradient estimates are noisy, resulting in parameter updates with high variance and strong fluctuations of the objective function. These fluctuations enable stochastic gradient descent to escape local minima but also complicate finding the exact minimum of the objective function. By slowly decreasing the step size of the parameter updates at every iteration, stochastic gradient descent most likely will converge to the global minimum for convex objective functions <span class="citation">[<a href="#ref-Ruder2017">197</a>–<a href="#ref-Bottou2010">199</a>]</span>. However, choosing an optimal step size for parameter updates as well as finding the optimal annealing schedule offers a challenge and needs manual tuning <span class="citation">[<a href="#ref-Schaul2013">200</a>,<a href="#ref-Zeiler2012">201</a>]</span>. If the step size is chosen too small, progress will be unnecessarily slow, if it is chosen too large, the optimum will be overshot and can cause the system to diverge (see Figure <a href="full-likelihood-optimization.html#fig:gd-learning-rate-intro">3.2</a>). Further complications arise from the fact that different parameters often require different optimal step sizes, because the magnitude of gradients might vary considerably for different parameters, e.g. because of sparse data.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:gd-learning-rate-intro"></span>
+<img src="img/full_likelihood/intro.png" alt="Visualization of gradient descent optimization of an objective function \(L(w)\) for different step sizes \(\alpha\). The blue dot marks the minimum of the objective function. The direction of the gradient at the initial parameter estimate \(w_0\) is given as black arrow. The updated parameter estimate \(w_1\) is obtained by taking a step of size \(\alpha\) into the opposite direction of the gradient. Left If the step size is too small the algorithm will require too many iterations to converge. Right If the step size is too large, gradient descent will overshoot the minimum and can cause the system to diverge." width="80%" />
+<p class="caption">
+Figure 3.2: Visualization of gradient descent optimization of an objective function <span class="math inline">\(L(w)\)</span> for different step sizes <span class="math inline">\(\alpha\)</span>. The blue dot marks the minimum of the objective function. The direction of the gradient at the initial parameter estimate <span class="math inline">\(w_0\)</span> is given as black arrow. The updated parameter estimate <span class="math inline">\(w_1\)</span> is obtained by taking a step of size <span class="math inline">\(\alpha\)</span> into the opposite direction of the gradient. <strong>Left</strong> If the step size is too small the algorithm will require too many iterations to converge. <strong>Right</strong> If the step size is too large, gradient descent will overshoot the minimum and can cause the system to diverge.
+</p>
+</div>
+<p>Unfortunately, it is neither possible to use second order optimization algorithms nor sophisticated first order algorithms like conjugate gradients to optimize the full likelihood of the <em>Potts</em> model. While the former class of algorithms requires (approximate) computation of the second partial derivatives, the latter requires evaluating the objective function in order to identify the optimal step size via linesearch, both being computationally too demanding.</p>
+<p>The next subsections describe the hyperparameter tuning for stochastic gradient descent, covering the choice of the convergence criterion and finding the optimal learning rate annealing schedule.</p>
+<div id="convergence-criteria-sgd" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Convergence Criterion for Stochastic Gradient Descent</h3>
+<p>In theory the gradient descent algorithm has converged and the optimum of the objective function has been reached when the gradient becomes zero. In practice the gradients will never be exactly zero, especially due to the stochasticity of the gradient estimates when using stochastic gradient descent with <a href="abbrev.html#abbrev">CD</a>. For this reason, it is crucial to define a suitable convergence criterion that can be tested during optimization and once the criterion is met, convergence is assumed and the algorithm is stopped. Typically, the objective function (or a related loss function) is periodically evaluated on a validation set and the optimizer is halted whenever the function value saturates or starts to increase. This technique is called early stopping and additionally prevents overfitting <span class="citation">[<a href="#ref-Bengio2012">202</a>,<a href="#ref-Mahsereci2017">203</a>]</span>. Unfortunately, we cannot compute the full likelihood function due to its complexity and need to define a different convergence criterion.</p>
+<p>One possibility is to stop learning when the L2 norm of the gradient for the coupling parameters <span class="math inline">\(||\nabla_{\w} L\!L(\v^*, \w)||_2\)</span> is close to zero <span class="citation">[<a href="#ref-Carreira-Perpinan2005">204</a>]</span>. However, when using a finite number of sequences for sampling, the norm of the gradient does not converge to zero but towards a certain offset as it is described in section <a href="cd-sampling-optimization.html#cd-sampling-size">3.3.2</a>. Convergence could also be monitored as the relative change of the norm of gradients within a certain number of iterations. Optimization will be stopped when the relative change becomes negligibly small, that is when the gradient norm has reached a plateau. As gradient estimates are very noisy with stochastic gradient descent, gradient fluctuations complicate the proper assessment of this criterion.</p>
+Instead of the gradient, it is also possible to observe the relative change of the norm of parameter estimates <span class="math inline">\(||\w||_2\)</span> over several iterations and stop learning when it falls below a small threshold <span class="math inline">\(\epsilon\)</span>,
+<span class="math display" id="eq:parameter-convergence-criterion">\[\begin{equation}
+  \frac{||\w_{t-x}||_2 - ||\w_t||_2}{||\w_{t-x}||_2} &lt; \epsilon \; .
+  \tag{3.3}
+\end{equation}\]</span>
+<p>This measure is less noisy than subsequent gradient estimates because the magnitude of parameter updates is bounded by the learning rate.</p>
+<p>For stochastic gradient descent the optimum is a moving target and the gradient will start oscillating when approaching the optimum. Therefore, another idea is to monitor the direction of the partial derivatives. However, this theoretical assumption is complicated by the fact that gradient oscillations are also typically observed when the parameter surface contains narrow valleys or generally when the learning rate is too big, as it is visualized in the right plot in Figure <a href="full-likelihood-optimization.html#fig:gd-learning-rate-intro">3.2</a>. When optimizing high-dimensional problems using the same learning rate for all dimensions, it is likely that parameters converge at different speeds <span class="citation">[<a href="#ref-Ruder2017">197</a>]</span> leading to oscillations that could either originate from convergence or yet too large learning rates. As can be seen in Figure <a href="full-likelihood-optimization.html#fig:gradient-directions">3.3</a>, the percentage of parameters for which the derivate changes direction within the last <span class="math inline">\(x\)</span> iterations is usually high and varies for different proteins. Therefore it is not a good indicator of convergence. When using the adaptive learning rate optimizer <em>ADAM</em>, the momentum term is an interfering factor for assessing the direction of partial derivatives. Parameters will be updated into the direction of a smoothed historical gradient and oscillations, regardless of which origin, will be dampened. It is therefore hard to define a general convergence criteria based on the direction of derivatives that can distinguish these different scenarios.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:gradient-directions"></span>
+<img src="img/full_likelihood/sgd/percentage_changes_in_gradient_direction_1c75A00_1ahoA00.png" alt="Percentage of parameters for which the derivate has changed its direction (i.e. the sign) during the previous \(x\) iterations (\(x\) is specified in the legend). Optimization is performed with SGD using the optimal hyperparameters defined in section 3.2.2 and using a regularization coefficient \(\lambda_w \eq 0.1L\) (see section 3.3.1) and using one step of Gibbs sampling. Optimization is stopped when the relative change over the L2-norm of parameter estimates \(||\w||_2\) over the last \(x\) iterations falls below the threshold of \(\epsilon \eq 1e-8\). Development has been monitored for two different proteins, Left 1c75A00 (protein length = 71, number sequences = 28078, Neff = 16808) Right 1ahoA00 (protein length = 64, number sequences = 378, Neff = 229)." width="100%" />
+<p class="caption">
+Figure 3.3: Percentage of parameters for which the derivate has changed its direction (i.e. the sign) during the previous <span class="math inline">\(x\)</span> iterations (<span class="math inline">\(x\)</span> is specified in the legend). Optimization is performed with <a href="abbrev.html#abbrev">SGD</a> using the optimal hyperparameters defined in section <a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning">3.2.2</a> and using a regularization coefficient <span class="math inline">\(\lambda_w \eq 0.1L\)</span> (see section <a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd">3.3.1</a>) and using one step of Gibbs sampling. Optimization is stopped when the relative change over the L2-norm of parameter estimates <span class="math inline">\(||\w||_2\)</span> over the last <span class="math inline">\(x\)</span> iterations falls below the threshold of <span class="math inline">\(\epsilon \eq 1e-8\)</span>. Development has been monitored for two different proteins, <strong>Left</strong> 1c75A00 (protein length = 71, number sequences = 28078, <a href="abbrev.html#abbrev">Neff</a> = 16808) <strong>Right</strong> 1ahoA00 (protein length = 64, number sequences = 378, <a href="abbrev.html#abbrev">Neff</a> = 229).
+</p>
+</div>
+<p>Of course, the simplest strategy to assume convergence is to specify a maximum number of iterations for the optimization procedure, which also ensures that the algorithm will stop eventually if none of the other convergence criteria is met.</p>
+<p>A necessary but not sufficient condition that is satisfied at the optimum when the gradient is zero, is given by <span class="math inline">\(\sum_{a,b=1}^{20} \wijab = 0\)</span> (see section <a href="methods-1.html#prior-v">3.7.4</a>). This condition is never violated, as long as parameters satisfy this criterion at initialization and the same step size is used to update all parameters. To understand why, note that the 400 partial derivatives <span class="math inline">\(\frac{\partial L\!L(\v^*, \w)}{\partial \wijab}\)</span> for a residue pair <span class="math inline">\((i,j)\)</span> and for <span class="math inline">\(a,b \in \{1, \ldots, 20\}\)</span> are not independent. The sum over the 400 pairwise amino acid counts at positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> is identical for the observed and the sampled alignment and amounts to,</p>
+<span class="math display">\[\begin{equation}
+  \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
+\end{equation}\]</span>
+<p>Considering a residue pair <span class="math inline">\((i,j)\)</span> and assuming amino acid pair <span class="math inline">\((a,b)\)</span> has higher counts in the sampled alignment than in the observed input alignment, then this difference in counts must be compensated by other amino acid pairs <span class="math inline">\((c,d)\)</span> having less counts in the sampled alignment compared to the true alignment (see Figure <a href="full-likelihood-optimization.html#fig:visualisation-wijab-constraint">3.4</a>). Therefore, it holds <span class="math inline">\(\sum_{a,b=1}^{20} \frac{\partial L\!L(\v^*, \w)}{\partial \wijab} = 0\)</span>. This symmetry is translated into parameter updates as long as the same step size is used to update all parameters. However, when using adaptive learning rates (e.g. with the <em>ADAM</em> optimizer), this symmetry is broken and the condition <span class="math inline">\(\sum_{a,b=1}^{20} \wijab = 0\)</span> can be violated during the optimization processs. It is therefore interesting to monitor <span class="math inline">\(\sum_{1 \le 1 &lt; j \le L} \sum_{a,b=1}^{20} \wijab\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:visualisation-wijab-constraint"></span>
+<img src="img/full_likelihood/constraint_wijab.png" alt="The 400 partial derivatives \(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\) at position \((i,j)\) for \(a,b \in \{1, \ldots, 20 \}\) are not independent. Red bars represent pairwise amino acid counts at position \((i,j)\) for the sampled alignment. Blue bars represent pairwise amino acid counts at position \((i,j)\) for the input alignment. The sum over pairwise amino acid counts at position \((i,j)\) for both alignments is \(N_{ij}\), which is the number of ungapped sequences. The partial derivative for \(\wijab\) is computed as the difference of pairwise amino acid counts for amino acids \(a\) and \(b\) at position \((i,j)\). The sum over the partial derivatives \(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\) at position \((i,j)\) for all \(a,b \in \{1, \ldots, 20 \}\) is zero." width="60%" />
+<p class="caption">
+Figure 3.4: The 400 partial derivatives <span class="math inline">\(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\)</span> at position <span class="math inline">\((i,j)\)</span> for <span class="math inline">\(a,b \in \{1, \ldots, 20 \}\)</span> are not independent. Red bars represent pairwise amino acid counts at position <span class="math inline">\((i,j)\)</span> for the sampled alignment. Blue bars represent pairwise amino acid counts at position <span class="math inline">\((i,j)\)</span> for the input alignment. The sum over pairwise amino acid counts at position <span class="math inline">\((i,j)\)</span> for both alignments is <span class="math inline">\(N_{ij}\)</span>, which is the number of ungapped sequences. The partial derivative for <span class="math inline">\(\wijab\)</span> is computed as the difference of pairwise amino acid counts for amino acids <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> at position <span class="math inline">\((i,j)\)</span>. The sum over the partial derivatives <span class="math inline">\(\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}\)</span> at position <span class="math inline">\((i,j)\)</span> for all <span class="math inline">\(a,b \in \{1, \ldots, 20 \}\)</span> is zero.
+</p>
+</div>
+</div>
+<div id="sgd-hyperparameter-tuning" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</h3>
+<p>The coupling parameters <span class="math inline">\(\w\)</span> will be updated at each time step <span class="math inline">\(t\)</span> by taking a step of size <span class="math inline">\(\alpha\)</span> along the direction of the negative gradient of the regularized full log likelihood, <span class="math inline">\(- \nabla_w \LLreg(\v^*,\w)\)</span>, that has been approximated with <a href="abbrev.html#abbrev">CD</a>,</p>
+<span class="math display">\[\begin{equation}
+  \w_{t+1} = \w_t - \alpha \cdot \nabla_w \LLreg(\v^*,\w) \; .
+\end{equation}\]</span>
+<p>In order to get a first intuition of the optimization problem, I tested initial learning rates <span class="math inline">\(\alpha_0 \in \{1\mathrm{e}{-4}, 5\mathrm{e}{-4}, 1\mathrm{e}{-3}, 5\mathrm{e}{-3}\}\)</span> with a standard learning rate annealing schedule, <span class="math inline">\(\alpha = \frac{\alpha_0}{1 + \gamma \cdot t}\)</span> where <span class="math inline">\(t\)</span> is the time step and <span class="math inline">\(\gamma\)</span> is the decay rate that is set to 0.01<span class="citation">[<a href="#ref-Bottou2012">198</a>]</span>.</p>
+<p>Figure <a href="full-likelihood-optimization.html#fig:performance-cd-alphaopt">3.5</a> shows the mean precision for top ranked contacts computed from pseudo-likelihood couplings and from <a href="abbrev.html#abbrev">CD</a> couplings optimized with stochastic gradient descent using the four different learning rates. Overall, mean precision for <a href="abbrev.html#abbrev">CD</a> contacts is lower than for pseudo-likelihood contacts, especially when using the smallest (<span class="math inline">\(\alpha_0 \eq 1\mathrm{e}{-4}\)</span>) and largest (<span class="math inline">\(\alpha_0 \eq 5\mathrm{e-}{3}\)</span>) learning rate.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:performance-cd-alphaopt"></span>
+<iframe src="img/full_likelihood/sgd/precision_vs_rank_learning_rates.html" width="85%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.5: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>CD alpha0 = X</strong>: couplings computed with <a href="abbrev.html#abbrev">CD</a> using stochastic gradient descent with different initial learning rates <span class="math inline">\(\alpha_0\)</span> (see legend).
+</p>
+</div>
+<p>By looking at individual proteins it becomes evident that the optimal learning rate depends on alignment size. Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-initial-learning-rate">3.6</a> displays the development of the L2 norm of the coupling parameters, <span class="math inline">\(||\w||_2\)</span>, during optimization using different learning rates for two proteins with different alignment sizes. The left plot shows protein 1c75A00 that has a large alignment with 28078 sequences (<a href="abbrev.html#abbrev">Neff</a> = 16808) while the right plot shows protein 1ahoA00 that has a small alignment with 378 sequences (<a href="abbrev.html#abbrev">Neff</a> = 229). For protein 1ahoA00 and using a small initial learning rate <span class="math inline">\(\alpha_0 \eq \mathrm{1e-4}\)</span>, the optimization runs very slowly and does not converge within tha maximum number of 5000 iterations. Using a large initial learning rate <span class="math inline">\(\alpha_0 \eq \mathrm{5e-3}\)</span> results in slighly overshooting the optimum at the beginning of the optimization but with the learning rate decaying over time the parameter estimates converge. In contrast, for protein 1c75A00, the choice of learning rate has a more pronounced effect. With a small initial learning rate <span class="math inline">\(\alpha_0 \eq \mathrm{1e-4}\)</span> the optimization runs slowly but almost converges within 5000 iterations. A large initial learning rate <span class="math inline">\(\alpha_0 \eq \mathrm{5e-3}\)</span> lets the parameters diverge quickly and the optimum cannot be recovered. With learning rates <span class="math inline">\(\alpha_0 \eq \mathrm{5e-4}\)</span> and <span class="math inline">\(\alpha_0 \eq \mathrm{1e-3}\)</span>, the optimum is well overshot at the beginning of the optimization but the parameter estimates eventually converge as the learning rate decreases over time.</p>
+<p>These observations can be explained by the fact that the magnitude of the gradient scales with the number of sequences in the alignment. The gradient is computed from amino acid counts as explained before. Therefore, alignments with many sequences will generally produce larger gradients than alignments with few sequences, especially at the beginning of the optimization procedure when the difference in amino acid counts between sampled and observed sequences is largest. Following these observations, I defined the initial learning rate <span class="math inline">\(\alpha_0\)</span> as a function of <a href="abbrev.html#abbrev">Neff</a>,</p>
+<span class="math display" id="eq:learning-rate-wrt-neff">\[\begin{equation}
+  \alpha_0 = \frac{5\mathrm{e}{-2}}{\sqrt{N_{\text{eff}}}} \; .
+  \tag{3.4}
+\end{equation}\]</span>
+<p>For small <a href="abbrev.html#abbrev">Neff</a>, e.g. 5th percentile of the distribution in the dataset <span class="math inline">\(\approx 50\)</span>, this definition of the learning rate yields <span class="math inline">\(\alpha_0 \approx 7\mathrm{e}{-3}\)</span> and for large <a href="abbrev.html#abbrev">Neff</a>, e.g. 95th percentile <span class="math inline">\(\approx 15000\)</span>, this yields <span class="math inline">\(\alpha_0 \approx 4\mathrm{e}{-4}\)</span>. These values for <span class="math inline">\(\alpha_0\)</span> lie in the optimal range that has been observed for the two representative proteins in Figure <a href="full-likelihood-optimization.html#fig:performance-cd-alphaopt">3.5</a>. With the initial learning rate defined as a function of <a href="#bbrev">Neff</a>, precision slightly improves over the previous fixed learning rates (see Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:performance-cd-alphaopt-0">E.1</a>). All following analyses are conducted using the <a href="abbrev.html#abbrev">Neff</a>-dependent initial learning rate.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sgd-single-proteins-initial-learning-rate"></span>
+<img src="img/full_likelihood/sgd/parameter_norm_1c75a00_alphas_lindecay001.png" alt="Convergence plots for two proteins during SGD optimization with different learning rates and convergence measured as L2-norm of the coupling parameters \(||\w||_2\). Linear learning rate annealing schedule has been used with decay rate \(\gamma=0.01\) and initial learning rates \(\alpha_0\) have been set as specified in the legend. Left 1c75A00 (protein length = 71, number sequences = 28078, Neff = 16808). Figure is cut at the yaxis at \(||\w||_2=1000\), but learning rate of \(5\mathrm{e}{-3}\) reaches \(||\w||_2 \approx 9000\). Right 1ahoA00 (protein length = 64, number sequences = 378, Neff = 229)" width="48%" /><img src="img/full_likelihood/sgd/parameter_norm_1ahoa00_alphas_lindecay001.png" alt="Convergence plots for two proteins during SGD optimization with different learning rates and convergence measured as L2-norm of the coupling parameters \(||\w||_2\). Linear learning rate annealing schedule has been used with decay rate \(\gamma=0.01\) and initial learning rates \(\alpha_0\) have been set as specified in the legend. Left 1c75A00 (protein length = 71, number sequences = 28078, Neff = 16808). Figure is cut at the yaxis at \(||\w||_2=1000\), but learning rate of \(5\mathrm{e}{-3}\) reaches \(||\w||_2 \approx 9000\). Right 1ahoA00 (protein length = 64, number sequences = 378, Neff = 229)" width="48%" />
+<p class="caption">
+Figure 3.6: Convergence plots for two proteins during <a href="abbrev.html#abbrev">SGD</a> optimization with different learning rates and convergence measured as L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span>. Linear learning rate annealing schedule has been used with decay rate <span class="math inline">\(\gamma=0.01\)</span> and initial learning rates <span class="math inline">\(\alpha_0\)</span> have been set as specified in the legend. <strong>Left</strong> 1c75A00 (protein length = 71, number sequences = 28078, <a href="abbrev.html#abbrev">Neff</a> = 16808). Figure is cut at the yaxis at <span class="math inline">\(||\w||_2=1000\)</span>, but learning rate of <span class="math inline">\(5\mathrm{e}{-3}\)</span> reaches <span class="math inline">\(||\w||_2 \approx 9000\)</span>. <strong>Right</strong> 1ahoA00 (protein length = 64, number sequences = 378, <a href="abbrev.html#abbrev">Neff</a> = 229)
+</p>
+</div>
+<p>In a next step, I evaluated the following learning rate annealing schedules and decay rates using the <a href="abbrev.html#abbrev">Neff</a>-dependent initial learning rate given in eq. <a href="full-likelihood-optimization.html#eq:learning-rate-wrt-neff">(3.4)</a>:</p>
+<ul>
+<li>default linear learning rate schedule <span class="math inline">\(\alpha = \frac{\alpha_0}{1 + \gamma t}\)</span> with <span class="math inline">\(\gamma \in \{1\mathrm{e}{-3}, 1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}\)</span></li>
+<li>square root learning rate schedule <span class="math inline">\(\alpha = \frac{\alpha_0}{\sqrt{1 + \gamma t}}\)</span> with <span class="math inline">\(\gamma \in \{1\mathrm{e}{-2}, 1\mathrm{e}{-1}, 1 \}\)</span></li>
+<li>sigmoidal learning rate schedule <span class="math inline">\(\alpha_{t+1} = \frac{\alpha_{t}}{1 + \gamma t}\)</span> with <span class="math inline">\(\gamma \in \{1\mathrm{e}{-6}, 1\mathrm{e}{-5}, 1\mathrm{e}{-4}, 1\mathrm{e}{-3}\}\)</span></li>
+<li>exponential learning rate schedule <span class="math inline">\(\alpha_{t+1} = \alpha_0 \cdot\exp(- \gamma t)\)</span> with <span class="math inline">\(\gamma \in \{5\mathrm{e}{-4}, 1\mathrm{e}{-4}, 5\mathrm{e}{-3}\}\)</span></li>
+</ul>
+<p>The learning rate annealing schedules are visualized for different decay rates in Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:learning-rate-schedules">E.2</a>. Optimizing <a href="abbrev.html#abbrev">CD</a> with <a href="abbrev.html#abbrev">SGD</a> using any of the learning rate schedules listed above yields on average lower precision for the top ranked contacts than the pseudo-likelihood contact score. Several learning rate schedules perform almost equally and yield a mean precision that is about one to two percentage below the mean precision for the pseudo-likelihood contact score (see Figure <a href="full-likelihood-optimization.html#fig:performance-cd-learnignrate-schedules">3.7</a>): a linear learning rate schedule with decay rate <span class="math inline">\(\gamma \eq 1\mathrm{e}{-2}\)</span>, a sigmoidal learning rate schedule with decay rates <span class="math inline">\(\gamma \eq 1\mathrm{e}{-5}\)</span> or <span class="math inline">\(\gamma \eq 1\mathrm{e}{-6}\)</span> and an exponential learning rate schedule with decay rates <span class="math inline">\(\gamma \eq 1\mathrm{e}{-3}\)</span> or <span class="math inline">\(\gamma \eq 1\mathrm{e}{-5}\)</span>. The square root learning rate schedule gives ovarall bad results and does not lead to convergence because the learning rate decays slowly at later time steps. The benchmark plots for all learning rate schedules are shown in Appendix section <a href="#benchmark-learning-rate-annealing-schedules"><strong>??</strong></a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:performance-cd-learnignrate-schedules"></span>
+<iframe src="img/full_likelihood/sgd/precision_vs_rank_schedules.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.7: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>CD</strong>: couplings computed with <a href="abbrev.html#abbrev">CD</a> using stochastic gradient descent with an initial learning rate defined with respect to <a href="abbrev.html#abbrev">Neff</a>. Learning rate annealing schedules and decay rates are specified in the legend.
+</p>
+</div>
+<p>In contrast to the findings regarding the initial learning rate earlier, an optimal decay rate can be defined independent of the alignment size. Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">3.8</a> shows the development of the L2 norm of the coupling parameters, <span class="math inline">\(||\w||_2\)</span>, during optimization for the same two representative proteins with small and large alignments as before. Convergence for protein 1ahoA00, having small <a href="abbrev.html#abbrev">Neff</a>=229, is robust against the particular choice of learning rate schedule and decay rate and the presumed optimum at <span class="math inline">\(||w||_2 \approx 13.2\)</span> is reached regardless of the learning rate annealing schedule (see right plot in Figure <a href="full-likelihood-optimization.html#fig:sgd-single-proteins-learning-rate-schedule">3.8</a>). For protein 1c75A00, with high <a href="abbrev.html#abbrev">Neff</a>=16808, the choice of the learning rate schedule has a notable impact on the rate of convergence. Using a linear schedule, the learning rate decays quickly but then converges to a certain offset, which effectively prevents further optimization progress and the presumed optimum at <span class="math inline">\(||w||_2 \approx 90\)</span> is not reached within 5000 iterations. Learning rate schedules that decay slower but decay continously for 5000 iterations, such as an exponential schedule with <span class="math inline">\(\gamma \eq 1\mathrm{e}{-3}\)</span> or a sigmoidal schedule with <span class="math inline">\(\gamma \eq 1\mathrm{e}{-6}\)</span>, guide the parameter estimates close to the expected optimum. Therefore, learning rate schedules with an exponential or sigmoidal decay can be used with proteins having low <a href="abbrev.html#abbrev">Neffs</a> as well as high <a href="abbrev.html#abbrev">Neffs</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sgd-single-proteins-learning-rate-schedule"></span>
+<img src="img/full_likelihood/sgd/parameter_norm_1c75a00_alpha0_different_schedules.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate \(\alpha_0\) is defined with respect to Neff as given in eq. (3.4). Learning rate schedules and decay rates are used according to the legend. Left 1c75A00 (protein length = 71, number sequences = 28078, Neff = 16808). Right 1ahoA00 (protein length = 64, number sequences = 378, Neff = 229)" width="48%" /><img src="img/full_likelihood/sgd/parameter_norm_1ahoa00_alpha0_different_schedules.png" alt="L2-norm of the coupling parameters \(||\w||_2\) during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate \(\alpha_0\) is defined with respect to Neff as given in eq. (3.4). Learning rate schedules and decay rates are used according to the legend. Left 1c75A00 (protein length = 71, number sequences = 28078, Neff = 16808). Right 1ahoA00 (protein length = 64, number sequences = 378, Neff = 229)" width="48%" />
+<p class="caption">
+Figure 3.8: L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span> during stochastic gradient descent optimization with different learning rates schedules. The initial learning rate <span class="math inline">\(\alpha_0\)</span> is defined with respect to <a href="abbrev.html#abbrev">Neff</a> as given in eq. <a href="full-likelihood-optimization.html#eq:learning-rate-wrt-neff">(3.4)</a>. Learning rate schedules and decay rates are used according to the legend. <strong>Left</strong> 1c75A00 (protein length = 71, number sequences = 28078, <a href="abbrev.html#abbrev">Neff</a> = 16808). <strong>Right</strong> 1ahoA00 (protein length = 64, number sequences = 378, <a href="abbrev.html#abbrev">Neff</a> = 229)
+</p>
+</div>
+<p>Another aspect worth considering is runtime and it can be observed that the different learning rate annealing schedules differ in convergence speed. Figure <a href="full-likelihood-optimization.html#fig:distribution-num-iterations">3.9</a> shows the distribution over the number of iterations until convergence for <a href="abbrev.html#abbrev">SGD</a> optimizations with five different learning rate schedules that yield similar performance. The optimization converges on average within less than 2000 iterations only when using either a sigmoidal learning rate annealing schedule with decay rate <span class="math inline">\(\gamma \eq 1\mathrm{e}{-5}\)</span> or an exponential learning rate annealing schedule with decay rate <span class="math inline">\(\gamma \eq 5\mathrm{e}{-3}\)</span>, On the contrary, the distribution of iterations until convergence has a median of 5000 when using a linear learning rate annealing schedule with <span class="math inline">\(\gamma \eq 1\mathrm{e}{-2}\)</span> or an exponential schedule with decay rate <span class="math inline">\(\gamma \eq 1\mathrm{e}{-3}\)</span>. Under these considerations, I chose a sigmoidal learning rate schedule with <span class="math inline">\(\gamma \eq 5\mathrm{e}{-6}\)</span> for all further analysis.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:distribution-num-iterations"></span>
+<iframe src="img/full_likelihood/sgd/distribution_numiterations_against_selected_learningrate_schedules.html" width="100%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.9: Distribution of the number of iterations until convergence for <a href="abbrev.html#abbrev">SGD</a> optimizations of <a href="abbrev.html#abbrev">CD</a> for different learning rate schedules. Convergence is reached when the relative difference of parameter norms, <span class="math inline">\(||\w||_2\)</span>, over the last five iterations falls below <span class="math inline">\(\epsilon \eq 1e-8\)</span>. Initial learning rate <span class="math inline">\(\alpha_0\)</span> is defined with respect to <a href="abbrev.html#abbrev">Neff</a> as given in eq. <a href="full-likelihood-optimization.html#eq:learning-rate-wrt-neff">(3.4)</a> and maximum number of iterations is set to 5000. Learning rate schedules and decay rates are specified in the legend.
+</p>
+</div>
+<p>Finally, I checked whether altering the convergence criteria has notable impact on performance. Per default, optimization is stopped whenever the relative change of the L2 norm over coupling parameters, <span class="math inline">\(||\w||_2\)</span>, over the last 5 iterations falls below a small value <span class="math inline">\(\epsilon &lt; 1e-8\)</span> as denoted in eq. <a href="full-likelihood-optimization.html#eq:parameter-convergence-criterion">(3.3)</a>. Figure <a href="full-likelihood-optimization.html#fig:performance-cd-convergence-prev">3.10</a> shows that the mean precision over proteins is robust to different settings of the number of iterations over which the relative change is computed. The convergence rate is mildly affected by the different settings. Optimization converges on average within 1697, 1782 and 1917 iterations, when computing the relative change of the parameter norm over the previous 2,5 and 10 iterations, respectively (see Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:numit-convergence-convergence-prev">E.11</a>). For all following analysis, I chose 10 to be the number of iterations over which the convergence criterion is computed.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:performance-cd-convergence-prev"></span>
+<iframe src="img/full_likelihood/sgd/precision_vs_rank_convergence_prev.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.10: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>#previous iterations = X</strong>: couplings computed with <a href="abbrev.html#abbrev">CD</a> using stochastic gradient descent with an initial learning rate defined with respect to <a href="abbrev.html#abbrev">Neff</a> and the sigmoidal learning rate schedule with <span class="math inline">\(\gamma \eq 5\mathrm{e}{-6}\)</span>. The relative change of the L2 norm over coupling parameters, <span class="math inline">\(||\w||_2\)</span>, is evaluated over the previous X iterations (specified in the legend) and convergence is assumed when the relative change falls below a small value <span class="math inline">\(\epsilon \eq 1e-8\)</span>.
+</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Ruder2017">
+<p>197. Ruder, S. (2017). An overview of gradient descent optimization algorithms. arXiv. Available at: <a href="http://arxiv.org/abs/1609.04747" class="uri">http://arxiv.org/abs/1609.04747</a>.</p>
+</div>
+<div id="ref-Bottou2010">
+<p>199. Bottou, L. (2010). Large-Scale Machine Learning with Stochastic Gradient Descent. 177–186. Available at: <a href="https://link.springer.com/chapter/10.1007/978-3-7908-2604-3{\_}16" class="uri">https://link.springer.com/chapter/10.1007/978-3-7908-2604-3{\_}16</a>.</p>
+</div>
+<div id="ref-Schaul2013">
+<p>200. Schaul, T., Zhang, S., and Lecun, Y. (2013). No More Pesky Learning Rates. arXiv. Available at: <a href="https://arxiv.org/pdf/1206.1106.pdf" class="uri">https://arxiv.org/pdf/1206.1106.pdf</a>.</p>
+</div>
+<div id="ref-Zeiler2012">
+<p>201. Zeiler, M.D. (2012). ADADELTA: An Adaptive Learning Rate Method. 6. Available at: <a href="http://arxiv.org/abs/1212.5701" class="uri">http://arxiv.org/abs/1212.5701</a>.</p>
+</div>
+<div id="ref-Bengio2012">
+<p>202. Bengio, Y. (2012). Practical Recommendations for Gradient-Based Training of Deep Architectures. In Neural networks: Tricks of the trade (Springer Berlin Heidelberg), pp. 437–478. Available at: <a href="https://arxiv.org/pdf/1206.5533v2.pdf" class="uri">https://arxiv.org/pdf/1206.5533v2.pdf</a>.</p>
+</div>
+<div id="ref-Mahsereci2017">
+<p>203. Mahsereci, M., Balles, L., Lassner, C., and Hennig, P. (2017). Early Stopping without a Validation Set. arXiv. Available at: <a href="http://arxiv.org/abs/1703.09580" class="uri">http://arxiv.org/abs/1703.09580</a>.</p>
+</div>
+<div id="ref-Carreira-Perpinan2005">
+<p>204. Carreira-Perpiñán, M. a, and Hinton, G.E. (2005). On Contrastive Divergence Learning. Artif. Intell. Stat. <em>0</em>, 17. Available at: <a href="http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf" class="uri">http://learning.cs.toronto.edu/{~}hinton/absps/cdmiguel.pdf</a>.</p>
+</div>
+<div id="ref-Bottou2012">
+<p>198. Bottou, L. (2012). Stochastic Gradient Descent Tricks. In Neural networks: Tricks of the trade (Springer, Berlin, Heidelberg), pp. 421–436. Available at: <a href="http://link.springer.com/10.1007/978-3-642-35289-8{\_}25" class="uri">http://link.springer.com/10.1007/978-3-642-35289-8{\_}25</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="full-likelihood-gradient.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cd-sampling-optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/06-optimizing_full_likelihood.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-# Introduction to Contact Prediction
+## Introduction to Contact Prediction
 
 Contact prediction refers to the prediction of physical contacts between amino acid side chains in the 3D protein structure, given the protein sequence as input. 
 
@@ -23,7 +23,7 @@ knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 The following sections will give an overview over important methods and developments in the field of contact prediction.
 
 
-## Local Statistical Models {#local-methods}
+### Local Statistical Models {#local-methods}
 
 Early contact prediction methods used local pairwise statistics to infer contacts that regard pairs of amino acids in a sequence as statistically independent from another.
 
@@ -53,7 +53,7 @@ knitr::include_graphics("img/intro/transitive_effects.png")
 ```
 
 
-## Global Statistical Models {#global-methods}
+### Global Statistical Models {#global-methods}
 
 A huge leap forward was the development of sophisticated statistical models that make predictions for a single residue pair while considering all other pairs in the protein.
 These global models allow for the distinction between transitive and causal interactions which has been referred to in the literature as [DCA](#abbrev) [@Lapedes1999; @Weigt2009].
@@ -67,7 +67,7 @@ A global statistical model not motivated by the maximum entropy approach was pro
 Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via [APC](#abbrev) but cannot compete with the pseudo-likelihood approaches presented in section \@ref(pseudo-likelihood). 
 
 
-## Machine Learning Methods and Meta-Predictors {#meta-predictors}
+### Machine Learning Methods and Meta-Predictors {#meta-predictors}
 
 With the steady increase in protein sequence data, machine learning based methods have emerged that extract features from [MSAs](#abbrev) in order to learn associations between input features and residue-residue contacts.
 Sequence features typically include predicted solvent accessibility, predicted secondary structure, contact potentials, conservation scores, global protein features, pairwise coevolution statistics and averages of certain features over sequence windows. 
@@ -93,7 +93,7 @@ Eventhough a benchmark comparing the recently developed meta-predictors is yet t
 As coevolution scores comprise the most informative feautures among the set of input features, it is clear that meta-predictors will benefit from further improvements of pure coevolution methods [@Wang2016a; @Stahl2017]. 
 
 
-## Modelling Protein Families with Potts Model {#maxent}
+### Modelling Protein Families with Potts Model {#maxent}
 
 Infering contacts from a joint probability distribution over all residues in a protein sequence instead of using simple pairwise statistics has been proven to enable the distinction of direct statistical dependencies between residues from indirect dependencies mediated through other residues.
 The global statistical model that is commonly used to describe this joint probability distribution is the *Potts model*. 
@@ -163,7 +163,7 @@ $Z$ is a normalization constant also known as *partition function* that ensures 
 
 
 
-### Model Properties {#potts-model-properties}
+#### Model Properties {#potts-model-properties}
 
 The Potts model is specified by singlet terms $\via$ which describe the tendency for each amino acid a to appear at position $i$, and pair terms $\wijab$, also called couplings, which describe the tendency of amino acid a at position $i$ to co-occur with amino acid b at position $j$.
 In contrast to mere correlations, the couplings explain the causative dependence structure between positions by jointly modelling the distribution of all positions in a protein sequence and thus account for transitive effects. 
@@ -211,7 +211,7 @@ The regularizer selects for a unique solution among all parametrizations of the 
 
 
 
-### Inferring Parameters for the Potts Model  {#potts-mle}
+#### Inferring Parameters for the Potts Model  {#potts-mle}
 
 Typically, parameter estimates are obtained by maximizing the log-likelihood function of the parameters over observed data.
 For the Potts model, the log-likelihood function is computed over sequences in the alignment $\mathbf{X}$: 
@@ -243,7 +243,7 @@ Consequently, evaluating the likelihood function at each iteration of an optimiz
 
 Many approximate inference techniques have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts that are briefly explained in the next section. 
 
-### Solving the Inverse Potts Problem {#potts-model-solutions}
+#### Solving the Inverse Potts Problem {#potts-model-solutions}
 
 In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle transitive effects [@Lapedes1999].
 In 2002 they applied their idea to 11 small proteins using an iterative Monte Carlo procedure to obtain estimates of the model parameters and achieved an increase in accuracy of 10-20% compared to the local statistical models [@Lapedes2012a]. 
@@ -314,7 +314,7 @@ That is, as the number of sequences in the alignment increases, pseudo-likelihoo
 
 
 
-### Computing Contact Maps {#post-processing-heuristics}
+#### Computing Contact Maps {#post-processing-heuristics}
 
 Model inference as described in the last section yields [MAP](#abbrev) estimates of the couplings $\hat{\w}_{ij}$. 
 In order to obtain a scalar measure for the coupling strength between two residues $i$ and $j$, all available methods presented in section \@ref(potts-model-solutions) heuristically map the $21 \! \times \! 21$ dimensional coupling matrix $\wij$ to a single scalar quantity.
@@ -569,7 +569,7 @@ Coevolution methods face several challenges when interpreting the covariation si
 Some of these challenges have been successfully met (e.g. disentangling transitive effects with global statistical models), others are still open or open up new perspectives, such as dissecting different sources of coevolution signals. 
 
 
-### Phylogenetic Effects as a Source of Noise
+### Phylogenetic Effects as a Source of Noise {#phylogenetic-noise}
 
 Sequences in [MSAs](#abbrev) do not represent independent samples of a protein family. 
 In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. 
@@ -577,7 +577,11 @@ This uneven sampling of a protein family's sequence space leaves certain regions
 Furthermore, due to their evolutionary relationship, sequences of a protein family have a complicated dependence structure.
 Closely related sequences can cause spurious correlations between positions, as there was not sufficient time for the sequences to diverge from their common ancestor [@Gouveia_Oliveira2007; @Lapedes1999; @Burger2010]. 
 Figure \@ref(fig:phylogenetic-effect) illustrates a simplified example, where dependence of sequences due to phylogeny leads to a covariation signal.
-To reduce the effects of redundant sequences, a popular sequence reweighting strategy has been found to improve contact prediction performance, where every sequence receives a weight that is the inverse of the number of similar sequences according to an identity threshold (see section \@ref(seq-reweighting)) [@Buslje2009; @Morcos2011; @Jones2012; @Cocco2017]. 
+
+To reduce the effects of overrepresented sequences, typically a simple weighting strategy is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold [@Stein2015a]. 
+It has been found that reweighting improves contact prediction performance [@Buslje2009; @Morcos2011; @Jones2012] significantly but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 [@Morcos2011]. 
+
+
 
 (ref:caption-phylogenetic-effect) The phylogenetic dependence of closely related sequences can produce covariation signals. Here, two independent mutation events (highlighted in red) in two branches of the tree result in a perfect covariation signal for two positions.
 

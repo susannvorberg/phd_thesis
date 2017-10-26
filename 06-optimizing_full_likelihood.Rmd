@@ -480,16 +480,9 @@ A problem when using *ADAM* is that the necessarty condidtion $\sum_{a,b=1}^{20}
 
 ## Comparing CD couplings to pLL couplings {#comparing-pll-cd}
 
-The previous sections dealed intensively with the hyperparameter optimization for the stochastic gradient descent optimizer and the [CD](#abbrev) model itself. 
-Eventhough the adaptive learning rate optimizer *ADAM* did not improve performance over plain stochastic gradient descent, it is still likely that appropriate modifications to the optimization procedure, e.g. averaging [@Ma2016], might be beneficial for particular variants of [CD](#abbrev).
-As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting.
-It might be worth to assess the convergence properties with more sophisticated convergence metrics, like the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017], instead of using the L2 norm of the coupling parameters, $||\w||_2$.
-
-Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
-With [CD](#abbrev)-1,  sequence samples are generated according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for only one full step.
-Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
-It is possible that the improved gradient helps to finetune the parameters which has no effect on the contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, and the ovaral ranking of residue pairs. 
-Furthermore, it can be speculated that the heuristic contact score that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
+A final benchmark over a larger set of proteins (2000 proteins randomly selected from subsets 5 to 10 described in method section \@ref(dataset)) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure \@ref(fig:precision-cd-final)). 
+At any rate it is interesting to not only compare pseudo-likelihood and contrastive divergence based on ovaral performance, but to also have a look at single predictions.
+In the following, I will examine and compare the predicitons made by both methods for two representative proteins, one with a small alignment and low corresponding [Neff](#abbrev) value and one with a large alignment and high corresponding [Neff](#abbrev) value. 
 
 (ref:caption-precision-cd-final) Mean precision for top ranked contact predictions over 2000 proteins. **pseudo-likelihood (APC)**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood. **pseudo-likelihood**: same as "pseudo-likelihood (APC)" but without [APC](#abbrev). **contrastive divergence (APC)**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from contrastive-divergence. **contrastive divergence**: same as "contrastive divergence (APC)" but without [APC](#abbrev).
 
@@ -497,9 +490,6 @@ Furthermore, it can be speculated that the heuristic contact score that has empi
 knitr::include_url("img/full_likelihood/final/precision_vs_rank_notitle.html", height = "500px")
 ```
 
-A final benchmark over a larger set of proteins (2000 proteins randomly selected from subsets 5 to 10 described in method section \@ref(dataset)) reveals that contact predictions obtained by maximizing the pseudo-likelihood and by optimizing the full likelihood with contrastive divergence perform similar (see Figure \@ref(fig:precision-cd-final)). 
-At any rate it is interesting to not only compare pseudo-likelihood and contrastive divergence based on ovaral performance, but to also have a look at single predictions.
-In the following, I will examine and compare the predicitons made by both methods for two representative proteins, one with a small alignment and low corresponding [Neff](#abbrev) value and one with a large alignment and high corresponding [Neff](#abbrev) value. 
 
 ### Protein 1c75A00
 
@@ -571,8 +561,33 @@ knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1ss3A00/conta
 This observation stresses the importance to complement coevolutionary analysis in low data scenarios by the use of other sequence derived information, like conservation. 
 The most successfull contact predictors presented in section \@ref(meta-predictors) integrate features extracted from the [MSA](#abbrev) because it is known that sequence-based contact prediction is robust when only few sequences are available [@Stahl2017; @He2017].
 
+## Discussion
 
-## Theoretical Methods
+Due to the complexity of the normalization constant it is infeasible to infer the model parameters via maximum-likelihood estimation. 
+The most popular [DCA](#abbrev) approaches optimize the pseudo-likelihood instead but it is unknown how well it approximates the full likelihood in case protein families have only few members.
+In this chapter I tested an alternative approach to infer the *Potts* model parameters called *contrastive divergence*.
+[CD] optimizes the full likelihood of the *Potts* model by approximating the gradient of the the full likelihood with short Gibbs chains. 
+However, it turned oit that pLL performs as well as CD, also in low data scanrios, given he fac thtat the improvement of CD can be attributed to couplings between highly conserved pairs.
+
+I elaborated in detail on the hyperparameter optimization for the stochastic gradient descent optimizer and the [CD](#abbrev) model itself. 
+Eventhough the adaptive learning rate optimizer *ADAM* did not improve performance over plain stochastic gradient descent, it is still likely that appropriate modifications to the optimization procedure, e.g. averaging [@Ma2016], might be beneficial for particular variants of [CD](#abbrev).
+As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting.
+It might be worth to assess the convergence properties with more sophisticated convergence metrics, like the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017], instead of using the L2 norm of the coupling parameters, $||\w||_2$.
+
+Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
+With [CD](#abbrev)-1,  sequence samples are generated according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for only one full step.
+Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
+It is possible that the improved gradient helps to finetune the parameters which has no effect on the contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, and the ovaral ranking of residue pairs. 
+This was shwon in the last sectionL: the ranking of pseudo-likelihood and CD scores is very similar. 
+  - strongest signals are sufficient [@cocoo]
+    - finetuning lower signals not relevant
+  
+Sophisitcated methods are required to use this fientuned information? --> bayes?
+Furthermore, it can be speculated that the heuristic contact score that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
+
+
+
+## Methods
 
 ### The Potts Model {#potts-full-likelihood}
 
@@ -738,7 +753,7 @@ If the proportion of gap positions in $\X$ is small (e.g. $<5\%$, also compare p
 Note that the couplings between columns $i$ and $j$ in the hypothetical MSA presented in the last section \@ref(gap-treatment) will now vanish since $N_{ij} \eq 0$ and the gradient with respect to $\wijab$ is equal to $-\lambda_w \wijab$.
 
 
-### The prior on $\v$ {#prior-v}
+### The prior on single potentials {#prior-v}
 
 Most previous approaches chose a prior around the origin, $p(\v) = \Gauss ( \v| \mathbf{0}, \lambda_v^{-1} \I)$, i.e., $\via^* \eq 0$. 
 It can be shown that the choice $\via^* \eq 0$ leads to undesirable results.
@@ -791,10 +806,10 @@ For this choice, $\via - \via^*$ will be approximately zero and will certainly b
 
 
 
-### Practical Methods {#methods-sgd}
+### Stochastic Gradien Descent {#methods-sgd}
 
 The couplings $\wijab$ are initialized at 0 and single potentials $\vi$ will not be optimized but rather kept fixed at their maximum-likleihood estimate $\vi^*$ as described in methods section \@ref(prior-v).
-The optimization is stopped when the maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates, $||\w||_2$, over the last five iterations falls below the threshold of $\epsilon = 1e-8$.
+The optimization is stopped when a maximum number of 5000 iterations has been reached or when the relative change over the L2-norm of parameter estimates, $||\w||_2$, over the last five iterations falls below the threshold of $\epsilon = 1e-8$.
 The gradient of the full likelihood is approximated with [CD](#abbrev) which involves Gibbs sampling of protein sequences according to the current model parametrization and is described in detail in methods section \@ref(methods-cd-sampling).
 Zero centered L2-regularization is used to constrain the coupling parameters $\w$ using the regularization coefficient $\lambda_w = 0.2L$ which is the default setting for optimizing the pseudo-likelihood with *CCMpredPy*. 
 Performance will be evaluated by the mean precision of top ranked contact predictions over a validation set of 300 proteins, that is a subset of the data set described in methods section \@ref(dataset).
@@ -803,7 +818,7 @@ Pseudo-likelihood couplings are computed with the tool *CCMpredPy* that is intro
 
 
 
-### Tuning Hyperparameters of *ADAM* Optimizer {#methods-full-likelihood-adam}
+#### The adaptive moment estimation optimizer *ADAM* Optimizer {#methods-full-likelihood-adam}
 
 *ADAM* [@Kingma2014] stores an exponentially decaying average of past gradients and squared gradients,
 
@@ -830,8 +845,7 @@ Kingma et al. proposed the default values $\beta_1=0.9$, $\beta_2=0.999$ and $\e
 
 
 
-
-## Computing the Gradient with Contrastive Divergence {#methods-cd-sampling}
+### Computing the Gradient with Contrastive Divergence {#methods-cd-sampling}
 
 This section describes the implementation details for approximating the gradient of the full likelihood with [CD](#abbrev). 
 

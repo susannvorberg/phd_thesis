@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PhD thesis: residue-residue contact prediction</title>
+  <meta name="description" content="This is my PhD thesis on residue-residue contact prediction.">
+  <meta name="generator" content="bookdown 0.3.9 and GitBook 2.6.7">
+
+  <meta property="og:title" content="PhD thesis: residue-residue contact prediction" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  <meta name="github-repo" content="susannvorberg/phd_thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PhD thesis: residue-residue contact prediction" />
+  
+  <meta name="twitter:description" content="This is my PhD thesis on residue-residue contact prediction." />
+  
+
+<meta name="author" content="Susann Vorberg">
+
+
+<meta name="date" content="2017-10-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="full-likelihood-optimization.html">
+<link rel="next" href="adam-results.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+  tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+  TeX: { 
+    extensions: ["mediawiki-texvc.js", "sinuitx.js"],
+    Macros: {
+      Cb: "C_\\beta",
+      eq: "\\!=\\!",
+      Gauss: "\\mathcal{N}",
+      H: "\\mathbf{H}",
+      Hij : "\\H_{ij}",
+      I: "\\mathbf{I}",
+      Lijk: "\\mathbf{\\Lambda}_{ij,k}",
+      Lk: "\\mathbf{\\Lambda}_k",
+      LL: "L\\!L(\\mathbf{v}, \\mathbf{w})",
+      LLreg: "L\\!L_\\mathrm{reg}",
+      muijk: "\\mathbf{\\mu}_{ij,k}",
+      muk: "\\mathbf{\\mu}_k",
+      neff: "N_\\mathrm{eff}",
+      r: "\\mathbf{r}",
+      rij: "r_{ij}",
+      c: "\\mathbf{c}",
+      cij: "c_{ij}",
+      seq: "\\mathbf{x}",
+      Qij: "\\mathbf{Q}_{ij}",
+      q: "\\mathbf{q}",
+      qij: "\\mathbf{q'}_{ij}",
+      Sn: "\\mathcal{S}_n",
+      v: "\\mathbf{v}",
+      vi: "\\mathcal{v}_{i}",
+      vj: "\\mathcal{v}_{j}",
+      via: "\\mathcal{v}_{ia}",
+      vja: "\\mathcal{v}_{ja}",
+      w: "\\mathbf{w}",
+      wij: "\\mathbf{w}_{ij}",
+      wijab: "\\mathcal{w}_{ijab}",
+      wijcd: "\\mathcal{w}_{ijcd}",
+      wklcd: "\\mathcal{w}_{klcd}",
+      X: "\\mathbf{X}",
+      angstrom: "\\AA \\; \\;"
+      }
+  }
+});
+</script>
+
+
+ 
+<!--
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "[siunitx]/siunitx.js"],
+  TeX: { TagSide: "left" }
+});
+MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
+</script>
+//-->
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PhD Thesis Susann Vorberg</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>1</b> Background</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-intro.html"><a href="general-intro.html"><i class="fa fa-check"></i><b>1.1</b> Biological Background</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html"><i class="fa fa-check"></i><b>1.2</b> Introduction to Contact Prediction</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#local-methods"><i class="fa fa-check"></i><b>1.2.1</b> Local Statistical Models</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#global-methods"><i class="fa fa-check"></i><b>1.2.2</b> Global Statistical Models</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#meta-predictors"><i class="fa fa-check"></i><b>1.2.3</b> Machine Learning Methods and Meta-Predictors</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introduction-to-contact-prediction.html"><a href="introduction-to-contact-prediction.html#maxent"><i class="fa fa-check"></i><b>1.2.4</b> Modelling Protein Families with Potts Model</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="application-contact-prediction.html"><a href="application-contact-prediction.html"><i class="fa fa-check"></i><b>1.3</b> Applications</a></li>
+<li class="chapter" data-level="1.4" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html"><i class="fa fa-check"></i><b>1.4</b> Evaluating Contact Prediction Methods</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#seq-sep"><i class="fa fa-check"></i><b>1.4.1</b> Sequence Separation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro-cp-evaluation.html"><a href="intro-cp-evaluation.html#interpretation-of-evaluation-results"><i class="fa fa-check"></i><b>1.4.2</b> Interpretation of Evaluation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="challenges.html"><a href="challenges.html"><i class="fa fa-check"></i><b>1.5</b> Challenges for Coevolutionary Inference</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="challenges.html"><a href="challenges.html#phylogenetic-noise"><i class="fa fa-check"></i><b>1.5.1</b> Phylogenetic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.2" data-path="challenges.html"><a href="challenges.html#entropic-effects-as-a-source-of-noise"><i class="fa fa-check"></i><b>1.5.2</b> Entropic Effects as a Source of Noise</a></li>
+<li class="chapter" data-level="1.5.3" data-path="challenges.html"><a href="challenges.html#finite-sampling-effects"><i class="fa fa-check"></i><b>1.5.3</b> Finite Sampling Effects</a></li>
+<li class="chapter" data-level="1.5.4" data-path="challenges.html"><a href="challenges.html#multiple-sequence-alignments"><i class="fa fa-check"></i><b>1.5.4</b> Multiple Sequence Alignments</a></li>
+<li class="chapter" data-level="1.5.5" data-path="challenges.html"><a href="challenges.html#alternative-sources-of-coevolution"><i class="fa fa-check"></i><b>1.5.5</b> Alternative Sources of Coevolution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interpreting-coupling-matrices.html"><a href="interpreting-coupling-matrices.html"><i class="fa fa-check"></i><b>2</b> Interpretation of Coupling Matrices</a><ul>
+<li class="chapter" data-level="2.1" data-path="correlation-between-couplings-and-class.html"><a href="correlation-between-couplings-and-class.html"><i class="fa fa-check"></i><b>2.1</b> Single Coupling Values Carry Evidence of Contacts</a></li>
+<li class="chapter" data-level="2.2" data-path="coupling-profiles.html"><a href="coupling-profiles.html"><i class="fa fa-check"></i><b>2.2</b> Coupling Profiles Vary with Distance</a></li>
+<li class="chapter" data-level="2.3" data-path="physico-chemical-fingerprints-in-coupling-matrices.html"><a href="physico-chemical-fingerprints-in-coupling-matrices.html"><i class="fa fa-check"></i><b>2.3</b> Physico-Chemical Fingerprints in Coupling Matrices</a></li>
+<li class="chapter" data-level="2.4" data-path="higher-order-coupling-profiles.html"><a href="higher-order-coupling-profiles.html"><i class="fa fa-check"></i><b>2.4</b> Higher Order Dependencies Between Couplings</a></li>
+<li class="chapter" data-level="2.5" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>2.5</b> Discussion</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2.6</b> Methods</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="methods.html"><a href="methods.html#dataset"><i class="fa fa-check"></i><b>2.6.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.6.2" data-path="methods.html"><a href="methods.html#diff-ccmpred-ccmpredpy"><i class="fa fa-check"></i><b>2.6.2</b> Computing Pseudo-Likelihood Couplings</a></li>
+<li class="chapter" data-level="2.6.3" data-path="methods.html"><a href="methods.html#seq-reweighting"><i class="fa fa-check"></i><b>2.6.3</b> Sequence Reweighting</a></li>
+<li class="chapter" data-level="2.6.4" data-path="methods.html"><a href="methods.html#amino-acid-frequencies"><i class="fa fa-check"></i><b>2.6.4</b> Computing Amino Acid Frequencies</a></li>
+<li class="chapter" data-level="2.6.5" data-path="methods.html"><a href="methods.html#methods-regularization"><i class="fa fa-check"></i><b>2.6.5</b> Regularization</a></li>
+<li class="chapter" data-level="2.6.6" data-path="methods.html"><a href="methods.html#method-coupling-correlation"><i class="fa fa-check"></i><b>2.6.6</b> Correlation of Couplings with Contact Class</a></li>
+<li class="chapter" data-level="2.6.7" data-path="methods.html"><a href="methods.html#method-coupling-profile"><i class="fa fa-check"></i><b>2.6.7</b> Coupling Distribution Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="optimizing-full-likelihood.html"><a href="optimizing-full-likelihood.html"><i class="fa fa-check"></i><b>3</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.1" data-path="full-likelihood-gradient.html"><a href="full-likelihood-gradient.html"><i class="fa fa-check"></i><b>3.1</b> Approximating the Gradient of the Full Likelihood with Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html"><i class="fa fa-check"></i><b>3.2</b> Optimizing the Full Likelihood</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#convergence-criteria-sgd"><i class="fa fa-check"></i><b>3.2.1</b> Convergence Criterion for Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="3.2.2" data-path="full-likelihood-optimization.html"><a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning"><i class="fa fa-check"></i><b>3.2.2</b> Tuning Hyperparameters of Stochastic Gradient Descent Optimizer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html"><i class="fa fa-check"></i><b>3.3</b> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#regularization-for-cd-with-sgd"><i class="fa fa-check"></i><b>3.3.1</b> Tuning Regularization Coefficients for Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-sampling-size"><i class="fa fa-check"></i><b>3.3.2</b> Varying the Sample Size</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
+<li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="discussion-1.html"><a href="discussion-1.html"><i class="fa fa-check"></i><b>3.6</b> Discussion</a></li>
+<li class="chapter" data-level="3.7" data-path="methods-1.html"><a href="methods-1.html"><i class="fa fa-check"></i><b>3.7</b> Methods</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="methods-1.html"><a href="methods-1.html#potts-full-likelihood"><i class="fa fa-check"></i><b>3.7.1</b> The Potts Model</a></li>
+<li class="chapter" data-level="3.7.2" data-path="methods-1.html"><a href="methods-1.html#gap-treatment"><i class="fa fa-check"></i><b>3.7.2</b> Treating Gaps as Missing Information</a></li>
+<li class="chapter" data-level="3.7.3" data-path="methods-1.html"><a href="methods-1.html#the-regularized-full-log-likelihood-and-its-gradient-with-gap-treatment"><i class="fa fa-check"></i><b>3.7.3</b> The Regularized Full Log Likelihood and its Gradient With Gap Treatment</a></li>
+<li class="chapter" data-level="3.7.4" data-path="methods-1.html"><a href="methods-1.html#prior-v"><i class="fa fa-check"></i><b>3.7.4</b> The prior on single potentials</a></li>
+<li class="chapter" data-level="3.7.5" data-path="methods-1.html"><a href="methods-1.html#methods-sgd"><i class="fa fa-check"></i><b>3.7.5</b> Stochastic Gradien Descent</a></li>
+<li class="chapter" data-level="3.7.6" data-path="methods-1.html"><a href="methods-1.html#methods-cd-sampling"><i class="fa fa-check"></i><b>3.7.6</b> Computing the Gradient with Contrastive Divergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contact-prior.html"><a href="contact-prior.html"><i class="fa fa-check"></i><b>4</b> Random Forest Contact Prior</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-forest-classifiers.html"><a href="random-forest-classifiers.html"><i class="fa fa-check"></i><b>4.1</b> Random Forest Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
+<li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
+<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
+<li class="chapter" data-level="5.1" data-path="overview-posterior-distances.html"><a href="overview-posterior-distances.html"><i class="fa fa-check"></i><b>5.1</b> Computing the Posterior Probabiilty of a Contact</a></li>
+<li class="chapter" data-level="5.2" data-path="coupling-prior.html"><a href="coupling-prior.html"><i class="fa fa-check"></i><b>5.2</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.3" data-path="bayesian-model-training-hyperparameters.html"><a href="bayesian-model-training-hyperparameters.html"><i class="fa fa-check"></i><b>5.3</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.4" data-path="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-three-components.html"><i class="fa fa-check"></i><b>5.4</b> Training Hyperparameters for a Gaussian Mixture with Three Components</a></li>
+<li class="chapter" data-level="5.5" data-path="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-five-components.html"><i class="fa fa-check"></i><b>5.5</b> Training Hyperparameters for a Gaussian Mixture with Five Components</a></li>
+<li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
+<li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
+<li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
+<li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
+<li class="chapter" data-level="5.10.3" data-path="methods-3.html"><a href="methods-3.html#likelihood-fct-distances"><i class="fa fa-check"></i><b>5.10.3</b> Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States</a></li>
+<li class="chapter" data-level="5.10.4" data-path="methods-3.html"><a href="methods-3.html#Hessian-offdiagonal"><i class="fa fa-check"></i><b>5.10.4</b> The Hessian off-diagonal Elements Carry a Negligible Signal</a></li>
+<li class="chapter" data-level="5.10.5" data-path="methods-3.html"><a href="methods-3.html#neg-Hessian-computation"><i class="fa fa-check"></i><b>5.10.5</b> Efficiently Computing the negative Hessian of the regularized log-likelihood</a></li>
+<li class="chapter" data-level="5.10.6" data-path="methods-3.html"><a href="methods-3.html#inv-lambda-ij-k"><i class="fa fa-check"></i><b>5.10.6</b> Efficiently Computing the Inverse of Matrix <span class="math inline">\(\Lijk\)</span></a></li>
+<li class="chapter" data-level="5.10.7" data-path="methods-3.html"><a href="methods-3.html#gradient-muk"><i class="fa fa-check"></i><b>5.10.7</b> The gradient of the log likelihood with respect to <span class="math inline">\(\muk\)</span></a></li>
+<li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
+<li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
+<li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
+<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
+<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="abbrev.html"><a href="abbrev.html"><i class="fa fa-check"></i><b>A</b> Abbreviations</a></li>
+<li class="chapter" data-level="B" data-path="amino-acids.html"><a href="amino-acids.html"><i class="fa fa-check"></i><b>B</b> Amino Acid Alphabet</a></li>
+<li class="chapter" data-level="C" data-path="dataset-properties.html"><a href="dataset-properties.html"><i class="fa fa-check"></i><b>C</b> Dataset Properties</a></li>
+<li class="chapter" data-level="D" data-path="interpretation-of-coupling-matrices.html"><a href="interpretation-of-coupling-matrices.html"><i class="fa fa-check"></i><b>D</b> Interpretation of Coupling Matrices</a></li>
+<li class="chapter" data-level="E" data-path="optimizing-full-likelihood-with-gradient-descent.html"><a href="optimizing-full-likelihood-with-gradient-descent.html"><i class="fa fa-check"></i><b>E</b> Optimizing Full Likelihood with Gradient Descent</a></li>
+<li class="chapter" data-level="F" data-path="training-of-the-random-forest-contact-prior.html"><a href="training-of-the-random-forest-contact-prior.html"><i class="fa fa-check"></i><b>F</b> Training of the Random Forest Contact Prior</a></li>
+<li class="chapter" data-level="G" data-path="bayesian-statistical-model-for-contact-prediction.html"><a href="bayesian-statistical-model-for-contact-prediction.html"><i class="fa fa-check"></i><b>G</b> Bayesian statistical model for contact prediction</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PhD thesis: residue-residue contact prediction</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cd-sampling-optimization" class="section level2">
+<h2><span class="header-section-number">3.3</span> Tuning the Gibbs Sampling Scheme for Contrastive Divergence</h2>
+<p>The original <a href="abbrev.html#abbrev">CD</a>-k algorithm described by Hinton in 2002 evolves the Markov chains by k=1 Gibbs steps <span class="citation">[<a href="#ref-Hinton2002">193</a>]</span>. As described earlier, <a href="abbrev.html#abbrev">CD</a>-1 provides a biased estimate of the true gradient because the Markov chains have not reached the stationary distribution <span class="citation">[<a href="#ref-Fischer2012">195</a>]</span>. Bengio and Delalleau show that the bias for <a href="abbrev.html#abbrev">CD</a>-k kan be understood as a residual term when expressing the log likelihood gradient as an expansion that involves the k-th sample of the Gibbs chain <span class="citation">[<a href="#ref-Bengio2009">196</a>,<a href="#ref-Ma2016">205</a>]</span>. As the number of Gibbs steps, k, goes to infinity the residual term and hence the bias converges to zero and the <a href="abbrev.html#abbrev">CD</a> gradient estimate converges to a stochastic estimation of the true likelihood gradient. Indeed, eventhough surprising results have been obtained by evolving the Markov chains for only one Gibbs step, typically <a href="abbrev.html#abbrev">CD</a>-k for k&gt;&gt;1 gives more precise results <span class="citation">[<a href="#ref-Bengio2009">196</a>]</span>. Furthermore it has been shown, that bias also depends on the mixing rate (rate of convergence) of the chains whereby the mixing rate decreases when model parameters increase <span class="citation">[<a href="#ref-Tieleman2008">206</a>]</span>. This can lead to divergence of the <a href="abbrev.html#abbrev">CD</a>-k solution from optimal solution in a sense that the model systematically gets worse as optimization progresses <span class="citation">[<a href="#ref-Fischer2010">207</a>]</span>. Regularization of the parameters offers a solution to this problem, constraining the magnitude of the parameters. A different solution suggested by Bengio and Delalleau is to dynamically increase k when the model parameters increase <span class="citation">[<a href="#ref-Bengio2009">196</a>]</span>. These studies analysing the convergence properties and the expected approximation error for <a href="abbrev.html#abbrev">CD</a>-k have mainly been conducted for Restricted Boltzmann Machines. It is therefore not clear, whether and to what extent these findings apply to the <em>Potts</em> model.</p>
+<p>Several connections of <a href="abbrev.html#abbrev">CD</a> to other well known approximation algorithms have been drawn. For example, it can be shown that <a href="abbrev.html#abbrev">CD</a> using one Gibbs update step on a randomly selected variable is exactly equivalent to a stochastic maximum pseudo-likelihood estimation <span class="citation">[<a href="#ref-Hyvarinen2006">208</a>,<a href="#ref-Hyvarinen2007">209</a>]</span>. Asuncion and colleagues showed further that an arbitrary good approximation to the full likelihood can be reached by applying blocked-Gibbs sampling <span class="citation">[<a href="#ref-Asuncion2010">210</a>]</span>. <a href="abbrev.html#abbrev">CD</a> based on sampling an arbitraty number of variables, has an equivalent stochastic composite likelihood, which is a higher-order generalization of the pseudo-likelihood.</p>
+<p>Another variant of <a href="abbrev.html#abbrev">CD</a> is <a href="abbrev.html#abbrev">PCD</a>, such that the Markov chain is not reinitialized at a data sample every time a new gradient is computed <span class="citation">[<a href="#ref-Tieleman2008">206</a>]</span>. Instead, the Markov chains are kept <em>persistent</em> that is, they are evolved between successive gradient computations. The fundamental idea behind <a href="abbrev.html#abbrev">PCD</a> is that the model changes only slowly between parameter updates given a sufficiently small learning rate. Consequently, the Markov chains will not be pushed too far from equilibrium after each update but rather stay close to the stationary distribution <span class="citation">[<a href="#ref-Murphy2012">95</a>,<a href="#ref-Fischer2012">195</a>,<a href="#ref-Tieleman2008">206</a>]</span>. Tieleman and others observed that <a href="abbrev.html#abbrev">PCD</a> performs better than <a href="abbrev.html#abbrev">CD</a> in all practical cases tested, eventhough <a href="abbrev.html#abbrev">CD</a> can be faster in the early stages of learning and thus should be preferred when runtime is the limiting factor <span class="citation">[<a href="#ref-Murphy2012">95</a>,<a href="#ref-Tieleman2008">206</a>,<a href="#ref-Swersky2010">211</a>]</span>.</p>
+<p>The next sections discuss various modifications of the <a href="abbrev.html#abbrev">CD</a> algorithm, such as varying the regularization strength <span class="math inline">\(\lambda_w\)</span> for constraining the coupling parameters <span class="math inline">\(\w\)</span>, increasing the number of Gibbs sampling steps and varying the number of Markov chains used for sampling. Persistent contrastive divergence is analysed for various combinations of the above mentioned settings and eventually combined with <a href="abbrev.html#abbrev">CD</a>-k. Unless noted otherwise, all optimizations will be performed using stochastic gradient descent with the tuned hyperparameters described in the last sections.</p>
+<div id="regularization-for-cd-with-sgd" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Tuning Regularization Coefficients for Contrastive Divergence</h3>
+<p>For tuning the hyperparameters of the stochastic gradient descent optimizer in the last section <a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning">3.2.2</a>, the coupling parameters <span class="math inline">\(\w\)</span> were constrained by a Gaussian prior <span class="math inline">\(\mathcal{N}(\w | 0, \lambda_w^{-1} I)\)</span> using the default pseudo-likelihood regularization coefficient <span class="math inline">\(\lambda_w \eq 1\mathrm{e}{-2}L\)</span> as decscribed in methods section <a href="methods.html#methods-regularization">2.6.5</a>. It is conceivable that <a href="abbrev.html#abbrev">CD</a> achieves optimal performance using stronger or weaker regularization than used for pseudo-likelihood optimization. Therefore, I evaluated performance for different regularization coefficients <span class="math inline">\(\lambda_w \in \{ 5\mathrm{e}{-2}L, 1\mathrm{e}{-1}L, 1\mathrm{e}{-2}L, L\}\)</span> using the previously identified hyperparamters for <a href="abbrev.html#abbrev">SGD</a>. The single potentials <span class="math inline">\(\v\)</span> are not subject to optimization and are kept fixed at their maximum-likelihood estimate <span class="math inline">\(v^*\)</span> that is derived in eq. <a href="methods-1.html#eq:prior-v">(3.17)</a>.</p>
+<p>As can be seen in Figure <a href="cd-sampling-optimization.html#fig:precison-cd-regularization">3.11</a>, using strong regularization for the couplings, with <span class="math inline">\(\lambda_w \eq L\)</span>, results in a drastic drop of mean precision. Using weaker regularization, with <span class="math inline">\(\lambda_w \eq \mathrm{5e}{-2}L\)</span>, improves precision for the top <span class="math inline">\(L/10\)</span> and <span class="math inline">\(L/5\)</span> predicted contacts but decreases precision when including lower ranked predictions. As a matter of fact, a slightly weaker regularization <span class="math inline">\(\lambda_w \eq \mathrm{1e}{-1}L\)</span> than the default <span class="math inline">\(\lambda_w \eq \mathrm{1e}{-2}L\)</span> improves mean precision especially for the top <span class="math inline">\(L/2\)</span> contacts in such a way, that it is comparable to the pseudo-likelihood performance.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:precison-cd-regularization"></span>
+<iframe src="img/full_likelihood/sgd/precision_vs_rank_regularizer.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.11: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>CD lambda_w = X</strong>: couplings computed with <a href="abbrev.html#abbrev">CD</a> using L2-regularization on the couplings <span class="math inline">\(\w\)</span> with regularization coefficient <span class="math inline">\(\lambda_w\)</span> specified in the legend and keeping the single potentials <span class="math inline">\(\vi\)</span> fixed at their <a href="abbrev.html#abbrev">MLE</a> optimum <span class="math inline">\(\vi^*\)</span> denoted in eq. <a href="methods-1.html#eq:prior-v">(3.17)</a>.
+</p>
+</div>
+<p>As mentioned before, in contrast to pseudo-likelihood optimization the single potentials <span class="math inline">\(\v\)</span> are not optimized with <a href="abbrev.html#abbrev">CD</a> but rather set to their maximum-likelihood estimate as it is obtained in a single position model that is discussed in methods section <a href="methods-1.html#eq:prior-v">(3.17)</a>. When the single potentials <span class="math inline">\(\v\)</span> are optimized with <a href="abbrev.html#abbrev">CD</a> using the same regularization coefficient <span class="math inline">\(\lambda_v \eq 10\)</span> as for pseudo-likelihood optimization, performance is almost indistinguishable compared to keeping the single potentials <span class="math inline">\(\v\)</span> fixed (see Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:full-likelihood-opt-fixv">E.12</a>).</p>
+</div>
+<div id="cd-sampling-size" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Varying the Sample Size</h3>
+<p>The default Gibbs sampling scheme outlined in method section <a href="methods-1.html#methods-cd-sampling">3.7.6</a> involves the random selection of <span class="math inline">\(10L\)</span> sequences from the input alignment, with <span class="math inline">\(L\)</span> being protein length, at every iteration of the optimization procedure. These selected sequences are used to initialize the same number of Markov chains. The particular choice of <span class="math inline">\(10L\)</span> sequences was motivated by the fact that there is a relationship between the precision of contacts predicted from pseudo-likelihood and protein length, at least for alignments with less than <span class="math inline">\(10^3\)</span> diverse sequences <span class="citation">[<a href="#ref-Anishchenko2017">178</a>]</span>. It has been argued that roughly <span class="math inline">\(5L\)</span> nonredundant sequences are required to obtain confident predictions that can bet used for protein structure prediction <span class="citation">[<a href="#ref-Kamisetty2013">103</a>]</span>.</p>
+<p>I analysed whether varying the number of sequences used for the approximation of the gradient via Gibbs sampling affects performance. Randomly selecting only a subset of sequences <span class="math inline">\(S\)</span> from the <span class="math inline">\(N\)</span> sequences of the input alignment corresponds to the stochastic gradient descent idea of a minibatch and introduces additional stochasticity over the <a href="abbrev.html#abbrev">CD</a> Gibbs sampling process. Using <span class="math inline">\(S &lt; N\)</span> sequences for Gibbs sampling has the further advantage of decreasing the runtime at each iteration. I evaluated different schemes for the random selection of sequences:</p>
+<ul>
+<li>sampling <span class="math inline">\(x\)</span>L sequences with <span class="math inline">\(x \in \{ 1, 5, 10, 50 \}\)</span> without replacement enforcing <span class="math inline">\(S \eq \min(N, xL)\)</span></li>
+<li>sampling <span class="math inline">\(x\)</span><a href="abbrev.html#abbrev">Neff</a> sequences with <span class="math inline">\(x \in \{ 0.2, 0.3, 0.4 \}\)</span> without replacement</li>
+</ul>
+<p>Figure <a href="cd-sampling-optimization.html#fig:cd-performance-samplesize">3.12</a> illustrates performance for several of the choices. Randomly selecting <span class="math inline">\(L\)</span> sequences for sampling results in a visible drop in performance. There is no benefit in using more than <span class="math inline">\(10L\)</span> sequences, especially as sampling more sequences increases runtime per iteration. Specifying the number of sequences for sampling as fractions of <a href="abbrev.html#abbrev">Neff</a> generally improves precision slightly over selecting <span class="math inline">\(10L\)</span> or <span class="math inline">\(50L\)</span> sequences for sampling. By sampling <span class="math inline">\(0.3\)</span><a href="abbrev.html#abbrev">Neff</a> sequences, <a href="abbrev.html#abbrev">CD</a> does slighty improve over pseudo-likelihood.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:cd-performance-samplesize"></span>
+<iframe src="img/full_likelihood/gibbs_sampling/precision_vs_rank_samplesize.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.12: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: couplings computed with pseudo-likelihood. <strong>CD sample size = X </strong>: contact scores computed from <a href="abbrev.html#abbrev">CD</a> with <a href="abbrev.html#abbrev">SGD</a>. At every iteration, a particular number of sequences is randomly selected from the input alignmet to initialize the Markoc chains for Gibbs sampling. The number of randomly selected sequences is specified in the legend. It is defined either as multiples of protein length <span class="math inline">\(L\)</span> or as fraction of the effective number of sequences <a href="abbrev.html#abbrev">Neff</a>.
+</p>
+</div>
+<p>When evaluating performance with respect to the number of effective sequences <a href="abbrev.html#abbrev">Neff</a>, it can clearly be noted that the optimal number of randomly selected sequences should be defined as a fraction of <a href="abbrev.html#abbrev">Neff</a>. Selecting too many sequences, e.g. <span class="math inline">\(50L\)</span> for small alignments (left plot in Figure <a href="cd-sampling-optimization.html#fig:cd-precision-sampling-size-neff">3.13</a>), or selecting too few sequences, e.g <span class="math inline">\(1L\)</span> for large alignments (right plot in Figure <a href="cd-sampling-optimization.html#fig:cd-precision-sampling-size-neff">3.13</a>), results in a decrease in precision compared to defining the number of sequences as fractions of <a href="abbrev.html#abbrev">Neff</a>. Especially small alignments benefit from sample sizes defined as a fraction of <a href="abbrev.html#abbrev">Neff</a> with improvements of about three percentage points in precision over pseudo-likelihood.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:cd-precision-sampling-size-neff"></span>
+<iframe src="img/full_likelihood/gibbs_sampling/precision_vs_rank_facetted_by_neff_samplesize.html" width="100%" height="600px">
+</iframe>
+<p class="caption">
+Figure 3.13: Mean precision for top ranked contact predictions over subsets of 75 proteins, defined according to <a href="abbrev.html#abbrev">Neff</a> quartiles. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: contact scores computed from pseudo-likelihood. <strong>CD sample size = X </strong>: contact scores computed from <a href="abbrev.html#abbrev">CD</a> with <a href="abbrev.html#abbrev">SGD</a>. The number of randomly selected sequences for the Gibbs sampling process is specified in the legend. It is defined either as multiples of protein length <span class="math inline">\(L\)</span> or as fraction of the effective number of sequences <a href="abbrev.html#abbrev">Neff</a>. <strong>Left</strong> Subset of 75 proteins with <a href="abbrev.html#abbrev">Neff</a> &lt; Q1. <strong>Right</strong> Subset of 75 proteins with Q3 &lt;= <a href="abbrev.html#abbrev">Neff</a> &lt; Q4.
+</p>
+</div>
+<p>To understand the effect of different choices of sample size it is necessary to look at single proteins. The left plot in Figure <a href="cd-sampling-optimization.html#fig:cd-samplesize-protein1c75a00">3.14</a> shows the development of the L2 norm of the gradient for couplings, <span class="math inline">\(||\nabla_{\w} L\!L(\v^*, \w)||_2\)</span>, for protein chain 1c75A00 that is of length 71 and has <a href="abbrev.html#abbrev">Neff</a> = 16808. The norm of the gradient decreases during optimization and for increasing choices of the sample size it saturates at decreasing levels. For example, increasing the sample size by a factor 100 (from <span class="math inline">\(L\)</span> to <span class="math inline">\(100L\)</span>) leads to an approximately 10-fold reduction of the norm of the gradient at convergence (<span class="math inline">\(\mathrm{1e}{+5}\)</span> compared to <span class="math inline">\(\mathrm{1e}{+4}\)</span>), which corresponds to a typical reduction of statistical noise as the square root of the number of samples. It is not feasible to sample the number of sequences at each iteration that would be necessary to reduce the norm of the gradient to near zero!</p>
+<p>The previous benchmark showed, that precision of the top ranked contacts does not improve to the same amount as the norm of the gradient decreases when the sample size is increased. Probably, the improved gradient when using a larger sample size helps to finetune the parameters, which only has a negligible effect on the contact score computed as <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. For example, the difference between the parameter norm at convergence for sampling <span class="math inline">\(10L = 710\)</span> sequences or <span class="math inline">\(50L = 3550\)</span> sequences is only marginal (see right plot in Figure <a href="cd-sampling-optimization.html#fig:cd-samplesize-protein1c75a00">3.14</a>), despite a larger difference of the norm of gradients.</p>
+<p>It is not clear why an improved gradient estimate due to sampling more sequences results in weaker performance for proteins with small alignments as could be seen in the previous benchmark in Figure <a href="cd-sampling-optimization.html#fig:cd-precision-sampling-size-neff">3.13</a>. Protein 1ahoA00, that has length 64 and an alignment of 378 sequences (<a href="abbrev.html#abbrev">Neff</a>=229), achieves a mean precision of 0.44 over the top <span class="math inline">\(0.1L\)</span> - <span class="math inline">\(L\)</span> contacts when using all <span class="math inline">\(N \eq 378\)</span> sequences for sampling. When only <span class="math inline">\(0.3N_{\textrm{eff}} \eq 69\)</span> sequences are used in the sampling procedure, 1ahoA00 achieves a mean precision of 0.62. Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:cd-samplesize-protein1ahoa00">E.13</a> shows the course of the norm of the gradient and the norm of coupling parameters during optimization for this protein. Similarly as it has been observed for protein 1c75A00, the norm of the gradient converges towards smaller values when more sequences are used in the Gibbs sampling process and the improved gradient is supposed to lead to a better approximation of the likelihood. One explanation for this obvious discrepancy could be some effect of overfitting. Eventhough a regularizer is used for optimization and the norm of coupling parameters actually is smaller when using a larger sample size (see the right plot in Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:cd-samplesize-protein1ahoa00">E.13</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:cd-samplesize-protein1c75a00"></span>
+<img src="img/full_likelihood/gibbs_sampling/1c75A00_gradient_and_parameter_norm_for_samplesizes.png" alt="Monitoring parameter norm and gradient norm for protein 1c75A00 during SGD using different sample sizes. Protein 1c75A00 has length L=71 and 28078 sequences in the alignment (Neff=16808). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 71 sequences, 5L = 355 sequences, 10L = 710 sequences, 50L = 3550 sequences, 100L = 7100 sequences, 0.2Neff = 3362 sequences, 0.3Neff = 5042 sequences, 0.4Neff = 6723 sequences. Left L2-norm of the gradients for coupling parameters, \(||\nabla_{\w} L\!L(\v^*, \w)||_2\) (without contribution of regularizer). Right L2-norm of the coupling parameters \(||\w||_2\)." width="100%" />
+<p class="caption">
+Figure 3.14: Monitoring parameter norm and gradient norm for protein 1c75A00 during <a href="abbrev.html#abbrev">SGD</a> using different sample sizes. Protein 1c75A00 has length L=71 and 28078 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=16808). The number of sequences, that is used for Gibbs sampling to approximate the gradient, is given in the legend with 1L = 71 sequences, 5L = 355 sequences, 10L = 710 sequences, 50L = 3550 sequences, 100L = 7100 sequences, 0.2Neff = 3362 sequences, 0.3Neff = 5042 sequences, 0.4Neff = 6723 sequences. <strong>Left</strong> L2-norm of the gradients for coupling parameters, <span class="math inline">\(||\nabla_{\w} L\!L(\v^*, \w)||_2\)</span> (without contribution of regularizer). <strong>Right</strong> L2-norm of the coupling parameters <span class="math inline">\(||\w||_2\)</span>.
+</p>
+</div>
+</div>
+<div id="cd-gibbs-steps" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Varying the number of Gibbs Steps</h3>
+<p>As discussed earlier, it has been pointed out in the literature that using <span class="math inline">\(k&gt;1\)</span> Gibbs steps for sampling sequences gives more precise results at the cost of longer runtimes per gradient evaluation <span class="citation">[<a href="#ref-Bengio2009">196</a>,<a href="#ref-Tieleman2008">206</a>]</span>. I analysed the impact on performance when the number of Gibbs steps is increased to 5 and 10. As can be seen in Figure <a href="cd-sampling-optimization.html#fig:precision-cd-gibbs-steps">3.15</a>, increasing the number of Gibbs steps does result in a slight drop of performance. When evaluating precision with respect to <a href="abbrev.html#abbrev">Neff</a> it can be found that using more Gibbs sampling steps is especially disadvantageous for large alignments (see Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:cd-precision-gibbssteps-neff">E.14</a>).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:precision-cd-gibbs-steps"></span>
+<iframe src="img/full_likelihood/gibbs_sampling/precision_vs_rank_gibbssteps.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.15: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: contact scores computed from pseudo-likelihood. <strong>CD #Gibbs steps = X</strong>: contact scores computed from <a href="abbrev.html#abbrev">CD</a> optimized with <a href="abbrev.html#abbrev">SGD</a> and evolving each Markov chain using the number of Gibbs steps specified in the legend.
+</p>
+</div>
+<p>When evaluating single proteins, it can be observed that for proteins with small alignments the L2 norm of the parameters, <span class="math inline">\(||\w||_2\)</span>, converges towards a different offset when using more than one Gibbs steps (see left plot in Figure <a href="cd-sampling-optimization.html#fig:cd-gibbssteps-single-proteins">3.16</a>). Naturally, the Markov chains can wander further away from their initialization when they are evolved over a longer time which results in a stronger gradient at the beginning of the optimization. Therefore and because the initial learning rate has been optimized for sampling with one Gibbs step, the parameter norm overshoots the optimum at the beginning. Even when lowering the initial learning rate from <span class="math inline">\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\)</span> to <span class="math inline">\(\alpha_0 \in \left \{ \frac{3e-2}{\sqrt{N_{\text{eff}}}}, \frac{2e-2}{\sqrt{N_{\text{eff}}}} , \frac{1e-2}{\sqrt{N_{\text{eff}}}} \right \}\)</span>, the <a href="abbrev.html#abbrev">SGD</a> optimizer evidently approaches a different optimum. Surprisingly, the different optimum that is found for proteins with small alignments has no substantial impact on precision, as becomes evident from Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:cd-precision-gibbssteps-neff">E.14</a>. For proteins with large alignments it can be observed that there is not one alternative solution to the parameters, but depending on the number of Gibbs steps and on the initial learning rate, <span class="math inline">\(\alpha_0\)</span>, the L2 norm over parameters converges towards various different offsets (see right plot in Figure <a href="cd-sampling-optimization.html#fig:cd-gibbssteps-single-proteins">3.16</a>). It is not clear how these observations can be interpreted, in particular given the fact, that the L2 norm of gradients, <span class="math inline">\(||\nabla_{\w} L\!L(\v^*, \w)||_2\)</span>, converges to the identical offset for all settings regardless of alignment size (see Appendix Figure <a href="optimizing-full-likelihood-with-gradient-descent.html#fig:cd-gibbssteps-single-proteins-gradient">E.15</a>). Optimizing <a href="abbrev.html#abbrev">CD</a> with 10 Gibbs steps and using a smaller initial learning rate, <span class="math inline">\(\alpha0 = \frac{2e-2}{\sqrt{N_{\text{eff}}}}\)</span>, does not have an overal impact on mean precision as can be seen in Figure <a href="cd-sampling-optimization.html#fig:precision-cd-gibbs-steps">3.15</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:cd-gibbssteps-single-proteins"></span>
+<img src="img/full_likelihood/gibbs_sampling/parameter_norm_1ahoa00.png" alt="Monitoring parameter norm, \(||\w||_2\), for protein 1aho_A_00 and 1c75_A_00 during SGD optimization using different number of Gibbs steps and initial learning rates, \(\alpha_0\). Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\). Left Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment (Neff=229) Right Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment (Neff=16808)." width="48%" /><img src="img/full_likelihood/gibbs_sampling/parameter_norm_1c75a00.png" alt="Monitoring parameter norm, \(||\w||_2\), for protein 1aho_A_00 and 1c75_A_00 during SGD optimization using different number of Gibbs steps and initial learning rates, \(\alpha_0\). Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default \(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\). Left Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment (Neff=229) Right Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment (Neff=16808)." width="48%" />
+<p class="caption">
+Figure 3.16: Monitoring parameter norm, <span class="math inline">\(||\w||_2\)</span>, for protein 1aho_A_00 and 1c75_A_00 during <a href="abbrev.html#abbrev">SGD</a> optimization using different number of Gibbs steps and initial learning rates, <span class="math inline">\(\alpha_0\)</span>. Number of Gibbs steps is given in the legend, as well as particular choices for the initial learning rate, when not using the default <span class="math inline">\(\alpha_0 = \frac{5e-2}{\sqrt{N_{\text{eff}}}}\)</span>. <strong>Left</strong> Protein 1aho_A_00 has length L=64 and 378 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=229) <strong>Right</strong> Protein 1c75_A_00 has length L=71 and 28078 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=16808).
+</p>
+</div>
+</div>
+<div id="cd-gibbs-steps" class="section level3">
+<h3><span class="header-section-number">3.3.4</span> Persistent Contrastive Divergence</h3>
+<p>Finally I analysed, whether evolving the Markov chains over successive iterations, which is known as <a href="abbrev.html#abbrev">PCD</a>, does improve performance <span class="citation">[<a href="#ref-Tieleman2008">206</a>]</span>. Several empirical studies have shown that <a href="abbrev.html#abbrev">PCD</a> performs superior compared to <a href="abbrev.html#abbrev">CD</a>-1 and also to <a href="abbrev.html#abbrev">CD</a>-10 <span class="citation">[<a href="#ref-Tieleman2008">206</a>,<a href="#ref-Swersky2010">211</a>]</span>. In the literatur is has been pointed out that <a href="abbrev.html#abbrev">PCD</a> needs to use small learning rates because in order to sample from a distribution close to the stationary distribution, the parameters cannot change too rapidly. However, using smaller learning rates not only increases runtime but also requires tuning of the learning rate and learning rate schedule once again. Since it has been found, that <a href="abbrev.html#abbrev">CD</a> is faster in learning at the beginning of the optimization, I tested a compromise, that uses <a href="abbrev.html#abbrev">CD</a>-1 at the beginning of the optimization and when learning slows down, <a href="abbrev.html#abbrev">PCD</a> is switched on. Concretely, <a href="abbrev.html#abbrev">PCD</a> is switched on, when the relative change of the norm of coupling parameters, <span class="math inline">\(||\w||_2\)</span>, falls below <span class="math inline">\(\epsilon \in \{\mathrm{1e}{-3}, \mathrm{1e}{-5}\}\)</span> while the convergence criterion is not altered and convergence is assumed when the relative change falls below <span class="math inline">\(\epsilon \eq \mathrm{1e}{-8}\)</span>. As a result, the model will already have approached the optimum when <a href="abbrev.html#abbrev">PCD</a> is switched on so that the coupling parameters <span class="math inline">\(\w\)</span> will mot change to quickly over many updates.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:precision-pcd"></span>
+<iframe src="img/full_likelihood/pcd/precision_vs_rank_notitle.html" width="90%" height="500px">
+</iframe>
+<p class="caption">
+Figure 3.17: Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the <a href="abbrev.html#abbrev">APC</a> corrected Frobenius norm of the couplings <span class="math inline">\(\wij\)</span>. <strong>pseudo-likelihood</strong>: contact scores computed from pseudo-likelihood. <strong>pCD</strong>: contact scores computed from <a href="abbrev.html#abbrev">PCD</a> optimized with <a href="abbrev.html#abbrev">SGD</a> using the hyperparameters that have been found to work optimal with <a href="abbrev.html#abbrev">CD</a> as described throughout the last sections. <strong>pCD #Gibbs steps = 10</strong>: same as pCD, but evolving the Gibbs chain for 10 steps. <strong>pCD start = 1e-3</strong>: <a href="abbrev.html#abbrev">SGD</a> optimization starts by optimizing the full likelihood using the <a href="abbrev.html#abbrev">CD</a> gradient approximation and switches to the <a href="abbrev.html#abbrev">PCD</a> gradient approximation once the relative change of L2 norm of parameters has fallen below <span class="math inline">\(\epsilon \eq \mathrm{1e}{-3}\)</span> evaluated over the last 10 iterations. <strong>pCD start = 1e-5</strong>: same as ‘pCD start = 1e-3’, but with <span class="math inline">\(\epsilon \eq \mathrm{1e}{-5}\)</span>.
+</p>
+</div>
+<p>Figure <a href="cd-sampling-optimization.html#fig:precision-pcd">3.17</a> shows the mean precision of top ranked contacts on the validation set computed with several <a href="abbrev.html#abbrev">PCD</a> variants that perform almost equally well. Evolving the Gibbs chains for k=10 steps results in a slight drop in performance, just as it has been observed for <a href="abbrev.html#abbrev">CD</a>. Optimizing the full likelihoood with <a href="abbrev.html#abbrev">CD</a> and switiching to <a href="abbrev.html#abbrev">PCD</a> at a later stage of optimization does also not have a notable impact on performance.</p>
+<p>Again it is insightful to observe the optimization progresss for single proteins. For protein 1ahoA00, with low <a href="abbrev.html#abbrev">Neff</a>=229, the <a href="abbrev.html#abbrev">PCD</a> model converges to the same coupling norm offset (<span class="math inline">\(||\w||_2 \approx 24\)</span>) as the <a href="abbrev.html#abbrev">CD</a> model using 5 and 10 Gibbs steps (see left plot in Figure <a href="cd-sampling-optimization.html#fig:pcd-single-proteins">3.18</a> compared to left plot in <a href="cd-sampling-optimization.html#fig:cd-gibbssteps-single-proteins">3.16</a>). It can also be seen that when <a href="abbrev.html#abbrev">PCD</a> is switched on at a later stage of optimization the coupling norm jumps from the <a href="abbrev.html#abbrev">CD</a>-1 level to the <a href="abbrev.html#abbrev">PCD</a> level. The different optimum that is found for proteins with small alignments does not seem to affect predictive performance. Interestingly, convergence behaves differently for protein 1c75A00, that has high <a href="abbrev.html#abbrev">Neff</a>=16808 (see right plot in Figure <a href="cd-sampling-optimization.html#fig:pcd-single-proteins">3.18</a>). <a href="abbrev.html#abbrev">PCD</a> using one Gibbs step converges to a different coupling norm offset than <a href="abbrev.html#abbrev">CD</a>-1 and <a href="abbrev.html#abbrev">PCD</a> using ten Gibbs steps. However, when <a href="abbrev.html#abbrev">PCD</a> is switched on later during optimization the model either ends up in the <a href="abbrev.html#abbrev">CD</a>-1 (switch at <span class="math inline">\(\epsilon \eq 1e-5\)</span> or <span class="math inline">\(\epsilon \eq 1e-6\)</span>) or in the <a href="abbrev.html#abbrev">PCD</a> optimum (switch at <span class="math inline">\(\epsilon \eq 1e-3\)</span>). The cause for this behaviour is unclear, yet it has no noticable impact on overal performance.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:pcd-single-proteins"></span>
+<img src="img/full_likelihood/pcd/1ahoA00_parameter_norm.png" alt="Monitoring parameter norm, \(||\w||_2\), for protein 1ahoA00 and 1c75A00 during SGD optimization of different objectives. Left Protein 1ahoA00 has length L=64 and 378 sequences in the alignment (Neff=229) Right Protein 1c75A00 has length L=71 and 28078 sequences in the alignment (Neff=16808). CD contrastive divergence using 1 Gibbs step. pCD persistent contrastive divergence using 1 Gibbs step. pCD #Gibbs steps = 10 persistent contrastive divergence using 10 Gibbs steps. pCD start = 1e-3, pCD start = 1e-5: same as in Figure 3.17 pCD start = 1e-6: same as ‘pCD start = 1e-3’, but with \(\epsilon \eq \mathrm{1e}{-6}\)." width="48%" /><img src="img/full_likelihood/pcd/1c75A00_parameter_norm.png" alt="Monitoring parameter norm, \(||\w||_2\), for protein 1ahoA00 and 1c75A00 during SGD optimization of different objectives. Left Protein 1ahoA00 has length L=64 and 378 sequences in the alignment (Neff=229) Right Protein 1c75A00 has length L=71 and 28078 sequences in the alignment (Neff=16808). CD contrastive divergence using 1 Gibbs step. pCD persistent contrastive divergence using 1 Gibbs step. pCD #Gibbs steps = 10 persistent contrastive divergence using 10 Gibbs steps. pCD start = 1e-3, pCD start = 1e-5: same as in Figure 3.17 pCD start = 1e-6: same as ‘pCD start = 1e-3’, but with \(\epsilon \eq \mathrm{1e}{-6}\)." width="48%" />
+<p class="caption">
+Figure 3.18: Monitoring parameter norm, <span class="math inline">\(||\w||_2\)</span>, for protein 1ahoA00 and 1c75A00 during <a href="abbrev.html#abbrev">SGD</a> optimization of different objectives. <strong>Left</strong> Protein 1ahoA00 has length L=64 and 378 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=229) <strong>Right</strong> Protein 1c75A00 has length L=71 and 28078 sequences in the alignment (<a href="abbrev.html#abbrev">Neff</a>=16808). <strong>CD</strong> contrastive divergence using 1 Gibbs step. <strong>pCD</strong> persistent contrastive divergence using 1 Gibbs step. <strong>pCD #Gibbs steps = 10</strong> persistent contrastive divergence using 10 Gibbs steps. <strong>pCD start = 1e-3</strong>, <strong>pCD start = 1e-5</strong>: same as in Figure <a href="cd-sampling-optimization.html#fig:precision-pcd">3.17</a> <strong>pCD start = 1e-6</strong>: same as ‘pCD start = 1e-3’, but with <span class="math inline">\(\epsilon \eq \mathrm{1e}{-6}\)</span>.
+</p>
+</div>
+<p>Against expectations from the findings in literature, neither <a href="abbrev.html#abbrev">CD</a>-k with k&gt;1 Gibbs steps nor <a href="abbrev.html#abbrev">PCD</a> does improve performance with respect to precision of the top ranked contact predictions. Swersky and colleagues ellaborated on various choices of hyperparameters (e.g momentum, averaging, regularization, etc.) for training Restricted Boltzmann Machines as classifiers with <a href="abbrev.html#abbrev">CD</a>-k and <a href="abbrev.html#abbrev">PCD</a> <span class="citation">[<a href="#ref-Swersky2010">211</a>]</span>. They found many subtleties that need to be explored and can play a crucial role for successfull training. In section <a href="full-likelihood-optimization.html#sgd-hyperparameter-tuning">3.2.2</a> I manually tuned the learning rate and annealing schedule for stoachstic gradient descent to be used with <a href="abbrev.html#abbrev">CD</a>-1. It is plausible, that these settings are not optimal for <a href="abbrev.html#abbrev">CD</a>-k with k&gt;1 Gibbs steps and <a href="abbrev.html#abbrev">PCD</a> and require tuning once again. Because hyperparameter optimization with stochastic gradient descent is a time-consuming task, in the following, I applied the popular <em>ADAM</em> stochastic gradient descent optimizer that does in theory not require tuning many hyperparameters <span class="citation">[<a href="#ref-Kingma2014">212</a>]</span>.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Hinton2002">
+<p>193. Hinton, G.E. (2002). Training Products of Experts by Minimizing Contrastive Divergence. Neural Comput. <em>14</em>, 1771–1800. Available at: <a href="http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf" class="uri">http://www.gatsby.ucl.ac.uk/publications/tr/tr00-004.pdf</a>.</p>
+</div>
+<div id="ref-Fischer2012">
+<p>195. Fischer, A., and Igel, C. (2012). An Introduction to Restricted Boltzmann Machines. Lect. Notes Comput. Sci. Prog. Pattern Recognition, Image Anal. Comput. Vision, Appl. <em>7441</em>, 14–36. Available at: <a href="http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2" class="uri">http://link.springer.com/chapter/10.1007/978-3-642-33275-3{\_}2</a>.</p>
+</div>
+<div id="ref-Bengio2009">
+<p>196. Bengio, Y., and Delalleau, O. (2009). Justifying and Generalizing Contrastive Divergence. Neural Comput. <em>21</em>, 1601–21. Available at: <a href="http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105" class="uri">http://www.iro.umontreal.ca/{~}lisa/publications2/index.php/attachments/single/105</a>.</p>
+</div>
+<div id="ref-Ma2016">
+<p>205. Ma, X., and Wang, X. (2016). Average Contrastive Divergence for Training Restricted Boltzmann Machines. Entropy <em>18</em>, 35. Available at: <a href="http://www.mdpi.com/1099-4300/18/1/35" class="uri">http://www.mdpi.com/1099-4300/18/1/35</a>.</p>
+</div>
+<div id="ref-Tieleman2008">
+<p>206. Tieleman, T. (2008). Training Restricted Boltzmann Machines using Approximations to the Likelihood Gradient. Proc. 25th Int. Conf. Mach. Learn. <em>307</em>, 7.</p>
+</div>
+<div id="ref-Fischer2010">
+<p>207. Fischer, A., and Igel, C. (2010). Empirical Analysis of the Divergence of Gibbs Sampling Based Learning Algorithms for Restricted Boltzmann Machines. In Artif. neural networks – icann 2010 (Springer, Berlin, Heidelberg), pp. 208–217. Available at: <a href="http://link.springer.com/10.1007/978-3-642-15825-4{\_}26" class="uri">http://link.springer.com/10.1007/978-3-642-15825-4{\_}26</a>.</p>
+</div>
+<div id="ref-Hyvarinen2006">
+<p>208. Hyvärinen, A. (2006). Consistency of pseudolikelihood estimation of fully visible Boltzmann machines. Available at: <a href="https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf" class="uri">https://www.cs.helsinki.fi/u/ahyvarin/papers/NC06.pdf</a>.</p>
+</div>
+<div id="ref-Hyvarinen2007">
+<p>209. Hyvarinen, A. (2007). Connections Between Score Matching, Contrastive Divergence, and Pseudolikelihood for Continuous-Valued Variables. IEEE Trans. Neural Networks <em>18</em>, 1529–1531. Available at: <a href="http://ieeexplore.ieee.org/document/4298117/" class="uri">http://ieeexplore.ieee.org/document/4298117/</a>.</p>
+</div>
+<div id="ref-Asuncion2010">
+<p>210. Asuncion, A.U., Liu, Q., Ihler, A.T., and Smyth, P. (2010). Learning with Blocks: Composite Likelihood and Contrastive Divergence. Proc. Mach. Learn. Res. <em>9</em>, 33–40. Available at: <a href="http://www.ics.uci.edu/{~}asuncion/pubs/AISTATS{\_}10.pdf" class="uri">http://www.ics.uci.edu/{~}asuncion/pubs/AISTATS{\_}10.pdf</a>.</p>
+</div>
+<div id="ref-Murphy2012">
+<p>95. Murphy, K.P. (2012). Machine Learning: A Probabilistic Perspective (MIT Press).</p>
+</div>
+<div id="ref-Swersky2010">
+<p>211. Swersky, K., Chen, B., Marlin, B., and Freitas, N. de (2010). A tutorial on stochastic approximation algorithms for training Restricted Boltzmann Machines and Deep Belief Nets. In 2010 inf. theory appl. work. (IEEE), pp. 1–10. Available at: <a href="http://ieeexplore.ieee.org/document/5454138/" class="uri">http://ieeexplore.ieee.org/document/5454138/</a>.</p>
+</div>
+<div id="ref-Anishchenko2017">
+<p>178. Anishchenko, I., Ovchinnikov, S., Kamisetty, H., and Baker, D. (2017). Origins of coevolution between residues distant in protein 3D structures. Proc. Natl. Acad. Sci., 201702664. Available at: <a href="http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114" class="uri">http://www.ncbi.nlm.nih.gov/pubmed/28784799 http://www.pnas.org/lookup/doi/10.1073/pnas.1702664114</a>.</p>
+</div>
+<div id="ref-Kamisetty2013">
+<p>103. Kamisetty, H., Ovchinnikov, S., and Baker, D. (2013). Assessing the utility of coevolution-based residue-residue contact predictions in a sequence- and structure-rich era. Proc. Natl. Acad. Sci. U. S. A. <em>110</em>, 15674–9. Available at: <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract" class="uri">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3785744{\&amp;}tool=pmcentrez{\&amp;}rendertype=abstract</a>.</p>
+</div>
+<div id="ref-Kingma2014">
+<p>212. Kingma, D., and Ba, J. (2014). Adam: A Method for Stochastic Optimization. Available at: <a href="http://arxiv.org/abs/1412.6980" class="uri">http://arxiv.org/abs/1412.6980</a>.</p>
+</div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://contactpredictionthesis.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="full-likelihood-optimization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="adam-results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/susannvorberg/phd_thesis/edit/master/06-optimizing_full_likelihood.Rmd",
+"text": "Edit"
+},
+"download": ["PhD_thesis_Susann_Vorberg.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
