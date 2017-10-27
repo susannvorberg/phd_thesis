@@ -224,64 +224,64 @@
 \chapter*{Summary}\label{summary}
 \addcontentsline{toc}{chapter}{Summary}
 
-Despite tremendous efforts in automating experimental structure
+Despite continuous efforts in automating experimental structure
 prediction and systematical target selection in structural genomics
 projects, the gap between the number of protein sequences and solved
-protein structures is constantly widening. While high-throughput DNA
+protein structures is constantly widening. High-throughput DNA
 sequencing technologies are advancing at an extraordinary pace, thereby
 not only decreasing the amount of time needed to sequence whole genomes
-but also drastically reducing costs, experimental techniques for
-structure determination are still labour intensive, time-consuming and
-very expensive. This trend illustrates the essential importance of
-computational approaches that can complement experimental structural
-biology efforts in order to bridge the sequence-structure gap.
+but also drastically reducing costs. By contrast, experimental
+techniques for structure determination are still labour intensive,
+time-consuming and very expensive. This trend illustrates the essential
+importance of computational approaches that can complement experimental
+structural biology efforts in order to bridge the sequence-structure
+gap.
 
-About half of the known protein families are annotated with experimental
-structural data and most likely are eligible for template-based
-structure prediction by which the protein structure is inferred from
-experimentally solved structures of homologous proteins. The other half
-can theoratically be addressed by \emph{de novo} structure prediction
-methods that minimize physical or knowledge based energy functions to
-identify the lowest-energy conformation that generally corresponds to
-the native protein conformation. However, in practice these approaches
-are limited by the immense computational costs to search the space of
-possible conformations.
-
+Only about half the known protein families are eligible for
+template-based structure prediction by which the protein structure is
+inferred from experimentally solved structures of homologous proteins.
+The other half can theoratically be addressed by \emph{de novo}
+structure prediction methods that try to identify the native protein
+structure without prior information. However, in practice these
+approaches are limited by the immense computational costs required to
+search the conformational space for the lowest-energy conformation.
 Recent advancements in residue-residue contact prediction have enabled
-the \emph{de novo} prediction of protein structures by constraining the
-overall protein fold and thereby reducing the conformational search
-space sufficiently. Residue-residue contact prediction is based on the
-old idea that spatially proximate amino acid residues tend to coevolve,
-leaving an echo of correlations in the evolutionary record. The
-predicted contacts can not only be used to guide \emph{de novo}
-structure prediction but they have also been successfully applied in
-diverse biological fields, such as predicting residue interactions in
-protein interfaces, studying protein flexibility and alternative
-conformations, quantifying the effects of mutations and ranking and
-validation of structural models.
+the \emph{de novo} prediction of protein structures by sufficiently
+constraining the overall protein fold.
 
-Despite the immense success of the new generation of contact prediction
-methods, several open challeges need to be addresed to broaden their
-applicability. The most evident limitation lies in the requirement of
-deep alignments that amplify the coevolutionary signal. Unfortunately,
-the most interesting targets for contact prediction, being protein
-families without any associated structural information, comprise low
-numbers of homologous sequences. Furthermore, the current methods apply
-heuristics that leave certain aspects of the available coevolutionary
-information unexploited but have so far resisted efforts to replace
-them.
+Residue-residue contact prediction is based on the idea that selection
+pressure on proteins to maintain structure and function can lead to
+compensatory mutations between spatially neighboring residues, leaving
+an echo of correlation signatures in the evolutionary record. Despite
+the immense success of contact prediction methods, several open
+challeges need to be addressed to broaden their applicability. The most
+evident limitation lies in the requirement of deep alignments that
+amplify the coevolutionary signal. Unfortunately, the majority of
+protein families without associated structural information that comprise
+interesting targets for contact guided \emph{de novo} structure
+prediction, have low numbers of homologous sequences. Furthermore, the
+current contact prediction methods apply heuristics that leave certain
+aspects of the available coevolutionary information unexploited. So far,
+the heuristics haven proven robust and resisted efforts to replace them.
 
-This work aims to improve the sensitivity of residue-residue contact
-prediction methods by exploiting the full coevolutionary information in
-a principled Bayesian framework. The statistical model underlying the
-current contact prediction approaches is embedded into the Bayesian
-framework which allows to deliver posterior estimates of contact
-probabilities instead of heuristic contact scores. The explicit
-modelling of amino acid preferences concealed in the coevolutionary
-coupling signal reflects the nature of residue-residue interactions.
-Furthermore,the Bayesian framework can naturally be extended to derive
-estimates of the probability distributions of the distances between
-residue pairs, which will be the focus of future work.
+This work presents two different approaches for improving contact
+prediction methods. Instead of inferring the evolutionary couplings by
+maximizing the pseudo-likelihood, a new approach was developed that
+maximizes the full likelihood by an approximation to its gradient. It
+achieved minor improvements in precision for protein families with low
+numbers of sequences. Secondly, a principled Bayesian framework has been
+developed that provides posterior probability estimates for
+residue-residue contacts instead of heuristic contact scores. The full
+information contained in the underlying statistical model is exploited
+by explicitely modelling the amino acid preferences in the
+coevolutionary coupling signal while at the same time accounting for the
+uncertainty in the data. Unexpectedly, the comprehensive modelling
+effort did not carry over to improved precision of the top ranked
+predictions. However, the Bayesian framework not only eradicates the use
+of heuristics and provides a statistically clean method for predicting
+contacts, but also offers the possibility for further extensions, such
+as deriving estimates of the probability distributions of the distances
+between residue pairs.
 
 \chapter*{Acknowledgements}\label{acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
@@ -8119,36 +8119,26 @@ parameters for \(K\eq5\) and 7618 parameters for \(K\eq10\) components.
 
 \chapter{Conclusion and Outlook}\label{conclusion-and-outlook}
 
-Direct coupling analysis (DCA) was developed in 2009 to infer spatially
-close residue pairs from coevolutionary signals in the evolutionary
-record of protein families {[}\protect\hyperlink{ref-Weigt2009}{64}{]}.
-Since then, the field of contact prediction has experienced rapid
-progress. Not only are the methods continuously improving but also the
-areas of application have extended beyond guiding \emph{de novo}
-structure prediction, for example to inferring evolutionary fitness
-landscapes and genomic interactions. While currently published
-\protect\hyperlink{abbrev}{DCA} methods are very successful at
-predicting contacts for large protein families, they all apply the same
-heuristics on top of the underlying statistical model thereby ignoring a
-wealth of information. It is a reasonable assumption that by making full
-use of the available information, the predictive performance of the
-models should improve and as a consequence extend the applicability of
-\protect\hyperlink{abbrev}{DCA} methods to smaller protein families.
-This is the motivation of my thesis.
+With the work presented here, I was the first to formulate
+\protect\hyperlink{abbrev}{DCA} as a principled statistical framework,
+providing true probability estimates and promoting transparency of
+modelling aspects. With this enhanced transparency, my work lays the
+foundation to improve \protect\hyperlink{abbrev}{DCA} for small protein
+families in a mechanistic way.
 
 In chapter \ref{interpreting-coupling-matrices}, I presented a thorough
-analysis of coupling matrices, that contain the information about
-residue-residue couplings and are inferred as part of the \emph{Potts}
-model, the statistical model underlying \protect\hyperlink{abbrev}{DCA}.
-I showed that coupling matrices contain valuable information with a
-meaningful biological interpretation. For example, the distributions of
-coupling values reflect biophysical interaction preferences between
-amino acids and the signal weakens with increasing residue-residue
-distances. Furthermore, interdependencies between different couplings
-are coherent and induce characteristic patterns in coupling matrices,
-often indicating the structural constraint for the residue pair. The
-majority of this information is lost by the the way current methods
-apply heuristics to compute a prediction for a residue-residue contact.
+analysis of coupling matrices that are inferred from a multiple sequence
+alignment (MSA) and reflect the tendencies of amino acids to co-occur at
+paired positions in the \protect\hyperlink{abbrev}{MSA}. I showed that
+coupling matrices contain valuable information with a meaningful
+biological interpretation. For example, the distributions of coupling
+values reflect biophysical interaction preferences between amino acids
+and the signal weakens with increasing residue-residue distances.
+Furthermore, interdependencies between different couplings are coherent
+and induce characteristic patterns in coupling matrices, often
+indicating the structural constraint for the residue pair. The majority
+of this information is lost by the the way current methods apply
+heuristics to compute a prediction for a residue-residue contact.
 
 Chapter \ref{optimizing-full-likelihood} presented an alternative
 approach to infer the \emph{Potts} model parameters. Due to the
@@ -8160,25 +8150,23 @@ full likelihood in case protein families have only few members. In my
 work, I optimized the full likelihood by using an approximate gradient
 provided by an approach called \emph{contrastive divergence}, that has
 not yet been applied to contact prediction. I systematically tuned the
-stochastic gradient descent optimization algorithm for the use with
-\emph{contrastive divergence} and also examined various modifications to
-the estimation of the gradient. Yet, I found that my approach achieved
-only minor improvements over pseudo-likelihood maximization for small
-protein families, that could be traced back to amplified signals between
-strongly conserved residue pairs.
+stochastic gradient descent algorithm for the use with \emph{contrastive
+divergence} and also examined various modifications to the estimation of
+the gradient. My approach improves over pseudo-likelihood maximization
+for small protein families, which could be traced back to amplified
+signals between strongly conserved residue pairs.
 
 In chapter \ref{contact-prior} I developed a random forest classifier
-for contact prediction that is trained on simple sequence features. As
-expected, this model yields a robust estimator that outperforms
-coevolution methods for small protein families where they suffer from
-the low signal-to-noise ratio. In line with the most successful contact
-predictors which exploit information from various sources and multiple
+for contact prediction that is trained on sequence features. This model
+yields a robust estimator that outperforms coevolution methods for small
+protein families where they suffer from the low signal-to-noise ratio.
+In line with the most successful contact predictors which exploit
+information from various sources and multiple
 \protect\hyperlink{abbrev}{DCA} methods, I integrated the predictions of
 the pseudo-likelihood and the constrastive divergence method as
-additional features for training. Eventhough the individual methods
-greatly contribute and improve the predictive performance of the random
-forest classifier, they do not seem to represent complementary
-information that would help to boost performance even further.
+additional features for training. The individual methods greatly
+contribute and improve the predictive performance of the random forest
+classifier.
 
 The Bayesian framework proposed in chapter \ref{bayesian-approach}
 represents a principled approach that eradicates the use of heuristics
@@ -8187,31 +8175,33 @@ parameters in form of a Gaussian mixture coupling prior while at the
 same time accounting for the uncertainty of the data. The
 hyperparameters of the coupling prior were learned on couplings and
 structures of many proteins and the Gaussian mixture convincingly
-reproduced empirical coupling distributions. However, the posterior
-probabilties obtained by combining the likelihood with prior information
-in form of the random forest contact class probabilities, does not
-improve contact predictions. It can only be hypothesized why the
-Bayesian approach falls short of expectations. A possible explanation is
-that the coupling prior, eventhough reproducing the empirical
-distributions well enough, needs to become more complex, e.g.~by using
-more Gaussian components or full instead of diagonal covariance
-matrices. Another reason could be that certain inherent modelling
-assumptions are not met or are too inaccurate but unfortunately it is
-not easy to verify these assumptions.
+reproduced empirical coupling distributions. Posterior probabilty
+estimates of residue-residue contacts are obtained by combining the
+Bayesian likelihood, that involves marginalizing out the coupling
+parameters, with prior information in form of the random forest contact
+class probabilities. The precision of the contacts that are assigned the
+highest probabilities did not improve over precision of the heuristic
+predictions obtained from the pseudo-likelihood approach. A possible
+explanation is that the coupling prior does not yet capture enough
+information in order to efficiently discriminate between contacts and
+non-contacts. Eventhough reproducing the one- and two-dimensional
+empirical distributions, it is possible that crucial interdependencies
+require a more complex model, e.g.~by using more Gaussian components or
+full instead of diagonal covariance matrices. Another reason could be
+that certain inherent modelling assumptions are not met or are too
+inaccurate but unfortunately it is not easy to verify these assumptions.
 
-Finally, it must be noted that this work represents the first attempt to
-formulate \protect\hyperlink{abbrev}{DCA} as a principled statistical
-framework, providing true probability estimates, promoting transparancy
-of modelling aspects and a simple way to extend the model with further
-prior information or to embed the model into even more complex Bayesian
-hierarchical frameworks. For example, an extension of the Bayesian model
-could be the estimation of posterior probabilities of residue-residue
-distances instead of contacts. The analysis in chapter
+The Bayesian framework developed here provides the means to establish a
+statistically sound formulation for \protect\hyperlink{abbrev}{DCA} that
+can be easily extended to include further prior information or that can
+be embedded in further Bayesian hierarchies. For example, a simple
+extension of the Bayesian model allows the estimation of posterior
+probabilities of residue-residue distances instead of contacts (see
+section \ref{bayesian-model-distances}). The analysis in chapter
 \ref{interpreting-coupling-matrices} has demonstrated that the coupling
-signal weakens with increasing inter-residue distances. It is therefore
-reasonable and also easy to adapt the Bayesian model to the prediction
-of residue-residue distances and the necessary modification of the
-coupling prior is denoted in section \ref{bayesian-model-distances}.
+signal weakens with increasing inter-residue distances. The higher
+information content of residue-residue distances compared to a binary
+contact can help to improve structure prediction.
 
 \appendix
 
