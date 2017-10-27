@@ -22,20 +22,24 @@ The other half can theoratically be addressed by *de novo* structure prediction 
 However, in practice these approaches are limited by the immense computational costs required to search the conformational space for the lowest-energy conformation.
 Recent advancements in residue-residue contact prediction have enabled the *de novo* prediction of protein structures by sufficiently constraining the overall protein fold.
 
-Residue-residue contact prediction is based on the idea that spatially proximate amino acid residues tend to coevolve, leaving an echo of correlations in the evolutionary record.
-New statistical models have enabled to reduce the formerly high false positive rate by distinguishing cause and correlation and opening new fields of application.
-Despite the immense success of contact prediction methods, several open challeges need to be addresed to broaden their applicability.
+<!--
+With the development of sophisticated statistical models the formerly high false positive rate of predictions could be reduced.
+-->
+Residue-residue contact prediction is based on the idea that selection pressure on proteins to maintain structure and function can lead to compensatory mutations between spatially neighboring residues, leaving an echo of correlation signatures in the evolutionary record.
+Despite the immense success of contact prediction methods, several open challeges need to be addressed to broaden their applicability.
 The most evident limitation lies in the requirement of deep alignments that amplify the coevolutionary signal.
-Unfortunately, the most interesting targets for contact prediction, being protein families without any associated structural information, comprise low numbers of homologous sequences.
-Furthermore, the current methods apply heuristics that leave certain aspects of the available coevolutionary information unexploited but have so far resisted efforts to replace them.
+Unfortunately, the majority of protein families without associated structural information that comprise interesting targets for contact guided *de novo* structure prediction, have low numbers of homologous sequences.
+Furthermore, the current contact prediction methods apply heuristics that leave certain aspects of the available coevolutionary information unexploited.
+So far, the heuristics haven proven robust and resisted efforts to replace them.
 
 This work presents two different approaches for improving contact prediction methods.
-Instead of inferring the evolutionary couplings by maximizing the pseudo-likelihood, a new approach is demonstrated that derives couplings by optimizing the full likelihood.
-Secondly, a principled Bayesian framework is developed that allows the derivation of posterior estimates of contact probabilities instead of heuristic contact scores.
-The available information is fully exploited by explicitely modelling the amino acid preferences which are concealed in the coevolutionary coupling signal.
-Furthermore,the Bayesian framework can naturally be extended to derive estimates of the probability distributions of the distances between residue pairs.
+Instead of inferring the evolutionary couplings by maximizing the pseudo-likelihood, a new approach was developed that maximizes the full likelihood by an approximation to its gradient.
+It achieved minor improvements in precision for protein families with low numbers of sequences.
+Secondly, a principled Bayesian framework has been developed that provides posterior probability estimates for residue-residue contacts instead of heuristic contact scores.
+The full information contained in the underlying statistical model is exploited by explicitely modelling the amino acid preferences in the coevolutionary coupling signal while at the same time accounting for the uncertainty in the data.
+Unexpectedly, the comprehensive modelling effort did not carry over to improved precision of the top ranked predictions. 
+However, the Bayesian framework not only eradicates the use of heuristics and provides a statistically clean method for predicting contacts, but also offers the possibility for further extensions, such as deriving estimates of the probability distributions of the distances between residue pairs.
 
-The predicted contacts can not only be used to guide *de novo* structure prediction but they have also been successfully applied in diverse biological fields, such as predicting residue interactions in protein interfaces, studying protein flexibility and alternative conformations, quantifying the effects of mutations and ranking and validation of structural models. 
 
 
 # Acknowledgements {-}
