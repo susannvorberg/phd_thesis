@@ -194,7 +194,23 @@ Since it has been shown in section \@ref(comparing-pll-cd) that pseudo-likelihoo
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd.html", height = "600px")
 ```
 
+## Discussion
 
+Much information about interacting protein residues is typically contained in simple protein sequence features.
+All popular machine learning and meta-predictors for contact prediction employ sequence derived features as additional source of information besides coevolution scores. 
+In line with this knowledge I developed a random forest classifier for contact prediction that is trained on simple sequence features.
+
+Random forests are a convenient choice for many machine learning applications as they require no input preparation, such as feature scaling, they perform implicit feature selection and provide a robust indicator of feature importance and can handle huge feature space.
+Furthermore they are quick and straight forward to train and have been shown to perform well for protein contact prediction.
+
+As expected, the random forest model yielded a robust estimator that outperformed coevolution methods for small protein families where they suffer from the low signal-to-noise ratio.
+Furthermore, I integrated the predictions of the pseudo-likelihood and the constrastive divergence method as additional features for training.
+Again as expected, the individual methods greatly contribute and improve the predictive performance of the random forest classifier.
+Even for protein families with many sequences, where coevolutionary methods perform best, the combined random forest model improves over the individual coevolution approaches. 
+Yet, including both coevolution scores as additional features into the random forest model does not help to boost performance further.
+Apparantly, they do not seem to represent complementary information which was on the other hand already expected from the analysis in chapter \@ref(optimizing-full-likelihood).
+
+\newpage
 ## Methods
 
 ### Features used to train Random Forest Model {#seq-features}

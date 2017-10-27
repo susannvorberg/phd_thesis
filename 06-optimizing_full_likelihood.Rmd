@@ -130,27 +130,6 @@ knitr::include_graphics("img/full_likelihood/sgd/percentage_changes_in_gradient_
 
 Of course, the simplest strategy to assume convergence is to specify a maximum number of iterations for the optimization procedure, which also ensures that the algorithm will stop eventually if none of the other convergence criteria is met.
 
-A necessary but not sufficient condition that is satisfied at the optimum when the gradient is zero, is given by $\sum_{a,b=1}^{20} \wijab = 0$ (see section \@ref(prior-v)).
-This condition is never violated, as long as parameters satisfy this criterion at initialization and the same step size is used to update all parameters. 
-To understand why, note that the 400 partial derivatives $\frac{\partial L\!L(\v^*, \w)}{\partial \wijab}$ for a residue pair $(i,j)$ and for $a,b \in \{1, \ldots, 20\}$ are not independent.
-The sum over the 400 pairwise amino acid counts at positions $i$ and $j$ is identical for the observed and the sampled alignment and amounts to,
-
-\begin{equation}
-  \sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij} \; .
-\end{equation}
-
-Considering a residue pair $(i,j)$ and assuming amino acid pair $(a,b)$ has higher counts in the sampled alignment than in the observed input alignment, then this difference in counts must be compensated by other amino acid pairs $(c,d)$ having less counts in the sampled alignment compared to the true alignment (see Figure \@ref(fig:visualisation-wijab-constraint)).
-Therefore, it holds $\sum_{a,b=1}^{20} \frac{\partial L\!L(\v^*, \w)}{\partial \wijab} = 0$.
-This symmetry is translated into parameter updates as long as the same step size is used to update all parameters. 
-However, when using adaptive learning rates (e.g. with the *ADAM* optimizer), this symmetry is broken and the condition $\sum_{a,b=1}^{20} \wijab = 0$ can be violated during the optimization processs.
-It is therefore interesting to monitor $\sum_{1 \le 1 < j \le L} \sum_{a,b=1}^{20} \wijab$.
-
-(ref:caption-visualisation-wijab-constraint) The 400 partial derivatives $\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}$ at position $(i,j)$ for $a,b \in \{1, \ldots, 20 \}$ are not independent. Red bars represent pairwise amino acid counts at position $(i,j)$ for the sampled alignment. Blue bars represent pairwise amino acid counts at position $(i,j)$ for the input alignment. The sum over pairwise amino acid counts at position $(i,j)$ for both alignments is $N_{ij}$, which is the number of ungapped sequences. The partial derivative for $\wijab$ is computed as the difference of pairwise amino acid counts for amino acids $a$ and $b$ at position $(i,j)$. The sum over the partial derivatives $\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}$ at position $(i,j)$ for all $a,b \in \{1, \ldots, 20 \}$ is zero.
-
-```{r visualisation-wijab-constraint, echo = FALSE, out.width = '60%', fig.align='center', fig.cap = '(ref:caption-visualisation-wijab-constraint)'}
-knitr::include_graphics("img/full_likelihood/constraint_wijab.png")
-```
-
 
 ### Tuning Hyperparameters of Stochastic Gradient Descent Optimizer {#sgd-hyperparameter-tuning}
 
@@ -215,7 +194,7 @@ Optimizing [CD](#abbrev) with [SGD](#abbrev) using any of the learning rate sche
 Several learning rate schedules perform almost equally and yield a mean precision that is about one to two percentage below the mean precision for the pseudo-likelihood contact score (see Figure \@ref(fig:performance-cd-learnignrate-schedules)):
 a linear learning rate schedule with decay rate $\gamma \eq 1\mathrm{e}{-2}$, a sigmoidal learning rate schedule with decay rates $\gamma \eq 1\mathrm{e}{-5}$ or $\gamma \eq 1\mathrm{e}{-6}$ and an exponential learning rate schedule with decay rates $\gamma \eq 1\mathrm{e}{-3}$ or $\gamma \eq 1\mathrm{e}{-5}$. 
 The square root learning rate schedule gives ovarall bad results and does not lead to convergence because the learning rate decays slowly at later time steps.
-The benchmark plots for all learning rate schedules are shown in Appendix section \@ref(benchmark-learning-rate-annealing-schedules).
+The benchmark plots for all learning rate schedules are shown in Appendix Figures \@ref(fig:performance-cd-linschedule), \@ref(fig:performance-cd-sigschedule), \@ref(fig:performance-cd-sqrtschedule), \@ref(fig:performance-cd-expschedule).
 
 (ref:caption-performance-cd-learnignrate-schedules) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$. **pseudo-likelihood**:  couplings computed with pseudo-likelihood. **CD**: couplings computed with [CD](#abbrev) using stochastic gradient descent with an initial learning rate defined with respect to [Neff](#abbrev). Learning rate annealing schedules and decay rates are specified in the legend.
 
@@ -416,7 +395,7 @@ Concretely, [PCD](#abbrev) is switched on, when the relative change of the norm 
 As a result, the model will already have approached the optimum when [PCD](#abbrev) is switched on so that the coupling parameters $\w$ will mot change to quickly over many updates. 
 
 
-(ref:caption-precision-pcd) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **pCD**: contact scores computed from [PCD](#abbrev) optimized with [SGD](#abbrev) using the hyperparameters that have been found to work optimal with [CD](#abbrev) as described throughout the last sections. **pCD #Gibbs steps = 10**: same as pCD, but evolving the Gibbs chain for 10 steps. **pCD start = 1e-3**: [SGD](#abbrev) optimization starts by optimizing the full likelihood using the [CD](#abbrev) gradient approximation and switches to the [PCD](#abbrev) gradient approximation once the relative change of L2 norm of parameters has fallen below $\epsilon \eq \mathrm{1e}{-3}$ evaluated over the last 10 iterations. **pCD start = 1e-5**: same as 'pCD start = 1e-3', but with $\epsilon \eq \mathrm{1e}{-5}$.
+(ref:caption-precision-pcd) Mean precision for top ranked contact predictions over 300 proteins. Contact scores are computed as the [APC](#abbrev) corrected Frobenius norm of the couplings $\wij$.  **pseudo-likelihood**:  contact scores computed from pseudo-likelihood. **pCD**: contact scores computed from [PCD](#abbrev) optimized with [SGD](#abbrev) using the hyperparameters that have been found to work optimal with [CD](#abbrev) as described throughout the last sections. **pCD #Gibbs steps = 10**: same as pCD, but evolving the Gibbs chain for 10 steps. **pCD start = 1e-3**: [SGD](#abbrev) optimization starts by optimizing the full likelihood using the [CD](#abbrev) gradient estimate and switches to the [PCD](#abbrev) gradient estimate once the relative change of L2 norm of parameters has fallen below $\epsilon \eq \mathrm{1e}{-3}$ evaluated over the last 10 iterations. **pCD start = 1e-5**: same as 'pCD start = 1e-3', but with $\epsilon \eq \mathrm{1e}{-5}$.
 
 ```{r precision-pcd, echo = FALSE, screenshot.alt="img/full_likelihood/pcd/precision_vs_rank_notitle.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-pcd)'}
 knitr::include_url("img/full_likelihood/pcd/precision_vs_rank_notitle.html", height = "500px")
@@ -451,31 +430,81 @@ In section \@ref(sgd-hyperparameter-tuning) I manually tuned the learning rate a
 It is plausible, that these settings are not optimal for [CD](#abbrev)-k with k>1 Gibbs steps and [PCD](#abbrev) and require tuning once again.
 Because hyperparameter optimization with stochastic gradient descent is a time-consuming task, in the following, I applied the popular *ADAM* stochastic gradient descent optimizer that does in theory not require tuning many hyperparameters [@Kingma2014].
 
-## Using ADAM to optimize Contrastive Divergence {#adam-results}
+## Using ADAM to Optimize Contrastive Divergence {#adam-results}
 
-*ADAM* computes per-parameter adaptive learning rates and includes momentum and the default values have been found to work quite well (see methods section \@ref(methods-full-likelihood-adam) for details) [@Ruder2017; @Kingma2014]. 
-However, I tested different learning rates for *ADAM* to optimize the full likelihood with [CD](#abbrev)-1 for protein 1mkcA00 (number of sequences = 142) and 1c75A00 (number of sequences = 28078) and found that both proteins require a differnt optimal learning rate.
+*ADAM* computes per-parameter adaptive learning rates including momentum.
+The default values have been found to work well in practice so that little parameter tuning is required (see methods section \@ref(methods-full-likelihood-adam) for details) [@Ruder2017; @Kingma2014]. 
+However, I tested *ADAM* with different learning rates for the optimization with [CD](#abbrev)-1 for protein 1mkcA00 (number of sequences = 142) and 1c75A00 (number of sequences = 28078) and found that both proteins are sensitive to the choice of learning rate.
 In contrast to plain stochastic gradient descent, with *ADAM* it is possible to use larger learning rates for proteins having large alignments, because the learning rate will be adapted to the magnitude of the gradient for every parameter individually. 
 For protein 1mkcA00, with [Neff](#abbrev)=96, a learning rate of 5e-3 quickly leads to convergence whereas for protein 1c75A00, having [Neff](#abbrev)=16808, an even larger learning rate can be chosen to obtain quick convergence (see Appendix Figure \@ref(fig:adam-learning-rate)). 
-Therefore, I again specified the learning rate as a function of [Neff](#abbrev), 
+Therefore, I again specified the learning rate as a function of [Neff](#abbrev), $\alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}})$, such that for small [Neff](#abbrev), e.g. 5th percentile of the distribution in the dataset $\approx 50$, this definition of the learning rate yields $\alpha_0 \approx 8\mathrm{e}{-3}$ and for large [Neff](#abbrev), e.g. 95th percentile $\approx 15000$, this yields $\alpha_0 \approx 2\mathrm{e}{-2}$. 
 
-\begin{equation}
-  \alpha = 2\mathrm{e}{-3}\log(\text{N}_{\text{eff}}) \; ,
-  (\#eq:learning-rate-wrt-neff-adam)
-\end{equation}
-
-such that or small [Neff](#abbrev), e.g. 5th percentile of the distribution in the dataset $\approx 50$, this definition of the learning rate yields $\alpha_0 \approx 8\mathrm{e}{-3}$ and for large [Neff](#abbrev), e.g. 95th percentile $\approx 15000$, this yields $\alpha_0 \approx 2\mathrm{e}{-2}$. 
-
-It is interesting to note, that the norm of the coupling parameters, $||\w||_2$, converges towards different values depending on the choice of the learning rate $\alpha$ ((see Appendix Figure \@ref(fig:adam-learning-rate)).
+It is interesting to note, that the norm of the coupling parameters, $||\w||_2$, converges towards different values depending on the choice of the learning rate (see Appendix Figure \@ref(fig:adam-learning-rate).
 By default, *ADAM* uses a constant learning rate, because the algorithm performs a kind of step size annealing by nature.
 However, popular implementations of *ADAM* in the [Keras](https://github.com/fchollet/keras/blob/master/keras/optimizers.py#L385) [@Chollet2015] and [Lasagne](https://github.com/Lasagne/Lasagne/blob/master/lasagne/updates.py#L565-L629) [@Dieleman2015] packages allow the use of an annealing schedule.
 I therefore tested *ADAM* with a sigmoidal learning rate annealing schedule which already gave good results for [SGD](#abbrev) (see section \@ref(sgd-hyperparameter-tuning)). 
 Indeed, as can be seen in Appendix Figure \@ref(fig:adam-learning-rate-annealing), when *ADAM* is used with a sigmoidal decay of the learning rate, the L2-norm of the coupling parameters $||\w||_2$ converges roughly towards the same value.
 For the following analysis I used *ADAM* with a learning rate defined as a function of [Neff](#abbrev) and a sigmoidal learning rate annealing schedule with decay rate $\gamma \eq 5e-6$.
 
-TODO
+(ref:caption-precision-cd-adam) Mean precision for top ranked contact predictions over 300 proteins. Contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **pseudo-likelihood**:  couplings computed from pseudo-likelihood. **CD ADAM**: couplings computed from contrastive divergence using *ADAM* optimizer. **CD ADAM #Gibbs steps = 10**: couplings computed from contrastive divergence using *ADAM* optimizer and 10 Gibbs steps for sampling sequences.  **pCD ADAM**: couplings computed from persistent contrastive divergence usign *ADAM* optimizer. **pCD ADAM start = 1e-3**: *ADAM* starts by optimizing the full likelihood using the [CD](#abbrev) gradient estimate and switches to the [PCD](#abbrev) gradient estimate once the relative change of L2 norm of parameters has fallen below $\epsilon \eq \mathrm{1e}{-3}$ evaluated over the last 10 iterations. **pCD ADAM start = 1e-5**: same as "pCD ADAM start = 1e-3" but [PCD](#abbrev) is switched on for $\epsilon \eq \mathrm{1e}{-5}$
 
-A problem when using *ADAM* is that the necessarty condidtion $\sum_{a,b=1}^{20} \wijab = 0$ is violated (see section \@ref(convergence-criteria-sgd)). 
+I evaluated [CD](#abbrev)-1, [CD](#abbrev)-10 and persistent contrastive divergence. 
+As before, I will also evaluate a combination of both, such that [PCD](#abbrev) is switched on, when the relative change of the norm of coupling parameters, $||\w||_2$, falls below a small threshold.
+Figure \@ref(fig:precision-cd-adam) shows the benchmark for training the various modified [CD](#abbrev) models with the *ADAM* optimizer. 
+Overall, the predictive performance for [CD](#abbrev) and [PCD](#abbrev) did not improve by using the *ADAM* optimzier instead of the manually tuned stochastic gradient descent optimizer. 
+Therefore it can be concluded that adaptive learning rates and momentum do not provide an essential advantage for inferring *Potts* model parameters with [CD](#abbrev) and [PCD](#abbrev). 
+
+
+```{r precision-cd-adam, echo = FALSE, screenshot.alt="img/full_likelihood/adam/precision_vs_rank_adam_gibbs_pcd.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-cd-adam)'}
+knitr::include_url("img/full_likelihood/adam/precision_vs_rank_adam_gibbs_pcd.html", height = "500px")
+```
+
+
+The convergence analysis for the two example proteins 1ahoA00 and 1c75A00 reveals, that optimization with *ADAM* converges towards similar offsets as optimization with plain [SGD](#abbrev) with respect to the L2 norm of coupling parameters.
+For 1ahoA00, with low [Neff](#abbrev)=229, the L2 norm of the parameters converges towards $||\w||_2 \approx 21.6$ when using [CD](#abbrev)-1 and towards $||\w||_2 \approx 24$ when using [PCD](#abbrev) or [CD](#abbrev)-k with k>1 (compare left plots in Figures \@ref(fig:adam-gibbs-pcd) and \@ref(fig:pcd-single-proteins)).
+For protein 1c75A00, with high [Neff](#abbrev)=16808, *ADAM* seems to find distinct optima that are clearly separated in contrast to using plain [SGD](#abrev).
+When using *ADAM* with [CD](#abbrev)-1 the algorithm converges towards $||\w||_2 \approx 120$, *ADAM* with [CD](#abbrev)-5 converges towards $||\w||_2 \approx 130$ and with [CD](#abbrev)-10 towards $||\w||_2 \approx 131$.
+And using *ADAM* with [PCD](#abrrev), regardless of whether the [PCD](#abrrev) gradient estimate is used right from the start of optimization or only later, the algorithm converges towards $||\w||_2 \approx 134$.
+Therefore, *ADAM* establishes the clear trend that longer sampling, or sampling with persistent chaisn results in larger parameter estimates. 
+
+
+(ref:caption-adam-gibbs-pcd) Monitoring the L2 norm of coupling parameters,$||\w||_2$, for protein 1ahoA00 and 1c75A00 during optimization of [CD](#abbrev) and [PCD](#abbrev) with the *ADAM* optimizer. Contrastive Divergence (CD in legend) is optimized employing a different number of Gibbs steps that are specified in the legend. Persistent contrastive divergence (pCD in legend) uses one Gibbs step. "pCD start= X" indicates that optimization starts by using the [CD](#abbrev) gradient estimate and switches to the [PCD](#abbrev) gradient estimate once the relative change of L2 norm of parameters has fallen below a small threshold over the last 10 iterations. The threshold is given in the legend. **Left** Protein 1ahoA00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). 
+
+```{r adam-gibbs-pcd, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-adam-gibbs-pcd)'}
+knitr::include_graphics(c("img/full_likelihood/adam/1ahoA00_parameter_norm_pcd_gibbs.png","img/full_likelihood/adam/1c75A00_parameter_norm_pcd_gibbs.png" ))
+```
+
+
+### A *Potts* model specific convergence criterion {#adam-violates-sum-wij}
+
+For the *Potts* model there exists a necessary but not sufficient condition that is satisfied at the optimum when the gradient is zero (derived in method section \@ref(prior-v)) and that is given by,  $\sum_{a,b=1}^{20} \wijab = 0$.
+This condition is never violated, as long as parameters satisfy this criterion at initialization and the same step size is used to update all parameters. 
+To understand why, note that the 400 partial derivatives $\frac{\partial L\!L(\v^*, \w)}{\partial \wijab}$ for a residue pair $(i,j)$ and for $a,b \in \{1, \ldots, 20\}$ are not independent.
+The sum over the 400 pairwise amino acid counts at positions $i$ and $j$ is identical for the observed and the sampled alignment and amounts to, $\sum_{a,b=1}^{20} N_{ij} q(x_i \eq a, q_j \eq b) = N_{ij}$.
+
+Considering a residue pair $(i,j)$ and assuming amino acid pair $(a,b)$ has higher counts in the sampled alignment than in the observed input alignment, then this difference in counts must be compensated by other amino acid pairs $(c,d)$ having less counts in the sampled alignment compared to the true alignment (see Figure \@ref(fig:visualisation-wijab-constraint)).
+Therefore, it holds $\sum_{a,b=1}^{20} \frac{\partial L\!L(\v^*, \w)}{\partial \wijab} = 0$.
+This symmetry is translated into parameter updates as long as the same step size is used to update all parameters. 
+However, when using adaptive learning rates, e.g. with the *ADAM* optimizer, this symmetry is broken and the condition $\sum_{a,b=1}^{20} \wijab = 0$ can be violated during the optimization processs.
+
+
+(ref:caption-visualisation-wijab-constraint) The 400 partial derivatives $\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}$ at position $(i,j)$ for $a,b \in \{1, \ldots, 20 \}$ are not independent. Red bars represent pairwise amino acid counts at position $(i,j)$ for the empirical alignment. Blue bars represent pairwise amino acid counts at position $(i,j)$ for the sampled alignment. The sum over pairwise amino acid counts at position $(i,j)$ for both alignments is $N_{ij}$, which is the number of ungapped sequences. The partial derivative for $\wijab$ is computed as the difference of pairwise amino acid counts for amino acids $a$ and $b$ at position $(i,j)$. The sum over the partial derivatives $\frac{\partial \LLreg(\v^*,\w)}{\partial \wijab}$ at position $(i,j)$ for all $a,b \in \{1, \ldots, 20 \}$ is zero.
+
+```{r visualisation-wijab-constraint, echo = FALSE, out.width = '70%', fig.align='center', fig.cap = '(ref:caption-visualisation-wijab-constraint)'}
+knitr::include_graphics("img/full_likelihood/constraint_wijab.png")
+```
+
+For proteins 1ahoA00 and 1c75A00, Figure \@ref(fig:adam-gibbs-pcd-sumwijab) shows the number of residue pairs for which this condition is violated according to $|\sum_{a,b=1}^{20} \wijab| > \mathrm{1e}{-2}$, during optimization with *ADAM*. 
+For about half out of the 2016 residue pairs in protein 1ahoA00 the condition is violated at the end of optimization. 
+For protein 1c75A00 it is about 2300 out of the 2485 residue pairs.
+Whereas this is not a problem when computing the contact score based on the Frobenius norm of the coupling matrix, it is problematic when utilizing the couplings in the Bayesian framework presented in section \@ref(bayesian-approach), which requires the condition $\sum_{a,b=1}^{20} \wijab = 0$ to hold.
+
+(ref:caption-adam-gibbs-pcd-sumwijab) Monitoring the number of residue pairs for which $|\sum_{a,b=1}^{20} \wijab| > \mathrm{1e}{-2}$. Legend is the same as in Figure \@ref(fig:adam-gibbs-pcd). **Left** Protein 1ahoA00 has length L=64 and 378 sequences in the alignment ([Neff](#abbrev)=229) **Right** Protein 1c75A00 has length L=71 and 28078 sequences in the alignment ([Neff](#abbrev)=16808). 
+
+```{r adam-gibbs-pcd-sumwijab, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-adam-gibbs-pcd-sumwijab)'}
+knitr::include_graphics(c("img/full_likelihood/adam/1ahoA00_number_ij_sumwijuneqzero.png","img/full_likelihood/adam/1c75A00_number_ij_sumwijuneqzero.png" ))
+```
+
 
 
 ## Comparing CD couplings to pLL couplings {#comparing-pll-cd}
@@ -499,7 +528,7 @@ The 14 (=L/5) highest scoring contacts predicted with [CD](#abbrev) are true pos
 Both methods predict very similar contact maps (see Figure \@ref(fig:contact-maps-1c75a00)).
 The highest scoring predictions (top L/5 contacts marked with croses) are identical except for one contact, which is the false positive contact predicted by the pseudo-likelihood.
 
-(ref:caption-contact-maps-1c75a00)  Contact maps computed for protein 1c75A00. Upper left shows computed contact map and lower right shows the native distance map. Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff. Contact scores have been computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Couplings computed from pseudo-likelihood. **Right** Couplings computed from [CD](#abbrev).
+(ref:caption-contact-maps-1c75a00)  Contact maps predicted for protein 1c75A00. Upper left shows predicted contact map and lower right shows the native distance map. Contacts are defined according to a $8 \angstrom \Cb$ distance cutoff and have been computed as [APC](#abbrev) corrected Frobenius norm of the couplings. **Left** Couplings computed from pseudo-likelihood. **Right** Couplings computed from [CD](#abbrev).
 
 ```{r contact-maps-1c75a00, echo = FALSE, out.width = '49%', fig.align='center', fig.show='hold', fig.cap = '(ref:caption-contact-maps-1c75a00)'}
 knitr::include_graphics(c("img/full_likelihood/comparing_couplings/1c75A00/contact_map_pseudo-likelihood_apc_1c75A00.png", "img/full_likelihood/comparing_couplings/1c75A00/contact_map_contrastive_divergence_apc_1c75A00.png"))
@@ -563,30 +592,34 @@ The most successfull contact predictors presented in section \@ref(meta-predicto
 
 ## Discussion
 
-Due to the complexity of the normalization constant it is infeasible to infer the model parameters via maximum-likelihood estimation. 
-The most popular [DCA](#abbrev) approaches optimize the pseudo-likelihood instead but it is unknown how well it approximates the full likelihood in case protein families have only few members.
-In this chapter I tested an alternative approach to infer the *Potts* model parameters called *contrastive divergence*.
-[CD] optimizes the full likelihood of the *Potts* model by approximating the gradient of the the full likelihood with short Gibbs chains. 
-However, it turned oit that pLL performs as well as CD, also in low data scanrios, given he fac thtat the improvement of CD can be attributed to couplings between highly conserved pairs.
+It is not feasible to evaluate the full likelihood of the *Potts* model for proteins of typical length due to the complexity of the normalization constant.
+The most popular approach for protein contact prediction to get around this problem is to optimize the pseudo-likelihood instead.
+However, it is unknown how well the pseudo-likelihood solution approximates the full likelihood solution in case protein families have only few members.
+In this chapter I tested an alternative approach to infer the *Potts* model parameters, called *contrastive divergence* (CD).
+It optimizes the full likelihood of the *Potts* model by approximating the gradient with short Gibbs chains. 
+However, a benchamrk on a large test set showed that the predictive performance of [CD](#abbrev) does not improve over pseudo-likelihood with respect to the precision of top ranked contact predictions (see Figure \@ref(fig:precision-cd-final)).
+[CD](#abbrev) achieved minor improvements for small protein families, however this improvement could be traced back to amplified signals between strongly conserved residue pairs.
 
 I elaborated in detail on the hyperparameter optimization for the stochastic gradient descent optimizer and the [CD](#abbrev) model itself. 
 Eventhough the adaptive learning rate optimizer *ADAM* did not improve performance over plain stochastic gradient descent, it is still likely that appropriate modifications to the optimization procedure, e.g. averaging [@Ma2016], might be beneficial for particular variants of [CD](#abbrev).
-As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but also preventing overfitting.
+As dicussed in section \@ref(convergence-criteria-sgd), the convergence criterion is a crucial aspect for optimization, not only affecting runtime but it can also prevent overfitting.
 It might be worth to assess the convergence properties with more sophisticated convergence metrics, like the EB-criterion proposed by Mahsereci et al. [@Mahsereci2017], instead of using the L2 norm of the coupling parameters, $||\w||_2$.
 
-Against expectations, the best performance with respect to the precision of the top ranked contacts, was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
+Against expectations, the best performance with respect to the precision of the top ranked contacts was obtained by using the most simple variant of the *contrastive divergence* algorithm, [CD](#abbrev)-1.
 With [CD](#abbrev)-1,  sequence samples are generated according to the current state of the model by evolving Gibbs chains, that have been initialized at data samples, for only one full step.
-Interestingly, better gradient estimates that were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), did not carry over to better predictive performance. 
-It is possible that the improved gradient helps to finetune the parameters which has no effect on the contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, and the ovaral ranking of residue pairs. 
-This was shwon in the last sectionL: the ranking of pseudo-likelihood and CD scores is very similar. 
-  - strongest signals are sufficient [@cocoo]
-    - finetuning lower signals not relevant
-  
-Sophisitcated methods are required to use this fientuned information? --> bayes?
-Furthermore, it can be speculated that the heuristic contact score that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for couplings computed with [CD](#abbrev).
+Interestingly, better gradient estimates were obtained by running more Gibbs chains in parallel (see section \@ref(cd-sampling-size)), but did not carry over to better predictive performance. 
+It is possible that the improved gradient helps to finetune the parameters.
+Finetuning would only have a negligible effect on the contact score, computed as the [APC](#abbrev) corrected Frobenius norm of the couplings, and the ovaral ranking of residue pairs. 
+
+Cocco and colleagues argued that for the purpose of contact prediction, where predictions only need to capture the topology of the network of coevolving positions, approximate methods such as pseudo-likelihood maximization might be sufficient to provide accurate results [@Cocco2017]. 
+They showed that different approaches for *Potts* model parameter inferrence yield highly correlated contact scores, using the [APC](#abbrev) corrected Frobenius norm.
+In contrast, more quantitative applications, such as inferring mutation landscapes, where energies or probabilities have to be accurate, require precise approaches to fit the model parameters that can reproduce the fine statistics of the empircal data.
+
+Therefore, it can be speculated that the heuristic contact score that has empirically been found to work very well for pseudo-likelihood couplings, might not be an appropriate choice for benchmarking the contrastive divergence approach.
+Perhaps the [CD](#abbrev) couplings need to be evluated in a more sophisticated framework or for other purposes than contact prediction.
 
 
-
+\newpage 
 ## Methods
 
 ### The Potts Model {#potts-full-likelihood}

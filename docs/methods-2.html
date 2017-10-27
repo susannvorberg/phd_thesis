@@ -25,14 +25,14 @@
 <meta name="author" content="Susann Vorberg">
 
 
-<meta name="date" content="2017-10-26">
+<meta name="date" content="2017-10-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="using-contact-scores-as-additional-features.html">
+<link rel="prev" href="discussion-2.html">
 <link rel="next" href="bayesian-approach.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -175,7 +175,9 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="3.3.3" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.3</b> Varying the number of Gibbs Steps</a></li>
 <li class="chapter" data-level="3.3.4" data-path="cd-sampling-optimization.html"><a href="cd-sampling-optimization.html#cd-gibbs-steps"><i class="fa fa-check"></i><b>3.3.4</b> Persistent Contrastive Divergence</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to optimize Contrastive Divergence</a></li>
+<li class="chapter" data-level="3.4" data-path="adam-results.html"><a href="adam-results.html"><i class="fa fa-check"></i><b>3.4</b> Using ADAM to Optimize Contrastive Divergence</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="adam-results.html"><a href="adam-results.html#adam-violates-sum-wij"><i class="fa fa-check"></i><b>3.4.1</b> A <em>Potts</em> model specific convergence criterion</a></li>
+</ul></li>
 <li class="chapter" data-level="3.5" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html"><i class="fa fa-check"></i><b>3.5</b> Comparing CD couplings to pLL couplings</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1c75a00"><i class="fa fa-check"></i><b>3.5.1</b> Protein 1c75A00</a></li>
 <li class="chapter" data-level="3.5.2" data-path="comparing-pll-cd.html"><a href="comparing-pll-cd.html#protein-1ss3a00-and-1c55a00"><i class="fa fa-check"></i><b>3.5.2</b> Protein 1ss3A00 and 1c55A00</a></li>
@@ -195,11 +197,12 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="4.2" data-path="hyperparameter-optimization-for-random-forest.html"><a href="hyperparameter-optimization-for-random-forest.html"><i class="fa fa-check"></i><b>4.2</b> Hyperparameter Optimization for Random Forest</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-random-forest-model-as-contact-predictor.html"><a href="evaluating-random-forest-model-as-contact-predictor.html"><i class="fa fa-check"></i><b>4.3</b> Evaluating Random Forest Model as Contact Predictor</a></li>
 <li class="chapter" data-level="4.4" data-path="using-contact-scores-as-additional-features.html"><a href="using-contact-scores-as-additional-features.html"><i class="fa fa-check"></i><b>4.4</b> Using Contact Scores as Additional Features</a></li>
-<li class="chapter" data-level="4.5" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.5</b> Methods</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.5.1</b> Features used to train Random Forest Model</a></li>
-<li class="chapter" data-level="4.5.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.5.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
-<li class="chapter" data-level="4.5.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.5.3</b> Cross-validation for Random Forest Training</a></li>
-<li class="chapter" data-level="4.5.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.5.4</b> Feature Selection</a></li>
+<li class="chapter" data-level="4.5" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>4.5</b> Discussion</a></li>
+<li class="chapter" data-level="4.6" data-path="methods-2.html"><a href="methods-2.html"><i class="fa fa-check"></i><b>4.6</b> Methods</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="methods-2.html"><a href="methods-2.html#seq-features"><i class="fa fa-check"></i><b>4.6.1</b> Features used to train Random Forest Model</a></li>
+<li class="chapter" data-level="4.6.2" data-path="methods-2.html"><a href="methods-2.html#simple-contact-prior-with-respect-to-protein-length"><i class="fa fa-check"></i><b>4.6.2</b> Simple Contact Prior with Respect to Protein Length</a></li>
+<li class="chapter" data-level="4.6.3" data-path="methods-2.html"><a href="methods-2.html#rf-training"><i class="fa fa-check"></i><b>4.6.3</b> Cross-validation for Random Forest Training</a></li>
+<li class="chapter" data-level="4.6.4" data-path="methods-2.html"><a href="methods-2.html#rf-feature-selection"><i class="fa fa-check"></i><b>4.6.4</b> Feature Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="bayesian-approach.html"><a href="bayesian-approach.html"><i class="fa fa-check"></i><b>5</b> A Bayesian Statistical Model for Residue-Residue Contact Prediction</a><ul>
@@ -211,7 +214,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="5.6" data-path="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><a href="training-hyperparameters-for-a-gaussian-mixture-with-ten-components.html"><i class="fa fa-check"></i><b>5.6</b> Training Hyperparameters for a Gaussian Mixture with Ten Components</a></li>
 <li class="chapter" data-level="5.7" data-path="posterior-of-rij.html"><a href="posterior-of-rij.html"><i class="fa fa-check"></i><b>5.7</b> Computing The Posterior Probability of Contacts</a></li>
 <li class="chapter" data-level="5.8" data-path="analysing-contact-maps.html"><a href="analysing-contact-maps.html"><i class="fa fa-check"></i><b>5.8</b> Analysing Contact Maps</a></li>
-<li class="chapter" data-level="5.9" data-path="discussion-2.html"><a href="discussion-2.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
+<li class="chapter" data-level="5.9" data-path="discussion-3.html"><a href="discussion-3.html"><i class="fa fa-check"></i><b>5.9</b> Discussion</a></li>
 <li class="chapter" data-level="5.10" data-path="methods-3.html"><a href="methods-3.html"><i class="fa fa-check"></i><b>5.10</b> Methods</a><ul>
 <li class="chapter" data-level="5.10.1" data-path="methods-3.html"><a href="methods-3.html#methods-coupling-prior"><i class="fa fa-check"></i><b>5.10.1</b> Modelling the Prior Over Couplings Depending on Contact States</a></li>
 <li class="chapter" data-level="5.10.2" data-path="methods-3.html"><a href="methods-3.html#laplace-approx"><i class="fa fa-check"></i><b>5.10.2</b> Gaussian Approximation to the Posterior of Couplings</a></li>
@@ -223,11 +226,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <li class="chapter" data-level="5.10.8" data-path="methods-3.html"><a href="methods-3.html#gradient-lambdak"><i class="fa fa-check"></i><b>5.10.8</b> The gradient of the log likelihood with respect to <span class="math inline">\(\Lk\)</span></a></li>
 <li class="chapter" data-level="5.10.9" data-path="methods-3.html"><a href="methods-3.html#the-gradient-of-the-log-likelihood-with-respect-to-gamma_k"><i class="fa fa-check"></i><b>5.10.9</b> The gradient of the log likelihood with respect to <span class="math inline">\(\gamma_k\)</span></a></li>
 <li class="chapter" data-level="5.10.10" data-path="methods-3.html"><a href="methods-3.html#bayesian-model-distances"><i class="fa fa-check"></i><b>5.10.10</b> Extending the Bayesian Statistical Model for the Prediction of Protein Residue-Residue Distances</a></li>
-</ul></li>
-<li class="chapter" data-level="5.11" data-path="practical-methods.html"><a href="practical-methods.html"><i class="fa fa-check"></i><b>5.11</b> Practical Methods</a><ul>
-<li class="chapter" data-level="5.11.1" data-path="practical-methods.html"><a href="practical-methods.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.11.1</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
-<li class="chapter" data-level="5.11.2" data-path="practical-methods.html"><a href="practical-methods.html#dataset-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.2</b> Dataset Specifications</a></li>
-<li class="chapter" data-level="5.11.3" data-path="practical-methods.html"><a href="practical-methods.html#model-specifications-training-bayesian-model"><i class="fa fa-check"></i><b>5.11.3</b> Model Specifications</a></li>
+<li class="chapter" data-level="5.10.11" data-path="methods-3.html"><a href="methods-3.html#training-hyperparameters-bayesian-model"><i class="fa fa-check"></i><b>5.10.11</b> Training the Hyperparameters in the Likelihood Function of Contact States</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="conclusion-and-outlook.html"><a href="conclusion-and-outlook.html"><i class="fa fa-check"></i><b>6</b> Conclusion and Outlook</a></li>
@@ -261,13 +260,13 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 
             <section class="normal" id="section-">
 <div id="methods-2" class="section level2">
-<h2><span class="header-section-number">4.5</span> Methods</h2>
+<h2><span class="header-section-number">4.6</span> Methods</h2>
 <div id="seq-features" class="section level3">
-<h3><span class="header-section-number">4.5.1</span> Features used to train Random Forest Model</h3>
+<h3><span class="header-section-number">4.6.1</span> Features used to train Random Forest Model</h3>
 <p>Given a multiple sequence alignment of a protein family, various sequence features can be derived that have been found to be informative of a residue-residue contact.</p>
 <p>In total there are 250 features that can be divided into global, single position and pairwise features and are described in the following sections. If not stated otherwise, <em>weighted</em> features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section <a href="methods.html#seq-reweighting">2.6.3</a>.</p>
 <div id="seq-features-global" class="section level4">
-<h4><span class="header-section-number">4.5.1.1</span> Global Features</h4>
+<h4><span class="header-section-number">4.6.1.1</span> Global Features</h4>
 <p>These features describe alignment characteristics. Every pair of residues <span class="math inline">\((i,j)\)</span> from the same protein will be attributed the same feature.</p>
 <table>
 <caption><span id="tab:global-features">Table 4.1: </span> Features characterizing the total alignment</caption>
@@ -334,7 +333,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>There are in total 32 global alignment features per reside pair.</p>
 </div>
 <div id="seq-features-single" class="section level4">
-<h4><span class="header-section-number">4.5.1.2</span> Single Position Features</h4>
+<h4><span class="header-section-number">4.6.1.2</span> Single Position Features</h4>
 <p>These features describe characteristics of a single alignment column. Every residue pair <span class="math inline">\((i,j)\)</span> will be described by two features, once for each position.</p>
 <table>
 <caption><span id="tab:single-position-features">Table 4.2: </span> Caption hereSingle Position Sequence Features</caption>
@@ -457,7 +456,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 <p>Additionally, all single features will be computed within a window of size 5. The window feature for center residue <span class="math inline">\(i\)</span> will be computed as the mean feature over residues <span class="math inline">\([i\!-\!2, \ldots, i, \ldots, i\!+\!2]\)</span>. Whenever the window extends the range of the sequence (for <span class="math inline">\(i\!&lt;\!2\)</span> and <span class="math inline">\(i\!&gt;\!(L-2)\)</span>), the window feature will be computed only for valid sequence positions. This results in additional 96 window features per residue pair.</p>
 </div>
 <div id="seq-features-pairwise" class="section level4">
-<h4><span class="header-section-number">4.5.1.3</span> Pairwise Features</h4>
+<h4><span class="header-section-number">4.6.1.3</span> Pairwise Features</h4>
 <p>These features are computed for every pair of columns <span class="math inline">\((i, j)\)</span> in the alignment with <span class="math inline">\(i&lt;j\)</span>.</p>
 <table>
 <caption><span id="tab:pairwise-position-features">Table 4.3: </span> Pairwise Sequence Features</caption>
@@ -550,7 +549,7 @@ MathJax.Ajax.config.path['siunitx']  = '../latex/MathJax-siunitx-master/';
 </div>
 </div>
 <div id="simple-contact-prior-with-respect-to-protein-length" class="section level3">
-<h3><span class="header-section-number">4.5.2</span> Simple Contact Prior with Respect to Protein Length</h3>
+<h3><span class="header-section-number">4.6.2</span> Simple Contact Prior with Respect to Protein Length</h3>
 <p>The last feature listed in table <a href="methods-2.html#tab:global-features">4.1</a> (“contact prior protein length”) stands for a simple contact predictor based on expected number of contacts per protein with respect to protein length. The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length <span class="math inline">\(L\)</span> as can be seen in Figure <a href="methods-2.html#fig:avg-nr-contacts-per-residue-vs-protein-length">4.9</a>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:avg-nr-contacts-per-residue-vs-protein-length"></span>
@@ -582,7 +581,7 @@ p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
 -->
 </div>
 <div id="rf-training" class="section level3">
-<h3><span class="header-section-number">4.5.3</span> Cross-validation for Random Forest Training</h3>
+<h3><span class="header-section-number">4.6.3</span> Cross-validation for Random Forest Training</h3>
 <p>Proteins constitute highly imbalanced datasets with respect to the number of residue pairs that form and do not form physical contacts. As can be seen in Figure <a href="methods-2.html#fig:fraction-contacts-vs-protein-length">4.10</a>, depending on the enforced sequence separation threshold and protein length the percentage of contacts per protein varies between 25% and 0%. Most studies applying machine learning algorithms for predicting residue-residue contacts rebalanced the data set by undersampling of the majority class. Table <a href="methods-2.html#tab:rebalancing-dataset">4.4</a> lists choices for the proportion of contacts to non-contacts used to train some machine learning contact predictors. I followed the same strategy and undersampled residue pairs that are not physical contacts with a proportion of contacts to non-contacts of 1:5.</p>
 <table style="width:88%;">
 <caption><span id="tab:rebalancing-dataset">Table 4.4: </span> Important machine learning contact prediction approaches and their choices for rebalancing the data set.</caption>
@@ -635,10 +634,10 @@ Figure 4.10: Fraction of contacts among all possible contacts in a protein again
 </p>
 </div>
 <p>The total training set is comprised of 50,000 residue pairs <span class="math inline">\(&lt;8 \angstrom\)</span> (“contacts”) and 250,000 residue pairs <span class="math inline">\(&gt;8 \angstrom\)</span> (“non-contacts”). I filtered residue pairs using a sequence separation of 12 positions and selected at maximum 100 contacts and 500 non-contacts per protein. The data is collected in equal parts from data subsets 1-5 (see methods section <a href="methods.html#methods">2.6</a>), so that the training set consists of five subsets that are non-redundand at the fold level. Each of the five models for cross-validation will be trained on 40,000 contacts and 200,000 non-contacts originating from four of the five subsets. As the training set has been undersampled for non-contacts, it is not representative of real world proteins and the models need to be validated on a more realistic validation set. Therefore, each of the five trained models is not validated on the hold-out set but on separate validation sets containing 40 proteins at a time. The proteins of the validation sets are randomly selected from the respective fifth data subset and consequently are non-redundant at the fold level with training data. Performance is assessed by means of the standard contact prediction benchmark (mean precision against top ranked contacts).</p>
-<p>I used the module <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> in the Python package <code>sklearn (v. 0.19)</code> <span class="citation">[<a href="#ref-Pedregosa2011">237</a>]</span> and trained the models on features extracted from <a href="abbrev.html#abbrev">MSAs</a> which are listed in methods section <a href="methods-2.html#seq-features">4.5.1</a>.</p>
+<p>I used the module <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> in the Python package <code>sklearn (v. 0.19)</code> <span class="citation">[<a href="#ref-Pedregosa2011">237</a>]</span> and trained the models on features extracted from <a href="abbrev.html#abbrev">MSAs</a> which are listed in methods section <a href="methods-2.html#seq-features">4.6.1</a>.</p>
 </div>
 <div id="rf-feature-selection" class="section level3">
-<h3><span class="header-section-number">4.5.4</span> Feature Selection</h3>
+<h3><span class="header-section-number">4.6.4</span> Feature Selection</h3>
 <p>A random forest model is trained on the total set of features. Given the distribution of <em>Gini importance</em> values of features from the model, subsets of features are defined by features having <em>Gini importance</em> values larger than the <span class="math inline">\(\{10, 30, 50, 70, 90\}\)</span>-percentile of the distribution. Performance of the models trained on these subsets of features is evaluated on the same validation set.</p>
 
 </div>
@@ -731,7 +730,7 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="using-contact-scores-as-additional-features.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="discussion-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="bayesian-approach.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -88,64 +88,123 @@ The hyperparameters are trained by minimizing the negative logarithm of the like
 The [MAP](#abbrev) estimates of the coupling parameters $\wij^*$ are needed to compute the Hessian of the regularized *Potts* model likelihood, which again is needed for the Gaussian approximation to the regularized likelihood (see method section \@ref(laplace-approx)).
 For that purpose, I trained the hyperparameters by utilizing couplings $\wij^*$ obtained from pseudo-likelihood maximization as well as couplings $\wij^*$ obtained by maximizing the full likelihood with [CD](#abbrev).
 
+In the following I present the results of learning the hyperparameters for the coupling prior modelled as a Gaussian mixture with $K \in \{3,5,10\}$ Gaussian components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$ on datasets of different sizes (see method section \@ref(dataset-training-bayesian-model) for details).
+
 ## Training Hyperparameters for a Gaussian Mixture with Three Components
 
-I trained models with $K \in \{3,5,10\}$ Gaussian mixture components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$ on datasets of different sizes (see method section \@ref(dataset-training-bayesian-model) for details).
-During optimization the value of the negative log likelihood is monitored not only on the training but also on a validation set to ensure the model is not overfitting the training data (see Appendix Figure \@ref(fig:neglogll-pll-3comp)).
-Eventhough, optimization according to a stringent convergence criterion (see method section \@ref(dataset-training-bayesian-model)) has only been observed for training Gaussian mixtures with $K \eq 3$ components and only using the smaller datasets (10,000 and 1000,000 residue pairs per contact class), the parameters for all optimization runs did not change substantially after several hundred iterations and the resultant Gaussian mixtures are consistent regardless of the dataset size and independent repeated trainings.
-In the following, analysis of the optimization results is conducted for optimization on the dataset with 100,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
+Optimization using pseudo-likelihood and contrastive divergence couplings converged after several hundreds of iterations of training on the dataset with 10,000, 100,000 and 300,000 residue pairs per contact class.
+The inferred hyperparameters obtained by several independent optimization runs and on the datasets of different size are consistent.
+The following analysis is conducted for the training on the dataset with 300,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
 
-Figure \@ref(fig:stats-pll-3comp-100k) shows the statistics of the hyperparameters for a three component Gaussian mixture. 
-The zeroth component, with $\mu_0=0$ has a weight of 0.88 for the non-contact class, whereas it has only weight 0.5 for the contact class.
+Figure \@ref(fig:stats-pll-3comp-300k) shows the statistics of the inferred hyperparameters. 
+The zeroth component, with $\mu_0=0$ has a weight of 0.88 for the non-contact class, whereas it has only weight 0.51 for the contact class.
 This is expected given that the couplings $\wijab$ for non-contacts have a much tighter distribution around zero than contacts. 
-Component 2 has on average the highest standard deviations and for several dimensions this component is located far off from zero, e.g. dimension EE has $\mu_2(\text{EE}) \eq -0.58$ or ER has $\mu_2(\text{ER}) \eq 0.42$. 
-Therefore, it is not surprising that component 2 has a low weight for non-contacts ($g_2(0) \eq 0.0026$) but a higher weight for contacts ($g_2(1) \eq 0.14$). 
-Statistics of the hyperparameters of the Gaussian mixture obtained after learning for several hundred of iterations on the other datasets is shown in Appendix Figures \@ref(fig:stats-pll-3comp-10k), \@ref(fig:stats-pll-3comp-300k), \@ref(fig:stats-pll-3comp-500k).
-Furthermore, the statistics of hyperparameters for the Gaussian mixture model based on couplings optimized with contrastive divergence are very consistent and are shown in Appendix Figures \@ref(fig:stats-cd-3comp-100k) ans \@ref(fig:stats-cd-3comp-10k).
+Component 2 has on average the highest standard deviations and for several dimensions this component is located far off from zero, e.g. dimension EE has $\mu_2(\text{EE}) \eq -0.57$ or ER has $\mu_2(\text{ER}) \eq 0.43$. 
+Therefore, it is not surprising that component 2 has a low weight for non-contacts ($g_2(0) \eq 0.0026$) but a higher weight for contacts ($g_2(1) \eq 0.13$). 
+Statistics of the hyperparameters of the Gaussian mixture obtained after learning for several hundred of iterations on the other datasets is shown in Appendix Figures \@ref(fig:stats-pll-3comp-10k) and \@ref(fig:stats-pll-3comp-100k).
+The inferred hyperparameters for the Gaussian mixture model based on couplings optimized with contrastive divergence are consistent with the estimates obtained by using pseudo-likelihood couplings as can be seen in Appendix Figures \@ref(fig:stats-cd-3comp-100k) ans \@ref(fig:stats-cd-3comp-10k).
 
-(ref:caption-stats-pll-3comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 371 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using pseudo-likelihood couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+(ref:caption-stats-pll-3comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 331 iterations. Trained on 300,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
-```{r stats-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-100k)'}
-knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-100k.png")
+```{r stats-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-300k.png")
 ```
 
 
-Figure \@ref(fig:vis1d-pll-3comp-100k) shows several one-dimensional projections of the 400 dimensionl Gaussian mixture with three components.
+Figure \@ref(fig:vis1d-pll-3comp-300k) shows several one-dimensional projections of the 400 dimensionl Gaussian mixture with three components.
 Generally, the Gaussian mixture learned for residue pairs that are not in contact is much narrower and almost symmetrically centered around zero.
 The Gaussian mixture for contacts, by contrast is much broader and often skewed.
 For the aliphatic amino acid pair V-I, the Gaussian mixture for both contacts and non-contacts is very symmetrical and much narrower compared for example to the Gaussian mixtures for the aromatic amino acid pair F-W, which also has symmetrical distributions.
 In contrast, the distribution for ER and EE has strong tails for positive and negative values respectively.
 The one-dimensional projections of the Gaussian mixture model greaty resembles the empirical distributions in Figure \@ref(fig:1d-coupling-profile-0-5) and in Figure \@ref(fig:1d-coupling-profile-20-50).
-The model learned on larger datasets produces very similar distributions (see Appendix Figures \@ref(fig:vis1d-aa-pll-3comp-300k) and \@ref(fig:vis1d-aa-pll-3comp-500k))
-Furthermore, the distributions for the model based on contrastive divergence couplings are also very similar and is shown in Appendix Figure \@ref(fig:vis1d-cd-3comp-100k)
+The model learned on larger datasets produces very similar distributions (see Appendix Figures \@ref(fig:vis1d-pll-3comp-100k) and \@ref(fig:vis1d-pll-3comp-500k)).
+Likewise, the distributions for the model based on contrastive divergence couplings are also very similar and shown in Appendix Figure \@ref(fig:vis1d-cd-3comp-100k).
 
-The two-dimensional projections of the Gaussian mixture are shown in Figure \@ref(fig:vis2d-pll-3comp-100k) for several pairs of couplings.
-The type of paired couplings has been chosen to allow a direct comparison to the empirical distributions in Figure \@ref(fig:2d-coupling-profiles-0-8).
-The top left plot shows the distribution of coupling values according to the Gaussian mixture model for contacts for amino acid pairs E-R and R-E. 
-Component 2 has a weight of 0.14 for contacts and is mainly responsible for the positive coupling between E-R and R-E.
-The amino acid pairs E-E and R-E are negatively coupled and again component 2 generates the strongest couplings far off zero as can be seen in the top right plot.
-The plots at the bottom of Figure \@ref(fig:vis2d-pll-3comp-100k) show the distribution of amino acid pairs I-L and V-I according to the Gaussian mixture model for contacts (component weight $g_k(1)$) as well as for non-contacts (component weight $g_k(0)$). 
-The coupling distribution for contacts is symmetrically centered around zero just as the distribution for non-contacts. 
-Because of the higher weight of component 2, the distribution for contacts is much broader than the distribution for non-contacts. 
-The two-dimensional distributions for the model based on contrastive divergence couplings is also very similar and is shown in Appendix Figure \@ref(fig:vis2d-cd-3comp-100k)
+(ref:caption-vis1d-pll-3comp-300k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2. **Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
 
-(ref:caption-vis1d-pll-3comp-100k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2.
-**Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
-
-```{r vis1d-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-3comp-100k)'}
-knitr::include_graphics("img/bayesian_model/pll/3/1dvis_combined.png")
+```{r vis1d-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-3comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/1dvis_combined_300k")
 ```
 
-(ref:caption-vis2d-pll-3comp-100k) Visualisation of two-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
 
-```{r vis2d-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-pll-3comp-100k)'}
-knitr::include_graphics("img/bayesian_model/pll/3/2dvis_combined.png")
+The two-dimensional projections of the Gaussian mixture are shown in Figure \@ref(fig:vis2d-pll-3comp-300k) for several pairs of couplings.
+The type of paired couplings has been chosen to allow a direct comparison to the empirical distributions in Figure \@ref(fig:2d-coupling-profiles-0-8).
+The top left plot shows the distribution of coupling values according to the Gaussian mixture model for contacts for amino acid pairs E-R and R-E. 
+Component 2 has a weight of 0.13 for contacts and is mainly responsible for the positive coupling between E-R and R-E.
+The amino acid pairs E-E and R-E are negatively coupled and again component 2 generates the strongest couplings far off zero as can be seen in the top right plot.
+The plots at the bottom of Figure \@ref(fig:vis2d-pll-3comp-300k) show the distribution of amino acid pairs I-L and V-I according to the Gaussian mixture model for contacts (component weight $g_k(1)$) as well as for non-contacts (component weight $g_k(0)$). 
+The coupling distribution for contacts is symmetrically centered around zero just as the distribution for non-contacts. 
+Because of the higher weight of component 2, the distribution for contacts is much broader than the distribution for non-contacts. 
+The two-dimensional distributions obtained from the set of Gaussian mixture hyperparameters that have been learned based on contrastive divergence couplings, are very similar and shown in Appendix Figure \@ref(fig:vis2d-cd-3comp-100k)
+
+(ref:caption-vis2d-pll-3comp-300k) Visualisation of two-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
+
+```{r vis2d-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-pll-3comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/2dvis_combined_300k.png")
 ```
 
 
 ## Training Hyperparameters for a Gaussian Mixture with Five Components
 
+The increased complexity of training five instead of three component Gaussian mixtures does not only result in longer runtimes until convergence but also slows down runtime per iteration. 
+Therefore, several optimization runs did not converge within 2000 iterations. 
+Nevertheless, the obtained hyperparameters and resulting Gaussian mixture are consistent, which will be shown in the following.
+Again, analysis of the optimization results is exemplified for the training on the dataset with 300,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
+
+Figure \@ref(fig:stats-pll-5comp-300k) shows the statistics of the inferred hyperparameters after 2502 iterations. 
+Similary as for three component Gaussian mixtures, the zeroth component receives a high weight for couplings from residue pairs that are not in physical contact ($g_0(0) \eq 0.94$).
+Besides the zeroth component, only component 2 has a noteworthy contribution to the Gaussian mixture ($g_1(0) \eq 0.05$).
+Component 0 and 2 are also the strongest components for the Gaussian mixture representing couplings from contacting residue pairs.
+The other three components contribute with weights of about 10% and are not only much broader but often located far off zero and therefore responsible for modelling the tails of the Gaussian mixture.
+The statistics of hyperparameters inferred from a larger dataset (300,000 residue pairs) are visualized in Appendix Figure \@ref(fig:stats-pll-5comp-100k).
+Furthermore, hyperparameters inferred using contrastive divergence couplings are again similar to those based on pseudo-likelihood couplings and statistics of hyperparameter  are visualized in Appendix Figures \@ref(fig:stats-cd-5comp-100k) and \@ref(fig:stats-cd-5comp-300k).
+
+(ref:caption-stats-pll-5comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 1134 iterations. Trained on 300,000 residue pairs per contact class for a five component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+
+```{r stats-pll-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-5comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/5/stats-pll-5comp-300k_contactthr25.png")
+```
+
+
+Figure \@ref(fig:vis1d-pll-5comp-300k) shows several one-dimensional projections of the 400 dimensionl Gaussian mixture with five components.
+The general observations regarding the shape of the Gaussian mixture for couplings from contacts and non-contacts that have been found for the three component mixture also apply for the five component mixtures. 
+The distribution of the Gaussian mixture for non-contacts is even narrower than for the three component model whereas the distribution of the Gaussian mixture for contacts is broader or rather more well defined.
+In the three component model only two components would contribute to defining the tails of the distribution for couplings from contacts.
+Now, there are four components that will, e.g. in the case of amino acid pair E-R be shifted towards positive values or in the case of amino acid pair E-E be shifted towards negative values. 
+Overall, the five component model seems to approximate the univariate distribution of couplings more precise than the three component model.
+The same observations apply to the Gaussian mixtures inferred based on contrastive divergence couplings. 
+One striking difference is that the distribution of couplings for non-contacts is even narrower compared to the model learned with pseudo-likelihood couplings (see Appendix Figure \@ref(fig:vis1d-cd-5comp-300k)).
+
+(ref:caption-vis1d-pll-5comp-300k) Visualisation of one-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian.. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2. Dark green dashed line: Gaussian component 3. Light pinkish dashed line: Gaussian component 4.
+**Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
+
+```{r vis1d-pll-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-5comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/5/1dvis_combined_300k.png")
+```
+
+
+Two-dimensional projections of the Gaussian mixture with five components are shown in Figure \@ref(fig:vis2d-pll-5comp-100k) for several pairs of couplings.
+The distributions resemble the ones learned for the Gaussian mixture with three components.
+However, it is visible that the zeroth component is narrower for the five-component Gaussian mixture and that the additional components model particular parts of the distribution.
+The optimized coupling prior model that has been learned based on couplings computed with contrastive-divergence in general produces distributiona that are narrower which is expected given the hyperparameter statistics and the observations from the univariate distributions.
+
+(ref:caption-vis2d-pll-5comp-100k) Visualisation of two-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. Dark green dashed line: Gaussian component 3. Light pinkish dashed line: Gaussian component 4. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
+
+```{r vis2d-pll-5comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-pll-5comp-100k)'}
+knitr::include_graphics("img/bayesian_model/pll/5/2dvis_combined_100k.png")
+```
+
+
+
 ## Training Hyperparameters for a Gaussian Mixture with Ten Components
+
+Training ten instead of five or three component Gaussian mixtures 
+
+The incresaed complexity of training five instead of three component Gaussian mixtures does not only result in longer runtimes until convergence but also slows down runtime per iteration. 
+Therefore, several optimization runs did not converge within 2000 iterations. 
+Nevertheless, the obtained hyperparameters and resulting Gaussian mixture are consistent, which will be shown in the following.
+Again, analysis of the optimization results is exemplified for the training on the dataset with 100,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
+
 
 
 ## Computing The Posterior Probability of Contacts {#posterior-of-rij}
@@ -890,7 +949,6 @@ and finally
 
 
 
-## Practical Methods
 
 ### Training the Hyperparameters in the Likelihood Function of Contact States {#training-hyperparameters-bayesian-model}
 
@@ -909,6 +967,8 @@ The regulariser penalizes values of  $\muk$ and $\Lk$ that deviate too far from 
 \end{align}
 
 Reasonable values are $\sigma_{\mu}=0.1$, $\sigma_\text{diag} = 100$.  
+These values have been chosen empirically, so that regularization does not substantially impact the strength of hyperparameters but does prevent components with small weights from wandering off zero too far or from becoming too narrow.
+It has been found that this is necessary especially for mixtures with many components.
 
 The log likelihood can be optimized using L-BFGS-B [@Byrd1995], which requires the computation of the gradient of the log likelihood. 
 For simplicity of notation, the following calculations consider the contribution of the log likelihood for just one protein, which allows to drop the index $m$ in $\cij^m$, $(\wij^m)^*$ and $\Hij^m$.
@@ -925,7 +985,7 @@ According to the default setting, optimization will converge when `(f^k - f^{k+1
 The negative log likelihood will be monitored during optimization.
 Every ten iterations it will be evaluated on a validation set of 1000 residue pairs per contact class to ensure that the model is not overfitting the training data.
 
-### Dataset Specifications {#dataset-training-bayesian-model}
+#### Dataset Specifications {#dataset-training-bayesian-model}
 
 An equal number of residue pairs that are in physical contact $\Delta\Cb <8 \angstrom$ and are not in contact $\Delta\Cb >8 \angstrom$ is selected according to the following criteria:
 
@@ -944,9 +1004,11 @@ Proteins are randomly selected and before residue pairs are selected from a prot
 The validation set is generated according to the same criteria and constitutes 1000 residue pairs per contact class.
 
 The [MAP](#abbrev) estimates of the coupling parameters $\wij^*$ that are needed to compute the Hessian $\Hij$ as descibed in method section \@ref(neg-Hessian-computation) are computed by maximizing the pseudo-likelihodd and by maximizing the full likelihood with contrastive divergence. 
+Stochastic gradient descent using the tuned hyperparameters presented in chapter \@ref(optimizing-full-likelihood) will be used to optimize the full likelihood with contrastive divergence.
+The *ADAM* optimizer is not used because its adaptive learning rates violate the condition $\sum_{a,b}^{20} \wijab = 0$ which is described in section \@ref(adam-violates-sum-wij).
 
 
-### Model Specifications {#model-specifications-training-bayesian-model}
+#### Model Specifications {#model-specifications-training-bayesian-model}
 
 The mixture weights $g_k(\cij)$ are randomly sampled from a uniform distribution over the half-open interval [0, 1) and normalized so that $\sum_k^K g_k(\cij) = 1$ for $\cij=0$ and $\cij=1$, respectively.
 Subsequently, the $g_k(\cij)$ are reparameterized as softmax functions as given in eq. \@ref(eq:def-g-k-binary) and fixing $\gamma_0(\cij)=0$ to avoid overparametrization.

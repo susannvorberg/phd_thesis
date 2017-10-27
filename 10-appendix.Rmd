@@ -362,23 +362,26 @@ knitr::include_graphics("img/bayesian_model/pll/3/negLL_combined.png")
 ```
 
 
-(ref:caption-stats-pll-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 388 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood couplings* to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+(ref:caption-stats-pll-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 388 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-pll-3comp-10k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-10k)'}
 knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-10k.png")
 ```
 
-(ref:caption-stats-pll-3comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 331 iterations. Trained on 300,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood couplings* to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+(ref:caption-stats-pll-3comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 371 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
-```{r stats-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-300k)'}
-knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-300k.png")
+```{r stats-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-100k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-100k.png")
 ```
 
+
+<!--
 (ref:caption-stats-pll-3comp-500k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 250 iterations. Trained on 500,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood couplings* to estimate the Hessian.  **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-pll-3comp-500k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-3comp-500k)'}
 knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-500k.png")
 ```
+-->
 
 (ref:caption-stats-cd-3comp-10k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after optimization of the likelihood function of contact states for 336 iterations. Trained on 10,000 residue pairs per contact class for a three component Gaussian mixture and using *contrastive divergence* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
@@ -386,34 +389,71 @@ knitr::include_graphics("img/bayesian_model/pll/3/stats-pll-3comp-500k.png")
 knitr::include_graphics("img/bayesian_model/cd/3/stats-cd-3comp-100k.png")
 ```
 
-(ref:caption-stats-cd-3comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after optimization of the likelihood function of contact states for 377 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using contrastive divergence couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+(ref:caption-stats-cd-3comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after optimization of the likelihood function of contact states for 377 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using *contrastive divergence* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-cd-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-cd-3comp-100k)'}
 knitr::include_graphics("img/bayesian_model/cd/3/stats-cd-3comp-100k.png")
 ```
 
-(ref:caption-vis1d-aa-pll-3comp-300k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2. **Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
+(ref:caption-vis1d-pll-3comp-100k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2.
+**Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
 
-```{r vis1d-aa-pll-3comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-aa-pll-3comp-300k)'}
-knitr::include_graphics("img/bayesian_model/pll/3/1dvis_combined_300k")
+```{r vis1d-pll-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-3comp-100k)'}
+knitr::include_graphics("img/bayesian_model/pll/3/1dvis_combined.png")
 ```
 
-(ref:caption-vis1d-aa-pll-3comp-500k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 500,000 residue pairs per contact class. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2. **Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
+(ref:caption-vis1d-pll-3comp-500k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 500,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light Green dashed line: Gaussian component 2. **Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
 
-```{r vis1d-aa-pll-3comp-500k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-aa-pll-3comp-500k)'}
+```{r vis1d-pll-3comp-500k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-3comp-500k)'}
 knitr::include_graphics("img/bayesian_model/pll/3/1dvis_combined_500k")
 ```
 
-(ref:caption-vis1d-cd-3comp-100k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2.
+(ref:caption-vis1d-cd-3comp-100k) Visualisation of one-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class and using *contrastive divergence* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2.
 **Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
 
 ```{r vis1d-cd-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-cd-3comp-100k)'}
 knitr::include_graphics("img/bayesian_model/cd/3/1dvis_combined_100k.png")
 ```
 
-(ref:caption-vis2d-cd-3comp-100k) Visualisation of two-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
+(ref:caption-vis2d-cd-3comp-100k) Visualisation of two-dimensional projections of the three-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class and using *contrastive divergence* couplings to estimate the Hessian. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
 
 ```{r vis2d-cd-3comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-cd-3comp-100k)'}
 knitr::include_graphics("img/bayesian_model/cd/3/2dvis_combined_100k.png")
 ```
 
+
+
+(ref:caption-stats-pll-5comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 2552 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+
+```{r stats-pll-5comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-5comp-100k)'}
+knitr::include_graphics("img/bayesian_model/pll/5/stats-pll-5comp-100k_contactthr25.png")
+```
+
+
+
+(ref:caption-stats-cd-5comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 2605 iterations. Trained on 100,000 residue pairs per contact class for a five component Gaussian mixture and using *contrastive divergence* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+
+```{r stats-cd-5comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-cd-5comp-100k)'}
+knitr::include_graphics("img/bayesian_model/cd/5/stats-cd-5comp-100k_contactthr25.png")
+```
+
+(ref:caption-stats-cd-5comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 1229 iterations. Trained on 300,000 residue pairs per contact class for a five component Gaussian mixture and using *contrastive divergence* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+
+```{r stats-cd-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-cd-5comp-300k)'}
+knitr::include_graphics("img/bayesian_model/cd/5/stats-cd-5comp-300k_contactthr25.png")
+```
+
+
+
+(ref:caption-vis1d-cd-5comp-300k) Visualisation of one-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *contrastive divergence* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2. Dark green dashed line: Gaussian component 3. Light pink dashed line: Gaussian component 4.
+**Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
+
+```{r vis1d-cd-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-cd-5comp-300k)'}
+knitr::include_graphics("img/bayesian_model/cd/5/1dvis_combined_300k.png")
+```
+
+(ref:caption-vis2d-cd-5comp-300k) Visualisation of two-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *contrastive divergence* couplings to estimate the Hessian. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. Dark green: values that have been generated by Gaussian component 4. Light pink: values that have been generated by Gaussian component 4. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
+
+```{r vis2d-cd-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-cd-5comp-300k)'}
+knitr::include_graphics("img/bayesian_model/cd/5/2dvis_combined_300k.png")
+```
