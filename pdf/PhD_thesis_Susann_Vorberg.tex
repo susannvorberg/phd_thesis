@@ -8173,14 +8173,13 @@ represents a principled approach that eradicates the use of heuristics
 by explicitely modelling the full information contained in the coupling
 parameters in form of a Gaussian mixture coupling prior while at the
 same time accounting for the uncertainty of the data. The
-hyperparameters of the coupling prior were learned on couplings and
-structures of many proteins and the Gaussian mixture convincingly
+hyperparameters of the coupling prior were trained on inferred couplings
+and structures from many proteins and the Gaussian mixture convincingly
 reproduced empirical coupling distributions. Posterior probabilty
 estimates of residue-residue contacts are obtained by combining the
-Bayesian likelihood, that involves marginalizing out the coupling
-parameters, with prior information in form of the random forest contact
-class probabilities. The precision of the contacts that are assigned the
-highest probabilities did not improve over precision of the heuristic
+Bayesian likelihood with prior information in form of the random forest
+contact class probabilities. The predicted contacts, that are assigned
+the highest probabilities, are not more precise than the heuristic
 predictions obtained from the pseudo-likelihood approach. A possible
 explanation is that the coupling prior does not yet capture enough
 information in order to efficiently discriminate between contacts and
@@ -8193,11 +8192,11 @@ inaccurate but unfortunately it is not easy to verify these assumptions.
 
 The Bayesian framework developed here provides the means to establish a
 statistically sound formulation for \protect\hyperlink{abbrev}{DCA} that
-can be easily extended to include further prior information or that can
-be embedded in further Bayesian hierarchies. For example, a simple
-extension of the Bayesian model allows the estimation of posterior
-probabilities of residue-residue distances instead of contacts (see
-section \ref{bayesian-model-distances}). The analysis in chapter
+can be easily extended to include additional prior information or that
+can be embedded in more complex Bayesian hierarchies. For example, a
+simple extension of the Bayesian model allows the estimation of
+posterior probabilities of residue-residue distances (see section
+\ref{bayesian-model-distances}). The analysis in chapter
 \ref{interpreting-coupling-matrices} has demonstrated that the coupling
 signal weakens with increasing inter-residue distances. The higher
 information content of residue-residue distances compared to a binary
