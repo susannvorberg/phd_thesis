@@ -2,7 +2,6 @@ bookdown::pdf_book:
   keep_tex: yes
   template: latex/phd_thesis_template.tex
   latex_engine: xelatex
-  pandoc_args:  [--top-level-division=chapter, --number-sections]
 bookdown::epub_book: default
 bookdown::gitbook:
   includes:

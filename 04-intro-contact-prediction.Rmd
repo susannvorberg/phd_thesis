@@ -1,4 +1,4 @@
-# Introduction to Contact Prediction
+## Introduction to Contact Prediction
 
 Contact prediction refers to the prediction of physical contacts between amino acid side chains in the 3D protein structure, given the protein sequence as input. 
 
@@ -23,7 +23,7 @@ knitr::include_graphics("img/intro/correlated-mutations-transparent.png")
 The following sections will give an overview over important methods and developments in the field of contact prediction.
 
 
-## Local Statistical Models {#local-methods}
+### Local Statistical Models {#local-methods}
 
 Early contact prediction methods used local pairwise statistics to infer contacts that regard pairs of amino acids in a sequence as statistically independent from another.
 
@@ -53,7 +53,7 @@ knitr::include_graphics("img/intro/transitive_effects.png")
 ```
 
 
-## Global Statistical Models {#global-methods}
+### Global Statistical Models {#global-methods}
 
 A huge leap forward was the development of sophisticated statistical models that make predictions for a single residue pair while considering all other pairs in the protein.
 These global models allow for the distinction between transitive and causal interactions which has been referred to in the literature as [DCA](#abbrev) [@Lapedes1999; @Weigt2009].
@@ -67,7 +67,7 @@ A global statistical model not motivated by the maximum entropy approach was pro
 Their fast Bayesian network model incorporates additional prior information and phylogenetic correction via [APC](#abbrev) but cannot compete with the pseudo-likelihood approaches presented in section \@ref(pseudo-likelihood). 
 
 
-## Machine Learning Methods and Meta-Predictors {#meta-predictors}
+### Machine Learning Methods and Meta-Predictors {#meta-predictors}
 
 With the steady increase in protein sequence data, machine learning based methods have emerged that extract features from [MSAs](#abbrev) in order to learn associations between input features and residue-residue contacts.
 Sequence features typically include predicted solvent accessibility, predicted secondary structure, contact potentials, conservation scores, global protein features, pairwise coevolution statistics and averages of certain features over sequence windows. 
@@ -93,7 +93,7 @@ Eventhough a benchmark comparing the recently developed meta-predictors is yet t
 As coevolution scores comprise the most informative feautures among the set of input features, it is clear that meta-predictors will benefit from further improvements of pure coevolution methods [@Wang2016a; @Stahl2017]. 
 
 
-## Modelling Protein Families with Potts Model {#maxent}
+### Modelling Protein Families with Potts Model {#maxent}
 
 Infering contacts from a joint probability distribution over all residues in a protein sequence instead of using simple pairwise statistics has been proven to enable the distinction of direct statistical dependencies between residues from indirect dependencies mediated through other residues.
 The global statistical model that is commonly used to describe this joint probability distribution is the *Potts model*. 
@@ -163,7 +163,7 @@ $Z$ is a normalization constant also known as *partition function* that ensures 
 
 
 
-### Model Properties {#potts-model-properties}
+#### Model Properties {#potts-model-properties}
 
 The Potts model is specified by singlet terms $\via$ which describe the tendency for each amino acid a to appear at position $i$, and pair terms $\wijab$, also called couplings, which describe the tendency of amino acid a at position $i$ to co-occur with amino acid b at position $j$.
 In contrast to mere correlations, the couplings explain the causative dependence structure between positions by jointly modelling the distribution of all positions in a protein sequence and thus account for transitive effects. 
@@ -211,7 +211,7 @@ The regularizer selects for a unique solution among all parametrizations of the 
 
 
 
-### Inferring Parameters for the Potts Model  {#potts-mle}
+#### Inferring Parameters for the Potts Model  {#potts-mle}
 
 Typically, parameter estimates are obtained by maximizing the log-likelihood function of the parameters over observed data.
 For the Potts model, the log-likelihood function is computed over sequences in the alignment $\mathbf{X}$: 
@@ -243,7 +243,7 @@ Consequently, evaluating the likelihood function at each iteration of an optimiz
 
 Many approximate inference techniques have been developed to sidestep the infeasible computation of the partition function for the specific problem of predicting contacts that are briefly explained in the next section. 
 
-### Solving the Inverse Potts Problem {#potts-model-solutions}
+#### Solving the Inverse Potts Problem {#potts-model-solutions}
 
 In 1999 Lapedes et al. were the first to propose maximum entropy models for the prediction of residue-residue contacts in order to disentangle transitive effects [@Lapedes1999].
 In 2002 they applied their idea to 11 small proteins using an iterative Monte Carlo procedure to obtain estimates of the model parameters and achieved an increase in accuracy of 10-20% compared to the local statistical models [@Lapedes2012a]. 
@@ -314,7 +314,7 @@ That is, as the number of sequences in the alignment increases, pseudo-likelihoo
 
 
 
-### Computing Contact Maps {#post-processing-heuristics}
+#### Computing Contact Maps {#post-processing-heuristics}
 
 Model inference as described in the last section yields [MAP](#abbrev) estimates of the couplings $\hat{\w}_{ij}$. 
 In order to obtain a scalar measure for the coupling strength between two residues $i$ and $j$, all available methods presented in section \@ref(potts-model-solutions) heuristically map the $21 \! \times \! 21$ dimensional coupling matrix $\wij$ to a single scalar quantity.
@@ -430,25 +430,28 @@ A different challenge lies in the correct distinction between the physical conta
 With the availability of monomeric structural data the idea is to filter out those high scoring contacts that form contacts in the monomeric structure or are located in the protein core. 
 The remaining high scoring false positive contacts at the surface of the protein are potential contacts at the interface that can be incorporated into a docking protocol to drive complex formation [@Uguzzoni2017; @DosSantos2015a].
 
-Contacts are also used to analyse potential alternative conformations of proteins [@Parisi2015a; @Sfriso2016; @Sutto2015; @Jana2014; @Morcos2013a; @Jeon2011a].
+Predicted contacts have also been appplied in the analysis of potential alternative conformations of proteins [@Parisi2015a; @Sfriso2016; @Sutto2015; @Jana2014; @Morcos2013a; @Jeon2011a].
 Coevolutionary analysis detects all evolutionarily significant residue–residue correlations, regardless of whether the interaction is formed in a transient state of the protein or its stable form.
 Therefore, predicted contact maps might capture multiple states of a protein, since they are of functional importance and thus under evolutionary pressure.
 Sfriso and colleagues developed an automated pipiline that introduces filtered predicted contacts as ensemble restraints into a molecular dynamics simulations and is able to detect alternative relevant conformational states [@Sfriso2016].
-
-Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology.
-Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts [@Wozniak2017; @Tress2010].
-Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model [@Cao2016; @Terashi2014a].
-
-As mentioned before, methods for protein fold reconstruction from experimental distance constraints have been successfully applied for many years. 
-Several integrative approaches have been developed that combine complementary sources of sparse structural constraints, including predicted contacts, to accurately determine protein structure [@Tang2015; @Ward2013].
-
-Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
 
 Eventhough the coevolutionary methods have been developed for proteins, they have been successfully applied to analyse nucleotide coevolution and to predict RNA tertiary structures with the help of predicted nucleotide-nucleotide contacts  [@Nawy2016; @Weinreb2015; @DeLeonardis2015a]. 
 Much less RNA sequences are required compared to protein sequences in order to extract statistically significant signals because of the reduced number of model parameters when working with a four letter alphabet (compared to a 20 letter alphabet with proteins).
 On the downside, alignment errors resulting from the complicated determination of RNA multiple sequence alignments limits the accuracy of coevolution analysis [@DeLeonardis2015a]. 
 Despite the diminished accuracy, predicted nucleotide contacts have been demonstrated to improve RNA structure prediction over conventional methods [@Weinreb2015]. 
 
+Predicted residue-residue contacts have been used to tackle various other problems in the area of structural biology.
+Sadowski used predicted contacts to parse domain boundaries based on the simple idea that contacts are more abundant within domains than between domains  [@Sadowski2013].
+Contact maps display patterns that reflect secondary structure elements, which can be parsed to detect alpha helices and beta-sheets [@Andreani2015a; @SuvarnaVani2018].
+Quality assessment of structural models, involving model selection and ranking, is a crucial task in structural biology.
+Predicted residue-residue contacts can indicate the best protein structure among a set of properly folded and misfolded structures by counting the number of satisfied contacts [@Wozniak2017; @Tress2010].
+Besides ranking of models, predicted contacts have been used as features for training machine learning methods that predict the global quality of a structural model [@Cao2016; @Terashi2014a].
+
+
+The mathematical framework of the coevolution models used to predict residue-residue proteins has been found to be useful in other fields of biology beyond structure prediction.
+Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017; @Gao2017].
+They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
+In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
 
 The stastistical models used for coevolution analysis provide information about which residue pairs are important in evolution for folding or functional constraints.
 They can be used to assign probabilities to sequences that reflect the overal compliance of a sequence with the protein family under study and thereby provide quantitative predictions of mutational effects [@Hopf2017; @Wu2016; @Figliuzzi2015].
@@ -458,11 +461,7 @@ Antibody affinity maturation can be viewed as a Darwinian process with the affin
 Therefore, given the model representing the antibody sequence family, the probability for a sequence reflects the binding affinity to the target antigen.
 Quantifying the effect of mutations is also helpful for protein design.
 Coevolving positions might be of particular interest as hotspots for engineering protein stability or functional specificity because they determine positions relevant to protein structure and function [@Franceus2016].
-
-
-Skwark and colleagues applied the popular coevolution statistical models to genomes and developed a statistical method called *genomeDCA* [@Skwark2017].
-They are able to identify coevolving polymorphic locus pairs based on the idea that the corresponding proteins form protein-protein interactions that are under strong evolutionary pressure.
-In a case study on two large human pathogen populations they found that three quarters of coevolving loci are located in genes that determine beta-lactam (antibiotic) resistence.
+The interpretation of the model parameters as energies has hlped to analyse the sequence capacity of protein folds, that is how many sequences can fold into a specific structure [@Tian2017].
 
 Fox and colleagues turn the idea of [DCA](#abbrev) upside down.
 They developed a benchmark for testing the accuracy of large [MSAs](#abbrev) by evaluating the agreeement between the predicted and the native contacts [@Fox2016].
@@ -570,7 +569,7 @@ Coevolution methods face several challenges when interpreting the covariation si
 Some of these challenges have been successfully met (e.g. disentangling transitive effects with global statistical models), others are still open or open up new perspectives, such as dissecting different sources of coevolution signals. 
 
 
-### Phylogenetic Effects as a Source of Noise
+### Phylogenetic Effects as a Source of Noise {#phylogenetic-noise}
 
 Sequences in [MSAs](#abbrev) do not represent independent samples of a protein family. 
 In fact, there is selection bias from sequencing species of special interest (e.g human pathogens) or sequencing closely related species, e.g multiple strains. 
@@ -578,7 +577,11 @@ This uneven sampling of a protein family's sequence space leaves certain regions
 Furthermore, due to their evolutionary relationship, sequences of a protein family have a complicated dependence structure.
 Closely related sequences can cause spurious correlations between positions, as there was not sufficient time for the sequences to diverge from their common ancestor [@Gouveia_Oliveira2007; @Lapedes1999; @Burger2010]. 
 Figure \@ref(fig:phylogenetic-effect) illustrates a simplified example, where dependence of sequences due to phylogeny leads to a covariation signal.
-To reduce the effects of redundant sequences, a popular sequence reweighting strategy has been found to improve contact prediction performance, where every sequence receives a weight that is the inverse of the number of similar sequences according to an identity threshold (see section \@ref(seq-reweighting)) [@Buslje2009; @Morcos2011; @Jones2012; @Cocco2017]. 
+
+To reduce the effects of overrepresented sequences, typically a simple weighting strategy is applied that assigns a weight to each sequence that is the inverse of the number of similar sequences according to an identity threshold [@Stein2015a]. 
+It has been found that reweighting improves contact prediction performance [@Buslje2009; @Morcos2011; @Jones2012] significantly but results are robust against the choice of the identity threshold in a range between 0.7 and 0.9 [@Morcos2011]. 
+
+
 
 (ref:caption-phylogenetic-effect) The phylogenetic dependence of closely related sequences can produce covariation signals. Here, two independent mutation events (highlighted in red) in two branches of the tree result in a perfect covariation signal for two positions.
 

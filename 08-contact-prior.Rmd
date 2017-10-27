@@ -1,3 +1,4 @@
+
 # Random Forest Contact Prior {#contact-prior}
 
 The wealth of successful meta-predictors presented in section \@ref(meta-predictors) highlights the importance to exploit other sources of information apart from coevolution statistics.
@@ -9,7 +10,7 @@ Other frequently used sequence derived features include pairwise contact potenti
 In the following sections I present a random forest classifier that uses sequence derived features to distinguish contacts from non-contacts.
 Methods section \@ref(seq-features) lists all features used to train the classifier including the aforementioned standard features as well as some novel features. 
 
-The probabilistic predictions of the random forest model can be introduced directly as prior information into the Bayesian statistical model presented in the last section \@ref(bayesian-approach) to improve the overall prediction accuracy in terms of posterior probabilities.
+The probabilistic predictions of the random forest model can be introduced directly as prior information into the Bayesian statistical model that will be presented in the next section \@ref(bayesian-approach) to improve the overall prediction accuracy in terms of posterior probabilities.
 Furthermore, contact scores from coevolution methods can be added as additional feature to the random forest model in order to elucidate how much the combined information improves prediction accuracy over the single methods. 
 
 
@@ -183,7 +184,8 @@ Especially for small alignments, the improvement is substantial (about 12%) as c
 In contrast, the improvement on large alignments (right plot in Figure \@ref(fig:performance-neff-rf-additional-features)) is smaller (about 5%), as the gain from simple sequence features compared to the much more powerful coevolution signals is neglectable. 
 
 Similarly, the contact scores derived from couplings computed with [CD](#abbrev) in chapter \@ref(optimizing-full-likelihood) can be added as a feature instead of the pseudo-likelihood score or besides the pseudo-likelihood contact score. 
-The three resultant models perform comparably (see Figure \@ref(fig:performance-rf-additional-features)) and apparantly, there is minor information gain by adding both coevolution contact scores.
+Again, the contrastive-divergence and the pseudo-likelihood contact score comprise the most important features in the respective models (see Appendix Figures \@ref(fig:feature-importance-rf-with-cd-score) and  \@ref(fig:feature-importance-rf-with-pll-cd-score)).
+The three models trained on additional coevolution features perform comparably (see Figure \@ref(fig:performance-rf-additional-features)) and apparantly, there is minor information gain by adding both coevolution contact scores.
 Since it has been shown in section \@ref(comparing-pll-cd) that pseudo-likelihood and contrastive divergence contact scores are highly correlated, resulting in very similar rankings for residue pairs, it is not surprising that the random forest model including both coevolution scores does not improve over the random forest model including only one of both scores.
 
 (ref:caption-performance-neff-rf-additional-features) Mean precision for top ranked contacts on a test set of 1000 proteins splitted into four equally sized subsets with respect to [Neff](#abbrev). Subsets are defined according to quantiles of [Neff](#abbrev) values. **Left**: Subset of proteins with [Neff](#abbrev) < Q1. **Right**: Subset of proteins with Q3 <= [Neff](#abbrev) < Q4. Methods are the same as in Figure \@ref(fig:performance-rf-additional-features)
@@ -191,6 +193,196 @@ Since it has been shown in section \@ref(comparing-pll-cd) that pseudo-likelihoo
 ```{r performance-neff-rf-additional-features, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd.png", out.width = '100%', fig.cap = '(ref:caption-performance-neff-rf-additional-features)'}
 knitr::include_url("img/random_forest_contact_prior/additional_contat_score_features/precision_vs_rank_facetted_by_neff_rf_pll_cd.html", height = "600px")
 ```
+
+## Discussion
+
+Much information about interacting protein residues is typically contained in simple protein sequence features.
+All popular machine learning and meta-predictors for contact prediction employ sequence derived features as additional source of information besides coevolution scores. 
+In line with this knowledge I developed a random forest classifier for contact prediction that is trained on simple sequence features.
+
+Random forests are a convenient choice for many machine learning applications as they require no input preparation, such as feature scaling, they perform implicit feature selection and provide a robust indicator of feature importance and can handle huge feature space.
+Furthermore they are quick and straight forward to train and have been shown to perform well for protein contact prediction.
+
+As expected, the random forest model yielded a robust estimator that outperformed coevolution methods for small protein families where they suffer from the low signal-to-noise ratio.
+Furthermore, I integrated the predictions of the pseudo-likelihood and the constrastive divergence method as additional features for training.
+Again as expected, the individual methods greatly contribute and improve the predictive performance of the random forest classifier.
+Even for protein families with many sequences, where coevolutionary methods perform best, the combined random forest model improves over the individual coevolution approaches. 
+Yet, including both coevolution scores as additional features into the random forest model does not help to boost performance further.
+Apparantly, they do not seem to represent complementary information which was on the other hand already expected from the analysis in chapter \@ref(optimizing-full-likelihood).
+
+\newpage
+## Methods
+
+### Features used to train Random Forest Model {#seq-features}
+
+Given a multiple sequence alignment of a protein family, various sequence features can be derived that have been found to be informative of a residue-residue contact.
+
+In total there are 250 features that can be divided into global, single position and pairwise features and are described in the following sections. 
+If not stated otherwise, *weighted* features have been computed using amino acid counts or amino acid frequencies based on weighted sequences as described in section \@ref(seq-reweighting).
+
+#### Global Features {#seq-features-global}
+
+These features describe alignment characteristics.
+Every pair of residues $(i,j)$ from the same protein will be attributed the same feature.
+
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+| L                                 | log of protein length | 1 |
+| N                                 | number of sequences | 1 |
+| Neff                              | number of effective sequences computed as the sum over sequence weights (see section \@ref(seq-reweighting)) | 1 |
+| gaps                              | average percentage of gaps over all positions | 1 |
+| diversity                         | $\frac{\sqrt{N}}{L}$, N=number of sequences, L=protein length| 1 |
+| amino acid composition            | weighted amino acid frequencies in alignment | 20 |
+| Psipred                           | secondary structure prediction by PSIPRED (v4.0)[@Jones1999] given as average three state propensities | 3 |
+| NetsurfP                          | secomdary structure prediction by Netsurfp (v1.0)[@Petersen2009a] given as average three state propensities | 3 |
+| contact prior protein length      | simple contact predictor based on expected number of contacts per protein with respect to protein length (see description below) | 1 |
+: (\#tab:global-features)  Features characterizing the total alignment
+
+There are in total 32 global alignment features per reside pair. 
+
+
+
+
+#### Single Position Features {#seq-features-single}
+
+These features describe characteristics of a single alignment column.
+Every residue pair $(i,j)$ will be described by two features, once for each position.
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+|shannon entropy (excluding gaps)   | $- \sum_{a=1}^{20} p_a \log p_a$ | 2 |
+|shannon entropy (including gaps)   | $- \sum_{a=1}^{21} p_a \log p_a$ | 2 |
+|kullback leibler divergence        | between weighted observed and background amino acid frequencies [@Robinson1991] | 2 |
+|jennson shannon divergence         | between weighted observed and background amino acid frequencies [@Robinson1991] | 2 |
+|PSSM                               | log odds ratio of weighted observed and background amino acid frequencies [@Robinson1991] | 40 | 
+|secondary structure prediction     | three state propensities PSIPRED (v4.0) [@Jones1999] | 6 |
+|secondary structure prediction     | three state propensities Netsurfp (v1.0) [@Petersen2009a] | 6 |
+|solvent accessibility prediction   | RSA and RSA Z-score Netsurfp (v1.0) [@Petersen2009a] | 4 |
+|relative position in sequence      | $\frac{i}{L}$ for a protien of length $L$ | 2 |
+|number of ungapped sequences       | $\sum_n w_n I(x_{ni} \neq 20)$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
+|percentage of gaps                 | $\frac{\sum_n w_n I(x_{ni} = 20)}{N_{\text{eff}}}$ for sequences $x_n$ and sequence weights $w_n$ | 2 |
+|Average Atchley Factor             | Atchley Factors 1-5 [@Atchley2005] | 10 |
+|Average polarity (Grantham)        | Polarity according to Grantham [@Grantham1974]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:GRAR740102) [@Kawashima2008]. | 2 |
+|Average polarity (Zimmermann)      | Polarity according to Zimmermann et al. [@Zimmerman1968]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680103) [@Kawashima2008]. | 2 |
+|Average isoelectricity             | Isoelectric point according to Zimmermann et al. [@Zimmerman1968]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680104) [@Kawashima2008]. | 2 |
+|Average hydrophobicity (Wimley&White) | Hydrophobicity scale according to Wimley & White [@Wimley1996]. Data taken from [UCSF Chimera](https://www.cgl.ucsf.edu/chimera/docs/ContributedSoftware/defineattrib/wwHydrophobicity.txt) [@Wimley1996]. | 2 |
+|Average hydrophobicity (Kyte&Dolittle) | Hydrophobicity index according to Kyte & Doolittle [@Kyte1982]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:KYTJ820101) [@Kawashima2008]. | 2 |
+|Average hydrophobicity (Cornette)  | Hydrophobicity according to Cornette [@Cornette1987]. | 2 |
+|Average bulkiness                  | Bulkiness according to Zimmerman et al. [@Zimmerman1968]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:ZIMJ680102) [@Kawashima2008]. | 2 |
+|Average volume                     | Average volumes of residues according to Pontius et al. [@Pontius1996]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:PONJ960101) [@Kawashima2008]. | 2 |
+: (\#tab:single-position-features) Caption hereSingle Position Sequence Features
+
+There are 48 single sequnece features per residue and consequently 96 single sequence features per residue pair. 
+
+Additionally, all single features will be computed within a window of size 5.
+The window feature for center residue $i$ will be computed as the mean feature over residues $[i\!-\!2, \ldots, i, \ldots, i\!+\!2]$.
+Whenever the window extends the range of the sequence (for $i\!<\!2$ and $i\!>\!(L-2)$), the window feature will be computed only for valid sequence positions. 
+This results in additional 96 window features per residue pair.
+
+
+#### Pairwise Features {#seq-features-pairwise}
+
+These features are computed for every pair of columns $(i, j)$ in the alignment with $i<j$.
+
+| Feature | Description | No. Features per residue pair $(i, j)$ | 
+|-----------------------------:|:------------------------------------------------------------------|:---------------------:|
+| sequence separation                   | $j-i$ | 1 |
+| gaps                                  | pairwise percentage of gaps using weighted sequences  | 1 |
+| number of ungapped sequences          | $\sum_n w_n I(x_{ni} \! \neq \!  20, x_{nj} \! \neq \! 20)$ for sequences $x_n$ and sequence weights $w_n$ | 1 |
+| correlation physico-chemical features | pairwise correlation of all physico-chemical properties listed in table \@ref(tab:single-position-features) | 13 |
+| pairwise potential (buried)           | Average quasi-chemical energy of interactions in an average buried environment according to Miyazawa&Jernigan [@Miyazawa1999a]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990107) [@Kawashima2008]. | 1 |
+| pairwise potential (water)            | Average quasi-chemical energy of transfer of amino acids from water to the protein environment according to Miyazawa&Jernigan [@Miyazawa1999a]. Data taken from [AAindex Database](http://www.genome.jp/dbget-bin/www_bget?aaindex:MIYS990106) [@Kawashima2008]. | 1 |
+| pairwise potential (Li&Fang)          | Average general contact potential by Li&Fang [@Li2011]| 1 |
+| pairwise potential (Zhu&Braun)        | Average statistical potential from residue pairs in beta-sheets by Zhu&Braun [@Zhu1999] | 1 |
+| joint shannon entropy (excluding gaps)| $- \sum_{a=1}^{20}\sum_{b=1}^{20} p(a,b) \log p(a,b)$ | 1 |
+| joint shannon entropy (including gaps)| $- \sum_{a=1}^{21}\sum_{b=1}^{21} p(a,b) \log p(a,b)$ | 1 |
+| normalized [MI](#abbrev)              | normalized mutual information of amino acid counts at two positions| 1 |
+| [MI](#abbrev) (+pseudo-counts)        | mutual information of amino acid counts at two positions, including uniform pseudo-counts | 1 |
+| [MI](#abbrev) (+pseudo-counts + [APC](#abbrev)) | mutual information of amino acid counts at two positions; including pseudo-counts and average product correction| 1 |
+| OMES coeevolution score               | according to Fodor&Aldrich [@Fodor2004a] with and without [APC](#abbrev) | 2 |
+: (\#tab:pairwise-position-features) Pairwise Sequence Features
+
+There are in total 26 pairwise sequence features. 
+
+### Simple Contact Prior with Respect to Protein Length
+
+The last feature listed in table \@ref(tab:global-features) ("contact prior protein length") stands for a simple contact predictor based on expected number of contacts per protein with respect to protein length.
+The average number of contats per residue, computed as the observed number of contacts divided by protein length L, has a non-linear relationship with protein length $L$ as can be seen in Figure \@ref(fig:avg-nr-contacts-per-residue-vs-protein-length).
+
+(ref:caption-avg-nr-contacts-per-residue-vs-protein-length) Observed number of contacts per residue has a non-linear relationship with protein length. Distribution is shown for several thresholds of sequence separation |j-i|.
+
+```{r avg-nr-contacts-per-residue-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-avg-nr-contacts-per-residue-vs-protein-length)'}
+knitr::include_url("img/random_forest_contact_prior/no_contacts_per_residue_vs_protein_length_thr8.html", height = "500px")
+```
+
+In log space, the average number of contats per residue can be fitted with a linear regression and yields the following functions:
+
+- $f(L) = 1.556 + 0.596 \log (L)$ for sequence separation of 0 positions
+- $f(L) = -1.273 + 0.59 \log (L)$ for sequence separation of 8 positions
+- $f(L) = -1.567 + 0.615 \log (L)$ for sequence separation of 12 positions
+- $f(L) = -2.0 + 0.624 \log (L)$ for sequence separation of 24 positions
+
+A simple contact predictor can be formulated as the ratio of the expected number of contacts per residue, given by $f(L)$, and the possible number of contacts per residue which is $L-1$,
+
+$$
+p(r_{ij} = 1 | L) = \frac{f(L)}{L-1} \; ,
+$$
+
+with $r_{ij}=1$ representing a contact between residue $i$ and $j$. 
+
+<!--
+(ref:caption-simple-contact-prior-linfit) Distribution of average number of contacts per residue against protein length and corresponding linear regression fits. Protein length is on logarithmic scale.  Distribution and linear regression fits are shown for different sequence separation thresholds |j-i|. 
+
+```{r simple-contact-prior-linfit, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-simple-contact-prior-linfit)'}
+knitr::include_url("img/random_forest_contact_prior/model_linreg_transformlogL_no_contacts_per_residue_vs_protein_length_thr8.html", height = "650px")
+```
+-->
+
+### Cross-validation for Random Forest Training {#rf-training}
+
+Proteins constitute highly imbalanced datasets with respect to the number of residue pairs that form and do not form physical contacts. 
+As can be seen in Figure \@ref(fig:fraction-contacts-vs-protein-length), depending on the enforced sequence separation threshold and protein length the percentage of contacts per protein varies between 25% and 0%.
+Most studies applying machine learning algorithms for predicting residue-residue contacts rebalanced the data set by undersampling of the majority class.
+Table \@ref(tab:rebalancing-dataset) lists choices for the proportion of contacts to non-contacts used to train some machine learning contact predictors.
+I followed the same strategy and undersampled residue pairs that are not physical contacts with a proportion of contacts to non-contacts of 1:5.
+
+| Study | Machine Learning Algorithm | Proportion of Contacts : Non-contacts | 
+|-----------------------:|:------------:|:--------------------:|
+| Wu et al. (2008) [@Wu2008] | SVM | 1:4 |
+| Li et al. (2011) [@Li2011] | Random Forest | 1:1, 1:2 |
+| Wang et al. (2011) [@Wang2011] | Random Forest | 1:4 |
+| DiLena et al. (2012) [@DiLena2012a] | deep neural network| 1:$\approx \!4$ (sampling 20% of non-contacts) |
+| Wang et al. (2013) [@Wang2013] | Random Forest |  1:$\approx 4$ (sampling 20% of non-contacts) |
+:(#tab:rebalancing-dataset) Important machine learning contact prediction approaches and their choices for rebalancing the data set.
+
+
+(ref:caption-fraction-contacts-vs-protein-length) Fraction of contacts among all possible contacts in a protein against protein length L. The distribution has a non-linear relationship. At a sequence separation >8 positions the fraction of contacts for intermediate size proteins with length >100 is approximately 2%. Data set contains 6368 proteins and is explained in methods section \@ref(dataset).
+
+```{r fraction-contacts-vs-protein-length, echo = FALSE, screenshot.alt="img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.png", out.width = '80%', fig.align='center', fig.cap = '(ref:caption-fraction-contacts-vs-protein-length)'}
+knitr::include_url("img/random_forest_contact_prior/fraction_contacts_vs_protein_length_thr8.html", height = "500px")
+```
+
+
+The total training set is comprised of 50,000 residue pairs $<8 \angstrom$ ("contacts") and 250,000 residue pairs $>8 \angstrom$ ("non-contacts").
+I filtered residue pairs using a sequence separation of 12 positions and selected at maximum 100 contacts and 500 non-contacts per protein.
+The data is collected in equal parts from data subsets 1-5 (see methods section  \@ref(methods)), so that the training set consists of five subsets that are non-redundand at the fold level.
+Each of the five models for cross-validation will be trained on 40,000 contacts and 200,000 non-contacts originating from four of the five subsets.
+As the training set has been undersampled for non-contacts, it is not representative of real world proteins and the models need to be validated on a more realistic validation set. 
+Therefore, each of the five trained models is not validated on the hold-out set but on separate validation sets containing 40 proteins at a time.
+The proteins of the validation sets are randomly selected from the respective fifth data subset and consequently are non-redundant at the fold level with training data. 
+Performance is assessed by means of the standard contact prediction benchmark (mean precision against top ranked contacts).
+
+I used the module [RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier) in the Python package `sklearn (v. 0.19)`  [@Pedregosa2011] and trained the models on features extracted from [MSAs](#abbrev) which are listed in methods section \@ref(seq-features). 
+
+
+
+### Feature Selection {#rf-feature-selection}
+
+A random forest model is trained on the total set of features.
+Given the distribution of *Gini importance* values of features from the model, subsets of features are defined by features having *Gini importance* values larger than the $\{10, 30, 50, 70, 90\}$-percentile of the distribution.
+Performance of the models trained on these subsets of features is evaluated on the same validation set. 
+
 
 
 
