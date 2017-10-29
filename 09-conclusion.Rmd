@@ -1,7 +1,7 @@
 # Conclusion and Outlook
 
-With the work presented here, I was the first to formulate [DCA](#abbrev) as a principled statistical framework, providing true probability estimates and promoting transparency of modelling aspects. 
-With this enhanced transparency, my work lays the foundation to improve [DCA](#abbrev) for small protein families in a mechanistic way.
+With the work presented here, I was the first to formulate [DCA](#abbrev) as a principled statistical framework, providing true probability estimates and promoting biological insights.
+The transparency of the modelling process and the flexibility of the Bayesian model lay the foundation to further improvements of [DCA](#abbrev) for small protein families in a mechanistic way.
 
 In chapter \@ref(interpreting-coupling-matrices), I presented a thorough analysis of coupling matrices that are inferred from a multiple sequence alignment (MSA) and reflect the tendencies of amino acids to co-occur at paired positions in the [MSA](#abbrev).
 I showed that coupling matrices contain valuable information with a meaningful biological interpretation.
@@ -14,25 +14,28 @@ Due to the complexity of the normalization constant it is infeasible to infer th
 The most popular [DCA](#abbrev) approaches optimize the pseudo-likelihood instead but it is unknown how well it approximates the full likelihood in case protein families have only few members.
 In my work, I optimized the full likelihood by using an approximate gradient provided by an approach called *contrastive divergence*, that has not yet been applied to contact prediction.
 I systematically tuned the stochastic gradient descent algorithm for the use with *contrastive divergence* and also examined various modifications to the estimation of the gradient.
-My approach improves over pseudo-likelihood maximization for small protein families, which could be traced back to amplified signals between strongly conserved residue pairs.
+My approach achieved improvements over pseudo-likelihood maximization for small protein families, which could be traced back to amplified signals between strongly conserved residue pairs.
 
 In chapter \@ref(contact-prior) I developed a random forest classifier for contact prediction that is trained on sequence features.
 This model yields a robust estimator that outperforms coevolution methods for small protein families where they suffer from the low signal-to-noise ratio.
 In line with the most successful contact predictors which exploit information from various sources and multiple [DCA](#abbrev) methods, I integrated the predictions of the pseudo-likelihood and the constrastive divergence method as additional features for training.
 The individual methods greatly contribute and improve the predictive performance of the random forest classifier.
 
-The Bayesian framework proposed in chapter \@ref(bayesian-approach) represents a principled approach that eradicates the use of heuristics by explicitely modelling the full information contained in the coupling parameters in form of a Gaussian mixture coupling prior while at the same time accounting for the uncertainty of the data.
-The hyperparameters of the coupling prior were trained on inferred couplings and structures from many proteins and the Gaussian mixture convincingly reproduced empirical coupling distributions.
-Posterior probabilty estimates of residue-residue contacts are obtained by combining the Bayesian likelihood with prior information in form of the random forest contact class probabilities.
-The predicted contacts, that are assigned the highest probabilities, are not more precise than the heuristic predictions obtained from the pseudo-likelihood approach.
-A possible explanation is that the coupling prior does not yet capture enough information in order to efficiently discriminate between contacts and non-contacts.
-Eventhough reproducing the one- and two-dimensional empirical distributions, it is possible that crucial interdependencies require a more complex model, e.g. by using more Gaussian components or full instead of diagonal covariance matrices.
-Another reason could be that certain inherent modelling assumptions are not met or are too inaccurate but unfortunately it is not easy to verify these assumptions. 
+The Bayesian framework proposed in chapter \@ref(bayesian-approach) represents a principled statistical approach that eradicates the use of heuristics by explicitely modelling the full information contained in the coupling signatures while at the same time accounting for the uncertainty of the data.
+Based on the observations and biological interpretations of coupling signals in chapter \@ref(interpreting-coupling-matrices), the prior on couplings was modelled as a Gaussian mixture.
+The hyperparameters were trained on inferred couplings and structures from many proteins and the Gaussian mixture model convincingly reproduced empirical coupling distributions.
+Posterior probabilty estimates of residue-residue contacts are obtained by combining the likelihood of contacts with prior information in form of the random forest contact class probabilities.
+They are less precise than the heuristic predictions obtained from the pseudo-likelihood approach combined with prior information.
+A possible explanation is that the Gaussian mixture model of the coupling prior does not yet capture enough information in order to efficiently discriminate between contacts and non-contacts.
+Eventhough reproducing the one- and two-dimensional empirical distributions, it is plausible that crucial interdependencies require a more complex model, e.g. by using more Gaussian components or full instead of diagonal covariance matrices.
+Furthermore, the approximation to the regularized likelihood of the sequences with a multivariate Gaussian can and perhaps must be iteratively improved by another round of training employing an improved regularization prior.
+Finally, the reason could be that certain inherent modelling assumptions are not met or are too inaccurate but unfortunately it is not easy to verify these assumptions. 
 
-The Bayesian framework developed here provides the means to establish a statistically sound formulation for [DCA](#abbrev) that can be easily extended to include additional prior information or that can be embedded in more complex Bayesian hierarchies.
-For example, a simple extension of the Bayesian model allows the estimation of posterior probabilities of residue-residue distances (see section \@ref(bayesian-model-distances)). 
-The analysis in chapter \@ref(interpreting-coupling-matrices) has demonstrated that the coupling signal weakens with increasing inter-residue distances.
-The higher information content of residue-residue distances compared to a binary contact can help to improve structure prediction.
+Nevertheless, the Bayesian framework developed here provides a solid theoretical and statistically sound formulation for [DCA](#abbrev) with an enhanced explanatory power compared to the uninformative heuristics. 
+Through the formulation in the language of Bayesian statistics, the framework naturally allows the integration of additional prior knowledge and it facilitates its further usage in even more complex Bayesian hierarchies. 
+It is also straightforward to extend the model towards the estimation of posterior probabilities of residue-residue distances (see section \@ref(bayesian-model-distances)). 
+The analysis in chapter \@ref(interpreting-coupling-matrices) has demonstrated that the coupling signal weakens with increasing inter-residue distances which represents additional information that awaits full utilization.
+The information gain of residue-residue distance estimates over binary contact prediction is substantial and could greatly improve *de novo* structure prediction. 
 
 
 

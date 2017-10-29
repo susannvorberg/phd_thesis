@@ -3,6 +3,7 @@
 # general
 
   - check quality/resolution of screenshots in pdf
+  - contact maps: lower cutoff one color, diverging color to higher distances
 
 # intro
 
