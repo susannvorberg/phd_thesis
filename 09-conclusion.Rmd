@@ -25,13 +25,13 @@ The Bayesian framework proposed in chapter \@ref(bayesian-approach) represents a
 Based on the observations and biological interpretations of coupling signals in chapter \@ref(interpreting-coupling-matrices), the prior on couplings was modelled as a Gaussian mixture.
 The hyperparameters were trained on inferred couplings and structures from many proteins and the Gaussian mixture model convincingly reproduced empirical coupling distributions.
 Posterior probabilty estimates of residue-residue contacts are obtained by combining the likelihood of contacts with prior information in form of the random forest contact class probabilities.
-They are less precise than the heuristic predictions obtained from the pseudo-likelihood approach combined with prior information.
+They posterior probabilties are less precise than the heuristic predictions obtained from the pseudo-likelihood approach combined with prior information.
 A possible explanation is that the Gaussian mixture model of the coupling prior does not yet capture enough information in order to efficiently discriminate between contacts and non-contacts.
-Eventhough reproducing the one- and two-dimensional empirical distributions, it is plausible that crucial interdependencies require a more complex model, e.g. by using more Gaussian components or full instead of diagonal covariance matrices.
+Eventhough reproducing the one- and two-dimensional empirical distributions, it is plausible that the precise interdependencies between couplings require a more complex model, e.g. by using more Gaussian components or full instead of diagonal covariance matrices.
 Furthermore, the approximation to the regularized likelihood of the sequences with a multivariate Gaussian can and perhaps must be iteratively improved by another round of training employing an improved regularization prior.
 Finally, the reason could be that certain inherent modelling assumptions are not met or are too inaccurate but unfortunately it is not easy to verify these assumptions. 
 
-Nevertheless, the Bayesian framework developed here provides a solid theoretical and statistically sound formulation for [DCA](#abbrev) with an enhanced explanatory power compared to the uninformative heuristics. 
+Nevertheless, the Bayesian framework developed here provides a solid theoretical and statistically sound formulation for [DCA](#abbrev) with enhanced explanatory power compared to the uninformative heuristics. 
 Through the formulation in the language of Bayesian statistics, the framework naturally allows the integration of additional prior knowledge and it facilitates its further usage in even more complex Bayesian hierarchies. 
 It is also straightforward to extend the model towards the estimation of posterior probabilities of residue-residue distances (see section \@ref(bayesian-model-distances)). 
 The analysis in chapter \@ref(interpreting-coupling-matrices) has demonstrated that the coupling signal weakens with increasing inter-residue distances which represents additional information that awaits full utilization.

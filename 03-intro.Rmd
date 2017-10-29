@@ -64,11 +64,11 @@ Another complementary source of information is given by predicted protein residu
 The invention of direct coupling analysis ([DCA](#abbrev)) in 2009 was a breakthrough in the development of computational methods to infer spatially close residue pairs from coevolutionary signals in the evolutionary record of protein families [@Weigt2009]. 
 Since then, the field of contact prediction has experienced rapid progress and methods are continously improving.
 Modern contact prediction approaches produce predictions that are sufficiently accurate to successfully assist the *de novo* prediction of protein structures [@Marks2011].
+The last years have seen an enourmous wealth of studies applying predicted residue-residue contacts not only as distance constraints for *de novo* modelling of protein structures, but also in many different fields in structural biology, such as domain prediction [@Sadowski2013], studying alternative conformations [@Parisi2015a] or inferring evolutionary fitness landscapes and quantifying mutational effects [@Hopf2017]. 
 
 It has long been known that native contacts can be used to reliably reconstruct native protein 3D structure [@Vendruscolo1997].
-Eventhough a contact map provides only a 2D represenation of the protein structure, it retains the full 3D structural information of a protein.
-Residue-residue contacts can be visualized in a contact map which is a binary $L \times L$ matrix, with $L$ being protein length.
-For two residues, $i$ and $j$, the binary element in the matrix $C(i,j)$ is 
+This is because a contact map retains the full 3D structural information of a protein, eventhough it provides only a 2D represenation of the protein structure. 
+For a protein of length $L$, a contact map is a binary $L \times L$ matrix, where the binary element in the matrix $C(i,j)$ for two residues $i$ and $j$ is given by 
 \begin{equation}
     C(i,j) =    
     \begin{cases}
@@ -84,7 +84,6 @@ However they all apply the same heuristics on top of the underlying statistical 
 It is a reasonable assumption that by making full use of the available information, the predictive performance of the models should improve and as a consequence extend the applicability of [DCA](#abbrev) methods to smaller protein families.
 The aim of this thesis is therefore to improve the models for residue-residue contact prediction by developing a flexible and transparent Bayesian framework that adresses these issues.
 
-The last years have seen an enourmous wealth of studies applying predicted residue-residue contacts not only as distance constraints for *de novo* modelling of protein structures, but also in many different fields in structural biology, such as domain prediction [@Sadowski2013], studying alternative conformations [@Parisi2015a] or inferring evolutionary fitness landscapes and quantifying mutational effects[@Hopf2017]. 
 The next chapter gives an introduction to state-of-the-art contact prediction approaches, how the predicted residue-residue contacts are applied and which challenges the current methods have to face. 
 
 (ref:caption-contact-map) 2D and 3D representations of protein triabin, a thombin inhibitor from triatoma pallidipennis (PDB identifier 1avg chain I). **Left** The upper left matrix illustrates a contact map using an $10 \angstrom \Cb$ cutoff. A black square is drawn at position $(i, j)$ if the $\Cb$ atoms of residues $i$ and $j$ are closer than $10 \angstrom$ in the structure. The lower right matrix illustrates a distance map. Color reflects $\Cb$ distances between residue pairs with red colors representing $\Delta \Cb \le 10 \angstrom$ and blue colors representing  $\Delta \Cb > 10 \angstrom$. **Right** 3D Structure showing an eight-stranded beta-barrel. 

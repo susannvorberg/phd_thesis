@@ -423,13 +423,6 @@ knitr::include_graphics("img/bayesian_model/cd/3/2dvis_combined_100k.png")
 
 
 
-(ref:caption-stats-pll-5comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 2552 iterations. Trained on 100,000 residue pairs per contact class for a three component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
-
-```{r stats-pll-5comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-5comp-100k)'}
-knitr::include_graphics("img/bayesian_model/pll/5/stats-pll-5comp-100k_contactthr25.png")
-```
-
-
 
 (ref:caption-stats-cd-5comp-100k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 2605 iterations. Trained on 100,000 residue pairs per contact class for a five component Gaussian mixture and using *contrastive divergence* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
@@ -457,3 +450,29 @@ knitr::include_graphics("img/bayesian_model/cd/5/1dvis_combined_300k.png")
 ```{r vis2d-cd-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-cd-5comp-300k)'}
 knitr::include_graphics("img/bayesian_model/cd/5/2dvis_combined_300k.png")
 ```
+
+
+(ref:caption-precision-bayesian-model-pll-3comp-ncthr) Mean precision for top ranked contact predictions over 500 proteins. Posterior probabilities of contacts have been computed with the Bayesian model using a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on different dataset sizes as specified in the legende.  Furthermore residue pairs not in physical contact are defined either by $\Cb$ distances $>8\angstrom$ or $>25\angstrom$. **Bayesian Posterior 100k 8A**: Bayesian model trained on 100,000 residue pairs per class and non-contacts defined by an $8 \angstrom$ distance threshold. **Bayesian Posterior 100k 25A**: Bayesian model trained on 100,000 residue pairs per class and non-contacts defined by an $25 \angstrom$ distance threshold. **Bayesian Posterior 300k 8A**: Bayesian model trained on 100,000 residue pairs per class and non-contacts defined by an $8 \angstrom$ distance threshold. **Bayesian Posterior 300k 25A**: Bayesian model trained on 100,000 residue pairs per class and non-contacts defined by an $25 \angstrom$ distance threshold. **Bayesian Posterior 100k, non-contacts 5 **: Bayesian model trained on 100,000 contacts and 500,000 non-contacts with non-contacts defined by an $25 \angstrom$ distance threshold. 
+
+
+```{r precision-bayesian-model-pll-3comp-ncthr, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_ncthr.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-pll-3comp-ncthr)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_ncthr.html", height = "500px")
+```
+
+(ref:caption-precision-bayesian-model-cd-3comp) Mean precision for top ranked contact predictions over 500 proteins. Bayesian models are based on couplings computed with *contrastive divergence*. **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior 100k**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class. **Bayesian Posterior 300k**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 300,000 residue pairs per contact class. **Bayesian Posterior 500k**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 500,000 residue pairs per contact class. **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood. 
+
+```{r precision-bayesian-model-cd-3comp, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_cd_3comp_all_datasets.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-cd-3comp)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_cd_3comp_all_datasets.html", height = "500px")
+```
+
+(ref:caption-precision-bayesian-model-cd-100k) Mean precision for top ranked contact predictions over 500 proteins. Bayesian models are based on couplings computed with *contrastive divergence*. **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior 3**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class. **Bayesian Posterior 5**: Bayesian model computing the posterior probability of contacts with a five component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class. **Bayesian Posterior 10**: Bayesian model computing the posterior probability of contacts with a ten component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class.  **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood.
+
+```{r precision-bayesian-model-cd-100k, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_cd_100k_allcomponents.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-cd-100k)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_cd_100k_allcomponents.html", height = "500px")
+```
+
+
+
+
+
+

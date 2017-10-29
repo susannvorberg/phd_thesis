@@ -26,24 +26,24 @@ However, in practice these approaches are limited by the immense computational c
 With the development of sophisticated statistical models the formerly high false positive rate of predictions could be reduced.
 -->
 
-About half of the protein families miss structural annotation and are therefore not amenable to template-based structure prediction.
-They can be addressed by *de novo* structure prediction approaches which in practice are limited by the immense computational costs required to search the conformational space for the lowest-energy conformation.
-Recent advancements in residue-residue contact prediction have enabled the *de novo* prediction of protein structures by sufficiently constraining the overall protein fold.
+About half of the protein families lack structural annotation and are therefore not amenable to template-based structure prediction.
+They can theoratically be addressed by *de novo* structure prediction approaches which in practice are limited by the immense computational costs required to search the conformational space for the lowest-energy conformation.
+Recent advances in residue-residue contact prediction have enabled the *de novo* prediction of protein structures by sufficiently constraining the overall protein fold.
 Residue-residue contact prediction is based on the idea that selection pressure on proteins to maintain their structure and function can lead to compensatory mutations between spatially neighboring residues.
 This leaves an echo of correlation signatures that can be traced down from the evolutionary record.
-Despite the immense success of contact prediction methods, several open challeges need to be addressed to broaden their applicability.
-The most evident limitation lies in the requirement of deep alignments that amplify the coevolutionary signal.
+Despite the immense success of contact prediction methods, several open challenges need to be addressed to broaden their applicability.
+The most evident limitation lies in the requirement of deep alignments that give rise to sufficiently strong coevolutionary signals compared to background noise.
 Unfortunately, the majority of protein families without associated structural information that comprise interesting targets for contact guided *de novo* structure prediction, have low numbers of homologous sequences.
 Furthermore, the current contact prediction methods apply heuristics that leave certain aspects of the available coevolutionary information unexploited.
-So far, the heuristics haven proven robust and resisted efforts to replace them.
+So far, the heuristics have proven robust and resisted efforts to replace them.
 
 This work presents two different approaches for improving contact prediction methods.
 Instead of inferring the evolutionary couplings by maximizing the pseudo-likelihood of the statistical model for protein sequence families, a new approach was developed that maximizes the full likelihood by an approximation to its gradient.
 This approach achieved minor improvements in precision for protein families with low numbers of sequences compared to the popular pseudo-likelihood method.
 Secondly, a principled Bayesian framework has been developed that provides posterior probability estimates for residue-residue contacts and eradicates the use of heuristics
-The full information contained in the underlying statistical model is exploited by explicitely modelling the amino acid preferences in the coevolutionary coupling signal while at the same time accounting for the uncertainty in the data.
-Eventhough, the posterior probabilities do not directly translate into more precise predictions than conventional methods, the Bayesian framework offers a statistically clean and theoretically solid treatment for the contact prediction problem with interpretable and transparent results.
-Moreover, it represents a convenient starting point for further developments, such as deriving estimates of the probability distributions of the distances between residue pairs.
+The full information of coevolutionary signatures is exploited by explicitely modelling the distribution of statistical couplings that reflects the nature of residue-residue interactions.
+Eventhough, the posterior probabilities do not directly translate into more precise predictions than obtained by conventional methods, the Bayesian framework offers a statistically clean and theoretically solid treatment for the contact prediction problem.
+The flexible and transparent framework provides a convenient starting point for further developments, such as integrating complex prior knowdledge or extending the model towards the derivation of probability estimates for residue-residue distances.
 
 
 

@@ -86,7 +86,7 @@ It contains the hyperparameters of the prior over couplings, $p(\wij|\cij)$, whi
 
 The hyperparameters are trained by minimizing the negative logarithm of the likelihood over a set of training [MSAs](#abbrev) as described in detail in method section \@ref(training-hyperparameters-bayesian-model).
 The [MAP](#abbrev) estimates of the coupling parameters $\wij^*$ are needed to compute the Hessian of the regularized *Potts* model likelihood, which again is needed for the Gaussian approximation to the regularized likelihood (see method section \@ref(laplace-approx)).
-For that purpose, I trained the hyperparameters by utilizing couplings $\wij^*$ obtained from pseudo-likelihood maximization as well as couplings $\wij^*$ obtained by maximizing the full likelihood with [CD](#abbrev).
+For that purpose, I trained the hyperparameters by utilizing couplings $\wij^*$ obtained from pseudo-likelihood maximization as well as couplings $\wij^*$ obtained by maximizing the full likelihood with contrastive divergence ([CD](#abbrev)).
 
 In the following I present the results of learning the hyperparameters for the coupling prior modelled as a Gaussian mixture with $K \in \{3,5,10\}$ Gaussian components with diagonal precision matrices $\Lk$ and a zero-component that is fixed at $\mu_0=0$ on datasets of different sizes (see method section \@ref(dataset-training-bayesian-model) for details).
 
@@ -144,67 +144,68 @@ knitr::include_graphics("img/bayesian_model/pll/3/2dvis_combined_300k.png")
 ```
 
 
-## Training Hyperparameters for a Gaussian Mixture with Five Components
+## Training Hyperparameters for a Gaussian Mixture with Five and Ten Components
 
-The increased complexity of training five instead of three component Gaussian mixtures does not only result in longer runtimes until convergence but also slows down runtime per iteration. 
-Therefore, several optimization runs did not converge within 2000 iterations. 
-Nevertheless, the obtained hyperparameters and resulting Gaussian mixture are consistent, which will be shown in the following.
-Again, analysis of the optimization results is exemplified for the training on the dataset with 300,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
+The increased complexity of training five or even ten instead of three component Gaussian mixtures does not only result in longer runtimes until convergence but also slows down runtime per iteration. 
+The optimization runs for five and ten component Gaussian mixtures did not converge within 2000 iterations. 
+Nevertheless, the obtained hyperparameters and resulting Gaussian mixture are consistent.
 
-Figure \@ref(fig:stats-pll-5comp-300k) shows the statistics of the inferred hyperparameters after 2502 iterations. 
-Similary as for three component Gaussian mixtures, the zeroth component receives a high weight for couplings from residue pairs that are not in physical contact ($g_0(0) \eq 0.94$).
-Besides the zeroth component, only component 2 has a noteworthy contribution to the Gaussian mixture ($g_1(0) \eq 0.05$).
-Component 0 and 2 are also the strongest components for the Gaussian mixture representing couplings from contacting residue pairs.
-The other three components contribute with weights of about 10% and are not only much broader but often located far off zero and therefore responsible for modelling the tails of the Gaussian mixture.
-The statistics of hyperparameters inferred from a larger dataset (300,000 residue pairs) are visualized in Appendix Figure \@ref(fig:stats-pll-5comp-100k).
-Furthermore, hyperparameters inferred using contrastive divergence couplings are again similar to those based on pseudo-likelihood couplings and statistics of hyperparameter  are visualized in Appendix Figures \@ref(fig:stats-cd-5comp-100k) and \@ref(fig:stats-cd-5comp-300k).
 
-(ref:caption-stats-pll-5comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 1134 iterations. Trained on 300,000 residue pairs per contact class for a five component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
+Figure \@ref(fig:stats-pll-5comp-300k) and  \@ref(fig:stats-pll-10comp-300k) show the statistics of the inferred hyperparameters for a five and ten component Gaussian mixture respectively. 
+Similary to three component Gaussian mixtures, the zeroth component receives a high weight for couplings from residue pairs that are not in physical contact ($g_0(0) \eq 0.93$ for five component mixture and $g_0(0) \eq 0.87$ for ten component mixture).
+There is a second component with a noteworthy contribution to the Gaussian mixture for non-contact couplings (component 3 with $g_1(0) \eq 0.07$ for five component mixture and component 9 with $g_1(0) \eq 0.13$ for ten component mixture).
+These two components are also the strongest components for the Gaussian mixture representing couplings from contacting residue pairs.
+Furthermore, hyperparameters inferred using contrastive divergence couplings are again similar to those based on pseudo-likelihood couplings and statistics of hyperparameter are visualized in Appendix Figures \@ref(fig:stats-cd-5comp-100k) and \@ref(fig:stats-cd-5comp-300k).
+
+(ref:caption-stats-pll-5comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 1134 iterations for a five component Guassian mixture. Trained on 300,000 residue pairs per contact class for a five component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Left** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Center** Distribution of the 400 elements in the mean vectors $\muk$. **Right** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
 ```{r stats-pll-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-stats-pll-5comp-300k)'}
 knitr::include_graphics("img/bayesian_model/pll/5/stats-pll-5comp-300k_contactthr25.png")
 ```
 
+(ref:caption-stats-pll-10comp-300k) Statistics for the hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$ obtained after 700 iterations for a ten component Gaussian mixture. Trained on 300,000 residue pairs per contact class for a five component Gaussian mixture and using *pseudo-likelihood* couplings to estimate the Hessian. **Top** Component weights $\gamma_k(\cij)$ for residue pairs not in physical contact ($\cij \eq 0$) and true contacts ($\cij \eq 1$). **Middle** Distribution of the 400 elements in the mean vectors $\muk$. **Bottom** Distribution of the 400 standard deviations corresponding to the square root of the diagonal of $\Lk^{-1}$.
 
-Figure \@ref(fig:vis1d-pll-5comp-300k) shows several one-dimensional projections of the 400 dimensionl Gaussian mixture with five components.
-The general observations regarding the shape of the Gaussian mixture for couplings from contacts and non-contacts that have been found for the three component mixture also apply for the five component mixtures. 
-The distribution of the Gaussian mixture for non-contacts is even narrower than for the three component model whereas the distribution of the Gaussian mixture for contacts is broader or rather more well defined.
-In the three component model only two components would contribute to defining the tails of the distribution for couplings from contacts.
-Now, there are four components that will, e.g. in the case of amino acid pair E-R be shifted towards positive values or in the case of amino acid pair E-E be shifted towards negative values. 
-Overall, the five component model seems to approximate the univariate distribution of couplings more precise than the three component model.
-The same observations apply to the Gaussian mixtures inferred based on contrastive divergence couplings. 
-One striking difference is that the distribution of couplings for non-contacts is even narrower compared to the model learned with pseudo-likelihood couplings (see Appendix Figure \@ref(fig:vis1d-cd-5comp-300k)).
-
-(ref:caption-vis1d-pll-5comp-300k) Visualisation of one-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian.. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Light blue dashed line: Gaussian component 0. Dark blue dashed line: Gaussian component 1. Light green dashed line: Gaussian component 2. Dark green dashed line: Gaussian component 3. Light pinkish dashed line: Gaussian component 4.
-**Top Left** One dimensional projection for pair (V,I). **Top Right** One dimensional projection for pair (F,W).  **Bottom Left** One dimensional projection for pair (E,R). **Bottom Right** One dimensional projection for pair (E,E).  
-
-```{r vis1d-pll-5comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-5comp-300k)'}
-knitr::include_graphics("img/bayesian_model/pll/5/1dvis_combined_300k.png")
+```{r stats-pll-10comp-300k, echo = FALSE, out.width = '90%', fig.show='hold', fig.cap = '(ref:caption-stats-pll-10comp-300k)'}
+knitr::include_graphics(c("img/bayesian_model/pll/10/300k_weights_noncontacththr25.png", "img/bayesian_model/pll/10/300k_mus_noncontactthr25.png", "img/bayesian_model/pll/10/300k_std_noncontactthr25.png"))
 ```
 
 
-Two-dimensional projections of the Gaussian mixture with five components are shown in Figure \@ref(fig:vis2d-pll-5comp-100k) for several pairs of couplings.
+Figure \@ref(fig:vis1d-pll-5-10-comp-300k) compares the one-dimensional projections of the 400 dimensionl Gaussian mixtures with five and ten components for the amino acid pair V-I and E-R.
+The general observations regarding the shape of the Gaussian mixture for couplings from contacts and non-contacts that have been found for the three component mixture also apply here.
+Generally, the Gaussian mixture for couplings from non-contacts is narrower in the five and ten component mixtures than in the three component Gaussian mixture model. 
+Thereby, the differentiation between contacts and non-contacts is enhanced because the ratio between the Gaussian mixture probability distribution for contacts and non-contacts increases.
+Furthermore, whereas in the three component model only two components would contribute to defining the tails of the distribution for couplings from contacts, now there are more components that can refine the tails.
+For example, in the case of amino acid pair E-R all but the zeroth component, which is fixed at zero, are shifted towards positive values.
+In the case of amino acid pair V-I the components are shifted towards both positive and negative values. 
+Overall, the Gaussian mixtures with five and ten components seem to refine the modelling of the coupling distributions compared to the simpler three component model.
+The same observations apply to the Gaussian mixtures inferred based on contrastive divergence couplings only that the resultant mixtures are narrower (see Appendix Figure \@ref(fig:vis1d-cd-5comp-300k)).
+
+
+(ref:caption-vis1d-pll-5-10-comp-300k) Visualisation of one-dimensional projections of the five and ten component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class and using *pseudo-likelihood* couplings to estimate the Hessian. Green solid line: Gaussian mixture for contacts. Blue solid line: Gaussian mixture for non-contacts. Black solid line: regularization prior with $\lambda_1 \eq 0.2L$ with L being protein length and assumed $L\eq150$. Dashed lines represent the unweighted Gaussian mixture components.
+**Top Left** One dimensional projection for pair (V,I) from the five component model. **Top Right** One dimensional projection for pair (V,I) from the ten component model.  **Bottom Left** One dimensional projection for pair (E,R) from the five component model. **Bottom Right** One dimensional projection for pair (E,R) from the ten component model.  
+
+```{r vis1d-pll-5-10-comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis1d-pll-5-10-comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/1dvis_combined_5comp_10comp_300k.png")
+```
+
+
+Two-dimensional projections of the Gaussian mixture with five and ten components are shown in Figure \@ref(fig:vis2d-pll-5-10-comp-300k) for different pairs of couplings.
 The distributions resemble the ones learned for the Gaussian mixture with three components.
-However, it is visible that the zeroth component is narrower for the five-component Gaussian mixture and that the additional components model particular parts of the distribution.
-The optimized coupling prior model that has been learned based on couplings computed with contrastive-divergence in general produces distributiona that are narrower which is expected given the hyperparameter statistics and the observations from the univariate distributions.
+However, it is visible that the zeroth component is narrower for the five and ten component Gaussian mixture and that the additional components model particular parts of the distribution.
+The optimized coupling prior model that has been learned based on couplings computed with contrastive-divergence in general produces distributions that are narrower which is expected given the hyperparameter statistics and the observations from the univariate distributions.
 
-(ref:caption-vis2d-pll-5comp-100k) Visualisation of two-dimensional projections of the five-component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 100,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. Light blue: values that have been generated by zero component. Dark blue: values that have been generated by Gaussian component 1. Light green: values that have been generated by Gaussian component 3. Dark green dashed line: Gaussian component 3. Light pinkish dashed line: Gaussian component 4. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$). **Top Right** Two- dimensional projection for pairs (E,E) and (R,E) for contacts (using component weight $g_k(1)$).  **Bottom Left** Two-dimensional projection for pairs (I,L) and (V,I) for contacts (using component weight $g_k(1)$). **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$).  
 
-```{r vis2d-pll-5comp-100k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-pll-5comp-100k)'}
-knitr::include_graphics("img/bayesian_model/pll/5/2dvis_combined_100k.png")
+(ref:caption-vis2d-pll-5-10-comp-300k) Visualisation of two-dimensional projections of the five and ten component Gaussian mixture model for the contact-dependent coupling prior. Hyperparameters, $\gamma_k(\cij)$, $\muk$ and $\Lk$, have been trained on 300,000 residue pairs per contact class. 10,000 values have been samples from the Gaussian mixture model. The color of a sampled coupling pair represents the Gaussian mixture component that has generated this sample point. Color code is specified in the legend. **Top Left** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$) from the five component Gaussian mixture model. **Top Right** Two-dimensional projection for pairs (E,R) and (R-E) for contacts (using component weight $g_k(1)$) from the ten component Gaussian mixture model.  **Bottom Left** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$) from the five component Gaussian mixture model.  **Bottom Right** Two-dimensional projection for pair (I,L) and (V,I) for non-contacts (using component weight $g_k(0)$) from the ten component Gaussian mixture model.  
+
+```{r vis2d-pll-5-10-comp-300k, echo = FALSE, out.width = '100%', fig.cap = '(ref:caption-vis2d-pll-5-10-comp-300k)'}
+knitr::include_graphics("img/bayesian_model/pll/2dvis_combined_5comp_10comp_300k.png")
 ```
 
-
-
-## Training Hyperparameters for a Gaussian Mixture with Ten Components
-
-Training ten instead of five or three component Gaussian mixtures 
-
-The incresaed complexity of training five instead of three component Gaussian mixtures does not only result in longer runtimes until convergence but also slows down runtime per iteration. 
-Therefore, several optimization runs did not converge within 2000 iterations. 
-Nevertheless, the obtained hyperparameters and resulting Gaussian mixture are consistent, which will be shown in the following.
-Again, analysis of the optimization results is exemplified for the training on the dataset with 100,000 residue pairs per contact class and using pseudo-likelihood couplings for estimation of the Hessian. 
-
+In conclusion it can be found that the learned Gaussian mixtures for the contact-dependent couplig prior seem to reproduce the empirical distribution of couplings in Figure \@ref(fig:2d-coupling-profiles-0-8)  very well. 
+Of course it must be noted that the empirical distributions do not take the uncertainty of the inferred couplings into account.
+They are computed for high evidence couplings as explained in method section \@ref(method-coupling-profile) and therefore do not provide a completely correct reference.
+The more components define the Gaussian mixture, the longer it takes to train the model per iteration and the more iterations it takes to reach convergence. 
+Eventhough, training the five and ten component Gaussian mixtures could not be continued until convergence because of time requirements, the resulting models seem robust and consistently produce similar distributions regardless of the dataset size and repeated independent runs.
 
 
 ## Computing The Posterior Probability of Contacts {#posterior-of-rij}
@@ -218,44 +219,121 @@ The posterior distribution for $c_{ij}$ can be computed by marginalizing over al
  \, \prod_{i'<j'} p(c_{i'j'} |\phi_{i'j'})  \,,
  \end{eqnarray}
  
-and, by pulling out of the integral over $\c_{\backslash ij}$ the term depending only on $\cij$, 
+where $p(\c | \phi)$ represents a prior on contacts that is implemented by the random forest classifier trained on sequence derived features, $\phi$, as described in chapter \@ref(contact-prior).
+By pulling out of the integral over $\c_{\backslash ij}$ the term depending only on $\cij$ one obtains the posterior distribution for $c_{ij}$ , 
  
  \begin{eqnarray}
     p(\cij | \X, \phi) & \propto & 
             p(\cij |\phi_{ij}) \, \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} \nonumber\\
-            & \times  & \prod_{i'<j', (i',j') \ne (i,j)} \int d c_{i'j'} \, p(c_{i'j'} |\phi_{i'j'}) \, \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}
+            & \times  & \prod_{i'<j', (i',j') \ne (i,j)} \int d c_{i'j'} \, p(c_{i'j'} |\phi_{i'j'}) \, \sum_{k=0}^K g_{k}(c_{i'j'}) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})} \; .
 \end{eqnarray}
 
-Since the second factor involving the integrals over $c_{i'j'}$ is a constant with respect to $\cij$, we find
+Since the second factor involving the integrals over $c_{i'j'}$ is a constant with respect to $\cij$, it can be written,
 
 \begin{equation}
     p(\cij | \X, \phi) \propto  p(\cij |\phi_{ij}) \,  \sum_{k=0}^K g_{k}(\cij) \, \frac{\Gauss( \mathbf{0} | \muk, \Lk^{-1})}{\Gauss(\mathbf{0} | \muijk, \Lijk^{-1})}  \, .
 (\#eq:posterior-marginal-rij)
 \end{equation}
 
+### Evaluation of the Bayesian models for contact-prediction
+
+In the following I am going to assess the performance of the Bayesian models with respect to the top ranked contact predictions based on the pseudo-likelihood couplings. 
+The ranking of predictions now follows the posterior probability estimates for contacts.
+
+Figure \@ref(fig:precision-bayesian-model-pll-3comp) shows a benchmark for the Bayesian models using a three component Gaussian mixture model for the coupling prior and with hyperparameters trained on different dataset sizes (100,000, 300,000 and 500,000 residue pairs per contact class). 
+The analysis of the Gaussian mixture models in the last sections has revealed that the statistics and resultant distributions are coherent regardless of dataset size. 
+And indeed, the precision over top ranked predictions is almost indistinguishable for the models learned on different dataset sizes.
+The Gaussian mixture model with three components has 2004 parameters (see methods section \@ref(model-specifications-training-bayesian-model)) and therefore it is a reasonable assumption that a dataset of 2x 100,000 residue pairs provides sufficient signal despite the unknown uncertainty of the couplings to be modelled.
+
+Because the posterior of contacts is computed from the likelihood function of contacts and a contact prior in form of the random forest classifier (see chapter \@ref(contact-prior)), it is not fair to compare them directly to the pseudo-likelihood predictions. 
+Instead, the predictions from the Bayesian model can be compared to the Random Forest model that has additionally been trained on the pseudo-likelihood derived contact scores.
+As can be seen in Figure \@ref(fig:precision-bayesian-model-pll-3comp), the Bayesian model predicts contacts more accurately than the heuristic contact score obtained from pseudo-likelihood couplings, but less accurately than the random forest model trained on the pseudo-likelihood contact scores.
+
+(ref:caption-precision-bayesian-model-pll-3comp) Mean precision for top ranked contact predictions over 500 proteins. "Bayesian Posterior" computing the posterior probability of contacts with the Bayesian framwork employing a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on different dataset sizes as specified in the legend. **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior 100k**:  Trained on 100,000 residue pairs per contact class. **Bayesian Posterior 300k**: Trained on 300,000 residue pairs per contact class. **Bayesian Posterior 500k**: Trained on 500,000 residue pairs per contact class. **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood. 
+
+```{r precision-bayesian-model-pll-3comp, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_all_datasets.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-pll-3comp)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_all_datasets.html", height = "500px")
+```
+
+The likelihood function of contacts has been optimized using an equal number of residue pairs that are in physical contact and that are not in physical contact. 
+The residue pairs that are not in physical contact have been defined on basis of a $>25 \angstrom \Cb$ distance threshold.
+Choosing a different non-contact threshold, $\Cb$ distance $>8 \angstrom$,  has a negligible impact on performance with the $25 \angstrom$ cutoff giving slightly better results (see Appendix Figure \@ref(fig:precision-bayesian-model-pll-3comp-ncthr)).
+Furthermore, I checked whether a different ratio of contacts and non-contacts has an impact on performance. 
+Appendix Figure \@ref(fig:precision-bayesian-model-pll-3comp-ncthr) also shows that choosing five times as many non-contacts as contacts gives slightly worse precision and has the disadvantage of longer runtimes.
 
 
-[PLOT BENCHMARKS]
+Figure \@ref(fig:precision-bayesian-model-pll-100k) shows the performance of the Bayesian models with Gaussian mixtures having different number of Gaussain components and trained on 100,000 residue pairs per contact class.
+The Bayesian model with a Gaussian mixture having five components shows minor improvements over the model with a three-component Gaussian mixture.
+Surprisingly, the Bayesian models with the ten component Gaussian mixture performs slightly worse than the other two models.
+This is unexpected, because the analysis in the last section indicated that both the five and the ten component Gaussian mixture models are able to precisely model the empirical coupling distributions.
+
+
+(ref:caption-precision-bayesian-model-pll-100k) Mean precision for top ranked contact predictions over 500 proteins.  **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior 3**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class. **Bayesian Posterior 5**: Bayesian model computing the posterior probability of contacts with a five component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class. **Bayesian Posterior 10**: Bayesian model computing the posterior probability of contacts with a ten component Gaussian mixture coupling prior. Hyperparameters for the coupling prior have been trained on 100,000 residue pairs per contact class.  **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood.
+
+```{r precision-bayesian-model-pll-100k, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_pll_100k_allcomponents.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-pll-100k)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_pll_100k_allcomponents.html", height = "500px")
+```
+
+
+The trends described for the Bayesian models based on pseudo-likelihood couplings also apply for the Bayesian models based on contrastive divergence couplings.
+The Bayesian models perform very similar regardless whether trained on 100000, 300000 or 500000 residue pairs per contact class (see Appendix Figure \@ref(fig:precision-bayesian-model-cd-3comp)) and the non-contact threshold has no substantial impact on precision.
+Furthermore, modelling the coupling prior as Gaussian mixtures with 3,5 or ten components does not seem to make a difference(see Appendix Figure \@ref(fig:precision-bayesian-model-cd-100k)). 
+Rather surprising is the finding the Bayesian models based on contrastive divergence couplings perform worse than the Bayesian models based on pseudo-likelihood couplings (see Figure \@ref(fig:precision-bayesian-model-pll-vs-cd-3comp-300k)).
+The reason being that the approximation of the regularized likelihood of sequences (see method section \@ref(laplace-approx)) employs the Hessian of the full likelihood and not of the pseudo-likelihood. 
+Therefore it can be assumed that the approximation is more accurate when using the couplings that have been obtained by maximizing the full likelihood with contrastive divergence.
+However, the Bayesian model rooted in couplings compute with contrastive divergence performs even worse than heuristic pseudo-likelihood score. 
+
+(ref:caption-precision-bayesian-model-pll-vs-cd-3comp-300k) Mean precision for top ranked contact predictions over 500 proteins. **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior pLL**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior based on *pseudo-likelihood* couplings. Hyperparameters for the coupling prior have been trained on 300,000 residue pairs per contact class. **Bayesian Posterior CD**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior based on *contrastive divergence* couplings. Hyperparameters for the coupling prior have been trained on 300,000 residue pairs per contact class. **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood.
+
+```{r precision-bayesian-model-pll-vs-cd-3comp-300k, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_pll_vs_cd_3comp_300k.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-pll-vs-cd-3comp-300k)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_pll_vs_cd_3comp_300k.html", height = "500px")
+```
+
 
 
 ## Analysing Contact Maps 
 
-  - protein with large N
-  - proteins with small N
-  
-  - look at probability estimates
-  - look at top >L predictions
-  
+In the following I will analyse contat maps predicted with the Bayesian model.
+While the posterior probabilties for contacts can be used as predictions it is also worth having a look at the likelihood of contacts, given by eq. \@ref(eq:pXr-final), to dissect the effect of likelihood and prior on the posterior. 
+Figure \@ref(fig:precision-bayesian-model-pll-3comp-300k-lik) shows the precision of predictions computed as the posterior probability of a contact as well as the likelihood of a contact. 
+It can be found, that the likelihood has worse predictive performance than the heuristic contact score computed from pseudo-likelihood couplings. 
+
+(ref:caption-precision-bayesian-model-pll-3comp-300k-lik) Mean precision for top ranked contact predictions over 500 proteins. **random forest (pLL)** random forest model trained on sequence features and and additional pseudo-likelihood contact score feature. **Bayesian Posterior**: Bayesian model computing the posterior probability of contacts with a three component Gaussian mixture coupling prior based on *pseudo-likelihood* couplings. Hyperparameters for the coupling prior have been trained on 300,000 residue pairs per contact class. **Bayesian Likelihood**: Normalized Likelihood of observing a contact as gicen in eq. \@ref(eq:pXr-final). Coupling prior is modelled as three component Gaussian mixture based on *pseudo-likelihood* couplings. Hyperparameters for the coupling prior have been trained on 300,000 residue pairs per contact class. **pseudo-likelihood**: contact score is computed as [APC](#abbrev) corrected Frobenius norm of the couplings computed from pseudo-likelihood.
+
+```{r precision-bayesian-model-pll-3comp-300k-lik, echo = FALSE, screenshot.alt="img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_300k_likelihood.png", out.width = '90%', fig.align='center', fig.cap = '(ref:caption-precision-bayesian-model-pll-3comp-300k-lik)'}
+knitr::include_url("img/bayesian_model/benchmark/precision_vs_rank_pll_3comp_300k_likelihood.html", height = "500px")
+```
+
+
+
 
 ## Discussion
-  - why no improvement:
-    - diagonal matrices require more components
-    - more data
-    - assumption that hessian diagonal block matrices are zero
-    - laplace approximation needs to be improved! 
 
-  - skwark deep learning analysis
+The Bayesian models have been shown to be less precise than the random forest trained on sequence features and pseudo-likelihood couplings.
+Eventhough the coupling prior modelled as a Gaussian mixture seems to reproduce the empirical distributions of high evident couplings very well, there might be possible drawbacks of the current implementation.
+
+First of all, the Gaussian components are modelles with diagonal covariance matrices.
+Much more information can be learned by using full covariance matrices whcih would also require less components.
+However, using full covariance matrices would increase computational complexity because the inverse of the matrix has to be computed.
+
+It is unlikely that using more data would improve the models.
+For one thing, the neg log likelihood has been monitored on a validation set during optimization and there seems to be no overfitting. 
+Further on, the hyperparameter statistics are almost identical regardless of the training set size.
+
+There is only one assumption in the theoretical framework that might be incorrect, but unfortunately it is not easy to verify: setting the off-diagonal block matrices in the Hessian to zero (see method section \@ref(Hessian-offdiagonal)).
+These off-diagonal block matrices describe the interdependency between specific couplings in different pairs of columns.
+However, in our view the entries in these off-diagonal matrices should be negligible.
+
+Another important point is that the quality of the Gaussian approximation to the posterior distribution of couplings $p(\w | \X , \v^*)$ depends on two points,
+
+  1. how well is the posterior distribution of couplings approximated by a Gaussian 
+  2. how closely does the mode of the posterior distribution of couplings lie near the mode of the integrand in equation \@ref(eq:in_over_w_1).
   
+  
+Finally, a proof of concept that the full information in the coupling matrices can be used to improve the precision of contact predictions was given in the work of Golkov and colleagues [@Golkov2016a].
+The developed a convolutional neural network for the prediction of protein residue-residue contacts that uses only coupling matrices as input features. 
+In their benchmark the convolutional network predictor improved over  Meta-PSICOV, which is a meta predictor combining several coevolution methods and sequence features. 
+
 
 \newpage
 
@@ -364,6 +442,7 @@ We can now run a second optimisation with better regularisation prior, in which 
 
 
 
+
 ### Integrating out the Hidden Variables to Obtain the Likelihood Function of the Contact States {#likelihood-fct-distances}
 
 In order to compute the likelihood function of the contact states, one needs to solve the integral over $(\v, \w)$,
@@ -378,7 +457,7 @@ Inserting the prior over parameters $p(\v, \w | \c)$ from eq. \@ref(eq:definitio
 \begin{eqnarray}
     p(\X | \c) &=& \int \left( \int  p(\X | \v,\w) \, \Gauss(\v|\v^*,\lambda_v^{-1} \I) \,d\v \right) \, \prod_{1\le i<j\le L} p(\wij|\cij) \, d\w  \\
     p(\X | \c) &=& \int  p(\X | \v^*,\w) \, \prod_{1\le i<j\le L} p(\wij|\cij) \, d\w  
-\label{eq:in_over_w_1}
+(\#eq:in-over-w-1)
 \end{eqnarray}
 
 Next, the likelihood of sequences, $p(\X | \v^*,\w)$, will be multiplied with the regularisation prior $\Gauss(\w|\mathbf{0}, \lambda_w^{-1} \I)$ and at the same time the coupling prior, which depends on the contact states, will be divided by the regularisation prior again:
@@ -1007,6 +1086,7 @@ The [MAP](#abbrev) estimates of the coupling parameters $\wij^*$ that are needed
 Stochastic gradient descent using the tuned hyperparameters presented in chapter \@ref(optimizing-full-likelihood) will be used to optimize the full likelihood with contrastive divergence.
 The *ADAM* optimizer is not used because its adaptive learning rates violate the condition $\sum_{a,b}^{20} \wijab = 0$ which is described in section \@ref(adam-violates-sum-wij).
 
+For validation of the models, 500 proteins are randomly selected from subsets 6-8 of the dataset described in method section \@ref(dataset). 
 
 #### Model Specifications {#model-specifications-training-bayesian-model}
 
