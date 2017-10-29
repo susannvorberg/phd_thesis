@@ -165,7 +165,7 @@ Both, local statistial models *OMES* and [MI](#abbrev) also perform weak on smal
 This finding is expected, as it is well known that models trained on simple sequence features perform almost independent of alignment size [@Stahl2017; @Skwark2016]. 
 
 
-## Using Contact Scores as Additional Features
+## Using Contact Scores as Additional Features {#contact-prior-add-features}
 
 
 (ref:caption-performance-rf-additional-features) Mean precision for top ranked contacts on a test set of 1000 proteins. **random forest (pLL, CD)** random forest model trained on sequence features and the pseudo-likelihood and contrastive divergence contact scores.  **random forest (pLL)** random forest model trained on sequence features and the pseudo-likelihood contact score. **random forest (CD)** random forest model trained on sequence features and the contrastive divergence contact score. **contrastive divergence** [APC](#abbrev) corrected Frobenius norm of couplings computed with contrastive divergence. **pseudo-likelihood** = [APC](#abbrev) corrected Frobenius norm of couplings computed with pseudo-likelihood. **random forest** = random forest model trained on 75 sequence derived features.
