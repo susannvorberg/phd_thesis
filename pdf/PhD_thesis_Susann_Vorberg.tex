@@ -147,7 +147,7 @@
     \thispagestyle{empty}
     \begin{flushleft}
       \large \textbf{Erklärung} \\[1mm]
-      \large Diese Dissertation wurde im Sinne von §7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
+      \large Diese Dissertation wurde im Sinne von \S7 der Promotionsordnung vom 28. November 2011 von #2 betreut.
       \bigskip
   
       \large \textbf{Eidesstattliche Versicherung}\\[1mm]
@@ -8636,10 +8636,10 @@ parameters for \(K\eq5\) and 7618 parameters for \(K\eq10\) components.
 \chapter{Conclusion and Outlook}\label{conclusion-and-outlook}
 
 With the work presented here, I was the first to formulate
-\protect\hyperlink{abbrev}{DCA} as a principled statistical framework,
+\protect\hyperlink{abbrev}{DCA} as a principled statistical approach,
 providing true probability estimates and promoting biological insights.
 The transparency of the modelling process and the flexibility of the
-Bayesian model lay the foundation to further improvements of
+Bayesian framework lay the foundation to further improvements of
 \protect\hyperlink{abbrev}{DCA} for small protein families in a
 mechanistic way.
 
@@ -8656,29 +8656,33 @@ and induce characteristic patterns in coupling matrices, often
 indicating the structural constraint for the residue pair. The majority
 of this information is lost by the the way current methods apply
 heuristics to compute a prediction for a residue-residue contact.
+However, in my Bayesian framework presented in chapter
+\ref{bayesian-approach}, this information is explicitelly modelled.
 
 Chapter \ref{optimizing-full-likelihood} presented an alternative
 approach to infer the \emph{Potts} model parameters. Due to the
-complexity of the normalization constant it is infeasible to infer the
-model parameters via maximum-likelihood estimation. The most popular
+complexity of the normalization constant it is infeasible to maximize
+the full likelihood to derive the model parameters. The most popular
 \protect\hyperlink{abbrev}{DCA} approaches optimize the
-pseudo-likelihood instead but it is unknown how well it approximates the
-full likelihood in case protein families have only few members. In my
-work, I optimized the full likelihood by using an approximate gradient
-provided by an approach called \emph{contrastive divergence}, that has
-not yet been applied to contact prediction. I systematically tuned the
-stochastic gradient descent algorithm for the use with \emph{contrastive
-divergence} and also examined various modifications to the estimation of
-the gradient. My approach achieved improvements over pseudo-likelihood
-maximization for small protein families, which could be traced back to
-amplified signals between strongly conserved residue pairs.
+pseudo-likelihood instead but it is unknown how wellthe
+pseudo-likelihood solution approximates the full likelihood solution in
+case protein families have only few members. In my work, I optimized the
+full likelihood by using an approximate gradient provided by an
+algorithm called \emph{contrastive divergence}, which is a novel method
+in contact prediction. I systematically tuned the stochastic gradient
+descent algorithm for the use with \emph{contrastive divergence} and
+also examined various modifications to the estimation of the gradient.
+My approach achieved comparable precision as pseudo-likelihood methods
+with minor improvements for small protein families, which could be
+traced back to amplified signals between strongly conserved residue
+pairs.
 
-In chapter \ref{contact-prior} I developed a random forest classifier
-for contact prediction that is trained on sequence features. This model
-yields a robust estimator that outperforms coevolution methods for small
-protein families where they suffer from the low signal-to-noise ratio.
-In line with the most successful contact predictors which exploit
-information from various sources and multiple
+A random forest classifier for contact prediction which was trained on
+sequence features is discussed in chapter \ref{contact-prior}. This
+model yields a robust estimator that outperforms coevolution methods for
+small protein families where they suffer from the low signal-to-noise
+ratio. In line with the most successful contact predictors, which
+exploit information from various sources and multiple
 \protect\hyperlink{abbrev}{DCA} methods, I integrated the predictions of
 the pseudo-likelihood and the constrastive divergence method as
 additional features for training. The individual methods greatly
@@ -8711,9 +8715,10 @@ regularized likelihood of the sequences with a multivariate Gaussian can
 and perhaps must be iteratively improved by another round of training
 employing an improved regularization prior. Finally, the reason could be
 that certain inherent modelling assumptions are not met or are too
-inaccurate but unfortunately it is not easy to verify these assumptions.
+inaccurate but work to verify these assumptions is stil ongoing.
 
-Nevertheless, the Bayesian framework developed here provides a solid
+Especially with the limited knowledge and uncertainty in the data, the
+Bayesian statistical approach developed here provides a solid
 theoretical and statistically sound formulation for
 \protect\hyperlink{abbrev}{DCA} with enhanced explanatory power compared
 to the uninformative heuristics. Through the formulation in the language
@@ -8726,8 +8731,8 @@ The analysis in chapter \ref{interpreting-coupling-matrices} has
 demonstrated that the coupling signal weakens with increasing
 inter-residue distances which represents additional information that
 awaits full utilization. The information gain of residue-residue
-distance estimates over binary contact prediction is substantial and
-could greatly improve \emph{de novo} structure prediction.
+distance estimates over binary contact prediction is substantial and is
+a promising way to greatly improve \emph{de novo} structure prediction.
 
 \appendix
 
